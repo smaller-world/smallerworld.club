@@ -430,7 +430,7 @@ class Post < ApplicationRecord
     if (hidden_from_ids = self.hidden_from_ids.presence)
       world_friends.where(id: hidden_from_ids)
     else
-      world_friends
+      world_friends.none
     end
   end
 
