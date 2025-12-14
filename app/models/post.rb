@@ -443,16 +443,15 @@ class Post < ApplicationRecord
 
   sig { returns(Friend::PrivateAssociationRelation) }
   def friends_to_notify
-    friends = if (notify_ids = friend_ids_to_notify)
-      subscribed_type = quoted_post&.type || type
-      scope = world_friends.where(id: notify_ids)
-      scope = scope.where(id: visible_to_ids) if visibility == :secret
-      scope.subscribed_to(subscribed_type)
+    scope = if (notify_ids = friend_ids_to_notify)
+      world_friends.where(id: notify_ids)
+    elsif visibility == :secret
+      world_friends.notifiable.where(id: visible_to_ids)
     else
-      world_friends.none
+      world_friends.notifiable
     end
-    friends = friends.chosen_family if visibility == :chosen_family
-    friends
+    subscribed_type = quoted_post&.type || type
+    scope.subscribed_to(subscribed_type)
   end
 
   sig { void }
