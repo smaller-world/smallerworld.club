@@ -6,6 +6,7 @@ import {
   type PostReaction,
   type SpacePost,
   type UniversePost,
+  type UniversePostAssociatedFriend,
   type WorldPost,
 } from "~/types";
 
@@ -23,6 +24,10 @@ const PublicPostCardActions: FC<PublicPostCardActionsProps> = ({
 }) => {
   const { ref: viewportRef, inViewport } = useInViewport();
   const currentFriend = useCurrentFriend();
+  let asFriend: UniversePostAssociatedFriend | undefined;
+  if ("associated_friend" in post) {
+    asFriend = post.associated_friend;
+  }
 
   // == Track views
   const trackSeenRef = useTrackPostSeen(post, {
@@ -53,17 +58,20 @@ const PublicPostCardActions: FC<PublicPostCardActionsProps> = ({
       align="start"
       gap={2}
       wrap="wrap"
-      className={cn("FriendPostCardActions", className)}
+      className={cn("PublicPostCardActions", className)}
       {...otherProps}
     >
       <Group gap={2} wrap="wrap" style={{ flexGrow: 1, rowGap: 0 }}>
         {Object.entries(reactionsByEmoji).map(([emoji, reactions]) => (
-          <PostReactionButton key={emoji} {...{ post, emoji, reactions }} />
+          <PostReactionButton
+            key={emoji}
+            {...{ post, emoji, reactions, asFriend }}
+          />
         ))}
       </Group>
       <Group justify="end" gap={2} style={{ flexGrow: 1 }}>
         <NewPostReactionButton
-          {...{ post }}
+          {...{ post, asFriend }}
           hasExistingReactions={!isEmpty(reactions)}
         />
       </Group>
