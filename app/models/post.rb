@@ -445,10 +445,13 @@ class Post < ApplicationRecord
   def friends_to_notify
     scope = if (notify_ids = friend_ids_to_notify)
       world_friends.where(id: notify_ids)
-    elsif visibility == :secret
-      world_friends.notifiable.where(id: visible_to_ids)
     else
       world_friends.notifiable
+    end
+    scope = if visibility == :secret
+      scope.where(id: visible_to_ids)
+    else
+      scope.where.not(id: hidden_from_ids)
     end
     subscribed_type = quoted_post&.type || type
     scope.subscribed_to(subscribed_type)
