@@ -438,7 +438,7 @@ class Post < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def send_notifications?
-    auto_generated? && (friend_ids_to_notify.present? || visibility == :public)
+    !auto_generated? && (friend_ids_to_notify.present? || visibility == :public)
   end
 
   sig { returns(Friend::PrivateAssociationRelation) }
