@@ -477,7 +477,7 @@ class Post < ApplicationRecord
     friends
       .text_only
       .where.not(id: text_blasts.select(:friend_id))
-      .select(:id)
+      .select(:id, :phone_number)
       .find_each do |friend|
         text_blasts.create!(friend:, send_delay: delay)
       end
