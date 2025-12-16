@@ -1,0 +1,29 @@
+<%= render "forms/field_wrapper", class: "icon-field", **local_assigns do %>
+  <div
+    class="<%= class_names(
+      "uppy-container form-input size-36 mt-1",
+      { "mx-auto": local_assigns[:center] },
+      local_assigns[:class],
+    ) %>"
+    data-controller="uppy-dnd"
+    data-uppy-direct-upload-url-value="<%= rails_direct_uploads_path %>"
+    data-prevent-submit-while-busy-target="busyable"
+  >
+    <% attachment = form.object.send(name) %>
+    <%= form.hidden_field(
+      name,
+      value: (attachment.signed_id if attachment.attached?),
+      data: {
+        uppy_dnd_target: "input",
+      },
+      aria: {
+        describedby: (form.field_id(name, :error) if form.object.errors.include?(name)),
+      },
+      **local_assigns.slice(:required),
+    ) %>
+    <div
+      class="absolute inset-0 flex items-center"
+      data-uppy-dnd-target="statusBar"
+    />
+  </div>
+<% end %>

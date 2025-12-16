@@ -1,9 +1,9 @@
-@layer utilities {
+@layer components {
   .form-input,
   .form-textarea,
   .form-select,
   .form-multiselect {
-    @apply border border-neutral-300 focus:border-focus-ring focus:ring-focus-ring;
+    @apply border border-shade-300 focus:border-focus-ring focus:ring-focus-ring leading-snug;
 
     &[data-error] {
       @apply border-red-500 focus:border-red-500;
@@ -14,25 +14,62 @@
   .form-radio {
     @apply text-primary-600 focus:ring-focus-ring;
   }
-}
 
-@layer components {
   .field_with_errors {
     display: contents;
   }
 
   .icon-field {
+    .form-input {
+      border-radius: var(--app-icon-radius);
+
+      &:not(:has(> .filepond--root)) {
+        @apply bg-shade-300 animate-pulse;
+      }
+    }
+
     .filepond--root[data-style-panel-layout~="circle"] {
       border-radius: var(--app-icon-radius) !important;
 
-      .filepond--file-poster-wrapper {
+      .filepond--image-preview-wrapper {
         border-radius: var(--app-icon-radius) !important;
       }
     }
 
-    .form-input {
-      @apply bg-neutral-50;
+    /* .uppy-container {
+      @apply relative flex flex-col items-stretch border-none;
       border-radius: var(--app-icon-radius);
+
+      &:not(:has(> .uppy-Root))::after {
+        @apply absolute inset-0 bg-stone-200 animate-pulse;
+        border-radius: var(--app-icon-radius);
+        content: "";
+      }
     }
+
+    .uppy-Root {
+      @apply flex-1;
+    }
+
+    .uppy-Root,
+    .uppy-DragDrop-container {
+      border-radius: inherit;
+    }
+
+    .uppy-DragDrop--isDragDropSupported {
+      @apply border-shade-300;
+    }
+
+    .uppy-DragDrop-inner {
+      @apply p-2;
+    }
+
+    .uppy-DragDrop-arrow {
+      @apply h-9 mb-2;
+    }
+
+    .uppy-DragDrop-label {
+      @apply text-sm font-medium font-sans leading-tight lowercase text-shade-600;
+    } */
   }
 }

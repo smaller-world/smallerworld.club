@@ -1,16 +1,22 @@
 <div class="<%= class_names("flex flex-col items-stretch gap-0.5", local_assigns[:class]) %>">
-  <% error = form.object.errors.full_messages_for(name).first %>
-  <%= form.label(
-    name,
-    local_assigns.fetch(:label) { name.to_s.humanize(capitalize: false) },
-    class: "text-sm font-medium font-headings",
-  ) %>
+  <div>
+    <%= form.label(
+      name,
+      local_assigns.fetch(:label) { name.to_s.humanize(capitalize: false) },
+      class: "block text-sm font-medium font-headings leading-tight",
+    ) %>
+    <% if (description = local_assigns[:description].presence) %>
+      <p class="text-xs text-shade-500 leading-[1.2]">
+        <%= description %>
+      </p>
+    <% end %>
+  </div>
   <div class="relative flex flex-col items-stretch">
     <%= yield %>
   </div>
-  <% if error %>
-    <span class="text-sm text-red-600" id="<%= form.field_id(name, "error") %>">
-      <%= error.downcase %>
+  <% if (error = form.object.errors.messages_for(name).first) %>
+    <span class="text-sm text-red-600" id="<%= form.field_id(name, :error) %>">
+      <%= error %>
     </span>
   <% end %>
 </div>

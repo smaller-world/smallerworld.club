@@ -26,6 +26,9 @@
   "rubocop.mode": "enableViaGemfile",
   "rubocop.bundleCommandPath": "mise x -- bundle",
 
+  // == Tailwind
+  "tailwindCSS.experimental.classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"],
+
   // == YAML
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": "${workspaceFolder}/.github/workflows/deploy.yml"
@@ -61,6 +64,5 @@
   },
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "github-actions.workflows.pinned.workflows": []
+  }
 }

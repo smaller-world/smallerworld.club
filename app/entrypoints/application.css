@@ -9,9 +9,13 @@
 @import "~/assets/stylesheets/forms.css";
 @import "~/assets/stylesheets/flash.css";
 @import "~/assets/stylesheets/filepond.css";
+@import "~/assets/stylesheets/truecropper.css";
+/* @import "~/assets/stylesheets/uppy.css"; */
 
 /* Tailwind CSS plugins */
-@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/forms" {
+  strategy: "base";
+}
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 @plugin "@tailwindcss/container-queries";

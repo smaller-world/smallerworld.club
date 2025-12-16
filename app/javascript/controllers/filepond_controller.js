@@ -1,52 +1,41 @@
 import { Controller } from "@hotwired/stimulus";
-import ImageEditorPlugin from "@pqina/filepond-plugin-image-editor";
-import {
-  createDefaultImageReader,
-  createDefaultImageWriter,
-  getEditorDefaults,
-  openEditor,
-  processImage,
-} from "@pqina/pintura";
 import { DirectUpload } from "@rails/activestorage";
 import { create, registerPlugin } from "filepond";
-import FilePosterPlugin from "filepond-plugin-file-poster";
 import FileValidateTypePlugin from "filepond-plugin-file-validate-type";
-import invariant from "tiny-invariant";
+import ImageCropPlugin from "filepond-plugin-image-crop";
+import ImageExifOrientationPlugin from "filepond-plugin-image-exif-orientation";
+// import ImageEditPlugin from "filepond-plugin-image-edit";
+import ImagePreviewPlugin from "filepond-plugin-image-preview";
+import ImageTransformPlugin from "filepond-plugin-image-transform";
 
+// TODO: Implement image editing with plugin.
 export default class extends Controller {
   static targets = ["input", "idleLabelTemplate"];
   static values = {
     directUploadUrl: String,
+    aspectRatio: {
+      type: String,
+      default: null,
+    },
   };
 
   initialize() {
-    registerPlugin(FileValidateTypePlugin, ImageEditorPlugin, FilePosterPlugin);
+    registerPlugin(
+      FileValidateTypePlugin,
+      ImagePreviewPlugin,
+      ImageExifOrientationPlugin,
+      ImageCropPlugin,
+      ImageTransformPlugin,
+    );
   }
 
-  connect() {
-    this.filepond = create(this.inputTarget, {
-      labelIdle: this.idleLabelTemplateTarget.innerHTML,
-      imageEditor: {
-        createEditor: openEditor,
-        imageReader: [createDefaultImageReader],
-        imageWriter: [
-          createDefaultImageWriter,
-          // optional image writer instructions, this instructs the image writer to resize the image to match a width of 384 pixels
-          {
-            targetSize: {
-              width: 128,
-            },
-          },
-        ],
-        imageProcessor: processImage,
-        editorOptions: {
-          ...getEditorDefaults(),
-          imageCropAspectRatio: 1,
-        },
-      },
+  /** @type {import("filepond").FilePond | null} */
+  #filepond = null;
 
-      // imageResizeTargetWidth: 200,
-      // imageResizeTargetHeight: 200,
+  connect() {
+    const filepond = create(this.inputTarget, {
+      labelIdle: this.idleLabelTemplateTarget.innerHTML,
+      imageCropAspectRatio: this.aspectRatioValue,
       stylePanelLayout: "compact circle",
       styleLoadIndicatorPosition: "center bottom",
       styleProgressIndicatorPosition: "right bottom",
@@ -78,22 +67,20 @@ export default class extends Controller {
         load: null,
       },
     });
-    this.filepond.on("processfilestart", () => {
+    filepond.on("processfilestart", () => {
       this.#markBusy();
     });
-    this.filepond.on("processfiles", () => {
+    filepond.on("processfiles", () => {
       this.#clearBusy();
     });
+    this.#filepond = filepond;
   }
 
   disconnect() {
-    this.filepond?.destroy();
-  }
-
-  #filepondRootTarget() {
-    const root = this.element.querySelector(".filepond--root");
-    invariant(root instanceof HTMLElement);
-    return root;
+    if (this.#filepond) {
+      this.#filepond.destroy();
+      this.#filepond = null;
+    }
   }
 
   #markBusy() {

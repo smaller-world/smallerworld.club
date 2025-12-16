@@ -12,6 +12,7 @@
     "clinyong.vscode-css-modules",
     "rubocop.vscode-rubocop",
     "csstools.postcss",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "bradlc.vscode-tailwindcss"
   ]
 }

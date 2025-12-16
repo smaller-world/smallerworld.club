@@ -31,6 +31,9 @@ module GeneratedPathHelpersModule
   def app_start_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def apple_app_site_association_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def audience_user_world_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

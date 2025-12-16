@@ -26,8 +26,9 @@ Rails.application.routes.draw do
 
   # == Well-known ==
 
-  get "/.well-known/apple-app-site-association",
-      to: "well_known#apple_app_site_association"
+  scope path: "/.well-known", controller: :well_known do
+    get "apple-app-site-association", action: :apple_app_site_association
+  end
 
   # == Good Job ==
 

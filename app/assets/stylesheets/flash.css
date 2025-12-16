@@ -11,7 +11,7 @@
 
   .flash__inner {
     animation: appear-then-fade 3s 300ms both;
-    background-color: var(--color-neutral-900);
+    background-color: var(--color-shade-900);
     border-radius: 4em;
     color: var(--color-white);
     display: inline-flex;

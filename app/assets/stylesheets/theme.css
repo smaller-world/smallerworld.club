@@ -35,4 +35,15 @@
   --color-primary-700: var(--color-rose-700);
   --color-primary-800: var(--color-rose-800);
   --color-primary-900: var(--color-rose-900);
+
+  --color-shade-50: var(--color-stone-50);
+  --color-shade-100: var(--color-stone-100);
+  --color-shade-200: var(--color-stone-200);
+  --color-shade-300: var(--color-stone-300);
+  --color-shade-400: var(--color-stone-400);
+  --color-shade-500: var(--color-stone-500);
+  --color-shade-600: var(--color-stone-600);
+  --color-shade-700: var(--color-stone-700);
+  --color-shade-800: var(--color-stone-800);
+  --color-shade-900: var(--color-stone-900);
 }

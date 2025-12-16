@@ -13,6 +13,7 @@ import { ViteImageOptimizer as imageOptimizerPlugin } from "vite-plugin-image-op
 import { isomorphicImport as isomorphicImportPlugin } from "vite-plugin-isomorphic-import";
 import { VitePWA as pwaPlugin } from "vite-plugin-pwa";
 import rubyPlugin from "vite-plugin-ruby";
+import stimulusHmrPlugin from "vite-plugin-stimulus-hmr";
 
 import { imports } from "./auto-import.config";
 
@@ -47,6 +48,7 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     imageOptimizerPlugin({ includePublic: false }),
     reactPlugin(),
     rubyPlugin(),
+    stimulusHmrPlugin(),
     pwaPlugin({
       registerType: "autoUpdate",
       manifest: false,

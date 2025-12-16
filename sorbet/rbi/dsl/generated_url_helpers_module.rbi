@@ -31,6 +31,9 @@ module GeneratedUrlHelpersModule
   def app_start_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def apple_app_site_association_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def audience_user_world_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
