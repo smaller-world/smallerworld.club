@@ -1,6 +1,7 @@
 import EmailLayout from "~/components/EmailLayout";
 import PageLayout from "~/components/PageLayout";
 import { type PageComponent, PageType } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
 
 export const preparePage = <Props extends SharedPageProps>(
   page: PageComponent<Props>,
@@ -8,9 +9,9 @@ export const preparePage = <Props extends SharedPageProps>(
 ): void => {
   if (!page.layout) {
     if (type === PageType.Email) {
-      page.layout = children => <EmailLayout>{children}</EmailLayout>;
+      page.layout = (children) => <EmailLayout>{children}</EmailLayout>;
     } else {
-      page.layout = children => <PageLayout>{children}</PageLayout>;
+      page.layout = (children) => <PageLayout>{children}</PageLayout>;
     }
   }
 };

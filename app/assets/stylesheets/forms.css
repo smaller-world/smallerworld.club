@@ -3,7 +3,8 @@
   .form-textarea,
   .form-select,
   .form-multiselect {
-    @apply border border-shade-300 focus:border-focus-ring focus:ring-focus-ring leading-snug;
+    @apply border-shade-300 focus:border-focus-ring focus:ring-focus-ring border;
+    @apply leading-snug;
 
     &[data-error] {
       @apply border-red-500 focus:border-red-500;
@@ -16,7 +17,7 @@
   }
 
   .field_with_errors {
-    display: contents;
+    @apply contents;
   }
 
   .icon-field {
@@ -25,6 +26,21 @@
 
       &:not(:has(> .filepond--root)) {
         @apply bg-shade-300 animate-pulse;
+      }
+    }
+
+    .editor-modal {
+      .modal-panel {
+        @apply p-0 max-w-xl bg-transparent focus-visible:ring-transparent shadow-none;
+
+        .editor-modal-content {
+          @apply flex flex-col gap-3 items-center;
+
+          img {
+            @apply shadow-xl;
+            max-height: calc(100vh - var(--spacing) * 20);
+          }
+        }
       }
     }
 

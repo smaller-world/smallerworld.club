@@ -4,15 +4,23 @@
  *
  * This code was AI-generated and may require human review and testing.
  */
-import { Image, Radio, type RadioGroupProps } from "@mantine/core";
-
-import NoneIcon from "~icons/heroicons/no-symbol-20-solid";
+import {
+  Box,
+  Center,
+  Group,
+  Image,
+  Radio,
+  type RadioGroupProps,
+} from "@mantine/core";
+import { type FC } from "react";
 
 import {
   useAvailableWorldThemes,
   worldThemeThumbnailSrc,
 } from "~/helpers/worldThemes";
 import { type WorldTheme } from "~/types";
+
+import NoneIcon from "~icons/heroicons/no-symbol-20-solid";
 
 import classes from "./WorldThemeRadioGroup.module.css";
 
@@ -31,7 +39,7 @@ const WorldThemeRadioGroup: FC<WorldThemeRadioGroupProps> = ({
     >
       <Group justify="center" gap={6} wrap="wrap">
         <RadioCard worldTheme={null} />
-        {availableThemes.map(worldTheme => (
+        {availableThemes.map((worldTheme) => (
           <RadioCard key={worldTheme} {...{ worldTheme }} />
         ))}
       </Group>

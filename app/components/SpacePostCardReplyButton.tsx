@@ -1,6 +1,12 @@
-import { type ButtonProps } from "@mantine/core";
+import { Box, Button, type ButtonProps, Center } from "@mantine/core";
+import { type FC } from "react";
+import { toast } from "sonner";
 
+import { useCurrentUser } from "~/helpers/authentication";
+import { ReplyIcon } from "~/helpers/icons";
 import { messageUri } from "~/helpers/messaging";
+import routes from "~/helpers/routes";
+import { useRouteMutation } from "~/helpers/routes/swr";
 import { mutateWorldPosts } from "~/helpers/worlds";
 import { type SpacePost } from "~/types";
 

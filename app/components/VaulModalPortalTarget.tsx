@@ -1,3 +1,7 @@
+import { randomId } from "@mantine/hooks";
+import { closeModal, openModal } from "@mantine/modals";
+import { type FC, startTransition, useEffect, useRef } from "react";
+
 import classes from "./VaulModalPortalTarget.module.css";
 
 // In order to render portals inside Vaul, we have to get a little creative.

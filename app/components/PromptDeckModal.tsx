@@ -1,9 +1,14 @@
-import { Modal, type ModalProps } from "@mantine/core";
-
-import WriteIcon from "~icons/heroicons/pencil-square-20-solid";
+import { Button, Modal, type ModalProps, Skeleton, Stack } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
 
 import { usePageDialogOpened } from "~/helpers/pageDialog";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { type Prompt, type PromptDeck } from "~/types";
+
+import WriteIcon from "~icons/heroicons/pencil-square-20-solid";
 
 import PromptStack from "./PromptStack";
 
@@ -47,7 +52,7 @@ const PromptDeckModal: FC<PromptDeckModalProps> = ({
       {...{ opened }}
       centered
       fullScreen
-      className={cn("PromptDeckModal", classes.modal, className)}
+      className={clsx("PromptDeckModal", classes.modal, className)}
       {...otherProps}
     >
       <Stack align="center" gap="xl">

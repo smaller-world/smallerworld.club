@@ -1,7 +1,12 @@
+import { Box, type BoxProps } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
 import { map } from "lodash-es";
 import { DateTime } from "luxon";
+import { type FC, useMemo } from "react";
 
+import { useForm } from "~/helpers/form";
 import { htmlHasText } from "~/helpers/richText";
+import routes from "~/helpers/routes";
 import { mutateSpacePosts } from "~/helpers/spaces";
 import {
   parseSpotifyTrackId,
@@ -55,7 +60,7 @@ const EditSpacePostForm: FC<EditSpacePostFormProps> = ({
       body_html: body_html ?? "",
       emoji: emoji ?? "",
       images_uploads: images
-        ? images.map<Upload>(image => ({ signedId: image.signed_id }))
+        ? images.map<Upload>((image) => ({ signedId: image.signed_id }))
         : [],
       pinned_until: pinned_until ?? null,
       spotify_track_url: spotify_track_id
@@ -111,7 +116,7 @@ const EditSpacePostForm: FC<EditSpacePostFormProps> = ({
   const { initialize } = form;
   useDidUpdate(() => {
     initialize(initialValues);
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   return (
     <Box component="form" onSubmit={form.submit} {...otherProps}>

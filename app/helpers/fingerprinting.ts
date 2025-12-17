@@ -18,7 +18,7 @@ export const preloadFingerprintJs = (): void => {
 
 export const fingerprintJs = (): Promise<GetResult> => {
   fingerprintJsAgent ??= loadFingerprintJs();
-  return fingerprintJsAgent.then(agent => agent.get());
+  return fingerprintJsAgent.then((agent) => agent.get());
 };
 
 export const fingerprintDevice = async (): Promise<FingerprintingResult> => {

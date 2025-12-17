@@ -1,4 +1,7 @@
-import { type MenuProps } from "@mantine/core";
+import { Menu, type MenuProps } from "@mantine/core";
+import { type FC, type ReactNode } from "react";
+
+import { AlertIcon } from "~/helpers/icons";
 
 import classes from "./DeleteConfirmation.module.css";
 

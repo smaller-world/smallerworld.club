@@ -1,6 +1,15 @@
-import { getRadius, Image, type ImageProps } from "@mantine/core";
+import {
+  Box,
+  type BoxProps,
+  getRadius,
+  Image,
+  type ImageProps,
+} from "@mantine/core";
+import { useElementSize } from "@mantine/hooks";
+import { clsx } from "clsx";
 import { motion, useMotionValue, useTransform } from "motion/react";
-import { type ComponentProps } from "react";
+import { type ComponentProps, type FC } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { clampedImageDimensions } from "~/helpers/images";
 import { type Image as ImageType } from "~/types";
@@ -38,7 +47,7 @@ const ImageStack: FC<ImageStackProps> = ({
   );
   const maxClampedImageHeight = useMemo(() => {
     let h = 0;
-    images.forEach(image => {
+    images.forEach((image) => {
       const { height: clampedHeight } = clampedImageDimensions(
         image,
         maxWidth,
@@ -54,7 +63,7 @@ const ImageStack: FC<ImageStackProps> = ({
     <>
       <Box
         ref={containerRef}
-        className={cn("ImageStack", classes.container, className)}
+        className={clsx("ImageStack", classes.container, className)}
         h={maxClampedImageHeight + (images.length - 1) * 8}
         {...otherProps}
       >
@@ -71,7 +80,7 @@ const ImageStack: FC<ImageStackProps> = ({
                 images.length > 1 ? (IMAGE_ROTATIONS[originalIndex] ?? 0) : 0
               }
               onDragToFlipBoundary={() => {
-                setIndex(prevIndex => (prevIndex + 1) % images.length);
+                setIndex((prevIndex) => (prevIndex + 1) % images.length);
               }}
               onClick={() => {
                 setLightboxOpened(true);
@@ -167,7 +176,7 @@ const StackImage: FC<StackImageProps> = ({
           y.set(0);
         }
       }}
-      onClick={event => {
+      onClick={(event) => {
         if (!draggingRef.current) {
           onClick?.(event);
         }

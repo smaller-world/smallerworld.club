@@ -2,6 +2,7 @@ import {
   Button as MantineButton,
   type ButtonProps as MantineButtonProps,
   getRadius,
+  useMantineTheme,
   useProps,
 } from "@mantine/core";
 import {
@@ -15,6 +16,7 @@ import {
   Link as _Link,
   Text as _Text,
 } from "@react-email/components";
+import { type ComponentPropsWithoutRef, forwardRef, useMemo } from "react";
 
 export interface ButtonProps
   extends _ButtonProps,

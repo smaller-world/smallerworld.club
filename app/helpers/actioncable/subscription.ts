@@ -5,6 +5,7 @@ import {
   useShallowEffect,
 } from "@mantine/hooks";
 import { type Subscription } from "@rails/actioncable";
+import { get } from "lodash-es";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { type SWRConfiguration } from "swr";
@@ -61,7 +62,7 @@ export const useSubscription = <
     if (!isFirstRender) {
       setKey(computeKey(channel, params));
     }
-  }, [channel, params]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [channel, params]);
 
   // == SWR
   const { online } = useNetwork();
@@ -114,17 +115,17 @@ export const useSubscription = <
     if (subscription) {
       onConnected?.();
     }
-  }, [subscription]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [subscription]);
   useEffect(() => {
     if (data) {
       onData?.(data);
     }
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data]);
   useEffect(() => {
     if (error) {
       onError?.(error);
     }
-  }, [error]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [error]);
   return { subscription, data, error };
 };
 

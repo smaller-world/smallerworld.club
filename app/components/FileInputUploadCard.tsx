@@ -1,7 +1,17 @@
-import { type CardProps } from "@mantine/core";
-import { Progress, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Card,
+  type CardProps,
+  Group,
+  Progress,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { type Blob } from "@rails/activestorage";
+import { type FC } from "react";
 
+import { CancelIcon, SuccessIcon } from "~/helpers/icons";
 import { useUpload } from "~/helpers/upload";
 
 export interface FileInputUploadCardProps extends CardProps {

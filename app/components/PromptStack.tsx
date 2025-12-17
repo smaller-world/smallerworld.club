@@ -1,5 +1,8 @@
-import { type CardProps, Text } from "@mantine/core";
+import { Box, type BoxProps, Card, type CardProps, Text } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
 import { motion, useMotionValue, useTransform } from "motion/react";
+import { type FC, useMemo, useRef, useState } from "react";
 
 import { type Prompt, type PromptDeck } from "~/types";
 
@@ -35,11 +38,11 @@ const PromptStack: FC<PromptStackProps> = ({
   );
   useDidUpdate(() => {
     onIndexChange?.(index);
-  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [index]);
 
   return (
     <Box
-      className={cn("PromptStack", classes.container, className)}
+      className={clsx("PromptStack", classes.container, className)}
       h={height + (prompts.length - 1) * 8}
       {...otherProps}
     >
@@ -55,7 +58,7 @@ const PromptStack: FC<PromptStackProps> = ({
               prompts.length > 1 ? (CARD_ROTATIONS[originalIndex] ?? 0) : 0
             }
             onDragToFlipBoundary={() => {
-              setIndex(prevIndex => (prevIndex + 1) % prompts.length);
+              setIndex((prevIndex) => (prevIndex + 1) % prompts.length);
             }}
           />
         );

@@ -8,11 +8,11 @@ class NotificationsController < ApplicationController
 
   # == Actions ==
 
-  # POST /notifications/mark_delivered?delivery_token=...
+  # POST /notifications/mark_delivered
   def mark_delivered
     respond_to do |format|
       format.json do
-        delivery_token = params.fetch(:delivery_token)
+        delivery_token = params.expect(:delivery_token)
         if (notification = Notification.find_by_delivery_token(delivery_token))
           notification.mark_as_delivered!
         end

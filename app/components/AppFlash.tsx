@@ -1,4 +1,9 @@
 import { useWindowEvent } from "@mantine/hooks";
+import { pick } from "lodash-es";
+import { type FC, useEffect } from "react";
+import { toast } from "sonner";
+
+import { usePageProps } from "~/helpers/inertia";
 
 const AppFlash: FC = () => {
   // Clear flash messages when going back in history

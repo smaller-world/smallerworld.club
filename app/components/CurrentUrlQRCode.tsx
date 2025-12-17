@@ -1,3 +1,5 @@
+import { hrefToUrl } from "@inertiajs/core";
+import { type FC, useEffect, useState } from "react";
 import { type QRCodeProps } from "react-qr-code";
 
 import { shortlinkIfAvailable } from "~/helpers/shortlinks";

@@ -1,8 +1,18 @@
+import { useDidUpdate } from "@mantine/hooks";
+import { pick } from "lodash-es";
+import { type FC, type PropsWithChildren, useEffect, useState } from "react";
+import { toast } from "sonner";
+import invariant from "tiny-invariant";
+
+import { useCurrentFriend } from "~/helpers/authentication";
 import { detectBrowser, isIos } from "~/helpers/browsers";
 import {
   fingerprintDevice,
   type FingerprintingResult,
 } from "~/helpers/fingerprinting";
+import routes from "~/helpers/routes";
+import { fetchRoute } from "~/helpers/routes/fetch";
+import { mutateRoute, useRouteSWR } from "~/helpers/routes/swr";
 import { type ServiceWorkerMetadata } from "~/helpers/serviceWorker";
 import { getServiceWorkerMetadata } from "~/helpers/serviceWorker/client";
 import {
@@ -28,11 +38,11 @@ const WebPushProvider: FC<WebPushProviderProps> = ({ children }) => {
     }
     console.info("Loading current push subscription...");
     void getPushSubscription().then(
-      pushSubscription => {
+      (pushSubscription) => {
         setPushSubscription(pushSubscription);
         console.info("Current push subscription", pushSubscription);
       },
-      reason => {
+      (reason) => {
         setPushSubscription(null);
         console.error("Failed to load current push subscription", reason);
         if (reason instanceof Error) {
@@ -104,7 +114,7 @@ const useWebPushPermission = (): NotificationPermission | null | undefined => {
       };
       void navigator.permissions
         .query({ name: "notifications" })
-        .then(permission => {
+        .then((permission) => {
           permissionRef.current = permission;
           permission.addEventListener("change", handlePermissionChange);
         });
@@ -127,7 +137,9 @@ const getPushManager = async (): Promise<PushManager> => {
 };
 
 const getPushSubscription = (): Promise<PushSubscription | null | undefined> =>
-  getPushManager().then(pushManager => pushManager?.getSubscription() ?? null);
+  getPushManager().then(
+    (pushManager) => pushManager?.getSubscription() ?? null,
+  );
 
 interface LookupPushRegistrationOptions {
   pushSubscription: PushSubscription | undefined | null;
@@ -230,7 +242,7 @@ const useWebPushSubscribe = ({
           console.debug("Creating new push subscription...");
           pushSubscription = await pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: createApplicationServerKey(publicKey),
+            applicationServerKey: createApplicationServerKey(publicKey) as any,
           });
           console.debug("New push subscription", { pushSubscription });
         }
@@ -272,7 +284,7 @@ const useWebPushSubscribe = ({
       });
     } else {
       return Notification.requestPermission()
-        .then(async permission => {
+        .then(async (permission) => {
           if (permission !== "granted") {
             const error = PUSH_PERMISSION_NOT_GRANTED;
             setSubscribeError(error);
@@ -401,7 +413,7 @@ const useWebPushUnsubscribe = ({
 };
 
 const createApplicationServerKey = (publicKey: string): Uint8Array =>
-  Uint8Array.from(atob(publicKey), element => {
+  Uint8Array.from(atob(publicKey), (element) => {
     const value = element.codePointAt(0);
     invariant(typeof value === "number", "Failed to parse public key");
     return value;

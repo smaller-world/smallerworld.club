@@ -1,10 +1,19 @@
-import { getRadius, Image, type MantineRadius, Text } from "@mantine/core";
-import { type ReactNode } from "react";
-
-import backgroundSrc from "~/assets/images/homescreen-preview-background.jpg";
+import {
+  Box,
+  type BoxProps,
+  getRadius,
+  Image,
+  LoadingOverlay,
+  type MantineRadius,
+  Text,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, type ReactNode } from "react";
 
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
 import { type WorldProfile } from "~/types";
+
+import backgroundSrc from "~/assets/images/homescreen-preview-background.jpg";
 
 import classes from "./WorldHomescreenPreview.module.css";
 
@@ -24,7 +33,7 @@ const WorldHomescreenPreview: FC<WorldHomescreenPreviewProps> = ({
 }) => {
   return (
     <Box
-      className={cn("HomescreenPreview", classes.container)}
+      className={clsx("HomescreenPreview", classes.container)}
       pos="relative"
       style={{
         "--hp-radius": getRadius(radius),

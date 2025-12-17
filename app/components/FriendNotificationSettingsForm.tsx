@@ -1,5 +1,17 @@
-import { Chip, Input } from "@mantine/core";
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Chip,
+  Group,
+  Input,
+  rem,
+  Stack,
+  Transition,
+} from "@mantine/core";
 import { pluralize } from "inflection";
+import { type FC } from "react";
+import { toast } from "sonner";
 
 import { type FormHelper } from "~/helpers/form";
 import {
@@ -7,6 +19,7 @@ import {
   type FriendNotificationSettingsFormValues,
   useFriendNotificationSettingsForm,
 } from "~/helpers/friends";
+import { SaveIcon } from "~/helpers/icons";
 import {
   POST_TYPE_TO_ICON,
   POST_TYPE_TO_LABEL,
@@ -37,7 +50,7 @@ const FriendNotificationSettingsForm: FC<
       <Stack gap="xs">
         <FriendNotificationSettingsFormInputs {...{ form }} />
         <Transition transition="fade" mounted={isDirty()}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Button
               type="submit"
               variant="filled"
@@ -90,7 +103,7 @@ export const FriendNotificationSettingsFormInputs: FC<
     >
       <Chip.Group multiple {...getInputProps("subscribed_post_types")}>
         <Group justify="center" gap={6} wrap="wrap" maw={340} mx="auto">
-          {SELECTABLE_POST_TYPES.map(postType => (
+          {SELECTABLE_POST_TYPES.map((postType) => (
             <Chip key={postType} value={postType} className={classes.chip}>
               <Box
                 component={POST_TYPE_TO_ICON[postType]}

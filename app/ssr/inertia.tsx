@@ -38,12 +38,12 @@ const emails = parsePageImports(emailImports);
 const port = process.env.INERTIA_PORT
   ? parseInt(process.env.INERTIA_PORT)
   : 13714;
-createServer(async page => {
+createServer(async (page) => {
   const type = resolvePageType(page.component);
   return createInertiaApp({
     page,
     render: renderToString,
-    resolve: name => {
+    resolve: (name) => {
       switch (type) {
         case PageType.Page: {
           const page = pages[name];

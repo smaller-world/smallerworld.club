@@ -6,7 +6,14 @@
  */
 
 import { useWindowEvent } from "@mantine/hooks";
-import { type ComponentPropsWithoutRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import Neko, { type NekoProps } from "~/components/Neko";
 

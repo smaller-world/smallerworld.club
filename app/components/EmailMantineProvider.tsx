@@ -1,4 +1,5 @@
 import { MantineProvider } from "@mantine/core";
+import { type FC, type PropsWithChildren } from "react";
 
 import { useCreateTheme } from "~/helpers/mantine";
 

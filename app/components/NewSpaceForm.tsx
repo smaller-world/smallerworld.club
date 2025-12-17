@@ -1,4 +1,20 @@
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Checkbox,
+  Stack,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC } from "react";
+
 import ImageInput from "~/components/ImageInput";
+import { useForm } from "~/helpers/form";
+import { SpaceIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
 import { type Space, type Upload } from "~/types";
 
@@ -43,7 +59,7 @@ const NewSpaceForm: FC<NewSpaceFormProps> = ({
     <Box
       component="form"
       onSubmit={submit}
-      className={cn("NewSpaceForm", className)}
+      className={clsx("NewSpaceForm", className)}
       {...otherProps}
     >
       <Stack gap="md">

@@ -1,9 +1,17 @@
-import { Image } from "@mantine/core";
+import { type BoxProps, Button, Image, Skeleton, Stack } from "@mantine/core";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
+import { type FC } from "react";
 
+import { PWAScopedLink } from "~/components";
+import { useQueryParams } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
 import { useUserUniversePosts } from "~/helpers/userUniverse";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
 import { type World } from "~/types";
 
+import EmptyCard from "./EmptyCard";
 import LoadMoreButton from "./LoadMoreButton";
 import PostCard from "./PostCard";
 import PublicPostCardActions from "./PublicPostCardActions";
@@ -29,13 +37,13 @@ const UserUniversePageFeed: FC<UserUniversePageFeedProps> = ({
   const { posts, hasMorePosts, setSize, isValidating } = useUserUniversePosts();
 
   return (
-    <Stack className={cn("UniversePageFeed", className)} {...otherProps}>
+    <Stack className={clsx("UniversePageFeed", className)} {...otherProps}>
       {posts ? (
         isEmpty(posts) ? (
           <EmptyCard itemLabel="posts" />
         ) : (
           <>
-            {posts.map(post => (
+            {posts.map((post) => (
               <Stack key={post.id} gap={6}>
                 {!!post.world && (
                   <Button
@@ -104,7 +112,7 @@ const UserUniversePageFeed: FC<UserUniversePageFeedProps> = ({
                 loading={isValidating}
                 style={{ alignSelf: "center" }}
                 onVisible={() => {
-                  void setSize(size => size + 1);
+                  void setSize((size) => size + 1);
                 }}
               />
             )}

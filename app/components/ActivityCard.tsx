@@ -1,9 +1,25 @@
-import { AspectRatio, type ButtonProps, Modal, Text } from "@mantine/core";
+import {
+  AspectRatio,
+  Badge,
+  Box,
+  type BoxProps,
+  Button,
+  type ButtonProps,
+  Card,
+  Modal,
+  Space,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, type ReactNode, useState } from "react";
+
+import { AddIcon, SuccessIcon } from "~/helpers/icons";
+import { useVaulPortalTarget } from "~/helpers/vaul";
+import { type Activity, type ActivityTemplate } from "~/types/generated";
 
 import AtIcon from "~icons/heroicons/at-symbol-20-solid";
 import SetupIcon from "~icons/heroicons/cog-6-tooth-20-solid";
-
-import { type Activity, type ActivityTemplate } from "~/types/generated";
 
 import CreateActivityForm from "./CreateActivityForm";
 
@@ -40,7 +56,7 @@ const ActivityCard: FC<ActivityCardProps> = ({
   return (
     <>
       <Stack
-        className={cn("ActivityCard", className)}
+        className={clsx("ActivityCard", className)}
         align="center"
         gap="sm"
         {...otherProps}
@@ -123,7 +139,7 @@ const ActivityCard: FC<ActivityCardProps> = ({
       >
         <CreateActivityForm
           template={activityOrTemplate}
-          onCreated={activity => {
+          onCreated={(activity) => {
             setActivity(activity);
             setDrawerOpened(false);
             onChange(activity);

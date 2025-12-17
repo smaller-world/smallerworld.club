@@ -1,6 +1,9 @@
 import { confetti as _confetti } from "@tsparticles/confetti";
-import { type ParticlesOptions, tsParticles } from "@tsparticles/engine";
-import { type RecursivePartial } from "@tsparticles/engine";
+import {
+  type ParticlesOptions,
+  type RecursivePartial,
+  tsParticles,
+} from "@tsparticles/engine";
 import { type IConfettiOptions } from "node_modules/@tsparticles/confetti/types/IConfettiOptions";
 
 export const CONFETTI_CANVAS_ID = "confetti-canvas";

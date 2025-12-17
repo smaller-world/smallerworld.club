@@ -1,18 +1,36 @@
-import { type BadgeProps, Image, Text } from "@mantine/core";
+import { hrefToUrl } from "@inertiajs/core";
+import { router } from "@inertiajs/react";
+import {
+  Badge,
+  type BadgeProps,
+  Box,
+  type BoxProps,
+  Button,
+  Divider,
+  Image,
+  rem,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { closeModal } from "@mantine/modals";
+import { type FC, type PropsWithChildren } from "react";
 
-import QRIcon from "~icons/heroicons/qr-code-20-solid";
-
-import addToHomeScreenStepSrc from "~/assets/images/add-to-home-screen-step.jpeg";
-import openShareMenuChromeStepSrc from "~/assets/images/open-share-menu-chrome-step.png";
-import openShareMenuSafariStepSrc from "~/assets/images/open-share-menu-safari-step.jpeg";
-
+import { useCurrentUser } from "~/helpers/authentication";
 import {
   isDesktop,
   isIos,
   isMobileChrome,
   useBrowserDetection,
 } from "~/helpers/browsers";
+import { InstallIcon } from "~/helpers/icons";
+import { usePWA } from "~/helpers/pwa";
 import { type WorldProfile } from "~/types";
+
+import QRIcon from "~icons/heroicons/qr-code-20-solid";
+
+import addToHomeScreenStepSrc from "~/assets/images/add-to-home-screen-step.jpeg";
+import openShareMenuChromeStepSrc from "~/assets/images/open-share-menu-chrome-step.png";
+import openShareMenuSafariStepSrc from "~/assets/images/open-share-menu-safari-step.jpeg";
 
 import ContactLink from "./ContactLink";
 import CurrentUrlQRCode from "./CurrentUrlQRCode";

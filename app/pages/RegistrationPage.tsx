@@ -1,18 +1,37 @@
-import { InputBase, InputWrapper, Text } from "@mantine/core";
+import { Link } from "@inertiajs/react";
+import {
+  Anchor,
+  Button,
+  Card,
+  Center,
+  Checkbox,
+  InputBase,
+  InputWrapper,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { hasLength } from "@mantine/form";
+import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
-
-import ProfileIcon from "~icons/heroicons/user-circle-20-solid";
 
 import AppLayout from "~/components/AppLayout";
 import ImageInput from "~/components/ImageInput";
 import WorldHomescreenPreview from "~/components/WorldHomescreenPreview";
 import WorldThemeRadioGroup from "~/components/WorldThemeRadioGroup";
 import { CANONICAL_DOMAIN } from "~/helpers/app";
+import { useCurrentUser } from "~/helpers/authentication";
+import { useForm } from "~/helpers/form";
+import { type PageComponent, usePage } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
 import { currentTimeZone } from "~/helpers/time";
+import { queryParamsFromPath, withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { isWorldTheme } from "~/helpers/worldThemes";
-import { type Image, type Upload } from "~/types";
+import { isWorldTheme, useWorldTheme } from "~/helpers/worldThemes";
+import { type Image, type SharedPageProps, type Upload } from "~/types";
+
+import ProfileIcon from "~icons/heroicons/user-circle-20-solid";
 
 import classes from "./RegistrationPage.module.css";
 
@@ -108,7 +127,7 @@ const RegistrationPage: PageComponent<RegistrationPageProps> = () => {
         .replace(/[^a-z0-9_]/g, "_");
       setFieldValue("prefixed_handle", "@" + handle);
     }
-  }, [values.name]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [values.name]);
 
   // == World theme preview
   useWorldTheme(isWorldTheme(values.theme) ? values.theme : null);
@@ -153,13 +172,13 @@ const RegistrationPage: PageComponent<RegistrationPageProps> = () => {
                 {...getInputProps("prefixed_handle")}
                 component={IMaskInput}
                 mask={/^@[a-z0-9_]*$/}
-                prepare={value => {
+                prepare={(value) => {
                   if (value && !value.startsWith("@")) {
                     return "@" + value;
                   }
                   return value;
                 }}
-                onAccept={value => {
+                onAccept={(value) => {
                   setFieldValue("prefixed_handle", value);
                 }}
                 onInput={({ currentTarget }) => {
@@ -168,7 +187,7 @@ const RegistrationPage: PageComponent<RegistrationPageProps> = () => {
                 label="your handle"
                 description="numbers, letters, and underscores only"
                 placeholder="@bonobo"
-                inputContainer={children => (
+                inputContainer={(children) => (
                   <Stack gap={2}>
                     {children}
                     {!!values.prefixed_handle && (
@@ -259,7 +278,7 @@ const RegistrationPage: PageComponent<RegistrationPageProps> = () => {
   );
 };
 
-RegistrationPage.layout = page => (
+RegistrationPage.layout = (page) => (
   <AppLayout title="sign up">
     <Center style={{ flexGrow: 1 }}>{page}</Center>
   </AppLayout>

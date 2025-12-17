@@ -1,9 +1,26 @@
-import { map } from "lodash-es";
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Button,
+  Group,
+  Stack,
+  TextInput,
+  Transition,
+} from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { keyBy, map } from "lodash-es";
+import { type FC, useMemo } from "react";
 
-import QRCodeIcon from "~icons/heroicons/qr-code-20-solid";
-
+import { useForm } from "~/helpers/form";
+import { EmojiIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 import { useUserWorldActivities } from "~/helpers/userWorld";
 import { type Activity, type Invitation } from "~/types";
+
+import QRCodeIcon from "~icons/heroicons/qr-code-20-solid";
 
 import EmojiPopover from "./EmojiPopover";
 
@@ -76,7 +93,7 @@ const EditInvitationForm: FC<EditInvitationFormProps> = ({
     <Box
       component="form"
       onSubmit={submit}
-      className={cn("EditInvitationForm", className)}
+      className={clsx("EditInvitationForm", className)}
       {...otherProps}
     >
       <Stack gap="xs">
@@ -154,7 +171,7 @@ const EditInvitationForm: FC<EditInvitationFormProps> = ({
           </Stack>
         </Group>
         <Transition transition="pop" mounted={!invitation || isDirty()}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Button
               type="submit"
               variant="filled"

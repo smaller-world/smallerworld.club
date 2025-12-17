@@ -1,10 +1,14 @@
-import { /* Loader, */ Text } from "@mantine/core";
-
-import SmileIcon from "~icons/heroicons/face-smile";
+import { Link } from "@inertiajs/react";
+import { Box, Button, Card, Stack, Text } from "@mantine/core";
 
 import AppLayout from "~/components/AppLayout";
-// import ContactLink from "~/components/ContactLink";
-import { type User } from "~/types";
+import { BackIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { withTrailingSlash } from "~/helpers/utils";
+import { type SharedPageProps, type User } from "~/types";
+
+import SmileIcon from "~icons/heroicons/face-smile";
 
 import classes from "./PaymentSuccessPage.module.css";
 
@@ -13,13 +17,6 @@ export interface PaymentSuccessPageProps extends SharedPageProps {
 }
 
 const PaymentSuccessPage: PageComponent<PaymentSuccessPageProps> = () => {
-  // const { data, error } = useRouteSWR<{
-  //   membershipTier: "supporter" | "believer" | null;
-  // }>(routes.memberships.activate, {
-  //   descriptor: "activate membership",
-  // });
-  // const { membershipTier } = data ?? {};
-
   return (
     <Stack gap="lg" align="center">
       <Card withBorder>
@@ -81,7 +78,7 @@ const PaymentSuccessPage: PageComponent<PaymentSuccessPageProps> = () => {
   );
 };
 
-PaymentSuccessPage.layout = page => (
+PaymentSuccessPage.layout = (page) => (
   <AppLayout<PaymentSuccessPageProps>
     title="thank you for supporting smaller world <3"
     withContainer

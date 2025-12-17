@@ -1,4 +1,7 @@
 import { Popover, type PopoverProps } from "@mantine/core";
+import { type FC, type ReactNode, useCallback, useState } from "react";
+
+import { useVaulPortalTarget } from "~/helpers/vaul";
 
 import EmojiPicker, { type EmojiPickerProps } from "./EmojiPicker";
 

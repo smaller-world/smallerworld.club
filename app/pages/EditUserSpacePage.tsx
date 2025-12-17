@@ -1,6 +1,11 @@
+import { router } from "@inertiajs/react";
+
 import AppLayout from "~/components/AppLayout";
 import EditSpaceForm from "~/components/EditSpaceForm";
-import { type Space, type World } from "~/types";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import { type SharedPageProps, type Space, type World } from "~/types";
 
 export interface EditSpacePageProps extends SharedPageProps {
   space: Space;
@@ -13,7 +18,7 @@ const EditSpacePage: PageComponent<EditSpacePageProps> = ({ space }) => {
   return (
     <EditSpaceForm
       {...{ space }}
-      onSpaceUpdated={space => {
+      onSpaceUpdated={(space) => {
         router.visit(routes.spaces.show.path({ id: space.friendly_id }), {
           replace: true,
         });
@@ -22,7 +27,7 @@ const EditSpacePage: PageComponent<EditSpacePageProps> = ({ space }) => {
   );
 };
 
-EditSpacePage.layout = page => (
+EditSpacePage.layout = (page) => (
   <AppLayout<EditSpacePageProps>
     title="edit space"
     withContainer

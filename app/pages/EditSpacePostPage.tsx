@@ -1,7 +1,12 @@
+import { router } from "@inertiajs/react";
+
 import AppLayout from "~/components/AppLayout";
 import EditSpacePostForm from "~/components/EditSpacePostForm";
+import { type PageComponent } from "~/helpers/inertia";
 import { POST_TYPE_TO_LABEL } from "~/helpers/posts";
-import { type Space, type SpacePost } from "~/types";
+import routes from "~/helpers/routes";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import { type SharedPageProps, type Space, type SpacePost } from "~/types";
 
 export interface EditSpacePostPageProps extends SharedPageProps {
   space: Space;
@@ -27,7 +32,7 @@ const EditSpacePostPage: PageComponent<EditSpacePostPageProps> = ({
   );
 };
 
-EditSpacePostPage.layout = page => (
+EditSpacePostPage.layout = (page) => (
   <AppLayout<EditSpacePostPageProps>
     title={({ post }) => `edit ${POST_TYPE_TO_LABEL[post.type]}`}
     withContainer

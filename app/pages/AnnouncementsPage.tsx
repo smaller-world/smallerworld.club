@@ -1,8 +1,15 @@
+import { Anchor, Badge, Card, Group, Stack, Title } from "@mantine/core";
 import Linkify from "linkify-react";
+import { isEmpty } from "lodash-es";
+import { DateTime } from "luxon";
 
+import { Time } from "~/components";
 import AnnouncementForm from "~/components/AnnouncementForm";
 import AppLayout from "~/components/AppLayout";
-import { type Announcement } from "~/types";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
+import { type Announcement, type SharedPageProps } from "~/types";
 
 export interface AnnouncementsPageProps extends SharedPageProps {}
 
@@ -22,7 +29,7 @@ const AnnouncementsPage: PageComponent<AnnouncementsPageProps> = () => {
           <Title order={2} size="h3" ta="center">
             recent announcements
           </Title>
-          {recentAnnouncements.map(announcement => (
+          {recentAnnouncements.map((announcement) => (
             <Card withBorder>
               <Card.Section inheritPadding withBorder py="sm">
                 <Group justify="space-between">
@@ -74,7 +81,7 @@ const AnnouncementsPage: PageComponent<AnnouncementsPageProps> = () => {
   );
 };
 
-AnnouncementsPage.layout = page => (
+AnnouncementsPage.layout = (page) => (
   <AppLayout<AnnouncementsPageProps>
     title="announcements"
     withContainer

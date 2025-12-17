@@ -1,9 +1,24 @@
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Button,
+  Group,
+  Stack,
+  TextInput,
+} from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { type FC, useMemo } from "react";
+
+import { useForm } from "~/helpers/form";
+import { EmojiIcon, SaveIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 import { type UserWorldFriendProfile } from "~/types";
 
 import EmojiPopover from "./EmojiPopover";
 
 import classes from "./EditFriendForm.module.css";
-
 export interface EditFriendFormProps extends BoxProps {
   friend: UserWorldFriendProfile;
   onFriendUpdated?: (friend: UserWorldFriendProfile) => void;
@@ -47,7 +62,7 @@ const EditFriendForm: FC<EditFriendFormProps> = ({
   useDidUpdate(() => {
     setInitialValues(initialValues);
     reset();
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   return (
     <Box component="form" onSubmit={submit} {...otherProps}>

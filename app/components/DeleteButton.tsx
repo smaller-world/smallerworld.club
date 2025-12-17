@@ -1,4 +1,7 @@
-import { type ButtonProps } from "@mantine/core";
+import { Button, type ButtonProps } from "@mantine/core";
+import { type ComponentPropsWithoutRef, type FC } from "react";
+
+import { DeleteIcon } from "~/helpers/icons";
 
 import DeleteConfirmation, {
   type DeleteConfirmationProps,

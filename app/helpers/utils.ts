@@ -27,12 +27,9 @@ export const useNormalizedUrl = (
   deps: DependencyList,
 ): string | undefined => {
   const [url, setUrl] = useState<string>();
-  useEffect(
-    () => {
-      setUrl(normalizeUrl(resolveUrlOrPath()));
-    },
-    deps, // eslint-disable-line react-hooks/exhaustive-deps
-  );
+  useEffect(() => {
+    setUrl(normalizeUrl(resolveUrlOrPath()));
+  }, deps);
   return url;
 };
 

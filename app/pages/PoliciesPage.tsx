@@ -1,7 +1,26 @@
-import { Text } from "@mantine/core";
+import {
+  Anchor,
+  Badge,
+  Box,
+  Button,
+  Card,
+  Center,
+  Divider,
+  Group,
+  rem,
+  Stack,
+  Text,
+  Title,
+  Transition,
+} from "@mantine/core";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 
 import AppLayout from "~/components/AppLayout";
 import { useContact } from "~/helpers/contact";
+import { BackIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import { queryParamsFromPath } from "~/helpers/utils";
+import { type SharedPageProps } from "~/types";
 
 import classes from "./PoliciesPage.module.css";
 
@@ -19,7 +38,7 @@ const PolicyPage: PageComponent<PolicyPageProps> = () => {
   return (
     <Stack gap="lg">
       <Transition transition="pop" mounted={!!prevPageName}>
-        {transitionStyle => (
+        {(transitionStyle) => (
           <Button
             leftSection={<BackIcon />}
             onClick={() => {
@@ -302,7 +321,7 @@ const PolicyPage: PageComponent<PolicyPageProps> = () => {
   );
 };
 
-PolicyPage.layout = page => (
+PolicyPage.layout = (page) => (
   <AppLayout<PolicyPageProps>
     withContainer
     containerProps={{ className: classes.container }}

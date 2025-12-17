@@ -1,6 +1,13 @@
-import { type ButtonProps } from "@mantine/core";
+import { Button, type ButtonProps } from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, useRef } from "react";
+import { toast } from "sonner";
 
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
+import { EmojiIcon } from "~/helpers/icons";
 import { confetti, particlePositionFor } from "~/helpers/particles";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
 import {
   type Post,
   type PostReaction,
@@ -49,7 +56,7 @@ const NewPostReactionButton: FC<NewPostReactionButtonProps> = ({
         { post_id: post.id },
         undefined,
         {
-          optimisticData: currentData => {
+          optimisticData: (currentData) => {
             const { reactions = [] } = currentData ?? {};
             return { reactions: [...reactions, reaction] };
           },
@@ -98,7 +105,7 @@ const NewPostReactionButton: FC<NewPostReactionButtonProps> = ({
       {({ open, opened }) => (
         <Button
           ref={buttonRef}
-          className={cn("NewPostReactionButton", classes.button, className)}
+          className={clsx("NewPostReactionButton", classes.button, className)}
           variant="subtle"
           size="compact-xs"
           leftSection={<EmojiIcon />}

@@ -1,5 +1,6 @@
+import { type BoxProps, Button } from "@mantine/core";
 import { useInViewport } from "@mantine/hooks";
-import { type PropsWithChildren } from "react";
+import { type FC, type PropsWithChildren, useEffect } from "react";
 
 export interface LoadMoreButtonProps extends PropsWithChildren, BoxProps {
   loading: boolean;
@@ -16,7 +17,7 @@ const LoadMoreButton: FC<LoadMoreButtonProps> = ({
     if (inViewport) {
       onVisible();
     }
-  }, [inViewport]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inViewport]);
   return (
     <Button {...{ ref }} {...otherProps}>
       {children ?? "load more"}

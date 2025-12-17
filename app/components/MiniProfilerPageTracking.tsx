@@ -1,3 +1,6 @@
+import { router } from "@inertiajs/react";
+import { type FC, useEffect } from "react";
+
 interface MiniProfiler {
   pageTransition: () => void;
 }

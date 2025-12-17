@@ -1,8 +1,10 @@
-import { type ButtonProps, Text } from "@mantine/core";
-
-import FixIcon from "~icons/heroicons/wrench-screwdriver-20-solid";
+import { Button, type ButtonProps, Stack, Text } from "@mantine/core";
+import { openModal } from "@mantine/modals";
+import { type FC } from "react";
 
 import { useSendTestNotification, useWebPush } from "~/helpers/webPush";
+
+import FixIcon from "~icons/heroicons/wrench-screwdriver-20-solid";
 
 import ContactLink from "./ContactLink";
 
@@ -32,8 +34,7 @@ export const openNotificationsTroubleshootingModal = (): void => {
   });
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-const ResetPushSubscriptionButton: FC<ButtonProps> = props => {
+const ResetPushSubscriptionButton: FC<ButtonProps> = (props) => {
   const { subscribe, loading } = useWebPush();
   const {
     send: sendTestNotification,

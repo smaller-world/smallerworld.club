@@ -1,3 +1,6 @@
+import { type FC } from "react";
+
+import routes from "~/helpers/routes";
 import { useShortlink } from "~/helpers/shortlinks";
 import { type Invitation } from "~/types";
 

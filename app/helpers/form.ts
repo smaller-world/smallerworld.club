@@ -57,7 +57,7 @@ export const useFieldsFilled = <Values extends {}>(
   const checkFields = useCallback(
     (values: Values, fields: LooseKeys<Values>[]) => {
       const fieldsToCheck = isEmpty(fields) ? Object.keys(values) : fields;
-      return fieldsToCheck.every(field => isFilledValue(get(values, field)));
+      return fieldsToCheck.every((field) => isFilledValue(get(values, field)));
     },
     [],
   );
@@ -182,7 +182,7 @@ export const useForm = <
         data: NO_BODY_METHODS.includes(method) ? undefined : transformedValues,
       })
         .then(
-          data => {
+          (data) => {
             setData(data);
             onSuccess?.(data, form);
             return data;
@@ -235,7 +235,7 @@ export const useForm = <
           form.setSubmitting(false);
         });
     },
-    errors => {
+    (errors) => {
       const formWithErrors = { ...form, errors };
       onError?.(formWithErrors);
       showFormErrorsAlert(formWithErrors, `couldn't ${descriptor}`);

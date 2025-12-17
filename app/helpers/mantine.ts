@@ -2,13 +2,18 @@ import {
   ActionIcon,
   Alert,
   AppShell,
+  Badge,
   Button,
+  Card,
+  Checkbox,
   Chip,
   CloseButton,
   createTheme as createMantineTheme,
   DEFAULT_THEME,
   type DefaultMantineColor,
+  Divider,
   Drawer,
+  Group,
   HoverCard,
   InputBase,
   InputWrapper,
@@ -26,10 +31,14 @@ import {
   PinInput,
   Popover,
   ScrollArea,
+  Skeleton,
   Table,
   Text,
+  Textarea,
   TextInput,
   ThemeIcon,
+  Title,
+  Tooltip,
   Typography,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -42,6 +51,7 @@ import { useEffect, useMemo } from "react";
 import { type Rect, useSafeViewportRect } from "./safeArea";
 
 import classes from "./mantine.module.css";
+
 import "./mantine.css";
 
 export type CustomColors = "accent" | "rose" | DefaultMantineColor;
@@ -375,5 +385,5 @@ export const useAutoClearColorScheme = () => {
   const { clearColorScheme } = useMantineColorScheme();
   useEffect(() => {
     clearColorScheme();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 };

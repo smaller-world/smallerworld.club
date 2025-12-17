@@ -1,5 +1,20 @@
-import { InputWrapper, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Button,
+  InputWrapper,
+  Stack,
+  Text,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
+import { type FC } from "react";
+import { Group } from "react-konva";
 
+import { useFieldsFilled, useForm } from "~/helpers/form";
+import { EmojiIcon, SaveIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
 import { type Activity, type ActivityTemplate } from "~/types";
 
 import EmojiPopover from "./EmojiPopover";
@@ -35,7 +50,7 @@ const CreateActivityForm: FC<CreateActivityFormProps> = ({
     action: routes.userWorldActivities.create,
     descriptor: "set up activity",
     initialValues,
-    transformValues: values => ({
+    transformValues: (values) => ({
       activity: {
         template_id: template.id,
         ...values,

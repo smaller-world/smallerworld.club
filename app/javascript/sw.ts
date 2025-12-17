@@ -10,17 +10,14 @@ import {
   get as getStoreValue,
   set as setStoreValue,
 } from "idb-keyval";
-import { isEmpty, pick } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import invariant from "tiny-invariant";
 import { v4 as uuid } from "uuid";
-// import { BroadcastUpdatePlugin } from "workbox-broadcast-update";
 import { enable as enableNavigationPreload } from "workbox-navigation-preload";
 import { PrecacheController } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { CacheFirst /*, StaleWhileRevalidate */ } from "workbox-strategies";
+import { CacheFirst } from "workbox-strategies";
 
-import { DEFAULT_NOTIFICATION_ICON_URL } from "~/helpers/notifications";
-import routes, { setupRoutes } from "~/helpers/routes";
 import { beforeSend, DENY_URLS } from "~/helpers/sentry/filtering";
 import {
   type ServiceWorkerCommandMessage,
@@ -31,18 +28,19 @@ import { type Notification, type NotificationMessage } from "~/types";
 // == Type declarations
 declare const self: ServiceWorkerGlobalScope;
 
-// == Constants
-const MANIFEST = self.__WB_MANIFEST;
-const SERVICE_WORKER_VERSION = 2;
+// == Helpers
 const withVersionPrefix = (name: string): string =>
   `v${SERVICE_WORKER_VERSION}/${name}`;
 
+// == Constants
+const MANIFEST = self.__WB_MANIFEST;
+const SERVICE_WORKER_VERSION = 2;
+const DEFAULT_ICON_URL = "/logo.png";
 const EMOJI_DATASOURCE_APPLE_CACHE_NAME = withVersionPrefix(
   "emoji-datasource-apple",
 );
 const EMOJI_STICKERS_CACHE_NAME = withVersionPrefix("emoji-stickers");
 const ASSETS_CACHE_NAME = withVersionPrefix("assets");
-// const PAGES_CACHE_NAME = withVersionPrefix("pages");
 const metadataStore = createStore("smallerworld", "metadata");
 
 // == Lifecycle
@@ -50,10 +48,10 @@ let shuttingDown = false;
 
 // == Helpers
 const awaitTimeout = (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 // == Fetch interception
-self.addEventListener("fetch", event => {
+self.addEventListener("fetch", (event) => {
   // Don't perform fetches when shutting down
   if (shuttingDown) {
     event.stopImmediatePropagation();
@@ -69,7 +67,6 @@ self.addEventListener("fetch", event => {
 });
 
 // == Setup
-setupRoutes();
 enableNavigationPreload();
 
 // const swrPages = new StaleWhileRevalidate({
@@ -136,7 +133,7 @@ const precache = async (): Promise<void> => {
 };
 
 // == Lifecycle
-self.addEventListener("install", event => {
+self.addEventListener("install", (event) => {
   console.info("Service worker installed");
   event.waitUntil(
     Promise.race([
@@ -144,7 +141,7 @@ self.addEventListener("install", event => {
         () => {
           console.info("Service worker skipped waiting");
         },
-        reason => {
+        (reason) => {
           console.error("Service worker skipped waiting failed", reason);
         },
       ),
@@ -155,14 +152,14 @@ self.addEventListener("install", event => {
   );
 });
 
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event) => {
   console.info("Service worker activating (claiming clients)...");
   event.waitUntil(
     self.clients.claim().then(
       () => {
         console.info("Service worker activated");
       },
-      reason => {
+      (reason) => {
         console.error("Claiming clients failed", reason);
         throw reason; // re-throw to fail activation
       },
@@ -174,24 +171,24 @@ self.addEventListener("activate", event => {
 // == Helpers
 const markDelivered = (
   notification: Notification & { delivery_token: string },
-): Promise<void> =>
-  routes.notifications
-    .markDelivered<{}>({
-      query: {
-        delivery_token: notification.delivery_token,
-      },
-    })
-    .then(
-      () => {
-        console.info(`Marked notification '${notification.id}' as delivered`);
-      },
-      reason => {
-        console.error(
-          `Failed to mark notification '${notification.id}' as delivered`,
-          reason,
-        );
-      },
-    );
+): Promise<void> => {
+  const formData = new FormData();
+  formData.append("delivery_token", notification.delivery_token);
+  return fetch("/notifications/mark_delivered", {
+    method: "POST",
+    body: formData,
+  }).then(
+    () => {
+      console.info(`Marked notification '${notification.id}' as delivered`);
+    },
+    (reason) => {
+      console.error(
+        `Failed to mark notification '${notification.id}' as delivered`,
+        reason,
+      );
+    },
+  );
+};
 
 const pathname = (url: string): string => {
   const { pathname } = new URL(url, self.location.origin);
@@ -206,10 +203,10 @@ interface NotificationData {
   badgeCount?: number;
 }
 
-self.addEventListener("push", event => {
+self.addEventListener("push", (event) => {
   invariant(event.data, "Missing push event data");
 
-  const data: NotificationData = event.data.json();
+  const data = event.data.json() as NotificationData;
   console.debug("Received push event", data);
   const { notification, message, pageIconUrl, badgeCount } = data;
 
@@ -218,7 +215,7 @@ self.addEventListener("push", event => {
     const { title, body, image_url } = notification;
     actions.push(
       self.registration.showNotification(title, {
-        icon: pageIconUrl ?? DEFAULT_NOTIFICATION_ICON_URL,
+        icon: pageIconUrl ?? DEFAULT_ICON_URL,
         body: body ?? undefined,
         data,
         ...(image_url && { type: "image", imageUrl: image_url }),
@@ -236,7 +233,7 @@ self.addEventListener("push", event => {
     const { title, body, image_url } = message;
     actions.push(
       self.registration.showNotification(title, {
-        icon: pageIconUrl ?? DEFAULT_NOTIFICATION_ICON_URL,
+        icon: pageIconUrl ?? DEFAULT_ICON_URL,
         body: body ?? undefined,
         data,
         ...(image_url && { type: "image", imageUrl: image_url }),
@@ -246,7 +243,7 @@ self.addEventListener("push", event => {
     actions.push(
       self.registration.showNotification("unsupported notification", {
         body: "this version of smaller world doesn't support this notification type. please re-open to update!",
-        icon: pageIconUrl ?? DEFAULT_NOTIFICATION_ICON_URL,
+        icon: pageIconUrl ?? DEFAULT_ICON_URL,
       }),
     );
   }
@@ -254,8 +251,8 @@ self.addEventListener("push", event => {
     actions.push(
       self.clients
         .matchAll({ type: "window", includeUncontrolled: true })
-        .then(clients => {
-          if (clients.some(client => client.visibilityState === "hidden")) {
+        .then((clients) => {
+          if (clients.some((client) => client.visibilityState === "hidden")) {
             return;
           }
           console.info("Setting app badge", badgeCount);
@@ -271,61 +268,42 @@ self.addEventListener("push", event => {
   event.waitUntil(Promise.all(actions));
 });
 
-interface PushSubscriptionAttributes {
-  endpoint: string;
-  auth_key: string;
-  p256dh_key: string;
-}
-
-const pushSubscriptionAttributes = (
-  subscription: PushSubscription,
-): PushSubscriptionAttributes => {
-  const { keys } = pick(
-    subscription.toJSON(),
-    "endpoint",
-    "keys.auth",
-    "keys.p256dh",
-  );
-  if (!keys?.auth) {
-    throw new Error("Missing push subscription auth key");
+self.addEventListener("pushsubscriptionchange", (event) => {
+  const { newSubscription, oldSubscription } = event;
+  const formData = new FormData();
+  if (oldSubscription) {
+    formData.append("old_subscription", oldSubscription.endpoint);
   }
-  if (!keys?.p256dh) {
-    throw new Error("Missing push subscription p256dh key");
+  if (newSubscription) {
+    const { keys } = newSubscription.toJSON();
+    formData.append("new_subscription[endpoint]", newSubscription.endpoint);
+    if (keys?.p256dh) {
+      formData.append("new_subscription[p256dh_key]", keys.p256dh);
+    }
+    if (keys?.auth) {
+      formData.append("new_subscription[auth_key]", keys.auth);
+    }
   }
-  return {
-    endpoint: subscription.endpoint,
-    auth_key: keys.auth,
-    p256dh_key: keys.p256dh,
-  };
-};
-
-self.addEventListener("pushsubscriptionchange", event => {
-  const changeEvent = event as PushSubscriptionChangeEvent;
-  const { newSubscription, oldSubscription } = changeEvent;
-  changeEvent.waitUntil(
-    routes.pushSubscriptions
-      .change({
-        data: {
-          old_subscription: oldSubscription
-            ? { endpoint: oldSubscription.endpoint }
-            : null,
-          new_subscription: newSubscription
-            ? pushSubscriptionAttributes(newSubscription)
-            : null,
-        },
+  event.waitUntil(
+    fetch("/push_subscriptions/change", {
+      method: "POST",
+      body: formData,
+    })
+      .then(() => {
+        console.info("Changed push subscription");
       })
-      .catch(reason => {
+      .catch((reason) => {
         console.error("Failed to change push subscription", reason);
       }),
   );
 });
 
-self.addEventListener("notificationclick", event => {
-  const data: NotificationData = event.notification.data;
+self.addEventListener("notificationclick", (event) => {
+  const data = event.notification.data as NotificationData;
   console.debug("Notification clicked", data);
   event.notification.close(); // Android needs explicit close
 
-  const { notification, message }: NotificationData = event.notification.data;
+  const { notification, message } = data;
   const { target_url } = notification ?? message ?? {};
   if (!target_url) {
     return;
@@ -336,7 +314,7 @@ self.addEventListener("notificationclick", event => {
   event.waitUntil(
     self.clients
       .matchAll({ type: "window", includeUncontrolled: true })
-      .then(async clients => {
+      .then(async (clients) => {
         // Check if there is already a window/tab open with the target path
         for (const client of clients) {
           // Skip clients that don't support focus
@@ -364,11 +342,11 @@ self.addEventListener("notificationclick", event => {
 
           // Set up a promise that resolves when navigation succeeds or times out
           let navigationSuccessful = false;
-          const navigationPromise = new Promise<boolean>(resolve => {
+          const navigationPromise = new Promise<boolean>((resolve) => {
             // Listen for confirmation from the client
             port1.onmessage = ({ data }) => {
               if (data && typeof data === "object") {
-                const { result } = data;
+                const { result } = data as { result?: string };
                 if (result === "success") {
                   navigationSuccessful = true;
                   resolve(true);
@@ -489,25 +467,26 @@ const isValidCommandMessage = (
   "command" in data &&
   typeof data.command === "string"; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
 
-self.addEventListener("message", event => {
-  const { data, ports } = event;
-  if (!isValidCommandMessage(data)) {
+self.addEventListener("message", (event) => {
+  if (!isValidCommandMessage(event.data)) {
     throw new Error("Invalid command message");
   }
-  const [responsePort] = ports;
+  const [responsePort] = event.ports;
   if (!responsePort) {
     throw new Error("Missing response port");
   }
   event.waitUntil(
-    processCommand(data)
+    processCommand(event.data)
       .then<Record<string, any>, Record<string, any>>(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        result => (typeof result === "object" && result !== null ? result : {}),
-        reason => ({
+        (result) =>
+          typeof result === "object" && result !== null
+            ? (result as Record<string, any>)
+            : {},
+        (reason) => ({
           error: reason instanceof Error ? reason.message : String(reason),
         }),
       )
-      .then(response => responsePort.postMessage(response)),
+      .then((response) => responsePort.postMessage(response)),
   );
 });
 

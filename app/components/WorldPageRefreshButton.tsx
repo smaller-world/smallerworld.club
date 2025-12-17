@@ -1,5 +1,13 @@
-import { type ActionIconProps } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import { ActionIcon, type ActionIconProps } from "@mantine/core";
+import { first } from "lodash-es";
+import { type FC, useState } from "react";
+import { toast } from "sonner";
 
+import { RefreshIcon } from "~/helpers/icons";
+import { usePageProps } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 import { useWorldPosts, type WorldPageProps } from "~/helpers/worlds";
 
 export interface WorldPageRefreshButtonProps
@@ -58,7 +66,7 @@ const WorldPageRefreshButton: FC<WorldPageRefreshButtonProps> = ({
 
         // Revalidate posts and post stats, reactions, etc
         const firstPost = first(posts);
-        void mutatePosts().then(pages => {
+        void mutatePosts().then((pages) => {
           const latestFirstPage = first(pages);
           const latestFirstPost = first(latestFirstPage?.posts);
           if (

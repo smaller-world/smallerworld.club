@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import { type FC, type PropsWithChildren } from "react";
 
 import { VaulPortalContext } from "~/helpers/vaul";
 

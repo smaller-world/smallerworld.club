@@ -1,9 +1,20 @@
-import { type InputWrapperProps } from "@mantine/core";
-import { Input, Text } from "@mantine/core";
+import {
+  Box,
+  type BoxProps,
+  Divider,
+  Input,
+  type InputWrapperProps,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { type DropzoneProps } from "@mantine/dropzone";
 import { Dropzone } from "@mantine/dropzone";
 import { useUncontrolled } from "@mantine/hooks";
-import { type ReactNode } from "react";
+import { isEmpty, uniqBy } from "lodash-es";
+import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useMemo } from "react";
+
+import { SuccessIcon } from "~/helpers/icons";
 
 import UploadIcon from "~icons/heroicons/arrow-up-tray-20-solid";
 import RejectIcon from "~icons/heroicons/no-symbol-20-solid";
@@ -112,11 +123,11 @@ const FileInput = <Multiple extends boolean = false>(
           multiple={multiple ?? false}
           {...{ accept, maxSize, maxFiles, disabled }}
           py="lg"
-          onDrop={files => {
+          onDrop={(files) => {
             if (!multiple && value) {
               (handleChange as SingleHandleChange)(null);
             }
-            setUploadingFiles(prevFiles =>
+            setUploadingFiles((prevFiles) =>
               uniqBy([...prevFiles, ...files], "name"),
             );
           }}
@@ -142,11 +153,11 @@ const FileInput = <Multiple extends boolean = false>(
         <>
           <Divider label="Uploading" />
           <Stack gap={8}>
-            {uploadingFiles.map(file => (
+            {uploadingFiles.map((file) => (
               <FileInputUploadCard
                 key={file.name}
-                onUploaded={blob => {
-                  setUploadingFiles(prevFiles =>
+                onUploaded={(blob) => {
+                  setUploadingFiles((prevFiles) =>
                     prevFiles.filter(({ name }) => name !== file.name),
                   );
                   if (multiple) {
@@ -180,7 +191,7 @@ const FileInput = <Multiple extends boolean = false>(
                     const currentValue =
                       resolvedValueRef.current as FileValue[];
                     const value = (currentValue ?? []).filter(
-                      blob => blob.signedId !== signedId,
+                      (blob) => blob.signedId !== signedId,
                     );
                     (handleChange as MultipleHandleChange)(value);
                   }}

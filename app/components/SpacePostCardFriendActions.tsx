@@ -1,8 +1,13 @@
-import { Text } from "@mantine/core";
+import { type BoxProps, Group, Text } from "@mantine/core";
 import { useInViewport, useMergedRef } from "@mantine/hooks";
-import { groupBy } from "lodash-es";
+import { clsx } from "clsx";
+import { groupBy, isEmpty } from "lodash-es";
+import { type FC, useMemo } from "react";
 
+import { useCurrentUser } from "~/helpers/authentication";
 import { useTrackPostSeen } from "~/helpers/posts";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { type PostReaction, type SpacePost } from "~/types";
 
 import NewPostReactionButton from "./NewPostReactionButton";
@@ -53,7 +58,7 @@ const SpacePostCardFriendActions: FC<SpacePostCardFriendActionsProps> = ({
       align="start"
       gap={2}
       wrap="wrap"
-      className={cn("FriendPostCardActions", className)}
+      className={clsx("FriendPostCardActions", className)}
       {...otherProps}
     >
       <Group gap={2} wrap="wrap" style={{ flexGrow: 1, rowGap: 0 }}>

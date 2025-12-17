@@ -28,7 +28,7 @@ export const setupRoutes = (): void => {
       }
     }
     return fetch(url, { body, redirect: "follow", ...options })
-      .then(response => {
+      .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response;
         }

@@ -1,7 +1,23 @@
-import { AspectRatio, Popover, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  AspectRatio,
+  Badge,
+  Box,
+  type BoxProps,
+  Button,
+  Card,
+  Popover,
+  Space,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC } from "react";
+import { Group } from "react-konva";
+import { toast } from "sonner";
 
-import AtIcon from "~icons/heroicons/at-symbol-20-solid";
-
+import { CouponIcon } from "~/helpers/icons";
 import {
   messageUri,
   MESSAGING_PLATFORM_TO_ICON,
@@ -9,7 +25,14 @@ import {
   MESSAGING_PLATFORMS,
 } from "~/helpers/messaging";
 import { confetti } from "~/helpers/particles";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import { type ActivityCoupon, type Friend, type WorldProfile } from "~/types";
+
+import AtIcon from "~icons/heroicons/at-symbol-20-solid";
+
+import TimeAgo from "./TimeAgo";
 
 import activityCardClasses from "./ActivityCard.module.css";
 import classes from "./ActivityCouponCard.module.css";
@@ -77,7 +100,7 @@ const ActivityCouponCard: FC<ActivityCouponCardProps> = ({
 
   return (
     <Stack
-      className={cn("ActivityCouponCard", className)}
+      className={clsx("ActivityCouponCard", className)}
       align="center"
       gap="sm"
       {...otherProps}
@@ -151,7 +174,7 @@ const ActivityCouponCard: FC<ActivityCouponCardProps> = ({
               contact {world.owner_name} to redeem:
             </Text>
             <Group justify="center" gap="sm">
-              {MESSAGING_PLATFORMS.map(platform => (
+              {MESSAGING_PLATFORMS.map((platform) => (
                 <Stack key={platform} gap={2} align="center" miw={60}>
                   <ActionIcon
                     component="a"

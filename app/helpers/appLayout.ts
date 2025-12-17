@@ -1,6 +1,8 @@
 import { type Page } from "@inertiajs/core";
+import { useMemo } from "react";
 
 import { usePage } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
 
 export type DynamicProp<PageProps extends SharedPageProps, T> =
   | T

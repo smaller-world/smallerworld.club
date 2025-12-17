@@ -1,10 +1,25 @@
-import { Affix, type AlertProps, Text } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import {
+  Affix,
+  Alert,
+  type AlertProps,
+  Button,
+  Stack,
+  Text,
+  Transition,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
+import { type FC, useEffect, useState } from "react";
+
+import { NotificationIcon } from "~/helpers/icons";
+import { usePageProps } from "~/helpers/inertia";
+import { usePageDialogOpened } from "~/helpers/pageDialog";
+import { queryParamsFromPath } from "~/helpers/utils";
+import { type WorldPageProps } from "~/helpers/worlds";
 
 import RequestInvitationIcon from "~icons/heroicons/hand-raised-20-solid";
-
-import { usePageDialogOpened } from "~/helpers/pageDialog";
-import { type WorldPageProps } from "~/helpers/worlds";
 
 import JoinRequestDrawerModal from "./JoinRequestDrawerModal";
 
@@ -28,7 +43,7 @@ const WorldPageJoinRequestAlert: FC<WorldPageJoinRequestAlertProps> = ({
     if (intent === "join" && !invitationRequested) {
       setDrawerModalOpened(true);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // == Page dialog
   const pageDialogOpened = usePageDialogOpened(drawerModalOpened);
@@ -36,7 +51,7 @@ const WorldPageJoinRequestAlert: FC<WorldPageJoinRequestAlertProps> = ({
   return (
     <>
       <Affix
-        className={cn("WorldPageJoinRequestAlert", classes.affix)}
+        className={clsx("WorldPageJoinRequestAlert", classes.affix)}
         position={{}}
         zIndex={180}
       >
@@ -45,7 +60,7 @@ const WorldPageJoinRequestAlert: FC<WorldPageJoinRequestAlertProps> = ({
           mounted={isEmpty(modals) && !pageDialogOpened}
           enterDelay={100}
         >
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Alert
               variant="filled"
               icon={<NotificationIcon />}
@@ -56,7 +71,7 @@ const WorldPageJoinRequestAlert: FC<WorldPageJoinRequestAlertProps> = ({
                   my life :)
                 </>
               }
-              className={cn(classes.alert, className)}
+              className={clsx(classes.alert, className)}
               style={[style, transitionStyle]}
               {...otherProps}
             >

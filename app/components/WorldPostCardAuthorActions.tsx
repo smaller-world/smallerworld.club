@@ -1,13 +1,40 @@
-import { HoverCard, Loader, Table, Text } from "@mantine/core";
-import { useInViewport } from "@mantine/hooks";
-import { openConfirmModal } from "@mantine/modals";
-import { groupBy } from "lodash-es";
+import {
+  ActionIcon,
+  Badge,
+  type BoxProps,
+  Button,
+  Group,
+  HoverCard,
+  List,
+  Loader,
+  Menu,
+  Skeleton,
+  Stack,
+  Table,
+  Text,
+} from "@mantine/core";
+import { useDidUpdate, useInViewport } from "@mantine/hooks";
+import { openConfirmModal, openModal } from "@mantine/modals";
+import { clsx } from "clsx";
+import { inflect } from "inflection";
+import { groupBy, isEmpty } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useState } from "react";
+import { toast } from "sonner";
 
-import FollowUpIcon from "~icons/heroicons/arrow-path-rounded-square-20-solid";
-import OpenedIcon from "~icons/heroicons/envelope-open-20-solid";
-import ActionsIcon from "~icons/heroicons/pencil-square-20-solid";
-import ShareIcon from "~icons/heroicons/share-20-solid";
-
+import {
+  CopiedIcon,
+  DeleteIcon,
+  EditIcon,
+  NotificationIcon,
+  ReplyIcon,
+} from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import {
+  mutateRoute,
+  useRouteMutation,
+  useRouteSWR,
+} from "~/helpers/routes/swr";
 import { mutateUserWorldPosts } from "~/helpers/userWorld";
 import { mutateWorldTimeline } from "~/helpers/worlds";
 import {
@@ -18,9 +45,16 @@ import {
   type World,
 } from "~/types";
 
+import FollowUpIcon from "~icons/heroicons/arrow-path-rounded-square-20-solid";
+import OpenedIcon from "~icons/heroicons/envelope-open-20-solid";
+import ActionsIcon from "~icons/heroicons/pencil-square-20-solid";
+import ShareIcon from "~icons/heroicons/share-20-solid";
+
 import DrawerModal from "./DrawerModal";
 import { openEditWorldPostModal } from "./EditWorldPostModal";
+import EmptyCard from "./EmptyCard";
 import NewWorldPostForm from "./NewWorldPostForm";
+import Time from "./Time";
 
 import postCardClasses from "./PostCard.module.css";
 import classes from "./WorldPostCardAuthorActions.module.css";
@@ -109,7 +143,7 @@ const WorldPostCardAuthorActions: FC<WorldPostCardAuthorActionsProps> = ({
         {...{ ref }}
         align="start"
         gap={3}
-        className={cn("AuthorPostCardActions", className)}
+        className={clsx("AuthorPostCardActions", className)}
         {...otherProps}
       >
         <Group align="start" gap={3} style={{ flexGrow: 1 }}>
@@ -122,7 +156,7 @@ const WorldPostCardAuthorActions: FC<WorldPostCardAuthorActionsProps> = ({
                     variant="transparent"
                     className={classes.statsIcon}
                     onClick={() => {
-                      setStatsClickedCount(count => {
+                      setStatsClickedCount((count) => {
                         const updatedCount = count + 1;
                         if (updatedCount === 10) {
                           openModal({
@@ -355,7 +389,7 @@ const PostViewersModalBody: FC<PostViewersModalBodyProps> = ({ postId }) => {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {viewers.map(viewer => (
+              {viewers.map((viewer) => (
                 <Table.Tr key={viewer.id}>
                   <Table.Td>
                     <Group gap={4}>{viewer.name}</Group>
@@ -370,7 +404,7 @@ const PostViewersModalBody: FC<PostViewersModalBodyProps> = ({ postId }) => {
                       wrap="wrap"
                       className={classes.postViewersTableReactionGroup}
                     >
-                      {viewer.reaction_emojis.map(emoji => (
+                      {viewer.reaction_emojis.map((emoji) => (
                         <span
                           className={classes.postViewersTableEmoji}
                           key={emoji}

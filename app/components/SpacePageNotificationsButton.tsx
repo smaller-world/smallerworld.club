@@ -1,10 +1,16 @@
 import {
   type ActionIconProps,
+  Anchor,
+  Button,
   type ButtonProps,
   Loader,
+  Menu,
+  Stack,
   Text,
 } from "@mantine/core";
+import { type FC, useState } from "react";
 
+import { NotificationIcon } from "~/helpers/icons";
 import { useSendTestNotification, useWebPush } from "~/helpers/webPush";
 
 import { openNotificationsTroubleshootingModal } from "./NotificationsTroubleshootingModal";
@@ -12,9 +18,9 @@ import { openNotificationsTroubleshootingModal } from "./NotificationsTroublesho
 export interface SpacePageNotificationsButtonProps
   extends Omit<ButtonProps & ActionIconProps, "children"> {}
 
-const SpacePageNotificationsButton: FC<
-  SpacePageNotificationsButtonProps
-> = props => {
+const SpacePageNotificationsButton: FC<SpacePageNotificationsButtonProps> = (
+  props,
+) => {
   // == Menu
   const [menuOpened, setMenuOpened] = useState(false);
 

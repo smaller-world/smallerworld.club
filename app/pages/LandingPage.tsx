@@ -1,4 +1,30 @@
-import { HoverCard, Image, Overlay, Text } from "@mantine/core";
+import { Link } from "@inertiajs/react";
+import {
+  Alert,
+  Badge,
+  Box,
+  Button,
+  Card,
+  Center,
+  Group,
+  HoverCard,
+  Image,
+  List,
+  Overlay,
+  rem,
+  Stack,
+  Text,
+  Title,
+  Transition,
+} from "@mantine/core";
+import { type FC, type ReactNode, useCallback, useRef, useState } from "react";
+
+import AppLayout from "~/components/AppLayout";
+import { useCurrentUser } from "~/helpers/authentication";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { withTrailingSlash } from "~/helpers/utils";
+import { type SharedPageProps } from "~/types";
 
 import PlayIcon from "~icons/heroicons/play-20-solid";
 
@@ -7,8 +33,6 @@ import logoSrc from "~/assets/images/logo.png";
 import realtalkPlaceholderSrc from "~/assets/images/realtalk-placeholder.png";
 import shareRealStuffSrc from "~/assets/images/share-real-stuff.png";
 import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
-
-import AppLayout from "~/components/AppLayout";
 
 import classes from "./LandingPage.module.css";
 
@@ -88,7 +112,7 @@ const LandingPage: PageComponent<LandingPageProps> = () => {
             />
           </Box>
           <Transition transition="fade" mounted={!videoPlaying}>
-            {transitionStyle => (
+            {(transitionStyle) => (
               <Overlay
                 backgroundOpacity={0}
                 blur={3}
@@ -315,7 +339,7 @@ const LandingPage: PageComponent<LandingPageProps> = () => {
   );
 };
 
-LandingPage.layout = page => (
+LandingPage.layout = (page) => (
   <AppLayout<LandingPageProps> withContainer containerSize="sm">
     {page}
   </AppLayout>

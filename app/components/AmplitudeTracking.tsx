@@ -4,8 +4,10 @@ import {
   reset,
   setUserId,
 } from "@amplitude/analytics-browser";
+import { type FC, useEffect } from "react";
 
 import { prettyFriendName } from "~/helpers/friends";
+import { usePageProps } from "~/helpers/inertia";
 
 const AmplitudeTracking: FC = () => {
   const { currentUser, currentFriend } = usePageProps();

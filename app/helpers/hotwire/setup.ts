@@ -1,11 +1,11 @@
-import "@hotwired/turbo-rails";
-
 import { Application } from "@hotwired/stimulus";
 import {
   AlertBridgeController,
   ButtonBridgeController,
   // @ts-expect-error - No TS types for @joemasilotti/bridge-components
 } from "@joemasilotti/bridge-components";
+
+import "@hotwired/turbo-rails";
 
 export const setupHotwire = (): void => {
   // @ts-expect-error - Bad TS types

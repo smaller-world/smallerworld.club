@@ -1,4 +1,5 @@
 import { useLocalStorage, useThrottledCallback } from "@mantine/hooks";
+import { isEmpty, pick } from "lodash-es";
 
 import { type PostType, type Upload } from "~/types";
 
@@ -78,7 +79,7 @@ const draftHasContent = ({
     return false;
   }
   const contentValues = Object.values(pick(otherValues));
-  return contentValues.every(value =>
+  return contentValues.every((value) =>
     typeof value === "string" ? !value.trim() : isEmpty(value),
   );
 };

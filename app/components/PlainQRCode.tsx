@@ -1,3 +1,5 @@
+import { clsx } from "clsx";
+import { type FC } from "react";
 import QRCode, { type QRCodeProps } from "react-qr-code";
 
 import classes from "./PlainQRCode.module.css";
@@ -10,7 +12,7 @@ const PlainQRCode: FC<PlainQRCodeProps> = ({
   ...otherProps
 }) => (
   <QRCode
-    className={cn("PlainQRCode", classes.qrCode, className)}
+    className={clsx("PlainQRCode", classes.qrCode, className)}
     {...{ size }}
     {...otherProps}
   />

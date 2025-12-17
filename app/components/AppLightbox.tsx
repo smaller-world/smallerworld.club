@@ -1,6 +1,9 @@
-import { CloseButton, Loader } from "@mantine/core";
+import { ActionIcon, Box, CloseButton, Group, Loader } from "@mantine/core";
 import parseSrcset from "@prettier/parse-srcset";
-import Lightbox, {
+import { clsx } from "clsx";
+import { type FC, useMemo, useState } from "react";
+import {
+  Lightbox,
   type LightboxExternalProps,
   type Plugin,
   type SlideImage,
@@ -9,13 +12,14 @@ import Lightbox, {
 import DownloadPlugin from "yet-another-react-lightbox/plugins/download";
 import LightboxZoomPlugin from "yet-another-react-lightbox/plugins/zoom";
 
+import routes from "~/helpers/routes";
+import { type Dimensions, type Image } from "~/types";
+
 import DownloadIcon from "~icons/heroicons/arrow-down-tray-20-solid";
 import PrevIcon from "~icons/heroicons/chevron-left-20-solid";
 import NextIcon from "~icons/heroicons/chevron-right-20-solid";
 import ZoomOutIcon from "~icons/heroicons/magnifying-glass-minus-20-solid";
 import ZoomInIcon from "~icons/heroicons/magnifying-glass-plus-20-solid";
-
-import { type Dimensions, type Image } from "~/types";
 
 import classes from "./AppLightbox.module.css";
 
@@ -37,7 +41,7 @@ const AppLightbox: FC<AppLightboxProps> = ({
   const [plugins] = useState<Plugin[]>([LightboxZoomPlugin, DownloadPlugin]);
   const slides = useMemo(
     () =>
-      images.map(image => ({
+      images.map((image) => ({
         src: image.src,
         download: {
           filename: image.filename,
@@ -51,7 +55,7 @@ const AppLightbox: FC<AppLightboxProps> = ({
   );
   return (
     <Lightbox
-      className={cn("AppLightbox", classes.lightbox, className)}
+      className={clsx("AppLightbox", classes.lightbox, className)}
       {...{ plugins }}
       carousel={{
         ...(images.length === 1 && {

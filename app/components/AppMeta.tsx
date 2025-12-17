@@ -1,6 +1,8 @@
 import bricolageGrotesqueSrc from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import manropeWoff2Src from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import { Head } from "@inertiajs/react";
 import { dirname } from "@sentry/core";
+import { type FC, useMemo } from "react";
 
 import { useIsHotwireNative } from "~/helpers/hotwire";
 
@@ -36,13 +38,13 @@ const AppMeta: FC<AppMetaProps> = ({
     const components = Array.isArray(titleProp) ? titleProp : [titleProp];
     return components
       .reverse()
-      .filter(component => !!component)
+      .filter((component) => !!component)
       .join(` ${APP_META_TITLE_SEPARATOR} `);
   }, [titleProp]);
   const siteTitle = useMemo<string>(
     () =>
       [pageTitle, siteName]
-        .filter(component => !!component)
+        .filter((component) => !!component)
         .join(` ${APP_META_TITLE_SEPARATOR} `),
     [pageTitle, siteName],
   );
@@ -52,7 +54,7 @@ const AppMeta: FC<AppMetaProps> = ({
       components.push(siteName);
     }
     return components
-      .filter(component => !!component)
+      .filter((component) => !!component)
       .join(` ${APP_META_TITLE_SEPARATOR} `);
   }, [pageTitle, siteName, isNative]);
 

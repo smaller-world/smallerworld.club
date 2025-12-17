@@ -1,5 +1,7 @@
 import { isInitialized, setUser, type User } from "@sentry/react";
+import { type FC, useEffect } from "react";
 
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
 import { prettyFriendName } from "~/helpers/friends";
 
 const SentryTracking: FC = () => {
@@ -23,7 +25,6 @@ const SentryTracking: FC = () => {
         setUser(null);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFriend?.id, currentUser?.id]);
 
   return null;

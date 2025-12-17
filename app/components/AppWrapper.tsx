@@ -1,4 +1,5 @@
 import { type Page } from "@inertiajs/core";
+import { type FC, type PropsWithChildren } from "react";
 
 import ActionCableProvider from "./ActionCableProvider";
 import AppMantineProvider from "./AppMantineProvider";

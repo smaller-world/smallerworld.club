@@ -40,5 +40,5 @@ export const useTrackVisit = (): void => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [visibility]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [visibility]);
 };

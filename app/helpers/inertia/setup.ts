@@ -2,8 +2,10 @@ import { visit as turboVisit } from "@hotwired/turbo";
 import { hrefToUrl, router } from "@inertiajs/core";
 import { closeAllModals } from "@mantine/modals";
 import { AxiosHeaders } from "axios";
+import { toast } from "sonner";
 
 import { setMeta } from "~/helpers/meta";
+import { type SharedPageProps } from "~/types";
 
 import { isHotwireNative } from "../hotwire";
 
@@ -26,7 +28,7 @@ export const setupInertia = (): void => {
       setMeta("csrf-token", token);
     }
   });
-  router.on("invalid", event => {
+  router.on("invalid", (event) => {
     console.warn("Invalid Inertia response", event.detail.response.data);
     const { status, headers, data, request } = event.detail.response;
     if (
@@ -75,7 +77,7 @@ export const setupInertia = (): void => {
       toast.error("Network request failed", { description });
     }
   });
-  router.on("exception", event => {
+  router.on("exception", (event) => {
     console.error(
       "An unexpected error occurred during an Inertia visit",
       event.detail.exception,

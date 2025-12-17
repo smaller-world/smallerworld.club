@@ -1,21 +1,33 @@
 import {
+  ActionIcon,
+  Box,
   getRadius,
+  Image,
   type ImageProps,
+  Input,
   type InputWrapperProps,
+  Stack,
+  Text,
 } from "@mantine/core";
-import { Image, Input, Text } from "@mantine/core";
 import { type DropzoneProps } from "@mantine/dropzone";
 import { Dropzone } from "@mantine/dropzone";
-import { useUncontrolled } from "@mantine/hooks";
-import { useId } from "react";
+import { useDidUpdate, useUncontrolled } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { first } from "lodash-es";
+import { type FC, useId, useState } from "react";
+import { toast } from "sonner";
 
-import PhotoIcon from "~icons/heroicons/photo-20-solid";
-
+import { RemoveIcon } from "~/helpers/icons";
 import { IMAGE_CROP_CANCELLED_ERROR, maybeCropImage } from "~/helpers/images";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { upload } from "~/helpers/upload";
 import { type Image as ImageType, type Upload } from "~/types";
 
+import PhotoIcon from "~icons/heroicons/photo-20-solid";
+
 import classes from "./ImageInput.module.css";
+
 import "@mantine/dropzone/styles.layer.css";
 
 const CROPPABLE_IMAGE_TYPES = [
@@ -92,10 +104,10 @@ const ImageInput: FC<ImageInputProps> = ({
   const { image } = data ?? {};
   useDidUpdate(() => {
     onPreviewChange?.(image ?? null);
-  }, [image]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [image]);
   useDidUpdate(() => {
     void mutate();
-  }, [resolvedValue]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [resolvedValue]);
 
   // == Loading
   const [uploading, setUploading] = useState(false);
@@ -115,7 +127,7 @@ const ImageInput: FC<ImageInputProps> = ({
     >
       <Box {...{ w, h }} p={4} {...(center && { mx: "auto" })} pos="relative">
         <Image
-          className={cn(classes.previewImage, previewClassName)}
+          className={clsx(classes.previewImage, previewClassName)}
           src={image?.src}
           {...(image?.srcset && { srcSet: image.srcset })}
           style={[
@@ -128,11 +140,11 @@ const ImageInput: FC<ImageInputProps> = ({
           className={classes.dropzone}
           accept={[...CROPPABLE_IMAGE_TYPES, ...UNCROPPABLE_IMAGE_TYPES]}
           multiple={false}
-          onDrop={files => {
+          onDrop={(files) => {
             const file = first(files);
             if (file) {
               void maybeCropImage(file, cropToAspect).then(
-                async file => {
+                async (file) => {
                   console.debug("Uploading image", file);
                   setUploading(true);
                   try {
@@ -150,7 +162,7 @@ const ImageInput: FC<ImageInputProps> = ({
                     setUploading(false);
                   }
                 },
-                reason => {
+                (reason) => {
                   if (reason === IMAGE_CROP_CANCELLED_ERROR) {
                     console.info("Crop cancelled");
                     return;

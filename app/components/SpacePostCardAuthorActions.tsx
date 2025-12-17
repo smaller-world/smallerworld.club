@@ -1,14 +1,24 @@
-import { useInViewport } from "@mantine/hooks";
-import { openConfirmModal } from "@mantine/modals";
+import { router } from "@inertiajs/react";
+import { Badge, type BoxProps, Button, Group, Menu } from "@mantine/core";
+import { randomId, useInViewport } from "@mantine/hooks";
+import { closeModal, openConfirmModal, openModal } from "@mantine/modals";
+import { clsx } from "clsx";
 import { groupBy } from "lodash-es";
-
-import ActionsIcon from "~icons/heroicons/pencil-square-20-solid";
+import { type FC, useMemo } from "react";
 
 import { isHotwireNative } from "~/helpers/hotwire";
+import { DeleteIcon, EditIcon } from "~/helpers/icons";
 import { POST_TYPE_TO_LABEL } from "~/helpers/posts";
-import { mutateRoute } from "~/helpers/routes/swr";
+import routes from "~/helpers/routes";
+import {
+  mutateRoute,
+  useRouteMutation,
+  useRouteSWR,
+} from "~/helpers/routes/swr";
 import { mutateSpacePosts } from "~/helpers/spaces";
 import { type PostReaction, type Space, type SpacePost } from "~/types";
+
+import ActionsIcon from "~icons/heroicons/pencil-square-20-solid";
 
 import EditSpacePostForm from "./EditSpacePostForm";
 
@@ -66,7 +76,7 @@ const SpacePostCardAuthorActions: FC<SpacePostCardAuthorActionsProps> = ({
       {...{ ref }}
       align="start"
       gap={3}
-      className={cn("AuthorPostCardActions", className)}
+      className={clsx("AuthorPostCardActions", className)}
       {...otherProps}
     >
       <Group gap={2} wrap="wrap" style={{ flexGrow: 1, rowGap: 0 }}>

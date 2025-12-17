@@ -1,7 +1,11 @@
-import { ScrollArea } from "@mantine/core";
+import { Badge, type BoxProps, Card, ScrollArea } from "@mantine/core";
 import { MiniCalendar } from "@mantine/dates";
+import { DateTime } from "luxon";
+import { type FC, useEffect, useMemo, useRef } from "react";
 
 import { confetti, particlePositionFor } from "~/helpers/particles";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { useTimeZone } from "~/helpers/time";
 import {
   TIMELINE_WEEKS_TO_SHOW,
@@ -10,6 +14,7 @@ import {
 import { type PostStreak } from "~/types";
 
 import classes from "./WorldTimelineCard.module.css";
+
 import "@mantine/dates/styles.css";
 
 export interface WorldTimelineCardProps extends BoxProps {
@@ -97,7 +102,7 @@ const WorldTimelineCard: FC<WorldTimelineCardProps> = ({
             size="xs"
             numberOfDays={TIMELINE_WEEKS_TO_SHOW * 7 + 1}
             defaultDate={startDate}
-            getDayProps={calendarDate => {
+            getDayProps={(calendarDate) => {
               const activity = activities[calendarDate];
               if (activity) {
                 const isStreakDay = streakDates?.has(calendarDate);
@@ -118,7 +123,7 @@ const WorldTimelineCard: FC<WorldTimelineCardProps> = ({
               };
             }}
             value={date}
-            onChange={selectedDate => {
+            onChange={(selectedDate) => {
               if (selectedDate === date) {
                 onDateChange(null);
               } else {

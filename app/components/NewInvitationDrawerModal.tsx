@@ -1,7 +1,22 @@
-import { type DrawerProps, Image, Popover, Text } from "@mantine/core";
+import { Link } from "@inertiajs/react";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Divider,
+  type DrawerProps,
+  Group,
+  Image,
+  Popover,
+  Stack,
+  Text,
+  Title,
+  Transition,
+} from "@mantine/core";
+import { type FC, useState } from "react";
 
-import bottomLeftArrowSrc from "~/assets/images/bottom-left-arrow.png";
-
+import { BackIcon, PhoneIcon } from "~/helpers/icons";
 import { formatInvitationMessage } from "~/helpers/invitations";
 import {
   messageUri,
@@ -9,7 +24,12 @@ import {
   MESSAGING_PLATFORM_TO_LABEL,
   MESSAGING_PLATFORMS,
 } from "~/helpers/messaging";
+import routes from "~/helpers/routes";
+import { useNormalizedUrl, withTrailingSlash } from "~/helpers/utils";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import { type Invitation, type JoinRequest } from "~/types";
+
+import bottomLeftArrowSrc from "~/assets/images/bottom-left-arrow.png";
 
 import DrawerModal from "./DrawerModal";
 import EditInvitationForm from "./EditInvitationForm";
@@ -43,7 +63,7 @@ const NewInvitationDrawerModal: FC<NewInvitationDrawerModalProps> = ({
         ) : (
           <NewInvitationForm
             {...{ fromJoinRequest }}
-            onInvitationCreated={invitation => {
+            onInvitationCreated={(invitation) => {
               setCreatedInvitation(invitation);
               setTimeout(() => {
                 setRevealBackToHomeButton(true);
@@ -94,7 +114,7 @@ const NewInvitationDrawerModal: FC<NewInvitationDrawerModalProps> = ({
               )}
             </Stack>
             <Transition transition="fade-up" mounted={revealBackToHomeButton}>
-              {transitionStyle => (
+              {(transitionStyle) => (
                 <Button
                   component={Link}
                   href={withTrailingSlash(routes.userWorld.show.path())}
@@ -162,7 +182,7 @@ const SendInviteLinkViaJoinRequestButton: FC<
             send via:
           </Text>
           <Group justify="center" gap="sm">
-            {MESSAGING_PLATFORMS.map(platform => (
+            {MESSAGING_PLATFORMS.map((platform) => (
               <Stack key={platform} gap={2} align="center" miw={60}>
                 <ActionIcon
                   component="a"

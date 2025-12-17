@@ -1,10 +1,28 @@
-import { Image, Overlay, Popover, RemoveScroll, Text } from "@mantine/core";
+import { Link, router } from "@inertiajs/react";
+import {
+  ActionIcon,
+  Alert,
+  Anchor,
+  Box,
+  Button,
+  Divider,
+  Group,
+  Image,
+  Overlay,
+  Popover,
+  RemoveScroll,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useWindowEvent } from "@mantine/hooks";
 import { useModals } from "@mantine/modals";
+import { isEmpty } from "lodash-es";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
-import logoSrc from "~/assets/images/logo.png";
-import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
-
+import { PWAScopedLink } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import WelcomeBackToast from "~/components/WelcomeBackToast";
 import WorldPageFeed from "~/components/WorldPageFeed";
@@ -14,10 +32,23 @@ import WorldPageInvitationsButton from "~/components/WorldPageInvitationsButton"
 import WorldPageJoinRequestAlert from "~/components/WorldPageJoinRequestAlert";
 import WorldPageNotificationsButtonCard from "~/components/WorldPageNotificationsButtonCard";
 import WorldPageRefreshButton from "~/components/WorldPageRefreshButton";
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
+import { BackIcon, PublicIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
 import { openWorldPageInstallModal } from "~/helpers/install";
-import { isStandaloneDisplayMode } from "~/helpers/pwa";
+import { isStandaloneDisplayMode, usePWA } from "~/helpers/pwa";
+import routes from "~/helpers/routes";
+import {
+  normalizeUrl,
+  queryParamsFromPath,
+  withTrailingSlash,
+} from "~/helpers/utils";
 import { useWebPush } from "~/helpers/webPush";
 import { WORLD_ICON_RADIUS_RATIO, type WorldPageProps } from "~/helpers/worlds";
+import { useWorldTheme } from "~/helpers/worldThemes";
+
+import logoSrc from "~/assets/images/logo.png";
+import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
 
 import classes from "./WorldPage.module.css";
 
@@ -54,7 +85,7 @@ const WorldPage: PageComponent<WorldPageProps> = ({ world }) => {
     ) {
       openWorldPageInstallModal(world);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const body = (
     <Stack>
@@ -272,7 +303,7 @@ const WorldPage: PageComponent<WorldPageProps> = ({ world }) => {
   );
 };
 
-WorldPage.layout = page => (
+WorldPage.layout = (page) => (
   <AppLayout<WorldPageProps>
     title={({ world }) => world.name}
     manifestUrl={({ currentFriend, world }, { url }) => {

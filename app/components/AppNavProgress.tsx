@@ -1,10 +1,13 @@
+import { router } from "@inertiajs/core";
 import {
   completeNavigationProgress,
   NavigationProgress,
   startNavigationProgress,
 } from "@mantine/nprogress";
+import { type FC, useEffect } from "react";
 
 import classes from "./AppNavProgress.module.css";
+
 import "@mantine/nprogress/styles.layer.css";
 
 export interface AppNavProgressProps {}

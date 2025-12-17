@@ -22,7 +22,7 @@
       @apply cursor-pointer;
 
       label {
-        @apply cursor-pointer text-sm text-shade-500 leading-tight;
+        @apply text-shade-500 cursor-pointer text-sm leading-tight;
       }
     }
 

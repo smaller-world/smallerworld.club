@@ -1,8 +1,20 @@
-import { Image, Text } from "@mantine/core";
-
-import logoSrc from "~/assets/images/logo.png";
+import { router } from "@inertiajs/react";
+import {
+  Box,
+  Image,
+  Stack,
+  Text,
+  Title,
+  useMantineColorScheme,
+} from "@mantine/core";
+import { type ReactNode, useEffect } from "react";
 
 import AppLayout from "~/components/AppLayout";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { type SharedPageProps } from "~/types";
+
+import logoSrc from "~/assets/images/logo.png";
 
 export interface SplashPageProps extends SharedPageProps {}
 
@@ -13,7 +25,7 @@ const SplashPage: PageComponent<SplashPageProps> = () => {
     setTimeout(() => {
       router.visit(routes.userSpaces.index.path());
     }, 200);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Stack align="center" justify="center" style={{ flexGrow: 1 }}>
       <Title order={2} size="h3" c="dimmed">

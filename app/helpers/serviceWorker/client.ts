@@ -120,7 +120,7 @@ export const unregisterOutdatedServiceWorkers = async (): Promise<void> => {
       normalizeUrl(active.scriptURL) !== normalizeUrl(SERVICE_WORKER_URL),
   );
   await Promise.all(
-    oldRegistrations.map(registration => registration.unregister()),
+    oldRegistrations.map((registration) => registration.unregister()),
   );
 };
 
@@ -301,7 +301,7 @@ const sendSkipWaiting = (serviceWorker: ServiceWorker): Promise<void> =>
     () => {
       console.info("New service worker skipped waiting");
     },
-    reason => {
+    (reason) => {
       console.error("Failed to skip waiting on new service worker", reason);
     },
   );
@@ -311,7 +311,7 @@ const sendPrecache = (serviceWorker: ServiceWorker): Promise<void> =>
     () => {
       console.info("Precaching started");
     },
-    reason => {
+    (reason) => {
       console.error("Failed to precache", reason);
     },
   );
@@ -334,7 +334,7 @@ export const initServiceWorkerSentry = (
     () => {
       console.info("Initialized Sentry on service worker");
     },
-    reason => {
+    (reason) => {
       console.error("Failed to initialize Sentry on service worker", reason);
     },
   );

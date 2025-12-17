@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 export interface PageDialogState {
   opened: boolean;
@@ -25,6 +25,6 @@ export const usePageDialogOpened = (opened?: boolean): boolean => {
     if (typeof opened === "boolean") {
       state.setOpened(opened);
     }
-  }, [opened]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [opened]);
   return state.opened;
 };

@@ -29,5 +29,32 @@
         drag & drop your image here
       </div>
     </template>
+    <%= render(
+      "overlays/modal",
+      class: "editor-modal",
+      data: {
+        filepond_target: "editorModal",
+        action: class_names(
+          "filepond:open-editor-modal->modal#open",
+          "modal:opened->filepond#initializeCropper",
+          "modal:cancelled->filepond#cancelEdit",
+          "modal:closed->filepond#finalizeEdit",
+        )
+      },
+    ) do %>
+      <div class="editor-modal-content">
+        <img
+          data-filepond-target="editorModalImage"
+          alt=""
+        />
+        <button
+          type="button"
+          class="btn text-sm"
+          data-action="modal#close filepond#confirmEdit"
+        >
+          crop and continue
+        </button>
+      </div>
+    <% end %>
   </div>
 <% end %>

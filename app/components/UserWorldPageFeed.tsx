@@ -1,16 +1,36 @@
-import { Loader, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Box,
+  type BoxProps,
+  Card,
+  Group,
+  Loader,
+  Skeleton,
+  Stack,
+  Text,
+  TextInput,
+  Tooltip,
+  Transition,
+} from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
+import { isEmpty } from "lodash-es";
+import { type FC, useRef, useState } from "react";
+
+import { openNewWorldPostModal } from "~/components/NewWorldPostModal";
+import { SearchIcon } from "~/helpers/icons";
+import { usePageProps, useQueryParams } from "~/helpers/inertia";
+import { POST_TYPE_TO_ICON, POST_TYPE_TO_LABEL } from "~/helpers/posts";
+import { useUserWorldPosts } from "~/helpers/userWorld";
+import { type UserWorldPageProps } from "~/pages/UserWorldPage";
+import { type PostType } from "~/types";
 
 import HideIcon from "~icons/heroicons/chevron-up-20-solid";
 import NewIcon from "~icons/heroicons/pencil-square-20-solid";
 import CloseIcon from "~icons/heroicons/x-mark";
 import CloseOutlineIcon from "~icons/heroicons/x-mark-20-solid";
 
-import { openNewWorldPostModal } from "~/components/NewWorldPostModal";
-import { POST_TYPE_TO_ICON, POST_TYPE_TO_LABEL } from "~/helpers/posts";
-import { useUserWorldPosts } from "~/helpers/userWorld";
-import { type UserWorldPageProps } from "~/pages/UserWorldPage";
-import { type PostType } from "~/types";
-
+import EmptyCard from "./EmptyCard";
 import LoadMoreButton from "./LoadMoreButton";
 import PostCard from "./PostCard";
 import WorldPostCardAuthorActions from "./WorldPostCardAuthorActions";
@@ -48,7 +68,7 @@ const UserWorldPageFeed: FC<UserWorldPageFeedProps> = ({
   return (
     <Stack {...otherProps}>
       <Transition transition="slide-down" mounted={showSearch}>
-        {transitionStyle => (
+        {(transitionStyle) => (
           <TextInput
             ref={inputRef}
             leftSection={<SearchIcon />}
@@ -157,7 +177,7 @@ const UserWorldPageFeed: FC<UserWorldPageFeedProps> = ({
           )
         ) : (
           <>
-            {posts.map(post => (
+            {posts.map((post) => (
               <PostCard
                 key={post.id}
                 {...{ post }}
@@ -174,7 +194,7 @@ const UserWorldPageFeed: FC<UserWorldPageFeedProps> = ({
                 loading={isValidating}
                 style={{ alignSelf: "center" }}
                 onVisible={() => {
-                  void setSize(size => size + 1);
+                  void setSize((size) => size + 1);
                 }}
               />
             )}

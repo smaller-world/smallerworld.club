@@ -1,11 +1,33 @@
-import { Image, Text } from "@mantine/core";
+import { Link, router } from "@inertiajs/react";
+import {
+  Box,
+  Card,
+  Group,
+  Image,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
+import { isEmpty } from "lodash-es";
 
+import { AnchorContainer, EmptyCard } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import NewSpaceButton from "~/components/NewSpaceButton";
 import UserFooter from "~/components/UserFooter";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { type Space, type User, type World } from "~/types";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type SharedPageProps,
+  type Space,
+  type User,
+  type World,
+} from "~/types";
 
 import classes from "./UserSpacesPage.module.css";
 
@@ -37,7 +59,7 @@ const UserSpacesPage: PageComponent<UserSpacesPageProps> = ({ userWorld }) => {
             size="md"
             h="unset"
             py="md"
-            onSpaceCreated={space => {
+            onSpaceCreated={(space) => {
               router.visit(routes.spaces.show.path({ id: space.friendly_id }));
             }}
           />
@@ -45,7 +67,7 @@ const UserSpacesPage: PageComponent<UserSpacesPageProps> = ({ userWorld }) => {
             isEmpty(spaces) ? (
               <EmptyCard itemLabel="spaces" />
             ) : (
-              spaces.map(space => (
+              spaces.map((space) => (
                 <AnchorContainer
                   key={space.id}
                   component={Link}
@@ -86,7 +108,7 @@ const UserSpacesPage: PageComponent<UserSpacesPageProps> = ({ userWorld }) => {
   );
 };
 
-UserSpacesPage.layout = page => (
+UserSpacesPage.layout = (page) => (
   <AppLayout<UserSpacesPageProps>
     title="your spaces"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

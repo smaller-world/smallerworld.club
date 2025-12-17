@@ -1,7 +1,10 @@
-import { type ActionIconProps } from "@mantine/core";
+import { ActionIcon, type ActionIconProps } from "@mantine/core";
+import { type FC } from "react";
+import { toast } from "sonner";
 
-import ShareIcon from "~icons/heroicons/arrow-up-on-square-20-solid";
-
+import { useCurrentFriend } from "~/helpers/authentication";
+import routes from "~/helpers/routes";
+import { useRouteMutation } from "~/helpers/routes/swr";
 import {
   type PostShare,
   type UniversePost,
@@ -9,6 +12,8 @@ import {
   type WorldPost,
   type WorldProfile,
 } from "~/types";
+
+import ShareIcon from "~icons/heroicons/arrow-up-on-square-20-solid";
 
 import classes from "./PostCardShareButton.module.css";
 
@@ -47,7 +52,7 @@ const PostCardShareButton: FC<PostCardShareButtonProps> = ({
         toast.success("share snippet copied to clipboard!");
       };
       if (navigator.canShare(shareData)) {
-        void navigator.share(shareData).then(undefined, reason => {
+        void navigator.share(shareData).then(undefined, (reason) => {
           if (reason instanceof Error && reason.name === "AbortError") {
             copyToClipboard();
           }

@@ -1,11 +1,28 @@
 import { Marquee } from "@gfazioli/mantine-marquee";
 import {
+  Anchor,
+  Badge,
   type BadgeProps,
+  Box,
   Code,
+  Divider,
+  Group,
   Image,
+  rem,
+  Stack,
   TableOfContents,
   Text,
+  Title,
+  Tooltip,
 } from "@mantine/core";
+import { openModal } from "@mantine/modals";
+import { clsx } from "clsx";
+import { type FC, type ReactNode } from "react";
+
+import AppLayout from "~/components/AppLayout";
+import ContactLink from "~/components/ContactLink";
+import { type PageComponent } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
 
 import activityCouponSrc from "~/assets/images/update1/activity-coupon.apng";
 import activityCouponToFriendSrc from "~/assets/images/update1/activity-coupon-to-friend.png";
@@ -29,13 +46,10 @@ import sharePostButtonSrc from "~/assets/images/update1/share-post-button.png";
 import textBlastSrc from "~/assets/images/update1/text-blast.png";
 import textsOnlySrc from "~/assets/images/update1/texts-only.jpg";
 
-import AppLayout from "~/components/AppLayout";
-import ContactLink from "~/components/ContactLink";
-
-import "@fontsource/jetbrains-mono";
-
 import classes from "./Update1Page.module.css";
+
 import "@gfazioli/mantine-marquee/styles.layer.css";
+import "@fontsource/jetbrains-mono";
 
 export interface Update1PageProps extends SharedPageProps {}
 
@@ -535,7 +549,7 @@ const Update1Page: PageComponent<Update1PageProps> = () => (
   </Stack>
 );
 
-Update1Page.layout = page => (
+Update1Page.layout = (page) => (
   <AppLayout<Update1PageProps>
     title="update 1"
     withContainer
@@ -569,7 +583,7 @@ const StatsBadge: FC<StatsBadgeProps> = ({
   >
     <Badge
       size="lg"
-      className={cn(classes.statsBadge, className)}
+      className={clsx(classes.statsBadge, className)}
       {...otherProps}
     >
       {children}

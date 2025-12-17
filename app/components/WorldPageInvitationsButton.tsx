@@ -1,12 +1,29 @@
-import { type ButtonProps, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  type ButtonProps,
+  Group,
+  Stack,
+  Text,
+  Title,
+  Tooltip,
+  Transition,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { inflect } from "inflection";
+import { isEmpty } from "lodash-es";
+import { type FC, useEffect, useRef, useState } from "react";
 
-import CalendarIcon from "~icons/heroicons/calendar-20-solid";
-
+import { CouponIcon } from "~/helpers/icons";
+import { usePageProps } from "~/helpers/inertia";
 import { usePageDialogOpened } from "~/helpers/pageDialog";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { useWebPush } from "~/helpers/webPush";
 import { type WorldPageProps } from "~/helpers/worlds";
 import { type ActivityCoupon, type WorldPost } from "~/types";
+
+import CalendarIcon from "~icons/heroicons/calendar-20-solid";
 
 import ActivityCouponsCarousel from "./ActivityCouponsCarousel";
 import DrawerModal from "./DrawerModal";
@@ -99,7 +116,7 @@ const WorldPageInvitationsButton: FC<WorldPageInvitationsButtonProps> = ({
   return (
     <>
       <Transition transition="pop" mounted={invitationCount > 0}>
-        {transitionStyle => (
+        {(transitionStyle) => (
           <Tooltip
             label={<>{world.owner_name} sent you an activity coupon!</>}
             opened={
@@ -176,7 +193,7 @@ const WorldPageInvitationsButton: FC<WorldPageInvitationsButtonProps> = ({
                   you&apos;re welcome to join me on.
                 </Text>
               </Box>
-              {pinnedPosts.map(post => (
+              {pinnedPosts.map((post) => (
                 <PostCard
                   key={post.id}
                   {...{ post }}

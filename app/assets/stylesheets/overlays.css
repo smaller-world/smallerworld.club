@@ -1,0 +1,64 @@
+@layer base {
+  body:has(dialog[open]) {
+    @apply overflow-hidden;
+
+    /** TODO: Compute scrollbar width to prevent horizontal shift */
+    padding-right: var(--scrollbar-width, 0px);
+  }
+}
+
+@layer components {
+  dialog.modal {
+    @apply fixed inset-0 bg-transparent backdrop:bg-transparent;
+
+    &::backdrop {
+      @apply bg-transparent;
+    }
+
+    .modal-container {
+      @apply flex min-h-full justify-center items-center p-4;
+    }
+
+    .modal-backdrop {
+      @apply fixed inset-0 bg-shade-500/75;
+      @apply transition-opacity duration-300 ease-out transition-discrete;
+
+      dialog[open][data-closing] & {
+        @apply opacity-0;
+      }
+    }
+
+    .modal-panel {
+      @apply relative bg-white shadow-xl p-4;
+      @apply transition-all duration-300 ease-out transition-discrete;
+    }
+
+    &[open] {
+      .modal-backdrop {
+        @apply opacity-100;
+
+        @starting-style {
+          @apply opacity-0;
+        }
+      }
+
+      .modal-panel {
+        @apply translate-y-0 scale-100 opacity-100;
+
+        @starting-style {
+          @apply translate-y-4 scale-95 opacity-0;
+        }
+      }
+
+      &[data-closing] {
+        .modal-backdrop {
+          @apply opacity-0;
+        }
+
+        .modal-panel {
+          @apply translate-y-4 scale-95 opacity-0;
+        }
+      }
+    }
+  }
+}

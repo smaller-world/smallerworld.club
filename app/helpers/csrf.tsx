@@ -1,8 +1,12 @@
 import { router } from "@inertiajs/react";
+import { Button } from "@mantine/core";
+import { toast } from "sonner";
+
+import { type PageCSRF, type SharedPageProps } from "~/types";
 
 import ReloadIcon from "~icons/heroicons/arrow-path-rounded-square-20-solid";
 
-import { type PageCSRF } from "~/types";
+import { usePageProps } from "./inertia";
 
 export const useCSRFToken = (): string => {
   const { csrf } = usePageProps();
@@ -49,7 +53,7 @@ export const reloadCSRF = (): Promise<PageCSRF> =>
         const { csrf } = props as unknown as SharedPageProps;
         resolve(csrf);
       },
-      onFinish: visit => {
+      onFinish: (visit) => {
         if (!visit.completed) {
           reject(new Error("Failed to reload CSRF token"));
         }

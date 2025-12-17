@@ -46,7 +46,7 @@ export const useLazyUpload = (
       onError?.(error);
       return Promise.reject(error);
     }
-    setState(prevState => {
+    setState((prevState) => {
       if (prevState.uploading) {
         prevState.cancel();
       }
@@ -60,11 +60,11 @@ export const useLazyUpload = (
     });
     const url = requireMeta("active-storage-direct-uploads-url");
     const upload = new DirectUpload(file, url, {
-      directUploadWillStoreFileWithXHR: request => {
-        request.upload.addEventListener("progress", event => {
+      directUploadWillStoreFileWithXHR: (request) => {
+        request.upload.addEventListener("progress", (event) => {
           const { loaded, total } = event;
           const progress = (loaded / total) * 100;
-          setState(prevState => ({
+          setState((prevState) => ({
             ...prevState,
             progress,
             cancel: () => {
@@ -86,7 +86,7 @@ export const useLazyUpload = (
       upload.create((error, blob) => {
         if (error) {
           console.error(`Error uploading file "${file.name}"`, error);
-          setState(prevState => ({
+          setState((prevState) => ({
             ...prevState,
             error,
             blob: null,
@@ -126,7 +126,6 @@ export const useUpload = (file: File, params?: UploadParams): UploadState => {
       uploadStartedRef.current = true;
       void upload(file);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return state;
 };

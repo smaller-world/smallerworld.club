@@ -38,7 +38,13 @@
       <%= form.check_box :public, class: "form-checkbox" %>
       <%= form.label :public, "show on spaces tab for all users", class: "text-sm" %>
     </div>
-    <%= form.button type: "submit", class: "btn" do %>
+    <%= form.button(
+      type: "submit",
+      class: "btn",
+      data: {
+        prevent_submit_while_busy_target: "submit",
+      },
+    ) do %>
       <span>create space</span>
     <% end %>
   <% end %>

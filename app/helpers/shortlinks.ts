@@ -6,14 +6,11 @@ export const useShortlink = (
   deps: DependencyList,
 ): string | undefined => {
   const [url, setUrl] = useState<string>();
-  useEffect(
-    () => {
-      const url = hrefToUrl(resolveUrlOrPath());
-      shortlinkIfAvailable(url);
-      setUrl(url.toString());
-    },
-    deps, // eslint-disable-line react-hooks/exhaustive-deps
-  );
+  useEffect(() => {
+    const url = hrefToUrl(resolveUrlOrPath());
+    shortlinkIfAvailable(url);
+    setUrl(url.toString());
+  }, deps);
   return url;
 };
 

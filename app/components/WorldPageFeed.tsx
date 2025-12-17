@@ -1,7 +1,15 @@
+import { router } from "@inertiajs/react";
+import { Box, type BoxProps, Skeleton, Stack } from "@mantine/core";
+import { isEmpty } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useState } from "react";
+
+import { usePageProps, useQueryParams } from "~/helpers/inertia";
 import { NEKO_SIZE } from "~/helpers/neko";
 import { useWebPush } from "~/helpers/webPush";
 import { useWorldPosts, type WorldPageProps } from "~/helpers/worlds";
 
+import EmptyCard from "./EmptyCard";
 import FeedbackNeko from "./FeedbackNeko";
 import LoadMoreButton from "./LoadMoreButton";
 import PostCard from "./PostCard";
@@ -12,7 +20,7 @@ import WorldTimelineCard from "./WorldTimelineCard";
 
 export interface WorldPageFeedProps extends BoxProps {}
 
-const WorldPageFeed: FC<WorldPageFeedProps> = props => {
+const WorldPageFeed: FC<WorldPageFeedProps> = (props) => {
   const { currentFriend, world, replyToNumber, lastSentEncouragement } =
     usePageProps<WorldPageProps>();
   const queryParams = useQueryParams();
@@ -104,7 +112,7 @@ const WorldPageFeed: FC<WorldPageFeedProps> = props => {
                 loading={isValidating}
                 style={{ alignSelf: "center" }}
                 onVisible={() => {
-                  void setSize(size => size + 1);
+                  void setSize((size) => size + 1);
                 }}
               />
             )}

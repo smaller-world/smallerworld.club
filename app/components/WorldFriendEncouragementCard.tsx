@@ -1,7 +1,26 @@
-import { Popover, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  type BoxProps,
+  Button,
+  Card,
+  Group,
+  LoadingOverlay,
+  Popover,
+  Stack,
+  Text,
+  Textarea,
+} from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { inflect } from "inflection";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useRef, useState } from "react";
 
+import { useForm } from "~/helpers/form";
+import { SendIcon } from "~/helpers/icons";
 import { NEKO_SIZE } from "~/helpers/neko";
 import { confetti, particlePositionFor } from "~/helpers/particles";
+import routes from "~/helpers/routes";
 import { type Encouragement, type Friend, type WorldProfile } from "~/types";
 
 import FeedbackNeko from "./FeedbackNeko";
@@ -75,7 +94,7 @@ const WorldFriendEncouragementCard: FC<WorldFriendEncouragementCardProps> = ({
   return (
     <Card
       ref={cardRef}
-      className={cn("WorldFriendEncouragementCard", classes.card, className)}
+      className={clsx("WorldFriendEncouragementCard", classes.card, className)}
       withBorder
       {...otherProps}
     >
@@ -190,7 +209,7 @@ const EncouragementForm: FC<EncouragementFormProps> = ({
     },
     descriptor: "send encouragement",
     initialValues: { message },
-    transformValues: values => ({
+    transformValues: (values) => ({
       encouragement: {
         ...values,
         emoji,

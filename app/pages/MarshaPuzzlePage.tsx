@@ -1,8 +1,12 @@
+import { Head } from "@inertiajs/react";
+import { useMantineColorScheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 
 import PageLayout from "~/components/PageLayout";
 import { type FillPatternOffset } from "~/components/SVGPuzzle";
+import { type PageComponent } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
 
 const LazySVGPuzzle = lazy(() => import("~/components/SVGPuzzle"));
 
@@ -27,8 +31,7 @@ const MarshaPuzzlePage: PageComponent<MarshaPuzzlePageProps> = ({
     return () => {
       clearColorScheme();
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, []);
   const { width, height } = useViewportSize();
   return (
     <Suspense>
@@ -43,7 +46,7 @@ const MarshaPuzzlePage: PageComponent<MarshaPuzzlePageProps> = ({
 
 export default MarshaPuzzlePage;
 
-MarshaPuzzlePage.layout = page => (
+MarshaPuzzlePage.layout = (page) => (
   <PageLayout>
     <Head>
       <title>Marsha's Puzzle</title>

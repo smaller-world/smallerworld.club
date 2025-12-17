@@ -1,5 +1,6 @@
-import { type CardProps } from "@mantine/core";
-import { Text } from "@mantine/core";
+import { Box, Card, type CardProps, Flex, Text } from "@mantine/core";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, type FC } from "react";
 
 import EmptyIcon from "~icons/heroicons/inbox-20-solid";
 
@@ -16,7 +17,7 @@ const EmptyCard: FC<EmptyCardProps> = ({
   itemLabel,
   ...otherProps
 }) => (
-  <Card className={cn("EmptyCard", classes.card)} withBorder {...otherProps}>
+  <Card className={clsx("EmptyCard", classes.card)} withBorder {...otherProps}>
     <Flex direction="column" align="center">
       <Box c="dimmed" lh={1.1}>
         <EmptyIcon />

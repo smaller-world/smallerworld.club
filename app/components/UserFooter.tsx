@@ -1,17 +1,32 @@
+import { router } from "@inertiajs/react";
 import {
   AppShell,
   type AppShellFooterProps,
+  Group,
   Image,
   SegmentedControl,
   type SegmentedControlItem,
 } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
+import {
+  type FC,
+  forwardRef,
+  type ReactNode,
+  startTransition,
+  useMemo,
+  useState,
+} from "react";
 
-import logoSrc from "~/assets/images/logo.png";
-
+import { usePage } from "~/helpers/inertia/page";
+import routes from "~/helpers/routes";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
 import { type UserUniversePageProps } from "~/pages/UserUniversePage";
 import { type UserWorldPageProps } from "~/pages/UserWorldPage";
 import { type User, type World } from "~/types";
+
+import logoSrc from "~/assets/images/logo.png";
 
 import classes from "./UserFooter.module.css";
 
@@ -86,13 +101,13 @@ const UserFooter = forwardRef<HTMLDivElement, UserFooterProps>(
       <AppShell.Footer
         {...{ ref }}
         px={8}
-        className={cn("AppFooter", classes.footer, className)}
+        className={clsx("AppFooter", classes.footer, className)}
         {...otherProps}
       >
         <SegmentedControl
           data={controls}
           {...{ value }}
-          onChange={value => {
+          onChange={(value) => {
             switch (value) {
               case "world":
                 setValue(value);

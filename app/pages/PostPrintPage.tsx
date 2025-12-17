@@ -1,5 +1,13 @@
+import { Space, useMantineColorScheme } from "@mantine/core";
+import { useEffect } from "react";
+
 import PostCard from "~/components/PostCard";
-import { type AuthorWorldProfile, type Post } from "~/types";
+import { type PageComponent } from "~/helpers/inertia";
+import {
+  type AuthorWorldProfile,
+  type Post,
+  type SharedPageProps,
+} from "~/types";
 
 import "./PostPrintPage.css";
 

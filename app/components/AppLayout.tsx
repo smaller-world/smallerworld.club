@@ -1,4 +1,6 @@
+import { Link } from "@inertiajs/react";
 import {
+  Anchor,
   AppShell,
   type AppShellProps,
   Breadcrumbs,
@@ -7,8 +9,16 @@ import {
   type MantineSize,
   Overlay,
   RemoveScroll,
+  Stack,
   Text,
 } from "@mantine/core";
+import { isEmpty } from "lodash-es";
+import {
+  type FC,
+  type PropsWithChildren,
+  type ReactNode,
+  useMemo,
+} from "react";
 
 import {
   type DynamicProp,
@@ -16,10 +26,13 @@ import {
   useResolveDynamicProp,
 } from "~/helpers/appLayout";
 import { useIsHotwireNative } from "~/helpers/hotwire";
+import { usePage } from "~/helpers/inertia";
 import { useAutoClearColorScheme } from "~/helpers/mantine";
 import { CONFETTI_CANVAS_ID, SMOKE_CANVAS_ID } from "~/helpers/particles";
+import { usePWA } from "~/helpers/pwa";
 import { useTrackVisit } from "~/helpers/visits";
 import { useReregisterPushSubscriptionIfNeeded } from "~/helpers/webPush";
+import { type SharedPageProps } from "~/types";
 
 import AppHeader, { type AppHeaderProps } from "./AppHeader";
 import AppMeta, { type AppMetaProps } from "./AppMeta";
@@ -82,7 +95,7 @@ const AppLayout = <PageProps extends SharedPageProps = SharedPageProps>({
   const page = usePage<PageProps>();
   const breadcrumbs = useMemo<AppBreadcrumb[]>(() => {
     return breadcrumbsProp
-      ? resolveDynamicProp(breadcrumbsProp, page).filter(x => !!x)
+      ? resolveDynamicProp(breadcrumbsProp, page).filter((x) => !!x)
       : [];
   }, [breadcrumbsProp, page]);
 

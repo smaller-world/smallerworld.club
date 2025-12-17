@@ -1,4 +1,5 @@
 import { ModalsProvider } from "@mantine/modals";
+import { type FC, type PropsWithChildren } from "react";
 
 import AmplitudeTracking from "./AmplitudeTracking";
 import AppFlash from "./AppFlash";
@@ -11,10 +12,9 @@ import PWAProvider from "./PWAProvider";
 import SentryTracking from "./SentryTracking";
 import WebPushProvider from "./WebPushProvider";
 
+import "@mantine/core/styles.layer.css";
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/bricolage-grotesque";
-
-import "@mantine/core/styles.layer.css";
 
 const PageLayout: FC<PropsWithChildren> = ({ children }) => (
   <>

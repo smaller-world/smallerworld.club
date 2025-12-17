@@ -8,8 +8,13 @@ import PlaceholderExtension from "@tiptap/extension-placeholder";
 import { type Editor, type EditorOptions, useEditor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKitExtension from "@tiptap/starter-kit";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
+
+import { useVaulPortalTarget } from "~/helpers/vaul";
 
 import classes from "./PostEditor.module.css";
+
 import "@mantine/tiptap/styles.layer.css";
 
 export interface PostEditorProps
@@ -49,7 +54,7 @@ const PostEditor: FC<PostEditorProps> = ({
       ],
       editorProps: {
         attributes: {
-          class: cn(classes.contentEditable),
+          class: clsx(classes.contentEditable),
         },
       },
       content: initialValue,
@@ -63,7 +68,7 @@ const PostEditor: FC<PostEditorProps> = ({
         // }
         onEditorCreated?.(editor);
       },
-      onUpdate: props => {
+      onUpdate: (props) => {
         const { editor } = props;
         const html = editor.getHTML();
         // htmlRef.current = html;

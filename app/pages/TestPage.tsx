@@ -1,14 +1,33 @@
-import { Text } from "@mantine/core";
+import {
+  type BoxProps,
+  Button,
+  Divider,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
-
-import ArrowTopRightOnSquareIcon from "~icons/heroicons/arrow-top-right-on-square-20-solid";
-import BellAlertIcon from "~icons/heroicons/bell-alert-20-solid";
-import PencilSquareIcon from "~icons/heroicons/pencil-square-20-solid";
+import { closeAllModals, openModal } from "@mantine/modals";
+import {
+  type ComponentPropsWithoutRef,
+  type FC,
+  useCallback,
+  useMemo,
+} from "react";
+import { toast } from "sonner";
 
 import AppLayout from "~/components/AppLayout";
 import { type FileValue } from "~/components/FileInput";
 import FileInput from "~/components/FileInput";
 import TestForm from "~/components/TestForm";
+import { type PageComponent } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
+
+import ArrowTopRightOnSquareIcon from "~icons/heroicons/arrow-top-right-on-square-20-solid";
+import BellAlertIcon from "~icons/heroicons/bell-alert-20-solid";
+import PencilSquareIcon from "~icons/heroicons/pencil-square-20-solid";
 
 export interface TestPageProps extends SharedPageProps {
   name: string;
@@ -73,7 +92,7 @@ const TestPage: PageComponent<TestPageProps> = ({ name: initialName }) => {
   );
 };
 
-TestPage.layout = page => (
+TestPage.layout = (page) => (
   <AppLayout title="test page" withContainer containerSize="sm" withGutter>
     {page}
   </AppLayout>

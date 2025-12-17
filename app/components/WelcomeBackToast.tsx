@@ -1,6 +1,8 @@
 import { useDocumentVisibility } from "@mantine/hooks";
 import { type ConfettiOptions } from "@tsparticles/confetti";
 import { DateTime } from "luxon";
+import { type FC, useEffect } from "react";
+import { toast } from "sonner";
 
 import { confetti } from "~/helpers/particles";
 import { type Friend, type User } from "~/types";

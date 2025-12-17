@@ -1,9 +1,24 @@
+import { Link } from "@inertiajs/react";
+import { Box, Button, Skeleton, Stack, Title } from "@mantine/core";
+import { isEmpty } from "lodash-es";
+
+import { EmptyCard } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import NewInvitationButton from "~/components/NewInvitationButton";
 import UserWorldInvitationCard from "~/components/UserWorldInvitationCard";
+import { BackIcon, InvitationIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
-import { type User, type UserWorldInvitation, type World } from "~/types";
-
+import { withTrailingSlash } from "~/helpers/utils";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type SharedPageProps,
+  type User,
+  type UserWorldInvitation,
+  type World,
+} from "~/types";
 export interface UserWorldInvitationsPageProps extends SharedPageProps {
   currentUser: User;
   world: World;
@@ -55,7 +70,7 @@ const UserWorldInvitationsPage: PageComponent<
           isEmpty(pendingInvitations) ? (
             <EmptyCard itemLabel="join requests" />
           ) : (
-            pendingInvitations.map(invitation => (
+            pendingInvitations.map((invitation) => (
               <UserWorldInvitationCard
                 key={invitation.id}
                 {...{ invitation }}
@@ -70,7 +85,7 @@ const UserWorldInvitationsPage: PageComponent<
   );
 };
 
-UserWorldInvitationsPage.layout = page => (
+UserWorldInvitationsPage.layout = (page) => (
   <AppLayout<UserWorldInvitationsPageProps>
     title="your pending invitations"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

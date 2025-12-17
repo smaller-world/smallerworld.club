@@ -22,7 +22,7 @@ export const useContact = (
     loading: false,
   });
   const contact = useCallback(() => {
-    setResult(result => ({ ...result, loading: true }));
+    setResult((result) => ({ ...result, loading: true }));
     const { onTriggered, ...params } = options ?? {};
     fetchRoute<{ mailto: string; sms: string }>(routes.contactUrl.show, {
       descriptor: "load contact info",
@@ -33,15 +33,15 @@ export const useContact = (
           location.href = params.type === "sms" ? sms : mailto;
           onTriggered?.();
         },
-        reason => {
+        (reason) => {
           console.error("Failed to redirect to contact URI", reason);
           if (reason instanceof Error) {
-            setResult(result => ({ ...result, error: reason }));
+            setResult((result) => ({ ...result, error: reason }));
           }
         },
       )
       .finally(() => {
-        setResult(result => ({ ...result, loading: false }));
+        setResult((result) => ({ ...result, loading: false }));
       });
   }, [options]);
   return [contact, result];

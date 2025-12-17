@@ -1,6 +1,29 @@
 import { visit } from "@hotwired/turbo";
 import { type InertiaLinkProps } from "@inertiajs/react";
-import { Image, Loader, type MenuItemProps, Text } from "@mantine/core";
+import { Link } from "@inertiajs/react";
+import {
+  Badge,
+  type BoxProps,
+  Image,
+  Loader,
+  Menu,
+  type MenuItemProps,
+  Skeleton,
+  Text,
+} from "@mantine/core";
+import {
+  type ComponentPropsWithoutRef,
+  type FC,
+  useEffect,
+  useState,
+} from "react";
+
+import { useCurrentUser } from "~/helpers/authentication";
+import { useContact } from "~/helpers/contact";
+import { SignInIcon, SignOutIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { useRouteMutation, useRouteSWR } from "~/helpers/routes/swr";
+import { withTrailingSlash } from "~/helpers/utils";
 
 import MenuIcon from "~icons/heroicons/bars-3-20-solid";
 import ChatIcon from "~icons/heroicons/chat-bubble-left-right-20-solid";
@@ -8,7 +31,7 @@ import LockIcon from "~icons/heroicons/lock-closed-20-solid";
 
 import logoSrc from "~/assets/images/logo.png";
 
-import { useContact } from "~/helpers/contact";
+import TimeAgo from "./TimeAgo";
 
 import classes from "./AppMenu.module.css";
 
@@ -160,7 +183,7 @@ const ContactItem: FC<ContactItemProps> = ({ onClose, ...otherProps }) => {
   );
 };
 
-const ServerInfoItem: FC<BoxProps> = props => {
+const ServerInfoItem: FC<BoxProps> = (props) => {
   const { data } = useRouteSWR<{ bootedAt: string }>(
     routes.healthcheckHealthchecks.check,
     {
@@ -199,6 +222,6 @@ const ServerInfoItem: FC<BoxProps> = props => {
 interface LinkItemProps
   extends MenuItemProps,
     Omit<InertiaLinkProps, "color" | "style"> {}
-const LinkItem: FC<LinkItemProps> = props => (
+const LinkItem: FC<LinkItemProps> = (props) => (
   <Menu.Item component={Link} {...props} />
 );

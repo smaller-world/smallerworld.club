@@ -1,5 +1,6 @@
 import { useMap } from "@mantine/hooks";
 import type Konva from "konva";
+import { type FC, useMemo, useRef } from "react";
 import {
   type KonvaNodeEvents,
   Layer,
@@ -8,6 +9,7 @@ import {
   type StageProps,
 } from "react-konva";
 import { useImage } from "react-konva-utils";
+import invariant from "tiny-invariant";
 
 import { usePuzzleSnap } from "~/helpers/svgPuzzle";
 
@@ -96,7 +98,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
       }
     > = {};
 
-    svgElement.querySelectorAll("pattern").forEach(pattern => {
+    svgElement.querySelectorAll("pattern").forEach((pattern) => {
       const id = pattern.getAttribute("id");
       const useElement = pattern.querySelector("use");
       const imageRef = useElement?.getAttribute("xlink:href");
@@ -133,7 +135,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
         let fillPatternSrc: string | undefined;
         let fillPatternTransform: string | undefined;
         if (fill?.startsWith("url(#")) {
-          const patternId = fill.match(/url\(#([^)]+)\)/)?.[1];
+          const patternId = /url\(#([^)]+)\)/.exec(fill)?.[1];
           if (patternId && patterns[patternId]) {
             const pattern = patterns[patternId];
             fillPatternSrc = pattern.href;
@@ -270,7 +272,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
         scale={{ x: scale * scaleMultiplier, y: scale * scaleMultiplier }}
         // offset={{ x: -offsetX / scale, y: -offsetY / scale }}
       >
-        {paths.map(path => {
+        {paths.map((path) => {
           const { x, y } = pathPositions.get(path.id) ?? {};
           const props: Konva.PathConfig & KonvaNodeEvents = {
             name: path.id,
@@ -332,7 +334,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
               target.opacity(1);
               document.body.style.cursor = "default";
             },
-            onDragStart: evt => {
+            onDragStart: (evt) => {
               document.body.style.cursor = "grabbing";
 
               // Collect connected component and cache positions
@@ -359,7 +361,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
                 };
               }
             },
-            onDragMove: evt => {
+            onDragMove: (evt) => {
               if (!dragGroupRef.current) return;
 
               const { leaderId, leaderStart, groupIds, memberStarts } =
@@ -399,7 +401,7 @@ const SVGPuzzle: FC<SVGPuzzleProps> = ({
           const isSnapped =
             debugSnapOverlay &&
             Array.from(pathPositions.keys()).some(
-              neighborId =>
+              (neighborId) =>
                 neighborId !== path.id &&
                 arePiecesSnapped(path.id, neighborId, 8),
             );
@@ -487,7 +489,7 @@ const svgTransform2KonvaTransformAttributes = (
   if (!transform || !path) {
     return {};
   }
-  const match = transform.match(/matrix\(([^)]+)\)/);
+  const match = /matrix\(([^)]+)\)/.exec(transform);
   if (!match) {
     throw new Error("Invalid transform string: " + transform);
   }

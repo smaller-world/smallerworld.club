@@ -1,6 +1,12 @@
-import { type AnchorProps, type MantineColor } from "@mantine/core";
-import { createPolymorphicComponent } from "@mantine/core";
-import { type ComponentPropsWithRef } from "react";
+import {
+  Anchor,
+  type AnchorProps,
+  createPolymorphicComponent,
+  getThemeColor,
+  type MantineColor,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 
 import classes from "./AnchorContainer.module.css";
 
@@ -15,11 +21,11 @@ const AnchorContainer = createPolymorphicComponent<"a", AnchorContainerProps>(
     ({ borderColor, style, className, children, ...otherProps }, ref) => (
       <Anchor
         {...{ ref }}
-        className={cn("AnchorContainer", classes.container, className)}
+        className={clsx("AnchorContainer", classes.container, className)}
         unstyled
         style={[
           style,
-          theme => ({
+          (theme) => ({
             "--ac-active-border-color": getThemeColor(
               borderColor ?? theme.primaryColor,
               theme,

@@ -1,4 +1,5 @@
-import { Text } from "@mantine/core";
+import { Box, Center, Divider, Stack, Text } from "@mantine/core";
+import { type FC } from "react";
 
 import { type DrawerModalProps } from "~/components/DrawerModal";
 import { type Invitation } from "~/types";

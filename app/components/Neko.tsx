@@ -22,7 +22,9 @@
  * This code was AI-generated and may require human review and testing.
  */
 
-import spriteSrc from "~/assets/images/neko-sprite.gif";
+import { Box, type BoxProps } from "@mantine/core";
+import { clsx } from "clsx";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   type Animation,
@@ -30,6 +32,8 @@ import {
   NEKO_SIZE,
   SPRITE_SETS,
 } from "~/helpers/neko";
+
+import spriteSrc from "~/assets/images/neko-sprite.gif";
 
 export interface NekoProps extends BoxProps {
   /** Current animation name */
@@ -74,7 +78,7 @@ const Neko = forwardRef<HTMLDivElement, NekoProps>(
         lastFrameTimeRef.current ??= timestamp;
 
         if (timestamp - lastFrameTimeRef.current >= animationInterval) {
-          setCurrentFrame(prev => (prev + 1) % currentAnimation.length);
+          setCurrentFrame((prev) => (prev + 1) % currentAnimation.length);
           lastFrameTimeRef.current = timestamp;
         }
 
@@ -99,7 +103,7 @@ const Neko = forwardRef<HTMLDivElement, NekoProps>(
     return (
       <Box
         {...{ ref }}
-        className={cn("Neko", className)}
+        className={clsx("Neko", className)}
         w={NEKO_SIZE}
         h={NEKO_SIZE}
         style={[

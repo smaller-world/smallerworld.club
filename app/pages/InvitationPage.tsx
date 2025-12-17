@@ -1,20 +1,26 @@
-import { Image, Text } from "@mantine/core";
-
-import bottomLeftArrowSrc from "~/assets/images/bottom-left-arrow.png";
+import { router } from "@inertiajs/react";
+import { Box, Card, Image, Stack, Text, Title } from "@mantine/core";
 
 import AcceptInvitationForm from "~/components/AcceptInvitationForm";
 import AppLayout from "~/components/AppLayout";
 import PostCard from "~/components/PostCard";
 import WorldHomescreenPreview from "~/components/WorldHomescreenPreview";
 import { prettyFriendName } from "~/helpers/friends";
+import { type PageComponent } from "~/helpers/inertia";
 import { prettyInviteeName } from "~/helpers/invitations";
+import routes from "~/helpers/routes";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
+import { useWorldTheme } from "~/helpers/worldThemes";
 import {
   type FriendProfile,
   type Invitation,
   type Post,
+  type SharedPageProps,
   type World,
 } from "~/types";
+
+import bottomLeftArrowSrc from "~/assets/images/bottom-left-arrow.png";
 
 import classes from "./InvitationPage.module.css";
 
@@ -104,7 +110,7 @@ const InvitationPage: PageComponent<InvitationPageProps> = ({
               invitation,
             }}
             initialPhoneNumber={autofillPhoneNumber}
-            onInvitationAccepted={friendAccessToken => {
+            onInvitationAccepted={(friendAccessToken) => {
               const installationPath = withTrailingSlash(
                 routes.worlds.show.path({
                   id: world.handle,
@@ -124,7 +130,7 @@ const InvitationPage: PageComponent<InvitationPageProps> = ({
   );
 };
 
-InvitationPage.layout = page => (
+InvitationPage.layout = (page) => (
   <AppLayout<InvitationPageProps>
     title={({ world }) => `you're invited to ${world.name}`}
     withContainer

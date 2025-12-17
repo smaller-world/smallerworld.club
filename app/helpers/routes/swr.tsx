@@ -16,7 +16,9 @@ import useSWRMutation, {
   type SWRMutationResponse,
 } from "swr/mutation";
 
-import { type FetchRouteOptions } from "./fetch";
+import { usePWA } from "~/helpers/pwa";
+
+import { fetchRoute, type FetchRouteOptions } from "./fetch";
 
 export interface RouteSWRResponse<Data>
   extends Omit<SWRResponse<Data, Error>, "isLoading" | "isValidating"> {
@@ -161,5 +163,5 @@ export const mutateRoute = <Data, T = Data>(
 ) => mutate<Data, T>(route.path(params), data, options);
 
 export const resetSWRCache = async (): Promise<void> => {
-  await Promise.all([...cache.keys()].map(key => mutate(key)));
+  await Promise.all([...cache.keys()].map((key) => mutate(key)));
 };

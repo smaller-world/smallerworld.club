@@ -1,6 +1,15 @@
+import { hrefToUrl } from "@inertiajs/core";
 import { router } from "@inertiajs/react";
-import { createContext, useContext, useEffect, useMemo, useRef } from "react";
-import { startTransition } from "react";
+import { isEqual } from "lodash-es";
+import {
+  createContext,
+  startTransition,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "sonner";
 
 import { type PageCSRF } from "~/types";
@@ -9,6 +18,7 @@ import { reloadCSRF } from "./csrf";
 import { usePage, usePageProps } from "./inertia/page";
 import { getMeta } from "./meta";
 import { resetSWRCache } from "./routes/swr";
+import { queryParamsFromPath } from "./utils";
 
 export interface PWAState {
   freshCSRF: { param: string; token: string } | null | undefined;
@@ -47,7 +57,7 @@ export const useIsStandalone = (): boolean | undefined => {
     return () => {
       mediaMatch.removeEventListener("change", listener);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return isStandalone;
 };
 
@@ -147,7 +157,7 @@ export const useInstallPWA = (): InstallPWAResult => {
                 toast.success("app installation started");
               }
             },
-            reason => {
+            (reason) => {
               console.error("Failed to install PWA", reason);
               if (reason instanceof Error) {
                 setError(reason);
@@ -192,12 +202,12 @@ export const useFreshCSRF = (
     }
 
     csrfLoadStartedRef.current = true;
-    void reloadCSRF().then(csrf => {
+    void reloadCSRF().then((csrf) => {
       setFreshCSRF(csrf);
       if (!isEqual(csrf, pageProps.csrf)) {
         return resetSWRCache();
       }
     });
-  }, [shouldLoad]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [shouldLoad]);
   return freshCSRF;
 };

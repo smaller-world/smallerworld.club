@@ -92,7 +92,7 @@ export const useFriendNotificationSettingsForm = ({
     },
     descriptor: "update notification preferences",
     initialValues,
-    transformValues: values => ({ notification_settings: values }),
+    transformValues: (values) => ({ notification_settings: values }),
     onSuccess: (data, form) => {
       void mutateRoute(routes.friend.notificationSettings, {
         query: {
@@ -106,6 +106,6 @@ export const useFriendNotificationSettingsForm = ({
   useDidUpdate(() => {
     setInitialValues(initialValues);
     reset();
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
   return form;
 };

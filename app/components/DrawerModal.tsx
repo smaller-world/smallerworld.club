@@ -5,8 +5,12 @@ import {
   type ScrollAreaAutosizeProps,
 } from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
+import { type FC, forwardRef, useMemo, useRef, useState } from "react";
 import { InPortal, OutPortal } from "react-reverse-portal";
 
+import { useIsMobileSize } from "~/helpers/layouts";
 import { useHtmlPortalNode } from "~/helpers/react-reverse-portal";
 
 import DrawerBase from "./DrawerBase";
@@ -82,7 +86,7 @@ const DrawerModal: FC<DrawerModalProps> = ({
       </DrawerBase>
       <Modal
         classNames={{
-          content: cn(contentClassName, classes.modalContent),
+          content: clsx(contentClassName, classes.modalContent),
           header: classes.modalHeader,
         }}
         size="var(--container-size-xs)"

@@ -1,10 +1,29 @@
-import { type CardProps, CopyButton } from "@mantine/core";
+import {
+  Anchor,
+  Badge,
+  Button,
+  Card,
+  type CardProps,
+  CopyButton,
+  Group,
+  List,
+  LoadingOverlay,
+  Stack,
+  Tooltip,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { DateTime } from "luxon";
+import { type FC, useState } from "react";
+
+import { PhoneIcon, UserIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
+import { type JoinRequest } from "~/types";
 
 import AddFriendIcon from "~icons/heroicons/user-plus-20-solid";
 
-import { type JoinRequest } from "~/types";
-
 import DeleteConfirmation from "./DeleteConfirmation";
+import Time from "./Time";
 
 import classes from "./UserWorldJoinRequestCard.module.css";
 
@@ -38,7 +57,7 @@ const UserWorldJoinRequestCard: FC<UserWorldJoinRequestCardProps> = ({
 
   return (
     <Card
-      className={cn("UserWorldJoinRequestCard", className, classes.card)}
+      className={clsx("UserWorldJoinRequestCard", className, classes.card)}
       withBorder
       {...otherProps}
     >

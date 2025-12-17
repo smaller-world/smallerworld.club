@@ -1,3 +1,5 @@
+import { randomId } from "@mantine/hooks";
+import { closeModal, openModal } from "@mantine/modals";
 import { type ModalSettings } from "node_modules/@mantine/modals/lib/context";
 
 import { POST_TYPE_TO_LABEL } from "~/helpers/posts";
@@ -28,7 +30,7 @@ export const openEditWorldPostModal = ({
     children: (
       <EditWorldPostForm
         {...{ worldId, post }}
-        onPostUpdated={updatedPost => {
+        onPostUpdated={(updatedPost) => {
           closeModal(modalId);
           onPostUpdated?.(updatedPost);
         }}

@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from "react";
+
 // Types (inline as requested)
 export type PieceId = string;
 export interface Point {

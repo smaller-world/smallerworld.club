@@ -1,5 +1,19 @@
-import { Code, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Code,
+  Divider,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
+import { type FC } from "react";
+
+import { useForm } from "~/helpers/form";
+import { formatJSON } from "~/helpers/json";
+import routes from "~/helpers/routes";
 
 import "@mantine/dates/styles.css";
 
@@ -13,7 +27,7 @@ const TestForm: FC = () => {
       name: "",
       birthday: "",
     },
-    transformValues: values => ({
+    transformValues: (values) => ({
       model: values,
     }),
   });

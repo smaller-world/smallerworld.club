@@ -1,10 +1,17 @@
 import {
+  ActionIcon,
   type ActionIconProps,
+  Anchor,
+  Button,
   type ButtonProps,
   Loader,
+  Menu,
+  Stack,
   Text,
 } from "@mantine/core";
+import { type FC, useState } from "react";
 
+import { NotificationIcon } from "~/helpers/icons";
 import { useSendTestNotification, useWebPush } from "~/helpers/webPush";
 
 import { openNotificationsTroubleshootingModal } from "./NotificationsTroubleshootingModal";
@@ -14,7 +21,7 @@ export interface UserWorldPageNotificationsButtonProps
 
 const UserWorldPageNotificationsButton: FC<
   UserWorldPageNotificationsButtonProps
-> = props => {
+> = (props) => {
   // == Menu
   const [menuOpened, setMenuOpened] = useState(false);
 

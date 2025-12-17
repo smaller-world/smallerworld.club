@@ -13,7 +13,7 @@ import { setupDayjs } from "~/helpers/dayjs";
 import { setupDevtools } from "~/helpers/devtools";
 import { setupFullStory } from "~/helpers/fullstory";
 import { setupHotwire } from "~/helpers/hotwire/setup";
-import { parsePageImports } from "~/helpers/inertia";
+import { PageComponent, parsePageImports } from "~/helpers/inertia";
 import { setupInertia } from "~/helpers/inertia/setup";
 import { setupLuxon } from "~/helpers/luxon";
 import { isStandaloneDisplayMode } from "~/helpers/pwa";
@@ -27,6 +27,7 @@ import {
 } from "~/helpers/serviceWorker/client";
 
 import "./inertia.css";
+import { getMeta } from "~/helpers/meta";
 
 // == Setup
 window.BOOTED_AT = new Date();
@@ -68,7 +69,7 @@ document.addEventListener("turbo:load", () => {
   console.info("Rendering Inertia app with ReactDOM");
   void createInertiaApp({
     progress: false,
-    resolve: async name => {
+    resolve: async (name) => {
       const importPage = pages[name];
       if (!importPage) {
         throw new Error(`Missing page '${name}'`);

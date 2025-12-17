@@ -15,7 +15,7 @@ export const setupDevtools = (): void => {
   window.resetWebPush = (): Promise<void> =>
     navigator.serviceWorker.ready
       .then(({ pushManager }) => pushManager.getSubscription())
-      .then(async subscription => {
+      .then(async (subscription) => {
         if (subscription) {
           const unsubscribed = await subscription.unsubscribe();
           if (unsubscribed) {

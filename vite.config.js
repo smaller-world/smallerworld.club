@@ -1,12 +1,11 @@
+import { createReadStream, existsSync } from "node:fs";
+import { join } from "node:path";
+
 import reactPlugin from "@vitejs/plugin-react";
-import { createReadStream, existsSync } from "fs";
 import Mime from "mime";
-import path, { join } from "path";
 import { visualizer as visualizerPlugin } from "rollup-plugin-visualizer";
-import autoImportPlugin from "unplugin-auto-import/vite";
 import iconsPlugin from "unplugin-icons/vite";
-import { resolveConfig } from "vite";
-import { defineConfig } from "vite";
+import { defineConfig, resolveConfig } from "vite";
 import environmentPlugin from "vite-plugin-environment";
 import fullReloadPlugin from "vite-plugin-full-reload";
 import { ViteImageOptimizer as imageOptimizerPlugin } from "vite-plugin-image-optimizer";
@@ -14,8 +13,6 @@ import { isomorphicImport as isomorphicImportPlugin } from "vite-plugin-isomorph
 import { VitePWA as pwaPlugin } from "vite-plugin-pwa";
 import rubyPlugin from "vite-plugin-ruby";
 import stimulusHmrPlugin from "vite-plugin-stimulus-hmr";
-
-import { imports } from "./auto-import.config";
 
 export default defineConfig(async ({ command, mode, isPreview }) => {
   // == Resolve Vite Ruby configuration
@@ -29,8 +26,10 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     undefined,
     isPreview,
   );
-  const { VITE_RUBY_ROOT, VITE_RUBY_PUBLIC_DIR } = env;
-  const publicDir = path.join(VITE_RUBY_ROOT, VITE_RUBY_PUBLIC_DIR);
+  const { VITE_RUBY_ROOT, VITE_RUBY_SOURCE_CODE_DIR, VITE_RUBY_PUBLIC_DIR } =
+    env;
+  const srcDir = join(VITE_RUBY_ROOT, VITE_RUBY_SOURCE_CODE_DIR);
+  const publicDir = join(VITE_RUBY_ROOT, VITE_RUBY_PUBLIC_DIR);
 
   // == Plugins
   /** @type {import("vite").PluginOption[]} */
@@ -40,10 +39,6 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
       { defineOn: "import.meta.env" },
     ),
     ignoringCssIsomorphicImportPlugin(),
-    autoImportPlugin({
-      dts: join(__dirname, "typings/generated/auto-import.d.ts"),
-      imports,
-    }),
     iconsPlugin({ compiler: "jsx", jsx: "react" }),
     imageOptimizerPlugin({ includePublic: false }),
     reactPlugin(),
@@ -80,7 +75,7 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
         if (!req.url) {
           return next();
         }
-        const filePath = path.join(publicDir, req.url);
+        const filePath = join(publicDir, req.url);
         if (!existsSync(filePath)) {
           return next();
         }
@@ -105,13 +100,22 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     );
   }
 
-  return {
+  /** @type {import("vite").UserConfig} */
+  const config = {
     clearScreen: false,
     resolve: {
       alias: [
         {
           find: "lodash",
           replacement: "lodash-es",
+        },
+        {
+          find: "~stylesheets",
+          replacement: join(srcDir, "assets/stylesheets"),
+        },
+        {
+          find: "~helpers",
+          replacement: join(srcDir, "javascript/helpers"),
         },
       ],
     },
@@ -135,14 +139,15 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     },
     plugins,
   };
+  return config;
 });
 
 const ignoringCssIsomorphicImportPlugin = () => {
   const plugin = isomorphicImportPlugin({
     client: ["@hotwired/turbo", "@rails/activestorage"],
   });
-  // Wrap the plugin to skip CSS files
-  const isCssFile = id => {
+
+  const isCssFile = (id) => {
     // Strip query parameters and hash before checking
     const pathWithoutQuery = id.split("?")[0].split("#")[0];
     return pathWithoutQuery.endsWith(".css");

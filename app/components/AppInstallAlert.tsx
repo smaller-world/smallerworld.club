@@ -1,5 +1,15 @@
-import { type AlertProps, Text } from "@mantine/core";
+import {
+  Alert,
+  type AlertProps,
+  Button,
+  Group,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC } from "react";
 
+import { InstallIcon, NotificationIcon } from "~/helpers/icons";
 import { openAppInstallModal } from "~/helpers/install";
 
 import classes from "./AppInstallAlert.module.css";
@@ -15,7 +25,7 @@ const AppInstallAlert: FC<AppInstallAlertProps> = ({
     variant="filled"
     icon={<NotificationIcon />}
     title="add smaller world to your phone"
-    className={cn(classes.alert, className)}
+    className={clsx(classes.alert, className)}
     {...otherProps}
   >
     <Stack gap={8} align="start">

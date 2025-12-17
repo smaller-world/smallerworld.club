@@ -51,7 +51,7 @@ export const useWebPush = (options?: WebPushOptions): WebPush => {
   return {
     ...context,
     subscribe: (subscribeOptions?: WebPushSubscribeOptions) =>
-      context.subscribe(subscribeOptions).then(subscription => {
+      context.subscribe(subscribeOptions).then((subscription) => {
         options?.onSubscribed?.(subscription);
         return subscription;
       }),
@@ -77,7 +77,7 @@ export const useSendTestNotification = (): SendTestNotificationReturn => {
           }),
         },
       },
-      serializeData: attributes => ({ push_subscription: attributes }),
+      serializeData: (attributes) => ({ push_subscription: attributes }),
     },
   );
   const send = useCallback(
@@ -126,6 +126,5 @@ export const useReregisterPushSubscriptionIfNeeded = (): void => {
       registrationAttemptedRef.current = true;
       void subscribe();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pushRegistration, serviceWorkerMetadata, deviceFingerprint, loading]);
 };

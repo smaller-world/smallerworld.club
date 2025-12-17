@@ -1,6 +1,11 @@
-import ShuffleIcon from "~icons/basil/shuffle-solid";
+import { hrefToUrl } from "@inertiajs/core";
+import { Box, Button, Stack } from "@mantine/core";
+import { type FC, useEffect, useState } from "react";
 
+import { usePage, useQueryParams } from "~/helpers/inertia";
 import { type WorldProfile } from "~/types";
+
+import ShuffleIcon from "~icons/basil/shuffle-solid";
 
 import WorldHomescreenPreview, {
   type WorldHomescreenPreviewProps,
@@ -73,6 +78,6 @@ const usePageUrlWithAlternativeManifestIcon = (
       pageUrl.searchParams.set("manifest_icon_type", "generic");
     }
     setAlternateUrl(pageUrl.toString());
-  }, [pagePath]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pagePath]);
   return alternateUrl;
 };

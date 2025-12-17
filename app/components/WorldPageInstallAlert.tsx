@@ -1,6 +1,20 @@
-import { Affix, type AlertProps, Text } from "@mantine/core";
+import {
+  Affix,
+  Alert,
+  type AlertProps,
+  Button,
+  Group,
+  Stack,
+  Text,
+  Transition,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
+import { type FC } from "react";
 
+import { InstallIcon, NotificationIcon } from "~/helpers/icons";
+import { usePageProps } from "~/helpers/inertia";
 import { openWorldPageInstallModal } from "~/helpers/install";
 import { usePageDialogOpened } from "~/helpers/pageDialog";
 import { type WorldPageProps } from "~/helpers/worlds";
@@ -21,7 +35,7 @@ const WorldPageInstallAlert: FC<WorldPageInstallAlertProps> = ({
 
   return (
     <Affix
-      className={cn("WorldPageInstallAlert", classes.affix)}
+      className={clsx("WorldPageInstallAlert", classes.affix)}
       position={{}}
       zIndex={180}
     >
@@ -30,12 +44,12 @@ const WorldPageInstallAlert: FC<WorldPageInstallAlertProps> = ({
         mounted={isEmpty(modals) && !pageDialogOpened}
         enterDelay={100}
       >
-        {transitionStyle => (
+        {(transitionStyle) => (
           <Alert
             variant="filled"
             icon={<NotificationIcon />}
             title="install me on your phone!"
-            className={cn(classes.alert, className)}
+            className={clsx(classes.alert, className)}
             style={[style, transitionStyle]}
             {...otherProps}
           >

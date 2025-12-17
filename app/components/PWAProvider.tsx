@@ -1,3 +1,5 @@
+import { type FC, type PropsWithChildren } from "react";
+
 import {
   PWAContext,
   useFreshCSRF,

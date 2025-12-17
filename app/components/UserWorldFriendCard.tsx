@@ -1,5 +1,31 @@
-import { CopyButton, Loader, MenuItem, Overlay, Text } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
+import {
+  ActionIcon,
+  Badge,
+  Box,
+  Button,
+  Card,
+  CopyButton,
+  Group,
+  Loader,
+  LoadingOverlay,
+  Menu,
+  MenuItem,
+  Overlay,
+  rem,
+  Text,
+  Tooltip,
+} from "@mantine/core";
+import { randomId } from "@mantine/hooks";
+import { closeModal, openConfirmModal, openModal } from "@mantine/modals";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
+import { toast } from "sonner";
+
+import { prettyFriendName } from "~/helpers/friends";
+import { EditIcon, PhoneIcon, RemoveIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
+import { type UserWorldFriendProfile } from "~/types";
 
 import SMSIcon from "~icons/heroicons/chat-bubble-left-ellipsis-20-solid";
 import MenuIcon from "~icons/heroicons/ellipsis-vertical-20-solid";
@@ -7,9 +33,6 @@ import FrownIcon from "~icons/heroicons/face-frown-20-solid";
 import PauseIcon from "~icons/heroicons/pause-20-solid";
 import ResumeIcon from "~icons/heroicons/play-20-solid";
 import QRCodeIcon from "~icons/heroicons/qr-code-20-solid";
-
-import { prettyFriendName } from "~/helpers/friends";
-import { /* type Activity, */ type UserWorldFriendProfile } from "~/types";
 
 import ActivityCouponDrawer from "./ActivityCouponDrawer";
 import EditFriendForm from "./EditFriendForm";
@@ -59,7 +82,7 @@ const UserWorldFriendCard: FC<UserWorldFriendCardProps> = ({
 
   return (
     <>
-      <Card className={cn("UserWorldFriendCard", classes.card)} withBorder>
+      <Card className={clsx("UserWorldFriendCard", classes.card)} withBorder>
         <Group gap={6} justify="space-between" className={classes.group}>
           <Group gap={8} miw={0} style={{ flexGrow: 1 }}>
             {!!friend.emoji && (

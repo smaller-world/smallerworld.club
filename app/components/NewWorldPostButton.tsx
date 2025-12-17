@@ -1,8 +1,13 @@
-import { type ButtonProps, Indicator } from "@mantine/core";
-
-import DraftIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
-import DraftCircleIcon from "~icons/heroicons/ellipsis-horizontal-circle-20-solid";
-import NewIcon from "~icons/heroicons/pencil-square-20-solid";
+import {
+  Box,
+  Button,
+  type ButtonProps,
+  Center,
+  Indicator,
+  Menu,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
 
 import {
   type NewWorldPostModalProps,
@@ -16,6 +21,10 @@ import {
 } from "~/helpers/posts";
 import { useSavedDraftType } from "~/helpers/posts/drafts";
 import { type PromptDeck } from "~/types";
+
+import DraftIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
+import DraftCircleIcon from "~icons/heroicons/ellipsis-horizontal-circle-20-solid";
+import NewIcon from "~icons/heroicons/pencil-square-20-solid";
 
 import PromptDeckDrawer from "./PromptDeckDrawer";
 import PromptDeckModal from "./PromptDeckModal";
@@ -70,7 +79,7 @@ const NewWorldPostButton: FC<NewWorldPostButtonProps> = ({
               size="md"
               variant="filled"
               radius="xl"
-              className={cn(
+              className={clsx(
                 "NewWorldPostButton",
                 classes.menuButton,
                 className,
@@ -83,7 +92,7 @@ const NewWorldPostButton: FC<NewWorldPostButtonProps> = ({
           </Indicator>
         </Menu.Target>
         <Menu.Dropdown>
-          {SELECTABLE_POST_TYPES.map(postType => (
+          {SELECTABLE_POST_TYPES.map((postType) => (
             <Menu.Item
               key={postType}
               leftSection={
@@ -131,7 +140,7 @@ const NewWorldPostButton: FC<NewWorldPostButtonProps> = ({
         onClose={() => {
           setDrawerOpened(false);
         }}
-        onDeckSelect={deck => {
+        onDeckSelect={(deck) => {
           setDrawerOpened(false);
           setTimeout(() => {
             setSelectedDeck(deck);
@@ -140,7 +149,7 @@ const NewWorldPostButton: FC<NewWorldPostButtonProps> = ({
       />
       <PromptDeckModal
         deck={selectedDeck}
-        onPromptSelected={prompt => {
+        onPromptSelected={(prompt) => {
           const deck = selectedDeck;
           setSelectedDeck(null);
           if (deck) {

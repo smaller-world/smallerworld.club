@@ -1,5 +1,6 @@
 import { DEFAULT_THEME, MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
+import { type FC, type PropsWithChildren, useEffect, useState } from "react";
 
 import { useCreateTheme } from "~/helpers/mantine";
 import { currentWorldTheme, DARK_WORLD_THEMES } from "~/helpers/worldThemes";
@@ -10,8 +11,8 @@ const AppMantineProvider: FC<PropsWithChildren> = ({ children }) => {
   const [detectedWorldTheme, setDetectedWorldTheme] =
     useState<WorldTheme | null>(null);
   useEffect(() => {
-    const observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
         if (mutation.attributeName !== "data-world-theme") {
           return;
         }

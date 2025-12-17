@@ -303,7 +303,7 @@ const { getInputProps, submit, submitting, values } = useForm({
   action: routes.posts.create,
   descriptor: "create post",
   initialValues: { title: "", body: "" },
-  transformValues: values => ({ post: values }),
+  transformValues: (values) => ({ post: values }),
   onSuccess: ({ result }) => {
     void mutateRoute(routes.posts.index);
     onPostCreated?.(result);

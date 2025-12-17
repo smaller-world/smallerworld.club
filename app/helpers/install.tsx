@@ -1,5 +1,6 @@
 import { type ModalProps } from "@mantine/core";
 import { randomId } from "@mantine/hooks";
+import { openModal } from "@mantine/modals";
 
 import {
   InstallModalBody,

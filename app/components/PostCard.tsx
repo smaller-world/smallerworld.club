@@ -1,20 +1,45 @@
+import { router } from "@inertiajs/react";
 import {
+  Alert,
+  Anchor,
+  Badge,
+  Box,
+  type BoxProps,
+  Button,
+  Card,
   type CardProps,
   Image,
   Overlay,
+  Paper,
+  Space,
   Spoiler,
+  Stack,
   Text,
+  Title,
+  Tooltip,
   Typography,
 } from "@mantine/core";
-import { Paper } from "@mantine/core";
+import { Group } from "@mantine/core";
+import { clsx } from "clsx";
+import { DateTime } from "luxon";
+import {
+  type FC,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Spotify } from "react-spotify-embed";
-
-import ExpandIcon from "~icons/heroicons/chevron-down-20-solid";
-import LockIcon from "~icons/heroicons/lock-closed-20-solid";
+import { toast } from "sonner";
 
 import { isHotwireNative } from "~/helpers/hotwire";
+import { PublicIcon } from "~/helpers/icons";
 import { clampedImageDimensions } from "~/helpers/images";
 import { POST_TYPE_TO_ICON, POST_TYPE_TO_LABEL } from "~/helpers/posts";
+import { usePWA } from "~/helpers/pwa";
+import routes from "~/helpers/routes";
+import { withTrailingSlash } from "~/helpers/utils";
 import { useWebPush } from "~/helpers/webPush";
 import {
   type AuthorWorldProfile,
@@ -22,13 +47,19 @@ import {
   type Post,
 } from "~/types";
 
+import ExpandIcon from "~icons/heroicons/chevron-down-20-solid";
+import LockIcon from "~icons/heroicons/lock-closed-20-solid";
+
 import AppLightbox from "./AppLightbox";
 import ImageStack from "./ImageStack";
 import { openNewSpacePostModal } from "./NewSpacePostModal";
 import { openNewWorldPostModal } from "./NewWorldPostModal";
+import PWAScopedLink from "./PWAScopedLink";
 import QuotedPostCard from "./QuotedPostCard";
+import Time from "./Time";
 
 import classes from "./PostCard.module.css";
+
 import "yet-another-react-lightbox/styles.css";
 
 export interface PostCardProps
@@ -101,7 +132,7 @@ const PostCard: FC<PostCardProps> = ({
 
   const { prompt } = post;
   return (
-    <Stack className={cn("PostCard", className)} gap={6} {...otherProps}>
+    <Stack className={clsx("PostCard", className)} gap={6} {...otherProps}>
       {post.encouragement && !hideEncouragement && (
         <Badge
           variant="default"
@@ -201,7 +232,7 @@ const PostCard: FC<PostCardProps> = ({
                     from{" "}
                     {author?.world ? (
                       <Anchor
-                        component={Link}
+                        component={PWAScopedLink}
                         href={withTrailingSlash(
                           routes.worlds.show.path({
                             id: author.world.handle,
@@ -239,7 +270,7 @@ const PostCard: FC<PostCardProps> = ({
                 ) : (
                   <Time
                     className={classes.timestamp}
-                    format={dateTime => {
+                    format={(dateTime) => {
                       if (dateTime.hasSame(DateTime.now(), "day")) {
                         return dateTime.toLocaleString(DateTime.TIME_SIMPLE);
                       }
@@ -406,7 +437,7 @@ const ImageWithLightbox: FC<ImageWithLightboxProps> = ({
   return (
     <>
       <Image
-        className={cn(classes.image, className)}
+        className={clsx(classes.image, className)}
         src={image.src}
         {...(image.srcset && { srcSet: image.srcset })}
         fit="contain"

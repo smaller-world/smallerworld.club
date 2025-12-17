@@ -1,4 +1,6 @@
-import { type ButtonProps } from "@mantine/core";
+import { Button, type ButtonProps } from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
 
 import AddFriendIcon from "~icons/heroicons/user-plus-20-solid";
 
@@ -24,7 +26,7 @@ const NewInvitationButton: FC<NewInvitationButtonProps> = ({
     <>
       <Button
         leftSection={<AddFriendIcon />}
-        className={cn("NewInvitationButton", className)}
+        className={clsx("NewInvitationButton", className)}
         onClick={() => {
           setModalOpened(true);
         }}

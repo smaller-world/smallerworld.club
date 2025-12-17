@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useMemo } from "react";
 
-import bakudekuSrc from "~/assets/images/bakudeku.jpg";
-
 import { type User, type WorldTheme } from "~/types";
+
+import bakudekuSrc from "~/assets/images/bakudeku.jpg";
 
 import { useCurrentUser } from "./authentication";
 
@@ -30,7 +30,7 @@ const SMUTTY_WORLD_THEMES: WorldTheme[] = ["bakudeku"];
 export const availableWorldThemes = (user: User | null): WorldTheme[] => {
   const worldThemes = new Set(WORLD_THEMES);
   if (!user?.supported_features.includes("smutty_themes")) {
-    SMUTTY_WORLD_THEMES.forEach(theme => worldThemes.delete(theme));
+    SMUTTY_WORLD_THEMES.forEach((theme) => worldThemes.delete(theme));
   }
   return Array.from(worldThemes);
 };
@@ -154,11 +154,11 @@ export const useWorldTheme = (
     if (worldTheme !== undefined) {
       setWorldTheme(worldTheme, plainBackground);
     }
-  }, [worldTheme]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [worldTheme]);
   useEffect(() => {
     return () => {
       setWorldTheme(null);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return currentWorldTheme;
 };

@@ -1,7 +1,14 @@
 import { visit } from "@hotwired/turbo";
+import { hrefToUrl } from "@inertiajs/core";
+import { router } from "@inertiajs/react";
+import { Card, Center, Title } from "@mantine/core";
 
 import AppLayout from "~/components/AppLayout";
 import LoginForm from "~/components/LoginForm";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { queryParamsFromPath, withTrailingSlash } from "~/helpers/utils";
+import { type SharedPageProps } from "~/types";
 
 export interface LoginPageProps extends SharedPageProps {}
 
@@ -15,7 +22,7 @@ const LoginPage: PageComponent<LoginPageProps> = () => {
       </Card.Section>
       <Card.Section inheritPadding py="md">
         <LoginForm
-          onSessionCreated={registered => {
+          onSessionCreated={(registered) => {
             const query = queryParamsFromPath(location.href);
             if (registered) {
               const { redirect_to } = queryParamsFromPath(location.href);
@@ -38,7 +45,7 @@ const LoginPage: PageComponent<LoginPageProps> = () => {
   );
 };
 
-LoginPage.layout = page => (
+LoginPage.layout = (page) => (
   <AppLayout title="sign in" hideTitleOnNative>
     <Center style={{ flexGrow: 1 }}>{page}</Center>
   </AppLayout>

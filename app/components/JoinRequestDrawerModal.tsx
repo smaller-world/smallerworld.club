@@ -1,4 +1,5 @@
 import { type DrawerProps } from "@mantine/core";
+import { type FC } from "react";
 
 import DrawerModal from "./DrawerModal";
 import JoinRequestForm, { type JoinRequestFormProps } from "./JoinRequestForm";

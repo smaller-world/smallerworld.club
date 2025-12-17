@@ -1,5 +1,5 @@
-import { type AnchorProps } from "@mantine/core";
-import { type ReactNode } from "react";
+import { Anchor, type AnchorProps } from "@mantine/core";
+import { type FC, type ReactNode } from "react";
 
 import { type UseContactOptions } from "~/helpers/contact";
 import { useContact } from "~/helpers/contact";

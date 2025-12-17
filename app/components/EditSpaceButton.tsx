@@ -1,7 +1,12 @@
-import { type ButtonProps } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import { Button, type ButtonProps } from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
 
 import { isHotwireNative } from "~/helpers/hotwire";
+import { EditIcon } from "~/helpers/icons";
 import { usePageDialogOpened } from "~/helpers/pageDialog";
+import routes from "~/helpers/routes";
 
 import DrawerModal from "./DrawerModal";
 import EditSpaceForm, { type EditSpaceFormProps } from "./EditSpaceForm";
@@ -22,7 +27,7 @@ const EditSpaceButton: FC<EditSpaceButtonProps> = ({
     <>
       <Button
         leftSection={<EditIcon />}
-        className={cn("EditSpaceButton", className)}
+        className={clsx("EditSpaceButton", className)}
         onClick={() => {
           if (isHotwireNative()) {
             router.visit(
@@ -47,7 +52,7 @@ const EditSpaceButton: FC<EditSpaceButtonProps> = ({
       >
         <EditSpaceForm
           space={space}
-          onSpaceUpdated={space => {
+          onSpaceUpdated={(space) => {
             setDrawerModalOpened(false);
             onSpaceUpdated?.(space);
           }}

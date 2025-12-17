@@ -1,22 +1,41 @@
-import { Input, ScrollArea, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  Box,
+  type BoxProps,
+  Button,
+  Card,
+  Group,
+  Input,
+  ScrollArea,
+  Space,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useLongPress, useMergedRef, useViewportSize } from "@mantine/hooks";
+import {
+  useElementSize,
+  useLongPress,
+  useMergedRef,
+  useViewportSize,
+} from "@mantine/hooks";
 import { type Editor } from "@tiptap/react";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
 import { DateTime } from "luxon";
 import { type DraggableProps, motion, Reorder } from "motion/react";
-
-import CalendarIcon from "~icons/heroicons/calendar-20-solid";
-import LinkIcon from "~icons/heroicons/link-20-solid";
-import ImageIcon from "~icons/heroicons/photo-20-solid";
-import SpotifyIcon from "~icons/ri/spotify-fill";
+import { type FC, useMemo, useState } from "react";
 
 import { isAndroid, isIos, useBrowserDetection } from "~/helpers/browsers";
 import { type FormHelper } from "~/helpers/form";
+import { EmojiIcon, RemoveIcon, SaveIcon, SendIcon } from "~/helpers/icons";
 import {
   POST_BODY_PLACEHOLDERS,
   POST_TITLE_PLACEHOLDERS,
   postTypeHasTitle,
 } from "~/helpers/posts";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import {
   type Post,
   type PostPrompt,
@@ -24,11 +43,17 @@ import {
   type Upload,
 } from "~/types";
 
+import CalendarIcon from "~icons/heroicons/calendar-20-solid";
+import LinkIcon from "~icons/heroicons/link-20-solid";
+import ImageIcon from "~icons/heroicons/photo-20-solid";
+import SpotifyIcon from "~icons/ri/spotify-fill";
+
 import EmojiPopover from "./EmojiPopover";
 import ImageInput, { type ImageInputProps } from "./ImageInput";
 import LazyPostEditor from "./LazyPostEditor";
 
 import classes from "./SpacePostFormBody.module.css";
+
 import "@mantine/dates/styles.css";
 
 export interface SpacePostFormValues {
@@ -160,7 +185,7 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
   );
 
   return (
-    <Stack className={cn("SpacePostFormBody", className)} {...otherProps}>
+    <Stack className={clsx("SpacePostFormBody", className)} {...otherProps}>
       {prompt && (
         <Card
           w={PROMPT_CARD_WIDTH}
@@ -211,11 +236,11 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
                     mah: viewportHeight * 0.4,
                   }),
               }}
-              onEditorCreated={editor => {
+              onEditorCreated={(editor) => {
                 setEditorMounted(true);
                 onEditorCreated?.(editor);
               }}
-              onChange={value => {
+              onChange={(value) => {
                 setFieldValue("body_html", value);
               }}
             />
@@ -275,7 +300,7 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
               leftSection={<LinkIcon />}
               placeholder="https://open.spotify.com/track/..."
               autoComplete="off"
-              inputContainer={children => (
+              inputContainer={(children) => (
                 <Group gap="xs" className={classes.spotifyTrackInputContainer}>
                   {children}
                   <Button
@@ -306,7 +331,7 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
                 values={values.images_uploads}
                 axis="x"
                 layoutScroll={editorMounted}
-                onReorder={uploads => {
+                onReorder={(uploads) => {
                   setFieldValue("images_uploads", uploads);
                 }}
               >
@@ -315,8 +340,8 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
                     key={upload.signedId}
                     value={upload}
                     previewFit="contain"
-                    onChange={value => {
-                      setTouched(touchedFields => ({
+                    onChange={(value) => {
+                      setTouched((touchedFields) => ({
                         ...touchedFields,
                         images_uploads: true,
                       }));
@@ -341,14 +366,14 @@ const SpacePostFormBody: FC<SpacePostFormBodyProps> = ({
                   >
                     <ImageInput
                       key={newImageInputKey}
-                      onChange={value => {
+                      onChange={(value) => {
                         if (value) {
-                          setTouched(touchedFields => ({
+                          setTouched((touchedFields) => ({
                             ...touchedFields,
                             images_uploads: true,
                           }));
                           insertListItem("images_uploads", value);
-                          setNewImageInputKey(prev => prev + 1);
+                          setNewImageInputKey((prev) => prev + 1);
                         }
                       }}
                       h={IMAGE_INPUT_SIZE}

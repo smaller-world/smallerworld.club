@@ -1,13 +1,33 @@
-import { Affix, HoverCard, Indicator, Text } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import {
+  ActionIcon,
+  Affix,
+  Badge,
+  Box,
+  Center,
+  Group,
+  HoverCard,
+  Indicator,
+  Space,
+  Stack,
+  Text,
+  Transition,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
-
-import MegaphoneIcon from "~icons/heroicons/megaphone-20-solid";
+import { isEmpty, last } from "lodash-es";
+import { type FC, useState } from "react";
 
 import { prettyFriendName } from "~/helpers/friends";
+import { usePageProps } from "~/helpers/inertia";
 import { NEKO_SIZE } from "~/helpers/neko";
+import { usePWA } from "~/helpers/pwa";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { useWebPush } from "~/helpers/webPush";
 import { type UserWorldPageProps } from "~/pages/UserWorldPage";
 import { type Encouragement, type Post } from "~/types";
+
+import MegaphoneIcon from "~icons/heroicons/megaphone-20-solid";
 
 import DrawerModal from "./DrawerModal";
 import FeedbackNeko from "./FeedbackNeko";
@@ -63,7 +83,7 @@ const UserWorldPageFloatingActions: FC<
       <Space className={classes.space} />
       <Affix className={classes.affix} position={{}} zIndex={180}>
         <Transition transition="pop" mounted={actionsVisible} enterDelay={100}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Group
               align="end"
               justify="center"
@@ -77,7 +97,7 @@ const UserWorldPageFloatingActions: FC<
                     variant="outline"
                     radius="lg"
                   >
-                    {encouragements.map(encouragement => (
+                    {encouragements.map((encouragement) => (
                       <HoverCard
                         key={encouragement.id}
                         position="top"
@@ -130,7 +150,7 @@ const UserWorldPageFloatingActions: FC<
                 mounted={!isEmpty(pinnedPosts)}
                 enterDelay={100}
               >
-                {transitionStyle => (
+                {(transitionStyle) => (
                   <ActionIcon
                     className={classes.pinnedPostsButton}
                     variant="outline"
@@ -164,7 +184,7 @@ const UserWorldPageFloatingActions: FC<
         }}
       >
         <Stack>
-          {pinnedPosts.map(post => (
+          {pinnedPosts.map((post) => (
             <PostCard
               key={post.id}
               {...{ post }}

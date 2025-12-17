@@ -1,3 +1,7 @@
+import { Box } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { type FC, type PropsWithChildren, useState } from "react";
+
 import {
   IMAGE_WORLD_THEMES,
   WORLD_THEME_BACKGROUND_COLORS,
@@ -77,7 +81,7 @@ const WorldThemeProvider: FC<WorldThemeProviderProps> = ({ children }) => {
               src={worldThemeBackgroundVideoSrc(worldTheme)}
               onSuspend={({ currentTarget }) => {
                 if (!videoSuspended && currentTarget.paused) {
-                  currentTarget.play().then(undefined, reason => {
+                  currentTarget.play().then(undefined, (reason) => {
                     if (
                       reason instanceof Error &&
                       reason.name === "NotAllowedError"

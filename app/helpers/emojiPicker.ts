@@ -1,12 +1,12 @@
 export const emojiFromUnified = (unified: string): string =>
   unified
     .split("-")
-    .map(hex => String.fromCodePoint(parseInt(hex, 16)))
+    .map((hex) => String.fromCodePoint(parseInt(hex, 16)))
     .join("");
 
 export const emojiToUnified = (emoji: string): string =>
   [...emoji]
-    .map(char => char.codePointAt(0)?.toString(16))
+    .map((char) => char.codePointAt(0)?.toString(16))
     .filter(Boolean)
     .join("-");
 

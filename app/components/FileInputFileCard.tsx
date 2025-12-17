@@ -1,6 +1,18 @@
-import { Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Card,
+  Group,
+  Skeleton,
+  Text,
+} from "@mantine/core";
 import prettyBytes from "pretty-bytes";
+import { type FC, useMemo } from "react";
 
+import { RemoveIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { type File } from "~/types";
 
 export interface FileInputFileCardProps extends BoxProps {

@@ -1,8 +1,21 @@
-import { Code, Text } from "@mantine/core";
-
-import BackIcon from "~icons/heroicons/arrow-uturn-left-20-solid";
+import { router } from "@inertiajs/react";
+import {
+  Badge,
+  Button,
+  Code,
+  Stack,
+  Text,
+  Title,
+  Transition,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
 
 import AppLayout from "~/components/AppLayout";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { type SharedPageProps } from "~/types";
+
+import BackIcon from "~icons/heroicons/arrow-uturn-left-20-solid";
 
 export interface ErrorPageProps extends SharedPageProps {
   title: string;
@@ -36,7 +49,7 @@ const ErrorPage: PageComponent<ErrorPageProps> = ({
         </Code>
       )}
       <Transition mounted={typeof hasPreviousPage === "boolean"}>
-        {transitionStyle => (
+        {(transitionStyle) => (
           <Button
             leftSection={<BackIcon />}
             onClick={() => {
@@ -58,7 +71,7 @@ const ErrorPage: PageComponent<ErrorPageProps> = ({
   );
 };
 
-ErrorPage.layout = page => (
+ErrorPage.layout = (page) => (
   <AppLayout<ErrorPageProps>
     title={({ title }) => title}
     description={({ description }) => description}

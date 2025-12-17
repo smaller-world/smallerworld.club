@@ -3,42 +3,35 @@
     // == Paths
     "baseUrl": ".",
     "paths": {
-      "~/*": ["app/*"]
+      "~/*": ["app/*"],
+      "~stylesheets/*": ["app/assets/stylesheets/*"],
+      "~helpers/*": ["app/javascript/helpers/*"]
     },
 
     // == Language
-    "module": "ES2022",
-    "target": "ES2022",
+    "module": "ESNext",
+    "target": "ESNext",
     "types": ["node", "vite/client", "unplugin-icons/types/react"],
-    "esModuleInterop": true,
-    "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
 
     // == Mode
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
+    "moduleResolution": "Bundler",
     "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true,
+    "jsx": "preserve",
     "noEmit": true,
 
     // == Linting
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "noFallthroughCasesInSwitch": true,
-
-    // == Plugins
-    "plugins": [
-      { "name": "typescript-plugin-css-modules" },
-      { "name": "vite-plugin-iso-import" }
-    ]
+    "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "app/**/*.module.css",
-    "typings/**/*.d.ts"
+  "include": ["app/**/*.ts", "app/**/*.tsx", "typings/**/*.d.ts"],
+  "exclude": [
+    "app/javascript/sw.ts",
+    "typings/service-worker.d.ts",
+    "typings/generated/**/*.d.ts"
   ],
-  "exclude": ["app/javascript/sw.ts", "typings/service-worker.d.ts"],
   "references": [{ "path": "./tsconfig.service-worker.json" }]
 }

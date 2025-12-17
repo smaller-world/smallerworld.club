@@ -7,16 +7,16 @@
     },
 
     // == Language
-    "module": "ES2022",
-    "lib": ["DOM", "WebWorker"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "WebWorker"],
     "types": ["node", "vite/client"],
-    "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
 
     // == Mode
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "isolatedModules": true,
-    "incremental": true,
     "composite": true,
     "emitDeclarationOnly": true,
     "outDir": "./dist",

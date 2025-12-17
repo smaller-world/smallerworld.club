@@ -1,11 +1,31 @@
-import { Input, InputBase, PinInput, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Button,
+  Group,
+  Input,
+  InputBase,
+  PinInput,
+  rem,
+  Stack,
+  Text,
+  Transition,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { randomId } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { type FC, useMemo, useState } from "react";
 import { IMaskInput } from "react-imask";
+import { toast } from "sonner";
+
+import { PhoneIcon, SignInIcon } from "~/helpers/icons";
+import { mustParsePhoneFromParts, parsePhoneFromParts } from "~/helpers/phone";
+import routes from "~/helpers/routes";
+import { fetchRoute } from "~/helpers/routes/fetch";
+import { type LoginRequest } from "~/types";
 
 import RetryIcon from "~icons/heroicons/arrow-path-20-solid";
-
-import { mustParsePhoneFromParts, parsePhoneFromParts } from "~/helpers/phone";
-import { type LoginRequest } from "~/types";
 
 export interface LoginFormProps extends BoxProps {
   onSessionCreated: (registered: boolean) => void;
@@ -114,7 +134,7 @@ const LoginForm: FC<LoginFormProps> = ({
           setSubmitting(false);
         });
       })}
-      className={cn("LoginForm", className)}
+      className={clsx("LoginForm", className)}
       {...otherProps}
     >
       <Stack gap="sm">
@@ -127,7 +147,7 @@ const LoginForm: FC<LoginFormProps> = ({
           name="national_phone_number"
           placeholder="(___) ___ ____"
           autoComplete="mobile tel-national"
-          onAccept={value => {
+          onAccept={(value) => {
             setFieldValue("national_phone_number", value);
           }}
           required
@@ -137,7 +157,7 @@ const LoginForm: FC<LoginFormProps> = ({
             label: { marginBottom: rem(4) },
             wrapper: { flexGrow: 1 },
           }}
-          inputContainer={children => (
+          inputContainer={(children) => (
             <Group gap={8} align="center">
               <InputBase
                 {...getInputProps("country_code")}
@@ -154,7 +174,7 @@ const LoginForm: FC<LoginFormProps> = ({
               />
               {children}
               <Transition mounted={loginCodeRequested}>
-                {transitionStyle => (
+                {(transitionStyle) => (
                   <ActionIcon
                     onClick={() => {
                       setLoginCodeRequested(false);
@@ -169,7 +189,7 @@ const LoginForm: FC<LoginFormProps> = ({
           )}
         />
         <Transition transition="pop" mounted={loginCodeRequested}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Input.Wrapper
               label="login code"
               description="enter the code sent to your phone"

@@ -1,5 +1,8 @@
+import { forwardRef, useMemo } from "react";
 import { type MapProps as _MapProps, type MapRef } from "react-map-gl";
 import { default as _Map, NavigationControl } from "react-map-gl";
+
+import { getMeta } from "~/helpers/meta";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 

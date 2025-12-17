@@ -1,21 +1,52 @@
-import { Text } from "@mantine/core";
-import { groupBy, sortBy } from "lodash-es";
+import { Link, router } from "@inertiajs/react";
+import {
+  ActionIcon,
+  Anchor,
+  Badge,
+  Box,
+  Button,
+  Card,
+  LoadingOverlay,
+  Skeleton,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+  Tooltip,
+  Transition,
+} from "@mantine/core";
+import { inflect } from "inflection";
+import { groupBy, isEmpty, keyBy, sortBy } from "lodash-es";
+import { DateTime } from "luxon";
 import MiniSearch from "minisearch";
+import { useCallback, useMemo, useRef, useState } from "react";
+import invariant from "tiny-invariant";
 
-import HideIcon from "~icons/heroicons/chevron-up-20-solid";
-import EnvelopeIcon from "~icons/heroicons/envelope-20-solid";
-import FrownyFaceIcon from "~icons/heroicons/face-frown-20-solid";
-import CloseIcon from "~icons/heroicons/x-mark";
-
+import { EmptyCard } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import NewInvitationButton from "~/components/NewInvitationButton";
 import UserWorldFriendCard from "~/components/UserWorldFriendCard";
+import { BackIcon, FriendsIcon, SearchIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
 import {
   useUserWorldActivities,
   useUserWorldFriends,
   worldManifestUrlForUser,
 } from "~/helpers/userWorld";
-import { type User, type UserWorldFriendProfile, type World } from "~/types";
+import { withTrailingSlash } from "~/helpers/utils";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type SharedPageProps,
+  type User,
+  type UserWorldFriendProfile,
+  type World,
+} from "~/types";
+
+import HideIcon from "~icons/heroicons/chevron-up-20-solid";
+import EnvelopeIcon from "~icons/heroicons/envelope-20-solid";
+import FrownyFaceIcon from "~icons/heroicons/face-frown-20-solid";
+import CloseIcon from "~icons/heroicons/x-mark";
 
 import classes from "./UserWorldFriendsPage.module.css";
 
@@ -57,7 +88,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
     },
   });
   const friendsByNotifiability = useMemo(() => {
-    const sortedFriends = sortBy(friends, friend =>
+    const sortedFriends = sortBy(friends, (friend) =>
       friend.paused_since ? DateTime.fromISO(friend.paused_since) : null,
     );
     return groupBy(sortedFriends, "notifiable");
@@ -85,7 +116,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
     const results: UserWorldFriendProfile[] = [];
     miniSearch
       .search(searchQuery, { prefix: true, fuzzy: 0.2 })
-      .forEach(result => {
+      .forEach((result) => {
         invariant(typeof result.id === "string");
         const friend = friendsById[result.id];
         if (friend) {
@@ -135,7 +166,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
             }}
           />
           <Transition mounted={pendingInvitationsCount > 0}>
-            {transitionStyle => (
+            {(transitionStyle) => (
               <Badge
                 leftSection={<EnvelopeIcon />}
                 mb="xs"
@@ -166,7 +197,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
           }
           enterDelay={250}
         >
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Badge
               variant="default"
               className={classes.searchBadge}
@@ -189,10 +220,10 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
           }
           enterDelay={250}
         >
-          {transitionStyle => (
+          {(transitionStyle) => (
             <TextInput
               ref={searchInputRef}
-              inputContainer={children => (
+              inputContainer={(children) => (
                 <>
                   {children}
                   <LoadingOverlay
@@ -259,7 +290,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
           ) : isEmpty(displayedFriends) ? (
             <EmptyCard itemLabel="results" />
           ) : (
-            displayedFriends.map(friend => (
+            displayedFriends.map((friend) => (
               <UserWorldFriendCard
                 key={friend.id}
                 {...{ activitiesById, friend }}
@@ -274,7 +305,7 @@ const UserWorldFriendsPage: PageComponent<WorldFriendsPageProps> = ({
   );
 };
 
-UserWorldFriendsPage.layout = page => (
+UserWorldFriendsPage.layout = (page) => (
   <AppLayout<WorldFriendsPageProps>
     title="your friends"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

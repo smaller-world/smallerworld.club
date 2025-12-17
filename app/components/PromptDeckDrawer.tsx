@@ -1,13 +1,17 @@
 import { Carousel } from "@mantine/carousel";
-import { Text } from "@mantine/core";
+import { Card, Text } from "@mantine/core";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import { type FC, useState } from "react";
 
 import { usePageDialogOpened } from "~/helpers/pageDialog";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { type PromptDeck } from "~/types";
 
 import Drawer, { type DrawerProps } from "./Drawer";
 
 import classes from "./PromptDeckDrawer.module.css";
+
 import "@mantine/carousel/styles.layer.css";
 
 const DECK_CARD_WIDTH = 200;
@@ -41,7 +45,7 @@ const PromptDeckDrawer: FC<PromptDeckDrawerProps> = ({
         plugins={[wheelGesturesPlugin]}
         emblaOptions={{ align: "center" }}
       >
-        {decks.map(deck => (
+        {decks.map((deck) => (
           <Carousel.Slide key={deck.id}>
             <Card
               className={classes.card}

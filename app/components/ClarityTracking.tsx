@@ -1,4 +1,7 @@
 import Clarity from "@microsoft/clarity";
+import { type FC, useEffect } from "react";
+
+import { usePage } from "~/helpers/inertia";
 
 const ClarityTracking: FC = () => {
   const {

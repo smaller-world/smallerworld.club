@@ -1,3 +1,5 @@
+import { type FC, useEffect, useRef } from "react";
+
 import classes from "./VaulPortalRoot.module.css";
 
 export interface VaulPortalRootProps {
@@ -16,7 +18,6 @@ const VaulPortalRoot: FC<VaulPortalRootProps> = ({
       onMounted(root);
       return onUnmounted;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div

@@ -65,7 +65,7 @@ const ComponentName: FC<ComponentNameProps> = ({ prop }) => {
   return <div className={classes.wrapper}>{prop}</div>;
 };
 
-ComponentName.layout = page => <SomeLayout>{page}</SomeLayout>;
+ComponentName.layout = (page) => <SomeLayout>{page}</SomeLayout>;
 
 export default ComponentName;
 ```

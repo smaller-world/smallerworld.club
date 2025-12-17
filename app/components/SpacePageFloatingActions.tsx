@@ -1,12 +1,24 @@
-import { Affix, Indicator } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import {
+  ActionIcon,
+  Affix,
+  Box,
+  Button,
+  Center,
+  Group,
+  Indicator,
+  Menu,
+  Space,
+  Stack,
+  Transition,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { isEmpty } from "lodash-es";
+import { type FC, useState } from "react";
 
-import DraftIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
-import DraftCircleIcon from "~icons/heroicons/ellipsis-horizontal-circle-20-solid";
-import MegaphoneIcon from "~icons/heroicons/megaphone-20-solid";
-import NewIcon from "~icons/heroicons/pencil-square-20-solid";
-
+import { useCurrentUser } from "~/helpers/authentication";
 import { isHotwireNative } from "~/helpers/hotwire";
+import { usePageProps } from "~/helpers/inertia";
 import { NEKO_SIZE } from "~/helpers/neko";
 import {
   POST_TYPE_TO_ICON,
@@ -15,8 +27,15 @@ import {
   spacePostDraftKey,
 } from "~/helpers/posts";
 import { useSavedDraftType } from "~/helpers/posts/drafts";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { type SpacePageProps } from "~/pages/SpacePage";
 import { type PromptDeck, type SpacePost } from "~/types";
+
+import DraftIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
+import DraftCircleIcon from "~icons/heroicons/ellipsis-horizontal-circle-20-solid";
+import MegaphoneIcon from "~icons/heroicons/megaphone-20-solid";
+import NewIcon from "~icons/heroicons/pencil-square-20-solid";
 
 import DrawerModal from "./DrawerModal";
 import FeedbackNeko from "./FeedbackNeko";
@@ -72,7 +91,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
           mounted={isEmpty(modals) && !pinnedPostsDrawerModalOpened}
           enterDelay={100}
         >
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Group
               align="end"
               justify="center"
@@ -113,7 +132,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
                     </Indicator>
                   </Menu.Target>
                   <Menu.Dropdown>
-                    {SELECTABLE_POST_TYPES.map(postType => (
+                    {SELECTABLE_POST_TYPES.map((postType) => (
                       <Menu.Item
                         key={postType}
                         leftSection={
@@ -181,7 +200,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
                 mounted={!isEmpty(pinnedPosts)}
                 enterDelay={100}
               >
-                {transitionStyle => (
+                {(transitionStyle) => (
                   <ActionIcon
                     className={classes.pinnedPostsButton}
                     variant="outline"
@@ -212,7 +231,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
         onClose={() => {
           setPromptDeckDrawerOpened(false);
         }}
-        onDeckSelect={deck => {
+        onDeckSelect={(deck) => {
           setPromptDeckDrawerOpened(false);
           setTimeout(() => {
             setSelectedDeck(deck);
@@ -221,7 +240,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
       />
       <PromptDeckModal
         deck={selectedDeck}
-        onPromptSelected={prompt => {
+        onPromptSelected={(prompt) => {
           const deck = selectedDeck;
           setSelectedDeck(null);
           if (deck) {
@@ -256,7 +275,7 @@ const SpacePageFloatingActions: FC<SpacePageFloatingActionsProps> = () => {
         }}
       >
         <Stack>
-          {pinnedPosts.map(post => (
+          {pinnedPosts.map((post) => (
             <PostCard
               key={post.id}
               {...{ post }}

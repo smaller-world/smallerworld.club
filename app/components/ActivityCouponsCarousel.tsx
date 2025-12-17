@@ -1,5 +1,8 @@
 import { Carousel } from "@mantine/carousel";
+import { type BoxProps } from "@mantine/core";
+import { clsx } from "clsx";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import { type FC, useState } from "react";
 
 import { type ActivityCoupon } from "~/types";
 
@@ -8,6 +11,7 @@ import ActivityCouponCard, {
 } from "./ActivityCouponCard";
 
 import classes from "./ActivityCouponsCarousel.module.css";
+
 import "@mantine/carousel/styles.layer.css";
 
 const COUPON_CARD_WIDTH = 320;
@@ -32,14 +36,14 @@ const ActivityCouponsCarousel: FC<ActivityCouponsCarouselProps> = ({
   const [wheelGesturesPlugin] = useState(WheelGesturesPlugin);
   return (
     <Carousel
-      className={cn("ActivityCouponsCarousel", classes.carousel, className)}
+      className={clsx("ActivityCouponsCarousel", classes.carousel, className)}
       slideSize={COUPON_CARD_WIDTH}
       slideGap="md"
       plugins={[wheelGesturesPlugin]}
       emblaOptions={{ align: "center" }}
       {...otherProps}
     >
-      {activityCoupons.map(activityCoupon => (
+      {activityCoupons.map((activityCoupon) => (
         <Carousel.Slide key={activityCoupon.id}>
           <ActivityCouponCard
             {...{

@@ -1,9 +1,13 @@
 import { Carousel } from "@mantine/carousel";
-import { AspectRatio, Text } from "@mantine/core";
+import { AspectRatio, Skeleton, Text } from "@mantine/core";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { map } from "lodash-es";
+import { type FC, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { prettyFriendName } from "~/helpers/friends";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
 import { useUserWorldActivities } from "~/helpers/userWorld";
 import { type ActivityCoupon, type UserWorldFriendProfile } from "~/types";
 
@@ -11,6 +15,7 @@ import ActivityCard from "./ActivityCard";
 import Drawer, { type DrawerProps } from "./Drawer";
 
 import classes from "./ActivityCouponDrawer.module.css";
+
 import "@mantine/carousel/styles.layer.css";
 
 const ACTIVITY_CARD_WIDTH = 320;
@@ -58,7 +63,7 @@ const ActivityCouponDrawer: FC<ActivityCouponDrawerProps> = ({
     coupon: ActivityCoupon;
   }>(routes.activityCoupons.create, {
     descriptor: "create activity coupon",
-    serializeData: attributes => ({ activity_coupon: attributes }),
+    serializeData: (attributes) => ({ activity_coupon: attributes }),
     onSuccess: ({ coupon: { activity } }) => {
       onClose?.();
       toast.success(`you gave ${prettyFriendName(friend)} a coupon!`, {
@@ -89,7 +94,7 @@ const ActivityCouponDrawer: FC<ActivityCouponDrawerProps> = ({
         plugins={[wheelGesturesPlugin]}
         emblaOptions={{ align: "center" }}
       >
-        {activitiesAndTemplates.map(activityOrTemplate => (
+        {activitiesAndTemplates.map((activityOrTemplate) => (
           <Carousel.Slide key={activityOrTemplate.id}>
             <ActivityCard
               {...{ activityOrTemplate }}
@@ -98,7 +103,7 @@ const ActivityCouponDrawer: FC<ActivityCouponDrawerProps> = ({
               disableAdded
               added={addedActivityIds.includes(activityOrTemplate.id)}
               loading={mutating}
-              onChange={activity => {
+              onChange={(activity) => {
                 if (activity) {
                   void trigger({
                     activity_id: activity.id,

@@ -5,6 +5,8 @@
  * This code was AI-generated and may require human review and testing.
  */
 
+import { rem } from "@mantine/core";
+
 export interface SpriteCoordinate {
   x: number;
   y: number;

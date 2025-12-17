@@ -1,4 +1,5 @@
-import { Affix } from "@mantine/core";
+import { Affix, Group, Space } from "@mantine/core";
+import { type FC } from "react";
 
 import WorldPageInvitationsButton from "./WorldPageInvitationsButton";
 

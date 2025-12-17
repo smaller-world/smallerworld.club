@@ -1,12 +1,34 @@
-import { Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Box,
+  Button,
+  Card,
+  Divider,
+  Group,
+  LoadingOverlay,
+  Menu,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
+import { clsx } from "clsx";
+import { isEmpty, keyBy } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useState } from "react";
+import { toast } from "sonner";
 
-import MenuIcon from "~icons/heroicons/ellipsis-vertical-20-solid";
-
+import { CouponIcon, InvitationIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteMutation } from "~/helpers/routes/swr";
 import { useUserWorldActivities } from "~/helpers/userWorld";
 import { type Activity, type UserWorldInvitation } from "~/types";
 
+import MenuIcon from "~icons/heroicons/ellipsis-vertical-20-solid";
+import RemoveIcon from "~icons/heroicons/trash-20-solid";
+
 import EditInvitationDrawerModal from "./EditInvitationDrawerModal";
+import Time from "./Time";
 
 import classes from "./UserWorldInvitationCard.module.css";
 
@@ -25,7 +47,7 @@ const UserWorldInvitationCard: FC<UserWorldInvitationCardProps> = ({
   const activitiesById = useMemo(() => keyBy(activities, "id"), [activities]);
   const offeredActivities = useMemo(() => {
     const activities: Activity[] = [];
-    invitation.offered_activity_ids.forEach(activityId => {
+    invitation.offered_activity_ids.forEach((activityId) => {
       const activity = activitiesById[activityId];
       if (activity) {
         activities.push(activity);
@@ -49,7 +71,10 @@ const UserWorldInvitationCard: FC<UserWorldInvitationCardProps> = ({
 
   return (
     <>
-      <Card className={cn("UserWorldInvitationCard", classes.card)} withBorder>
+      <Card
+        className={clsx("UserWorldInvitationCard", classes.card)}
+        withBorder
+      >
         <Stack gap={4}>
           <Group
             gap={6}
@@ -130,7 +155,7 @@ const UserWorldInvitationCard: FC<UserWorldInvitationCardProps> = ({
               open invitation
             </Button>
             {!isEmpty(offeredActivities) && <Divider orientation="vertical" />}
-            {offeredActivities.map(activity => (
+            {offeredActivities.map((activity) => (
               <Badge
                 className={classes.activityBadge}
                 key={activity.id}

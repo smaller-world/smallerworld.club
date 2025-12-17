@@ -1,11 +1,39 @@
-import { Image, Indicator, ScrollArea, Text } from "@mantine/core";
+import {
+  Anchor,
+  Box,
+  type BoxProps,
+  Container,
+  Divider,
+  Image,
+  Indicator,
+  ScrollArea,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+  Tooltip,
+} from "@mantine/core";
+import { isEmpty } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC } from "react";
 
+import { EmptyCard, PWAScopedLink, Time } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import UserFooter from "~/components/UserFooter";
 import UserUniversePageFeed from "~/components/UserUniversePageFeed";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { type UniverseWorldProfile, type User, type World } from "~/types";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type SharedPageProps,
+  type UniverseWorldProfile,
+  type User,
+  type World,
+} from "~/types";
 
 import classes from "./UserUniversePage.module.css";
 
@@ -48,7 +76,7 @@ const UserUniversePage: PageComponent<UserUniversePageProps> = ({
               offsetScrollbars="present"
             >
               {worlds
-                ? worlds.map(world => (
+                ? worlds.map((world) => (
                     <Anchor
                       className={classes.worldAnchor}
                       key={world.id}
@@ -111,7 +139,7 @@ const UserUniversePage: PageComponent<UserUniversePageProps> = ({
   );
 };
 
-UserUniversePage.layout = page => (
+UserUniversePage.layout = (page) => (
   <AppLayout<UserUniversePageProps>
     title="your universe"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

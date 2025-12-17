@@ -5,7 +5,6 @@
     "Procfile.test": "procfile",
     "Procfile.ci-test": "procfile",
     "Gemfile.lock": "plaintext",
-    ".inputrc": "plaintext",
     "test/fixtures/active_storage/blobs.yml": "erb"
   },
 
@@ -18,9 +17,6 @@
     "html",
     "markdown"
   ],
-
-  // == Typescript
-  "typescript.tsdk": "node_modules/typescript/lib",
 
   // == Rubocop
   "rubocop.mode": "enableViaGemfile",

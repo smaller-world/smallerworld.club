@@ -1,11 +1,27 @@
-import { type ButtonProps, Popover, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  type ButtonProps,
+  Center,
+  Group,
+  Popover,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { type FC } from "react";
 
+import { useCurrentFriend } from "~/helpers/authentication";
+import { ReplyIcon } from "~/helpers/icons";
 import {
   messageUri,
   MESSAGING_PLATFORM_TO_ICON,
   MESSAGING_PLATFORM_TO_LABEL,
   MESSAGING_PLATFORMS,
 } from "~/helpers/messaging";
+import routes from "~/helpers/routes";
+import { useRouteMutation } from "~/helpers/routes/swr";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import { mutateWorldPosts } from "~/helpers/worlds";
 import {
   type UniversePost,
@@ -14,7 +30,6 @@ import {
 } from "~/types";
 
 import classes from "./PostCardReplyButton.module.css";
-
 export interface PostCardReplyButtonProps extends ButtonProps {
   post: WorldPost | UniversePost;
   replyToNumber: string;
@@ -90,7 +105,7 @@ const PostCardReplyButton: FC<PostCardReplyButtonProps> = ({
             reply using:
           </Text>
           <Group justify="center" gap="sm">
-            {MESSAGING_PLATFORMS.map(platform => (
+            {MESSAGING_PLATFORMS.map((platform) => (
               <Stack key={platform} gap={2} align="center" miw={60}>
                 <ActionIcon
                   component="a"

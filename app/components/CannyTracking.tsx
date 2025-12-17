@@ -1,6 +1,9 @@
 import { pluralize } from "inflection";
+import { type FC, useEffect } from "react";
 
 import { prettyFriendName } from "~/helpers/friends";
+import { usePageProps } from "~/helpers/inertia";
+import { getMeta } from "~/helpers/meta";
 
 const CannyTracking: FC = () => {
   const { currentUser, currentFriend } = usePageProps();
@@ -46,7 +49,6 @@ const CannyTracking: FC = () => {
         },
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFriend?.id, currentUser?.id]);
 
   return null;

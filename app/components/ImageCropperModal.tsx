@@ -1,13 +1,21 @@
-import { Image } from "@mantine/core";
+import { Button, Group, Image, Stack } from "@mantine/core";
+import { randomId } from "@mantine/hooks";
+import { closeModal, openModal } from "@mantine/modals";
 import { Jimp } from "jimp";
 import { type ModalSettings } from "node_modules/@mantine/modals/lib/context";
-import ReactCrop, {
+import { type FC, useEffect, useState } from "react";
+import {
   centerCrop,
   makeAspectCrop,
   type PercentCrop,
+  ReactCrop,
 } from "react-image-crop";
+import invariant from "tiny-invariant";
+
+import { CancelIcon, SuccessIcon } from "~/helpers/icons";
 
 import classes from "./ImageCropperModal.module.css";
+
 import "react-image-crop/dist/ReactCrop.css";
 
 type JimpInstance = Awaited<ReturnType<typeof Jimp.read>>;
@@ -37,7 +45,7 @@ export const openImageCropperModal = ({
     children: (
       <ImageCropperModalBody
         {...{ file, aspect }}
-        onCropped={file => {
+        onCropped={(file) => {
           closeModal(modalId);
           onCropped(file);
         }}
@@ -61,7 +69,6 @@ interface ImageCropperModalBodyProps {
   onCancelled: () => void;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 const ImageCropperModalBody: FC<ImageCropperModalBodyProps> = ({
   file,
   aspect,
@@ -81,7 +88,7 @@ const ImageCropperModalBody: FC<ImageCropperModalBodyProps> = ({
   // == Jimp
   const [jimpImage, setJimpImage] = useState<JimpInstance>();
   useEffect(() => {
-    void file.arrayBuffer().then(async arrayBuffer => {
+    void file.arrayBuffer().then(async (arrayBuffer) => {
       const image = await Jimp.read(arrayBuffer);
       setJimpImage(image);
       if (aspect) {
@@ -131,7 +138,8 @@ const ImageCropperModalBody: FC<ImageCropperModalBodyProps> = ({
                 h: (crop.height * height) / 100,
               })
               .getBuffer("image/png")
-              .then(croppedBuffer => {
+              .then((croppedBuffer) => {
+                // @ts-expect-error - croppedBuffer is a Buffer
                 const croppedFile = new File([croppedBuffer], file.name, {
                   type: "image/png",
                 });

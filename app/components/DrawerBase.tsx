@@ -1,12 +1,16 @@
 import {
+  Box,
   CloseButton,
   Drawer as MantineDrawer,
   type ModalProps,
   Overlay,
+  rem,
   Text,
 } from "@mantine/core";
 import { useModals } from "@mantine/modals";
-import { useDeferredValue } from "react";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash-es";
+import { type FC, useDeferredValue } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 
 import VaulModalPortalTarget from "./VaulModalPortalTarget";
@@ -29,7 +33,7 @@ export interface DrawerBaseProps
 }
 
 const DrawerBase: FC<DrawerBaseProps> = ({
-  classNames,
+  classNames = {},
   title,
   children,
   opened,
@@ -47,7 +51,7 @@ const DrawerBase: FC<DrawerBaseProps> = ({
       disablePreventScroll
       repositionInputs={false}
       open={opened}
-      onAnimationEnd={open => {
+      onAnimationEnd={(open) => {
         if (onExitTransitionEnd && !open) {
           onExitTransitionEnd();
         }
@@ -60,8 +64,8 @@ const DrawerBase: FC<DrawerBaseProps> = ({
           style={{ backdropFilter: `blur(${rem(2)})` }}
         />
         <VaulDrawer.Content
-          className={cn(classes.content, classNames?.content)}
-          onEscapeKeyDown={event => {
+          className={clsx(classes.content, classNames?.content)}
+          onEscapeKeyDown={(event) => {
             if (
               !isEmpty(deferredModals) ||
               document.querySelector(".mantine-Menu-dropdown")
@@ -69,7 +73,7 @@ const DrawerBase: FC<DrawerBaseProps> = ({
               event.preventDefault();
             }
           }}
-          onPointerDownOutside={event => {
+          onPointerDownOutside={(event) => {
             let node = event.target;
             if (node instanceof SVGElement) {
               node = node.parentElement;
@@ -93,7 +97,7 @@ const DrawerBase: FC<DrawerBaseProps> = ({
         >
           <VaulModalPortalTarget />
           <VaulPortalRoot
-            onMounted={portalRoot => {
+            onMounted={(portalRoot) => {
               setVaulPortalRoot(portalRoot);
             }}
             onUnmounted={() => {
@@ -103,7 +107,7 @@ const DrawerBase: FC<DrawerBaseProps> = ({
           <div className={classes.viewport}>
             <Box
               component="header"
-              className={cn(
+              className={clsx(
                 MantineDrawer.classes.header,
                 mantineClasses.drawerHeader,
                 classes.header,
@@ -125,7 +129,7 @@ const DrawerBase: FC<DrawerBaseProps> = ({
               <CloseButton component={VaulDrawer.Close} />
             </Box>
             {!!children && (
-              <div className={cn(classes.body, classNames?.body)}>
+              <div className={clsx(classes.body, classNames?.body)}>
                 {children}
               </div>
             )}

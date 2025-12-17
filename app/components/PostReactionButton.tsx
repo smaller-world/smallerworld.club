@@ -1,8 +1,16 @@
+import { Button } from "@mantine/core";
+import { type FC, useMemo, useState } from "react";
+import { toast } from "sonner";
+
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
 import {
   confetti,
   particlePositionFor,
   puffOfSmoke,
 } from "~/helpers/particles";
+import routes from "~/helpers/routes";
+import { fetchRoute } from "~/helpers/routes/fetch";
+import { mutateRoute } from "~/helpers/routes/swr";
 import {
   type Post,
   type PostReaction,
@@ -31,13 +39,13 @@ const PostReactionButton: FC<PostReactionButtonProps> = ({
     () =>
       friend
         ? reactions.find(
-            reaction =>
+            (reaction) =>
               reaction.reactor_type === "Friend" &&
               reaction.reactor_id === friend.id,
           )
         : currentUser
           ? reactions.find(
-              reaction =>
+              (reaction) =>
                 reaction.reactor_type === "User" &&
                 reaction.reactor_id === currentUser.id,
             )
@@ -85,11 +93,11 @@ const PostReactionButton: FC<PostReactionButtonProps> = ({
                 },
                 undefined,
                 {
-                  optimisticData: currentData => {
+                  optimisticData: (currentData) => {
                     const { reactions = [] } = currentData ?? {};
                     return {
                       reactions: reactions.filter(
-                        reaction => reaction.id !== currentReaction.id,
+                        (reaction) => reaction.id !== currentReaction.id,
                       ),
                     };
                   },
@@ -127,7 +135,7 @@ const PostReactionButton: FC<PostReactionButtonProps> = ({
                 },
                 undefined,
                 {
-                  optimisticData: currentData => {
+                  optimisticData: (currentData) => {
                     const { reactions = [] } = currentData ?? {};
                     return { reactions: [...reactions, reaction] };
                   },

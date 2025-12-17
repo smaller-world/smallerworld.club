@@ -1,19 +1,32 @@
 import {
   AspectRatio,
+  Box,
+  type BoxProps,
+  Button,
   type CardProps,
+  Group,
   Image,
   Spoiler,
+  Stack,
   Text,
+  Title,
   Typography,
 } from "@mantine/core";
-import Lightbox from "yet-another-react-lightbox";
-
-import ExpandIcon from "~icons/heroicons/chevron-down-20-solid";
+import { Card } from "@mantine/core";
+import { clsx } from "clsx";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useRef, useState } from "react";
+import { Lightbox } from "yet-another-react-lightbox";
 
 import { POST_TYPE_TO_ICON, POST_TYPE_TO_LABEL } from "~/helpers/posts";
 import { type Image as ImageType, type QuotedPost } from "~/types";
 
+import ExpandIcon from "~icons/heroicons/chevron-down-20-solid";
+
+import Time from "./Time";
+
 import classes from "./QuotedPostCard.module.css";
+
 import "yet-another-react-lightbox/styles.css";
 
 export interface QuotedPostCardProps extends CardProps {
@@ -35,7 +48,7 @@ const QuotedPostCard: FC<QuotedPostCardProps> = ({ post, ...otherProps }) => {
   return (
     <Card
       ref={cardRef}
-      className={cn("QuotedPostCard", classes.card)}
+      className={clsx("QuotedPostCard", classes.card)}
       withBorder
       {...otherProps}
     >

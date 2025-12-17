@@ -1,3 +1,5 @@
+import { type FC, useState } from "react";
+
 import DrawerBase, { type DrawerBaseProps } from "./DrawerBase";
 import VaulPortalProvider from "./VaulPortalProvider";
 

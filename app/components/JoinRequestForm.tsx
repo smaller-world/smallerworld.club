@@ -1,11 +1,25 @@
-import { InputBase } from "@mantine/core";
+import {
+  Alert,
+  type BoxProps,
+  Button,
+  Group,
+  InputBase,
+  rem,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import parsePhone from "phone";
+import { type FC } from "react";
 import { IMaskInput } from "react-imask";
+import { toast } from "sonner";
+
+import { useCurrentUser } from "~/helpers/authentication";
+import { useFieldsFilled, useForm } from "~/helpers/form";
+import { parsePhoneIntoParts } from "~/helpers/phone";
+import routes from "~/helpers/routes";
+import { type JoinRequest, type User, type WorldProfile } from "~/types";
 
 import RequestInvitationIcon from "~icons/heroicons/hand-raised-20-solid";
-
-import { parsePhoneIntoParts } from "~/helpers/phone";
-import { type JoinRequest, type User, type WorldProfile } from "~/types";
 
 export interface JoinRequestFormProps extends BoxProps {
   world: WorldProfile;
@@ -75,7 +89,7 @@ const JoinRequestForm: FC<JoinRequestFormProps> = ({
               label="your phone #"
               placeholder="(___) ___ ____"
               autoComplete="mobile tel-national"
-              onAccept={value => {
+              onAccept={(value) => {
                 setFieldValue("national_phone_number", value);
               }}
               required
@@ -85,7 +99,7 @@ const JoinRequestForm: FC<JoinRequestFormProps> = ({
                 label: { marginBottom: rem(4) },
                 wrapper: { flexGrow: 1 },
               }}
-              inputContainer={children => (
+              inputContainer={(children) => (
                 <Group gap={8} align="start">
                   <InputBase
                     {...getInputProps("country_code")}

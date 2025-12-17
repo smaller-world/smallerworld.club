@@ -1,4 +1,15 @@
-import { AppShell, type AppShellHeaderProps, Image } from "@mantine/core";
+import { Link } from "@inertiajs/react";
+import {
+  AppShell,
+  type AppShellHeaderProps,
+  Button,
+  Image,
+} from "@mantine/core";
+import { Group } from "@mantine/core";
+import { clsx } from "clsx";
+import { forwardRef } from "react";
+
+import routes from "~/helpers/routes";
 
 import logoSrc from "~/assets/images/logo.png";
 
@@ -15,7 +26,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     <AppShell.Header
       {...{ ref }}
       px={8}
-      className={cn("AppHeader", classes.header, className)}
+      className={clsx("AppHeader", classes.header, className)}
       {...otherProps}
     >
       <Group gap={4}>

@@ -1,12 +1,16 @@
-import { type ButtonProps, CopyButton } from "@mantine/core";
+import { Button, type ButtonProps, CopyButton } from "@mantine/core";
+import { Menu } from "@mantine/core";
+import { type FC } from "react";
 
-import ShareIcon from "~icons/heroicons/share-20-solid";
-
+import { CopiedIcon, CopyIcon, SendIcon } from "~/helpers/icons";
 import {
   useInvitationShareData,
   useInvitationShortlink,
 } from "~/helpers/invitations";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import { type Invitation } from "~/types";
+
+import ShareIcon from "~icons/heroicons/share-20-solid";
 
 export interface SendInviteLinkButtonProps extends ButtonProps {
   invitation: Invitation;

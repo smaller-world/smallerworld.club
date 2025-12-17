@@ -1,8 +1,11 @@
+import { useMantineColorScheme } from "@mantine/core";
+import { clsx } from "clsx";
 import _EmojiPicker, {
   EmojiStyle,
   type PickerProps,
   type Theme,
 } from "emoji-picker-react";
+import { type FC } from "react";
 
 import classes from "./EmojiPicker.module.css";
 
@@ -16,7 +19,7 @@ const EmojiPicker: FC<EmojiPickerProps> = ({
   const { colorScheme } = useMantineColorScheme();
   return (
     <_EmojiPicker
-      className={cn("EmojiPicker", classes.picker, className)}
+      className={clsx("EmojiPicker", classes.picker, className)}
       autoFocusSearch={!reactionsDefaultOpen}
       {...{ reactionsDefaultOpen }}
       previewConfig={{ showPreview: false }}

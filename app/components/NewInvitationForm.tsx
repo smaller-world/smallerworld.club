@@ -1,17 +1,32 @@
-// import { Carousel } from "@mantine/carousel";
-// import { Text } from "@mantine/core";
-// import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import {
+  ActionIcon,
+  Box,
+  type BoxProps,
+  Button,
+  Group,
+  Stack,
+  TextInput,
+  Transition,
+} from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
 import { map } from "lodash-es";
+import { type FC, useMemo } from "react";
 
-import QRCodeIcon from "~icons/heroicons/qr-code-20-solid";
-
+import { useForm } from "~/helpers/form";
+import { EmojiIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 // import { useUserWorldActivities } from "~/helpers/userWorld";
 import { type Activity, type Invitation, type JoinRequest } from "~/types";
+
+import QRCodeIcon from "~icons/heroicons/qr-code-20-solid";
 
 // import ActivityCard from "./ActivityCard";
 import EmojiPopover from "./EmojiPopover";
 
 import classes from "./NewInvitationForm.module.css";
+
 import "@mantine/carousel/styles.layer.css";
 
 // const ACTIVITY_CARD_WIDTH = 320;
@@ -80,7 +95,7 @@ const NewInvitationForm: FC<NewInvitationFormProps> = ({
     <Box
       component="form"
       onSubmit={submit}
-      className={cn("NewInvitationForm", className)}
+      className={clsx("NewInvitationForm", className)}
       {...otherProps}
     >
       <Stack gap="xs">
@@ -243,7 +258,7 @@ const NewInvitationForm: FC<NewInvitationFormProps> = ({
           </Transition>
         )} */}
         <Transition transition="pop" mounted={isDirty()}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Button
               type="submit"
               variant="filled"

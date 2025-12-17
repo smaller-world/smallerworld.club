@@ -1,16 +1,20 @@
-import { type PreviewProps } from "@react-email/components";
+import { Container } from "@mantine/core";
 import {
   Body,
   Column,
   Hr,
   Img,
   Preview,
+  type PreviewProps,
   Row,
   Section,
 } from "@react-email/components";
+import { type PropsWithChildren } from "react";
 
 import { Heading, Link, Text } from "~/components/email";
 import { type DynamicProp, useResolveDynamicProp } from "~/helpers/appLayout";
+import routes from "~/helpers/routes";
+import { type SharedPageProps } from "~/types";
 
 import "@mantine/core/styles.css";
 

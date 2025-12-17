@@ -1,13 +1,26 @@
+import { router } from "@inertiajs/react";
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Checkbox,
+  Stack,
+  TextInput,
+} from "@mantine/core";
+import { randomId, useDidUpdate } from "@mantine/hooks";
+import { closeModal, openModal } from "@mantine/modals";
 import { type Editor } from "@tiptap/react";
+import { clsx } from "clsx";
 import { map } from "lodash-es";
 import { DateTime } from "luxon";
-import { useMemo, useRef, useState } from "react";
+import { type FC, useMemo, useRef, useState } from "react";
 
-import ProfileIcon from "~icons/heroicons/user-circle-20-solid";
-
+import { useCurrentUser } from "~/helpers/authentication";
+import { useForm } from "~/helpers/form";
 import { postTypeHasTitle, spacePostDraftKey } from "~/helpers/posts";
 import { usePostDraftFormValues } from "~/helpers/posts/drafts";
 import { htmlHasText } from "~/helpers/richText";
+import routes from "~/helpers/routes";
 import { mutateSpacePosts } from "~/helpers/spaces";
 import {
   parseSpotifyTrackId,
@@ -15,6 +28,8 @@ import {
 } from "~/helpers/spotify";
 import { currentTimeZone } from "~/helpers/time";
 import { type Post, type PostPrompt, type PostType } from "~/types";
+
+import ProfileIcon from "~icons/heroicons/user-circle-20-solid";
 
 import LoginForm from "./LoginForm";
 import SpacePostFormBody, {
@@ -49,6 +64,7 @@ const NewSpacePostForm: FC<NewSpacePostFormProps> = ({
   postType,
   prompt,
   onPostCreated,
+  className,
   ...otherProps
 }) => {
   const currentUser = useCurrentUser();
@@ -118,7 +134,7 @@ const NewSpacePostForm: FC<NewSpacePostFormProps> = ({
       image_upload: image,
       spotify_track_url: spotify_track_id,
     }),
-    onValuesChange: values => {
+    onValuesChange: (values) => {
       if (form.isTouched()) {
         shouldRestoreDraftRef.current = false;
         saveDraftValues(values);
@@ -133,7 +149,7 @@ const NewSpacePostForm: FC<NewSpacePostFormProps> = ({
   const { initialize, setValues, submit } = form;
   useDidUpdate(() => {
     initialize(initialValues);
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   // == Draft restoration
   const shouldRestoreDraftRef = useRef(true);
@@ -146,12 +162,13 @@ const NewSpacePostForm: FC<NewSpacePostFormProps> = ({
         editor.commands.setContent(draftValues.body_html);
       }
     }
-  }, [draftValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [draftValues]);
 
   return (
     <Box
       component="form"
-      onSubmit={event => {
+      className={clsx("NewSpacePostForm", className)}
+      onSubmit={(event) => {
         if (currentUser) {
           return submit(event);
         }
@@ -174,7 +191,7 @@ const NewSpacePostForm: FC<NewSpacePostFormProps> = ({
     >
       <SpacePostFormBody
         {...{ form, postType, prompt }}
-        onEditorCreated={editor => {
+        onEditorCreated={(editor) => {
           editorRef.current = editor;
           const values = form.getValues();
           editor.commands.setContent(values.body_html);
@@ -221,7 +238,7 @@ const LoginOrRegisterForm: FC<LoginOrRegisterFormProps> = ({
         />
       ) : (
         <LoginForm
-          onSessionCreated={registered => {
+          onSessionCreated={(registered) => {
             if (!registered) {
               setShowRegistrationForm(true);
             } else {

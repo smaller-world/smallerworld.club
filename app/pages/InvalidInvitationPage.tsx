@@ -1,6 +1,9 @@
-import { Text } from "@mantine/core";
+import { Box, Stack, Text, Title } from "@mantine/core";
 
 import AppLayout from "~/components/AppLayout";
+import { InvitationIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import { type SharedPageProps } from "~/types";
 
 export interface InvalidInvitationPageProps extends SharedPageProps {}
 
@@ -18,7 +21,7 @@ const InvalidInvitationPage: PageComponent<InvalidInvitationPageProps> = () => {
   );
 };
 
-InvalidInvitationPage.layout = page => (
+InvalidInvitationPage.layout = (page) => (
   <AppLayout<InvalidInvitationPageProps>
     title="invalid invite link"
     withContainer

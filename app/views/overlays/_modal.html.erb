@@ -1,0 +1,30 @@
+<% data = {}.merge(local_assigns.fetch(:data, {})) %>
+<%= tag.dialog(
+  class: class_names("modal", local_assigns[:class]),
+  data: {
+    controller: class_names("modal", data.delete(:controller)),
+    action: class_names(
+      "cancel->modal#onDialogCancel",
+      "pointerdown@document->modal#onDocumentPointerDown",
+      "click@document->modal#onDocumentClick",
+      data.delete(:action)
+    ),
+    **data
+  }
+) do %>
+  <div class="modal-backdrop" data-modal-target="backdrop" />
+  <div class="modal-container">
+    <% panel_options = {}.merge(local_assigns.fetch(:panel_options, {})) %>
+    <%= tag.div(
+      class: class_names("modal-panel", panel_options.delete(:class)),
+      data: {
+        modal_target: "panel",
+        **panel_options.delete(:data)
+      },
+      tabindex: "-1",
+      **panel_options
+    ) do %>
+      <%= yield %>
+    <% end %>
+  </div>
+<% end %>

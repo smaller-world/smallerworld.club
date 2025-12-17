@@ -1,6 +1,6 @@
 @layer base {
   :where(:focus-visible) {
-    @apply ring-2 ring-focus-ring;
+    @apply ring-focus-ring ring-2;
 
     outline: none;
   }
@@ -12,7 +12,7 @@
   }
 
   .header {
-    @apply h-12 flex items-center px-2 sticky top-0;
+    @apply sticky top-0 flex h-12 items-center px-2;
 
     z-index: 100;
 

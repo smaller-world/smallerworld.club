@@ -1,6 +1,11 @@
-import { type ButtonProps } from "@mantine/core";
+import { router } from "@inertiajs/react";
+import { Box, Button, type ButtonProps } from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC, useState } from "react";
 
 import { isHotwireNative } from "~/helpers/hotwire";
+import { SpaceIcon } from "~/helpers/icons";
+import routes from "~/helpers/routes";
 
 import DrawerModal from "./DrawerModal";
 import NewSpaceForm, { type NewSpaceFormProps } from "./NewSpaceForm";
@@ -19,7 +24,7 @@ const NewSpaceButton: FC<NewSpaceButtonProps> = ({
     <>
       <Button
         leftSection={<Box component={SpaceIcon} fz="sm" />}
-        className={cn("NewSpaceButton", className)}
+        className={clsx("NewSpaceButton", className)}
         onClick={() => {
           if (isHotwireNative()) {
             router.visit(routes.userSpaces.new.path());
@@ -39,7 +44,7 @@ const NewSpaceButton: FC<NewSpaceButtonProps> = ({
         }}
       >
         <NewSpaceForm
-          onSpaceCreated={space => {
+          onSpaceCreated={(space) => {
             setDrawerModalOpened(false);
             onSpaceCreated?.(space);
           }}

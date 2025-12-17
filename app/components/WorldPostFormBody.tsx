@@ -1,29 +1,53 @@
 import {
   Accordion,
+  ActionIcon,
+  Anchor,
+  Badge,
+  Box,
+  type BoxProps,
+  Button,
+  Card,
+  Center,
+  Group,
   Input,
+  LoadingOverlay,
   ScrollArea,
   SegmentedControl,
+  Space,
+  Stack,
   Table,
   Text,
+  TextInput,
+  Tooltip,
+  Transition,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useLongPress, useMergedRef, useViewportSize } from "@mantine/hooks";
+import {
+  useElementSize,
+  useLongPress,
+  useMergedRef,
+  useViewportSize,
+} from "@mantine/hooks";
 import { type Editor } from "@tiptap/react";
-import { sortBy } from "lodash-es";
+import { clsx } from "clsx";
+import { isEmpty, keyBy, mapValues, sortBy } from "lodash-es";
+import { DateTime } from "luxon";
 import { type DraggableProps, motion, Reorder } from "motion/react";
-import { type PropsWithChildren } from "react";
-
-import MutedIcon from "~icons/heroicons/bell-slash-20-solid";
-import CalendarIcon from "~icons/heroicons/calendar-20-solid";
-import VisibleIcon from "~icons/heroicons/eye-20-solid";
-import HiddenIcon from "~icons/heroicons/eye-slash-20-solid";
-import LinkIcon from "~icons/heroicons/link-20-solid";
-import ImageIcon from "~icons/heroicons/photo-20-solid";
-import SpotifyIcon from "~icons/ri/spotify-fill";
+import { type FC, type PropsWithChildren, useMemo, useState } from "react";
 
 import { isAndroid, isIos, useBrowserDetection } from "~/helpers/browsers";
 import { type FormHelper } from "~/helpers/form";
 import { prettyFriendName } from "~/helpers/friends";
+import {
+  EmojiIcon,
+  NotificationIcon,
+  PhoneIcon,
+  RemoveIcon,
+  SaveIcon,
+  SendIcon,
+  SettingsIcon,
+  SuccessIcon,
+} from "~/helpers/icons";
 import {
   POST_BODY_PLACEHOLDERS,
   POST_TITLE_PLACEHOLDERS,
@@ -33,6 +57,9 @@ import {
   POST_VISIBILITY_TO_LABEL,
   postTypeHasTitle,
 } from "~/helpers/posts";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
+import { useVaulPortalTarget } from "~/helpers/vaul";
 import {
   type Encouragement,
   type Post,
@@ -44,12 +71,21 @@ import {
   type UserWorldFriendProfile,
 } from "~/types";
 
+import MutedIcon from "~icons/heroicons/bell-slash-20-solid";
+import CalendarIcon from "~icons/heroicons/calendar-20-solid";
+import VisibleIcon from "~icons/heroicons/eye-20-solid";
+import HiddenIcon from "~icons/heroicons/eye-slash-20-solid";
+import LinkIcon from "~icons/heroicons/link-20-solid";
+import ImageIcon from "~icons/heroicons/photo-20-solid";
+import SpotifyIcon from "~icons/ri/spotify-fill";
+
 import EmojiPopover from "./EmojiPopover";
 import ImageInput, { type ImageInputProps } from "./ImageInput";
 import LazyPostEditor from "./LazyPostEditor";
 import QuotedPostCard from "./QuotedPostCard";
 
 import classes from "./WorldPostFormBody.module.css";
+
 import "@mantine/dates/styles.css";
 
 export interface WorldPostFormValues {
@@ -217,10 +253,10 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
   );
 
   return (
-    <Stack className={cn("WorldPostFormBody", className)} {...otherProps}>
+    <Stack className={clsx("WorldPostFormBody", className)} {...otherProps}>
       {encouragement && (
         <Transition mounted={!!values.encouragement_id}>
-          {transitionStyle => (
+          {(transitionStyle) => (
             <Stack gap={4} style={transitionStyle}>
               <Card withBorder className={classes.encouragementCard}>
                 <Stack gap={2} style={{ alignSelf: "center" }}>
@@ -307,11 +343,11 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                     mah: viewportHeight * 0.4,
                   }),
               }}
-              onEditorCreated={editor => {
+              onEditorCreated={(editor) => {
                 setEditorMounted(true);
                 onEditorCreated?.(editor);
               }}
-              onChange={value => {
+              onChange={(value) => {
                 setFieldValue("body_html", value);
               }}
             />
@@ -372,7 +408,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
               leftSection={<LinkIcon />}
               placeholder="https://open.spotify.com/track/..."
               autoComplete="off"
-              inputContainer={children => (
+              inputContainer={(children) => (
                 <Group gap="xs" className={classes.spotifyTrackInputContainer}>
                   {children}
                   <Button
@@ -403,7 +439,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                 values={values.images_uploads}
                 axis="x"
                 layoutScroll={editorMounted}
-                onReorder={uploads => {
+                onReorder={(uploads) => {
                   setFieldValue("images_uploads", uploads);
                 }}
               >
@@ -412,8 +448,8 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                     key={upload.signedId}
                     value={upload}
                     previewFit="contain"
-                    onChange={value => {
-                      setTouched(touchedFields => ({
+                    onChange={(value) => {
+                      setTouched((touchedFields) => ({
                         ...touchedFields,
                         images_uploads: true,
                       }));
@@ -438,14 +474,14 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                   >
                     <ImageInput
                       key={newImageInputKey}
-                      onChange={value => {
+                      onChange={(value) => {
                         if (value) {
-                          setTouched(touchedFields => ({
+                          setTouched((touchedFields) => ({
                             ...touchedFields,
                             images_uploads: true,
                           }));
                           insertListItem("images_uploads", value);
-                          setNewImageInputKey(prev => prev + 1);
+                          setNewImageInputKey((prev) => prev + 1);
                         }
                       }}
                       h={IMAGE_INPUT_SIZE}
@@ -463,7 +499,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
           <Stack gap={4}>
             <SegmentedControl
               {...getInputProps("visibility")}
-              data={POST_VISIBILITIES.map(visibility => ({
+              data={POST_VISIBILITIES.map((visibility) => ({
                 label: (
                   <Group gap={6} justify="center">
                     <Box
@@ -482,7 +518,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
             </Text>
           </Stack>
           <Transition transition="pop" mounted={!isEmpty(subscribedFriends)}>
-            {transitionStyle => (
+            {(transitionStyle) => (
               <Accordion
                 variant="filled"
                 className={classes.friendNotifiabilityAccordion}
@@ -495,7 +531,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                   <Accordion.Panel>
                     <Stack gap={4}>
                       <Transition mounted={values.visibility !== "secret"}>
-                        {transitionStyle => (
+                        {(transitionStyle) => (
                           <Group
                             gap={8}
                             justify="center"
@@ -511,8 +547,8 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                               onClick={() => {
                                 setFieldValue(
                                   "friend_notifiability",
-                                  prevValue =>
-                                    mapValues(prevValue, prevNotifiability =>
+                                  (prevValue) =>
+                                    mapValues(prevValue, (prevNotifiability) =>
                                       prevNotifiability === "notify"
                                         ? "muted"
                                         : prevNotifiability,
@@ -536,7 +572,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                                 );
                                 setFieldValue(
                                   "friend_notifiability",
-                                  prevValue =>
+                                  (prevValue) =>
                                     mapValues(
                                       prevValue,
                                       (prevNotifiability, friendId) => {
@@ -566,7 +602,7 @@ const WorldPostFormBody: FC<WorldPostFormBodyProps> = ({
                           {...{ postId }}
                           friends={subscribedFriends}
                           visibility={values.visibility}
-                          getSegmentedControlInputProps={friend =>
+                          getSegmentedControlInputProps={(friend) =>
                             getInputProps(`friend_notifiability.${friend.id}`)
                           }
                         />
@@ -768,7 +804,7 @@ const FriendNotifiabilityTables: FC<FriendNotifiabilityTableProps> = ({
             {...(value === "notify" && {
               color: "primary",
             })}
-            className={cn(
+            className={clsx(
               classes.segmentedControl,
               classes.friendNotifiabilitySegmentedControl,
             )}

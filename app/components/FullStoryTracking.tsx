@@ -1,4 +1,8 @@
+import { FullStory, isInitialized } from "@fullstory/browser";
+import { type FC, useEffect } from "react";
+
 import { prettyFriendName } from "~/helpers/friends";
+import { usePage } from "~/helpers/inertia";
 
 const FullStoryTracking: FC = () => {
   const {
@@ -8,7 +12,7 @@ const FullStoryTracking: FC = () => {
 
   // == Current user tracking
   useEffect(() => {
-    if (!isFsInitialized()) {
+    if (!isInitialized()) {
       return;
     }
     if (currentFriend) {
@@ -50,7 +54,7 @@ const FullStoryTracking: FC = () => {
 
   // == Page tracking
   useEffect(() => {
-    if (!isFsInitialized()) {
+    if (!isInitialized()) {
       return;
     }
     void FullStory("setPropertiesAsync", {

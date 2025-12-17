@@ -1,15 +1,37 @@
-import { InputWrapper } from "@mantine/core";
+import { Link, router } from "@inertiajs/react";
+import {
+  Button,
+  Card,
+  Center,
+  Checkbox,
+  InputWrapper,
+  Stack,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { hasLength } from "@mantine/form";
+import { pick } from "lodash-es";
+import { startTransition, useState } from "react";
 
 import AppLayout from "~/components/AppLayout";
 import ImageInput from "~/components/ImageInput";
 import WorldHomescreenPreview from "~/components/WorldHomescreenPreview";
 import WorldThemeRadioGroup from "~/components/WorldThemeRadioGroup";
+import { useForm } from "~/helpers/form";
+import { BackIcon, SaveIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
 import { imageUpload } from "~/helpers/uploads";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
+import { withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { isWorldTheme } from "~/helpers/worldThemes";
-import { type Image, type User, type World } from "~/types";
+import { isWorldTheme, useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type Image,
+  type SharedPageProps,
+  type User,
+  type World,
+} from "~/types";
 
 import classes from "./UserEditWorldPage.module.css";
 
@@ -190,7 +212,7 @@ const UserEditWorldPage: PageComponent<UserEditWorldPageProps> = ({
   );
 };
 
-UserEditWorldPage.layout = page => (
+UserEditWorldPage.layout = (page) => (
   <AppLayout<UserEditWorldPageProps>
     title="customize your page"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

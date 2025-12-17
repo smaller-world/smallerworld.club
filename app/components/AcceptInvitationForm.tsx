@@ -1,12 +1,24 @@
-import { Text } from "@mantine/core";
-import { InputBase } from "@mantine/core";
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Group,
+  InputBase,
+  rem,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { type FC, useMemo } from "react";
 import { IMaskInput } from "react-imask";
 
+import { useForm } from "~/helpers/form";
+import { PhoneIcon } from "~/helpers/icons";
 import {
   mustParsePhoneFromParts,
   parsePhoneFromParts,
   parsePhoneIntoParts,
 } from "~/helpers/phone";
+import routes from "~/helpers/routes";
 import { currentTimeZone } from "~/helpers/time";
 import { type Invitation, type World } from "~/types";
 
@@ -50,7 +62,7 @@ const AcceptInvitationForm: FC<AcceptInvitationFormProps> = ({
     },
     descriptor: "accept invitation",
     initialValues,
-    transformValues: values => {
+    transformValues: (values) => {
       const phoneNumber = mustParsePhoneFromParts(values);
       return {
         friend: {
@@ -87,7 +99,7 @@ const AcceptInvitationForm: FC<AcceptInvitationFormProps> = ({
           name="national_phone_number"
           placeholder="(___) ___ ____"
           autoComplete="mobile tel-national"
-          onAccept={value => {
+          onAccept={(value) => {
             setFieldValue("national_phone_number", value);
           }}
           required
@@ -96,7 +108,7 @@ const AcceptInvitationForm: FC<AcceptInvitationFormProps> = ({
             label: { marginBottom: rem(4) },
             wrapper: { flexGrow: 1 },
           }}
-          inputContainer={children => (
+          inputContainer={(children) => (
             <Group gap={8} align="start">
               <InputBase
                 {...getInputProps("country_code")}

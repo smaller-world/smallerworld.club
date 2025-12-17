@@ -1,5 +1,5 @@
 // import { useLocalStorage } from "@mantine/hooks";
-import { type SVGProps } from "react";
+import { type FC, type SVGProps } from "react";
 
 import TelegramIcon from "~icons/basil/telegram-solid";
 import WhatsappIcon from "~icons/basil/whatsapp-outline";

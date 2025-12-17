@@ -11,7 +11,12 @@ import useSWRInfinite, {
   unstable_serialize,
 } from "swr/infinite";
 
-import { type Encouragement, type WorldPost, type WorldProfile } from "~/types";
+import {
+  type Encouragement,
+  type SharedPageProps,
+  type WorldPost,
+  type WorldProfile,
+} from "~/types";
 
 import { useCurrentFriend } from "./authentication";
 import routes from "./routes";
@@ -124,7 +129,7 @@ export const mutateWorldPosts = async (worldId: string): Promise<void> => {
 
 export const mutateWorldTimeline = async (worldId: string): Promise<void> => {
   await mutate(
-    key => {
+    (key) => {
       if (typeof key !== "string") {
         return false;
       }

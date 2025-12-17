@@ -1,16 +1,40 @@
-import { Image, Popover, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Anchor,
+  Box,
+  Button,
+  Divider,
+  Image,
+  Popover,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { truncate } from "lodash-es";
+import { toast } from "sonner";
 
-import MailIcon from "~icons/heroicons/envelope-open-20-solid";
-
-import logoSrc from "~/assets/images/logo.png";
-
+import { PWAScopedLink } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import PostCard from "~/components/PostCard";
 import PostSharePageRequestInvitationAlert from "~/components/PostSharePageRequestInvitationAlert";
 import PublicPostCardActions from "~/components/PublicPostCardActions";
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { normalizeUrl, withTrailingSlash } from "~/helpers/utils";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { type FriendProfile, type WorldPost, type WorldProfile } from "~/types";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type FriendProfile,
+  type SharedPageProps,
+  type WorldPost,
+  type WorldProfile,
+} from "~/types";
+
+import MailIcon from "~icons/heroicons/envelope-open-20-solid";
+
+import logoSrc from "~/assets/images/logo.png";
 
 import classes from "./PostSharePage.module.css";
 import worldPageClasses from "./WorldPage.module.css";
@@ -135,7 +159,7 @@ const PostSharePage: PageComponent<PostSharePageProps> = ({
   );
 };
 
-PostSharePage.layout = page => (
+PostSharePage.layout = (page) => (
   <AppLayout<PostSharePageProps>
     title={({ post, world }) => [world.name, postTitleSnippet(post)]}
     withContainer

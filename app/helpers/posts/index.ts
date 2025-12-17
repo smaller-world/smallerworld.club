@@ -7,14 +7,15 @@ import {
   useRef,
 } from "react";
 
-import JournalEntryIcon from "~icons/basil/book-solid";
-import FollowUpIcon from "~icons/heroicons/arrow-path-rounded-square-20-solid";
-import InvitationIcon from "~icons/heroicons/envelope-open-20-solid";
-import LockIcon from "~icons/heroicons/lock-closed-20-solid";
-import PoemIcon from "~icons/heroicons/pencil-20-solid";
-import QuestionIcon from "~icons/heroicons/question-mark-circle-20-solid";
-
-import { ChosenFamilyIcon, FriendsIcon, PublicIcon } from "~/helpers/icons";
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
+import {
+  ChosenFamilyIcon,
+  FriendsIcon,
+  PublicIcon,
+  ReplyIcon,
+} from "~/helpers/icons";
+import routes from "~/helpers/routes";
+import { fetchRoute } from "~/helpers/routes/fetch";
 import {
   type Post,
   type PostType,
@@ -22,9 +23,12 @@ import {
   type UniversePostAssociatedFriend,
 } from "~/types";
 
-import { useCurrentFriend } from "../authentication";
-import routes from "../routes";
-import { fetchRoute } from "../routes/fetch";
+import JournalEntryIcon from "~icons/basil/book-solid";
+import FollowUpIcon from "~icons/heroicons/arrow-path-rounded-square-20-solid";
+import InvitationIcon from "~icons/heroicons/envelope-open-20-solid";
+import LockIcon from "~icons/heroicons/lock-closed-20-solid";
+import PoemIcon from "~icons/heroicons/pencil-20-solid";
+import QuestionIcon from "~icons/heroicons/question-mark-circle-20-solid";
 
 export { POST_TYPE_TO_LABEL, POST_VISIBILITY_TO_LABEL } from "./formatting";
 
@@ -147,6 +151,6 @@ export const useTrackPostSeen = <T extends HTMLElement>(
     return () => {
       clearTimeout(timeout);
     };
-  }, [inViewport]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inViewport]);
   return ref;
 };

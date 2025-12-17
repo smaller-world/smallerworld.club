@@ -1,14 +1,27 @@
-import { useComputedColorScheme } from "@mantine/core";
-import { useModals } from "@mantine/modals";
+import {
+  Button,
+  Divider,
+  Stack,
+  Tooltip,
+  useComputedColorScheme,
+} from "@mantine/core";
+import { openModal, useModals } from "@mantine/modals";
+import { clsx } from "clsx";
+import { isEmpty } from "lodash";
+import { type FC, useEffect, useState } from "react";
+
+import { useCurrentFriend, useCurrentUser } from "~/helpers/authentication";
+import { useContact } from "~/helpers/contact";
+import { requireMeta } from "~/helpers/meta";
+import { usePageDialogOpened } from "~/helpers/pageDialog";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
+import { readingTimeFor } from "~/helpers/utils";
 
 import ChatIcon from "~icons/heroicons/chat-bubble-left-right-20-solid";
 import ReportIcon from "~icons/heroicons/hand-raised-20-solid";
 import HeartIcon from "~icons/heroicons/heart-20-solid";
 import FeedbackIcon from "~icons/heroicons/megaphone-20-solid";
-
-import { useContact } from "~/helpers/contact";
-import { usePageDialogOpened } from "~/helpers/pageDialog";
-import { readingTimeFor } from "~/helpers/utils";
 
 import SleepyNeko, { type SleepyNekoProps } from "./SleepyNeko";
 
@@ -178,7 +191,7 @@ const FeedbackModalBody: FC<FeedbackModalBodyProps> = ({
         leftSection={<HeartIcon />}
         variant="gradient"
         gradient={{ from: "var(--gradient-from)", to: "var(--gradient-to)" }}
-        className={cn(classes.button, classes.supportButton)}
+        className={clsx(classes.button, classes.supportButton)}
       >
         support smaller world
       </Button>

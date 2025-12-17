@@ -1,5 +1,9 @@
-import { type AlertProps, Text } from "@mantine/core";
+import { Alert, type AlertProps, Stack, Text, Transition } from "@mantine/core";
+import { clsx } from "clsx";
+import { type FC } from "react";
 
+import { NotificationIcon } from "~/helpers/icons";
+import { usePageProps } from "~/helpers/inertia";
 import { type PostSharePageProps } from "~/pages/PostSharePage";
 
 import JoinRequestForm from "./JoinRequestForm";
@@ -15,12 +19,12 @@ const PostSharePageRequestInvitationAlert: FC<
   const { world, invitationRequested } = usePageProps<PostSharePageProps>();
   return (
     <Transition transition="pop" mounted={!invitationRequested}>
-      {transitionStyle => (
+      {(transitionStyle) => (
         <Alert
           variant="default"
           icon={<NotificationIcon />}
           title="hear more about what's going on in my life :)"
-          className={cn(
+          className={clsx(
             "PostSharePageRequestInvitationAlert",
             classes.alert,
             className,

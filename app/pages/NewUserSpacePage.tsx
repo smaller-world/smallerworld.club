@@ -1,5 +1,11 @@
+import { router } from "@inertiajs/react";
+
 import AppLayout from "~/components/AppLayout";
 import NewSpaceForm from "~/components/NewSpaceForm";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import { type SharedPageProps } from "~/types";
 
 export interface NewSpacePageProps extends SharedPageProps {}
 
@@ -8,7 +14,7 @@ const NewSpacePage: PageComponent<NewSpacePageProps> = () => {
 
   return (
     <NewSpaceForm
-      onSpaceCreated={space => {
+      onSpaceCreated={(space) => {
         router.visit(routes.spaces.show.path({ id: space.friendly_id }), {
           replace: true,
         });
@@ -17,7 +23,7 @@ const NewSpacePage: PageComponent<NewSpacePageProps> = () => {
   );
 };
 
-NewSpacePage.layout = page => (
+NewSpacePage.layout = (page) => (
   <AppLayout<NewSpacePageProps>
     title="new space"
     withContainer

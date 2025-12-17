@@ -1,5 +1,12 @@
-import { type ContainerProps, type MantineSize } from "@mantine/core";
-import { getSize, getSpacing } from "@mantine/core";
+import {
+  Container,
+  type ContainerProps,
+  getSize,
+  getSpacing,
+  type MantineSize,
+} from "@mantine/core";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, type FC } from "react";
 
 export interface PageContainerProps
   extends ContainerProps,
@@ -22,7 +29,7 @@ const PageContainer: FC<PageContainerProps> = ({
       {...{ size }}
       p="md"
       w="100%"
-      className={cn("PageContainer", className)}
+      className={clsx("PageContainer", className)}
       style={[
         style,
         withGutter

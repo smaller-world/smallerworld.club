@@ -1,8 +1,24 @@
-import { Button, Image, Overlay, RemoveScroll, Text } from "@mantine/core";
+import { Link, router } from "@inertiajs/react";
+import {
+  Box,
+  Button,
+  Group,
+  Image,
+  Overlay,
+  rem,
+  RemoveScroll,
+  Skeleton,
+  Space as MantineSpace,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { isEmpty } from "lodash-es";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
-import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
-
+import { EmptyCard } from "~/components";
 import AppInstallAlert from "~/components/AppInstallAlert";
 import AppLayout from "~/components/AppLayout";
 import EditSpaceButton from "~/components/EditSpaceButton";
@@ -13,13 +29,25 @@ import SpacePageNotificationsButton from "~/components/SpacePageNotificationsBut
 import SpacePostCardAuthorActions from "~/components/SpacePostCardAuthorActions";
 import SpacePostCardFriendActions from "~/components/SpacePostCardFriendActions";
 import UserFooter from "~/components/UserFooter";
+import { useCurrentUser } from "~/helpers/authentication";
 import { useIsHotwireNative } from "~/helpers/hotwire";
+import { BackIcon } from "~/helpers/icons";
+import { type PageComponent, useQueryParams } from "~/helpers/inertia";
 import { openAppInstallModal } from "~/helpers/install";
-import { isStandaloneDisplayMode } from "~/helpers/pwa";
+import { isStandaloneDisplayMode, usePWA } from "~/helpers/pwa";
+import routes from "~/helpers/routes";
 import { useSpacePosts } from "~/helpers/spaces";
+import {
+  normalizeUrl,
+  queryParamsFromPath,
+  withTrailingSlash,
+} from "~/helpers/utils";
 import { useWebPush } from "~/helpers/webPush";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { type Space, type World } from "~/types";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import { type SharedPageProps, type Space, type World } from "~/types";
+
+import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
 
 import classes from "./SpacePage.module.css";
 
@@ -56,7 +84,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
     if (intent === "install" && isEmpty(modals) && !isStandaloneDisplayMode()) {
       openAppInstallModal();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const body = (
     <Stack>
@@ -92,7 +120,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
               }}
             />
           ) : (
-            <>{currentUser && isNative === false && <Space h="lg" />}</>
+            <>{currentUser && isNative === false && <MantineSpace h="lg" />}</>
           )}
           <Box ta="center">
             <Title size="h2" className={classes.spaceName}>
@@ -113,7 +141,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
             top={0}
             right={0}
             styles={{ section: { marginRight: rem(6) } }}
-            onSpaceUpdated={space => {
+            onSpaceUpdated={(space) => {
               router.visit(routes.spaces.show.path({ id: space.friendly_id }), {
                 only: ["space"],
               });
@@ -139,7 +167,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
               <EmptyCard itemLabel="posts" />
             ) : (
               <>
-                {posts.map(post => (
+                {posts.map((post) => (
                   <PostCard
                     key={post.id}
                     {...{ post }}
@@ -162,7 +190,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
                     loading={isValidating}
                     style={{ alignSelf: "center" }}
                     onVisible={() => {
-                      void setSize(size => size + 1);
+                      void setSize((size) => size + 1);
                     }}
                   />
                 )}
@@ -211,7 +239,7 @@ const SpacePage: PageComponent<SpacePageProps> = ({ space }) => {
   );
 };
 
-SpacePage.layout = page => (
+SpacePage.layout = (page) => (
   <AppLayout<SpacePageProps>
     title={({ space }) => space.name}
     manifestUrl={routes.userManifest.show.path()}

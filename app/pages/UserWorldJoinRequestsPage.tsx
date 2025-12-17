@@ -1,9 +1,25 @@
+import { Link } from "@inertiajs/react";
+import { Box, Button, Skeleton, Stack, Title } from "@mantine/core";
+import { isEmpty } from "lodash-es";
+import { useState } from "react";
+
+import { EmptyCard } from "~/components";
 import AppLayout from "~/components/AppLayout";
 import NewInvitationDrawerModal from "~/components/NewInvitationDrawerModal";
 import UserWorldJoinRequestCard from "~/components/UserWorldJoinRequestCard";
+import { BackIcon, JoinRequestIcon } from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
+import routes from "~/helpers/routes";
+import { useRouteSWR } from "~/helpers/routes/swr";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
-import { type JoinRequest, type User, type World } from "~/types";
-
+import { withTrailingSlash } from "~/helpers/utils";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import {
+  type JoinRequest,
+  type SharedPageProps,
+  type User,
+  type World,
+} from "~/types";
 export interface UserWorldJoinRequestsPageProps extends SharedPageProps {
   currentUser: User;
   world: World;
@@ -55,7 +71,7 @@ const UserWorldJoinRequestsPage: PageComponent<
             isEmpty(pendingJoinRequests) ? (
               <EmptyCard itemLabel="join requests" />
             ) : (
-              pendingJoinRequests.map(joinRequest => (
+              pendingJoinRequests.map((joinRequest) => (
                 <UserWorldJoinRequestCard
                   key={joinRequest.id}
                   {...{ joinRequest }}
@@ -84,7 +100,7 @@ const UserWorldJoinRequestsPage: PageComponent<
   );
 };
 
-UserWorldJoinRequestsPage.layout = page => (
+UserWorldJoinRequestsPage.layout = (page) => (
   <AppLayout<UserWorldJoinRequestsPageProps>
     title="your join requests"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}

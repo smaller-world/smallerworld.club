@@ -1,12 +1,20 @@
+import { Box, type BoxProps } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
 import { type Editor } from "@tiptap/react";
-import { invertBy, map, uniq } from "lodash-es";
+import { clsx } from "clsx";
+import { invertBy, keyBy, map, mapValues, uniq } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC, useMemo, useRef } from "react";
 
+import { useForm } from "~/helpers/form";
 import {
   NONPRIVATE_POST_VISIBILITIES,
   worldPostDraftKey,
 } from "~/helpers/posts";
 import { usePostDraftFormValues } from "~/helpers/posts/drafts";
 import { htmlHasText } from "~/helpers/richText";
+import routes from "~/helpers/routes";
+import { mutateRoute } from "~/helpers/routes/swr";
 import {
   parseSpotifyTrackId,
   validateSpotifyTrackUrl,
@@ -71,7 +79,7 @@ const NewWorldPostForm: FC<NewWorldPostFormProps> = ({
   const subscribedFriends = useMemo(
     () =>
       friends?.filter(
-        friend =>
+        (friend) =>
           friend.notifiable && friend.subscribed_post_types.includes(postType),
       ),
     [friends, postType],
@@ -160,7 +168,7 @@ const NewWorldPostForm: FC<NewWorldPostFormProps> = ({
         },
       };
     },
-    onValuesChange: values => {
+    onValuesChange: (values) => {
       if (form.isTouched()) {
         shouldRestoreDraftRef.current = false;
         saveDraftValues(values);
@@ -179,7 +187,7 @@ const NewWorldPostForm: FC<NewWorldPostFormProps> = ({
   const { initialize, setValues, watch, setFieldValue } = form;
   useDidUpdate(() => {
     initialize(initialValues);
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   // == Draft restoration
   const shouldRestoreDraftRef = useRef(true);
@@ -192,7 +200,7 @@ const NewWorldPostForm: FC<NewWorldPostFormProps> = ({
         editor.commands.setContent(draftValues.body_html);
       }
     }
-  }, [draftValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [draftValues]);
 
   // == Update friend notifiability when visibility changes
   watch("visibility", ({ value, previousValue }) => {
@@ -215,13 +223,13 @@ const NewWorldPostForm: FC<NewWorldPostFormProps> = ({
     <Box
       component="form"
       onSubmit={form.submit}
-      className={cn("NewWorldPostForm", className)}
+      className={clsx("NewWorldPostForm", className)}
       {...otherProps}
     >
       <WorldPostFormBody
         {...{ form, postType, prompt, quotedPost, subscribedFriends }}
         encouragementId={encouragementId}
-        onEditorCreated={editor => {
+        onEditorCreated={(editor) => {
           editorRef.current = editor;
           const values = form.getValues();
           editor.commands.setContent(values.body_html);
@@ -248,7 +256,7 @@ const buildFriendNotifiability = (
   friends: UserWorldFriendProfile[],
   visibility: PostVisibility,
 ): Record<string, "hidden" | "muted" | "notify"> =>
-  mapValues(keyBy(friends, "id"), friend =>
+  mapValues(keyBy(friends, "id"), (friend) =>
     visibility === "secret"
       ? "hidden"
       : friend.paused_since

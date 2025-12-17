@@ -1,25 +1,37 @@
-import { type InertiaLinkProps } from "@inertiajs/react";
+import { type InertiaLinkProps, Link, router } from "@inertiajs/react";
 import {
+  ActionIcon,
+  Alert,
+  Anchor,
   Avatar,
+  Badge,
+  Box,
+  type BoxProps,
+  Button,
+  Checkbox,
+  Group,
   Image,
   Indicator,
+  List,
   type ListItemProps,
   Loader,
+  Menu,
   type MenuItemProps,
   Overlay,
   RemoveScroll,
+  Stack,
   Text,
+  Title,
+  Tooltip,
+  Transition,
 } from "@mantine/core";
 import { useWindowEvent } from "@mantine/hooks";
 import { useModals } from "@mantine/modals";
-
-import EllipsisHorizontalIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
-import MenuIcon from "~icons/heroicons/ellipsis-vertical-20-solid";
-import HeartIcon from "~icons/heroicons/heart-20-solid";
-import AddFriendIcon from "~icons/heroicons/user-plus-20-solid";
-
-import logoSrc from "~/assets/images/logo.png";
-import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
+import { clsx } from "clsx";
+import { inflect } from "inflection";
+import { isEmpty, omit } from "lodash-es";
+import { type FC, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import AppLayout from "~/components/AppLayout";
 import NewInvitationDrawerModal from "~/components/NewInvitationDrawerModal";
@@ -28,12 +40,38 @@ import UserWorldPageFeed from "~/components/UserWorldPageFeed";
 import UserWorldPageFloatingActions from "~/components/UserWorldPageFloatingActions";
 import UserWorldPageNotificationsButton from "~/components/UserWorldPageNotificationsButton";
 import WelcomeBackToast from "~/components/WelcomeBackToast";
+import {
+  EditIcon,
+  InvitationIcon,
+  JoinRequestIcon,
+  OpenExternalIcon,
+  SearchIcon,
+  SignOutIcon,
+  UserIcon,
+} from "~/helpers/icons";
+import { type PageComponent } from "~/helpers/inertia";
 import { openUserWorldPageInstallModal } from "~/helpers/install";
-import { isStandaloneDisplayMode } from "~/helpers/pwa";
+import { isStandaloneDisplayMode, usePWA } from "~/helpers/pwa";
+import routes from "~/helpers/routes";
+import { useRouteMutation } from "~/helpers/routes/swr";
 import { worldManifestUrlForUser } from "~/helpers/userWorld";
+import {
+  normalizeUrl,
+  queryParamsFromPath,
+  withTrailingSlash,
+} from "~/helpers/utils";
 import { useWebPush } from "~/helpers/webPush";
 import { WORLD_ICON_RADIUS_RATIO } from "~/helpers/worlds";
-import { type User, type World } from "~/types";
+import { useWorldTheme } from "~/helpers/worldThemes";
+import { type SharedPageProps, type User, type World } from "~/types";
+
+import EllipsisHorizontalIcon from "~icons/heroicons/ellipsis-horizontal-20-solid";
+import MenuIcon from "~icons/heroicons/ellipsis-vertical-20-solid";
+import HeartIcon from "~icons/heroicons/heart-20-solid";
+import AddFriendIcon from "~icons/heroicons/user-plus-20-solid";
+
+import logoSrc from "~/assets/images/logo.png";
+import swirlyUpArrowSrc from "~/assets/images/swirly-up-arrow.png";
 
 import classes from "./UserWorldPage.module.css";
 
@@ -79,7 +117,7 @@ const UserWorldPage: PageComponent<UserWorldPageProps> = ({
     if (intent === "install" && isEmpty(modals) && !isStandaloneDisplayMode()) {
       openUserWorldPageInstallModal(world);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // == Search
   const [searchActive, setSearchActive] = useState(false);
@@ -91,7 +129,7 @@ const UserWorldPage: PageComponent<UserWorldPageProps> = ({
   interface LinkItemProps
     extends MenuItemProps,
       Omit<InertiaLinkProps, "color" | "style"> {}
-  const LinkItem: FC<LinkItemProps> = props => (
+  const LinkItem: FC<LinkItemProps> = (props) => (
     <Menu.Item component={Link} {...props} />
   );
 
@@ -135,7 +173,7 @@ const UserWorldPage: PageComponent<UserWorldPageProps> = ({
                     transition="slide-up"
                     mounted={world.search_enabled && !searchActive}
                   >
-                    {transitionStyle => (
+                    {(transitionStyle) => (
                       <ActionIcon
                         size="lg"
                         variant="light"
@@ -180,7 +218,7 @@ const UserWorldPage: PageComponent<UserWorldPageProps> = ({
                       )
                     }
                     className={classes.friendButton}
-                    onClick={event => {
+                    onClick={(event) => {
                       if (isEmpty(latestFriendEmojis)) {
                         event.preventDefault();
                         setAddFriendModalOpened(true);
@@ -200,7 +238,7 @@ const UserWorldPage: PageComponent<UserWorldPageProps> = ({
             <Transition
               mounted={isEmpty(latestFriendEmojis) && pendingInvitations > 0}
             >
-              {transitionStyle => (
+              {(transitionStyle) => (
                 <Badge
                   leftSection={<InvitationIcon />}
                   variant="transparent"
@@ -481,7 +519,7 @@ const SupportButton: FC = () => {
   );
 };
 
-UserWorldPage.layout = page => (
+UserWorldPage.layout = (page) => (
   <AppLayout<UserWorldPageProps>
     title="your world"
     manifestUrl={({ currentUser }) => worldManifestUrlForUser(currentUser)}
@@ -509,13 +547,13 @@ const CheckableListItem: FC<CheckableListItemProps> = ({
   ...otherProps
 }) => (
   <List.Item
-    className={cn(classes.checkableListItem, className)}
+    className={clsx(classes.checkableListItem, className)}
     icon={
       <Checkbox
         checked={checked === true}
         {...(checked === "partial" && {
           indeterminate: true,
-          icon: props => (
+          icon: (props) => (
             <EllipsisHorizontalIcon {...omit(props, "indeterminate")} />
           ),
         })}

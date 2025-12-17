@@ -1,7 +1,16 @@
-import { difference, invertBy, map, uniq } from "lodash-es";
+import { Box, type BoxProps } from "@mantine/core";
+import { useDidUpdate } from "@mantine/hooks";
+import { clsx } from "clsx";
+import { difference, invertBy, keyBy, map, mapValues, uniq } from "lodash-es";
+import { DateTime } from "luxon";
+import { type FC, useMemo } from "react";
+import invariant from "tiny-invariant";
 
+import { useForm } from "~/helpers/form";
 import { NONPRIVATE_POST_VISIBILITIES } from "~/helpers/posts";
 import { htmlHasText } from "~/helpers/richText";
+import routes from "~/helpers/routes";
+import { mutateRoute, useRouteSWR } from "~/helpers/routes/swr";
 import {
   parseSpotifyTrackId,
   validateSpotifyTrackUrl,
@@ -58,7 +67,7 @@ const EditWorldPostForm: FC<EditWorldPostFormProps> = ({
   const subscribedFriends = useMemo(
     () =>
       friends?.filter(
-        friend =>
+        (friend) =>
           friend.notifiable && friend.subscribed_post_types.includes(postType),
       ),
     [friends, postType],
@@ -91,7 +100,7 @@ const EditWorldPostForm: FC<EditWorldPostFormProps> = ({
       body_html: body_html ?? "",
       emoji: emoji ?? "",
       images_uploads: images
-        ? images.map<Upload>(image => ({ signedId: image.signed_id }))
+        ? images.map<Upload>((image) => ({ signedId: image.signed_id }))
         : [],
       visibility,
       pinned_until: pinned_until ?? null,
@@ -181,7 +190,7 @@ const EditWorldPostForm: FC<EditWorldPostFormProps> = ({
   const { initialize, watch, setFieldValue } = form;
   useDidUpdate(() => {
     initialize(initialValues);
-  }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   // == Update friend notifiability when visibility changes
   watch("visibility", ({ value, previousValue }) => {
@@ -204,7 +213,7 @@ const EditWorldPostForm: FC<EditWorldPostFormProps> = ({
     <Box
       component="form"
       onSubmit={form.submit}
-      className={cn("EditWorldPostForm", className)}
+      className={clsx("EditWorldPostForm", className)}
       {...otherProps}
     >
       <WorldPostFormBody
@@ -241,7 +250,7 @@ const buildFriendNotifiability = (
     visibleToIds: string[];
   },
 ): Record<string, "hidden" | "muted" | "notify"> =>
-  mapValues(keyBy(friends, "id"), friend =>
+  mapValues(keyBy(friends, "id"), (friend) =>
     audienceData.notifiedIds.includes(friend.id)
       ? "notify"
       : visibility === "secret"

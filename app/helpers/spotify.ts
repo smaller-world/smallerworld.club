@@ -4,7 +4,7 @@ const SPOTIFY_TRACK_URL_PATTERN =
   /^https:\/\/open\.spotify\.com\/track\/([a-zA-Z0-9]+)(\?.*)?$/;
 
 export const parseSpotifyTrackId = (trackUrl: string): string | null => {
-  const matches = trackUrl.match(SPOTIFY_TRACK_URL_PATTERN);
+  const matches = SPOTIFY_TRACK_URL_PATTERN.exec(trackUrl);
   return matches?.[1] ?? null;
 };
 

@@ -1,5 +1,12 @@
-import { Text } from "@mantine/core";
+import { Text, type TextProps } from "@mantine/core";
 import { DateTime } from "luxon";
+import {
+  type ComponentPropsWithoutRef,
+  type FC,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { format as formatTimeAgo } from "timeago.js";
 
 export interface TimeAgoProps
