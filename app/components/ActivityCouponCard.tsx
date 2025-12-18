@@ -7,6 +7,7 @@ import {
   type BoxProps,
   Button,
   Card,
+  Group,
   Popover,
   Space,
   Stack,
@@ -14,7 +15,6 @@ import {
 } from "@mantine/core";
 import { clsx } from "clsx";
 import { type FC } from "react";
-import { Group } from "react-konva";
 import { toast } from "sonner";
 
 import { CouponIcon } from "~/helpers/icons";

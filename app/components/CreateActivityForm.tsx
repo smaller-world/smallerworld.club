@@ -3,6 +3,7 @@ import {
   Box,
   type BoxProps,
   Button,
+  Group,
   InputWrapper,
   Stack,
   Text,
@@ -10,7 +11,6 @@ import {
   TextInput,
 } from "@mantine/core";
 import { type FC } from "react";
-import { Group } from "react-konva";
 
 import { useFieldsFilled, useForm } from "~/helpers/form";
 import { EmojiIcon, SaveIcon } from "~/helpers/icons";
