@@ -1,3 +1,5 @@
+// @ts-check
+
 /* eslint-disable import-x/no-named-as-default-member */
 import { readFileSync } from "node:fs";
 
@@ -20,7 +22,9 @@ export default defineConfig([
   js.configs.recommended,
   ts.configs.recommendedTypeChecked,
   ts.configs.stylisticTypeChecked,
+  // @ts-expect-error - Bad typing, but it works
   importX.flatConfigs.recommended,
+  // @ts-expect-error - Bad typing, but it works
   importX.flatConfigs.typescript,
   {
     settings: {

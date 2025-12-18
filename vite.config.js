@@ -3,7 +3,6 @@ import { join } from "node:path";
 
 import reactPlugin from "@vitejs/plugin-react";
 import Mime from "mime";
-import { visualizer as visualizerPlugin } from "rollup-plugin-visualizer";
 import iconsPlugin from "unplugin-icons/vite";
 import { defineConfig, resolveConfig } from "vite";
 import environmentPlugin from "vite-plugin-environment";
@@ -87,17 +86,6 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     },
   });
 
-  // == Visualizer
-  const visualize = process.env.VITE_VISUALIZE;
-  if (visualize && ["1", "true", "t"].includes(visualize.toLowerCase())) {
-    plugins.push(
-      visualizerPlugin({
-        filename: "tmp/vite_visualize.html",
-        open: true,
-      }),
-    );
-  }
-
   /** @type {import("vite").UserConfig} */
   const config = {
     clearScreen: false,
@@ -132,9 +120,10 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
   return config;
 });
 
+/** @type {() => import("vite").PluginOption} */
 const ignoringCssIsomorphicImportPlugin = () => {
   const plugin = isomorphicImportPlugin({
-    client: ["@hotwired/turbo", "@rails/activestorage"],
+    client: ["@hotwired/turbo-rails", "@rails/activestorage"],
   });
 
   const isCssFile = (id) => {
