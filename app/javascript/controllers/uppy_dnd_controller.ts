@@ -3,8 +3,7 @@ import Uppy from "@uppy/core";
 import DragDrop from "@uppy/drag-drop";
 import StatusBar from "@uppy/status-bar";
 
-import { isDevelopment } from "~/javascript/helpers/env";
-// import { ActiveStorageUpload } from "~/javascript/uppy";
+import { isDevelopment } from "#helpers/env";
 
 export default class extends Controller {
   static targets = ["input", "statusBar"];

@@ -3,7 +3,7 @@
   .form-textarea,
   .form-select,
   .form-multiselect {
-    @apply border-shade-300 focus:border-focus-ring focus:ring-focus-ring border;
+    @apply border border-shade-300 focus:border-focus-ring focus:ring-focus-ring;
     @apply leading-snug;
 
     &[data-error] {
@@ -22,70 +22,50 @@
 
   .icon-field {
     .form-input {
-      border-radius: var(--app-icon-radius);
+      @apply rounded-app-icon;
 
       &:not(:has(> .filepond--root)) {
-        @apply bg-shade-300 animate-pulse;
+        @apply animate-pulse bg-shade-300;
       }
     }
 
     .editor-modal {
       .modal-panel {
-        @apply p-0 max-w-xl bg-transparent focus-visible:ring-transparent shadow-none;
+        @apply mb-11 max-w-xl bg-transparent p-0 shadow-none;
+        @apply focus-visible:ring-0;
+        @apply relative;
 
-        .editor-modal-content {
-          @apply flex flex-col gap-3 items-center;
+        img {
+          @apply shadow-xl;
+          max-height: calc(100vh - var(--spacing) * 20);
+        }
 
-          img {
-            @apply shadow-xl;
-            max-height: calc(100vh - var(--spacing) * 20);
+        &:has(> img) {
+          &::after {
+            @apply absolute inset-0;
+            content: "";
+            background-color: rgba(0, 0, 0, 0.5);
           }
+        }
+
+        .truecropper .truecropper__selection {
+          @apply rounded-app-icon;
+        }
+
+        .footer {
+          @apply absolute right-0 -bottom-11 left-0;
+          @apply flex flex-col items-center;
+          @apply pointer-events-none *:pointer-events-auto;
         }
       }
     }
 
     .filepond--root[data-style-panel-layout~="circle"] {
-      border-radius: var(--app-icon-radius) !important;
+      @apply rounded-app-icon!;
 
       .filepond--image-preview-wrapper {
-        border-radius: var(--app-icon-radius) !important;
+        @apply rounded-app-icon!;
       }
     }
-
-    /* .uppy-container {
-      @apply relative flex flex-col items-stretch border-none;
-      border-radius: var(--app-icon-radius);
-
-      &:not(:has(> .uppy-Root))::after {
-        @apply absolute inset-0 bg-stone-200 animate-pulse;
-        border-radius: var(--app-icon-radius);
-        content: "";
-      }
-    }
-
-    .uppy-Root {
-      @apply flex-1;
-    }
-
-    .uppy-Root,
-    .uppy-DragDrop-container {
-      border-radius: inherit;
-    }
-
-    .uppy-DragDrop--isDragDropSupported {
-      @apply border-shade-300;
-    }
-
-    .uppy-DragDrop-inner {
-      @apply p-2;
-    }
-
-    .uppy-DragDrop-arrow {
-      @apply h-9 mb-2;
-    }
-
-    .uppy-DragDrop-label {
-      @apply text-sm font-medium font-sans leading-tight lowercase text-shade-600;
-    } */
   }
 }

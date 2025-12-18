@@ -3,9 +3,7 @@
     // == Paths
     "baseUrl": ".",
     "paths": {
-      "~/*": ["app/*"],
-      "~stylesheets/*": ["app/assets/stylesheets/*"],
-      "~helpers/*": ["app/javascript/helpers/*"]
+      "~/*": ["app/*"]
     },
 
     // == Language

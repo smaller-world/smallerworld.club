@@ -26,9 +26,7 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
     undefined,
     isPreview,
   );
-  const { VITE_RUBY_ROOT, VITE_RUBY_SOURCE_CODE_DIR, VITE_RUBY_PUBLIC_DIR } =
-    env;
-  const srcDir = join(VITE_RUBY_ROOT, VITE_RUBY_SOURCE_CODE_DIR);
+  const { VITE_RUBY_ROOT, VITE_RUBY_PUBLIC_DIR } = env;
   const publicDir = join(VITE_RUBY_ROOT, VITE_RUBY_PUBLIC_DIR);
 
   // == Plugins
@@ -108,14 +106,6 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
         {
           find: "lodash",
           replacement: "lodash-es",
-        },
-        {
-          find: "~stylesheets",
-          replacement: join(srcDir, "assets/stylesheets"),
-        },
-        {
-          find: "~helpers",
-          replacement: join(srcDir, "javascript/helpers"),
         },
       ],
     },

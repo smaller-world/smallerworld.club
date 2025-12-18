@@ -1,6 +1,6 @@
 @layer base {
   :where(:focus-visible) {
-    @apply ring-focus-ring ring-2;
+    @apply ring-2 ring-focus-ring;
 
     outline: none;
   }

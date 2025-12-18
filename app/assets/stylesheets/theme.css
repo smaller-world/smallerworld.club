@@ -21,7 +21,7 @@
   --color-focus-ring: var(--color-primary-300);
 
   /* Border radius */
-  --app-icon-radius: 22.37%;
+  --radius-app-icon: 22.37%;
 }
 
 @theme inline {

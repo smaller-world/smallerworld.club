@@ -51,7 +51,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["app/javascript/**/*.ts"],
+    files: ["app/javascript/**/*.ts", "app/entrypoints/application.ts"],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -109,6 +109,9 @@ export default defineConfig([
             // Anything not matched in another group.
             ["^"],
 
+            // == Project imports
+            ["^#/"],
+
             // == Icons
             ["^~icons/"],
 
@@ -122,8 +125,11 @@ export default defineConfig([
             // == CSS modules
             ["\\.module\\.css$"],
 
-            // == Side effect imports
-            ["^\\u0000", "^\\u0000@fontsource"],
+            // == Absolute side effect imports
+            ["^\\u0000"],
+
+            // == Relative side effect imports
+            ["^\\u0000\\."],
           ],
         },
       ],
@@ -135,7 +141,10 @@ export default defineConfig([
   // == Legacy (React frontend)
   // TODO: Remove this once React frontend is gone.
   {
-    files: ["app/{helpers,components,pages}/**/*.{ts,tsx}"],
+    files: [
+      "app/{helpers,components,pages}/**/*.{ts,tsx}",
+      "app/entrypoints/{inertia.tsx,mailer.ts}",
+    ],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-empty-function": "off",

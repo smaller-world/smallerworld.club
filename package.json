@@ -1,6 +1,11 @@
 {
   "license": "UNLICENSED",
   "type": "module",
+  "imports": {
+    "#helpers/*": "./app/javascript/helpers/*.ts",
+    "#controllers": "./app/javascript/controllers/index.ts",
+    "#initializers": "./app/javascript/initializers/index.ts"
+  },
   "resolutions": {
     "@parcel/watcher": "2.1.0",
     "@svgr/core": "^8.0.0",
@@ -55,7 +60,7 @@
     "@uppy/utils": "^7.1.5",
     "@wordpress/wordcount": "^4.34.0",
     "axios": "^1.7.9",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
@@ -145,7 +150,6 @@
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.6.2",
-    "prettier-plugin-jsdoc": "^1.8.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rollup": "^4.13.0",
     "rollup-plugin-visualizer": "^6.0.3",

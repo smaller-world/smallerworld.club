@@ -1,6 +1,6 @@
 import { Application } from "@hotwired/stimulus";
 
-import { isDevelopment } from "~/javascript/helpers/env";
+import { isDevelopment } from "#helpers/env";
 
 const application = Application.start();
 

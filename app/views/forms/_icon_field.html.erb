@@ -36,17 +36,18 @@
         filepond_target: "editorModal",
         action: class_names(
           "filepond:open-editor-modal->modal#open",
+          "filepond:close-editor-modal->modal#close",
           "modal:opened->filepond#initializeCropper",
           "modal:cancelled->filepond#cancelEdit",
           "modal:closed->filepond#finalizeEdit",
         )
       },
     ) do %>
-      <div class="editor-modal-content">
-        <img
-          data-filepond-target="editorModalImage"
-          alt=""
-        />
+      <img
+        data-filepond-target="editorModalImage"
+        alt=""
+      />
+      <div class="footer">
         <button
           type="button"
           class="btn text-sm"

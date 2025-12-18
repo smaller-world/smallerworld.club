@@ -3,12 +3,7 @@
   class: class_names("modal", local_assigns[:class]),
   data: {
     controller: class_names("modal", data.delete(:controller)),
-    action: class_names(
-      "cancel->modal#onDialogCancel",
-      "pointerdown@document->modal#onDocumentPointerDown",
-      "click@document->modal#onDocumentClick",
-      data.delete(:action)
-    ),
+    action: class_names("cancel->modal#onDialogCancel", data.delete(:action)),
     **data
   }
 ) do %>
