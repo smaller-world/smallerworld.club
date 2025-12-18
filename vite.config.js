@@ -48,12 +48,12 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
       strategies: "injectManifest",
       injectRegister: null,
       injectManifest: {
-        swSrc: "app/javascript/sw.ts",
+        swSrc: "app/entrypoints/sw.ts",
         modifyURLPrefix: {
           "": base,
         },
       },
-      srcDir: "javascript",
+      srcDir: "entrypoints",
       filename: "sw.ts",
       devOptions: {
         enabled: true,

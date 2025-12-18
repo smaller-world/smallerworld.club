@@ -27,7 +27,7 @@
   },
   "include": ["app/**/*.ts", "app/**/*.tsx", "typings/**/*.d.ts"],
   "exclude": [
-    "app/javascript/sw.ts",
+    "app/entrypoints/sw.ts",
     "typings/service-worker.d.ts",
     "typings/generated/**/*.d.ts"
   ],

@@ -51,7 +51,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["app/javascript/**/*.ts", "app/entrypoints/application.ts"],
+    files: ["app/javascript/**/*.ts", "app/entrypoints/*.ts"],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -143,7 +143,7 @@ export default defineConfig([
   {
     files: [
       "app/{helpers,components,pages}/**/*.{ts,tsx}",
-      "app/entrypoints/{inertia.tsx,mailer.ts}",
+      "app/entrypoints/deprecated/**.ts",
     ],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
