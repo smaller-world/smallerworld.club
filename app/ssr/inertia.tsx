@@ -22,7 +22,7 @@ setupDayjs();
 
 // == Pages
 const pageImports: Record<string, PageComponent> = import.meta.glob(
-  "../pages/**/*.tsx",
+  "~/pages/**/*.tsx",
   { import: "default", eager: true },
 );
 const pages = parsePageImports(pageImports);

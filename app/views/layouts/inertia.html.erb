@@ -65,8 +65,8 @@
     <%= vite_client_tag %>
     <% if local_assigns.include?(:page) %>
       <%= vite_react_refresh_tag %>
-      <%= vite_javascript_tag "inertia.tsx" %>
-      <%= vite_stylesheet_tag "inertia" %>
+      <%= vite_javascript_tag "entrypoints/deprecated/inertia.tsx" %>
+      <%= vite_stylesheet_tag "entrypoints/deprecated/inertia" %>
     <% end %>
 
     <%# == Inertia %>

@@ -55,7 +55,7 @@ if ("serviceWorker" in navigator && isStandaloneDisplayMode()) {
 }
 
 // == Pages
-const pageImports = import.meta.glob("../pages/*.tsx", {
+const pageImports = import.meta.glob("~/pages/*.tsx", {
   import: "default",
 }) as Record<string, () => Promise<PageComponent>>;
 const pages = parsePageImports(pageImports);
