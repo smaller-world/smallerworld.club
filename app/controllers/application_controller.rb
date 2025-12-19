@@ -14,10 +14,8 @@ class ApplicationController < ActionController::Base
   include SharesApplicationProps
   include NPlusOneDetection
   include RendersWorldThemes
-  unless Rails.env.production?
-    include EmulatesExpiredPage
-    include EmulatesNativeApp
-  end
+  include EmulatesNativeApp
+  include EmulatesExpiredPage unless Rails.env.production?
 
   # == Errors ==
 

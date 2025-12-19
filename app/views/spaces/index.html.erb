@@ -5,7 +5,7 @@
       <ul class="space-y-2">
         <% @owned_spaces.each do |space| %>
           <li>
-            <%= link_to space_path(space, emulate_native_app: true) do %>
+            <%= link_to space_path(space, emulate_native_app: 1) do %>
               <%= render "spaces/card", space: %>
             <% end %>
           </li>

@@ -1,5 +1,5 @@
 <div class="max-w-xl mx-auto p-4 flex flex-col gap-6">
-  <%= back_link_to @space.name, space_path(@space, emulate_native_app: true) %>
+  <%= back_link_to @space.name, space_path(@space, emulate_native_app: 1) %>
   <%= turbo_frame_tag dom_id(@space, :edit) do %>
     <%= render "spaces/form", space: @space %>
   <% end %>
