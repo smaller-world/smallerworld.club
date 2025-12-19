@@ -22,7 +22,31 @@
   "rubocop.mode": "enableViaGemfile",
   "rubocop.bundleCommandPath": "mise x -- bundle",
 
-  // == Tailwind
+  // == CSS & Tailwind
+  "cssVariables.languages": [
+    "scss",
+    "postcss",
+    "less",
+    "css",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "source.css.styled",
+    "erb"
+  ],
+  "cssVariables.blacklistFolders": [
+    "**/.git",
+    "**/.DS_Store",
+    "**/node_modules",
+    "**/tmp",
+    "**/dist",
+    "**/tests",
+    "public/dist",
+    "public/dist-dev",
+    "public/dist-test"
+  ],
   "tailwindCSS.experimental.classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"],
 
   // == YAML

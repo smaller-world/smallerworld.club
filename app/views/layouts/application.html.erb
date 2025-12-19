@@ -17,9 +17,9 @@
 
     <%# == Favicons == %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="shotcut icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%# == Application assets == %>
 
@@ -54,7 +54,7 @@
     <%= turbo_frame_tag :flash do %>
     <% if notice = flash[:notice] || flash[:alert] %>
         <div class="flash" data-controller="element-removal" data-action="animationend->element-removal#remove">
-          <div class="flash__inner shadow">
+          <div class="flash-inner shadow">
             <%= notice %>
           </div>
         </div>

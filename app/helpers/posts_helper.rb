@@ -25,6 +25,8 @@ module PostsHelper
       icon("question-mark-circle", variant:, **options)
     when "follow_up"
       icon("arrow-path-rounded-square", variant:, **options)
+    when "response"
+      icon("chat-bubble-oval-left", variant:, **options)
     else
       raise NotImplementedError, "Unknown post type: #{type}"
     end

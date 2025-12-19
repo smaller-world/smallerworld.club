@@ -1,18 +1,27 @@
 {
   "recommendations": [
-    "shopify.ruby-lsp",
-    "formulahendry.auto-close-tag",
-    "sorbet.sorbet-vscode-extension",
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
+    // == Editor
     "editorconfig.editorconfig",
+    "github.vscode-github-actions",
+
+    // == HTML/CSS
+    "bradlc.vscode-tailwindcss",
+    "csstools.postcss",
+    "formulahendry.auto-close-tag",
+
+    // == Ruby
     "benspaulding.procfile",
     "itarato.byesig",
-    "github.vscode-github-actions",
-    "clinyong.vscode-css-modules",
     "rubocop.vscode-rubocop",
-    "csstools.postcss",
+    "shopify.ruby-lsp",
+    "sorbet.sorbet-vscode-extension",
+
+    // == JavaScript
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+
+    // == Others
     "redhat.vscode-yaml",
-    "bradlc.vscode-tailwindcss"
+    "vunguyentuan.vscode-css-variables"
   ]
 }
