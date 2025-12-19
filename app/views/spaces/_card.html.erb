@@ -1,0 +1,13 @@
+<div id="<%= dom_id(space, :card) %>" class="card flex gap-4">
+  <% if space.icon.attached? %>
+    <%= image_tag space.icon, class: "rounded-app-icon size-20" %>
+  <% end %>
+  <div class="flex-1 flex flex-col">
+    <p class="font-headings font-semibold">
+      <%= space.name %>
+    </p>
+    <p class="text-sm text-shade-500">
+      <%= space.description %>
+    </p>
+  </div>
+</div>

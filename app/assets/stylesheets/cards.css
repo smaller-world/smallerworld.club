@@ -1,0 +1,9 @@
+@layer components {
+  .card {
+    @apply block border border-shade-300 bg-white p-4;
+
+    a > & {
+      @apply hover:border-primary-500;
+    }
+  }
+}

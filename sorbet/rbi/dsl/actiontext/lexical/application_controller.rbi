@@ -30,6 +30,8 @@ class Actiontext::Lexical::ApplicationController
     include ::ActionController::Base::HelperMethods
     include ::Actiontext::Lexical::ApplicationHelper
     include ::ApplicationHelper
+    include ::PostsHelper
+    include ::LocalTimeHelper
   end
 
   class HelperProxy < ::ActionView::Base

@@ -22,32 +22,6 @@ module Users
       end
     end
 
-    # GET /world/spaces/new
-    def new
-      respond_to do |format|
-        format.html do
-          @page_title = "new space"
-          @space = Space.new
-        end
-      end
-    end
-
-    # GET /world/spaces/:id/edit
-    def edit
-      respond_to do |format|
-        format.html do
-          space = find_space!(scope: Space.with_attached_icon)
-          render(
-            inertia: "EditUserSpacePage",
-            world_theme: "cloudflow",
-            props: {
-              space: SpaceSerializer.one(space)
-            },
-          )
-        end
-      end
-    end
-
     # POST /world/spaces
     def create
       respond_to do |format|
@@ -68,16 +42,6 @@ module Users
             )
           end
         end
-        format.html do
-          current_user = authenticate_user!
-          space_params = params.expect(space: %i[name description icon public])
-          @space = current_user.owned_spaces.build(**space_params)
-          if @space.save
-            redirect_to(space_path(@space), status: :see_other)
-          else
-            render :new, status: :unprocessable_content
-          end
-        end
       end
     end
 
@@ -85,7 +49,7 @@ module Users
     def update
       respond_to do |format|
         format.json do
-          space = find_space!
+          space = find_space
           authorize!(space)
           space_params = params.expect(space: %i[name description icon public])
           if space.update(space_params)
@@ -99,10 +63,11 @@ module Users
 
     private
 
+
     # == Helpers ==
 
     sig { params(scope: Space::PrivateRelation).returns(Space) }
-    def find_space!(scope: Space.all)
+    def find_space(scope: Space.all)
       scope.friendly.find(params.fetch(:id))
     end
   end

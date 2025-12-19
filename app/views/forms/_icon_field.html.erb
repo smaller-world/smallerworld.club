@@ -1,4 +1,5 @@
 <%= render "forms/field_wrapper", class: "icon-field", **local_assigns do %>
+  <% attachment = form.object.send(name) %>
   <% error = form.object.errors.full_messages_for(name).first %>
   <div
     class="<%= class_names(
@@ -11,9 +12,10 @@
     data-filepond-aspect-ratio-value="1:1"
     data-prevent-submit-while-busy-target="busyable"
   >
-    <%= form.file_field(
+    <%= form.hidden_field name, value: "" %>
+    <%= form.hidden_field(
       name,
-      hidden: true,
+      value: (attachment.signed_id if attachment.attached?),
       data: {
         filepond_target: "input",
         error: error.present? ,
@@ -25,7 +27,7 @@
     ) %>
     <template data-filepond-target="idleLabelTemplate">
       <div class="flex flex-col items-center gap-1.5">
-        <%= heroicon "arrow-up-tray", variant: :micro, options: { class: "size-5 text-shade-600" } %>
+        <%= icon "arrow-up-tray", variant: :micro, class: "size-5 text-shade-600" %>
         drag & drop your image here
       </div>
     </template>
@@ -46,11 +48,11 @@
       <img
         data-filepond-target="editorModalImage"
         alt=""
-      />
+      >
       <div class="footer">
         <button
           type="button"
-          class="btn text-sm"
+          class="btn btn-action text-sm"
           data-action="modal#close filepond#confirmEdit"
         >
           crop and continue

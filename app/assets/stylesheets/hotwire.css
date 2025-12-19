@@ -1,0 +1,11 @@
+@custom-variant native {
+  body[data-hotwire-native] & {
+    @slot;
+  }
+}
+
+@custom-variant not-native {
+  body:not([data-hotwire-native]) & {
+    @slot;
+  }
+}

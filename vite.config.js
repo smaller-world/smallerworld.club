@@ -3,6 +3,7 @@ import { join } from "node:path";
 
 import reactPlugin from "@vitejs/plugin-react";
 import Mime from "mime";
+import gzipPlugin from "rollup-plugin-gzip";
 import iconsPlugin from "unplugin-icons/vite";
 import { defineConfig, resolveConfig } from "vite";
 import environmentPlugin from "vite-plugin-environment";
@@ -35,12 +36,10 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
       { RAILS_ENV: "development" },
       { defineOn: "import.meta.env" },
     ),
-    ignoringCssIsomorphicImportPlugin(),
-    iconsPlugin({ compiler: "jsx", jsx: "react" }),
-    imageOptimizerPlugin({ includePublic: false }),
-    reactPlugin(),
     rubyPlugin(),
-    stimulusHmrPlugin(),
+    ignoringCssIsomorphicImportPlugin(),
+    reactPlugin(),
+    iconsPlugin({ compiler: "jsx", jsx: "react" }),
     pwaPlugin({
       registerType: "autoUpdate",
       manifest: false,
@@ -59,6 +58,9 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
         type: "module",
       },
     }),
+    imageOptimizerPlugin({ includePublic: false }),
+    gzipPlugin(),
+    stimulusHmrPlugin(),
     fullReloadPlugin(["app/views/**/*"]),
   ];
 

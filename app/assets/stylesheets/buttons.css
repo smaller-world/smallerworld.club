@@ -1,8 +1,16 @@
 @layer components {
   .btn {
-    @apply font-headings font-semibold text-white;
-    @apply bg-primary-600 px-4 py-2 hover:bg-primary-700;
+    @apply flex items-center justify-center gap-2 px-4 py-2;
+    @apply font-headings font-semibold;
     @apply cursor-pointer;
+
+    &:not([class^="btn-"]) {
+      @apply text-primary-600 hover:bg-shade-100;
+    }
+
+    &.btn-action {
+      @apply bg-primary-600 text-white hover:bg-primary-700;
+    }
 
     &:disabled {
       @apply pointer-events-none cursor-not-allowed opacity-30;

@@ -43,7 +43,7 @@ class StartController < ApplicationController
     respond_to do |format|
       format.html do
         # if signed_in?
-        redirect_to(user_spaces_path)
+        redirect_to(spaces_path)
         # else
         #   render(inertia: "SplashPage")
         # end

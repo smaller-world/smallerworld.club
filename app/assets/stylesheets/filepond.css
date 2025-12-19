@@ -25,9 +25,5 @@
         @apply cursor-pointer text-sm leading-tight text-shade-500;
       }
     }
-
-    .filepond--credits {
-      @apply hidden;
-    }
   }
 }

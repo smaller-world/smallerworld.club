@@ -1,0 +1,55 @@
+<%= form_with(
+  model: space,
+  class: "flex flex-col gap-4",
+  data: {
+    turbo_frame: "_top",
+    controller: "prevent-submit-while-busy",
+  }
+) do |form| %>
+  <%= render(
+    "forms/text_field",
+    form:,
+    name: :name,
+    label: "your space's name",
+    placeholder: "new stadium",
+    required: true,
+  ) %>
+  <%= render(
+    "forms/text_area",
+    form:,
+    name: :description,
+    label: "purpose",
+    description: "what do people write about in this space?",
+    placeholder: "a space to share project progress updates",
+    required: true,
+    class: "min-h-24",
+  ) %>
+  <%= render(
+    "forms/icon_field",
+    form:,
+    name: :icon,
+    label: "icon (optional)",
+    accept: "image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif",
+    center: true,
+  ) %>
+  <% if current_user.admin? %>
+    <div class="flex gap-1.5 items-center">
+      <%= form.check_box :public, class: "form-checkbox" %>
+      <%= form.label :public, "show on spaces tab for all users", class: "text-sm" %>
+    </div>
+  <% end %>
+  <%= form.button(
+    type: "submit",
+    class: "btn btn-action",
+    data: {
+      prevent_submit_while_busy_target: "submit",
+    },
+  ) do %>
+    <span>
+      <%= space.new_record? ? "create space" : "save changes" %>
+    </span>
+    <% if space.new_record? %>
+      <%= icon "arrow-right", variant: :micro, class: "size-5" %>
+    <% end %>
+  <% end %>
+<% end %>

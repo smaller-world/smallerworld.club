@@ -84,7 +84,8 @@ module Worlds
       ])
     end
     def paginate_posts(scope)
-      pagy_keyset(
+      pagy(
+        :keyset,
         scope.order(created_at: :desc, id: :asc),
         limit: 5,
       )

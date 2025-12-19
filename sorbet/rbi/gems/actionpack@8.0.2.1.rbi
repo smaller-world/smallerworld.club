@@ -2700,6 +2700,7 @@ module ActionController::Base::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::ActionText::ContentHelper
   include ::ActionText::TagHelper
+  include ::Lexxy::TagHelper
   include ::InertiaRails::Helper
   include ::InertiaRails::AssetHelper
   include ::ViteRails::TagHelpers

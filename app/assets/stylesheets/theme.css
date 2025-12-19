@@ -1,10 +1,10 @@
 @theme {
   --font-sans:
-    "Manrope Variable", Inter, -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Helvetica, Arial, sans-serif;
+    Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
   --font-headings:
-    "Bricolage Grotesque Variable", Manrope Variable, Inter, -apple-system,
-    BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    "Bricolage Grotesque", Manrope, Inter, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
   /* Spacing */
   --inline-space: 1ch;

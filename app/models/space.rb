@@ -93,6 +93,10 @@ class Space < ApplicationRecord
       .or(User.where(id: posts.distinct.select(:author_id)))
   end
 
+  # == Normalizations ==
+
+  strips_text :name, :description
+
   # == Validations ==
 
   validates :name, presence: true, uniqueness: { scope: :owner }

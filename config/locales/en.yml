@@ -34,3 +34,8 @@ en:
       about_x_months:
         one: "%{count} month"
         other: "%{count} months"
+  time:
+    formats:
+      default: "%a, %d %b %Y %I:%M:%S %p %Z"
+      long: "%B %d, %Y %-I:%M %p"
+      short: "%d %b, %-I:%M %p"

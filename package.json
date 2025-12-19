@@ -2,9 +2,9 @@
   "license": "UNLICENSED",
   "type": "module",
   "imports": {
-    "#helpers/*": "./app/javascript/helpers/*.ts",
+    "#initializers": "./app/javascript/initializers/index.ts",
     "#controllers": "./app/javascript/controllers/index.ts",
-    "#initializers": "./app/javascript/initializers/index.ts"
+    "#helpers/*": "./app/javascript/helpers/*.ts"
   },
   "resolutions": {
     "@parcel/watcher": "2.1.0",
@@ -22,7 +22,6 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fullstory/browser": "^2.0.5",
     "@gfazioli/mantine-marquee": "^2.6.0",
-    "@gothassos/uppy-activestorage-upload": "^2.0.1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.20",
     "@inertiajs/core": "^2.2.20",
@@ -54,10 +53,6 @@
     "@tsparticles/confetti": "^3.8.1",
     "@tsparticles/engine": "^3.8.1",
     "@types/hotwired__turbo": "^8.0.4",
-    "@uppy/core": "^5.2.0",
-    "@uppy/drag-drop": "^5.1.0",
-    "@uppy/status-bar": "^5.1.0",
-    "@uppy/utils": "^7.1.5",
     "@wordpress/wordcount": "^4.34.0",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
@@ -80,6 +75,7 @@
     "konva": "^9.3.20",
     "linkify-react": "^4.3.2",
     "linkifyjs": "^4.3.2",
+    "local-time": "^3.0.3",
     "lodash-es": "^4.17.21",
     "luxon": "^3.4.4",
     "mapbox-gl": "^2.15.0",
@@ -154,6 +150,7 @@
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "rollup-plugin-gzip": "^4.1.1",
     "sharp": "^0.34.5",
     "svgo": "^4.0.0",
     "tailwindcss": "^4.1.18",

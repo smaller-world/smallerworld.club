@@ -4,13 +4,21 @@
 
     outline: none;
   }
+
+  html,
+  :host {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-headings;
+    }
+  }
 }
 
 @layer components {
-  .turbo-progress-bar {
-    @apply bg-primary-300;
-  }
-
   .header {
     @apply sticky top-0 flex h-12 items-center px-2;
 
@@ -29,4 +37,9 @@
       mask: linear-gradient(to top, transparent, black --spacing(6));
     }
   }
+}
+
+.turbo-progress-bar {
+  @apply h-0.5;
+  @apply bg-transparent bg-linear-to-r from-transparent to-primary-500;
 }

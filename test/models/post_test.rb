@@ -54,7 +54,8 @@
 require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
-  test "notification_message formats the message correctly with title and emoji" do
+  test "notification_message formats the message correctly with title and " \
+    "emoji" do
     post = posts(:post_with_title_and_emoji)
     friend = friends(:summer_friend)
     message = post.notification_message(recipient: friend)
@@ -70,7 +71,8 @@ class PostTest < ActiveSupport::TestCase
     assert_equal(expected_body, message.body)
   end
 
-  test "notification_message formats the message correctly with neither emoji nor title" do
+  test "notification_message formats the message correctly with neither "\
+    "emoji nor title" do
     post = posts(:post_without_title_or_emoji)
     friend = friends(:summer_friend)
     message = post.notification_message(recipient: friend)

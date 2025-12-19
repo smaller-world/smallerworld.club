@@ -1,0 +1,36 @@
+<div
+  id="<%= dom_id(post, :card) %>"
+  class="card post-card flex flex-col gap-2 shadow-sm"
+>
+  <div class="post-card-header flex gap-1 justify-between text-xs text-shade-500">
+    <div class="flex items-baseline gap-1">
+      <span class="inline-flex gap-1 items-baseline">
+        <%= post_type_icon(post.type, class: "size-4 self-center") %>
+        <span class="font-medium font-headings">
+          <%= post.type.humanize(capitalize: false) %>
+        </span>
+      </span>
+      <span>
+        from
+        <span class="font-medium">
+          <%= post.author.name %>
+        </span>
+      </span>
+    </div>
+    <%= local_time(
+      post.created_at,
+      format: :short,
+      class: "font-headings lowercase",
+    ) %>
+  </div>
+  <div class="post-card-content">
+    <% if (title = post.title) %>
+      <h3 class="text-xl font-bold leading-tight"><%= title %></h3>
+    <% end %>
+    <% if (body_html = post.body_html) %>
+      <div class="prose prose-stone max-w-none">
+        <%= body_html.html_safe %>
+      </div>
+    <% end %>
+  </div>
+</div>

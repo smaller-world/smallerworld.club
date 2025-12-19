@@ -27,4 +27,59 @@ AllCops:
     - .vscode/**/*
     - db/schema*.rb
     - db/migrate/**/*
-  CacheRootDirectory: "tmp/cache/rubocop"
+  CacheRootDirectory: tmp/cache/rubocop
+
+Layout/BlockAlignment:
+  Enabled: true
+Layout/DotPosition:
+  Enabled: true
+  EnforcedStyle: leading
+Layout/EndAlignment:
+  Enabled: true
+Layout/ExtraSpacing:
+  Enabled: true
+Layout/IndentationWidth:
+  Enabled: true
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+Layout/MultilineBlockLayout:
+  Enabled: true
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+Layout/MultilineMethodDefinitionBraceLayout:
+  Enabled: true
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: true
+Layout/MultilineOperationIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+Layout/ParameterAlignment:
+  Enabled: true
+Layout/RescueEnsureAlignment:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/SpaceAfterMethodName:
+  Enabled: true
+
+Style/BlockDelimiters:
+  Enabled: true

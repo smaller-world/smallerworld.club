@@ -1,4 +1,5 @@
 import "@hotwired/turbo-rails";
 import "@37signals/lexxy";
 
-import "./activestorage";
+import "./active_storage";
+import "./local_time";

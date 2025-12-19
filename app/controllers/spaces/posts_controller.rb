@@ -28,10 +28,10 @@ module Spaces
           ordering = { created_at: :desc, id: :asc }
           pagy, posts = if (query = params[:q])
             scope = scope.search(query).order(**ordering)
-            pagy(scope, limit: POSTS_PER_PAGE)
+            pagy(:offset, scope, limit: POSTS_PER_PAGE)
           else
             scope = scope.order(**ordering)
-            pagy_keyset(scope, limit: POSTS_PER_PAGE)
+            pagy(:keyset, scope, limit: POSTS_PER_PAGE)
           end
           space_posts = load_space_posts(posts)
           render(json: {

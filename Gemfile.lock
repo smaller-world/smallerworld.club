@@ -227,9 +227,6 @@ GEM
       bigdecimal
       rake (>= 13)
     hashie (5.0.0)
-    heroicons (2.2.0)
-      nokogiri
-      railties (>= 5.2)
     html2text (0.4.0)
       nokogiri (>= 1.0, < 2.0)
     htmlentities (4.3.4)
@@ -262,6 +259,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    local_time (3.0.3)
     logger (1.7.0)
     loofah (2.24.1)
       crass (~> 1.0.2)
@@ -343,7 +341,9 @@ GEM
       omniauth (~> 2.0)
     openssl (3.2.0)
     ostruct (0.6.1)
-    pagy (9.2.1)
+    pagy (43.2.2)
+      json
+      yaml
     parallel (1.27.0)
     parser (3.3.10.0)
       ast (~> 2.4.1)
@@ -434,6 +434,9 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails_icons (1.5.1)
+      nokogiri (~> 1.16, >= 1.16.4)
+      rails (>= 7.0)
     railties (8.0.2.1)
       actionpack (= 8.0.2.1)
       activesupport (= 8.0.2.1)
@@ -621,6 +624,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yajl-ruby (1.4.3)
+    yaml (0.4.0)
     yard (0.9.37)
     yard-sorbet (0.9.0)
       sorbet-runtime
@@ -666,7 +670,6 @@ DEPENDENCIES
   friendly_id (~> 5.5)
   frozen_record (~> 0.27.1)
   good_job (~> 4.7.0)
-  heroicons (~> 2.2)
   html2text (~> 0.4.0)
   image_processing (~> 1.12)
   inertia_rails (~> 3.10.0)
@@ -675,13 +678,14 @@ DEPENDENCIES
   lefthook (~> 1.7)
   lexxy (~> 0.1.23.beta)
   listen (~> 3.8)
+  local_time (~> 3.0)
   mailjet (~> 1.7)
   memory_profiler
   money-rails (~> 1.15)
   multi_json (~> 1.15)
   nokogiri (~> 1.15)
   oj_serializers (~> 2.0)
-  pagy (~> 9.2)
+  pagy (~> 43.2)
   pg (~> 1.5)
   pg_query
   pg_search (~> 2.3)
@@ -699,6 +703,7 @@ DEPENDENCIES
   rack-test
   rails (~> 8.0.2)
   rails-healthcheck
+  rails_icons (~> 1.5)
   rerun (~> 0.14.0)
   rexml (>= 3.3.6)
   rgeo (~> 3.0)

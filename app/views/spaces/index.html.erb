@@ -1,0 +1,42 @@
+<div class="max-w-xl mx-auto p-4 flex flex-col gap-6">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-lg text-center font-semibold">spaces you created</h2>
+    <% if @owned_spaces.any? %>
+      <ul class="space-y-2">
+        <% @owned_spaces.each do |space| %>
+          <li>
+            <%= link_to space_path(space, emulate_native_app: true) do %>
+              <%= render "spaces/card", space: %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-center text-shade-400">
+        you haven&apos;t created any spaces yet :<
+        <br >
+        (but maybe you should try it..)
+      </p>
+    <% end %>
+    <%= link_to new_space_path, class: "btn mt-1" do %>
+      <%= icon "user-group", options: { class: "size-5" } %>
+      <span>
+        create a space
+      </span>
+    <% end %>
+  </div>
+  <% if @posted_spaces.any? %>
+    <div class="flex flex-col gap-2">
+      <h2 class="text-lg text-center font-semibold">spaces you posted in</h2>
+      <ul class="space-y-2">
+        <% @posted_spaces.each do |space| %>
+          <li>
+            <%= link_to space do %>
+              <%= render "spaces/card", space: %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

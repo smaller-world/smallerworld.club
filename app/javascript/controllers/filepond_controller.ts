@@ -1,6 +1,11 @@
 import { Controller } from "@hotwired/stimulus";
 import { DirectUpload } from "@rails/activestorage";
-import { create, type FilePond, registerPlugin } from "filepond";
+import {
+  create,
+  type FilePond,
+  type FilePondInitialFile,
+  registerPlugin,
+} from "filepond";
 /* eslint-disable import-x/default */
 import FileValidateTypePlugin from "filepond-plugin-file-validate-type";
 import ImageCropPlugin from "filepond-plugin-image-crop";
@@ -137,17 +142,36 @@ class FilepondController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
+    const files: FilePondInitialFile[] = [];
+    if (this.inputTarget.value) {
+      files.push({
+        source: this.inputTarget.value,
+        options: {
+          type: "local",
+        },
+      });
+    }
     const pond = create(this.inputTarget, {
+      files,
       labelIdle: this.idleLabelTemplateTarget.innerHTML,
       imageCropAspectRatio: this.aspectRatioValue || undefined,
       imageEditEditor: this.#editor,
-      imageEditAllowEdit: !!this.aspectRatioValue,
-      imageEditInstantEdit: !!this.aspectRatioValue,
+      imageEditAllowEdit: true,
+      imageEditInstantEdit: true,
+      imageTransformOutputMimeType: "image/png",
       stylePanelLayout: "compact circle",
       styleLoadIndicatorPosition: "center bottom",
       styleProgressIndicatorPosition: "right bottom",
       styleButtonRemoveItemPosition: "left bottom",
       styleButtonProcessItemPosition: "right bottom",
+      credits: false,
+      beforeAddFile: (file) => {
+        pond.setOptions({
+          imageEditAllowEdit:
+            !!this.aspectRatioValue && file.source instanceof File,
+        });
+        return true;
+      },
       server: {
         process: (fieldName, file, metadata, load, error, progress) => {
           const uploader = new DirectUpload(
@@ -169,13 +193,22 @@ class FilepondController extends Controller<HTMLElement> {
             }
           });
         },
-        revert: (signedId, load, error) => {
-          fetch(`/filepond/files/${signedId}`, {
+        revert: (signedId: string, load, error) => {
+          void fetch(`/filepond/files/${signedId}`, {
             method: "DELETE",
-          }).then(load, error);
+          }).then(() => {
+            load();
+          }, error);
+        },
+        load: (signedId: string, load, error) => {
+          void fetch(`/filepond/files/${signedId}`)
+            .then((response) => response.blob())
+            .then((blob) => {
+              load(blob);
+            })
+            .catch(error);
         },
         restore: null,
-        load: null,
       },
     });
     pond.on("processfilestart", () => {
@@ -280,10 +313,10 @@ class FilepondController extends Controller<HTMLElement> {
     const height = width * cropAspect;
 
     return {
-      x: centerX * naturalWidth - width / 2,
-      y: centerY * naturalHeight - height / 2,
-      width,
-      height,
+      x: Math.max(0, Math.round(centerX * naturalWidth - width / 2)),
+      y: Math.max(0, Math.round(centerY * naturalHeight - height / 2)),
+      width: Math.max(1, Math.round(width)),
+      height: Math.max(1, Math.round(height)),
     };
   }
 

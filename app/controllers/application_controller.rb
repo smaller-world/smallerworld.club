@@ -6,15 +6,18 @@ class ApplicationController < ActionController::Base
   extend T::Helpers
 
   include ActiveStorage::SetCurrent
-  include Pagy::Backend
+  include Pagy::Method
   include Logging
   include RendersJsonException
   include AuthenticatesUsers
   include AuthenticatesFriends
   include SharesApplicationProps
-  include SimulatesExpiredPage unless Rails.env.production?
   include NPlusOneDetection
-  prepend RendersWorldThemes
+  include RendersWorldThemes
+  unless Rails.env.production?
+    include EmulatesExpiredPage
+    include EmulatesNativeApp
+  end
 
   # == Errors ==
 
@@ -31,17 +34,6 @@ class ApplicationController < ActionController::Base
     around_action :with_ssr
   end
 
-  # == Pagy ==
-
-  sig do
-    params(pagy: Pagy, absolute: T::Boolean)
-      .returns(T::Hash[Symbol, T.untyped])
-  end
-  def pagy_metadata(pagy, absolute: false)
-    metadata = super
-    metadata.delete(:limit) if params.exclude?(pagy.vars[:limit_param])
-    metadata
-  end
 
   # == Exception Handling ==
 

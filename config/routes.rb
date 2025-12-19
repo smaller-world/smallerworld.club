@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 
   resources :visits, only: :create, export: true
 
-  # == Login Requests ==
+  # == Login requests ==
 
   resources :login_requests, only: :create, export: true
 
@@ -147,9 +147,10 @@ Rails.application.routes.draw do
   end
 
   # == Spaces ==
-  resources :spaces, only: %i[show], export: true do
+
+  resources :spaces, except: :destroy, export: true do
     scope module: :spaces do
-      # == Space Posts ==
+      # == Space posts
       resources(
         :posts,
         only: %i[new index create],
@@ -168,7 +169,7 @@ Rails.application.routes.draw do
   end
 
   scope module: :users, as: "user" do
-    # == User World
+    # == User world
     resource(
       :world,
       only: %i[edit update],
@@ -344,7 +345,7 @@ Rails.application.routes.draw do
 
   # == Filepond ==
   namespace :filepond do
-    resource :files, param: :signed_id, only: :destroy
+    resources :files, param: :signed_id, only: %i[show destroy]
   end
 
   # == Pages ==

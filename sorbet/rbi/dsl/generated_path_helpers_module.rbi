@@ -49,6 +49,9 @@ module GeneratedPathHelpersModule
   def download_image_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_space_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_spaces_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -64,7 +67,7 @@ module GeneratedPathHelpersModule
   def file_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def filepond_files_path(*args); end
+  def filepond_file_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def friend_encouragements_path(*args); end
@@ -122,6 +125,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_space_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_space_post_path(*args); end
@@ -287,6 +293,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def space_posts_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def spaces_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def spaces_post_path(*args); end

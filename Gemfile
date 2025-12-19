@@ -144,7 +144,7 @@ gem "oj_serializers", "~> 2.0"
 gem "types_from_serializers", "~> 2.1"
 
 # Paginate records with Pagy
-gem "pagy", "~> 9.2"
+gem "pagy", "~> 43.2"
 
 # Send web push notifications
 gem "web-push", "~> 3.0"
@@ -182,8 +182,11 @@ gem "turbo-rails", "~> 2.0"
 # Use lexxy to edit rich text
 gem "lexxy", "~> 0.1.23.beta"
 
-# Use Heroicon icons
-gem "heroicons", "~> 2.2"
+# Use icons from Heroicons, Lucide, etc.
+gem "rails_icons", "~> 1.5"
+
+# Display local time in the browser
+gem "local_time", "~> 3.0"
 
 group :development, :test do
   # Debug code with debug

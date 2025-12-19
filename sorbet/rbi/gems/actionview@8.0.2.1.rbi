@@ -390,14 +390,17 @@ class ActionView::Base
   include ::ActionView::ModelNaming
   include ::ActionView::RecordIdentifier
   include ::ActionView::Helpers::FormHelper
+  include ::Lexxy::FormHelper
   include ::ActionView::Helpers::TranslationHelper
   include ::ActionView::Helpers::FormOptionsHelper
   include ::ActionView::Helpers::JavaScriptHelper
   include ::ActionView::Helpers::NumberHelper
   include ::ActionView::Helpers::RenderingHelper
   include ::ActionView::Helpers
+  include ::MoneyRails::ActionViewExtension
   include ::ActionCable::Helpers::ActionCableHelper
   include ::ViteRails::TagHelpers
+  include ::RailsIcons::Helpers::IconHelper
   extend ::ActionView::Helpers::UrlHelper::ClassMethods
   extend ::ActionView::Helpers::SanitizeHelper::ClassMethods
 
@@ -15070,6 +15073,7 @@ class ActionView::TestCase < ::ActiveSupport::TestCase
   include ::ActionView::ModelNaming
   include ::ActionView::RecordIdentifier
   include ::ActionView::Helpers::FormHelper
+  include ::Lexxy::FormHelper
   include ::ActionView::Helpers::TranslationHelper
   include ::ActionView::Helpers::FormOptionsHelper
   include ::ActionView::Helpers::JavaScriptHelper
@@ -15580,6 +15584,9 @@ class ActionView::TestCase::TestController < ::ActionController::Base
   # source://actionview//lib/action_view/test_case.rb#16
   def _layout(lookup_context, formats, keys); end
 
+  # source://actionview//lib/action_view/test_case.rb#16
+  def _layout_from_proc; end
+
   class << self
     # source://actionview//lib/action_view/test_case.rb#16
     def _routes; end
@@ -15617,6 +15624,28 @@ class ActionView::TestCase::TestController < ::ActionController::Base
     # source://actionview//lib/action_view/test_case.rb#16
     def __class_attr_middleware_stack=(new_value); end
   end
+end
+
+# source://actionview//lib/action_view/test_case.rb#16
+module ActionView::TestCase::TestController::HelperMethods
+  include ::Turbo::DriveHelper
+  include ::Turbo::FramesHelper
+  include ::Turbo::IncludesHelper
+  include ::Turbo::StreamsHelper
+  include ::ActionView::Helpers::CaptureHelper
+  include ::ActionView::Helpers::OutputSafetyHelper
+  include ::ActionView::Helpers::TagHelper
+  include ::Turbo::Streams::ActionHelper
+  include ::ActionText::ContentHelper
+  include ::ActionText::TagHelper
+  include ::Lexxy::TagHelper
+  include ::InertiaRails::Helper
+  include ::InertiaRails::AssetHelper
+  include ::ViteRails::TagHelpers
+  include ::ActionController::Base::HelperMethods
+  include ::LocalTimeHelper
+  include ::ApplicationHelper
+  include ::PostsHelper
 end
 
 # source://actionview//lib/action_view/unbound_template.rb#6
