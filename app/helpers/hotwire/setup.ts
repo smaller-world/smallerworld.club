@@ -5,7 +5,7 @@ import {
   // @ts-expect-error - No TS types for @joemasilotti/bridge-components
 } from "@joemasilotti/bridge-components";
 
-import "@hotwired/turbo-rails";
+import "@hotwired/turbo";
 
 export const setupHotwire = (): void => {
   // @ts-expect-error - Bad TS types

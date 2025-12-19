@@ -125,7 +125,7 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
 /** @type {() => import("vite").PluginOption} */
 const ignoringCssIsomorphicImportPlugin = () => {
   const plugin = isomorphicImportPlugin({
-    client: ["@hotwired/turbo-rails", "@rails/activestorage"],
+    client: ["@hotwired/turbo", "@rails/activestorage"],
   });
 
   const isCssFile = (id) => {

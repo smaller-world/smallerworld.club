@@ -1,4 +1,4 @@
-import "@hotwired/turbo-rails";
+import "@hotwired/turbo";
 import "@37signals/lexxy";
 
 import "./active_storage";
