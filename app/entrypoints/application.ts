@@ -1,8 +1,6 @@
-// == Polyfills ==
-
+// == Polyfills
 import "requestidlecallback-polyfill";
 
-// == Application ==
-
+// == Application
 import "#initializers";
 import "#controllers";

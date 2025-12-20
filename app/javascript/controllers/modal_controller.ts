@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class extends Controller<HTMLDialogElement> {
+export default class ModalController extends Controller<HTMLDialogElement> {
   // == Targets ==
 
   static targets = ["panel", "backdrop"];

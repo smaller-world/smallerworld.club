@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-/** @extends {Controller<HTMLFormElement>} */
-export default class extends Controller {
+export default class PreventSubmitWhileBusyController extends Controller<HTMLFormElement> {
   static targets = ["busyable", "submit"];
 
   declare readonly busyableTargets: readonly HTMLElement[];

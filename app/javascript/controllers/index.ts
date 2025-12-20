@@ -1,6 +1,5 @@
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
-// import { registerControllers } from "stimulus-vite-helpers";
 import { application } from "./application";
 import ElementRemovalController from "./element_removal_controller";
 import FilepondController from "./filepond_controller";
@@ -17,6 +16,3 @@ application.register(
   PreventSubmitWhileBusyController,
 );
 application.register("modal", ModalController);
-
-// const controllers = import.meta.glob("./**/*_controller.js", { eager: true });
-// registerControllers(application, controllers);
