@@ -1,20 +1,28 @@
 <div
   id="<%= dom_id(post, :card) %>"
-  class="card post-card flex flex-col gap-2 shadow-sm"
+  class="card post-card flex flex-col gap-2.5 shadow-sm"
 >
   <div class="post-card-header flex gap-1 justify-between text-xs text-shade-500">
     <div class="flex items-baseline gap-1">
       <span class="inline-flex gap-1 items-baseline">
-        <%= post_type_icon(post.type, class: "size-4 self-center") %>
+        <%= post_type_icon(post.type, class: "size-3 self-center") %>
         <span class="font-medium font-headings">
           <%= post.type.humanize(capitalize: false) %>
         </span>
       </span>
       <span>
         from
-        <span class="font-medium">
-          <%= post.author.name %>
-        </span>
+        <% if !post.pen_name? && (world = post.author.world) %>
+          <%= link_to(
+            post.author.name,
+            world_path(world),
+            class: "font-semibold text-primary-500",
+          ) %>
+        <% else %>
+          <span class="font-semibold">
+            <%= post.author.name %>
+          </span>
+        <% end %>
       </span>
     </div>
     <%= local_time(
@@ -25,7 +33,7 @@
   </div>
   <div class="post-card-content">
     <% if (title = post.title) %>
-      <h3 class="text-xl font-bold leading-tight"><%= title %></h3>
+      <h3 class="text-lg font-bold leading-tight"><%= title %></h3>
     <% end %>
     <% if (body_html = post.body_html) %>
       <div class="prose prose-stone max-w-none">

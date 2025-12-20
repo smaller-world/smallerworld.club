@@ -47,3 +47,27 @@
   --color-shade-800: var(--color-stone-800);
   --color-shade-900: var(--color-stone-900);
 }
+
+@layer base {
+  :where(:focus-visible) {
+    @apply ring-2 ring-focus-ring;
+
+    outline: none;
+  }
+
+  html,
+  :host {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-headings;
+    }
+  }
+
+  fieldset {
+    @apply font-headings;
+  }
+}

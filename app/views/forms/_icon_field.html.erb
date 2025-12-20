@@ -23,7 +23,7 @@
       aria: {
         describedby: (form.field_id(name, "error") if error.present?),
       },
-      **local_assigns.slice(:required, :accept),
+      **local_assigns.slice(:accept),
     ) %>
     <template data-filepond-target="idleLabelTemplate">
       <div class="flex flex-col items-center gap-1.5">

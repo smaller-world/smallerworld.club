@@ -1,11 +1,11 @@
 export const getEnv = (): string => {
-  const el = document.querySelector("meta[name='env']");
+  const el = document.querySelector('meta[name="env"]');
   if (!el) {
-    throw new Error("Missing <meta name='env'> in document head");
+    throw new Error("Missing environment meta tag");
   }
   const value = el.getAttribute("content");
   if (value === null) {
-    throw new Error("Missing <meta name='env'> content");
+    throw new Error("Invalid environment meta tag");
   }
   return value;
 };

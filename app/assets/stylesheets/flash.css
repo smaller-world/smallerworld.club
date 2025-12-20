@@ -8,11 +8,11 @@
     z-index: var(--z-flash);
 
     .flash-inner {
-      @apply inline-flex bg-shade-900 text-base text-white;
+      @apply mx-auto inline-flex;
+      @apply bg-shade-900 text-base text-white shadow-sm;
 
       animation: appear-then-fade 3s 300ms both;
       border-radius: 4em;
-      margin: 0 auto;
       padding: 0.7em 1.4em;
     }
   }

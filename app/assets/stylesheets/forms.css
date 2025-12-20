@@ -3,6 +3,7 @@
   .form-textarea,
   .form-select,
   .form-multiselect {
+    @apply rounded-3xl;
     @apply border border-shade-300 focus:border-focus-ring focus:ring-focus-ring;
     @apply leading-snug;
 
@@ -13,6 +14,7 @@
 
   .form-checkbox,
   .form-radio {
+    @apply size-4.5 rounded-3xl;
     @apply text-primary-600 focus:ring-focus-ring;
   }
 

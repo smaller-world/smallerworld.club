@@ -19,9 +19,9 @@
       </p>
     </div>
   </div>
-  <%= turbo_frame_tag dom_id(@space, :posts) do %>
+  <%= turbo_frame_tag dom_id(@space, :posts), target: "_top" do %>
     <% if @posts.any? %>
-      <ul class="space-y-2">
+      <ul class="space-y-3">
         <% @posts.each do |post| %>
           <li>
             <%= render "posts/card", post: %>

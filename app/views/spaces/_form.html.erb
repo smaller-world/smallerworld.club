@@ -2,7 +2,6 @@
   model: space,
   class: "flex flex-col gap-4",
   data: {
-    turbo_frame: "_top",
     controller: "prevent-submit-while-busy",
   }
 ) do |form| %>
@@ -33,10 +32,15 @@
     center: true,
   ) %>
   <% if current_user.admin? %>
-    <div class="flex gap-1.5 items-center">
-      <%= form.check_box :public, class: "form-checkbox" %>
-      <%= form.label :public, "show on spaces tab for all users", class: "text-sm" %>
-    </div>
+    <fieldset class="card pt-1.5">
+      <legend class="font-medium bg-white px-2 text-center">
+        advanced settings
+      </legend>
+      <div class="flex gap-2 items-center">
+        <%= form.check_box :public, class: "form-checkbox" %>
+        <%= form.label :public, "show on spaces tab for all users", class: "text-sm leading-tight" %>
+      </div>
+    </fieldset>
   <% end %>
   <%= form.button(
     type: "submit",
