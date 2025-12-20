@@ -16,6 +16,7 @@ class SpacesController < ApplicationController
   def index
     respond_to do |format|
       format.html do
+        @page_title = "spaces"
         current_user = authenticate_user!
         @owned_spaces = current_user.owned_spaces.with_attached_icon
         @posted_spaces = current_user.post_spaces

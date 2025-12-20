@@ -7,9 +7,25 @@ export default class ModalController extends Controller<HTMLDialogElement> {
   declare readonly panelTarget: HTMLElement;
   declare readonly backdropTarget: HTMLElement;
 
-  // == State ==
+  // == Focus previous active element ==
 
   #previousActiveElement?: HTMLElement | null;
+
+  #storePreviousActiveElement(): void {
+    if (document.activeElement instanceof HTMLElement) {
+      this.#previousActiveElement = document.activeElement;
+    }
+  }
+
+  #focusPreviousActiveElement(): void {
+    if (this.#previousActiveElement?.isConnected) {
+      this.#previousActiveElement.focus({ preventScroll: true });
+      this.#previousActiveElement = null;
+    }
+  }
+
+  // == Backdrop click detection ==
+
   #pointerDownTarget?: EventTarget | null;
 
   // == Lifecycle ==
@@ -56,9 +72,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     if (this.element.open) {
       return;
     }
-    if (document.activeElement instanceof HTMLElement) {
-      this.#previousActiveElement = document.activeElement;
-    }
+    this.#storePreviousActiveElement();
     this.element.showModal();
     this.#addDocumentActions();
     void this.#waitForTransitions().then(() => {
@@ -103,9 +117,8 @@ export default class ModalController extends Controller<HTMLDialogElement> {
 
   // == Closing helpers ==
 
-  /** @param {boolean} cancelled */
-  async #requestClose(cancelled = false) {
-    if (this.#isClosing) {
+  async #requestClose(cancelled = false): Promise<void> {
+    if (this.#isClosing()) {
       return;
     }
     this.#markClosing();
@@ -121,7 +134,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     this.dispatch("closed");
   }
 
-  get #isClosing(): boolean {
+  #isClosing(): boolean {
     return this.element.dataset.closing === "true";
   }
 
@@ -133,22 +146,13 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     delete this.element.dataset.closing;
   }
 
-  // == Focus helpers ==
-
-  #focusPreviousActiveElement(): void {
-    if (this.#previousActiveElement?.isConnected) {
-      this.#previousActiveElement.focus({ preventScroll: true });
-    }
-  }
-
   // == Transition helpers ==
 
   async #waitForTransitions(): Promise<void> {
-    /** @type {HTMLElement[]} */
     const targets = [this.backdropTarget, this.panelTarget];
-    const animations = targets
+    const transitions = targets
       .flatMap((el) => el.getAnimations())
       .filter((animation) => animation instanceof CSSTransition);
-    await Promise.allSettled(animations.map((animation) => animation.finished));
+    await Promise.allSettled(transitions.map(({ finished }) => finished));
   }
 }

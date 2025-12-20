@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class PreventSubmitWhileBusyController extends Controller<HTMLFormElement> {
   static targets = ["busyable", "submit"];
-
   declare readonly busyableTargets: readonly HTMLElement[];
   declare readonly submitTarget: HTMLButtonElement;
 
