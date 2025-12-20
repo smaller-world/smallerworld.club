@@ -72,8 +72,7 @@ const WorldPostCardFriendActions: FC<WorldPostCardFriendActionsProps> = ({
         {Object.entries(reactionsByEmoji).map(([emoji, reactions]) => (
           <PostReactionButton
             key={emoji}
-            {...{ post }}
-            {...{ emoji, reactions }}
+            {...{ post, asFriend, emoji, reactions }}
           />
         ))}
       </Group>

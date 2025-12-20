@@ -21,19 +21,17 @@ import PostReactionButton from "./PostReactionButton";
 
 export interface PublicPostCardActionsProps extends Omit<BoxProps, "children"> {
   post: WorldPost | UniversePost | SpacePost;
+  asFriend?: UniversePostAssociatedFriend;
 }
 
 const PublicPostCardActions: FC<PublicPostCardActionsProps> = ({
   post,
+  asFriend,
   className,
   ...otherProps
 }) => {
   const { ref: viewportRef, inViewport } = useInViewport();
   const currentFriend = useCurrentFriend();
-  let asFriend: UniversePostAssociatedFriend | undefined;
-  if ("associated_friend" in post) {
-    asFriend = post.associated_friend;
-  }
 
   // == Track views
   const trackSeenRef = useTrackPostSeen(post, {

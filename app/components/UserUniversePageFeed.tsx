@@ -101,7 +101,10 @@ const UserUniversePageFeed: FC<UserUniversePageFeedProps> = ({
                         asFriend={post.associated_friend}
                       />
                     ) : (
-                      <PublicPostCardActions {...{ post }} />
+                      <PublicPostCardActions
+                        {...{ post }}
+                        asFriend={post.associated_friend}
+                      />
                     )
                   }
                 />

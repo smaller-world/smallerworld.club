@@ -30,7 +30,6 @@
 class World < ApplicationRecord
   extend FriendlyId
   include NormalizesPhoneNumber
-  include ImageHelpers
 
   # == Constants ==
 
@@ -106,11 +105,10 @@ class World < ApplicationRecord
             presence: true,
             length: { minimum: 2 },
             exclusion: { in: %i[kai], message: "is reserved" }
-  validates :icon, presence: true
+  validates :icon, presence: true, opaque_image: true
   validates :reply_to_number_override,
             phone: { possible: true, types: :mobile, extensions: false },
             allow_nil: true
-  validate :validate_opaque_icon, if: %i[icon? icon_changed?]
 
   # == Callbacks ==
 
@@ -232,14 +230,5 @@ class World < ApplicationRecord
       .where(type: %i[poem journal_entry])
       .reverse_chronological
       .pick(:created_at)
-  end
-
-  # == Validators ==
-
-  sig { void }
-  def validate_opaque_icon
-    if (blob = icon.public_send(:blob)) && !image_blob_is_opaque?(blob)
-      errors.add(:icon, :invalid, message: "must be opaque")
-    end
   end
 end

@@ -27,7 +27,6 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Space < ApplicationRecord
   extend FriendlyId
-  include ImageHelpers
 
   # == FriendlyId ==
 
@@ -101,6 +100,7 @@ class Space < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :owner }
   validates :description, presence: true
+  validates :icon, opaque_image: true, allow_nil: true
 
   # == Scopes ==
 

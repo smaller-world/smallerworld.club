@@ -3,12 +3,19 @@
 
 require "vips"
 
-module ImageHelpers
+class OpaqueImageValidator < ActiveModel::EachValidator
   extend T::Sig
-  extend T::Helpers
-  extend ActiveSupport::Concern
 
-  requires_ancestor { ActiveRecord::Base }
+  sig { params(record: ActiveRecord::Base, attribute: Symbol, value: T.untyped).void }
+  def validate_each(record, attribute, value)
+    blob = value.respond_to?(:blob) ? value.blob : value
+    unless blob.is_a?(ActiveStorage::Blob)
+      raise "Expected an ActiveStorage::Blob, instead got: #{blob.class}"
+    end
+    unless image_blob_is_opaque?(blob)
+      record.errors.add(attribute, :invalid, message: "must be opaque")
+    end
+  end
 
   private
 
