@@ -4,26 +4,24 @@
 >
   <div class="post-card-header flex gap-1 justify-between text-xs text-shade-500">
     <div class="flex items-baseline gap-1">
-      <span class="inline-flex gap-1 items-baseline">
+      <span class="inline-flex gap-0.5 items-baseline">
         <%= post_type_icon(post.type, class: "size-3 self-center") %>
         <span class="font-medium font-headings">
           <%= post.type.humanize(capitalize: false) %>
         </span>
       </span>
-      <span>
-        from
-        <% if !post.pen_name? && (world = post.author.world) %>
-          <%= link_to(
-            post.author.name,
-            world_path(world),
-            class: "font-semibold text-primary-500 dark:text-primary-600",
-          ) %>
-        <% else %>
-          <span class="font-semibold">
-            <%= post.author.name %>
-          </span>
-        <% end %>
-      </span>
+      from
+      <% if !post.pen_name? && (world = post.author.world) %>
+        <%= link_to(
+          post.author.name,
+          world_path(world),
+          class: "font-semibold text-primary-500 dark:text-primary-600",
+        ) %>
+      <% else %>
+        <span class="font-semibold">
+          <%= post.author.name %>
+        </span>
+      <% end %>
     </div>
     <%= local_time(
       post.created_at,
