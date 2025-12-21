@@ -1,11 +1,50 @@
+@layer base {
+  :root {
+    [type="text"],
+    input:where(:not([type])),
+    [type="email"],
+    [type="url"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="week"],
+    [multiple],
+    textarea,
+    select {
+      @apply dark:bg-black;
+    }
+
+    [type="checkbox"],
+    [type="radio"] {
+      @apply dark:bg-shade-800;
+
+      &:focus {
+        @media (prefers-color-scheme: dark) {
+          &:focus {
+            --tw-ring-offset-width: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @layer components {
   .form-input,
   .form-textarea,
   .form-select,
   .form-multiselect {
-    @apply rounded-3xl;
-    @apply border border-shade-300 focus:border-focus-ring focus:ring-focus-ring;
+    @apply rounded-2xl border border-shade-300 dark:border-shade-700;
     @apply leading-snug;
+
+    &:focus-visible {
+      @apply border-focus-ring ring-focus-ring;
+    }
 
     &[data-error] {
       @apply border-red-500 focus:border-red-500;

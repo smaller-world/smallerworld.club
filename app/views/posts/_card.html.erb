@@ -16,7 +16,7 @@
           <%= link_to(
             post.author.name,
             world_path(world),
-            class: "font-semibold text-primary-500",
+            class: "font-semibold text-primary-500 dark:text-primary-600",
           ) %>
         <% else %>
           <span class="font-semibold">
@@ -36,7 +36,7 @@
       <h3 class="text-lg font-bold leading-tight"><%= title %></h3>
     <% end %>
     <% if (body_html = post.body_html) %>
-      <div class="prose prose-stone max-w-none">
+      <div class="prose dark:prose-invert max-w-none">
         <%= body_html.html_safe %>
       </div>
     <% end %>

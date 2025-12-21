@@ -1,9 +1,11 @@
 @layer components {
   .card {
-    @apply block rounded-3xl border border-shade-300 bg-white p-4;
+    @apply block rounded-3xl p-4;
+    /* @apply bg-white dark:bg-shade-900; */
+    @apply border border-shade-300 dark:border-shade-700;
 
-    a > & {
-      @apply hover:border-primary-500;
+    a > &:hover {
+      @apply border-primary-500 dark:border-primary-800;
     }
   }
 }

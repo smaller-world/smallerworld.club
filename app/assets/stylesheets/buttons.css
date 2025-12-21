@@ -5,11 +5,15 @@
     @apply cursor-pointer;
 
     &:not([class^="btn-"]) {
-      @apply text-primary-600 hover:bg-shade-100;
+      @apply text-primary-600;
+
+      &:hover {
+        @apply bg-shade-100 dark:bg-shade-800;
+      }
     }
 
     &.btn-action {
-      @apply bg-primary-600 text-white hover:bg-primary-700;
+      @apply bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-800;
     }
 
     &:disabled {

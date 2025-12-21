@@ -1,6 +1,7 @@
 @layer base {
   body {
     @apply flex min-h-lvh flex-col;
+    @apply dark:bg-shade-900;
 
     > header {
       @apply sticky top-0 h-12 px-2;
