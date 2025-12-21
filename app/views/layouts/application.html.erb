@@ -42,8 +42,8 @@
     <%= yield :head %>
   </head>
 
-  <body class="flex flex-col min-h-dvh">
-    <header class="header">
+  <body>
+    <header>
       <%= link_to web_start_path, class: "flex items-center gap-1 rounded-3xl hover:bg-primary-100 py-1 pl-2 pr-3" do %>
         <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
         <span class="font-headings font-bold">smaller world</span>
@@ -58,7 +58,7 @@
         </div>
       <% end %>
     <% end %>
-    <main class="flex-1">
+    <main>
       <%= yield %>
     </main>
   </body>

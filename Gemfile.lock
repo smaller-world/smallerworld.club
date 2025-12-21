@@ -160,6 +160,11 @@ GEM
       addressable
       capybara
       playwright-ruby-client (>= 1.16.0)
+    cloudflare-rails (7.0.0)
+      actionpack (>= 7.2.0, < 8.2.0)
+      activesupport (>= 7.2.0, < 8.2.0)
+      railties (>= 7.2.0, < 8.2.0)
+      zeitwerk (>= 2.5.0)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
@@ -657,6 +662,7 @@ DEPENDENCIES
   can_has_validations (~> 1.8)
   capybara
   capybara-playwright-driver
+  cloudflare-rails (~> 7.0)
   concurrent-ruby (~> 1.1)
   counter_culture (~> 3.5)
   date_validator (~> 0.12.0)

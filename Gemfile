@@ -1,3 +1,5 @@
+# rubocop:disable Layout/LineLength
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -21,10 +23,14 @@ gem "rgeo-geojson", "~> 2.2"
 gem "rgeo-activerecord", "~> 8.0"
 
 # Enable additional operators and utilities for Active Record with PostgreSQL
-gem "active_record_extended", github: "GeorgeKaraszi/ActiveRecordExtended", branch: "feature/rails80"
+gem "active_record_extended",
+github: "GeorgeKaraszi/ActiveRecordExtended",
+branch: "feature/rails80"
 
 # Use PostGIS extensions for PostgreSQL
-gem "activerecord-postgis-adapter", github: "rgeo/activerecord-postgis-adapter", ref: "32d58f3d3df94779acabba3a2e510de56a2bce63"
+gem "activerecord-postgis-adapter",
+github: "rgeo/activerecord-postgis-adapter",
+ref: "32d58f3d3df94779acabba3a2e510de56a2bce63"
 
 # Use enhanced PostgreSQL adapter for Action Cable
 gem "actioncable-enhanced-postgresql-adapter", "~> 1.0"
@@ -255,4 +261,9 @@ group :test do
   gem "capybara"
   gem "capybara-playwright-driver"
   gem "rack-test"
+end
+
+group :production do
+  # Fix request.ip and request.remote_ip in Rails when using Cloudflare
+  gem "cloudflare-rails", "~> 7.0"
 end

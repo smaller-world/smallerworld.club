@@ -1,20 +1,33 @@
-@layer components {
-  .header {
-    @apply sticky top-0 flex h-12 items-center px-2;
+@layer base {
+  body {
+    @apply flex min-h-lvh flex-col;
 
-    z-index: 100;
+    margin-top: env(safe-area-inset-top);
+    margin-bottom: env(safe-area-inset-bottom);
 
-    &::before {
-      @apply absolute inset-0 -bottom-2 backdrop-blur-xs;
+    > header {
+      @apply sticky top-0 h-12 px-2;
+      @apply flex items-center;
+      @apply native:hidden;
 
-      z-index: -1;
-      content: "";
-      background-image: linear-gradient(
-        to top,
-        transparent,
-        --alpha(var(--color-white) / 80%)
-      );
-      mask: linear-gradient(to top, transparent, black --spacing(6));
+      z-index: 100;
+
+      &::before {
+        @apply absolute inset-0 -bottom-2 backdrop-blur-xs;
+
+        z-index: -1;
+        content: "";
+        background-image: linear-gradient(
+          to top,
+          transparent,
+          --alpha(var(--color-white) / 80%)
+        );
+        mask: linear-gradient(to top, transparent, black --spacing(6));
+      }
+    }
+
+    > main {
+      @apply flex-1;
     }
   }
 }
