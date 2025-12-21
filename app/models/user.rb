@@ -74,7 +74,7 @@ class User < ApplicationRecord
            dependent: :destroy,
            inverse_of: :author,
            foreign_key: :author_id
-  has_many :post_spaces, through: :posts, source: :space
+  has_many :posted_spaces, -> { distinct }, through: :posts, source: :space
 
   # == Normalizations ==
 
@@ -111,7 +111,7 @@ class User < ApplicationRecord
   sig { returns(Space::PrivateRelation) }
   def spaces
     Space.where(owner_id: id)
-      .or(Space.where(id: post_spaces.select(:id)))
+      .or(Space.where(id: posted_spaces.select(:id)))
       .distinct
   end
 

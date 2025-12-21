@@ -19,7 +19,7 @@ class SpacePolicy < ApplicationPolicy
     relation = T.cast(relation, Space::PrivateRelation)
     if (user = self.user)
       relation.where(owner: user)
-        .or(relation.where(id: user.post_spaces.select(:id)))
+        .or(relation.where(id: user.posted_spaces.select(:id)))
         .or(relation.where(id: Space.publicly_visible.select(:id)))
     else
       relation.none

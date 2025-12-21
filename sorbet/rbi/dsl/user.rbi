@@ -399,20 +399,6 @@ class User
     def post_reply_receipts=(value); end
 
     sig { returns(T::Array[T.untyped]) }
-    def post_space_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def post_space_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `User` class because it declared `has_many :post_spaces, through: :posts`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::Space::PrivateCollectionProxy) }
-    def post_spaces; end
-
-    sig { params(value: T::Enumerable[::Space]).void }
-    def post_spaces=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
     def post_view_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
@@ -425,6 +411,20 @@ class User
 
     sig { params(value: T::Enumerable[::PostView]).void }
     def post_views=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def posted_space_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def posted_space_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :posted_spaces, through: :posts`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Space::PrivateCollectionProxy) }
+    def posted_spaces; end
+
+    sig { params(value: T::Enumerable[::Space]).void }
+    def posted_spaces=(value); end
 
     # This method is created by ActiveRecord on the `User` class because it declared `has_many :posts`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)

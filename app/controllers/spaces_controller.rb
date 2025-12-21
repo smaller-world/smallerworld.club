@@ -19,7 +19,7 @@ class SpacesController < ApplicationController
         @page_title = "spaces" unless hotwire_native_app?
         current_user = authenticate_user!
         @owned_spaces = current_user.owned_spaces.with_attached_icon
-        @posted_spaces = current_user.post_spaces
+        @posted_spaces = current_user.posted_spaces
           .where.not(id: @owned_spaces.select(:id))
           .with_attached_icon
       end
