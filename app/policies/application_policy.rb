@@ -18,7 +18,7 @@ class ApplicationPolicy < ActionPolicy::Base
 
   # == Pre-checks ==
 
-  pre_check :allow_admins!
+  # pre_check :allow_admins!
 
   # == Rules ==
 
@@ -51,10 +51,10 @@ class ApplicationPolicy < ActionPolicy::Base
 
   # == Helpers ==
 
-  sig { void }
-  def allow_admins!
-    allow! if user&.admin?
-  end
+  # sig { void }
+  # def allow_admins!
+  #   allow! if user&.admin?
+  # end
 
   sig { returns(User) }
   def user!

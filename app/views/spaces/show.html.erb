@@ -6,23 +6,27 @@
     <% end %>
     <div class="flex flex-col gap-0.5">
       <div class="flex flex-row items-start justify-between gap-1">
-        <div class="w-9"></div>
+        <% if allowed_to?(:edit?, @space) %>
+          <div class="w-9 with-button-bridge:hidden"></div>
+        <% end %>
         <h1 class="text-2xl font-semibold text-center">
           <%= @space.name %>
         </h1>
-        <%= link_to(
-          edit_space_path(@space),
-          class: "btn dark:text-primary-700 p-1 rounded-full with-button-bridge:invisible",
-          aria: {
-            label: "space settings"
-          },
-          data: {
-            controller: "button-bridge",
-            bridge_title: "settings",
-            bridge_ios_image: "gearshape.fill"
-          }
-        ) do %>
-          <%= icon "cog-6-tooth", variant: :solid, class: "size-6" %>
+        <% if allowed_to?(:edit?, @space) %>
+          <%= link_to(
+            edit_space_path(@space),
+            class: "btn dark:text-primary-700 p-1 rounded-full with-button-bridge:hidden",
+            aria: {
+              label: "space settings"
+            },
+            data: {
+              controller: "button-bridge",
+              bridge_title: "settings",
+              bridge_ios_image: "gearshape.fill"
+            }
+          ) do %>
+            <%= icon "cog-6-tooth", variant: :solid, class: "size-6" %>
+          <% end %>
         <% end %>
       </div>
       <p class="text-sm text-shade-500 text-center">
