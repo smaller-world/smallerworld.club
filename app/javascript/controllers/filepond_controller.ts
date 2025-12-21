@@ -73,10 +73,16 @@ class FilepondController extends Controller<HTMLElement> {
   }
 
   #openEditorModal(): void {
+    if (this.editorModalTarget.open) {
+      return;
+    }
     this.dispatch("open-editor-modal", { target: this.editorModalTarget });
   }
 
   #closeEditorModal(): void {
+    if (!this.editorModalTarget.open) {
+      return;
+    }
     this.dispatch("close-editor-modal", { target: this.editorModalTarget });
   }
 
@@ -117,12 +123,17 @@ class FilepondController extends Controller<HTMLElement> {
 
   // == Pond ==
 
-  #pond: FilePond | null = null;
+  #replacedInput?: HTMLInputElement;
+  #pond?: FilePond;
 
   #destroyPond(): void {
     if (this.#pond) {
+      if (this.#replacedInput) {
+        this.#pond.restoreElement(this.#replacedInput);
+        this.#replacedInput = undefined;
+      }
       this.#pond.destroy();
-      this.#pond = null;
+      this.#pond = undefined;
       this.#resetEditor();
     }
   }
@@ -151,6 +162,7 @@ class FilepondController extends Controller<HTMLElement> {
         },
       });
     }
+    this.#replacedInput = this.inputTarget;
     const pond = create(this.inputTarget, {
       files,
       labelIdle: this.idleLabelTemplateTarget.innerHTML,
@@ -222,9 +234,7 @@ class FilepondController extends Controller<HTMLElement> {
 
   disconnect(): void {
     super.disconnect();
-    this.#closeEditorModal();
-    this.#destroyCropper();
-    this.#destroyPond();
+    this.teardown();
   }
 
   // == Actions ==
@@ -257,6 +267,12 @@ class FilepondController extends Controller<HTMLElement> {
     this.#editor.onclose();
     this.#resetEditor();
     this.#destroyCropper();
+  }
+
+  teardown(): void {
+    this.#closeEditorModal();
+    this.#destroyCropper();
+    this.#destroyPond();
   }
 
   // == Status helpers ==

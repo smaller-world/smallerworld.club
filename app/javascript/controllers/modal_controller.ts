@@ -118,7 +118,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
   // == Closing helpers ==
 
   async #requestClose(cancelled = false): Promise<void> {
-    if (this.#isClosing()) {
+    if (!this.element.open || this.#isClosing) {
       return;
     }
     this.#markClosing();
@@ -134,7 +134,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     this.dispatch("closed");
   }
 
-  #isClosing(): boolean {
+  get #isClosing(): boolean {
     return this.element.dataset.closing === "true";
   }
 

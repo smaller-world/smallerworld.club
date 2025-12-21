@@ -20,6 +20,14 @@ module ApplicationHelper
     end
   end
 
+
+  sig { returns(T.nilable(String)) }
+  def hotwire_native_data_attribute
+    if hotwire_native_app?
+      ""
+    end
+  end
+
   sig { params(label: String, url: String, options: T.untyped).returns(String) }
   def back_link_to(label, url, **options)
     link_to(url, class: "btn native:hidden", **options) do

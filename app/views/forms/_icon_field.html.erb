@@ -8,6 +8,7 @@
       local_assigns[:class]
     ) %>"
     data-controller="filepond"
+    data-action="turbo:before-cache@document->filepond#teardown"
     data-filepond-direct-upload-url-value="<%= rails_direct_uploads_path %>"
     data-filepond-aspect-ratio-value="1:1"
     data-prevent-submit-while-busy-target="busyable"
@@ -55,7 +56,10 @@
           class="btn btn-action text-sm"
           data-action="modal#close filepond#confirmEdit"
         >
-          crop and continue
+          <span>
+            crop and continue
+          </span>
+          <%= icon "arrow-right", variant: :micro, class: "size-4" %>
         </button>
       </div>
     <% end %>
