@@ -16,7 +16,7 @@
     [multiple],
     textarea,
     select {
-      @apply dark:bg-black;
+      @apply dark:bg-shade-950;
     }
 
     [type="checkbox"],

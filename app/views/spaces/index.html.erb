@@ -5,7 +5,10 @@
       <ul class="space-y-3">
         <% @owned_spaces.each do |space| %>
           <li>
-            <%= link_to space_path(space, emulate_native_app: 1) do %>
+            <%= link_to(
+              space_path(space, emulate_native_app: 1),
+              class: "block rounded-3xl"
+            ) do %>
               <%= render "spaces/card", space: %>
             <% end %>
           </li>
@@ -31,7 +34,7 @@
       <ul class="space-y-3">
         <% @posted_spaces.each do |space| %>
           <li>
-            <%= link_to space do %>
+            <%= link_to space, class: "block rounded-3xl" do %>
               <%= render "spaces/card", space: %>
             <% end %>
           </li>
