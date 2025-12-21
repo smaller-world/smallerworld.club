@@ -8,11 +8,10 @@ class OpaqueImageValidator < ActiveModel::EachValidator
 
   sig { params(record: ActiveRecord::Base, attribute: Symbol, value: T.untyped).void }
   def validate_each(record, attribute, value)
-    blob = value.respond_to?(:blob) ? value.blob : value
-    unless blob.is_a?(ActiveStorage::Blob)
-      raise "Expected an ActiveStorage::Blob, instead got: #{blob.class}"
+    unless value.is_a?(ActiveStorage::Blob)
+      raise "Expected an ActiveStorage::Blob, instead got: #{value.class}"
     end
-    unless image_blob_is_opaque?(blob)
+    unless image_blob_is_opaque?(value)
       record.errors.add(attribute, :invalid, message: "must be opaque")
     end
   end

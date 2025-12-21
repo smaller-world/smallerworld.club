@@ -105,7 +105,7 @@ class World < ApplicationRecord
             presence: true,
             length: { minimum: 2 },
             exclusion: { in: %i[kai], message: "is reserved" }
-  validates :icon, presence: true, opaque_image: true
+  validates :icon_blob, presence: true, opaque_image: true
   validates :reply_to_number_override,
             phone: { possible: true, types: :mobile, extensions: false },
             allow_nil: true

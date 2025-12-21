@@ -1,20 +1,20 @@
 @layer components {
   .btn {
     @apply flex items-center justify-center gap-2 rounded-3xl px-4 py-2;
-    @apply font-headings font-semibold;
+    @apply font-headings font-semibold text-primary-600;
     @apply cursor-pointer;
     @apply ring-offset-2 dark:ring-offset-0;
 
-    &:not([class^="btn-"]) {
-      @apply text-primary-600;
-
-      &:hover {
-        @apply bg-shade-100 dark:bg-shade-800;
-      }
+    &:hover {
+      @apply bg-shade-100 dark:bg-shade-800;
     }
 
     &.btn-action {
-      @apply bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-800;
+      @apply bg-primary-600 text-white dark:bg-primary-700;
+
+      &:hover {
+        @apply bg-primary-700 dark:bg-primary-800;
+      }
     }
 
     &:disabled {
