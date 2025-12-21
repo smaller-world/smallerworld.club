@@ -97,7 +97,7 @@ class SpacesController < ApplicationController
         authorize!(@space)
         space_params = params.expect(space: permitted_space_attributes)
         if @space.update(space_params)
-          recede_or_redirect_to(
+          refresh_or_redirect_to(
             space_path(@space, emulate_native_app: 1),
             status: :see_other,
           )
