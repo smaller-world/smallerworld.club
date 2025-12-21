@@ -9,3 +9,9 @@
     @slot;
   }
 }
+
+@custom-variant with-button-bridge {
+  html[data-bridge-components~="button"] & {
+    @slot;
+  }
+}

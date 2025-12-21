@@ -16,7 +16,7 @@ class SpacesController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        @page_title = "spaces"
+        @page_title = "spaces" unless hotwire_native_app?
         current_user = authenticate_user!
         @owned_spaces = current_user.owned_spaces.with_attached_icon
         @posted_spaces = current_user.post_spaces
@@ -42,7 +42,7 @@ class SpacesController < ApplicationController
       format.html do
         if hotwire_native_app?
           @space = find_space(scope: Space.with_attached_icon)
-          @page_title = @space.name
+          # @page_title = @space.name
           @pagy, @posts = scoped do
             scope = @space.posts
               .order(created_at: :desc, id: :asc)

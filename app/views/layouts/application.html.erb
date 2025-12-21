@@ -38,7 +38,9 @@
 
     <%# == Other head content == %>
 
-    <%= page_title_tag %>
+    <% if title = page_title %>
+      <title><%= title %></title>
+    <% end %>
     <%= yield :head %>
   </head>
 
