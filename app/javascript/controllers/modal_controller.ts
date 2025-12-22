@@ -75,7 +75,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     this.#storePreviousActiveElement();
     this.element.showModal();
     this.#addDocumentActions();
-    void this.#waitForTransitions().then(() => {
+    void this.#afterAnimate().then(() => {
       this.dispatch("opened");
     });
     requestAnimationFrame(() => {
@@ -124,7 +124,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     this.#markClosing();
     this.dispatch("closing");
     this.#removeDocumentActions();
-    await this.#waitForTransitions();
+    await this.#afterAnimate();
     this.element.close();
     this.#clearClosing();
     this.#focusPreviousActiveElement();
@@ -148,7 +148,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
 
   // == Transition helpers ==
 
-  async #waitForTransitions(): Promise<void> {
+  async #afterAnimate(): Promise<void> {
     const targets = [this.backdropTarget, this.panelTarget];
     const transitions = targets
       .flatMap((el) => el.getAnimations())

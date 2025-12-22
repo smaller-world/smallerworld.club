@@ -1,45 +1,82 @@
 @layer base {
   body {
     @apply flex min-h-lvh flex-col;
-
-    > header {
-      @apply sticky top-0 h-12 px-2;
-      @apply flex items-center;
-      @apply native:hidden;
-
-      z-index: 100;
-
-      &::before {
-        @apply absolute inset-0 -bottom-2 backdrop-blur-xs;
-
-        --color-background: var(--color-white);
-        @media (prefers-color-scheme: dark) {
-          --color-background: var(--color-shade-900);
-        }
-
-        z-index: -1;
-        content: "";
-        background-image: linear-gradient(
-          to top,
-          transparent,
-          --alpha(var(--color-background) / 80%)
-        );
-        mask: linear-gradient(to top, transparent, black --spacing(6));
-      }
-    }
-
-    > main {
-      @apply flex-1;
-
-      html[data-hotwire-native] & {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-    }
   }
 }
 
 @layer components {
+  .app-header {
+    @apply sticky top-0 h-12 px-2;
+    @apply flex items-center justify-between;
+    @apply native:hidden;
+
+    z-index: 100;
+
+    &::before {
+      @apply absolute inset-0 -bottom-2 backdrop-blur-xs;
+
+      --color-background: var(--color-white);
+      @media (prefers-color-scheme: dark) {
+        --color-background: var(--color-shade-900);
+      }
+
+      z-index: -1;
+      content: "";
+      background-image: linear-gradient(
+        to top,
+        transparent,
+        --alpha(var(--color-background) / 80%)
+      );
+      mask: linear-gradient(to top, transparent, black --spacing(6));
+    }
+
+    .logo-button {
+      @apply py-1 pr-3 pl-2;
+      @apply gap-1;
+      @apply text-black dark:text-white;
+
+      &:hover {
+        @apply bg-shade-100 dark:bg-shade-800;
+      }
+    }
+
+    .menu-button {
+      @apply px-3 py-1;
+      @apply text-sm text-black dark:text-white;
+
+      /* &[aria-expanded="true"] {
+        @apply bg-shade-100 dark:bg-shade-800;
+      } */
+    }
+
+    .menu-dropdown {
+      @apply absolute top-0 right-0 origin-top-right transform transition;
+      @apply min-w-52 rounded-2xl p-1;
+      @apply shadow-md;
+
+      li {
+        @apply rounded-xl;
+
+        &:hover {
+          @apply bg-shade-100 dark:bg-shade-800;
+        }
+
+        [role="menuitem"] {
+          @apply flex items-center gap-2 p-2 font-headings font-medium;
+        }
+      }
+    }
+  }
+
+  .app-main {
+    @apply flex-1;
+
+    html[data-hotwire-native] & {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
   .page-container {
     @apply mx-auto max-w-xl p-4 native:py-0;
   }

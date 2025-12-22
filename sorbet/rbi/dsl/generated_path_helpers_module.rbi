@@ -46,6 +46,9 @@ module GeneratedPathHelpersModule
   def contact_url_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def destroy_session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def download_image_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -89,9 +92,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def login_requests_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def logout_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def lookup_push_subscriptions_path(*args); end

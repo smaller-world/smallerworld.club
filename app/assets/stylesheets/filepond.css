@@ -1,10 +1,10 @@
-@import "filepond/dist/filepond.min.css" layer(components);
+@import "filepond/dist/filepond.min.css" layer(base);
 @import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
-  layer(components);
+  layer(base);
 @import "filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
-  layer(components);
+  layer(base);
 
-@layer components {
+@layer base {
   .filepond--root {
     margin-bottom: 0px !important;
 
@@ -24,6 +24,10 @@
       label {
         @apply cursor-pointer text-sm leading-tight text-shade-500;
       }
+    }
+
+    .filepond--file-action-button {
+      @apply cursor-pointer;
     }
   }
 }

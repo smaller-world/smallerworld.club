@@ -55,6 +55,10 @@ class SessionsController < ApplicationController
   # POST /logout
   def destroy
     respond_to do |format|
+      format.html do
+        terminate_session!
+        redirect_to(root_path)
+      end
       format.json do
         terminate_session!
         render(json: {})

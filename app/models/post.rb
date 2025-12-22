@@ -56,6 +56,7 @@ class Post < ApplicationRecord
   include PgSearch::Model
 
   # == Constants ==
+  SELECTABLE_TYPES = %w[journal_entry poem invitation question].freeze
 
   NOTIFICATION_DELAY = T.let(
     Rails.env.production? ? 1.minute : 5.seconds,

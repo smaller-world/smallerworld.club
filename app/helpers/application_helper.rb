@@ -35,4 +35,9 @@ module ApplicationHelper
         tag.span("back to #{label}", class: "overflow-ellipsis")
     end
   end
+
+  sig { params(options: T.untyped).returns(String) }
+  def new_session_with_redirect_path(**options)
+    new_session_path(redirect_to: request.fullpath, **options)
+  end
 end

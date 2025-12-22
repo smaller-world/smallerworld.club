@@ -49,11 +49,6 @@ class ApplicationController < ActionController::Base
 
   # == Helpers ==
 
-  sig { returns(T::Boolean) }
-  def signed_in?
-    current_user.present?
-  end
-
   sig { returns(T::Hash[Symbol, T.untyped]) }
   def error_context
     if (user = current_user)

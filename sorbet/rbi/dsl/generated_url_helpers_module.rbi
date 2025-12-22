@@ -46,6 +46,9 @@ module GeneratedUrlHelpersModule
   def contact_url_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def destroy_session_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def download_image_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -89,9 +92,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def login_requests_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def logout_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def lookup_push_subscriptions_url(*args); end

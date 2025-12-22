@@ -22,8 +22,8 @@ class ApplicationController
     include ::ActionView::Helpers::TagHelper
     include ::Turbo::Streams::ActionHelper
     include ::ActionText::ContentHelper
-    include ::ActionText::TagHelper
     include ::Lexxy::TagHelper
+    include ::ActionText::TagHelper
     include ::InertiaRails::Helper
     include ::InertiaRails::AssetHelper
     include ::ViteRails::TagHelpers

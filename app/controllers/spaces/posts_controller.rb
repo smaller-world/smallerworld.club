@@ -13,7 +13,7 @@ module Spaces
     def index
       respond_to do |format|
         format.json do
-          space = find_space!
+          space = find_space
           scope = authorized_scope(space.posts)
             .with_author_world
             .with_attached_images
@@ -49,7 +49,7 @@ module Spaces
       respond_to do |format|
         format.html do
           post_type = T.let(params.fetch(:type), String)
-          space = find_space!
+          space = find_space
           prompt = if (id = params[:prompt_id])
             Prompt.find(id)
           end
@@ -99,7 +99,7 @@ module Spaces
     def pinned
       respond_to do |format|
         format.json do
-          space = find_space!
+          space = find_space
           posts = authorized_scope(space.posts)
             .currently_pinned
             .with_author_world
@@ -119,7 +119,7 @@ module Spaces
       respond_to do |format|
         format.json do
           current_user = authenticate_user!
-          space = find_space!
+          space = find_space
           authorize!(space, to: :post?)
           post_params = params.expect(post: [
             :type,

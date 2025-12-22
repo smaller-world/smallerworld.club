@@ -31,17 +31,23 @@ module AuthenticatesUsers
 
     # == Helpers ==
 
-    helper_method :current_user
+    helper_method :current_user, :signed_in?
   end
 
   private
 
   # == Helpers ==
 
+  # sig { returns(T::Boolean) }
+  # def authenticated?
+  #   !!resume_session
+  # end
+
   sig { returns(T::Boolean) }
-  def authenticated?
-    !!resume_session
+  def signed_in?
+    current_user.present?
   end
+
 
   sig { returns(T.nilable(User)) }
   def current_user

@@ -103,7 +103,7 @@ Rails.application.routes.draw do
   scope controller: :sessions, export: true do
     get "/login", action: :new, as: :new_session
     post "/login", action: :create, as: :session
-    post "/logout", action: :destroy
+    post "/logout", action: :destroy, as: :destroy_session
   end
 
   # == Registrations ==

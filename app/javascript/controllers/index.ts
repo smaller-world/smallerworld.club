@@ -3,6 +3,7 @@ import { ButtonBridgeController } from "@joemasilotti/bridge-components";
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
 import { application } from "./application";
+import DropdownController from "./dropdown_controller";
 import ElementRemovalController from "./element_removal_controller";
 import FilepondController from "./filepond_controller";
 import HelloController from "./hello_controller";
@@ -15,6 +16,7 @@ application.register("button-bridge", ButtonBridgeController);
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 application.register("textarea-autogrow", TextareaAutogrowController);
+application.register("dropdown", DropdownController);
 
 application.register("element-removal", ElementRemovalController);
 application.register("hello", HelloController);

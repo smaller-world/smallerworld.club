@@ -15,7 +15,7 @@
         <% if allowed_to?(:edit?, @space) %>
           <%= link_to(
             edit_space_path(@space),
-            class: "btn dark:text-primary-700 p-1 rounded-full with-button-bridge:hidden",
+            class: "btn p-1 rounded-full with-button-bridge:hidden",
             aria: {
               label: "space settings"
             },
@@ -29,21 +29,47 @@
           <% end %>
         <% end %>
       </div>
-      <p class="text-sm text-shade-500 text-center whitespace-pre-line">
-        <%= @space.description %>
-      </p>
+      <p class="text-sm text-shade-500 text-center whitespace-pre-line"><%= @space.description %></p>
     </div>
   </div>
-  <%= turbo_frame_tag dom_id(@space, :posts), target: "_top" do %>
-    <% if @posts.any? %>
-      <ul class="space-y-3">
-        <% @posts.each do |post| %>
-          <li>
-            <%= render "posts/card", post: %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
+  <%= turbo_frame_tag(
+    dom_id(@space, :posts),
+    target: "_top",
+    class: "flex flex-col gap-3"
+  ) do %>
+    <ul class="space-y-3">
+      <li class="card border-dashed flex flex-col gap-1">
+        <h2 class="font-medium text-center">share something from the heart:</h2>
+        <div class="flex items-center justify-center gap-2">
+          <% Post::SELECTABLE_TYPES.each do |type| %>
+            <%= link_to(
+              new_space_post_path(@space, type:),
+              class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl"
+             ) do %>
+              <%= post_type_icon(type, class: "size-6") %>
+              <p class="text-xs font-headings">
+                <%= type.humanize(capitalize: false) %>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      </li>
+      <% @posts.each do |post| %>
+        <li><%= render "posts/card", post: %></li>
+      <% end %>
+    </ul>
+    <% if (page = @pagy.next) %>
+      <%= link_to(
+        space_path(@space, emulate_native_app: 1, page:),
+        class: "self-center font-headings text-primary-500 hover:text-primary-600",
+        data: {
+          turbo_frame: dom_id(@space, :posts)
+        }
+      ) do %>
+        load more...
+      <% end %>
+    <% end %>
+    <% if @posts.none? %>
       <p class="text-sm text-center text-shade-400">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
         <br>
