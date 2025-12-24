@@ -1,21 +1,24 @@
 <% class_name = local_assigns.delete(:class) %>
+<% required = local_assigns.delete(:required) %>
+<% placeholder = local_assigns.delete(:placeholder) %>
 <% error = form.object.errors.full_messages_for(name).first %>
 
 <%= render(
   "forms/field_wrapper",
-  class: class_names("text-area", class_name),
+  class: class_names("rich_text_area", class_name),
   **local_assigns,
 ) do %>
-  <%= form.text_area(
+  <%= form.rich_text_area(
     name,
-    class: "form-textarea p-2",
+    class: "form-textarea lexxy-content p-2",
     data: {
-      controller: "textarea-autogrow",
       error: error.present? ,
     }.compact_blank,
     aria: {
       describedby: (form.field_id(name, "error") if error.present?),
     },
-    **local_assigns.slice(:required, :placeholder),
+    attachment: false,
+    required:,
+    placeholder:,
   ) %>
 <% end %>

@@ -56,8 +56,6 @@ class Post < ApplicationRecord
   include PgSearch::Model
 
   # == Constants ==
-  SELECTABLE_TYPES = %w[journal_entry poem invitation question].freeze
-
   NOTIFICATION_DELAY = T.let(
     Rails.env.production? ? 1.minute : 5.seconds,
     ActiveSupport::Duration,
@@ -73,6 +71,8 @@ class Post < ApplicationRecord
             in: %i[journal_entry poem invitation question follow_up response],
             predicates: true
   enumerize :visibility, in: %i[public friends chosen_family secret]
+
+  has_rich_text :body
 
   sig { returns(T.nilable(T::Array[String])) }
   attr_accessor :friend_ids_to_notify

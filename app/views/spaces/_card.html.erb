@@ -1,13 +1,18 @@
-<div id="<%= dom_id(space, :card) %>" class="card flex gap-4">
+<% class_name = local_assigns.delete(:class) %>
+
+<div
+  id="<%= dom_id(space, :card) %>"
+  class="<%= class_names("card flex gap-4", class_name) %>"
+>
   <% if space.icon.attached? %>
     <%= image_tag space.icon, class: "rounded-app-icon size-20" %>
   <% end %>
-  <div class="flex-1 flex flex-col gap-y-0.5">
-    <p class="font-headings font-semibold text-lg leading-tight">
+
+  <div class="flex flex-1 flex-col gap-y-0.5">
+    <p class="font-headings text-lg leading-tight font-semibold">
       <%= space.name %>
     </p>
-    <p class="text-shade-500 leading-tight">
-      <%= space.description %>
-    </p>
+
+    <p class="text-shade-500 leading-tight"><%= space.description %></p>
   </div>
 </div>

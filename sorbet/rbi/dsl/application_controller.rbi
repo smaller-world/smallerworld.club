@@ -22,8 +22,8 @@ class ApplicationController
     include ::ActionView::Helpers::TagHelper
     include ::Turbo::Streams::ActionHelper
     include ::ActionText::ContentHelper
-    include ::Lexxy::TagHelper
     include ::ActionText::TagHelper
+    include ::Lexxy::TagHelper
     include ::InertiaRails::Helper
     include ::InertiaRails::AssetHelper
     include ::ViteRails::TagHelpers
@@ -34,6 +34,9 @@ class ApplicationController
 
     sig { returns(T.nilable(::User)) }
     def current_user; end
+
+    sig { returns(T::Boolean) }
+    def signed_in?; end
   end
 
   class HelperProxy < ::ActionView::Base

@@ -232,6 +232,9 @@ GEM
       bigdecimal
       rake (>= 13)
     hashie (5.0.0)
+    herb (0.8.5-aarch64-linux-gnu)
+    herb (0.8.5-arm64-darwin)
+    herb (0.8.5-x86_64-linux-gnu)
     html2text (0.4.0)
       nokogiri (>= 1.0, < 2.0)
     htmlentities (4.3.4)
@@ -676,6 +679,7 @@ DEPENDENCIES
   friendly_id (~> 5.5)
   frozen_record (~> 0.27.1)
   good_job (~> 4.7.0)
+  herb
   html2text (~> 0.4.0)
   image_processing (~> 1.12)
   inertia_rails (~> 3.10.0)

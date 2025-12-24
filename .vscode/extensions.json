@@ -4,10 +4,11 @@
     "editorconfig.editorconfig",
     "github.vscode-github-actions",
 
-    // == HTML/CSS
+    // == HTML/CSS/ERB
     "bradlc.vscode-tailwindcss",
     "csstools.postcss",
     "formulahendry.auto-close-tag",
+    "marcoroth.herb-lsp",
 
     // == Ruby
     "benspaulding.procfile",

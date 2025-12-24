@@ -46,12 +46,14 @@ class FilepondController extends Controller<HTMLElement> {
 
   static values = {
     directUploadUrl: String,
+    fileUrlTemplate: String,
     aspectRatio: {
       type: String,
     },
   };
   declare readonly directUploadUrlValue: string;
   declare readonly aspectRatioValue: string;
+  declare readonly fileUrlTemplateValue: string;
 
   // == Editor ==
 
@@ -206,14 +208,14 @@ class FilepondController extends Controller<HTMLElement> {
           });
         },
         revert: (signedId: string, load, error) => {
-          void fetch(`/filepond/files/${signedId}`, {
+          void fetch(this.#fileUrl(signedId), {
             method: "DELETE",
           }).then(() => {
             load();
           }, error);
         },
         load: (signedId: string, load, error) => {
-          void fetch(`/filepond/files/${signedId}`)
+          void fetch(this.#fileUrl(signedId))
             .then((response) => response.blob())
             .then((blob) => {
               load(blob);
@@ -382,6 +384,12 @@ class FilepondController extends Controller<HTMLElement> {
     const zoom = rectWidth / (crop.width / naturalSide);
     instructions.crop.center = { x, y };
     instructions.crop.zoom = zoom;
+  }
+
+  // == Filepond url helpers ==
+
+  #fileUrl(signedId: string): string {
+    return this.fileUrlTemplateValue.replace(":signed_id", signedId);
   }
 }
 

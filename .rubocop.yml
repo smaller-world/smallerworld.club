@@ -33,12 +33,19 @@ AllCops:
 
 Layout/BlockAlignment:
   Enabled: true
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
 Layout/DotPosition:
   Enabled: true
   EnforcedStyle: leading
 Layout/EndAlignment:
   Enabled: true
 Layout/ExtraSpacing:
+  Enabled: true
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+Layout/HashAlignment:
   Enabled: true
 Layout/IndentationWidth:
   Enabled: true

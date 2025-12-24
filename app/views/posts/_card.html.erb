@@ -1,12 +1,15 @@
+<% class_name = local_assigns.delete(:class) %>
+
 <div
   id="<%= dom_id(post, :card) %>"
-  class="card post-card flex flex-col gap-2.5 shadow-sm"
+  class="<%= class_names("card post-card flex flex-col gap-2.5 shadow-sm", class_name) %>"
 >
-  <div class="post-card-header flex gap-1 justify-between text-xs text-shade-500">
+  <div class="post-card-header text-shade-500 flex justify-between gap-1 text-xs">
     <div class="flex items-baseline gap-1">
-      <span class="inline-flex gap-0.5 items-baseline">
+      <span class="inline-flex items-baseline gap-0.5">
         <%= post_type_icon(post.type, class: "size-3 self-center") %>
-        <span class="font-medium font-headings">
+
+        <span class="font-headings font-medium">
           <%= post.type.humanize(capitalize: false) %>
         </span>
       </span>
@@ -18,21 +21,22 @@
           class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
         ) %>
       <% else %>
-        <span class="font-semibold">
-          <%= post.author.name %>
-        </span>
+        <span class="font-semibold"><%= post.author.name %></span>
       <% end %>
     </div>
+
     <%= local_time(
       post.created_at,
       format: :short,
       class: "font-headings lowercase",
     ) %>
   </div>
+
   <div class="post-card-content">
     <% if (title = post.title) %>
-      <h3 class="text-lg font-bold leading-tight"><%= title %></h3>
+      <h3 class="text-lg leading-tight font-bold"><%= title %></h3>
     <% end %>
+
     <% if (body_html = post.body_html) %>
       <div class="prose dark:prose-invert max-w-none">
         <%= body_html.html_safe %>

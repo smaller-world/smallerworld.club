@@ -50,14 +50,23 @@ module Spaces
         format.html do
           post_type = T.let(params.fetch(:type), String)
           space = find_space
-          prompt = if (id = params[:prompt_id])
-            Prompt.find(id)
+          if hotwire_native_app?
+            current_user = authenticate_user!
+            @post = space.posts.build(type: post_type, author: current_user)
+          else
+            prompt = if (id = params[:prompt_id])
+              Prompt.find(id)
+            end
+            render(
+              inertia: "NewSpacePostPage",
+              world_theme: "cloudflow",
+              props: {
+                space: SpaceSerializer.one(space),
+                "postType" => post_type,
+                prompt: PostPromptSerializer.one_if(prompt)
+              }
+            )
           end
-          render(inertia: "NewSpacePostPage", world_theme: "cloudflow", props: {
-            space: SpaceSerializer.one(space),
-            "postType" => post_type,
-            prompt: PostPromptSerializer.one_if(prompt)
-          })
         end
       end
     end

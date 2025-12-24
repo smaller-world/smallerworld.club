@@ -8,7 +8,7 @@
 }
 
 @layer components {
-  dialog.modal {
+  .modal {
     @apply fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent;
 
     .modal-container {

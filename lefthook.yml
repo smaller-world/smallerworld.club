@@ -2,7 +2,9 @@ check:
   parallel: true
   commands:
     check-prettier:
-      files: &modified-files git ls-files -mo --exclude-standard
+      files: &modified-files >-
+        git ls-files -mo --exclude-standard &&
+          git diff --name-only --cached
       run: npx prettier --check {files}
       glob: "*.{js,jsx,ts,tsx,css,md,html,json,yaml,yml}"
       tags: js
@@ -25,11 +27,18 @@ check:
       run: bin/rubocop --force-exclusion {files}
       glob: "*.{rb,rbi}"
       tags: rb
+    check-herb:
+      files: *modified-files
+      run: npx herb-lint {files}
+      glob: "*.{html.erb}"
+      tags: erb
 
 fix:
   commands:
     fix-prettier:
-      files: &modified-files git ls-files -mo --exclude-standard
+      files: &modified-files >-
+        git ls-files -mo --exclude-standard &&
+          git diff --name-only --cached
       run: npx prettier --write {files}
       glob: "*.{js,jsx,ts,tsx,css,md,html,json,yaml,yml}"
       tags: js
@@ -44,6 +53,11 @@ fix:
       run: bin/rubocop --force-exclusion --autocorrect {files}
       glob: "*.{rb,rbi}"
       tags: rb
+    fix-herb:
+      files: *modified-files
+      run: npx herb-lint --fix
+      glob: "*.{html.erb}"
+      tags: erb
 
 audit: &audit
   parallel: true
@@ -80,5 +94,9 @@ pre-commit:
       run: bin/rubocop --force-exclusion --cache=true {staged_files}
       glob: "*.{rb,rbi}"
       tags: rb
+    check-herb:
+      run: npx herb-lint {staged_files}
+      glob: "*.{html.erb}"
+      tags: erb
 
 pre-push: *audit

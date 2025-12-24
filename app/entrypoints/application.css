@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* Application */
 @import "../assets/stylesheets/theme.css";
 @import "../assets/stylesheets/hotwire.css";
 @import "../assets/stylesheets/animation.css";
@@ -13,9 +12,8 @@
 @import "../assets/stylesheets/filepond.css";
 @import "../assets/stylesheets/overlays.css";
 @import "../assets/stylesheets/truecropper.css";
-/* @import "../assets/stylesheets/posts.css"; */
+@import "../assets/stylesheets/lexxy.css";
 
-/* Tailwind CSS plugins */
 @plugin "@tailwindcss/forms" {
   strategy: "base";
 }

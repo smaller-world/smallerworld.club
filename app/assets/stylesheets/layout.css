@@ -5,6 +5,12 @@
 }
 
 @layer components {
+  :where(.page-container) {
+    @apply mx-auto max-w-xl p-4 native:py-0;
+  }
+}
+
+@layer components {
   .app-header {
     @apply sticky top-0 h-12 px-2;
     @apply flex items-center justify-between;
@@ -75,10 +81,6 @@
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
-  }
-
-  .page-container {
-    @apply mx-auto max-w-xl p-4 native:py-0;
   }
 }
 

@@ -1,17 +1,21 @@
 <div class="page-container flex flex-col gap-6">
   <%= back_link_to "your spaces", spaces_path %>
+
   <div class="flex flex-col gap-3">
     <% if @space.icon.attached? %>
       <%= image_tag @space.icon, class: "self-center rounded-app-icon size-28" %>
     <% end %>
+
     <div class="flex flex-col gap-0.5">
-      <div class="flex flex-row items-start justify-between gap-1">
+      <div class="flex flex-row items-start gap-1">
         <% if allowed_to?(:edit?, @space) %>
-          <div class="w-9 with-button-bridge:hidden"></div>
+          <div class="with-button-bridge:hidden w-9"></div>
         <% end %>
-        <h1 class="text-2xl font-semibold text-center">
+
+        <h1 class="flex-1 text-center text-2xl font-semibold">
           <%= @space.name %>
         </h1>
+
         <% if allowed_to?(:edit?, @space) %>
           <%= link_to(
             edit_space_path(@space),
@@ -29,35 +33,47 @@
           <% end %>
         <% end %>
       </div>
-      <p class="text-sm text-shade-500 text-center whitespace-pre-line"><%= @space.description %></p>
+
+      <p class="text-shade-500 text-center text-sm whitespace-pre-line">
+        <%= @space.description %>
+      </p>
     </div>
   </div>
+
   <%= turbo_frame_tag(
     dom_id(@space, :posts),
     target: "_top",
     class: "flex flex-col gap-3"
   ) do %>
     <ul class="space-y-3">
-      <li class="card border-dashed flex flex-col gap-1">
-        <h2 class="font-medium text-center">share something from the heart:</h2>
-        <div class="flex items-center justify-center gap-2">
-          <% Post::SELECTABLE_TYPES.each do |type| %>
-            <%= link_to(
-              new_space_post_path(@space, type:),
-              class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl"
-             ) do %>
-              <%= post_type_icon(type, class: "size-6") %>
-              <p class="text-xs font-headings">
-                <%= type.humanize(capitalize: false) %>
-              </p>
+      <li>
+        <fieldset class="card flex flex-col gap-1 border-dashed">
+          <legend class="text-center font-medium">
+            share something from the heart
+          </legend>
+
+          <div class="flex items-start justify-center gap-1">
+            <% selectable_post_types.each do |type| %>
+              <%= link_to(
+                new_space_post_path(@space, type:, emulate_native_app: 1),
+                class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl"
+              ) do %>
+                <%= post_type_icon(type, class: "size-6") %>
+
+                <p class="font-headings w-14 text-center text-xs leading-snug">
+                  <%= type.humanize(capitalize: false) %>
+                </p>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        </fieldset>
       </li>
+
       <% @posts.each do |post| %>
         <li><%= render "posts/card", post: %></li>
       <% end %>
     </ul>
+
     <% if (page = @pagy.next) %>
       <%= link_to(
         space_path(@space, emulate_native_app: 1, page:),
@@ -69,9 +85,11 @@
         load more...
       <% end %>
     <% end %>
+
     <% if @posts.none? %>
-      <p class="text-sm text-center text-shade-400">
+      <p class="text-shade-400 text-center text-sm">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
+        
         <br>
         (maybe you should do something about that...)
       </p>

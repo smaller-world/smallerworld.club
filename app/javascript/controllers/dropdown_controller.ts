@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { useTransition } from "stimulus-use";
 
-export default class DropdownController extends Controller {
+export default class DropdownController extends Controller<HTMLElement> {
   // == Targets ==
 
   static targets = ["menu", "trigger"];
@@ -41,13 +41,19 @@ export default class DropdownController extends Controller {
   // == Methods ==
 
   toggle(): void {
-    if (!this.toggleTransition || typeof this.transitioned !== "boolean") {
+    if (!this.enter || !this.leave || typeof this.transitioned !== "boolean") {
       return;
     }
-    const previouslyExpanded = this.#isExpanded;
-    this.toggleTransition();
-    if (this.hasTriggerTarget) {
-      this.triggerTarget.ariaExpanded = String(!previouslyExpanded);
+    if (this.transitioned) {
+      void this.leave().then(() => {
+        this.#removeHideListener();
+        this.triggerTarget.ariaExpanded = "false";
+      });
+    } else {
+      void this.enter().then(() => {
+        this.#addHideListener();
+        this.triggerTarget.ariaExpanded = "true";
+      });
     }
   }
 
@@ -62,14 +68,39 @@ export default class DropdownController extends Controller {
       !this.element.contains(event.target) &&
       !this.menuTarget.classList.contains("hidden")
     ) {
-      void this.leave();
-      if (this.hasTriggerTarget) {
+      void this.leave().then(() => {
+        this.#removeHideListener();
         this.triggerTarget.ariaExpanded = "false";
-      }
+      });
     }
   }
 
+  // == Expanded helpers ==
+
   get #isExpanded(): boolean {
     return !this.menuTarget.classList.contains("hidden");
+  }
+
+  // == Action helpers ==
+
+  #addHideListener(): void {
+    this.updateActions((actions) => {
+      actions.add("click@window->dropdown#hide");
+    });
+  }
+
+  #removeHideListener(): void {
+    this.updateActions((actions) => {
+      actions.remove("click@window->dropdown#hide");
+    });
+  }
+
+  updateActions(update: (actions: DOMTokenList) => void): void {
+    const parser = document.createElement("div");
+    if (this.element.dataset.action) {
+      parser.className = this.element.dataset.action;
+    }
+    update(parser.classList);
+    this.element.dataset.action = parser.className;
   }
 }

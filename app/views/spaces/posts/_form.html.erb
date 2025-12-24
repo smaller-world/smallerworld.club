@@ -1,0 +1,39 @@
+<%= form_with(
+  model: [post.space, post],
+  class: "flex flex-col gap-4",
+  data: {
+    controller: "prevent-submit-while-busy",
+  }
+) do |form| %>
+  <%= render(
+    "forms/text_field",
+    form:,
+    name: :title,
+    label: "title (optional)",
+    placeholder: post_title_placeholder(type: post.type),
+    required: true,
+  ) %>
+
+  <%= render(
+    "forms/rich_text_area",
+    form:,
+    name: :body,
+    label: false,
+    placeholder: post_body_placeholder(type: post.type),
+    required: true,
+  ) %>
+
+  <%= form.button(
+    type: "submit",
+    class: "btn btn-action",
+    data: {
+      prevent_submit_while_busy_target: "submit",
+    },
+  ) do %>
+    <span><%= post.new_record? ? "submit post" : "save changes" %></span>
+
+    <% if post.new_record? %>
+      <%= icon "paper-airplane", variant: :micro, class: "size-5" %>
+    <% end %>
+  <% end %>
+<% end %>

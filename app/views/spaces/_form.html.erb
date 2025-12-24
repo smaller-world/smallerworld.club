@@ -1,6 +1,8 @@
+<% class_name = local_assigns.delete(:class) %>
+
 <%= form_with(
   model: space,
-  class: "flex flex-col gap-4",
+  class: class_names("flex flex-col gap-4", class_name),
   data: {
     controller: "prevent-submit-while-busy",
   }
@@ -13,6 +15,7 @@
     placeholder: "new stadium",
     required: true,
   ) %>
+
   <%= render(
     "forms/text_area",
     form:,
@@ -23,6 +26,7 @@
     required: true,
     class: "min-h-24",
   ) %>
+
   <%= render(
     "forms/icon_field",
     form:,
@@ -31,17 +35,20 @@
     accept: "image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif",
     center: true,
   ) %>
+
   <% if current_user.admin? %>
     <fieldset class="card pt-1.5">
-      <legend class="font-medium bg-white dark:bg-shade-900 px-2 text-center">
+      <legend class="dark:bg-shade-900 bg-white px-2 text-center font-medium">
         advanced settings
       </legend>
-      <div class="flex gap-2 items-center">
+
+      <div class="flex items-center gap-2">
         <%= form.check_box :public, class: "form-checkbox" %>
         <%= form.label :public, "show on spaces tab for all users", class: "text-sm leading-tight" %>
       </div>
     </fieldset>
   <% end %>
+
   <%= form.button(
     type: "submit",
     class: "btn btn-action",
@@ -49,9 +56,8 @@
       prevent_submit_while_busy_target: "submit",
     },
   ) do %>
-    <span>
-      <%= space.new_record? ? "create space" : "save changes" %>
-    </span>
+    <span><%= space.new_record? ? "create space" : "save changes" %></span>
+
     <% if space.new_record? %>
       <%= icon "arrow-right", variant: :micro, class: "size-5" %>
     <% end %>

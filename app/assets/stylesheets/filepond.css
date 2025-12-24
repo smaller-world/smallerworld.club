@@ -1,11 +1,11 @@
-@import "filepond/dist/filepond.min.css" layer(base);
+@import "filepond/dist/filepond.min.css" layer(components);
 @import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
-  layer(base);
+  layer(components);
 @import "filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
-  layer(base);
+  layer(components);
 
-@layer base {
-  .filepond--root {
+@layer components {
+  :where(.filepond--root) {
     margin-bottom: 0px !important;
 
     &:hover {
