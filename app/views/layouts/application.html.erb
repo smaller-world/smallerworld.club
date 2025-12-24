@@ -1,24 +1,38 @@
 <!DOCTYPE html>
+
 <%= tag.html lang: "en", data: { hotwire_native: hotwire_native_data_attribute } do %>
   <head>
     <%# == Meta tags == %>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    >
+
     <meta name="view-transition" content="same-origin">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="env" content="<%= Rails.env %>">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <% turbo_refreshes_with method: :morph, scroll: :preserve %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%# = tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <%# == Favicons == %>
 
     <link rel="shotcut icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
+
+    <link
+      rel="icon"
+      href="/favicon-96x96.png"
+      type="image/png"
+      sizes="96x96"
+    >
+
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%# == Application assets == %>
@@ -30,7 +44,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&family=Single+Day&display=swap"
+      rel="stylesheet"
+    >
 
     <%# == Vite == %>
 
@@ -41,6 +59,7 @@
     <% if title = page_title %>
       <title><%= title %></title>
     <% end %>
+
     <%= yield :head %>
   </head>
 
@@ -50,20 +69,21 @@
         <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
         <span class="font-headings font-bold">smaller world</span>
       <% end %>
+
       <div data-controller="dropdown" class="relative">
         <button
           type="button"
-          class="btn menu-button"
+          class="btn menu-btn"
           data-dropdown-target="trigger"
-          data-action="dropdown#toggle click@window->dropdown#hide"
+          data-action="dropdown#toggle"
           aria-haspopup="true"
-          aria-controls="menu"
         >
           <%= icon "bars-3", variant: :micro, class: "size-4" %>
           <span>menu</span>
         </button>
+
         <ul
-          class="card menu-dropdown hidden"
+          class="card menu-card hidden"
           role="menu"
           data-dropdown-target="menu"
         >
@@ -78,9 +98,7 @@
                 }
               ) do %>
                 <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
-                <span class="text-sm font-headings">
-                  sign out
-                </span>
+                <span class="font-headings text-sm">sign out</span>
               <% end %>
             </li>
           <% else %>
@@ -93,26 +111,26 @@
                 }
               ) do %>
                 <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
-                <span class="text-sm font-headings">
-                  sign in
-                </span>
+                <span class="font-headings text-sm"> sign in </span>
               <% end %>
             </li>
           <% end %>
         </ul>
       </div>
     </header>
+
     <%= turbo_frame_tag :flash do %>
-    <% if notice = flash[:notice] || flash[:alert] %>
-        <div class="flash" data-controller="element-removal" data-action="animationend->element-removal#remove">
-          <div class="flash-inner">
-            <%= notice %>
-          </div>
+      <% if notice = flash[:notice] || flash[:alert] %>
+        <div
+          class="flash"
+          data-controller="element-removal"
+          data-action="animationend->element-removal#remove"
+        >
+          <div class="flash-inner"><%= notice %></div>
         </div>
       <% end %>
     <% end %>
-    <main class="app-main">
-      <%= yield %>
-    </main>
+
+    <main class="app-main"><%= yield %></main>
   </body>
 <% end %>

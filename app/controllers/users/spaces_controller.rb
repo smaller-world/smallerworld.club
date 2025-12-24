@@ -10,13 +10,13 @@ module Users
       respond_to do |format|
         format.html do
           render(inertia: "UserSpacesPage", props: {
-            "userWorld" => WorldSerializer.one_if(current_world)
+            "userWorld" => WorldSerializer.one_if(current_world),
           })
         end
         format.json do
           spaces = authorized_scope(Space.all).with_attached_icon
           render(json: {
-            spaces: SpaceSerializer.many(spaces)
+            spaces: SpaceSerializer.many(spaces),
           })
         end
       end
@@ -31,12 +31,12 @@ module Users
           space = current_user.owned_spaces.build(**space_params)
           if space.save
             render(json: {
-              space: SpaceSerializer.one(space)
+              space: SpaceSerializer.one(space),
             })
           else
             render(
               json: {
-                errors: space.form_errors
+                errors: space.form_errors,
               },
               status: :unprocessable_content,
             )
@@ -54,7 +54,7 @@ module Users
           space_params = params.expect(space: %i[name description icon public])
           if space.update(space_params)
             render(json: {
-              space: SpaceSerializer.one(space)
+              space: SpaceSerializer.one(space),
             })
           end
         end

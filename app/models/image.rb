@@ -36,9 +36,9 @@ class Image < ActiveStorage::Blob
       lossless: false,
       alpha_q: 85,
       reduction_effort: 6,
-      smart_subsample: true
+      smart_subsample: true,
     },
-    format: "webp"
+    format: "webp",
   }
 
   # == Methods ==

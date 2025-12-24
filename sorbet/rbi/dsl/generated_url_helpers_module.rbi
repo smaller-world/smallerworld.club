@@ -52,10 +52,10 @@ module GeneratedUrlHelpersModule
   def download_image_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_space_url(*args); end
+  def edit_space_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_spaces_post_url(*args); end
+  def edit_space_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_user_space_url(*args); end
@@ -289,13 +289,13 @@ module GeneratedUrlHelpersModule
   def shortlinks_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def space_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def space_posts_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def space_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def spaces_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def spaces_url(*args); end

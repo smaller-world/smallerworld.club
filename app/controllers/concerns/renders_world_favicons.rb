@@ -31,21 +31,21 @@ module RendersWorldFavicons
       {
         "head-key" => "favicon",
         "rel" => "shortcut icon",
-        "href" => rails_representation_path(favicon_variant)
+        "href" => rails_representation_path(favicon_variant),
       },
       {
         "head-key" => "favicon-image",
         "rel" => "icon",
         "type" => "image/png",
         "href" => rails_representation_path(favicon_image_variant),
-        "sizes" => "96x96"
-      }
+        "sizes" => "96x96",
+      },
     ]
     unless except_apple_touch_icon
       icons << {
         "head-key" => "apple-touch-icon",
         "rel" => "apple-touch-icon",
-        "href" => rails_representation_path(apple_touch_icon_variant)
+        "href" => rails_representation_path(apple_touch_icon_variant),
       }
     end
     icons

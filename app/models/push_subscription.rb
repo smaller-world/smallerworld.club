@@ -40,7 +40,7 @@ class PushSubscription < ApplicationRecord
       auth: auth_key,
       vapid: {
         **vapid_credentials,
-        subject: Contact.plain_mailto_uri.to_s
+        subject: Contact.plain_mailto_uri.to_s,
       },
       message:,
       **options,

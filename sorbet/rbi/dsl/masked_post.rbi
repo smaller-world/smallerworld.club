@@ -11,11 +11,23 @@ class MaskedPost
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
+  sig { returns(ActionText::RichText) }
+  def rich_text_body; end
+
+  sig { returns(ActionText::RichText) }
+  def body; end
+
+  sig { params(value: T.untyped).returns(T.untyped) }
+  def body=(value); end
+
   sig { returns(ActiveStorage::Attached::Many) }
   def images; end
 
   sig { params(attachable: T.untyped).returns(T.untyped) }
   def images=(attachable); end
+
+  sig { params(value: ActionText::RichText).returns(ActionText::RichText) }
+  def rich_text_body=(value); end
 
   sig { returns(Enumerize::Value) }
   def type; end
@@ -418,6 +430,9 @@ class MaskedPost
     sig { params(args: T.untyped, blk: T.untyped).returns(::Post) }
     def build_quoted_post(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def build_rich_text_body(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::Space) }
     def build_space(*args, &blk); end
 
@@ -441,6 +456,12 @@ class MaskedPost
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::Post) }
     def create_quoted_post!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def create_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def create_rich_text_body!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::Space) }
     def create_space(*args, &blk); end
@@ -531,6 +552,9 @@ class MaskedPost
     sig { returns(T.nilable(::Post)) }
     def reload_quoted_post; end
 
+    sig { returns(T.nilable(::ActionText::RichText)) }
+    def reload_rich_text_body; end
+
     sig { returns(T.nilable(::Space)) }
     def reload_space; end
 
@@ -561,10 +585,19 @@ class MaskedPost
     def reset_quoted_post; end
 
     sig { void }
+    def reset_rich_text_body; end
+
+    sig { void }
     def reset_space; end
 
     sig { void }
     def reset_world; end
+
+    sig { returns(T.nilable(::ActionText::RichText)) }
+    def rich_text_body; end
+
+    sig { params(value: T.nilable(::ActionText::RichText)).void }
+    def rich_text_body=(value); end
 
     sig { returns(T::Array[T.untyped]) }
     def share_ids; end
@@ -848,6 +881,12 @@ class MaskedPost
     def with_recursive(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_rich_text_body_and_embeds(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -900,10 +939,10 @@ class MaskedPost
     sig { void }
     def author_id_will_change!; end
 
-    sig { returns(::String) }
+    sig { returns(T.nilable(::String)) }
     def body_html; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def body_html=(value); end
 
     sig { returns(T::Boolean) }
@@ -918,10 +957,10 @@ class MaskedPost
     sig { returns(T::Boolean) }
     def body_html_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def body_html_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def body_html_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -930,7 +969,7 @@ class MaskedPost
     sig { returns(T.nilable(::String)) }
     def body_html_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def body_html_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1509,7 +1548,7 @@ class MaskedPost
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_author_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_body_html; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -2250,6 +2289,12 @@ class MaskedPost
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_rich_text_body_and_embeds(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_world(*args, &blk); end

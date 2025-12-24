@@ -151,21 +151,12 @@ Rails.application.routes.draw do
   resources :spaces, except: :destroy, export: true do
     scope module: :spaces do
       # == Space posts
-      resources(
-        :posts,
-        only: %i[new index create],
-        export: { namespace: "spacePosts" },
-      ) do
+      resources :posts, export: { namespace: "spacePosts" } do
         collection do
           get :pinned
         end
       end
     end
-  end
-  namespace :spaces do
-    resources :posts,
-              only: %i[edit update destroy],
-              export: { namespace: "spacePosts" }
   end
 
   scope module: :users, as: "user" do

@@ -1,12 +1,16 @@
-<div
-  id="<%= dom_id(post, :card) %>"
-  class="card post-card flex flex-col gap-2.5 shadow-sm"
->
-  <div class="post-card-header flex gap-1 justify-between text-xs text-shade-500">
+<% class_name = local_assigns.delete(:class) %>
+<% delete_confirmation = "really delete post?" %>
+
+<%= tag.div(
+  id: dom_id(post, :card),
+  class: class_names("card post-card", class_name),
+) do %>
+  <div class="post-card-header">
     <div class="flex items-baseline gap-1">
-      <span class="inline-flex gap-0.5 items-baseline">
+      <span class="inline-flex items-baseline gap-0.5">
         <%= post_type_icon(post.type, class: "size-3 self-center") %>
-        <span class="font-medium font-headings">
+
+        <span class="font-headings font-medium">
           <%= post.type.humanize(capitalize: false) %>
         </span>
       </span>
@@ -18,25 +22,80 @@
           class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
         ) %>
       <% else %>
-        <span class="font-semibold">
-          <%= post.author.name %>
-        </span>
+        <span class="font-semibold"><%= post.author.name %></span>
       <% end %>
     </div>
+
     <%= local_time(
       post.created_at,
       format: :short,
       class: "font-headings lowercase",
     ) %>
   </div>
+
   <div class="post-card-content">
     <% if (title = post.title) %>
-      <h3 class="text-lg font-bold leading-tight"><%= title %></h3>
+      <h3 class="text-lg leading-tight font-bold"><%= title %></h3>
     <% end %>
+
     <% if (body_html = post.body_html) %>
-      <div class="prose dark:prose-invert max-w-none">
-        <%= body_html.html_safe %>
-      </div>
+      <div class="prose dark:prose-invert max-w-none"><%== body_html -%></div>
+    <% else %>
+      <%= post.body -%>
     <% end %>
   </div>
-</div>
+
+  <% if allowed_to?(:manage?, post) %>
+    <div class="post-card-footer">
+      <div data-controller="dropdown" class="relative">
+        <button
+          type="button"
+          class="btn menu-btn"
+          data-dropdown-target="trigger"
+          data-action="dropdown#toggle"
+          aria-haspopup="true"
+        >
+          <%= icon "pencil-square", variant: :micro, class: "size-4" %>
+          <span>actions</span>
+        </button>
+
+        <ul
+          class="card menu-card hidden"
+          role="menu"
+          data-dropdown-target="menu"
+        >
+          <li role="presentation">
+            <%= link_to(
+              polymorphic_path([:edit, post.space, post], emulate_native_app: 1),
+              role: "menuitem",
+              data: {
+                action: "dropdown#toggle"
+              }
+            ) do %>
+              <%= icon "pencil", variant: :micro, class: "size-4" %>
+              <span class="font-headings text-sm">edit post</span>
+            <% end %>
+          </li>
+
+          <li role="presentation">
+            <%= button_to(
+              [post.space, post],
+              method: :delete,
+              role: "menuitem",
+              form_class: "flex flex-col",
+              data: {
+                controller: "alert-bridge",
+                action: "dropdown#toggle alert-bridge#show",
+                bridge_title: delete_confirmation,
+                turbo_confirm: delete_confirmation,
+              }
+            ) do %>
+              <%= icon "trash", variant: :micro, class: "size-4" %>
+              <span class="font-headings text-sm">delete post</span>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -74,7 +74,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     }
     this.#storePreviousActiveElement();
     this.element.showModal();
-    this.#addDocumentActions();
+    this.#addBackdropListeners();
     void this.#afterAnimate().then(() => {
       this.dispatch("opened");
     });
@@ -92,14 +92,14 @@ export default class ModalController extends Controller<HTMLDialogElement> {
 
   // == Action helpers ==
 
-  #addDocumentActions(): void {
+  #addBackdropListeners(): void {
     this.#updateActions((actions) => {
       actions.add("pointerdown@document->modal#onDocumentPointerDown");
       actions.add("click@document->modal#onDocumentClick");
     });
   }
 
-  #removeDocumentActions(): void {
+  #removeBackdropListeners(): void {
     this.#updateActions((actions) => {
       actions.remove("pointerdown@document->modal#onDocumentPointerDown");
       actions.remove("click@document->modal#onDocumentClick");
@@ -123,7 +123,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     }
     this.#markClosing();
     this.dispatch("closing");
-    this.#removeDocumentActions();
+    this.#removeBackdropListeners();
     await this.#afterAnimate();
     this.element.close();
     this.#clearClosing();

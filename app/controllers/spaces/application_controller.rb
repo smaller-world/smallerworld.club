@@ -3,8 +3,6 @@
 
 module Spaces
   class ApplicationController < ::ApplicationController
-    private
-
     # == Helpers ==
 
     sig { returns(String) }
@@ -12,8 +10,8 @@ module Spaces
       params.fetch(:space_id)
     end
 
-    sig { returns(Space) }
-    def find_space
+    sig { params(scope: Space::PrivateRelation).returns(Space) }
+    def find_space(scope: Space.all)
       Space.friendly.find(space_id)
     end
   end

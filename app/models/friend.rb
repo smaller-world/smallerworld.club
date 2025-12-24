@@ -154,8 +154,8 @@ class Friend < ApplicationRecord
                   against: %i[emoji name],
                   using: {
                     tsearch: {
-                      websearch: true
-                    }
+                      websearch: true,
+                    },
                   }
 
   # == Callbacks ==

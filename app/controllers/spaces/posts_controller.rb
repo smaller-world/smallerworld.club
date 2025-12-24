@@ -37,8 +37,8 @@ module Spaces
           render(json: {
             posts: SpacePostSerializer.many(space_posts),
             pagination: {
-              next: pagy.next
-            }
+              next: pagy.next,
+            },
           })
         end
       end
@@ -49,48 +49,65 @@ module Spaces
       respond_to do |format|
         format.html do
           post_type = T.let(params.fetch(:type), String)
-          space = find_space
-          prompt = if (id = params[:prompt_id])
-            Prompt.find(id)
+          @space = find_space
+          authorize!(@space, to: :post?)
+          if hotwire_native_app?
+            current_user = authenticate_user!
+            @page_title = "new #{post_type.humanize(capitalize: false)}"
+            @post = @space.posts.build(type: post_type, author: current_user)
+          else
+            prompt = if (id = params[:prompt_id])
+              Prompt.find(id)
+            end
+            render(
+              inertia: "NewSpacePostPage",
+              world_theme: "cloudflow",
+              props: {
+                space: SpaceSerializer.one(@space),
+                "postType" => post_type,
+                prompt: PostPromptSerializer.one_if(prompt),
+              },
+            )
           end
-          render(inertia: "NewSpacePostPage", world_theme: "cloudflow", props: {
-            space: SpaceSerializer.one(space),
-            "postType" => post_type,
-            prompt: PostPromptSerializer.one_if(prompt)
-          })
         end
       end
     end
 
-    # GET /spaces/posts/:id/edit
+    # GET /spaces/:space_id/posts/:id/edit
     def edit
       respond_to do |format|
+        @space = find_space
+        @post = find_post(scope: @space.posts)
+        authorize!(@post)
         format.html do
-          post = find_post!(scope: Post.in_space)
-          replied = if (user = current_user)
-            user.post_reply_receipts.exists?(post:)
+          if hotwire_native_app?
+            @page_title = "edit #{@post.type.humanize(capitalize: false)}"
           else
-            false
+            replied = if (user = current_user)
+              user.post_reply_receipts.exists?(post: @post)
+            else
+              false
+            end
+            seen = if (user = current_user)
+              user.post_views.exists?(post: @post)
+            else
+              false
+            end
+            space_post = SpacePost.new(
+              post: @post,
+              repliers: @post.repliers.count,
+              replied:,
+              seen:,
+            )
+            render(
+              inertia: "EditSpacePostPage",
+              world_theme: "cloudflow",
+              props: {
+                space: SpaceSerializer.one(@space),
+                post: SpacePostSerializer.one(space_post),
+              },
+            )
           end
-          seen = if (user = current_user)
-            user.post_views.exists?(post:)
-          else
-            false
-          end
-          space_post = SpacePost.new(
-            post:,
-            repliers: post.repliers.count,
-            replied:,
-            seen:,
-          )
-          render(
-            inertia: "EditSpacePostPage",
-            world_theme: "cloudflow",
-            props: {
-              space: SpaceSerializer.one(post.space!),
-              post: SpacePostSerializer.one(space_post)
-            },
-          )
         end
       end
     end
@@ -108,7 +125,7 @@ module Spaces
             .order(pinned_until: :asc, created_at: :asc)
           space_posts = load_space_posts(posts)
           render(json: {
-            posts: SpacePostSerializer.many(space_posts)
+            posts: SpacePostSerializer.many(space_posts),
           })
         end
       end
@@ -116,11 +133,11 @@ module Spaces
 
     # POST /spaces/:id/posts
     def create
+      current_user = authenticate_user!
+      @space = find_space
+      authorize!(@space, to: :post?)
       respond_to do |format|
         format.json do
-          current_user = authenticate_user!
-          space = find_space
-          authorize!(space, to: :post?)
           post_params = params.expect(post: [
             :type,
             :title,
@@ -130,42 +147,65 @@ module Spaces
             :spotify_track_id,
             :prompt_id,
             :pen_name,
-            images: []
+            images: [],
           ])
-          post = space.posts.build(
+          @post = @space.posts.build(
             author: current_user,
             visibility: :public,
             **post_params,
           )
-          if post.save
+          if @post.save
             render(
               json: {
-                post: PostSerializer.one(post)
+                post: PostSerializer.one(@post),
               },
               status: :created,
             )
           else
             render(
               json: {
-                errors: post.form_errors
+                errors: @post.form_errors,
               },
               status: :unprocessable_content,
             )
           end
         end
+        format.html do
+          post_params = params.expect(post: [
+            :type,
+            :title,
+            :body,
+            :emoji,
+          ])
+          @post = @space.posts.build(
+            author: current_user,
+            visibility: :public,
+            **post_params,
+          )
+          if @post.save
+            refresh_or_redirect_to(space_path(
+              @space,
+              post_id: @post.id,
+              emulate_native_app: 1,
+            ))
+          else
+            render :new, status: :unprocessable_content
+          end
+        end
       end
     end
 
-    # PUT /spaces/posts/:id
+    # PUT/PATCH /spaces/:space_id/posts/:id
     def update
+      @space = find_space
+      @post = find_post(
+        scope: @space.posts
+          .with_attached_images
+          .with_quoted_post_and_attached_images,
+      )
+      authorize!(@post)
       respond_to do |format|
         format.json do
-          post = find_post!(
-            scope: Post.where.associated(:space)
-              .with_attached_images
-              .with_quoted_post_and_attached_images,
-          )
-          authorize!(post)
           post_params = params.expect(post: [
             :title,
             :body_html,
@@ -173,35 +213,52 @@ module Spaces
             :pinned_until,
             :spotify_track_id,
             :pen_name,
-            images: []
+            images: [],
           ])
-          if post.update(post_params)
+          if @post.update(post_params)
             render(json: {
-              post: PostSerializer.one(post)
+              post: PostSerializer.one(@post),
             })
           else
             render(
-              json: { errors: post.form_errors },
+              json: { errors: @post.form_errors },
               status: :unprocessable_content,
             )
+          end
+        end
+        format.html do
+          post_params = params.expect(post: [
+            :title,
+            :body,
+            :emoji,
+          ])
+          if @post.update(post_params)
+            refresh_or_redirect_to(space_path(
+              @space,
+              post_id: @post.id,
+              emulate_native_app: 1,
+            ))
+          else
+            render :edit, status: :unprocessable_content
           end
         end
       end
     end
 
-    # DELETE /spaces/posts/:id
+    # DELETE /spaces/:space_id/posts/:id
     def destroy
+      @space = find_space
+      @post = find_post(scope: @space.posts)
+      authorize!(@post)
       respond_to do |format|
         format.json do
-          post = find_post!
-          authorize!(post)
-          space_id = post.space_id!
-          if post.destroy
+          space_id = @post.space_id!
+          if @post.destroy
             render(json: { "spaceId" => space_id })
           else
             render(
               json: {
-                errors: post.errors.full_messages
+                errors: @post.errors.full_messages,
               },
               status: :unprocessable_content,
             )
@@ -214,8 +271,14 @@ module Spaces
 
     # == Helpers ==
 
-    sig { params(scope: Post::PrivateRelation).returns(Post) }
-    def find_post!(scope: Post.where.associated(:space))
+    sig do
+      params(scope: T.any(
+        Post::PrivateRelation,
+        Post::PrivateCollectionProxy,
+        Post::PrivateAssociationRelation,
+      )).returns(Post)
+    end
+    def find_post(scope: Post.where.associated(:space))
       scope.find(params.fetch(:id))
     end
 

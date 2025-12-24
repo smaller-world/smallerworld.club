@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
             title: "an unexpected error occurred",
             description: error.message,
             code: status,
-            error: nil
+            error: nil,
           },
           status:,
         )

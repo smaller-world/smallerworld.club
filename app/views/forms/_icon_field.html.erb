@@ -1,19 +1,30 @@
-<%= render "forms/field_wrapper", class: "icon-field", **local_assigns do %>
-  <% attachment = form.object.send(name) %>
-  <% error = form.object.errors.full_messages_for(name).first %>
-  <div
-    class="<%= class_names(
+<% class_name = local_assigns.delete(:class) %>
+<% attachment = form.object.send(name) %>
+<% error = form.object.errors.full_messages_for(name).first %>
+<% center = local_assigns.delete(:center) %>
+<% accept = local_assigns.delete(:accept) %>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("icon_field", class_name),
+  **local_assigns,
+) do %>
+  <%= tag.div(
+    class: class_names(
       "form-input border-dashed size-36 mt-1",
-      { "mx-auto" => local_assigns[:center] },
-      local_assigns[:class]
-    ) %>"
-    data-controller="filepond"
-    data-action="turbo:before-cache@document->filepond#teardown"
-    data-filepond-direct-upload-url-value="<%= rails_direct_uploads_path %>"
-    data-filepond-aspect-ratio-value="1:1"
-    data-prevent-submit-while-busy-target="busyable"
-  >
+      { "mx-auto" => center },
+    ),
+    data: {
+      controller: "filepond",
+      action: "turbo:before-cache@document->filepond#teardown",
+      filepond_direct_upload_url_value: rails_direct_uploads_path,
+      filepond_file_url_template_value: filepond_file_path(":signed_id"),
+      filepond_aspect_ratio_value: "1:1",
+      prevent_submit_while_busy_target: "busyable",
+    }
+  ) do %>
     <%= form.hidden_field name, value: "" %>
+
     <%= form.hidden_field(
       name,
       value: (attachment.signed_id if attachment.attached?),
@@ -24,17 +35,19 @@
       aria: {
         describedby: (form.field_id(name, "error") if error.present?),
       },
-      **local_assigns.slice(:accept),
+      accept:,
     ) %>
+
     <template data-filepond-target="idleLabelTemplate">
       <div class="flex flex-col items-center gap-1.5">
         <%= icon "arrow-up-tray", variant: :micro, class: "size-5 text-shade-600" %>
         drag & drop your image here
       </div>
     </template>
+
     <%= render(
       "overlays/modal",
-      class: "editor-modal",
+      class: "editor_modal",
       data: {
         filepond_target: "editorModal",
         action: class_names(
@@ -46,22 +59,18 @@
         )
       },
     ) do %>
-      <img
-        data-filepond-target="editorModalImage"
-        alt=""
-      >
+      <img data-filepond-target="editorModalImage" alt="">
+
       <div class="footer">
         <button
           type="button"
           class="btn btn-action text-sm"
           data-action="modal#close filepond#confirmEdit"
         >
-          <span>
-            crop and continue
-          </span>
+          <span> crop and continue </span>
           <%= icon "arrow-right", variant: :micro, class: "size-4" %>
         </button>
       </div>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

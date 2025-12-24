@@ -1,4 +1,5 @@
 <% data = {}.merge(local_assigns.fetch(:data, {})) %>
+
 <%= tag.dialog(
   class: class_names("modal", local_assigns[:class]),
   data: {
@@ -8,8 +9,10 @@
   }
 ) do %>
   <div class="modal-backdrop" data-modal-target="backdrop"></div>
+
   <div class="modal-container">
     <% panel_options = {}.merge(local_assigns.fetch(:panel_options, {})) %>
+
     <%= tag.div(
       class: class_names("modal-panel", panel_options.delete(:class)),
       data: {

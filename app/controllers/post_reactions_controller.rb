@@ -15,7 +15,7 @@ class PostReactionsController < ApplicationController
         post = find_post!(scope: Post.with_reactions)
         reactions = authorized_scope(post.reactions)
         render(json: {
-          reactions: PostReactionSerializer.many(reactions)
+          reactions: PostReactionSerializer.many(reactions),
         })
       end
     end
@@ -34,7 +34,7 @@ class PostReactionsController < ApplicationController
         )
         render(
           json: {
-            reaction: PostReactionSerializer.one(reaction)
+            reaction: PostReactionSerializer.one(reaction),
           },
           status: :created,
         )

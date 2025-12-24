@@ -1,0 +1,62 @@
+<% placeholder = post_title_placeholder(type: post.type) %>
+
+<%= form_with(
+  model: [post.space!, post],
+  class: "flex flex-col gap-4",
+  data: {
+    controller: "prevent-submit-while-busy",
+  }
+) do |form| %>
+  <%= form.hidden_field :type %>
+
+  <div class="flex flex-col gap-2">
+    <div class="<%= class_names("flex gap-2", "items-center": !placeholder) %>">
+      <%= render(
+        "forms/emoji_field",
+        form:,
+        name: :emoji,
+        label: false,
+      ) %>
+
+      <% if placeholder %>
+        <%= render(
+        "forms/text_field",
+        form:,
+        name: :title,
+        label: false,
+        placeholder:,
+        required: true,
+        class: "flex-1",
+      ) %>
+      <% else %>
+        <div class="flex items-center gap-1">
+          <%= icon "arrow-long-left", class: "size-5" %>
+          <span class="font-cursive">tag your post with an emoji!</span>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render(
+      "forms/rich_text_area",
+      form:,
+      name: :body,
+      label: false,
+      placeholder: post_body_placeholder(type: post.type),
+      required: true,
+    ) %>
+  </div>
+
+  <%= form.button(
+    type: "submit",
+    class: "btn btn-action",
+    data: {
+      prevent_submit_while_busy_target: "submit",
+    },
+  ) do %>
+    <span><%= post.new_record? ? "post" : "save changes" %></span>
+
+    <% if post.new_record? %>
+      <%= icon "paper-airplane", variant: :micro, class: "size-4" %>
+    <% end %>
+  <% end %>
+<% end %>

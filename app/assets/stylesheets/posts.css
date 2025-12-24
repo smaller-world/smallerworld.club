@@ -1,0 +1,13 @@
+@layer components {
+  :where(.post-card) {
+    @apply flex flex-col shadow-sm;
+  }
+
+  :where(.post-card-header) {
+    @apply mb-2.5 flex justify-between gap-1 text-xs text-shade-500;
+  }
+
+  :where(.post-card-footer) {
+    @apply flex justify-end;
+  }
+}

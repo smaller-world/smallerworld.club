@@ -76,7 +76,10 @@ const EditSpacePostForm: FC<EditSpacePostFormProps> = ({
     (values: EditSpacePostFormValues) => EditSpacePostSubmission
   >({
     action: routes.spacePosts.update,
-    params: { id: post.id },
+    params: {
+      space_id: spaceId,
+      id: post.id,
+    },
     descriptor: "update post",
     initialValues,
     validate: {

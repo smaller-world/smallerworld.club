@@ -31,7 +31,11 @@ AllCops:
     - storage/**/*
   CacheRootDirectory: tmp/cache/rubocop
 
+Layout/ArgumentAlignment:
+  Enabled: true
 Layout/BlockAlignment:
+  Enabled: true
+Layout/ClosingParenthesisIndentation:
   Enabled: true
 Layout/DotPosition:
   Enabled: true
@@ -39,6 +43,11 @@ Layout/DotPosition:
 Layout/EndAlignment:
   Enabled: true
 Layout/ExtraSpacing:
+  Enabled: true
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+Layout/HashAlignment:
   Enabled: true
 Layout/IndentationWidth:
   Enabled: true
@@ -85,3 +94,12 @@ Layout/SpaceAfterMethodName:
 
 Style/BlockDelimiters:
   Enabled: true
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: diff_comma
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: diff_comma
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: diff_comma

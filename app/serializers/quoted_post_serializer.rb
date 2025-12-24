@@ -11,10 +11,17 @@ class QuotedPostSerializer < ApplicationSerializer
   identifier
   attributes :created_at,
              :title,
-             :body_html,
              :emoji,
              :pinned_until,
              type: { type: "PostType" }
+
+  attribute :body_html, type: :string do
+    if (body_html = post.body_html)
+      body_html
+    else
+      post.rich_text_body.to_trix_html
+    end
+  end
 
   # == Associations ==
 

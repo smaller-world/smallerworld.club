@@ -55,7 +55,7 @@ module GeneratedPathHelpersModule
   def edit_space_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_spaces_post_path(*args); end
+  def edit_space_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_user_space_path(*args); end
@@ -292,13 +292,13 @@ module GeneratedPathHelpersModule
   def space_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def space_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def space_posts_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def spaces_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def spaces_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def splash_path(*args); end

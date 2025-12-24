@@ -7,7 +7,7 @@
 # Table name: posts
 #
 #  id               :uuid             not null, primary key
-#  body_html        :text             not null
+#  body_html        :text
 #  emoji            :string
 #  hidden_from_ids  :uuid             default([]), not null, is an Array
 #  images_ids       :uuid             default([]), not null, is an Array
@@ -56,8 +56,6 @@ class Post < ApplicationRecord
   include PgSearch::Model
 
   # == Constants ==
-  SELECTABLE_TYPES = %w[journal_entry poem invitation question].freeze
-
   NOTIFICATION_DELAY = T.let(
     Rails.env.production? ? 1.minute : 5.seconds,
     ActiveSupport::Duration,
@@ -74,6 +72,8 @@ class Post < ApplicationRecord
             predicates: true
   enumerize :visibility, in: %i[public friends chosen_family secret]
 
+  has_rich_text :body
+
   sig { returns(T.nilable(T::Array[String])) }
   attr_accessor :friend_ids_to_notify
 
@@ -85,6 +85,11 @@ class Post < ApplicationRecord
   sig { returns(String) }
   def space_id!
     space_id or raise "Missing space ID"
+  end
+
+  sig { returns(T::Boolean) }
+  def rich_text_body?
+    !rich_text_body.nil?
   end
 
   sig { returns(String) }
@@ -99,7 +104,7 @@ class Post < ApplicationRecord
     self.body_html = format_body_html(text)
   end
 
-  sig { returns(T::Boolean) }
+  sig { returns(T.nilable(T::Boolean)) }
   def title_visible?
     journal_entry? || poem? || invitation?
   end
@@ -164,8 +169,8 @@ class Post < ApplicationRecord
                   against: %i[emoji title body_html],
                   using: {
                     tsearch: {
-                      websearch: true
-                    }
+                      websearch: true,
+                    },
                   }
 
   # == Associations ==
@@ -221,7 +226,8 @@ class Post < ApplicationRecord
   # == Validations ==
 
   validates :emoji, emoji: true, allow_nil: true
-  validates :type, :body_html, presence: true
+  validates :type, presence: true
+  validates :body_html, presence: true, unless: :rich_text_body?
   validates :title, absence: true, unless: :title_visible?
   validates :spotify_track_id, presence: true, allow_nil: true
   validates :images_ids, length: { maximum: 4 }, absence: { if: :follow_up? }

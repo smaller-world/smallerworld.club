@@ -35,7 +35,7 @@ class LoginRequestsController < ApplicationController
         else
           render(
             json: {
-              errors: login_request.form_errors
+              errors: login_request.form_errors,
             },
             status: :unprocessable_content,
           )

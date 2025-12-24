@@ -1,5 +1,5 @@
-@layer base {
-  .btn {
+@layer components {
+  :where(.btn) {
     @apply flex items-center justify-center gap-2 rounded-3xl px-4 py-2;
     @apply font-headings font-semibold text-primary-500;
     @apply transition-colors duration-200 ease-out;

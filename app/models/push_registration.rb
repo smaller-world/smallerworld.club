@@ -64,7 +64,7 @@ class PushRegistration < ApplicationRecord
 
     payload = {
       "notification" => serializer.one(notification),
-      "pageIconUrl" => world_icon_url
+      "pageIconUrl" => world_icon_url,
     }
     if (recipient = notification.recipient)
       payload["badgeCount"] = recipient
@@ -77,7 +77,7 @@ class PushRegistration < ApplicationRecord
   sig { void }
   def push_test_notification
     payload = {
-      "pageIconUrl" => world_icon_url
+      "pageIconUrl" => world_icon_url,
     }
     if service_worker_version.to_i > 1
       message = NotificationMessage.new(

@@ -5,6 +5,7 @@
   --font-headings:
     "Bricolage Grotesque", Manrope, Inter, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --font-cursive: "Single Day", "Comic Sans MS", Manrope, cursive;
 
   /* Spacing */
   --inline-space: 1ch;
@@ -82,5 +83,13 @@
 
   button {
     @apply cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .prose {
+    :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      @apply my-5;
+    }
   }
 }

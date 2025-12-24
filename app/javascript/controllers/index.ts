@@ -1,10 +1,15 @@
-// @ts-expect-error - Untyped package
-import { ButtonBridgeController } from "@joemasilotti/bridge-components";
+import {
+  AlertBridgeController,
+  ButtonBridgeController,
+  // @ts-expect-error - Untyped package
+} from "@joemasilotti/bridge-components";
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
 import { application } from "./application";
 import DropdownController from "./dropdown_controller";
 import ElementRemovalController from "./element_removal_controller";
+import EmojiFieldController from "./emoji_field_controller";
+import EmojiMartController from "./emoji_mart_controller";
 import FilepondController from "./filepond_controller";
 import HelloController from "./hello_controller";
 import ModalController from "./modal_controller";
@@ -13,6 +18,7 @@ import PreventSubmitWhileBusyController from "./prevent_submit_while_busy_contro
 // == Native bridge components ==
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 application.register("button-bridge", ButtonBridgeController);
+application.register("alert-bridge", AlertBridgeController);
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 application.register("textarea-autogrow", TextareaAutogrowController);
@@ -26,3 +32,5 @@ application.register(
   PreventSubmitWhileBusyController,
 );
 application.register("modal", ModalController);
+application.register("emoji-mart", EmojiMartController);
+application.register("emoji-field", EmojiFieldController);

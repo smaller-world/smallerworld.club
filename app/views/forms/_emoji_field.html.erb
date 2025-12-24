@@ -1,0 +1,61 @@
+<% class_name = local_assigns.delete(:class) %>
+<% data = local_assigns.delete(:data) %>
+<% error = form.object.errors.full_messages_for(name).first %>
+<% required = local_assigns.delete(:required) %>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("emoji_field", class_name),
+  data: {
+    controller: "emoji-field",
+    **data,
+  },
+  **local_assigns,
+) do %>
+  <div
+    class="relative"
+    data-controller="dropdown"
+    data-emoji-field-target="pickerDropdown"
+    data-action="emoji-field:open-picker->dropdown#toggle"
+  >
+    <%= form.text_field(
+      name,
+      class: "form-input",
+      placeholder: "dummy",
+      data: {
+        emoji_field_target: "input",
+        dropdown_target: "trigger",
+        action: "click->emoji-field#openPickerOrClearEmoji",
+        error: error.present?
+      }.compact_blank,
+      aria: {
+        haspopup: true,
+        controls: "menu",
+        describedby: (form.field_id(name, "error") if error.present?),
+      },
+      readonly: true,
+      required:,
+    ) %>
+
+    <div class="placeholder">
+      <%= icon(
+        "face-smile-plus",
+        library: :sidekickicons,
+        class: "size-5 text-shade-400 dark:text-shade-500",
+      ) %>
+    </div>
+
+    <%= tag.div(
+      class: "card dropdown-menu hidden",
+      role: "dialog",
+      data: {
+        controller: "emoji-mart",
+        dropdown_target: "menu",
+        action: class_names(
+          "emoji-mart:select->emoji-field#setEmoji",
+          "emoji-mart:select->dropdown#toggle"
+        ),
+      },
+    ) %>
+  </div>
+<% end %>

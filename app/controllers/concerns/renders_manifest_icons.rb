@@ -34,7 +34,7 @@ module RendersManifestIcons
           src: rails_representation_path(icon_variant),
           sizes: "#{size}x#{size}",
           type: type.to_s,
-          purpose: "any"
+          purpose: "any",
         }
       end
     else
@@ -48,8 +48,8 @@ module RendersManifestIcons
           src: rails_representation_path(icon_variant),
           sizes: "192x192",
           type: type.to_s,
-          purpose: "any"
-        }
+          purpose: "any",
+        },
       ]
     end
   end
@@ -61,7 +61,7 @@ module RendersManifestIcons
         src: "/#{BRAND_MANIFEST_ICON_PREFIX}-#{size}x#{size}.png",
         sizes: "#{size}x#{size}",
         type: "image/png",
-        purpose: "any"
+        purpose: "any",
       }
     end
   end

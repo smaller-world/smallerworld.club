@@ -1,8 +1,14 @@
-<%= render "forms/field_wrapper", **local_assigns do %>
-  <% error = form.object.errors.full_messages_for(name).first %>
+<% class_name = local_assigns.delete(:class) %>
+<% error = form.object.errors.full_messages_for(name).first %>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("text-area", class_name),
+  **local_assigns,
+) do %>
   <%= form.text_area(
     name,
-    class: class_names("form-textarea p-2", local_assigns[:class]),
+    class: "form-textarea p-2",
     data: {
       controller: "textarea-autogrow",
       error: error.present? ,
@@ -10,6 +16,6 @@
     aria: {
       describedby: (form.field_id(name, "error") if error.present?),
     },
-    **local_assigns.slice(:required),
+    **local_assigns.slice(:required, :placeholder),
   ) %>
 <% end %>

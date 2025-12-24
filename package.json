@@ -14,7 +14,7 @@
     "strip-ansi": "6.0.1"
   },
   "dependencies": {
-    "@37signals/lexxy": "^0.1.23-beta",
+    "@37signals/lexxy": "^0.1.24-beta",
     "@amplitude/analytics-browser": "^2.17.3",
     "@fingerprintjs/fingerprintjs": "^4.6.1",
     "@fontsource-variable/bricolage-grotesque": "^5.2.5",
@@ -61,6 +61,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.0.2",
+    "emoji-mart": "^5.6.0",
     "emoji-picker-react": "^4.12.0",
     "filepond": "^4.32.10",
     "filepond-plugin-file-validate-type": "^1.2.9",
@@ -113,6 +114,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@eslint/js": "^9.39.2",
+    "@herb-tools/formatter": "^0.8.5",
+    "@herb-tools/linter": "^0.8.5",
     "@iconify-json/basil": "^1.1.5",
     "@iconify-json/heroicons": "^1.2.0",
     "@iconify-json/ri": "^1.1.22",

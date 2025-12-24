@@ -62,6 +62,7 @@ const SpacePostCardAuthorActions: FC<SpacePostCardAuthorActionsProps> = ({
     spaceId: string;
   }>(routes.spacePosts.destroy, {
     params: {
+      space_id: space.friendly_id,
       id: post.id,
     },
     descriptor: "delete post",
@@ -109,7 +110,12 @@ const SpacePostCardAuthorActions: FC<SpacePostCardAuthorActionsProps> = ({
             leftSection={<EditIcon />}
             onClick={() => {
               if (isHotwireNative()) {
-                router.visit(routes.spacePosts.edit.path({ id: post.id }));
+                router.visit(
+                  routes.spacePosts.edit.path({
+                    space_id: space.id,
+                    id: post.id,
+                  }),
+                );
               } else {
                 onEditModalOpened?.();
                 const modalId = randomId();

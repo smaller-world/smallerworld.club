@@ -7,7 +7,7 @@
 # Table name: posts
 #
 #  id               :uuid             not null, primary key
-#  body_html        :text             not null
+#  body_html        :text
 #  emoji            :string
 #  hidden_from_ids  :uuid             default([]), not null, is an Array
 #  images_ids       :uuid             default([]), not null, is an Array

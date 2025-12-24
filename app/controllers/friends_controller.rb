@@ -15,7 +15,7 @@ class FriendsController < ApplicationController
         current_friend = authenticate_friend!
         render(json: {
           "notificationSettings" =>
-            FriendNotificationSettingsSerializer.one(current_friend)
+            FriendNotificationSettingsSerializer.one(current_friend),
         })
       end
     end
@@ -30,7 +30,7 @@ class FriendsController < ApplicationController
         if current_friend.update(friend_params)
           render(json: {
             "notificationSettings" =>
-              FriendNotificationSettingsSerializer.one(current_friend)
+              FriendNotificationSettingsSerializer.one(current_friend),
           })
         else
           render(

@@ -35,8 +35,8 @@ module Worlds
           render(json: {
             posts: WorldPostSerializer.many(world_posts),
             pagination: {
-              next: pagy.next
-            }
+              next: pagy.next,
+            },
           })
         end
       end
@@ -63,7 +63,7 @@ module Worlds
           end
           world_posts = load_world_posts(posts)
           render(json: {
-            posts: WorldPostSerializer.many(world_posts)
+            posts: WorldPostSerializer.many(world_posts),
           })
         end
       end
@@ -80,7 +80,7 @@ module Worlds
         Post::PrivateAssociationRelation,
       )).returns([
         Pagy::Keyset,
-        T::Array[Post]
+        T::Array[Post],
       ])
     end
     def paginate_posts(scope)

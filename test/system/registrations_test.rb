@@ -21,7 +21,7 @@ class RegistrationsTest < ApplicationSystemTestCase
 
     # Attach the file to the upload input
     world_icon_path = Rails.public_path.join("web-app-manifest-512x512.png")
-    attach_file("your world's icon", world_icon_path,)
+    attach_file("your world's icon", world_icon_path)
     click_link_or_button "continue"
 
     # Submit the form

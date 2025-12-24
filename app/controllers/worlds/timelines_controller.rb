@@ -20,11 +20,11 @@ module Worlds
               select_sql = Post.sanitize_sql_array([
                 "DISTINCT ON (DATE(created_at AT TIME ZONE :tz)) " \
                   "DATE(created_at AT TIME ZONE :tz) AS date, emoji",
-                tz:
+                tz:,
               ])
               order_sql = Post.sanitize_sql_array([
                 "DATE(created_at AT TIME ZONE :tz), created_at DESC",
-                tz:
+                tz:,
               ])
               scope
                 .select(select_sql)
@@ -41,7 +41,7 @@ module Worlds
           end
           render(json: {
             timeline:,
-            "postStreak" => PostStreakSerializer.one_if(post_streak)
+            "postStreak" => PostStreakSerializer.one_if(post_streak),
           })
         end
       end
