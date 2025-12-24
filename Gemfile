@@ -58,7 +58,7 @@ gem "image_processing", "~> 1.12"
 gem "ruby-vips", "~> 2.2", require: false
 
 # Use S3 as the backend for Active Storage
-gem "aws-sdk-s3", "~> 1.126", require: false
+gem "aws-sdk-s3", "~> 1.208", require: false
 
 # Use Good Job as the backend for Active Job
 gem "good_job", "~> 4.7.0"
