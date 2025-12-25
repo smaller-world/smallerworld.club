@@ -4,5 +4,9 @@
   :where(.toastify) {
     @apply rounded-2xl px-3 py-2 shadow-2xl;
     @apply bg-linear-to-r from-primary-500 to-primary-700;
+
+    &.toastify-top {
+      margin-top: env(safe-area-inset-top);
+    }
   }
 }

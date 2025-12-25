@@ -30,6 +30,8 @@
           --mask: no-repeat radial-gradient(#000 68%, #0000 71%);
           --size: 1.25em;
 
+          @apply absolute;
+
           -webkit-mask: var(--mask), var(--mask), var(--mask);
           -webkit-mask-size: 28% 45%;
           animation: submitting 1s infinite linear;
@@ -40,7 +42,6 @@
           inset: 50%;
           margin-block: calc((var(--size) / 3) * -1);
           margin-inline: calc((var(--size) / 2) * -1);
-          position: absolute;
         }
       }
     }

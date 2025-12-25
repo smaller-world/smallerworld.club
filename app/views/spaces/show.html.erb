@@ -11,6 +11,7 @@
           action: "click->clipboard#copy",
           clipboard_copy_text_value: space_url(@space, emulate_native_app: 1),
           clipboard_copied_text_value: "space url copied to clipboard!",
+          clipboard_toast_duration_value: 200000,
         },
       ) %>
     <% end %>
@@ -96,7 +97,7 @@
     <% if @posts.none? %>
       <p class="text-shade-400 text-center text-sm">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
-        
+
         <br>
         (maybe you should do something about that...)
       </p>
