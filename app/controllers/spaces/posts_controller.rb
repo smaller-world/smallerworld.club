@@ -41,6 +41,17 @@ module Spaces
             },
           })
         end
+        format.turbo_stream do
+          @space = find_space
+          @pagy, @posts = scoped do
+            scope = @space.posts
+              .order(created_at: :desc, id: :asc)
+              .with_author_world
+              .with_attached_images
+              .with_quoted_post_and_attached_images
+            pagy(:keyset, scope, limit: POSTS_PER_PAGE)
+          end
+        end
       end
     end
 
@@ -183,11 +194,14 @@ module Spaces
             **post_params,
           )
           if @post.save
-            refresh_or_redirect_to(space_path(
-              @space,
-              post_id: @post.id,
-              emulate_native_app: 1,
-            ))
+            refresh_or_redirect_to(
+              space_path(
+                @space,
+                post_id: @post.id,
+                emulate_native_app: 1,
+              ),
+              status: :see_other,
+            )
           else
             render :new, status: :unprocessable_content
           end
@@ -233,11 +247,14 @@ module Spaces
             :emoji,
           ])
           if @post.update(post_params)
-            refresh_or_redirect_to(space_path(
-              @space,
-              post_id: @post.id,
-              emulate_native_app: 1,
-            ))
+            refresh_or_redirect_to(
+              space_path(
+                @space,
+                post_id: @post.id,
+                emulate_native_app: 1,
+              ),
+              status: :see_other,
+            )
           else
             render :edit, status: :unprocessable_content
           end
@@ -263,6 +280,9 @@ module Spaces
               status: :unprocessable_content,
             )
           end
+        end
+        format.turbo_stream do
+          @post.destroy
         end
       end
     end

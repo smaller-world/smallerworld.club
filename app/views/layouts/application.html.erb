@@ -65,7 +65,7 @@
 
   <body>
     <header class="app-header">
-      <%= link_to web_start_path, class: "btn logo-button" do %>
+      <%= link_to web_start_path, class: "btn app-header-logo-btn" do %>
         <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
         <span class="font-headings font-bold">smaller world</span>
       <% end %>
@@ -73,7 +73,7 @@
       <div data-controller="dropdown" class="relative">
         <button
           type="button"
-          class="btn menu-btn"
+          class="btn app-header-menu-btn"
           data-dropdown-target="trigger"
           data-action="dropdown#toggle"
           aria-haspopup="true"

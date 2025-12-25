@@ -4,7 +4,7 @@
   model: space,
   class: class_names("flex flex-col gap-4", class_name),
   data: {
-    controller: "prevent-submit-while-busy",
+    controller: "busy-reporter",
   }
 ) do |form| %>
   <%= render(
@@ -54,13 +54,7 @@
     </fieldset>
   <% end %>
 
-  <%= form.button(
-    type: "submit",
-    class: "btn btn-action",
-    data: {
-      prevent_submit_while_busy_target: "submit",
-    },
-  ) do %>
+  <%= form.button type: "submit", class: "btn action-btn" do %>
     <span><%= space.new_record? ? "create space" : "save changes" %></span>
 
     <% if space.new_record? %>

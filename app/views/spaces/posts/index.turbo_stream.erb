@@ -1,0 +1,22 @@
+<%= turbo_stream.append dom_id(@space, :posts) do %>
+  <% @posts.each do |post| %>
+    <li><%= render "posts/card", post: %></li>
+  <% end %>
+<% end %>
+
+<% if (page = @pagy.next) %>
+  <%= turbo_stream.replace dom_id(@space, :pagination) do %>
+    <%= link_to(
+    space_posts_path(@space, page:, emulate_native_app: 1),
+    id: dom_id(@space, :pagination),
+    class: "btn space-posts-pagination-btn",
+    data: {
+      turbo_stream: true,
+    },
+  ) do %>
+      see more posts...
+    <% end %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove dom_id(@space, :pagination) %>
+<% end %>

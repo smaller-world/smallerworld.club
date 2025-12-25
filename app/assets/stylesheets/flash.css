@@ -1,5 +1,5 @@
 @layer components {
-  .flash {
+  :where(.flash) {
     @apply fixed flex justify-center;
 
     inset-block-start: var(--block-space);

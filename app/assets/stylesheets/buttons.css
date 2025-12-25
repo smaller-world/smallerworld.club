@@ -10,22 +10,20 @@
       @apply bg-shade-100 dark:bg-shade-800;
     }
 
-    &.btn-action {
-      @apply bg-primary-600 text-white;
-
-      &:hover {
-        @apply bg-primary-700;
+    &:not(:disabled) {
+      form[aria-busy="true"] & {
+        @apply pointer-events-none cursor-not-allowed opacity-30;
       }
     }
 
     &:disabled {
       @apply pointer-events-none cursor-not-allowed opacity-30;
 
-      form[aria-busy] & {
-        position: relative;
+      form[aria-busy="true"] & {
+        @apply relative;
 
         > * {
-          visibility: hidden;
+          @apply invisible;
         }
 
         &::after {
@@ -45,6 +43,14 @@
           position: absolute;
         }
       }
+    }
+  }
+
+  :where(.action-btn) {
+    @apply bg-primary-600 text-white;
+
+    &:hover {
+      @apply bg-primary-700;
     }
   }
 }

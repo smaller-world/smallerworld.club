@@ -87,9 +87,15 @@
 }
 
 @layer utilities {
-  .prose {
+  .prose.lexxy-content {
     :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-      @apply my-5;
+      margin-block: var(--lexxy-content-margin);
+    }
+
+    :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      @apply mt-0;
+
+      margin-bottom: var(--lexxy-content-margin);
     }
   }
 }

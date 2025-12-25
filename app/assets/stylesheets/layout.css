@@ -35,20 +35,20 @@
       );
       mask: linear-gradient(to top, transparent, black --spacing(6));
     }
+  }
 
-    .logo-button {
-      @apply py-1 pr-3 pl-2;
-      @apply gap-1;
-      @apply text-black dark:text-white;
+  .app-header-logo-btn {
+    @apply py-1 pr-3 pl-2;
+    @apply gap-1;
+    @apply text-black dark:text-white;
 
-      &:hover {
-        @apply bg-shade-100 dark:bg-shade-800;
-      }
+    &:hover {
+      @apply bg-shade-100 dark:bg-shade-800;
     }
+  }
 
-    .menu-btn {
-      @apply text-black dark:text-white;
-    }
+  .app-header-menu-btn {
+    @apply text-black dark:text-white;
   }
 
   .app-main {

@@ -34,22 +34,19 @@
         <% end %>
       </div>
 
-      <p class="text-shade-500 text-center text-sm whitespace-pre-line">
-        <%= @space.description %>
-      </p>
+      <%= tag.p(
+        @space.description,
+        class: "text-shade-500 text-center text-sm whitespace-pre-line",
+      ) %>
     </div>
   </div>
 
-  <%= turbo_frame_tag(
-    dom_id(@space, :posts),
-    target: "_top",
-    class: "flex flex-col gap-3"
-  ) do %>
-    <ul class="space-y-3">
+  <div class="flex flex-col gap-3">
+    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
       <li>
         <fieldset class="card flex flex-col gap-1 border-dashed">
-          <legend class="w-fit px-2 text-center font-medium">
-            share something from the heart
+          <legend class="w-fit px-2 text-center text-sm font-medium italic">
+            share something from the heart...
           </legend>
 
           <div class="flex items-start justify-center gap-1">
@@ -60,7 +57,7 @@
               ) do %>
                 <%= post_type_icon(type, class: "size-6") %>
 
-                <p class="font-headings w-14 text-center text-xs leading-snug">
+                <p class="font-headings w-14 text-center text-xs leading-[1.1]">
                   <%= type.humanize(capitalize: false) %>
                 </p>
               <% end %>
@@ -76,13 +73,14 @@
 
     <% if (page = @pagy.next) %>
       <%= link_to(
-        space_path(@space, emulate_native_app: 1, page:),
-        class: "self-center font-headings text-primary-500 hover:text-primary-600",
+        space_posts_path(@space, page:, emulate_native_app: 1),
+        id: dom_id(@space, :pagination),
+        class: "btn space-posts-pagination-btn",
         data: {
-          turbo_frame: dom_id(@space, :posts)
-        }
+          turbo_stream: true,
+        },
       ) do %>
-        load more...
+        see more posts...
       <% end %>
     <% end %>
 
@@ -94,5 +92,5 @@
         (maybe you should do something about that...)
       </p>
     <% end %>
-  <% end %>
+  </div>
 </div>

@@ -1,13 +1,28 @@
 @layer components {
   :where(.post-card) {
-    @apply flex flex-col shadow-sm;
+    @apply relative shadow-sm;
   }
 
   :where(.post-card-header) {
     @apply mb-2.5 flex justify-between gap-1 text-xs text-shade-500;
   }
 
+  :where(.post-card-content) {
+    @apply flex flex-col gap-1;
+  }
+
   :where(.post-card-footer) {
     @apply flex justify-end;
+  }
+
+  :where(.post-card-loading_overlay) {
+    @apply absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xs;
+    @apply opacity-0 transition-opacity duration-200 ease-out;
+    @apply text-white dark:text-primary-500;
+    @apply flex items-center justify-center;
+
+    .post-card[aria-busy="true"] & {
+      @apply opacity-100;
+    }
   }
 }

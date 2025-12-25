@@ -1,6 +1,6 @@
 @layer components {
   .spinner {
-    position: relative;
+    @apply relative;
 
     &::before {
       --mask: no-repeat radial-gradient(#000 68%, #0000 71%);

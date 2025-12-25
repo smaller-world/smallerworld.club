@@ -64,7 +64,7 @@
   }
 
   .menu-card {
-    @apply absolute top-0 right-0 origin-top-right transform transition;
+    @apply absolute top-0 right-0 z-10 origin-top-right transform transition;
     @apply min-w-44 rounded-2xl p-1;
     @apply shadow-md;
 

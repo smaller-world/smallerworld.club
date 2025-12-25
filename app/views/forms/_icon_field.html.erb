@@ -20,7 +20,7 @@
       filepond_direct_upload_url_value: rails_direct_uploads_path,
       filepond_file_url_template_value: filepond_file_path(":signed_id"),
       filepond_aspect_ratio_value: "1:1",
-      prevent_submit_while_busy_target: "busyable",
+      busy_reporter_target: "busyable",
     }
   ) do %>
     <%= form.hidden_field name, value: "" %>
@@ -64,7 +64,7 @@
       <div class="footer">
         <button
           type="button"
-          class="btn btn-action text-sm"
+          class="btn action-btn text-sm"
           data-action="modal#close filepond#confirmEdit"
         >
           <span> crop and continue </span>

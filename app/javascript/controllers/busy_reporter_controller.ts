@@ -1,17 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class PreventSubmitWhileBusyController extends Controller<HTMLFormElement> {
-  static targets = ["busyable", "submit"];
+export default class BusyReporterController extends Controller<HTMLFormElement> {
+  static targets = ["busyable"];
   declare readonly busyableTargets: readonly HTMLElement[];
-  declare readonly submitTarget: HTMLButtonElement;
 
   #observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (!(mutation.target instanceof HTMLElement)) {
         return;
       }
-      const isBusy = this.#isBusy(mutation.target);
-      this.submitTarget.disabled = isBusy;
+      this.element.ariaBusy = String(this.#isBusy(mutation.target));
     });
   });
 

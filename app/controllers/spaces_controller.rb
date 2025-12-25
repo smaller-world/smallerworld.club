@@ -38,24 +38,22 @@ class SpacesController < ApplicationController
 
   # GET /spaces/:id
   def show
+    @space = find_space(scope: Space.with_attached_icon)
+    @page_title = @space.name unless hotwire_native_app?
+    @pagy, @posts = scoped do
+      scope = @space.posts
+        .order(created_at: :desc, id: :asc)
+        .with_author_world
+        .with_attached_images
+        .with_quoted_post_and_attached_images
+      pagy(:keyset, scope, limit: POSTS_PER_PAGE)
+    end
     respond_to do |format|
       format.html do
-        if hotwire_native_app?
-          @space = find_space(scope: Space.with_attached_icon)
-          # @page_title = @space.name
-          @pagy, @posts = scoped do
-            scope = @space.posts
-              .order(created_at: :desc, id: :asc)
-              .with_author_world
-              .with_attached_images
-              .with_quoted_post_and_attached_images
-            pagy(:keyset, scope, limit: POSTS_PER_PAGE)
-          end
-        else
-          space = find_space(scope: Space.with_attached_icon)
+        unless hotwire_native_app?
           user_world = current_user&.world
           render(inertia: "SpacePage", world_theme: "cloudflow", props: {
-            space: SpaceSerializer.one(space),
+            space: SpaceSerializer.one(@space),
             "userWorld" => WorldSerializer.one_if(user_world),
           })
         end

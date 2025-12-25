@@ -126,7 +126,8 @@
       @apply rounded-t-2xl dark:bg-shade-900;
 
       :has(> [name="highlight"]),
-      [name="upload"] {
+      [name="upload"],
+      [name="heading"] {
         @apply hidden;
       }
     }

@@ -1,39 +1,53 @@
-<% placeholder = post_title_placeholder(type: post.type) %>
+<% title_placeholder = post_title_placeholder(type: post.type) %>
 
 <%= form_with(
   model: [post.space!, post],
   class: "flex flex-col gap-4",
   data: {
-    controller: "prevent-submit-while-busy",
+    controller: "busy-reporter",
   }
 ) do |form| %>
   <%= form.hidden_field :type %>
 
   <div class="flex flex-col gap-2">
-    <div class="<%= class_names("flex gap-2", "items-center": !placeholder) %>">
-      <%= render(
-        "forms/emoji_field",
-        form:,
-        name: :emoji,
-        label: false,
-      ) %>
+    <div>
+      <% if title_placeholder %>
+        <div class="mb-1 ml-3 flex items-center gap-1.5">
+          <%= icon(
+            "arrow-bend-left-down",
+            library: :phosphor,
+            fill: "currentColor",
+            class: "size-5 mt-3",
+          ) %>
 
-      <% if placeholder %>
-        <%= render(
-        "forms/text_field",
-        form:,
-        name: :title,
-        label: false,
-        placeholder:,
-        required: true,
-        class: "flex-1",
-      ) %>
-      <% else %>
-        <div class="flex items-center gap-1">
-          <%= icon "arrow-long-left", class: "size-5" %>
-          <span class="font-cursive">tag your post with an emoji!</span>
+          <span class="font-cursive">tag your post with an emoji</span>
         </div>
       <% end %>
+
+      <div class="<%= class_names("flex gap-2", "items-center": !title_placeholder) %>">
+        <%= render(
+            "forms/emoji_field",
+            form:,
+            name: :emoji,
+            label: false,
+          ) %>
+
+        <% if title_placeholder %>
+          <%= render(
+          "forms/text_field",
+          form:,
+          name: :title,
+          label: false,
+          placeholder: title_placeholder,
+          class: "flex-1",
+        ) %>
+        <% else %>
+          <div class="flex items-center gap-1">
+            <%= icon "arrow-long-left", class: "size-5" %>
+            <span class="font-cursive">tag your post with an emoji</span>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <%= render(
@@ -46,13 +60,7 @@
     ) %>
   </div>
 
-  <%= form.button(
-    type: "submit",
-    class: "btn btn-action",
-    data: {
-      prevent_submit_while_busy_target: "submit",
-    },
-  ) do %>
+  <%= form.button type: "submit", class: "btn action-btn" do %>
     <span><%= post.new_record? ? "post" : "save changes" %></span>
 
     <% if post.new_record? %>

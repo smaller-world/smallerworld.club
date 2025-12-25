@@ -13,21 +13,21 @@
         @apply bg-shade-100 dark:bg-shade-950/50;
       }
     }
+  }
 
-    .filepond--panel-root {
-      @apply bg-shade-50 dark:bg-shade-950;
+  :where(.filepond--panel-root) {
+    @apply bg-shade-50 dark:bg-shade-950;
+  }
+
+  :where(.filepond--drop-label) {
+    @apply cursor-pointer;
+
+    label {
+      @apply cursor-pointer text-sm leading-tight text-shade-500;
     }
+  }
 
-    .filepond--drop-label {
-      @apply cursor-pointer;
-
-      label {
-        @apply cursor-pointer text-sm leading-tight text-shade-500;
-      }
-    }
-
-    .filepond--file-action-button {
-      @apply cursor-pointer;
-    }
+  :where(.filepond--file-action-button) {
+    @apply cursor-pointer;
   }
 }

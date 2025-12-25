@@ -4,16 +4,23 @@
 @layer components {
   /* Revert to default Lexxy styles that Tailwind messes up */
   :where(.lexxy-content) {
-    /* ul,
+    @apply dark:text-shade-200;
+
+    ul,
     ol,
     dl {
       list-style: revert;
-      margin: revert;
+      margin-top: 0;
       padding: revert;
-    } */
+      padding-inline-start: 1.625em;
+
+      > li {
+        padding-inline-start: 0.375em;
+      }
+    }
 
     .horizontal-divider {
-      @apply flex rounded-xs text-shade-400;
+      @apply flex rounded-xs text-shade-400 dark:text-shade-600;
 
       padding-top: 0.5em;
 
