@@ -1,5 +1,4 @@
 <% class_name = local_assigns.delete(:class) %>
-<% delete_confirmation = "really delete post?" %>
 
 <%= tag.div(
   id: dom_id(post, :card),
@@ -87,9 +86,7 @@
                 role: "menuitem",
                 method: :delete,
                 data: {
-                  controller: "alert-bridge",
                   action: "dropdown#toggle alert-bridge#show",
-                  bridge_title: delete_confirmation,
                 },
                 form: {
                   class: "flex flex-col",
@@ -97,7 +94,7 @@
                     controller: "haptic-bridge",
                     action: "turbo:submit-end->haptic-bridge#vibrate",
                     busy_reporter_target: "busyable",
-                    turbo_confirm: delete_confirmation,
+                    turbo_confirm: "really delete post?",
                   },
                 }
               ) do %>
