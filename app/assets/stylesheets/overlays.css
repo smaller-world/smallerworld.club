@@ -13,10 +13,6 @@
     @apply bg-transparent backdrop:bg-transparent;
   }
 
-  :where(.modal-container) {
-    @apply flex min-h-full items-center justify-center p-4;
-  }
-
   :where(.modal-backdrop) {
     @apply fixed inset-0 bg-shade-500/75;
     @apply transition-opacity transition-discrete duration-300 ease-out;
@@ -34,9 +30,16 @@
     }
   }
 
+  :where(.modal-container) {
+    @apply flex min-h-full items-center justify-center p-4;
+  }
+
   :where(.modal-panel) {
     @apply relative bg-white p-4 shadow-xl;
     @apply transition-all transition-discrete duration-300 ease-out;
+
+    margin-top: env(safe-area-inset-top);
+    margin-bottom: env(safe-area-inset-bottom);
 
     dialog[open] & {
       @apply translate-y-0 scale-100 opacity-100;
