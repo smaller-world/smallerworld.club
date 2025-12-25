@@ -112,16 +112,19 @@ GEM
     ast (2.4.3)
     aws-eventstream (1.3.0)
     aws-partitions (1.1004.0)
-    aws-sdk-core (3.212.0)
+    aws-sdk-core (3.240.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
+      base64
+      bigdecimal
       jmespath (~> 1, >= 1.6.1)
+      logger
     aws-sdk-kms (1.95.0)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.170.1)
-      aws-sdk-core (~> 3, >= 3.210.0)
+    aws-sdk-s3 (1.209.0)
+      aws-sdk-core (~> 3, >= 3.234.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.10.1)
@@ -653,7 +656,7 @@ DEPENDENCIES
   addressable (~> 2.8)
   after_party (~> 1.11)
   annotaterb
-  aws-sdk-s3 (~> 1.126)
+  aws-sdk-s3 (~> 1.208)
   better_errors
   bootsnap
   brakeman

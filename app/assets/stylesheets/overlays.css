@@ -8,62 +8,55 @@
 }
 
 @layer components {
-  .modal {
-    @apply fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent;
+  :where(.modal) {
+    @apply fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto;
+    @apply bg-transparent backdrop:bg-transparent;
+  }
 
-    .modal-container {
-      @apply flex min-h-full items-center justify-center p-4;
-    }
+  :where(.modal-container) {
+    @apply flex min-h-full items-center justify-center p-4;
+  }
 
-    .modal-backdrop {
-      @apply fixed inset-0 bg-shade-500/75;
-      @apply transition-opacity transition-discrete duration-300 ease-out;
+  :where(.modal-backdrop) {
+    @apply fixed inset-0 bg-shade-500/75;
+    @apply transition-opacity transition-discrete duration-300 ease-out;
 
-      dialog[open][data-closing] & {
+    dialog[open] & {
+      @apply opacity-100;
+
+      @starting-style {
         @apply opacity-0;
       }
     }
 
-    .modal-panel {
-      @apply relative bg-white p-4 shadow-xl;
-      @apply transition-all transition-discrete duration-300 ease-out;
-    }
-
-    &[open] {
-      .modal-backdrop {
-        @apply opacity-100;
-
-        @starting-style {
-          @apply opacity-0;
-        }
-      }
-
-      .modal-panel {
-        @apply translate-y-0 scale-100 opacity-100;
-
-        @starting-style {
-          @apply translate-y-4 scale-95 opacity-0;
-        }
-      }
-
-      &[data-closing] {
-        .modal-backdrop {
-          @apply opacity-0;
-        }
-
-        .modal-panel {
-          @apply translate-y-4 scale-95 opacity-0;
-        }
-      }
+    dialog[open][data-closing] & {
+      @apply opacity-0;
     }
   }
 
-  .menu-btn {
+  :where(.modal-panel) {
+    @apply relative bg-white p-4 shadow-xl;
+    @apply transition-all transition-discrete duration-300 ease-out;
+
+    dialog[open] & {
+      @apply translate-y-0 scale-100 opacity-100;
+
+      @starting-style {
+        @apply translate-y-4 scale-95 opacity-0;
+      }
+    }
+
+    dialog[open][data-closing] & {
+      @apply translate-y-4 scale-95 opacity-0;
+    }
+  }
+
+  :where(.menu-btn) {
     @apply px-3 py-1;
     @apply text-sm;
   }
 
-  .menu-card {
+  :where(.menu-card) {
     @apply absolute top-0 right-0 z-10 origin-top-right transform transition;
     @apply min-w-44 rounded-2xl p-1;
     @apply shadow-md;

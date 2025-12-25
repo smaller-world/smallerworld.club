@@ -24,13 +24,13 @@ gem "rgeo-activerecord", "~> 8.0"
 
 # Enable additional operators and utilities for Active Record with PostgreSQL
 gem "active_record_extended",
-github: "GeorgeKaraszi/ActiveRecordExtended",
-branch: "feature/rails80"
+    github: "GeorgeKaraszi/ActiveRecordExtended",
+    branch: "feature/rails80"
 
 # Use PostGIS extensions for PostgreSQL
 gem "activerecord-postgis-adapter",
-github: "rgeo/activerecord-postgis-adapter",
-ref: "32d58f3d3df94779acabba3a2e510de56a2bce63"
+    github: "rgeo/activerecord-postgis-adapter",
+    ref: "32d58f3d3df94779acabba3a2e510de56a2bce63"
 
 # Use enhanced PostgreSQL adapter for Action Cable
 gem "actioncable-enhanced-postgresql-adapter", "~> 1.0"
@@ -58,7 +58,7 @@ gem "image_processing", "~> 1.12"
 gem "ruby-vips", "~> 2.2", require: false
 
 # Use S3 as the backend for Active Storage
-gem "aws-sdk-s3", "~> 1.126", require: false
+gem "aws-sdk-s3", "~> 1.208", require: false
 
 # Use Good Job as the backend for Active Job
 gem "good_job", "~> 4.7.0"
