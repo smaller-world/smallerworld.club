@@ -10,8 +10,14 @@
   <div class="flex flex-col gap-1">
     <div class="post-card-header">
       <div class="flex items-baseline gap-1">
-        <span class="inline-flex items-baseline gap-0.5">
-          <%= post_type_icon(post.type, class: "size-3 self-center") %>
+        <span class="inline-flex items-baseline gap-1">
+          <% if (emoji = post.emoji) %>
+            <span class="font-emoji relative top-px mr-px text-sm">
+              <%= emoji %>
+            </span>
+          <% else %>
+            <%= post_type_icon(post.type, class: "size-3 self-center") %>
+          <% end %>
 
           <span class="font-headings font-medium">
             <%= post.type.humanize(capitalize: false) %>
