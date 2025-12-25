@@ -8,6 +8,12 @@ class OpaqueImageValidator < ActiveModel::EachValidator
 
   sig { params(record: ActiveRecord::Base, attribute: Symbol, value: T.untyped).void }
   def validate_each(record, attribute, value)
+    if value.is_a?(ActiveStorage::Attached::One)
+      if !value.attached? && options[:allow_nil]
+        return
+      end
+      value = value.public_send(:blob)
+    end
     unless value.is_a?(ActiveStorage::Blob)
       raise "Expected an ActiveStorage::Blob, instead got: #{value.class}"
     end

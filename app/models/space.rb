@@ -102,7 +102,8 @@ class Space < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :owner }
   validates :description, presence: true
-  validates :icon_blob, opaque_image: true, allow_nil: true
+  validates :icon, presence: true, if: :public?
+  validates :icon, opaque_image: true, allow_nil: true
 
   # == Scopes ==
 

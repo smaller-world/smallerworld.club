@@ -95,7 +95,7 @@ class SpacesController < ApplicationController
         @space = find_space(scope: Space.with_attached_icon)
         authorize!(@space)
         space_params = params.expect(space: permitted_space_attributes)
-        if @space.update(space_params)
+        if @space.update(**space_params)
           refresh_or_redirect_to(
             space_path(@space, emulate_native_app: 1),
             status: :see_other,
