@@ -4,7 +4,7 @@
   }
 
   :where(.post-card-header) {
-    @apply mb-1.5 flex justify-between gap-1 text-xs text-shade-500;
+    @apply flex justify-between gap-1 text-xs text-shade-500;
   }
 
   :where(.post-card-content) {
