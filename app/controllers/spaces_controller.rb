@@ -46,6 +46,7 @@ class SpacesController < ApplicationController
         .with_author_world
         .with_attached_images
         .with_quoted_post_and_attached_images
+        .with_rich_text_body_and_embeds
       pagy(:keyset, scope, limit: POSTS_PER_PAGE)
     end
     respond_to do |format|

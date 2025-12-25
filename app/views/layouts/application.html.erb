@@ -119,15 +119,17 @@
       </div>
     </header>
 
-    <%= turbo_frame_tag :flash do %>
-      <% if notice = flash[:notice] || flash[:alert] %>
-        <div
-          class="flash"
-          data-controller="element-removal"
-          data-action="animationend->element-removal#remove"
-        >
-          <div class="flash-inner"><%= notice %></div>
-        </div>
+    <% if false %>
+      <%= turbo_frame_tag :flash do %>
+        <% if notice = flash[:notice] || flash[:alert] %>
+          <div
+            class="flash"
+            data-controller="element-removal"
+            data-action="animationend->element-removal#remove"
+          >
+            <div class="flash-inner"><%= notice %></div>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
 

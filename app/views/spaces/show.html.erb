@@ -3,7 +3,16 @@
 
   <div class="flex flex-col gap-3">
     <% if @space.icon.attached? %>
-      <%= image_tag @space.icon, class: "self-center rounded-app-icon size-28" %>
+      <%= image_tag(
+        @space.icon,
+        class: "self-center rounded-app-icon size-28 cursor-copy",
+        data: {
+          controller: "clipboard",
+          action: "click->clipboard#copy",
+          clipboard_copy_text_value: space_url(@space, emulate_native_app: 1),
+          clipboard_copied_text_value: "space url copied to clipboard!",
+        },
+      ) %>
     <% end %>
 
     <div class="flex flex-col gap-0.5">
