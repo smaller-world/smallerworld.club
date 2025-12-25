@@ -69,7 +69,8 @@
       }
 
       [role="menuitem"] {
-        @apply flex items-center gap-2 p-2 font-headings font-medium;
+        @apply flex items-center gap-2 rounded-xl p-2;
+        @apply font-headings font-medium;
       }
     }
   }
