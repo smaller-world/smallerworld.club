@@ -4,7 +4,8 @@
   model: space,
   class: class_names("flex flex-col gap-4", class_name),
   data: {
-    controller: "busy-reporter",
+    controller: "busy-reporter haptic-bridge",
+    action: "turbo:submit-end->haptic-bridge#vibrate",
   }
 ) do |form| %>
   <%= render(

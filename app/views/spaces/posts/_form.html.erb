@@ -1,11 +1,13 @@
+<% class_name = local_assigns.delete(:class) %>
 <% title_placeholder = post_title_placeholder(type: post.type) %>
 
 <%= form_with(
   model: [post.space!, post],
-  class: "flex flex-col gap-4",
+  class: class_names("flex flex-col gap-4", class_name),
   data: {
-    controller: "busy-reporter",
-  }
+    controller: "busy-reporter haptic-bridge",
+    action: "turbo:submit-end->haptic-bridge#vibrate",
+  },
 ) do |form| %>
   <%= form.hidden_field :type %>
 

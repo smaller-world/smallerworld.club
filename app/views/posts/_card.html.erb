@@ -94,7 +94,9 @@
                 },
                 form: {
                   class: "flex flex-col",
-                  data:{
+                  data: {
+                    controller: "haptic-bridge",
+                    action: "turbo:submit-end->haptic-bridge#vibrate",
                     busy_reporter_target: "busyable",
                   },
                 }

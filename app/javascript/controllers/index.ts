@@ -1,6 +1,7 @@
 import {
   AlertBridgeController,
   ButtonBridgeController,
+  HapticBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
@@ -18,8 +19,9 @@ import ModalController from "./modal_controller";
 
 // == Native bridge components ==
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-application.register("button-bridge", ButtonBridgeController);
 application.register("alert-bridge", AlertBridgeController);
+application.register("button-bridge", ButtonBridgeController);
+application.register("haptic-bridge", HapticBridgeController);
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 application.register("dropdown", DropdownController);
