@@ -15,8 +15,11 @@
       { "mx-auto" => center },
     ),
     data: {
-      controller: "filepond",
-      action: "turbo:before-cache@document->filepond#teardown",
+      controller: "filepond haptic-bridge",
+      action: class_names(
+        "turbo:before-cache@document->filepond#teardown",
+        "filepond:uploaded->haptic-bridge#vibrate",
+      ),
       filepond_direct_upload_url_value: rails_direct_uploads_path,
       filepond_file_url_template_value: filepond_file_path(":signed_id"),
       filepond_aspect_ratio_value: "1:1",

@@ -18,6 +18,7 @@ export default class ClipboardController extends Controller {
 
   copy() {
     void navigator.clipboard.writeText(this.copyTextValue).then(() => {
+      this.dispatch("copied");
       const toastify = Toastify({
         text: this.copiedTextValue,
         duration: this.toastDurationValue,

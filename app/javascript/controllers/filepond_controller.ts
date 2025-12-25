@@ -229,6 +229,7 @@ class FilepondController extends Controller<HTMLElement> {
       this.#markBusy();
     });
     pond.on("processfiles", () => {
+      this.dispatch("uploaded");
       this.#clearBusy();
     });
     this.#pond = pond;

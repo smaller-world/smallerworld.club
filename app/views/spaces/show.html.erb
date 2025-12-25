@@ -7,8 +7,8 @@
         @space.icon,
         class: "self-center rounded-app-icon size-28 cursor-copy",
         data: {
-          controller: "clipboard",
-          action: "click->clipboard#copy",
+          controller: "clipboard haptic-bridge",
+          action: "click->clipboard#copy clipboard:copied->haptic-bridge#vibrate",
           clipboard_copy_text_value: space_url(@space, emulate_native_app: 1),
           clipboard_copied_text_value: "space url copied to clipboard!",
           clipboard_toast_duration_value: 200000,
