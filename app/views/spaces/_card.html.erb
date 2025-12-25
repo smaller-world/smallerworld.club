@@ -5,7 +5,10 @@
   class: class_names("card flex gap-4", class_name)
 ) do %>
   <% if space.icon.attached? %>
-    <%= image_tag space.icon, class: "rounded-app-icon size-20" %>
+    <%= image_tag(
+      space.icon.variant(:icon),
+      class: "rounded-app-icon size-20",
+    ) %>
   <% end %>
 
   <div class="flex flex-1 flex-col gap-y-0.5">

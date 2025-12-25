@@ -74,7 +74,9 @@ class World < ApplicationRecord
 
   # == Attachments ==
 
-  has_one_attached :icon
+  has_one_attached :icon do |attachable|
+    attachable.variant :icon, resize_to_limit: [ 256, 256 ]
+  end
 
   sig { returns(T::Boolean) }
   def icon? = icon.attached?

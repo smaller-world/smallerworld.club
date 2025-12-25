@@ -4,7 +4,7 @@
   <div class="flex flex-col gap-3">
     <% if @space.icon.attached? %>
       <%= image_tag(
-        @space.icon,
+        @space.icon.variant(:icon),
         class: "self-center rounded-app-icon size-28 cursor-copy",
         data: {
           controller: "clipboard haptic-bridge",
