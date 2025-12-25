@@ -107,4 +107,8 @@
     inset-block-start: auto;
     max-inline-size: unset;
   }
+
+  :where(.lexxy-editor__toolbar-overflow) summary {
+    @apply text-xs tracking-tighter;
+  }
 }
