@@ -1,7 +1,5 @@
 <% class_name = local_assigns.delete(:class) %>
 <% error = form.object.errors.full_messages_for(name).first %>
-<% required = local_assigns.delete(:required) %>
-<% placeholder = local_assigns.delete(:placeholder) %>
 
 <%= render(
   "forms/field_wrapper",
@@ -15,7 +13,6 @@
     aria: {
       describedby: (form.field_id(name, "error") if error.present?),
     },
-    required:,
-    placeholder:,
+    **local_assigns.slice(:required, :placeholder),
   ) %>
 <% end %>

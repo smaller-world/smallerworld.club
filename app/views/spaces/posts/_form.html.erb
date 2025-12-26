@@ -57,6 +57,7 @@
       form:,
       name: :body,
       label: false,
+      value: post.body_html || post.rich_text_body.to_trix_html,
       placeholder: post_body_placeholder(type: post.type),
       required: true,
     ) %>

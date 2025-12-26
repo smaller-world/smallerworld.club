@@ -1,7 +1,6 @@
 <% class_name = local_assigns.delete(:class) %>
 <% data = local_assigns.delete(:data) %>
 <% error = form.object.errors.full_messages_for(name).first %>
-<% required = local_assigns.delete(:required) %>
 
 <%= render(
   "forms/field_wrapper",
@@ -34,7 +33,7 @@
         describedby: (form.field_id(name, "error") if error.present?),
       },
       readonly: true,
-      required:,
+      **local_assigns.slice(:required),
     ) %>
 
     <div class="placeholder">
