@@ -4,6 +4,7 @@ import {
   HapticBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
+import RevealController from "@stimulus-components/reveal";
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
 import { application } from "./application";
@@ -26,6 +27,7 @@ application.register("haptic-bridge", HapticBridgeController);
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 application.register("dropdown", DropdownController);
+application.register("reveal", RevealController);
 application.register("textarea-autogrow", TextareaAutogrowController);
 
 application.register("element-removal", ElementRemovalController);

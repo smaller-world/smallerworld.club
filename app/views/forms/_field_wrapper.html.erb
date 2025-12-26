@@ -1,13 +1,10 @@
-<% class_name = local_assigns.delete(:class) %>
-<% data = local_assigns.delete(:data) %>
 <% label = local_assigns.delete(:label) %>
 <% description = local_assigns.delete(:description) %>
 <% error = error_message_for(form.object, name) %>
-<% error_class = local_assigns.delete(:error_class) %>
 
 <%= tag.div(
-  class: class_names("field_wrapper", class_name),
-  data:,
+  class: class_names("field_wrapper", local_assigns[:class]),
+  **local_assigns.slice(:data),
 ) do %>
   <% if label != false || description %>
     <div>
@@ -31,7 +28,7 @@
     <%= tag.span(
       error,
       id: form.field_id(name, :error),
-      class: class_names("text-sm text-red-600", error_class),
+      class: class_names("text-sm text-red-600", local_assigns[:error_class]),
     ) %>
   <% end %>
 <% end %>

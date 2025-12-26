@@ -25,4 +25,8 @@
       @apply pointer-events-auto opacity-100;
     }
   }
+
+  :where(.post-form-emoji_hint) {
+    @apply text-shade-500 dark:text-shade-400;
+  }
 }

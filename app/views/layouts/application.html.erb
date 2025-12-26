@@ -70,7 +70,11 @@
         <span class="font-headings font-bold">smaller world</span>
       <% end %>
 
-      <div data-controller="dropdown" class="relative">
+      <div
+        data-controller="dropdown"
+        data-action="turbo:before-cache@document->dropdown#hide"
+        class="relative"
+      >
         <button
           type="button"
           class="btn app-header-menu-btn"
@@ -82,40 +86,41 @@
           <span>menu</span>
         </button>
 
-        <ul
-          class="card menu-card hidden"
-          role="menu"
+        <div
+          class="dropdown-menu card menu-card hidden"
           data-dropdown-target="menu"
         >
-          <% if signed_in? %>
-            <li role="presentation">
-              <%= button_to(
-                destroy_session_path,
-                role: "menuitem",
-                form_class: "flex flex-col",
-                data: {
-                  action: "dropdown#toggle"
-                }
-              ) do %>
-                <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
-                <span class="font-headings text-sm">sign out</span>
-              <% end %>
-            </li>
-          <% else %>
-            <li role="presentation">
-              <%= link_to(
-                new_session_with_redirect_path,
-                role: "menuitem",
-                data: {
-                  action: "dropdown#toggle"
-                }
-              ) do %>
-                <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
-                <span class="font-headings text-sm"> sign in </span>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+          <ul role="menu">
+            <% if signed_in? %>
+              <li role="presentation">
+                <%= button_to(
+                  destroy_session_path,
+                  role: "menuitem",
+                  form_class: "flex flex-col",
+                  data: {
+                    action: "dropdown#toggle"
+                  }
+                ) do %>
+                  <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
+                  <span class="font-headings text-sm">sign out</span>
+                <% end %>
+              </li>
+            <% else %>
+              <li role="presentation">
+                <%= link_to(
+                  new_session_with_redirect_path,
+                  role: "menuitem",
+                  data: {
+                    action: "dropdown#toggle"
+                  }
+                ) do %>
+                  <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
+                  <span class="font-headings text-sm"> sign in </span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </header>
 

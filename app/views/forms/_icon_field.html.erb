@@ -13,7 +13,7 @@
   <%= tag.div(
     class: class_names(
       "form-input border-dashed size-36 mt-1",
-      { "mx-auto" => center },
+      "mx-auto" => center,
     ),
     data: {
       controller: "filepond haptic-bridge",
@@ -26,7 +26,7 @@
       filepond_aspect_ratio_value: "1:1",
       busy_reporter_target: "busyable",
       turbo_permanent: true,
-    }
+    },
   ) do %>
     <%= form.hidden_field name, value: "" %>
 
@@ -69,7 +69,7 @@
       <div class="icon_field-editor_modal-footer">
         <button
           type="button"
-          class="btn action-btn text-sm"
+          class="btn btn-action text-sm"
           data-action="modal#close filepond#confirmEdit"
         >
           <span> crop and continue </span>

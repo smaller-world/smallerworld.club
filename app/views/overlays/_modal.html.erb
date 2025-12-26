@@ -1,20 +1,22 @@
-<% data = {}.merge(local_assigns.fetch(:data, {})) %>
+<% data = local_assigns.delete(:data) || {} %>
+<% controller = data.delete(:controller) %>
+<% action = data.delete(:action) %>
+<% panel_options = local_assigns.delete(:panel_options) || {} %>
+<% panel_class = panel_options.delete(:class) %>
 
 <%= tag.dialog(
   class: class_names("modal", local_assigns[:class]),
   data: {
-    controller: class_names("modal", data.delete(:controller)),
-    action: class_names("cancel->modal#onDialogCancel", data.delete(:action)),
-    **data
+    controller: class_names("modal", controller),
+    action: class_names("cancel->modal#onDialogCancel", action),
+    **data,
   }
 ) do %>
   <div class="modal-backdrop" data-modal-target="backdrop"></div>
 
   <div class="modal-container">
-    <% panel_options = {}.merge(local_assigns.fetch(:panel_options, {})) %>
-
     <%= tag.div(
-      class: class_names("modal-panel", panel_options.delete(:class)),
+      class: class_names("modal-panel", panel_class),
       data: {
         modal_target: "panel",
         **panel_options.delete(:data)

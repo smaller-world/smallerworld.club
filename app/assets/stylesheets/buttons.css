@@ -47,7 +47,7 @@
     }
   }
 
-  :where(.action-btn) {
+  :where(.btn-action) {
     @apply bg-primary-600 text-white;
 
     &:hover {

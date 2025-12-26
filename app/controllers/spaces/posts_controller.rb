@@ -188,6 +188,7 @@ module Spaces
             :title,
             :body,
             :emoji,
+            :pen_name,
           ])
           @post = @space.posts.build(
             author: current_user,
@@ -246,6 +247,7 @@ module Spaces
             :title,
             :body,
             :emoji,
+            :pen_name,
           ])
           if @post.update(post_params)
             refresh_or_redirect_to(

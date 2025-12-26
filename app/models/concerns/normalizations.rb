@@ -19,7 +19,7 @@ module Normalizations
     # == Helpers ==
 
     sig { params(attributes: T.any(Symbol, String)).void }
-    def removes_blank(*attributes)
+    def nilify_blanks(*attributes)
       normalizes(*T.unsafe(attributes), with: ->(value) { value.presence })
     end
 

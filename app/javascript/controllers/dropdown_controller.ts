@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-import { useTransition } from "stimulus-use";
 
 export default class DropdownController extends Controller<HTMLElement> {
   // == Targets ==
@@ -9,29 +8,23 @@ export default class DropdownController extends Controller<HTMLElement> {
   declare readonly triggerTarget: HTMLElement;
   declare readonly hasTriggerTarget: boolean;
 
-  // == useTransition ==
-
-  transitioned?: boolean;
-  toggleTransition?: (event?: Event) => void;
-  leave?: (event?: Event) => Promise<void>;
-  enter?: (event?: Event) => Promise<void>;
-
   // == Lifecycle ==
 
-  initialize(): void {
-    useTransition(this, {
-      element: this.menuTarget,
-      enterFrom: "opacity-0 scale-95",
-      enterTo: "opacity-100 scale-100",
-      leaveFrom: "opacity-100 scale-100",
-      leaveTo: "opacity-0 scale-95",
-    });
+  connect(): void {
+    super.connect();
+    this.#removeHideListener();
+    // useTransition(this, {
+    //   element: this.menuTarget,
+    //   enterFrom: "opacity-0 scale-95",
+    //   enterTo: "opacity-100 scale-100",
+    //   leaveFrom: "opacity-100 scale-100",
+    //   leaveTo: "opacity-0 scale-95",
+    // });
   }
 
   disconnect(): void {
-    this.enter = undefined;
-    this.leave = undefined;
-    this.toggleTransition = undefined;
+    super.disconnect();
+    this.#removeHideListener();
   }
 
   triggerTargetConnected(target: Element): void {
@@ -40,42 +33,34 @@ export default class DropdownController extends Controller<HTMLElement> {
 
   // == Methods ==
 
+  expand(): void {
+    this.menuTarget.classList.remove("hidden");
+    this.triggerTarget.ariaExpanded = "true";
+    this.#addHideListener();
+  }
+
+  collapse(): void {
+    this.#removeHideListener();
+    this.menuTarget.classList.add("hidden");
+    this.triggerTarget.ariaExpanded = null;
+  }
+
   toggle(): void {
-    if (!this.enter || !this.leave || typeof this.transitioned !== "boolean") {
-      return;
-    }
-    if (this.transitioned) {
-      void this.leave().then(() => {
-        this.#removeHideListener();
-        this.triggerTarget.ariaExpanded = "false";
-      });
+    if (this.#isExpanded) {
+      this.collapse();
     } else {
-      void this.enter().then(() => {
-        this.#addHideListener();
-        this.triggerTarget.ariaExpanded = "true";
-      });
+      this.expand();
     }
   }
 
   hide(event: Event): void {
-    if (!(event.target instanceof Node)) {
+    if (event.target instanceof Node && this.element.contains(event.target)) {
       return;
     }
-    if (!this.leave) {
-      return;
-    }
-    if (
-      !this.element.contains(event.target) &&
-      !this.menuTarget.classList.contains("hidden")
-    ) {
-      void this.leave().then(() => {
-        this.#removeHideListener();
-        this.triggerTarget.ariaExpanded = "false";
-      });
-    }
+    this.collapse();
   }
 
-  // == Expanded helpers ==
+  // == Expansion helpers ==
 
   get #isExpanded(): boolean {
     return !this.menuTarget.classList.contains("hidden");
@@ -84,18 +69,18 @@ export default class DropdownController extends Controller<HTMLElement> {
   // == Action helpers ==
 
   #addHideListener(): void {
-    this.updateActions((actions) => {
+    this.#updateActions((actions) => {
       actions.add("click@window->dropdown#hide");
     });
   }
 
   #removeHideListener(): void {
-    this.updateActions((actions) => {
+    this.#updateActions((actions) => {
       actions.remove("click@window->dropdown#hide");
     });
   }
 
-  updateActions(update: (actions: DOMTokenList) => void): void {
+  #updateActions(update: (actions: DOMTokenList) => void): void {
     const parser = document.createElement("div");
     if (this.element.dataset.action) {
       parser.className = this.element.dataset.action;

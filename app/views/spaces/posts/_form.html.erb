@@ -14,7 +14,7 @@
   <div class="flex flex-col gap-2">
     <div>
       <% if title_placeholder %>
-        <div class="mb-1 ml-3 flex items-center gap-1.5">
+        <div class="post-form-emoji_hint mb-1 ml-3 flex items-center gap-1.5">
           <%= icon(
             "arrow-bend-left-down",
             library: :phosphor,
@@ -44,7 +44,7 @@
           class: "flex-1",
         ) %>
         <% else %>
-          <div class="flex items-center gap-1">
+          <div class="post-form-emoji_hint flex items-center gap-1">
             <%= icon "arrow-long-left", class: "size-5" %>
             <span class="font-cursive">tag your post with an emoji</span>
           </div>
@@ -57,17 +57,45 @@
       form:,
       name: :body,
       label: false,
-      value: post.body_html || post.rich_text_body.to_trix_html,
+      value: post.body_html || post.body&.to_trix_html,
       placeholder: post_body_placeholder(type: post.type),
       required: true,
     ) %>
   </div>
 
-  <%= form.button type: "submit", class: "btn action-btn" do %>
-    <span><%= post.new_record? ? "post" : "save changes" %></span>
+  <div class="flex flex-col gap-2">
+    <div data-controller="reveal" class="flex flex-col">
+      <%= tag.button(
+        "post under an anonymous pen name",
+        type: "button",
+        class: class_names(
+          "text-shade-500 self-center text-xs hover:underline",
+          "hidden" => post.pen_name?,
+        ),
+        data: {
+          reveal_target: "item",
+          action: "reveal#toggle",
+        },
+      ) %>
 
-    <% if post.new_record? %>
-      <%= icon "paper-airplane", variant: :micro, class: "size-4" %>
+      <%= render(
+        "forms/text_field",
+        form:,
+        name: :pen_name,
+        placeholder: "the mysterious john darby",
+        class: class_names("hidden": !post.pen_name?),
+        data: {
+          reveal_target: "item",
+        },
+      ) %>
+    </div>
+
+    <%= form.button type: "submit", class: "btn btn-action text-xl py-2.5" do %>
+      <span><%= post.new_record? ? "post" : "save changes" %></span>
+
+      <% if post.new_record? %>
+        <%= icon "paper-airplane", variant: :micro, class: "size-5" %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 <% end %>

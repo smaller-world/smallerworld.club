@@ -221,7 +221,7 @@ class Post < ApplicationRecord
   # == Normalizations ==
 
   strips_text :title
-  removes_blank :emoji
+  nilify_blanks :emoji, :pen_name
 
   # == Validations ==
 

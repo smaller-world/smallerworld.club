@@ -31,7 +31,9 @@
             class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
           ) %>
         <% else %>
-          <span class="font-semibold"><%= post.author.name %></span>
+          <span class="font-semibold">
+            <%= post.pen_name||post.author.name %>
+          </span>
         <% end %>
       </div>
 
@@ -56,10 +58,14 @@
 
     <% if allowed_to?(:manage?, post) %>
       <div class="post-card-footer">
-        <div data-controller="dropdown" class="relative">
+        <div
+          class="relative -mr-1 -mb-1"
+          data-controller="dropdown"
+          data-action="turbo:before-cache@document->dropdown#hide"
+        >
           <button
             type="button"
-            class="btn menu-btn -mr-1 -mb-1"
+            class="btn menu-btn"
             data-dropdown-target="trigger"
             data-action="dropdown#toggle"
             aria-haspopup="true"
@@ -68,47 +74,48 @@
             <span>actions</span>
           </button>
 
-          <ul
-            class="card menu-card top-auto bottom-0 hidden"
-            role="menu"
+          <div
+            class="card dropdown-menu menu-card top-auto bottom-0 hidden"
             data-dropdown-target="menu"
           >
-            <li role="presentation">
-              <%= link_to(
-                polymorphic_path([:edit, post.space, post], emulate_native_app: 1),
-                role: "menuitem",
-                data: {
-                  action: "dropdown#toggle"
-                }
-              ) do %>
-                <%= icon "pencil", variant: :micro, class: "size-4" %>
-                <span class="font-headings text-sm">edit post</span>
-              <% end %>
-            </li>
-
-            <li role="presentation">
-              <%= button_to(
-                [post.space, post],
-                role: "menuitem",
-                method: :delete,
-                data: {
-                  action: "dropdown#toggle alert-bridge#show",
-                },
-                form: {
-                  class: "flex flex-col",
+            <ul role="menu">
+              <li role="presentation">
+                <%= link_to(
+                  polymorphic_path([:edit, post.space, post], emulate_native_app: 1),
+                  role: "menuitem",
                   data: {
-                    controller: "haptic-bridge",
-                    action: "turbo:submit-end->haptic-bridge#vibrate",
-                    busy_reporter_target: "busyable",
-                    turbo_confirm: "really delete post?",
+                    action: "dropdown#toggle"
+                  }
+                ) do %>
+                  <%= icon "pencil", variant: :micro, class: "size-4" %>
+                  <span class="font-headings text-sm">edit post</span>
+                <% end %>
+              </li>
+
+              <li role="presentation">
+                <%= button_to(
+                  [post.space, post],
+                  role: "menuitem",
+                  method: :delete,
+                  data: {
+                    action: "dropdown#toggle alert-bridge#show",
                   },
-                }
-              ) do %>
-                <%= icon "trash", variant: :micro, class: "size-4" %>
-                <span class="font-headings text-sm">delete post</span>
-              <% end %>
-            </li>
-          </ul>
+                  form: {
+                    class: "flex flex-col",
+                    data: {
+                      controller: "haptic-bridge",
+                      action: "turbo:submit-end->haptic-bridge#vibrate",
+                      busy_reporter_target: "busyable",
+                      turbo_confirm: "really delete post?",
+                    },
+                  }
+                ) do %>
+                  <%= icon "trash", variant: :micro, class: "size-4" %>
+                  <span class="font-headings text-sm">delete post</span>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     <% end %>

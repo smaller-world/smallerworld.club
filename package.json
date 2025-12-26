@@ -46,6 +46,7 @@
     "@sentry/browser": "^9.15.0",
     "@sentry/react": "^9.15.0",
     "@stimulus-components/dialog": "^1.0.1",
+    "@stimulus-components/reveal": "^5.0.0",
     "@tiptap/extension-placeholder": "^3.0.7",
     "@tiptap/pm": "^3.0.7",
     "@tiptap/react": "^3.0.7",

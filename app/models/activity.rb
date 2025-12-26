@@ -49,7 +49,7 @@ class Activity < ApplicationRecord
 
   # == Normalizations ==
 
-  removes_blank :emoji
+  nilify_blanks :emoji
 
   # == Validations ==
 

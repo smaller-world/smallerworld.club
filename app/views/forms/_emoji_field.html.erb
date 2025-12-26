@@ -36,7 +36,7 @@
       **local_assigns.slice(:required),
     ) %>
 
-    <div class="placeholder">
+    <div class="emoji_field-placeholder">
       <%= icon(
         "face-smile-plus",
         library: :sidekickicons,
@@ -45,7 +45,7 @@
     </div>
 
     <%= tag.div(
-      class: "card dropdown-menu hidden",
+      class: "dropdown-menu emoji_field-picker card hidden",
       role: "dialog",
       data: {
         controller: "emoji-mart",

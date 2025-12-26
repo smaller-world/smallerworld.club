@@ -54,15 +54,26 @@
     }
   }
 
-  :where(.menu-btn) {
-    @apply px-3 py-1;
-    @apply text-sm;
-  }
-
-  :where(.menu-card) {
+  :where(.dropdown-menu) {
     @apply absolute top-0 right-0 z-10 origin-top-right transform transition;
-    @apply min-w-44 rounded-2xl p-1;
-    @apply shadow-md;
+    @apply transition-all transition-discrete duration-200 ease-out;
+    @apply shadow-lg;
+
+    &.hidden {
+      @apply scale-90 opacity-0;
+
+      @starting-style {
+        @apply scale-100 opacity-100;
+      }
+    }
+
+    &:not(.hidden) {
+      @apply scale-100 opacity-100;
+
+      @starting-style {
+        @apply scale-90 opacity-0;
+      }
+    }
 
     li {
       @apply rounded-xl;
@@ -77,4 +88,21 @@
       }
     }
   }
+
+  :where(.menu-btn) {
+    @apply px-3 py-1;
+    @apply text-sm;
+  }
+
+  :where(.menu-card) {
+    @apply min-w-44 rounded-2xl p-1;
+  }
 }
+
+/* useTransition(this, {
+  element: this.menuTarget,
+  enterFrom: "opacity-0 scale-95",
+  enterTo: "opacity-100 scale-100",
+  leaveFrom: "opacity-100 scale-100",
+  leaveTo: "opacity-0 scale-95",
+}); */
