@@ -81,16 +81,7 @@
     </ul>
 
     <% if (page = @pagy.next) %>
-      <%= link_to(
-        space_posts_path(@space, page:, emulate_native_app: 1),
-        id: dom_id(@space, :pagination),
-        class: "btn space-posts-pagination-btn",
-        data: {
-          turbo_stream: true,
-        },
-      ) do %>
-        see more posts...
-      <% end %>
+      <%= render "spaces/posts/pagination_button", space: @space, page: %>
     <% end %>
 
     <% if @posts.none? %>

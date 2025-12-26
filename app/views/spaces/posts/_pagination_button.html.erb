@@ -1,0 +1,19 @@
+<%= button_to(
+  space_posts_path(space),
+  method: :get,
+  class: "btn",
+  form: {
+    id: dom_id(space, :pagination),
+    class: "self-center overflow-anchor-none",
+  },
+  data: {
+    controller: "click-on-appear",
+    action: "click-on-appear:appear->click-on-appear#click",
+    turbo_stream: true,
+  },
+) do %>
+  <input type="hidden" name="emulate_native_app" value="1">
+  <input type="hidden" name="page" value="<%= page %>">
+
+  <span class="text-xs">see more posts...</span>
+<% end %>

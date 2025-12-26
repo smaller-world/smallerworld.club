@@ -8,6 +8,7 @@ import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
 import { application } from "./application";
 import BusyReporterController from "./busy_reporter_controller";
+import ClickOnAppearController from "./click_on_appear_controller";
 import ClipboardController from "./clipboard_controller";
 import DropdownController from "./dropdown_controller";
 import ElementRemovalController from "./element_removal_controller";
@@ -35,3 +36,4 @@ application.register("modal", ModalController);
 application.register("emoji-mart", EmojiMartController);
 application.register("emoji-field", EmojiFieldController);
 application.register("clipboard", ClipboardController);
+application.register("click-on-appear", ClickOnAppearController);

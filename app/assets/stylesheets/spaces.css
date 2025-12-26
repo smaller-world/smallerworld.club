@@ -1,7 +1,0 @@
-@layer components {
-  .space-posts-pagination-btn {
-    @apply self-center text-sm;
-
-    overflow-anchor: none;
-  }
-}

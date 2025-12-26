@@ -6,16 +6,7 @@
 
 <% if (page = @pagy.next) %>
   <%= turbo_stream.replace dom_id(@space, :pagination) do %>
-    <%= link_to(
-    space_posts_path(@space, page:, emulate_native_app: 1),
-    id: dom_id(@space, :pagination),
-    class: "btn space-posts-pagination-btn",
-    data: {
-      turbo_stream: true,
-    },
-  ) do %>
-      see more posts...
-    <% end %>
+    <%= render "spaces/posts/pagination_button", space: @space, page: %>
   <% end %>
 <% else %>
   <%= turbo_stream.remove dom_id(@space, :pagination) %>

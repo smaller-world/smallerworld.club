@@ -15,7 +15,6 @@
 @import "../assets/stylesheets/truecropper.css";
 @import "../assets/stylesheets/lexxy.css";
 @import "../assets/stylesheets/posts.css";
-@import "../assets/stylesheets/spaces.css";
 
 @plugin "@tailwindcss/forms" {
   strategy: "base";

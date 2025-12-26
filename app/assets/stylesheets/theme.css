@@ -107,4 +107,8 @@
       @apply mb-0;
     }
   }
+
+  .overflow-anchor-none {
+    overflow-anchor: none;
+  }
 }
