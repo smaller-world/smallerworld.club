@@ -1,0 +1,9 @@
+<% if @reaction.persisted? %>
+  <%= turbo_stream.replace(
+    "post_reactions",
+    partial: "posts/reactions",
+    locals: { post: @post },
+  ) %>
+<% else %>
+  <%= turbo_stream.replace "flash", partial: "layouts/flash" %>
+<% end %>

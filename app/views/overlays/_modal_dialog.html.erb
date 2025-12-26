@@ -1,22 +1,21 @@
 <% data = local_assigns.delete(:data) || {} %>
-<% controller = data.delete(:controller) %>
 <% action = data.delete(:action) %>
 <% panel_options = local_assigns.delete(:panel_options) || {} %>
 <% panel_class = panel_options.delete(:class) %>
 
 <%= tag.dialog(
-  class: class_names("modal", local_assigns[:class]),
+  class: class_names("modal_dialog", local_assigns[:class]),
   data: {
-    controller: class_names("modal", controller),
+    modal_target: "dialog",
     action: class_names("cancel->modal#onDialogCancel", action),
     **data,
   }
 ) do %>
-  <div class="modal-backdrop" data-modal-target="backdrop"></div>
+  <div class="modal_backdrop" data-modal-target="backdrop"></div>
 
-  <div class="modal-container">
+  <div class="modal_container">
     <%= tag.div(
-      class: class_names("modal-panel", panel_class),
+      class: class_names("modal_panel", panel_class),
       data: {
         modal_target: "panel",
         **panel_options.delete(:data)

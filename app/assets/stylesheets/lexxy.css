@@ -4,7 +4,7 @@
 @layer components {
   /* Revert to default Lexxy styles that Tailwind messes up */
   :where(.lexxy-content) {
-    @apply dark:text-shade-200;
+    @apply font-light dark:text-shade-200;
 
     ul,
     ol,

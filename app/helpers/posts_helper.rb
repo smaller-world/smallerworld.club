@@ -6,7 +6,6 @@ module PostsHelper
   extend T::Helpers
 
   requires_ancestor { ActionView::Base }
-  requires_ancestor { RailsIcons::Helpers::IconHelper }
 
   # == Methods ==
 

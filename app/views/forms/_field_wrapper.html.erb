@@ -12,12 +12,12 @@
         <%= form.label(
         name,
         label || name.to_s.humanize(capitalize: false),
-        class: "block text-sm font-medium font-headings leading-tight"
+        class: class_names("field_wrapper-label", local_assigns[:label_class]),
       ) %>
       <% end %>
 
       <% if description %>
-        <p class="text-shade-500 text-xs leading-[1.2]"><%= description %></p>
+        <p class="field_wrapper-description"><%= description %></p>
       <% end %>
     </div>
   <% end %>
@@ -28,7 +28,7 @@
     <%= tag.span(
       error,
       id: form.field_id(name, :error),
-      class: class_names("text-sm text-red-600", local_assigns[:error_class]),
+      class: class_names("field_wrapper-error", local_assigns[:error_class]),
     ) %>
   <% end %>
 <% end %>

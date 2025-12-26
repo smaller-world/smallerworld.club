@@ -6,7 +6,7 @@
   "forms/field_wrapper",
   class: class_names("emoji_field", class_name),
   data: {
-    controller: "emoji-field",
+    controller: "emoji-picker",
     **data,
   },
   **local_assigns,
@@ -14,17 +14,20 @@
   <div
     class="relative"
     data-controller="dropdown"
-    data-emoji-field-target="pickerDropdown"
-    data-action="emoji-field:open-picker->dropdown#toggle"
+    data-emoji-picker-target="dropdown"
   >
     <%= form.text_field(
       name,
       class: "form-input",
       placeholder: "dummy",
       data: {
-        emoji_field_target: "input",
+        controller: "emoji-toggle-input",
+        action: class_names(
+          "click->emoji-input#openPickerOrClearEmoji",
+          "emoji-toggle-input:open-picker->dropdown#toggle",
+        ),
+        emoji_picker_target: "input",
         dropdown_target: "trigger",
-        action: "click->emoji-field#openPickerOrClearEmoji",
         error: error.present?
       }.compact_blank,
       aria: {
@@ -45,7 +48,7 @@
     </div>
 
     <%= tag.div(
-      class: "dropdown-menu emoji_field-picker card hidden",
+      class: "dropdown_menu emoji_field-picker card hidden",
       role: "dialog",
       data: {
         controller: "emoji-mart",

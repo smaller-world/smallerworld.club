@@ -17,6 +17,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# == Turbo == %>
+
     <% turbo_refreshes_with method: :morph, scroll: :preserve %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -64,80 +66,17 @@
   </head>
 
   <body>
-    <header class="app-header">
-      <%= link_to web_start_path, class: "btn app-header-logo-btn" do %>
+    <header class="app_header">
+      <%= link_to web_start_path, class: "btn app_header-logo_btn" do %>
         <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
         <span class="font-headings font-bold">smaller world</span>
       <% end %>
 
-      <div
-        data-controller="dropdown"
-        data-action="turbo:before-cache@document->dropdown#hide"
-        class="relative"
-      >
-        <button
-          type="button"
-          class="btn app-header-menu-btn"
-          data-dropdown-target="trigger"
-          data-action="dropdown#toggle"
-          aria-haspopup="true"
-        >
-          <%= icon "bars-3", variant: :micro, class: "size-4" %>
-          <span>menu</span>
-        </button>
-
-        <div
-          class="dropdown-menu card menu-card hidden"
-          data-dropdown-target="menu"
-        >
-          <ul role="menu">
-            <% if signed_in? %>
-              <li role="presentation">
-                <%= button_to(
-                  destroy_session_path,
-                  role: "menuitem",
-                  form_class: "flex flex-col",
-                  data: {
-                    action: "dropdown#toggle"
-                  }
-                ) do %>
-                  <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
-                  <span class="font-headings text-sm">sign out</span>
-                <% end %>
-              </li>
-            <% else %>
-              <li role="presentation">
-                <%= link_to(
-                  new_session_with_redirect_path,
-                  role: "menuitem",
-                  data: {
-                    action: "dropdown#toggle"
-                  }
-                ) do %>
-                  <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
-                  <span class="font-headings text-sm"> sign in </span>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
+      <%= render "layouts/app_menu" %>
     </header>
 
-    <% if false %>
-      <%= turbo_frame_tag :flash do %>
-        <% if notice = flash[:notice] || flash[:alert] %>
-          <div
-            class="flash"
-            data-controller="element-removal"
-            data-action="animationend->element-removal#remove"
-          >
-            <div class="flash-inner"><%= notice %></div>
-          </div>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render "layouts/flash" %>
 
-    <main class="app-main"><%= yield %></main>
+    <main class="app_main"><%= yield %></main>
   </body>
 <% end %>

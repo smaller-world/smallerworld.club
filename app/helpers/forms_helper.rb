@@ -14,8 +14,9 @@ module FormsHelper
       .returns(T.nilable(String))
   end
   def error_message_for(record, attribute)
-    if (error = record.errors.messages_for(attribute).first)
-      [ attribute.to_s.humanize(capitalize: false), error ].join(" ")
-    end
+    record.errors.full_messages_for(attribute).first
+    # if (error = record.errors.messages_for(attribute).first)
+    #   [ attribute.to_s.humanize(capitalize: false), error ].join(" ")
+    # end
   end
 end

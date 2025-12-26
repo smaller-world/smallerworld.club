@@ -11,7 +11,7 @@
 }
 
 @layer components {
-  .app-header {
+  .app_header {
     @apply sticky top-0 h-12 px-2;
     @apply flex items-center justify-between;
     @apply native:hidden;
@@ -37,7 +37,7 @@
     }
   }
 
-  .app-header-logo-btn {
+  .app_header-logo_btn {
     @apply py-1 pr-3 pl-2;
     @apply gap-1;
     @apply text-black dark:text-white;
@@ -47,17 +47,17 @@
     }
   }
 
-  .app-header-menu-btn {
-    @apply text-black dark:text-white;
-  }
-
-  .app-main {
+  .app_main {
     @apply flex-1;
 
     html[data-hotwire-native] & {
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
+  }
+
+  .flash-alert {
+    @apply from-red-500 to-red-700;
   }
 }
 

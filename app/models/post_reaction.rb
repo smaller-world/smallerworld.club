@@ -56,6 +56,7 @@ class PostReaction < ApplicationRecord
   validates :emoji,
             presence: true,
             uniqueness: { scope: %i[post reactor], message: "already added" }
+  validate :validate_no_self_reaction
 
   # == Callbacks ==
 
@@ -97,5 +98,15 @@ class PostReaction < ApplicationRecord
       reactions = reactions.where.not(id:)
     end
     reactions.exists?(reactor: reactor!)
+  end
+
+  # == Validators ==
+
+  sig { void }
+  def validate_no_self_reaction
+    reactor = self.reactor
+    if reactor.is_a?(User) && reactor == post_author
+      errors.add(:base, :invalid, message: "cannot react to your own post")
+    end
   end
 end

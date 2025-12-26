@@ -4,7 +4,7 @@
   <div class="flex flex-col gap-3">
     <% if @space.icon.attached? %>
       <%= image_tag(
-        @space.icon.variant(:icon),
+        @space.icon.variant(:page_icon),
         class: "self-center rounded-app-icon size-28 cursor-copy",
         data: {
           controller: "clipboard haptic-bridge",
@@ -87,7 +87,7 @@
     <% if @posts.none? %>
       <p class="text-shade-400 text-center text-sm">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
-
+        
         <br>
         (maybe you should do something about that...)
       </p>

@@ -30,6 +30,8 @@ class Actiontext::Lexical::ApplicationController
     include ::ActionController::Base::HelperMethods
     include ::Actiontext::Lexical::ApplicationHelper
     include ::ApplicationHelper
+    include ::FormsHelper
+    include ::PostReactionsHelper
     include ::PostsHelper
     include ::LocalTimeHelper
   end

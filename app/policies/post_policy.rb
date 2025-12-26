@@ -30,6 +30,11 @@ class PostPolicy < ApplicationPolicy
     end
   end
 
+  def react?
+    post = T.cast(record, Post)
+    post.author! != user
+  end
+
   def manage?
     post = T.cast(record, Post)
     post.author! == user!

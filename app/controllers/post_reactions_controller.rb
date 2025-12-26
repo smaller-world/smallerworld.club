@@ -10,10 +10,10 @@ class PostReactionsController < ApplicationController
 
   # GET /posts/:post_id/reactions
   def index
+    @post = find_post(scope: Post.with_reactions)
     respond_to do |format|
       format.json do
-        post = find_post!(scope: Post.with_reactions)
-        reactions = authorized_scope(post.reactions)
+        reactions = authorized_scope(@post.reactions)
         render(json: {
           reactions: PostReactionSerializer.many(reactions),
         })
@@ -23,12 +23,12 @@ class PostReactionsController < ApplicationController
 
   # POST /posts/:post_id/reactions?friend_token=...
   def create
+    reactor = require_authentication!
+    @post = find_post
     respond_to do |format|
       format.json do
-        reactor = require_authentication!
-        post = find_post!
         reaction_params = params.expect(reaction: [ :emoji ])
-        reaction = post.reactions.find_or_create_by!(
+        reaction = @post.reactions.find_or_create_by!(
           reactor:,
           **reaction_params,
         )
@@ -38,6 +38,23 @@ class PostReactionsController < ApplicationController
           },
           status: :created,
         )
+      end
+      format.turbo_stream do
+        reaction_params = params.expect(post_reaction: [ :emoji ])
+        @reaction = @post.reactions
+          .find_or_create_by(reactor:, **reaction_params)
+        unless @reaction.persisted?
+          flash.now[:alert] = @reaction.errors.full_messages.first!
+        end
+        # if @reaction.save
+        #   redirect_to(post_reactions_path(@post), status: :see_other)
+        # else
+        #   flash.now[:alert] = @reaction.errors.full_messages.first
+        #   render(turbo_stream: turbo_stream.replace(
+        #     "flash",
+        #     partial: "layouts/flash",
+        #   ))
+        # end
       end
     end
   end
@@ -59,7 +76,7 @@ class PostReactionsController < ApplicationController
   # == Helpers ==
 
   sig { params(scope: Post::PrivateRelation).returns(Post) }
-  def find_post!(scope: Post.all)
+  def find_post(scope: Post.all)
     scope.find(params.fetch(:post_id))
   end
 

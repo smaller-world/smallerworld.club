@@ -29,6 +29,8 @@ class Rails::Conductor::BaseController
     include ::ViteRails::TagHelpers
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
+    include ::FormsHelper
+    include ::PostReactionsHelper
     include ::PostsHelper
     include ::LocalTimeHelper
   end

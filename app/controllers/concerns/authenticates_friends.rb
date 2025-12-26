@@ -26,6 +26,10 @@ module AuthenticatesFriends
     # == Exception Handling ==
 
     rescue_from MissingAccessToken, with: :handle_missing_friend_access_token
+
+    # == Helpers ==
+
+    helper_method :current_friend
   end
 
   private

@@ -1,9 +1,10 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class ModalController extends Controller<HTMLDialogElement> {
+export default class ModalController extends Controller {
   // == Targets ==
 
-  static targets = ["panel", "backdrop"];
+  static targets = ["dialog", "panel", "backdrop"];
+  declare readonly dialogTarget: HTMLDialogElement;
   declare readonly panelTarget: HTMLElement;
   declare readonly backdropTarget: HTMLElement;
 
@@ -43,7 +44,7 @@ export default class ModalController extends Controller<HTMLDialogElement> {
   }
 
   onDocumentClick(event: PointerEvent): void {
-    if (!this.element.open) {
+    if (!this.dialogTarget.open) {
       return;
     }
     if (!(event.target instanceof Node)) {
@@ -65,15 +66,12 @@ export default class ModalController extends Controller<HTMLDialogElement> {
     void this.#requestClose(true);
   }
 
-  open(event?: Event): void {
-    if (event) {
-      event.preventDefault();
-    }
-    if (this.element.open) {
+  open(): void {
+    if (this.dialogTarget.open) {
       return;
     }
     this.#storePreviousActiveElement();
-    this.element.showModal();
+    this.dialogTarget.showModal();
     this.#addBackdropListeners();
     void this.#afterAnimate().then(() => {
       this.dispatch("opened");
@@ -108,24 +106,24 @@ export default class ModalController extends Controller<HTMLDialogElement> {
 
   #updateActions(update: (actions: DOMTokenList) => void): void {
     const parser = document.createElement("div");
-    if (this.element.dataset.action) {
-      parser.className = this.element.dataset.action;
+    if (this.dialogTarget.dataset.action) {
+      parser.className = this.dialogTarget.dataset.action;
     }
     update(parser.classList);
-    this.element.dataset.action = parser.className;
+    this.dialogTarget.dataset.action = parser.className;
   }
 
   // == Closing helpers ==
 
   async #requestClose(cancelled = false): Promise<void> {
-    if (!this.element.open || this.#isClosing) {
+    if (!this.dialogTarget.open || this.#isClosing) {
       return;
     }
     this.#markClosing();
     this.dispatch("closing");
     this.#removeBackdropListeners();
     await this.#afterAnimate();
-    this.element.close();
+    this.dialogTarget.close();
     this.#clearClosing();
     this.#focusPreviousActiveElement();
     if (cancelled) {
@@ -135,15 +133,15 @@ export default class ModalController extends Controller<HTMLDialogElement> {
   }
 
   get #isClosing(): boolean {
-    return this.element.dataset.closing === "true";
+    return this.dialogTarget.dataset.closing === "true";
   }
 
   #markClosing(): void {
-    this.element.dataset.closing = "true";
+    this.dialogTarget.dataset.closing = "true";
   }
 
   #clearClosing(): void {
-    delete this.element.dataset.closing;
+    delete this.dialogTarget.dataset.closing;
   }
 
   // == Transition helpers ==

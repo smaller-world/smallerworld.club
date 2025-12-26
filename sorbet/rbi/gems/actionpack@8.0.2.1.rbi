@@ -15310,6 +15310,7 @@ ActionDispatch::RemoteIp::TRUSTED_PROXIES = T.let(T.unsafe(nil), Array)
 class ActionDispatch::Request
   include ::ActionDispatch::Flash::RequestMethods
   include ::Rack::Request::Helpers
+  include ::CloudflareRails::CheckTrustedProxies
   include ::ActionDispatch::Http::Cache::Request
   include ::ActionDispatch::Http::MimeNegotiation
   include ::ActionDispatch::Http::Parameters

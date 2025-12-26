@@ -75,7 +75,8 @@ class World < ApplicationRecord
   # == Attachments ==
 
   has_one_attached :icon do |attachable|
-    attachable.variant :icon, resize_to_limit: [ 256, 256 ]
+    attachable.variant :icon, resize_to_limit: [ 128, 128 ]
+    attachable.variant :page_icon, resize_to_limit: [ 256, 256 ]
   end
 
   sig { returns(T::Boolean) }

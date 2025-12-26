@@ -154,19 +154,19 @@ module GeneratedPathHelpersModule
   def policies_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def post_post_reactions_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def post_post_stickers_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def post_reaction_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_reactions_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_share_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_sticker_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_stickers_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def posts_user_universe_path(*args); end

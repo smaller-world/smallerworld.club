@@ -31,16 +31,10 @@ interface EditInstructions {
 class FilepondController extends Controller<HTMLElement> {
   // == Targets ==
 
-  static targets = [
-    "input",
-    "idleLabelTemplate",
-    "editorModal",
-    "editorModalImage",
-  ];
+  static targets = ["input", "idleLabelTemplate", "editorImage"];
   declare readonly inputTarget: HTMLInputElement;
   declare readonly idleLabelTemplateTarget: HTMLTemplateElement;
-  declare readonly editorModalImageTarget: HTMLImageElement;
-  declare readonly editorModalTarget: HTMLDialogElement;
+  declare readonly editorImageTarget: HTMLImageElement;
 
   // == Values ==
 
@@ -61,8 +55,8 @@ class FilepondController extends Controller<HTMLElement> {
     instructions: null as EditInstructions | null,
     open: (file: File, instructions: EditInstructions) => {
       this.#editor.instructions = instructions;
-      this.editorModalImageTarget.src = URL.createObjectURL(file);
-      this.#openEditorModal();
+      this.editorImageTarget.src = URL.createObjectURL(file);
+      this.#requestOpenEditorModal();
     },
     onconfirm: (_output: { data: EditInstructions }) => {},
     oncancel: () => {},
@@ -74,18 +68,12 @@ class FilepondController extends Controller<HTMLElement> {
     return this.#editor.instructions;
   }
 
-  #openEditorModal(): void {
-    if (this.editorModalTarget.open) {
-      return;
-    }
-    this.dispatch("open-editor-modal", { target: this.editorModalTarget });
+  #requestOpenEditorModal(): void {
+    this.dispatch("request-open-editor-modal");
   }
 
-  #closeEditorModal(): void {
-    if (!this.editorModalTarget.open) {
-      return;
-    }
-    this.dispatch("close-editor-modal", { target: this.editorModalTarget });
+  #requestCloseEditorModal(): void {
+    this.dispatch("request-close-editor-modal");
   }
 
   #resetEditor(): void {
@@ -113,13 +101,13 @@ class FilepondController extends Controller<HTMLElement> {
   }
 
   #resetEditorModalImageAfterCrop(): void {
-    const currentImage = this.editorModalImageTarget;
+    const currentImage = this.editorImageTarget;
     invariant(
       currentImage.parentNode,
-      "Missing parent node for editorModalImageTarget",
+      "Missing parent node for editorImageTarget",
     );
     const newImage = document.createElement("img");
-    newImage.dataset.filepondTarget = "editorModalImage";
+    newImage.dataset.filepondTarget = "editorImage";
     currentImage.parentNode.replaceChild(newImage, currentImage);
   }
 
@@ -244,7 +232,7 @@ class FilepondController extends Controller<HTMLElement> {
 
   initializeCropper(): void {
     const instructions = this.#currentEditInstructions();
-    this.#truecropper = new TrueCropper(this.editorModalImageTarget, {
+    this.#truecropper = new TrueCropper(this.editorImageTarget, {
       aspectRatio: instructions.crop.aspectRatio,
       startSize: {
         ...this.#editInstructionsToCrop(instructions),
@@ -273,7 +261,7 @@ class FilepondController extends Controller<HTMLElement> {
   }
 
   teardown(): void {
-    this.#closeEditorModal();
+    this.#requestCloseEditorModal();
     this.#destroyCropper();
     this.#destroyPond();
   }
@@ -304,7 +292,7 @@ class FilepondController extends Controller<HTMLElement> {
     width: number;
     height: number;
   } {
-    const { naturalWidth, naturalHeight } = this.editorModalImageTarget;
+    const { naturalWidth, naturalHeight } = this.editorImageTarget;
     const { center, zoom, aspectRatio: cropAspect } = instructions.crop;
     const { x: centerX, y: centerY } = center;
 
@@ -360,7 +348,7 @@ class FilepondController extends Controller<HTMLElement> {
     instructions: EditInstructions,
     crop: { x: number; y: number; width: number; height: number },
   ): void {
-    const { naturalWidth, naturalHeight } = this.editorModalImageTarget;
+    const { naturalWidth, naturalHeight } = this.editorImageTarget;
     const x = (crop.x + crop.width / 2) / naturalWidth;
     const y = (crop.y + crop.height / 2) / naturalHeight;
     const cx = x > 0.5 ? 1 - x : x;

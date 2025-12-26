@@ -1,0 +1,66 @@
+<%= turbo_frame_tag dom_id(post, :reactions), class: "flex gap-1" do %>
+  <% post_reaction_groups(post).each do |reaction_group| %>
+    <%= tag.button(
+      type: "button",
+      class: "btn post_card-reaction",
+      disabled: !allowed_to?(:react?, post),
+      aria: {
+        pressed: reaction_group.reacted,
+      },
+    ) do %>
+      <span class="font-emoji text-sm"><%= reaction_group.emoji %></span>
+
+      <span class="font-headings text-xs leading-none">
+        <%= reaction_group.count %>
+      </span>
+    <% end %>
+  <% end %>
+
+  <% if allowed_to?(:react?, post) %>
+    <%= form_with(
+      model: post.reactions.build,
+      url: post_reactions_path(post),
+      class: "relative",
+      data: {
+        controller: "form modal emoji-picker",
+        action: "turbo:before-cache@document->modal#close",
+      }
+    ) do |form| %>
+      <%= form.hidden_field :emoji, data: { emoji_picker_target: "input" } %>
+
+      <button type="submit" class="btn p-1" data-action="modal#open:prevent">
+        <%= icon "face-smile-plus", library: :sidekickicons, class: "size-4" %>
+      </button>
+
+      <%#
+        = tag.div(
+          class: class_names(
+            "dropdown_menu dropdown_menu-top_left card",
+            "rounded-2xl p-0 overflow-hidden",
+            "hidden",
+          ),
+          role: "dialog",
+          data: {
+            controller: "emoji-mart",
+            action: class_names(
+              "emoji-mart:select->emoji-picker#setEmoji",
+              "emoji-mart:select->dropdown#toggle"
+            ),
+            dropdown_target: "menu",
+          },
+        )
+      %>
+
+      <%= render "overlays/modal_dialog", class: "post_reactions-modal_dialog" do %>
+        <% tag.div(data: {
+          controller: "emoji-mart",
+          action: class_names(
+            "emoji-mart:select->emoji-picker#setEmoji",
+            "emoji-mart:select->modal#close",
+            "emoji-mart:select->form#submit",
+          ),
+        }) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

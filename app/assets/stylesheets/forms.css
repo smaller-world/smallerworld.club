@@ -65,6 +65,20 @@
     @apply flex flex-col items-stretch gap-0.5;
   }
 
+  :where(.field_wrapper-label) {
+    @apply block font-headings text-sm leading-tight font-medium;
+  }
+
+  :where(.field_wrapper-description) {
+    @apply text-xs text-shade-500;
+
+    line-height: 1.2;
+  }
+
+  :where(.field_wrapper-error) {
+    @apply text-sm text-red-600;
+  }
+
   :where(.icon_field) {
     .form-input {
       @apply rounded-app-icon;
@@ -83,8 +97,8 @@
     }
   }
 
-  :where(.icon_field-editor_modal) {
-    .modal-panel {
+  :where(.icon_field-modal_dialog) {
+    .modal_panel {
       @apply mb-11 max-w-xl bg-transparent p-0 shadow-none;
       @apply focus-visible:ring-0;
       @apply relative;
@@ -111,7 +125,7 @@
     }
   }
 
-  :where(.icon_field-editor_modal-footer) {
+  :where(.icon_field-modal_dialog_footer) {
     @apply absolute right-0 -bottom-11 left-0;
     @apply flex flex-col items-center;
     @apply pointer-events-none *:pointer-events-auto;
@@ -162,7 +176,7 @@
   }
 
   :where(.emoji_field-picker) {
-    &.dropdown-menu {
+    &.dropdown_menu {
       @apply -top-px right-auto -left-px origin-top-left;
     }
     @apply overflow-hidden rounded-2xl p-0;

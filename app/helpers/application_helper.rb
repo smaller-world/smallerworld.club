@@ -6,8 +6,6 @@ module ApplicationHelper
   extend T::Helpers
 
   requires_ancestor { ActionView::Base }
-  requires_ancestor { ActionController::Base::HelperMethods }
-  requires_ancestor { RailsIcons::Helpers::IconHelper }
 
   # == Methods ==
 

@@ -16,10 +16,13 @@
       "mx-auto" => center,
     ),
     data: {
-      controller: "filepond haptic-bridge",
+      controller: "filepond haptic-bridge modal",
       action: class_names(
         "turbo:before-cache@document->filepond#teardown",
         "filepond:uploaded->haptic-bridge#vibrate",
+        "filepond:request-open-editor-modal->modal#open",
+        "filepond:request-close-editor-modal->modal#close",
+        "turbo:before-cache@document->modal#close",
       ),
       filepond_direct_upload_url_value: rails_direct_uploads_path,
       filepond_file_url_template_value: filepond_file_path(":signed_id"),
@@ -51,22 +54,19 @@
     </template>
 
     <%= render(
-      "overlays/modal",
-      class: "icon_field-editor_modal",
+      "overlays/modal_dialog",
+      class: "icon_field-modal_dialog",
       data: {
-        filepond_target: "editorModal",
         action: class_names(
-          "filepond:open-editor-modal->modal#open",
-          "filepond:close-editor-modal->modal#close",
           "modal:opened->filepond#initializeCropper",
           "modal:cancelled->filepond#cancelEdit",
           "modal:closed->filepond#finalizeEdit",
         )
       },
     ) do %>
-      <img data-filepond-target="editorModalImage" alt="">
+      <img data-filepond-target="editorImage" alt="">
 
-      <div class="icon_field-editor_modal-footer">
+      <div class="icon_field-modal_dialog_footer">
         <button
           type="button"
           class="btn btn-action text-sm"

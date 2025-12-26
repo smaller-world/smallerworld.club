@@ -154,19 +154,19 @@ module GeneratedUrlHelpersModule
   def policies_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def post_post_reactions_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def post_post_stickers_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def post_reaction_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_reactions_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_share_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_sticker_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_stickers_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def posts_user_universe_url(*args); end

@@ -2,13 +2,13 @@
 
 <%= tag.div(
   id: dom_id(post, :card),
-  class: class_names("card post-card", class_name),
+  class: class_names("card post_card", class_name),
   data: {
     controller: "busy-reporter",
   },
 ) do %>
   <div class="flex flex-col gap-1">
-    <div class="post-card-header">
+    <div class="post_card-header">
       <div class="flex items-baseline gap-1">
         <span class="inline-flex items-baseline gap-1">
           <% if (emoji = post.emoji) %>
@@ -44,9 +44,9 @@
       ) %>
     </div>
 
-    <div class="post-card-content">
+    <div class="post_card-content">
       <% if (title = post.title) %>
-        <h3 class="text-lg leading-tight font-bold"><%= title %></h3>
+        <h3 class="text-lg leading-tight font-medium"><%= title %></h3>
       <% end %>
 
       <% if (body_html = post.body_html) %>
@@ -56,8 +56,10 @@
       <% end %>
     </div>
 
-    <% if allowed_to?(:manage?, post) %>
-      <div class="post-card-footer">
+    <div class="post_card-footer">
+      <%= render "posts/reactions", post: %>
+
+      <% if allowed_to?(:manage?, post) %>
         <div
           class="relative -mr-1 -mb-1"
           data-controller="dropdown"
@@ -65,7 +67,7 @@
         >
           <button
             type="button"
-            class="btn menu-btn"
+            class="btn menu_btn"
             data-dropdown-target="trigger"
             data-action="dropdown#toggle"
             aria-haspopup="true"
@@ -75,7 +77,7 @@
           </button>
 
           <div
-            class="card dropdown-menu menu-card top-auto bottom-0 hidden"
+            class="card dropdown_menu menu_card dropdown_menu-bottom_right hidden"
             data-dropdown-target="menu"
           >
             <ul role="menu">
@@ -117,11 +119,11 @@
             </ul>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="post-card-loading_overlay">
+  <div class="post_card-loading_overlay">
     <div class="spinner"></div>
   </div>
 <% end %>

@@ -266,10 +266,12 @@ Rails.application.routes.draw do
     resources :post_reactions,
               path: "/reactions",
               only: %i[index create],
+              as: :reactions,
               export: true
     resources :post_stickers,
               path: "/stickers",
               only: %i[index create],
+              as: :stickers,
               export: true
   end
 

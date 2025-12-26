@@ -87,6 +87,15 @@ class Post < ApplicationRecord
     space_id or raise "Missing space ID"
   end
 
+  sig { returns(T.any(World, Space)) }
+  def area
+    if self.world_id
+      world!
+    else
+      space!
+    end
+  end
+
   sig { returns(T::Boolean) }
   def rich_text_body?
     !rich_text_body.nil?
@@ -393,54 +402,6 @@ class Post < ApplicationRecord
     ordered_image_blobs.map { |blob| blob.becomes(Image) }
   end
 
-  # == Methods ==
-
-  sig { returns(T::Boolean) }
-  def auto_generated?
-    if (world = self.world)
-      updated_at <= (world.created_at + 1.second)
-    else
-      false
-    end
-  end
-
-  sig { void }
-  def save_images_ids!
-    images_ids = images.blobs.pluck(:id)
-    update_column("images_ids", images_ids)
-  end
-
-  sig { returns(Friend::PrivateRelation) }
-  def friend_viewers
-    friend_ids = views.where(viewer_type: "Friend").select(:viewer_id)
-    Friend.where(id: friend_ids).distinct
-  end
-
-  sig { returns(User::PrivateRelation) }
-  def user_viewers
-    user_ids = views.where(viewer_type: "User").select(:viewer_id)
-    User.where(id: user_ids).distinct
-  end
-
-  sig { returns(PostReplyReceipt::PrivateAssociationRelation) }
-  def repliers
-    reply_receipts.select(:replier_id).distinct
-  end
-
-  sig do
-    returns(T.any(
-      Friend::PrivateCollectionProxy,
-      Friend::PrivateAssociationRelation,
-    ))
-  end
-  def hidden_from
-    if (hidden_from_ids = self.hidden_from_ids.presence)
-      world_friends.where(id: hidden_from_ids)
-    else
-      world_friends.none
-    end
-  end
-
   # == Notifications ==
 
   sig { returns(T::Boolean) }
@@ -540,6 +501,55 @@ class Post < ApplicationRecord
       end
     redelivered_notifications_count
   end
+
+  # == Methods ==
+
+  sig { returns(T::Boolean) }
+  def auto_generated?
+    if (world = self.world)
+      updated_at <= (world.created_at + 1.second)
+    else
+      false
+    end
+  end
+
+  sig { void }
+  def save_images_ids!
+    images_ids = images.blobs.pluck(:id)
+    update_column("images_ids", images_ids)
+  end
+
+  sig { returns(Friend::PrivateRelation) }
+  def friend_viewers
+    friend_ids = views.where(viewer_type: "Friend").select(:viewer_id)
+    Friend.where(id: friend_ids).distinct
+  end
+
+  sig { returns(User::PrivateRelation) }
+  def user_viewers
+    user_ids = views.where(viewer_type: "User").select(:viewer_id)
+    User.where(id: user_ids).distinct
+  end
+
+  sig { returns(PostReplyReceipt::PrivateAssociationRelation) }
+  def repliers
+    reply_receipts.select(:replier_id).distinct
+  end
+
+  sig do
+    returns(T.any(
+      Friend::PrivateCollectionProxy,
+      Friend::PrivateAssociationRelation,
+    ))
+  end
+  def hidden_from
+    if (hidden_from_ids = self.hidden_from_ids.presence)
+      world_friends.where(id: hidden_from_ids)
+    else
+      world_friends.none
+    end
+  end
+
 
   private
 

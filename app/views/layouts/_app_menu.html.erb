@@ -1,0 +1,64 @@
+<div
+  data-controller="dropdown"
+  data-action="turbo:before-cache@document->dropdown#hide"
+  class="relative"
+>
+  <button
+    type="button"
+    class="btn text-black dark:text-white"
+    data-dropdown-target="trigger"
+    data-action="dropdown#toggle"
+    aria-haspopup="true"
+  >
+    <%= icon "bars-3", variant: :micro, class: "size-4" %>
+    <span>menu</span>
+  </button>
+
+  <div
+    class="dropdown_menu dropdown_menu-top_right card menu_card hidden min-w-52"
+    data-dropdown-target="menu"
+  >
+    <% if (user = current_user) %>
+      <div
+        class="
+          font-headings dark:text-shade-500 text-shade-400 px-2 py-1
+          text-center text-xs leading-none font-light
+        "
+      >
+        signed in as
+        <span class="text-shade-500 dark:text-shade-400 font-medium"><%= user.name %></span>
+      </div>
+    <% end %>
+
+    <ul role="menu">
+      <% if signed_in? %>
+        <li role="presentation">
+          <%= button_to(
+            destroy_session_path,
+            role: "menuitem",
+            form_class: "flex flex-col",
+            data: {
+              action: "dropdown#toggle",
+            },
+          ) do %>
+            <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
+            <span class="font-headings text-sm">sign out</span>
+          <% end %>
+        </li>
+      <% else %>
+        <li role="presentation">
+          <%= link_to(
+            new_session_with_redirect_path,
+            role: "menuitem",
+            data: {
+              action: "dropdown#toggle",
+            },
+          ) do %>
+            <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
+            <span class="font-headings text-sm"> sign in </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

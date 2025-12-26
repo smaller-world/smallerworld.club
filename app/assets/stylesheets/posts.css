@@ -1,32 +1,51 @@
 @layer components {
-  :where(.post-card) {
+  :where(.post_card) {
     @apply relative shadow-sm;
   }
 
-  :where(.post-card-header) {
+  :where(.post_card-header) {
     @apply flex justify-between gap-1 text-xs text-shade-500;
   }
 
-  :where(.post-card-content) {
+  :where(.post_card-content) {
     @apply flex flex-col gap-1;
   }
 
-  :where(.post-card-footer) {
-    @apply flex justify-end;
+  :where(.post_card-footer) {
+    @apply flex justify-between;
   }
 
-  :where(.post-card-loading_overlay) {
+  :where(.post_card-loading_overlay) {
     @apply absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xs;
     @apply pointer-events-none opacity-0 transition-opacity duration-200 ease-out;
     @apply text-white dark:text-primary-500;
     @apply flex items-center justify-center;
 
-    .post-card[aria-busy="true"] & {
+    .post_card[aria-busy="true"] & {
       @apply pointer-events-auto opacity-100;
     }
   }
 
-  :where(.post-form-emoji_hint) {
+  :where(.post_form-emoji_hint) {
     @apply text-shade-500 dark:text-shade-400;
+  }
+
+  :where(.post_card-reaction) {
+    @apply gap-1 py-0.5 pr-2 pl-1.5;
+    @apply text-shade-700 dark:text-shade-200;
+
+    &[aria-pressed="true"] {
+      @apply bg-primary-300/60 dark:bg-primary-500/50;
+
+      &:hover {
+        @apply bg-primary-300/80 dark:bg-primary-500/75;
+      }
+    }
+  }
+
+  :where(.post_reactions-modal_dialog) {
+    .modal_panel {
+      @apply overflow-hidden rounded-3xl p-0;
+    }
   }
 }
