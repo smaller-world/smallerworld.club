@@ -35,11 +35,11 @@
     @apply leading-0;
 
     &[aria-pressed="true"] {
-      @apply bg-primary-300/60 dark:bg-primary-500/60;
+      @apply bg-primary-300/50 dark:bg-primary-500/40;
       @apply text-shade-700 dark:text-shade-200;
 
       &:hover {
-        @apply bg-primary-300/80 dark:bg-primary-500/80;
+        @apply bg-primary-300/80 dark:bg-primary-500/60;
       }
     }
   }

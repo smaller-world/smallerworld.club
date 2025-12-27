@@ -52,8 +52,9 @@
       <%= tag.div(data: {
         controller: "emoji-mart",
         action: class_names(
+          "turbo:before-cache@document->emoji-mart#teardown",
           "emoji-mart:select->emoji-picker#setEmoji",
-          "emoji-mart:select->modal#close"
+          "emoji-mart:select->modal#close",
         ),
       }) %>
     <% end %>

@@ -2,6 +2,8 @@ import { Controller } from "@hotwired/stimulus";
 import { Picker } from "emoji-mart";
 
 export default class EmojiMartController extends Controller<HTMLElement> {
+  // == Lifecycle ==
+
   connect(): void {
     super.connect();
     const picker = new Picker({
@@ -14,6 +16,12 @@ export default class EmojiMartController extends Controller<HTMLElement> {
 
   disconnect(): void {
     super.disconnect();
+    this.element.replaceChildren();
+  }
+
+  // == Actions ==
+
+  teardown(): void {
     this.element.replaceChildren();
   }
 }

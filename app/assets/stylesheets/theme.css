@@ -39,6 +39,7 @@
   --color-primary-700: var(--color-sky-700);
   --color-primary-800: var(--color-sky-800);
   --color-primary-900: var(--color-sky-900);
+  --color-primary-950: var(--color-sky-950);
 
   --color-shade-50: var(--color-gray-50);
   --color-shade-100: var(--color-gray-100);

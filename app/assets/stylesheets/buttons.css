@@ -7,7 +7,7 @@
     @apply ring-offset-2 dark:ring-offset-0;
 
     &:hover {
-      @apply bg-shade-100 dark:bg-shade-800;
+      @apply bg-primary-200/50 dark:bg-primary-900/50;
     }
 
     &:not(:disabled) {

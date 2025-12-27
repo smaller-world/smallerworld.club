@@ -42,9 +42,9 @@
     @apply gap-1;
     @apply text-black dark:text-white;
 
-    &:hover {
+    /* &:hover {
       @apply bg-shade-100 dark:bg-shade-800;
-    }
+    } */
   }
 
   .app_main {
