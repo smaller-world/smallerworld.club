@@ -11,11 +11,7 @@
   },
   **local_assigns,
 ) do %>
-  <div
-    class="relative"
-    data-controller="dropdown"
-    data-emoji-picker-target="dropdown"
-  >
+  <div class="relative" data-controller="modal">
     <%= form.text_field(
       name,
       class: "form-input",
@@ -23,8 +19,8 @@
       data: {
         controller: "emoji-toggle-input",
         action: class_names(
-          "click->emoji-input#openPickerOrClearEmoji",
-          "emoji-toggle-input:open-picker->dropdown#toggle",
+          "click->emoji-toggle-input#clearEmojiOrOpenPicker",
+          "emoji-toggle-input:open-picker->modal#open",
         ),
         emoji_picker_target: "input",
         dropdown_target: "trigger",
@@ -47,17 +43,19 @@
       ) %>
     </div>
 
-    <%= tag.div(
-      class: "dropdown_menu emoji_field-picker card hidden",
-      role: "dialog",
-      data: {
-        controller: "emoji-mart",
-        dropdown_target: "menu",
-        action: class_names(
-          "emoji-mart:select->emoji-field#setEmoji",
-          "emoji-mart:select->dropdown#toggle"
-        ),
+    <%= render(
+      "overlays/modal_dialog",
+      panel: {
+        class: "overflow-hidden rounded-3xl p-0",
       },
-    ) %>
+    ) do %>
+      <%= tag.div(data: {
+        controller: "emoji-mart",
+        action: class_names(
+          "emoji-mart:select->emoji-picker#setEmoji",
+          "emoji-mart:select->modal#close"
+        ),
+      }) %>
+    <% end %>
   </div>
 <% end %>

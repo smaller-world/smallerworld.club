@@ -61,12 +61,17 @@ class PostReactionsController < ApplicationController
 
   # DELETE /post_reactions/:id
   def destroy
+    @reaction = find_reaction
+    authorize!(@reaction)
     respond_to do |format|
       format.json do
-        reaction = find_reaction!
-        authorize!(reaction)
-        reaction.destroy!
-        render(json: { "postId": reaction.post_id })
+        @reaction.destroy!
+        render(json: { "postId": @reaction.post_id })
+      end
+      format.turbo_stream do
+        unless @reaction.destroy
+          flash.now[:alert] = @reaction.errors.full_messages.first!
+        end
       end
     end
   end
@@ -81,7 +86,7 @@ class PostReactionsController < ApplicationController
   end
 
   sig { params(scope: PostReaction::PrivateRelation).returns(PostReaction) }
-  def find_reaction!(scope: PostReaction.all)
+  def find_reaction(scope: PostReaction.all)
     scope.find(params.fetch(:id))
   end
 end

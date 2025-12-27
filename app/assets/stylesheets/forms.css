@@ -174,11 +174,4 @@
       @apply visible;
     }
   }
-
-  :where(.emoji_field-picker) {
-    &.dropdown_menu {
-      @apply -top-px right-auto -left-px origin-top-left;
-    }
-    @apply overflow-hidden rounded-2xl p-0;
-  }
 }

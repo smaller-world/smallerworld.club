@@ -2,7 +2,8 @@
 # frozen_string_literal: true
 
 class PostReactionGroup < T::Struct
+  const :post, Post
   const :emoji, String
   const :count, Integer
-  const :reacted, T::Boolean
+  const :current_reaction_id, T.nilable(String)
 end

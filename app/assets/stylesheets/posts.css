@@ -32,20 +32,15 @@
 
   :where(.post_card-reaction) {
     @apply gap-1 py-0.5 pr-2 pl-1.5;
-    @apply text-shade-700 dark:text-shade-200;
+    @apply leading-0;
 
     &[aria-pressed="true"] {
-      @apply bg-primary-300/60 dark:bg-primary-500/50;
+      @apply bg-primary-300/60 dark:bg-primary-500/60;
+      @apply text-shade-700 dark:text-shade-200;
 
       &:hover {
-        @apply bg-primary-300/80 dark:bg-primary-500/75;
+        @apply bg-primary-300/80 dark:bg-primary-500/80;
       }
-    }
-  }
-
-  :where(.post_reactions-modal_dialog) {
-    .modal_panel {
-      @apply overflow-hidden rounded-3xl p-0;
     }
   }
 }

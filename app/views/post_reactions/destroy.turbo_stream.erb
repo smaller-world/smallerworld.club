@@ -1,8 +1,10 @@
-<% if @reaction.persisted? %>
+<% post = @reaction.post %>
+
+<% if @reaction.destroyed? %>
   <%= turbo_stream.replace(
-    dom_id(@post, :reactions),
+    dom_id(post, :reactions),
     partial: "posts/reactions",
-    locals: { post: @post },
+    locals: { post: },
   ) %>
 <% else %>
   <%= turbo_stream.replace "flash", partial: "layouts/flash" %>

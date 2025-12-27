@@ -88,6 +88,19 @@ export default class ModalController extends Controller {
     void this.#requestClose();
   }
 
+  teardown(): void {
+    if (!this.dialogTarget.open) {
+      return;
+    }
+    this.#removeBackdropListeners();
+    this.dialogTarget.close();
+    if (this.#isClosing) {
+      this.#clearClosing();
+    }
+    this.dispatch("cancelled");
+    this.dispatch("closed");
+  }
+
   // == Action helpers ==
 
   #addBackdropListeners(): void {
