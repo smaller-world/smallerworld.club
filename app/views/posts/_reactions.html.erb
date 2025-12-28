@@ -10,7 +10,7 @@
         pressed: reacted,
       },
     ) do %>
-      <span class="font-emoji text-sm"><%= group.emoji %></span>
+      <span class="font-emoji text-base"><%= group.emoji %></span>
       <span class="font-headings text-xs leading-none"><%= group.count %></span>
     <% end %>
   <% end %>
@@ -32,7 +32,7 @@
           action: "modal#open:prevent",
         },
       ) do %>
-        <%= icon "face-smile-plus", library: :sidekickicons, class: "size-4" %>
+        <%= icon "face-smile-plus", library: :sidekickicons, class: "size-5" %>
       <% end %>
 
       <%= render(
