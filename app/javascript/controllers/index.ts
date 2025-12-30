@@ -2,6 +2,7 @@ import {
   AlertBridgeController,
   ButtonBridgeController,
   HapticBridgeController,
+  NotificationTokenBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
 import RevealController from "@stimulus-components/reveal";
@@ -27,6 +28,10 @@ import ToastController from "./toast_controller";
 application.register("alert-bridge", AlertBridgeController);
 application.register("button-bridge", ButtonBridgeController);
 application.register("haptic-bridge", HapticBridgeController);
+application.register(
+  "notification-token-bridge",
+  NotificationTokenBridgeController,
+);
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 application.register("dropdown", DropdownController);

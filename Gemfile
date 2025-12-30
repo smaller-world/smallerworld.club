@@ -194,6 +194,9 @@ gem "rails_icons", "~> 1.5"
 # Display local time in the browser
 gem "local_time", "~> 3.0"
 
+# Send native push notifications
+gem "action_push_native", "~> 0.2.1"
+
 group :development, :test do
   # Debug code with debug
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
