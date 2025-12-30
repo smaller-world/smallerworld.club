@@ -9,6 +9,7 @@
       aria: {
         pressed: reacted,
       },
+      ontouchstart: "",
     ) do %>
       <span class="font-emoji text-base"><%= group.emoji %></span>
       <span class="font-headings text-xs leading-none"><%= group.count %></span>
@@ -31,6 +32,7 @@
         data: {
           action: "modal#open:prevent",
         },
+        ontouchstart: "",
       ) do %>
         <%= icon "face-smile-plus", library: :sidekickicons, class: "size-5" %>
       <% end %>

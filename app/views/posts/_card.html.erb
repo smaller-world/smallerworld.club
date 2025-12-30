@@ -71,6 +71,7 @@
             data-dropdown-target="trigger"
             data-action="dropdown#toggle"
             aria-haspopup="true"
+            ontouchstart=""
           >
             <%= icon "pencil-square", variant: :micro, class: "size-4" %>
             <span>actions</span>
@@ -83,11 +84,12 @@
             <ul role="menu">
               <li role="presentation">
                 <%= link_to(
-                  polymorphic_path([:edit, post.space, post], emulate_native_app: 1),
+                  polymorphic_path([ :edit, post.space, post ], emulate_native_app: 1),
                   role: "menuitem",
                   data: {
-                    action: "dropdown#toggle"
-                  }
+                    action: "dropdown#toggle",
+                  },
+                  ontouchstart: "",
                 ) do %>
                   <%= icon "pencil", variant: :micro, class: "size-4" %>
                   <span class="font-headings text-sm">edit post</span>
@@ -96,7 +98,7 @@
 
               <li role="presentation">
                 <%= button_to(
-                  [post.space, post],
+                  [ post.space, post ],
                   role: "menuitem",
                   method: :delete,
                   data: {
@@ -110,7 +112,8 @@
                       busy_reporter_target: "busyable",
                       turbo_confirm: "really delete post?",
                     },
-                  }
+                  },
+                  ontouchstart: "",
                 ) do %>
                   <%= icon "trash", variant: :micro, class: "size-4" %>
                   <span class="font-headings text-sm">delete post</span>

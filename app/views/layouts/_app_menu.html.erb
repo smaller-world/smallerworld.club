@@ -9,6 +9,7 @@
     data-dropdown-target="trigger"
     data-action="dropdown#toggle"
     aria-haspopup="true"
+    ontouchstart=""
   >
     <%= icon "bars-3", variant: :micro, class: "size-4" %>
     <span>menu</span>
@@ -40,6 +41,7 @@
             data: {
               action: "dropdown#toggle",
             },
+            ontouchstart: "",
           ) do %>
             <%= icon "arrow-left-start-on-rectangle", variant: :micro, class: "size-4" %>
             <span class="font-headings text-sm">sign out</span>
@@ -53,6 +55,7 @@
             data: {
               action: "dropdown#toggle",
             },
+            ontouchstart: "",
           ) do %>
             <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
             <span class="font-headings text-sm"> sign in </span>

@@ -51,20 +51,29 @@
   </div>
 
   <div class="flex flex-col gap-3">
-    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
-      <li>
-        <fieldset class="card flex flex-col gap-1 border-dashed pt-2">
-          <legend class="text-shade-400 w-fit px-2 text-center text-sm font-medium italic">
-            share something from the heart...
-          </legend>
+    <% if hotwire_native_app? %>
+      <div
+        class="flex flex-col gap-2"
+        data-controller="notification-token-bridge"
+      >
+        <button
+          type="button"
+          class="btn btn-action"
+          data-action="notification-token-bridge#get"
+          ontouchstart=""
+        >
+          <%= icon "bell", variant: :mini, class: "size-5" %>
+          <span>enable push notifications</span>
+        </button>
 
-          <div class="flex items-start justify-center gap-1">
-            <% selectable_post_types.each do |type| %>
-              <%= link_to(
-                new_space_post_path(@space, type:, emulate_native_app: 1),
-                class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl"
-              ) do %>
-                <%= post_type_icon(type, class: "size-6") %>
+        <code
+          class="bg-shade-950 border-shade-700 rounded-2xl border p-2 text-center"
+          data-notification-token-bridge-target="token"
+        >
+          no token...
+        </code>
+      </div>
+    <% end %>
 
                 <p class="font-headings w-14 text-center text-xs leading-[1.1]">
                   <%= type.humanize(capitalize: false) %>
