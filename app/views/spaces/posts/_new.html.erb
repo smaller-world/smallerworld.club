@@ -1,0 +1,21 @@
+<fieldset class="card flex flex-col gap-1 border-dashed pt-2">
+  <legend class="text-shade-400 w-fit px-2 text-center text-sm font-medium italic">
+    share something from the heart...
+  </legend>
+
+  <div class="flex items-start justify-center gap-1">
+    <% selectable_post_types.each do |type| %>
+      <%= link_to(
+        new_space_post_path(space, type:, emulate_native_app: 1),
+        class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl",
+        ontouchstart: "",
+      ) do %>
+        <%= post_type_icon(type, class: "size-6") %>
+
+        <p class="font-headings w-14 text-center text-xs leading-[1.1]">
+          <%= type.humanize(capitalize: false) %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+</fieldset>

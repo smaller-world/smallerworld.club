@@ -75,14 +75,8 @@
       </div>
     <% end %>
 
-                <p class="font-headings w-14 text-center text-xs leading-[1.1]">
-                  <%= type.humanize(capitalize: false) %>
-                </p>
-              <% end %>
-            <% end %>
-          </div>
-        </fieldset>
-      </li>
+    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
+      <li><%= render "spaces/posts/new", space: @space %></li>
 
       <% @posts.each do |post| %>
         <li><%= render "posts/card", post: %></li>
