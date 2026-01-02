@@ -1,6 +1,7 @@
 .ruby-lsp/
 .bundle/
 bin/
+config/push.yml
 dist/
 db/
 log/
