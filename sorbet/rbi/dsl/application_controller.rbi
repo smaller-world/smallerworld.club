@@ -37,6 +37,9 @@ class ApplicationController
     sig { returns(T.nilable(::Friend)) }
     def current_friend; end
 
+    sig { returns(T.nilable(::NativeDevice)) }
+    def current_native_device; end
+
     sig { returns(T.nilable(::User)) }
     def current_user; end
 

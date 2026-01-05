@@ -102,6 +102,9 @@ class Notification < ApplicationRecord
     PushRegistration.where(owner: recipient).find_each do |registration|
       registration.push(self)
     end
+    if (recipient = self.recipient) && recipient.is_a?(User)
+      push_to_devices(recipient) if recipient.is_a?(User)
+    end
     mark_as_pushed!
   end
 
@@ -122,5 +125,26 @@ class Notification < ApplicationRecord
   sig { void }
   def mark_as_delivered!
     update!(delivered_at: Time.current)
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(recipient: User).void }
+  def push_to_devices(recipient)
+    message = self.message
+    notification = NativeNotification.new(
+      title: message.title,
+      body: message.body,
+      badge: recipient.notifications_received_since_last_cleared.count,
+      data: {
+        notification_id: id,
+        delivery_token: delivery_token,
+        target_url: message.target_url,
+        image_url: message.image&.src,
+      }.compact,
+    )
+    notification.deliver_later_to(recipient.native_devices)
   end
 end

@@ -27,6 +27,7 @@
     <%# == Favicons == %>
 
     <link rel="shotcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <link
       rel="icon"
@@ -35,12 +36,14 @@
       sizes="96x96"
     >
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
     <%# == Application assets == %>
 
-    <%= vite_typescript_tag "application", "data-turbo-track": "reload" %>
-    <%= vite_stylesheet_tag "application", "data-turbo-track": "reload" %>
+    <%= vite_typescript_tag "application", data: { turbo_track: "reload" } %>
+    <%= vite_stylesheet_tag "application", data: { turbo_track: "reload" } %>
+
+    <% if Rails.env.development? %>
+      <%= vite_typescript_tag "devtools", data: { turbo_track: "reload" } %>
+    <% end %>
 
     <%# == Fonts == %>
 

@@ -20,7 +20,9 @@ import EmojiToggleInputController from "./emoji_toggle_input_controller";
 import FilepondController from "./filepond_controller";
 import FormController from "./form_controller";
 import HelloController from "./hello_controller";
+import InputFromEventController from "./input_from_event_controller";
 import ModalController from "./modal_controller";
+import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import ToastController from "./toast_controller";
 
 // == Native bridge components ==
@@ -33,6 +35,11 @@ application.register(
   NotificationTokenBridgeController,
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
+
+application.register(
+  "notification-permission-bridge",
+  NotificationPermissionBridgeController,
+);
 
 application.register("dropdown", DropdownController);
 application.register("reveal", RevealController);
@@ -50,3 +57,4 @@ application.register("emoji-toggle-input", EmojiToggleInputController);
 application.register("clipboard", ClipboardController);
 application.register("click-on-appear", ClickOnAppearController);
 application.register("toast", ToastController);
+application.register("input-from-event", InputFromEventController);

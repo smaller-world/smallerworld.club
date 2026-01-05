@@ -1,6 +1,6 @@
-<% class_name = local_assigns.delete(:class) %>
-<% data = local_assigns.delete(:data) %>
-<% error = form.object.errors.full_messages_for(name).first %>
+<%- class_name = local_assigns.delete(:class) -%>
+<%- data = local_assigns.delete(:data) -%>
+<%- error = form.object.errors.full_messages_for(name).first -%>
 
 <%= render(
   "forms/field_wrapper",

@@ -4,8 +4,8 @@
     @apply bg-white dark:bg-shade-900;
     @apply border border-shade-300 dark:border-shade-700;
 
-    a > &:hover {
-      @apply border-focus-ring;
+    a > & {
+      @apply hover:border-focus-ring;
     }
   }
 }

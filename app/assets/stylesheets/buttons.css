@@ -5,14 +5,7 @@
     @apply transition-colors duration-200 ease-out;
     @apply cursor-pointer;
     @apply ring-offset-2 dark:ring-offset-0;
-
-    &:not([ontouchstart]):hover {
-      @apply bg-primary-200/50 dark:bg-primary-900/50;
-    }
-
-    &[ontouchstart]:active {
-      @apply bg-primary-200/50 dark:bg-primary-900/50;
-    }
+    @apply hover:bg-primary-200/50 hover:dark:bg-primary-900/50;
 
     @media (pointer: coarse) {
       -webkit-touch-callout: none;
@@ -59,17 +52,12 @@
 
   :where(.btn-action) {
     @apply bg-primary-600 text-white;
+    @apply hover:bg-primary-700;
+  }
 
-    @media (hover: hover) {
-      &:hover {
-        @apply bg-primary-700;
-      }
-    }
-
-    @media (hover: none) {
-      &:active {
-        @apply bg-primary-700;
-      }
+  :where(.btn-readonly) {
+    &:disabled {
+      @apply cursor-default opacity-100;
     }
   }
 }

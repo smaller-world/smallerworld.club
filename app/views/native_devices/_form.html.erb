@@ -1,0 +1,36 @@
+<%- class_name = local_assigns.delete(:class) -%>
+
+<%= form_with(
+  model: NativeDevice.new,
+  # class: class_names("native_device_form", class_name),
+  class: class_name,
+  data: {
+    controller: "form",
+  },
+) do |form| %>
+  <div
+    data-controller="input-from-event"
+    data-action="input-from-event:set->form#submit"
+    data-input-from-event-detail-value="token"
+  >
+    <%= form.hidden_field :token, data: { input_from_event_target: "input" } %>
+
+    <%= form.button(
+      class: class_names(
+        "btn btn-action",
+        "transition-all transition-discrete duration-200 ease-out",
+        "starting:scale-90 starting:opacity-0 scale-100 opacity-100",
+      ),
+      data: {
+        controller: "notification-token-bridge",
+        action: class_names(
+          "notification-token-bridge#get:prevent",
+          "notification-token-bridge:retrieved->input-from-event#set",
+        ),
+      },
+    ) do %>
+      <%= icon "bell", variant: :mini, class: "size-5" %>
+      <span>enable push notifications</span>
+    <% end %>
+  </div>
+<% end %>

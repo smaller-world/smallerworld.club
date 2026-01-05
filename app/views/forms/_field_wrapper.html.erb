@@ -1,6 +1,6 @@
-<% label = local_assigns.delete(:label) %>
-<% description = local_assigns.delete(:description) %>
-<% error = error_message_for(form.object, name) %>
+<%- label = local_assigns.delete(:label) -%>
+<%- description = local_assigns.delete(:description) -%>
+<%- error = error_message_for(form.object, name) -%>
 
 <%= tag.div(
   class: class_names("field_wrapper", local_assigns[:class]),

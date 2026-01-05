@@ -10,6 +10,12 @@ class Current
 
   class << self
     sig { returns(T.untyped) }
+    def native_device; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def native_device=(value); end
+
+    sig { returns(T.untyped) }
     def session; end
 
     sig { params(value: T.untyped).returns(T.untyped) }
@@ -20,6 +26,12 @@ class Current
   end
 
   module GeneratedAttributeMethods
+    sig { returns(T.untyped) }
+    def native_device; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def native_device=(value); end
+
     sig { returns(T.untyped) }
     def session; end
 

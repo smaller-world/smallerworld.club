@@ -26,17 +26,26 @@
     }
   }
 
-  :where(.post_card-reaction) {
+  :where(.post_card-reaction_button) {
     @apply gap-1 py-0.5 pr-2 pl-1.5;
     @apply leading-0;
 
     &[aria-pressed="true"] {
       @apply bg-primary-300/50 dark:bg-primary-500/40;
       @apply text-shade-700 dark:text-shade-200;
+      @apply hover:bg-primary-400/70 hover:dark:bg-primary-500/70;
+    }
+  }
 
-      &:hover {
-        @apply bg-primary-300/80 dark:bg-primary-500/60;
-      }
+  :where(.post_card-reaction_emoji) {
+    @apply font-emoji text-base;
+  }
+
+  :where(.post_card-reaction_count) {
+    @apply font-headings text-xs leading-none;
+
+    :disabled & {
+      @apply text-shade-400;
     }
   }
 

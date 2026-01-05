@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 
-class ApplicationPushNotification < ActionPushNative::Notification
+class NativeNotification < ActionPushNative::Notification
   # Set a custom job queue_name
   # queue_as :realtime
 

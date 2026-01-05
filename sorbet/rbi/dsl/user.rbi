@@ -351,6 +351,20 @@ class User
     def create_world!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
+    def native_device_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def native_device_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :native_devices`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::NativeDevice::PrivateCollectionProxy) }
+    def native_devices; end
+
+    sig { params(value: T::Enumerable[::NativeDevice]).void }
+    def native_devices=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
     def owned_space_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }

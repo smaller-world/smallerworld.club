@@ -1,4 +1,4 @@
-<% class_name = local_assigns.delete(:class) %>
+<%- class_name = local_assigns.delete(:class) -%>
 
 <%= tag.div(
   id: dom_id(post, :card),
@@ -71,7 +71,6 @@
             data-dropdown-target="trigger"
             data-action="dropdown#toggle"
             aria-haspopup="true"
-            ontouchstart=""
           >
             <%= icon "pencil-square", variant: :micro, class: "size-4" %>
             <span>actions</span>
@@ -89,7 +88,6 @@
                   data: {
                     action: "dropdown#toggle",
                   },
-                  ontouchstart: "",
                 ) do %>
                   <%= icon "pencil", variant: :micro, class: "size-4" %>
                   <span class="font-headings text-sm">edit post</span>
@@ -113,7 +111,6 @@
                       turbo_confirm: "really delete post?",
                     },
                   },
-                  ontouchstart: "",
                 ) do %>
                   <%= icon "trash", variant: :micro, class: "size-4" %>
                   <span class="font-headings text-sm">delete post</span>

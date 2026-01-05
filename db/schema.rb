@@ -14,15 +14,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_28_013545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "action_push_native_devices", force: :cascade do |t|
+  create_table "action_push_native_devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
+    t.string "installation_id", null: false
     t.string "platform", null: false
     t.string "token", null: false
-    t.string "owner_type"
-    t.bigint "owner_id"
+    t.uuid "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id"], name: "index_action_push_native_devices_on_owner"
+    t.index ["installation_id", "owner_id"], name: "index_action_push_native_devices_uniqueness", unique: true
+    t.index ["owner_id"], name: "index_action_push_native_devices_on_owner_id"
   end
 
   create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -461,6 +462,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_28_013545) do
     t.index ["owner_id"], name: "index_worlds_on_owner_id"
   end
 
+  add_foreign_key "action_push_native_devices", "users", column: "owner_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users", column: "deprecated_user_id"

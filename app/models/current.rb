@@ -4,6 +4,6 @@
 class Current < ActiveSupport::CurrentAttributes
   # == Attributes ==
 
-  attribute :session
+  attribute :session, :native_device
   delegate :user, to: :session, allow_nil: true
 end

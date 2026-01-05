@@ -1,0 +1,5 @@
+<% if @native_device.persisted? %>
+  <%= turbo_stream.refresh %>
+<% else %>
+  <%= turbo_stream.replace "flash", partial: "layouts/flash" %>
+<% end %>

@@ -1,7 +1,7 @@
-<% data = local_assigns.delete(:data) || {} %>
-<% action = data.delete(:action) %>
-<% panel_options = local_assigns.delete(:panel) || {} %>
-<% panel_class = panel_options.delete(:class) %>
+<%- data = local_assigns.delete(:data) || {} -%>
+<%- action = data.delete(:action) -%>
+<%- panel_options = local_assigns.delete(:panel) || {} -%>
+<%- panel_class = panel_options.delete(:class) -%>
 
 <%= tag.dialog(
   class: class_names("modal_dialog", local_assigns[:class]),

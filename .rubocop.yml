@@ -26,7 +26,6 @@ AllCops:
     - .github/**/*
     - .vscode/**/*
     - db/schema*.rb
-    - db/migrate/**/*
     - public/**/*
     - storage/**/*
   CacheRootDirectory: tmp/cache/rubocop

@@ -78,10 +78,7 @@
 
     li {
       @apply rounded-xl;
-
-      &:hover {
-        @apply bg-shade-100 dark:bg-shade-800;
-      }
+      @apply hover:bg-shade-100 dark:hover:bg-shade-800;
 
       [role="menuitem"] {
         @apply flex items-center gap-2 rounded-xl p-2;

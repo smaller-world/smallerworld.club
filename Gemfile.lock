@@ -193,6 +193,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     debug_inspector (1.2.0)
+    device_detector (1.1.3)
     discard (1.4.0)
       activerecord (>= 4.2, < 9.0)
     domain_name (0.6.20240107)
@@ -699,6 +700,7 @@ DEPENDENCIES
   counter_culture (~> 3.5)
   date_validator (~> 0.12.0)
   debug
+  device_detector (~> 1.1)
   discard (~> 1.2)
   dotenv (~> 2.7)
   email_validator (~> 2.2)

@@ -96,4 +96,5 @@ Rails.application.configure do
   config.hosts << /[a-z0-9-]+\.ngrok-free\.app/
   config.hosts << /[a-z0-9-]+\.loca\.lt/
   config.hosts << /[a-z0-9-]+\.local/
+  config.hosts << /[a-z0-9-]+\.itskai\.me/
 end

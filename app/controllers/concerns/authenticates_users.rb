@@ -111,14 +111,14 @@ module AuthenticatesUsers
       .present?
   end
 
-  # == Filter Handlers ==
+  # == Filter handlers ==
 
   sig { returns(T.nilable(Session)) }
   def resume_session
     Current.session ||= find_session_by_cookie
   end
 
-  # == Rescue Handlers ==
+  # == Rescue handlers ==
 
   sig { params(error: NotAuthenticated).void }
   def handle_not_authenticated(error)

@@ -270,3 +270,5 @@ group :production do
   # Fix request.ip and request.remote_ip in Rails when using Cloudflare
   gem "cloudflare-rails", "~> 7.0"
 end
+
+gem "device_detector", "~> 1.1"

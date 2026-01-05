@@ -35,8 +35,8 @@
             data: {
               controller: "button-bridge",
               bridge_title: "settings",
-              bridge_ios_image: "gearshape.fill"
-            }
+              bridge_ios_image: "gearshape.fill",
+            },
           ) do %>
             <%= icon "cog-6-tooth", variant: :solid, class: "size-6" %>
           <% end %>
@@ -51,28 +51,8 @@
   </div>
 
   <div class="flex flex-col gap-3">
-    <% if hotwire_native_app? %>
-      <div
-        class="flex flex-col gap-2"
-        data-controller="notification-token-bridge"
-      >
-        <button
-          type="button"
-          class="btn btn-action"
-          data-action="notification-token-bridge#get"
-          ontouchstart=""
-        >
-          <%= icon "bell", variant: :mini, class: "size-5" %>
-          <span>enable push notifications</span>
-        </button>
-
-        <code
-          class="bg-shade-950 border-shade-700 rounded-2xl border p-2 text-center"
-          data-notification-token-bridge-target="token"
-        >
-          no token...
-        </code>
-      </div>
+    <% if hotwire_native_app? && !current_native_device %>
+      <%= render "native_devices/form", class: "self-center" %>
     <% end %>
 
     <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
@@ -90,7 +70,7 @@
     <% if @posts.none? %>
       <p class="text-shade-400 text-center text-sm">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
-        
+
         <br>
         (maybe you should do something about that...)
       </p>

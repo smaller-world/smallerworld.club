@@ -158,11 +158,7 @@
       @apply size-10 p-2;
       @apply text-center text-xl;
       @apply cursor-pointer placeholder:text-transparent;
-
-      &:hover,
-      &[aria-expanded="true"] {
-        @apply border-primary-400;
-      }
+      @apply hover:border-primary-400 aria-expanded:border-primary-400;
     }
   }
 

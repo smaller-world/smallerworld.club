@@ -1,8 +1,8 @@
-<% class_name = local_assigns.delete(:class) %>
-<% attachment = form.object.send(name) %>
-<% has_error = form.object.errors.include?(name) %>
-<% center = local_assigns.delete(:center) %>
-<% accept = local_assigns.delete(:accept) %>
+<%- class_name = local_assigns.delete(:class) -%>
+<%- attachment = form.object.send(name) -%>
+<%- has_error = form.object.errors.include?(name) -%>
+<%- center = local_assigns.delete(:center) -%>
+<%- accept = local_assigns.delete(:accept) -%>
 
 <%= render(
   "forms/field_wrapper",

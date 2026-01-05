@@ -38,9 +38,7 @@ module PostReactionsHelper
         emoji: reaction.emoji,
         count: reaction[:count],
         current_reaction_id: reaction[:current_reaction_id],
-      ).tap do |group|
-        puts "group: #{group.inspect}"
-      end
+      )
     end
   end
 

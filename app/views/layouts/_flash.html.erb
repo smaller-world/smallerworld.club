@@ -1,7 +1,8 @@
-<% alert = flash[:alert] %>
+<%- notice = flash[:notice] -%>
+<%- alert = flash[:alert] -%>
 
 <%= turbo_frame_tag :flash do %>
-  <% if notice = flash[:notice] || alert %>
+  <% if notice || alert %>
     <%= tag.template(
       notice,
       class: class_names("flash", "flash-alert": alert.present?),

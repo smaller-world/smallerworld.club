@@ -4,15 +4,14 @@
 
     <%= post_reaction_group_button(
       group,
-      class: "btn post_card-reaction",
+      class: "btn btn-readonly post_card-reaction_button",
       disabled: !allowed_to?(:react?, post),
       aria: {
         pressed: reacted,
       },
-      ontouchstart: "",
     ) do %>
-      <span class="font-emoji text-base"><%= group.emoji %></span>
-      <span class="font-headings text-xs leading-none"><%= group.count %></span>
+      <span class="post_card-reaction_emoji"><%= group.emoji %></span>
+      <span class="post_card-reaction_count"><%= group.count %></span>
     <% end %>
   <% end %>
 
@@ -32,7 +31,6 @@
         data: {
           action: "modal#open:prevent",
         },
-        ontouchstart: "",
       ) do %>
         <%= icon "face-smile-plus", library: :sidekickicons, class: "size-5" %>
       <% end %>

@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include RendersJsonException
   include AuthenticatesUsers
   include AuthenticatesFriends
+  include LoadsNativeDevices
   include SharesApplicationProps
   include NPlusOneDetection
   include RendersWorldThemes

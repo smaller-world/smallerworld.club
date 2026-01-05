@@ -1,7 +1,11 @@
+# == Application
+config/push.yml
+test/fixtures/active_storage/blobs.yml
+
+# == System
 .ruby-lsp/
 .bundle/
 bin/
-config/push.yml
 dist/
 db/
 log/
@@ -9,7 +13,6 @@ node_modules/
 public/dist*/
 sorbet/
 storage/
-test/fixtures/active_storage/blobs.yml
 tmp/
 vendor/
 package-lock.json
