@@ -125,6 +125,7 @@ class PushRegistration < ApplicationRecord
 
     blob = owner.world&.icon_blob or return
     variant = blob.variant(resize_to_fill: [ 192, 192 ])
-    Rails.application.routes.url_helpers.rails_representation_path(variant)
+    Rails.application.routes.url_helpers
+      .rails_representation_path(variant, only_path: true)
   end
 end

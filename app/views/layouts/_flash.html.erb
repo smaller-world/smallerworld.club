@@ -1,12 +1,12 @@
 <%- notice = flash[:notice] -%>
 <%- alert = flash[:alert] -%>
 
-<%= turbo_frame_tag :flash do %>
-  <% if notice || alert %>
-    <%= tag.template(
-      notice,
-      class: class_names("flash", "flash-alert": alert.present?),
-      data: { controller: "toast" },
-    ) %>
+<%= turbo_frame_tag :flash, class: "contents" do %>
+  <% if (message = (notice || alert)) %>
+    <%= tag.div(
+      class: class_names("card flash", "flash-alert": alert.present?),
+    ) do %>
+      <%= message %>
+    <% end %>
   <% end %>
 <% end %>

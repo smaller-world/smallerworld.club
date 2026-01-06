@@ -60,9 +60,9 @@ module Notifiable
 
   sig do
     returns(T.any(
-      Notification::PrivateAssociationRelation,
-      Notification::PrivateCollectionProxy,
-    ))
+              Notification::PrivateAssociationRelation,
+              Notification::PrivateCollectionProxy,
+            ))
   end
   def notifications_received_since_last_cleared
     if (last_cleared_at = notifications_last_cleared_at)

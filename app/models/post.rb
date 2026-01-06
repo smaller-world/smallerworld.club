@@ -306,6 +306,7 @@ class Post < ApplicationRecord
 
   sig { override.params(recipient: Notifiable).returns(NotificationMessage) }
   def notification_message(recipient:)
+    url_helpers = Rails.application.routes.url_helpers
     title = "new #{type.humanize(capitalize: false)}"
     author = author!
     unless recipient.is_a?(Friend)
@@ -323,19 +324,18 @@ class Post < ApplicationRecord
       end
       body_text.gsub("\n\n", "\n")
     end
-    url_helpers = Rails.application.routes.url_helpers
     target_url = case recipient
     when Friend
-      url_helpers.world_url(
+      url_helpers.world_path(
         world!,
         friend_token: recipient.access_token,
         post_id: id,
       )
     when User
       if (space = self.space)
-        url_helpers.space_url(space, post_id: id)
+        url_helpers.space_path(space, post_id: id)
       else
-        url_helpers.user_universe_url(post_id: id)
+        url_helpers.user_universe_path(post_id: id)
       end
     else
       raise "Invalid notification recipient: #{recipient.inspect}"
@@ -356,7 +356,7 @@ class Post < ApplicationRecord
     else
       truncated_body_text
     end
-    post_shortlink = ShortlinkService.url_helpers.world_url(
+    post_shortlink = Rails.application.shortlinked_url_helpers.world_url(
       world,
       post_id: id,
       friend_token: recipient.access_token,
@@ -538,9 +538,9 @@ class Post < ApplicationRecord
 
   sig do
     returns(T.any(
-      Friend::PrivateCollectionProxy,
-      Friend::PrivateAssociationRelation,
-    ))
+              Friend::PrivateCollectionProxy,
+              Friend::PrivateAssociationRelation,
+            ))
   end
   def hidden_from
     if (hidden_from_ids = self.hidden_from_ids.presence)

@@ -47,8 +47,7 @@ class Notification < ApplicationRecord
 
   sig { returns(Notifiable) }
   def recipient!
-    recipient or
-      raise ActiveRecord::RecordNotFound, "Missing associated recipient"
+    recipient or raise ActiveRecord::RecordNotFound, "Missing recipient"
   end
 
   sig { returns(Noticeable) }
@@ -99,12 +98,11 @@ class Notification < ApplicationRecord
 
   sig { void }
   def push
+    recipient = self.recipient
     PushRegistration.where(owner: recipient).find_each do |registration|
       registration.push(self)
     end
-    if (recipient = self.recipient) && recipient.is_a?(User)
-      push_to_devices(recipient) if recipient.is_a?(User)
-    end
+    deliver_to_native_devices(recipient) if recipient.is_a?(User)
     mark_as_pushed!
   end
 
@@ -132,19 +130,72 @@ class Notification < ApplicationRecord
   # == Helpers ==
 
   sig { params(recipient: User).void }
-  def push_to_devices(recipient)
+  def deliver_to_native_devices(recipient)
+    url_helpers = Rails.application.routes.url_helpers
     message = self.message
-    notification = NativeNotification.new(
-      title: message.title,
-      body: message.body,
-      badge: recipient.notifications_received_since_last_cleared.count,
-      data: {
-        notification_id: id,
-        delivery_token: delivery_token,
-        target_url: message.target_url,
-        image_url: message.image&.src,
-      }.compact,
-    )
+    apple_data = {
+      aps: { "mutable-content" => 1 },
+    }
+    if (target_url = message.target_url)
+      apple_data["target_url"] = target_url
+    end
+    sender = case (noticeable = self.noticeable)
+    when Post
+      noticeable.space || noticeable.world
+    when PostReaction
+      post = noticeable.post!
+      post.space || post.world
+    end
+    if message.image
+      apple_data["image_url"] =
+        url_helpers.rails_representation_path(message.image, only_path: true)
+    end
+    if sender
+      if (icon_blob = sender.icon_blob)
+        icon_variant = icon_blob.variant(
+          resize_to_fill: [ 192, 192 ],
+          format: "png",
+        )
+        apple_data["icon_url"] =
+          url_helpers.rails_representation_path(icon_variant, only_path: true)
+      end
+    end
+    notification = NativeNotification
+      .with_apple(apple_data)
+      .new(
+        thread_id: native_notification_thread_id,
+        title: message.title,
+        body: message.body,
+        badge: recipient.notifications_received_since_last_cleared.count,
+        # data: {
+        #   notification_id: id,
+        #   delivery_token: delivery_token,
+        #   target_url: message.target_url,
+        #   image_url: message.image&.src,
+        # }.compact,
+      )
     notification.deliver_later_to(recipient.native_devices)
   end
+
+  sig { returns(T.nilable(String)) }
+  def native_notification_thread_id
+    noticeable = self.noticeable
+    case noticeable
+    when Friend
+      noticeable.world_id
+    when Post
+      noticeable.space_id || noticeable.world_id
+    end
+  end
+
+  # sig { returns(Hash) }
+  # def native_notification_apple_data
+  #   data = T.let({ aps: { "mutable-content" => 1 } }, Hash)
+  #   case noticeable
+  #   when Friend
+
+  #   end
+  #   end
+  #   data
+  # end
 end

@@ -1,3 +1,4 @@
+# typed: false
 # rubocop:disable Rails/SkipsModelValidations
 # frozen_string_literal: true
 

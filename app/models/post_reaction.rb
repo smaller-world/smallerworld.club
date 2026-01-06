@@ -66,14 +66,14 @@ class PostReaction < ApplicationRecord
 
   sig { override.params(recipient: Notifiable).returns(NotificationMessage) }
   def notification_message(recipient:)
+    url_helpers = Rails.application.routes.url_helpers
     case recipient
     when User
       reactor = reactor!
       NotificationMessage.new(
         title: "#{emoji} from #{reactor.name}",
         body: post!.compact_snippet,
-        target_url: Rails.application.routes.url_helpers
-        .user_world_path(post_id:),
+        target_url: url_helpers.user_world_path(post_id:),
       )
     else
       raise "Invalid notification recipient: #{recipient.inspect}"

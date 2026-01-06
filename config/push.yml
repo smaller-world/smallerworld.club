@@ -7,9 +7,10 @@ shared:
     encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :encryption_key)&.dump %>
 
     team_id: UB3SB3746X
+
     # Your identifier found on
     # https://developer.apple.com/account/resources/identifiers/list
-    topic: club.smallerworld.app
+    topic: club.smallerworld.ios
 
     # Set this to the number of threads used to process notifications (default: 5).
     # When the pool size is too small a HTTPX::PoolTimeoutError error will be raised.
@@ -22,7 +23,7 @@ shared:
     # Please note that anything built directly from Xcode and loaded on your phone will have
     # the app generate DEVELOPMENT tokens, while everything else (TestFlight, Apple Store, ...)
     # will be considered as PRODUCTION environment.
-    # connect_to_development_server: <%# Rails.env.development? %>
+    connect_to_development_server: <%= Rails.env.development? %>
 
   # Use bin/rails credentials:edit to set the fcm secrets (as action_push_native:fcm:encryption_key)
   google:

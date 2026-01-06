@@ -6,6 +6,7 @@ import {
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
 import RevealController from "@stimulus-components/reveal";
+// import { TemporaryStateController } from "stimulus-library";
 import TextareaAutogrowController from "stimulus-textarea-autogrow";
 
 import { application } from "./application";
@@ -18,6 +19,7 @@ import EmojiMartController from "./emoji_mart_controller";
 import EmojiPickerController from "./emoji_picker_controller";
 import EmojiToggleInputController from "./emoji_toggle_input_controller";
 import FilepondController from "./filepond_controller";
+import FlashController from "./flash_controller";
 import FormController from "./form_controller";
 import HelloController from "./hello_controller";
 import InputFromEventController from "./input_from_event_controller";
@@ -41,10 +43,12 @@ application.register(
   NotificationPermissionBridgeController,
 );
 
+// == Controllers ==
+
 application.register("dropdown", DropdownController);
 application.register("reveal", RevealController);
 application.register("textarea-autogrow", TextareaAutogrowController);
-
+application.register("flash", FlashController);
 application.register("element-removal", ElementRemovalController);
 application.register("hello", HelloController);
 application.register("form", FormController);

@@ -38,7 +38,7 @@ Pry::Commands.block_command(
     file = Regexp.last_match[1]
     line = Regexp.last_match[2].to_i
     method = Regexp.last_match[3]
-    output.puts [file, line, method]
+    output.puts [ file, line, method ]
   end
 end
 

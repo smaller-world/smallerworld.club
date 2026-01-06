@@ -166,22 +166,20 @@ class Friend < ApplicationRecord
 
   sig { override.params(recipient: Notifiable).returns(NotificationMessage) }
   def notification_message(recipient:)
-    target_url = Rails.application.routes
-      .url_helpers
-      .user_world_friends_url(friend_id: id)
+    url_helpers = Rails.application.routes.url_helpers
     case recipient
     when User
       if push_registrations.exists?
         NotificationMessage.new(
           title: "#{fun_name} installed your world!",
           body: "#{name} installed your world on their phone :)",
-          target_url:,
+          target_url: url_helpers.user_world_path,
         )
       else
         NotificationMessage.new(
           title: "#{fun_name} joined your world!",
           body: "#{name} subscribed to text updates",
-          target_url:,
+          target_url: url_helpers.user_world_friends_path(friend_id: id),
         )
       end
     else
@@ -194,7 +192,10 @@ class Friend < ApplicationRecord
   sig { returns(String) }
   def installation_message
     world = world!
-    installation_url = world.shortlink_url(friend_token: access_token)
+    installation_url = Rails.application.shortlinked_url_helpers.world_url(
+      world,
+      friend_token: access_token,
+    )
     "hi, #{fun_name}! here's your secret link to #{world.name}: " \
       "#{installation_url}"
   end

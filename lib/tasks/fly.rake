@@ -17,7 +17,7 @@ namespace :fly do
 
   private
 
-  def fly_exec(command, pty: false)
+  define_method(:fly_exec) do |command, pty: false|
     args = [
       "ssh",
       "console",

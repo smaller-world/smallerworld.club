@@ -1,5 +1,5 @@
 # rubocop:disable Style/MethodCallWithArgsParentheses
-# typed: strict
+# typed: true
 # frozen_string_literal: true
 
 require_relative "boot"
@@ -42,6 +42,7 @@ module SmallerWorld
     require "service_worker_app"
     require "overpowered"
     require "canny"
+    require "shortlinked_url_helpers"
 
     # == Configuration
     # Initialize configuration defaults for originally generated Rails version.
@@ -103,5 +104,17 @@ module SmallerWorld
 
     sig { returns(Time) }
     def booted_at = BOOTED_AT
+
+    # == Shortlinking
+    T::Sig::WithoutRuntime.sig do
+      returns(T.all(GeneratedUrlHelpersModule, GeneratedPathHelpersModule))
+    end
+    def shortlinked_url_helpers
+      @shortlinked_url_helpers ||= if Rails.env.production?
+        ShortlinkedUrlHelpers.new(protocol: "https", host: "smlr.world")
+      else
+        routes.url_helpers
+      end
+    end
   end
 end

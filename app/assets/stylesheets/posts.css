@@ -1,21 +1,21 @@
 @layer components {
-  :where(.post_card) {
+  .post_card {
     @apply relative shadow-sm;
   }
 
-  :where(.post_card-header) {
+  .post_card-header {
     @apply flex justify-between gap-1 text-xs text-shade-500;
   }
 
-  :where(.post_card-content) {
+  .post_card-content {
     @apply flex flex-col gap-1;
   }
 
-  :where(.post_card-footer) {
+  .post_card-footer {
     @apply flex justify-between;
   }
 
-  :where(.post_card-loading_overlay) {
+  .post_card-loading_overlay {
     @apply absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xs;
     @apply pointer-events-none opacity-0 transition-opacity duration-200 ease-out;
     @apply text-white dark:text-primary-500;
@@ -26,7 +26,7 @@
     }
   }
 
-  :where(.post_card-reaction_button) {
+  .post_card-reaction_button {
     @apply gap-1 py-0.5 pr-2 pl-1.5;
     @apply leading-0;
 
@@ -37,11 +37,11 @@
     }
   }
 
-  :where(.post_card-reaction_emoji) {
+  .post_card-reaction_emoji {
     @apply font-emoji text-base;
   }
 
-  :where(.post_card-reaction_count) {
+  .post_card-reaction_count {
     @apply font-headings text-xs leading-none;
 
     :disabled & {
@@ -49,7 +49,7 @@
     }
   }
 
-  :where(.post_form-emoji_hint) {
+  .post_form-emoji_hint {
     @apply text-shade-500 dark:text-shade-400;
   }
 }

@@ -8,11 +8,11 @@ require "active_support/core_ext/integer/time"
 # config/application.rb.
 Rails.application.configure do
   # Set default URL options.
-  routes.default_url_options = {
-    protocol: "http",
-    host: "localhost",
-    port: ENV.fetch("RAILS_PORT") { 3000 }.to_i,
-  }
+  # routes.default_url_options = {
+  #   protocol: "http",
+  #   host: "localhost",
+  #   port: ENV.fetch("RAILS_PORT") { 3000 }.to_i,
+  # }
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true

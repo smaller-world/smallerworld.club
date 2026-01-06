@@ -15,3 +15,9 @@
     @slot;
   }
 }
+
+@custom-variant with-notification-token-bridge {
+  html[data-bridge-components~="notification-token"] & {
+    @slot;
+  }
+}

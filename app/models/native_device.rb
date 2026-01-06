@@ -39,7 +39,29 @@ class NativeDevice < ActionPushNative::Device
 
   belongs_to :owner, class_name: "User", inverse_of: :native_devices
 
+  sig { returns(User) }
+  def owner!
+    owner or raise ActiveRecord::RecordNotFound, "Missing owner"
+  end
+
   # == Validations ==
 
   validates :installation_id, uniqueness: { scope: :owner }
+
+  # == Methods ==
+
+  sig { void }
+  def send_test_notification
+    url_helpers = Rails.application.routes.url_helpers
+    notification = NativeNotification
+      .with_data(target_url: url_helpers.settings_path(
+        test_notification_success: 1,
+      ))
+      .new(
+        title: "test notification",
+        body: "this is a test notification. if you are seeing this, then " \
+          "your push notifications are working!",
+      )
+    notification.deliver_to(self)
+  end
 end

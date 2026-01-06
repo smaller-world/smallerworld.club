@@ -92,7 +92,15 @@ Rails.application.routes.draw do
 
   # == Native Push ==
 
-  resources :native_devices, only: :create
+  resources :native_devices, only: :create do
+    member do
+      post :test
+    end
+  end
+
+  # == Settings ==
+
+  resource :settings, only: :show
 
   # == Visits ==
 

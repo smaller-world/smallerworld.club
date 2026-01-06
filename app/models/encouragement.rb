@@ -54,13 +54,14 @@ class Encouragement < ApplicationRecord
 
   sig { override.params(recipient: Notifiable).returns(NotificationMessage) }
   def notification_message(recipient:)
+    url_helpers = Rails.application.routes.url_helpers
     case recipient
     when User
       friend = friend!
       NotificationMessage.new(
         title: "#{friend.name} wants to hear from u!",
         body: [ emoji, message ].join(" "),
-        target_url: Rails.application.routes.url_helpers.user_world_path,
+        target_url: url_helpers.user_world_path,
       )
     else
       raise "Invalid notification recipient: #{recipient.inspect}"

@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.4.1"
+ruby "3.4.8"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
@@ -195,7 +195,7 @@ gem "rails_icons", "~> 1.5"
 gem "local_time", "~> 3.0"
 
 # Send native push notifications
-gem "action_push_native", "~> 0.2.1"
+gem "action_push_native", "~> 0.3.0"
 
 group :development, :test do
   # Debug code with debug

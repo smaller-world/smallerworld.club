@@ -283,6 +283,9 @@ module GeneratedUrlHelpersModule
   def session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def settings_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def share_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -317,6 +320,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def support_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_native_device_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_push_subscriptions_url(*args); end

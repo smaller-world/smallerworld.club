@@ -13,9 +13,9 @@ module Discardable
 
   included do
     T.bind(self, T.all(
-      T.class_of(ActiveRecord::Base),
-      RequiresColumn::ClassMethods,
-    ))
+                   T.class_of(ActiveRecord::Base),
+                   RequiresColumn::ClassMethods,
+                 ))
 
     # == Configuration ==
 

@@ -3,6 +3,8 @@
 
 
 class NativeNotification < ActionPushNative::Notification
+  extend T::Sig
+
   # Set a custom job queue_name
   # queue_as :realtime
 
@@ -15,4 +17,18 @@ class NativeNotification < ActionPushNative::Notification
   #   throw :abort if Notification.find(notification.context[:notification_id])
   #     .expired?
   # end
+
+  # == Methods ==
+  sig do
+    override
+      .params(devices: T.any(NativeDevice, T::Enumerable[NativeDevice]))
+      .void
+  end
+  def deliver_later_to(devices)
+    Array(devices).each do |device|
+      NativeNotificationJob
+        .set(queue: queue_name)
+        .perform_later(self.class.name, self.as_json, device)
+    end
+  end
 end

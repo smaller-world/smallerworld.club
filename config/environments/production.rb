@@ -7,10 +7,10 @@ require "active_support/core_ext/integer/time"
 # config/application.rb.
 Rails.application.configure do
   # Set default URL options.
-  routes.default_url_options = {
-    protocol: "https",
-    host: "smallerworld.club",
-  }
+  # routes.default_url_options = {
+  #   protocol: "https",
+  #   host: "smallerworld.club",
+  # }
 
   # Run Good Job in async mode.
   config.good_job.execution_mode = :async

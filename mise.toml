@@ -1,6 +1,6 @@
 [tools]
   node = "22.13.1"
-  ruby = "3.4.1"
+  ruby = "3.4.8"
   overmind = "2.5.1"
 
 [env]

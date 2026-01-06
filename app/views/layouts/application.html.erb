@@ -78,8 +78,6 @@
       <%= render "layouts/app_menu" %>
     </header>
 
-    <%= render "layouts/flash" %>
-
-    <main class="app_main"><%= yield %></main>
+    <main class="app_main"><%= render "layouts/flash" %><%= yield %></main>
   </body>
 <% end %>

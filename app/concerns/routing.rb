@@ -1,6 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
+# TODO: Remove once ApplicationSerializer is removed
 module Routing
   extend T::Sig
   extend T::Helpers

@@ -2,13 +2,13 @@
 
 <%= form_with(
   model: NativeDevice.new,
-  # class: class_names("native_device_form", class_name),
-  class: class_name,
+  class: class_names("hidden with-notification-token-bridge:block", class_name),
   data: {
     controller: "form",
   },
 ) do |form| %>
   <div
+    class="flex flex-col"
     data-controller="input-from-event"
     data-action="input-from-event:set->form#submit"
     data-input-from-event-detail-value="token"

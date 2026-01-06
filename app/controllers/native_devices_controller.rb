@@ -2,6 +2,10 @@
 # frozen_string_literal: true
 
 class NativeDevicesController < ApplicationController
+  # == Filters ==
+
+  before_action :authenticate_user!
+
   # == Actions ==
 
   # POST /native_devices
@@ -24,7 +28,26 @@ class NativeDevicesController < ApplicationController
     end
   end
 
+  # POST /native_devices/:id/test
+  def test
+    respond_to do |format|
+      format.turbo_stream do
+        native_device = find_native_device
+        authorize!(native_device)
+        native_device.send_test_notification
+        head :no_content
+      end
+    end
+  end
+
   private
+
+  # == Helpers ==
+
+  sig { params(scope: NativeDevice::PrivateRelation).returns(NativeDevice) }
+  def find_native_device(scope: NativeDevice.all)
+    scope.find(params.fetch(:id))
+  end
 
   sig { params(user_agent: String).returns(Symbol) }
   def parse_platform(user_agent)

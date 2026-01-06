@@ -283,6 +283,9 @@ module GeneratedPathHelpersModule
   def session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def settings_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def share_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -317,6 +320,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def support_success_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_native_device_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_path(*args); end

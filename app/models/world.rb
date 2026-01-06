@@ -218,11 +218,6 @@ class World < ApplicationRecord
     PostStreak.new(length:, posted_today:)
   end
 
-  sig { params(params: T.untyped).returns(String) }
-  def shortlink_url(**params)
-    ShortlinkService.url_helpers.world_url(self, **params)
-  end
-
   private
 
   # == Helpers ==

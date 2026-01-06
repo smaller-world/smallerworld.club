@@ -1,3 +1,4 @@
+# typed: false
 # rubocop:disable Rails/RakeEnvironment
 # frozen_string_literal: true
 

@@ -6,7 +6,7 @@
 
 @layer components {
   :where(.page-container) {
-    @apply mx-auto max-w-xl p-4 native:py-0;
+    @apply w-full max-w-xl self-center p-4 native:py-0;
   }
 }
 
@@ -48,7 +48,7 @@
   }
 
   .app_main {
-    @apply flex-1;
+    @apply flex flex-1 flex-col gap-y-4;
 
     html[data-hotwire-native] & {
       padding-top: env(safe-area-inset-top);
@@ -56,9 +56,9 @@
     }
   }
 
-  .flash-alert {
+  /* .flash-alert {
     @apply from-red-500 to-red-700;
-  }
+  } */
 }
 
 .turbo-progress-bar {
