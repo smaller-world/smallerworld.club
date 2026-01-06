@@ -1,4 +1,5 @@
 <%- class_name = local_assigns.delete(:class) -%>
+<%- tooltip = local_assigns.delete(:tooltip) -%>
 
 <%= form_with(
   model: NativeDevice.new,
@@ -22,11 +23,16 @@
         "starting:scale-90 starting:opacity-0 scale-100 opacity-100",
       ),
       data: {
-        controller: "notification-token-bridge",
+        controller: class_names(
+          "notification-token-bridge",
+          "tooltip": tooltip,
+        ),
         action: class_names(
           "notification-token-bridge#get:prevent",
           "notification-token-bridge:retrieved->input-from-event#set",
         ),
+        tooltip_content_value: tooltip,
+        tooltip_permanent_value: true,
       },
     ) do %>
       <%= icon "bell", variant: :mini, class: "size-5" %>

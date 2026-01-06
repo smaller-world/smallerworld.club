@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 import { Picker } from "emoji-mart";
 
+import { addCleanupAction } from "#helpers/stimulus_helpers";
+
 export default class EmojiMartController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
@@ -12,16 +14,17 @@ export default class EmojiMartController extends Controller<HTMLElement> {
       },
     });
     this.element.appendChild(picker as any);
+    addCleanupAction(this, "destroy");
   }
 
   disconnect(): void {
     super.disconnect();
-    this.element.replaceChildren();
+    this.destroy();
   }
 
   // == Actions ==
 
-  teardown(): void {
+  destroy(): void {
     this.element.replaceChildren();
   }
 }

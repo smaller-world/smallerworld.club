@@ -52,7 +52,11 @@
 
   <div class="flex flex-col gap-3">
     <% if hotwire_native_app? && !current_native_device %>
-      <%= render "native_devices/form", class: "self-center" %>
+      <%= render(
+        "native_devices/form",
+        class: "self-center",
+        tooltip: "hear about happenings in this space!",
+      ) %>
     <% end %>
 
     <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
@@ -70,7 +74,7 @@
     <% if @posts.none? %>
       <p class="text-shade-400 text-center text-sm">
         this space doesn&apos;t have any posts yet <span class="ml-1">:<</span>
-
+        
         <br>
         (maybe you should do something about that...)
       </p>

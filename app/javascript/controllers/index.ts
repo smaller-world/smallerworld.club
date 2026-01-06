@@ -26,6 +26,7 @@ import InputFromEventController from "./input_from_event_controller";
 import ModalController from "./modal_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import ToastController from "./toast_controller";
+import TooltipController from "./tooltip_controller";
 
 // == Native bridge components ==
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -62,3 +63,4 @@ application.register("clipboard", ClipboardController);
 application.register("click-on-appear", ClickOnAppearController);
 application.register("toast", ToastController);
 application.register("input-from-event", InputFromEventController);
+application.register("tooltip", TooltipController);

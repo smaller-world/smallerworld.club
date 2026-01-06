@@ -7,11 +7,7 @@
   class: class_names("modal_dialog", local_assigns[:class]),
   data: {
     modal_target: "dialog",
-    action: class_names(
-      "turbo:before-cache@document->modal#teardown",
-      "cancel->modal#onDialogCancel",
-      action,
-    ),
+    action: class_names("cancel->modal#onDialogCancel", action),
     **data,
   }
 ) do %>

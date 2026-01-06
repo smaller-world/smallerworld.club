@@ -18,7 +18,6 @@
     data: {
       controller: "filepond haptic-bridge modal",
       action: class_names(
-        "turbo:before-cache@document->filepond#teardown",
         "filepond:uploaded->haptic-bridge#vibrate",
         "filepond:request-open-editor-modal->modal#open",
         "filepond:request-close-editor-modal->modal#close",

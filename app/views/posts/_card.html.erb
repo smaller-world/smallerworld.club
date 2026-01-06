@@ -60,11 +60,7 @@
       <%= render "posts/reactions", post: %>
 
       <% if allowed_to?(:manage?, post) %>
-        <div
-          class="relative -mr-1 -mb-1"
-          data-controller="dropdown"
-          data-action="turbo:before-cache@document->dropdown#hide"
-        >
+        <div class="relative -mr-1 -mb-1" data-controller="dropdown">
           <button
             type="button"
             class="btn menu_btn"

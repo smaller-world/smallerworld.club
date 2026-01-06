@@ -1,6 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class ModalController extends Controller {
+import {
+  addAction,
+  addCleanupAction,
+  removeAction,
+  waitForTransitionAnimations,
+} from "#helpers/stimulus_helpers";
+
+export default class ModalController extends Controller<HTMLElement> {
   // == Targets ==
 
   static targets = ["dialog", "panel", "backdrop"];
@@ -30,6 +37,11 @@ export default class ModalController extends Controller {
   #pointerDownTarget?: EventTarget | null;
 
   // == Lifecycle ==
+
+  connect(): void {
+    super.connect();
+    addCleanupAction(this, "destroy");
+  }
 
   disconnect(): void {
     super.disconnect();
@@ -72,8 +84,8 @@ export default class ModalController extends Controller {
     }
     this.#storePreviousActiveElement();
     this.dialogTarget.showModal();
-    this.#addBackdropListeners();
-    void this.#afterAnimate().then(() => {
+    this.#addBackdropActions();
+    void this.#waitForTransitionAnimations().then(() => {
       this.dispatch("opened");
     });
     requestAnimationFrame(() => {
@@ -88,11 +100,11 @@ export default class ModalController extends Controller {
     void this.#requestClose();
   }
 
-  teardown(): void {
+  destroy(): void {
     if (!this.dialogTarget.open) {
       return;
     }
-    this.#removeBackdropListeners();
+    this.#removeBackdropActions();
     this.dialogTarget.close();
     if (this.#isClosing) {
       this.#clearClosing();
@@ -101,29 +113,16 @@ export default class ModalController extends Controller {
     this.dispatch("closed");
   }
 
-  // == Action helpers ==
+  // == Backdrop helpers ==
 
-  #addBackdropListeners(): void {
-    this.#updateActions((actions) => {
-      actions.add("pointerdown@document->modal#onDocumentPointerDown");
-      actions.add("click@document->modal#onDocumentClick");
-    });
+  #addBackdropActions(): void {
+    addAction(this, "pointerdown@document", "onDocumentPointerDown");
+    addAction(this, "click@document", "onDocumentClick");
   }
 
-  #removeBackdropListeners(): void {
-    this.#updateActions((actions) => {
-      actions.remove("pointerdown@document->modal#onDocumentPointerDown");
-      actions.remove("click@document->modal#onDocumentClick");
-    });
-  }
-
-  #updateActions(update: (actions: DOMTokenList) => void): void {
-    const parser = document.createElement("div");
-    if (this.dialogTarget.dataset.action) {
-      parser.className = this.dialogTarget.dataset.action;
-    }
-    update(parser.classList);
-    this.dialogTarget.dataset.action = parser.className;
+  #removeBackdropActions(): void {
+    removeAction(this, "pointerdown@document", "onDocumentPointerDown");
+    removeAction(this, "click@document", "onDocumentClick");
   }
 
   // == Closing helpers ==
@@ -134,8 +133,8 @@ export default class ModalController extends Controller {
     }
     this.#markClosing();
     this.dispatch("closing");
-    this.#removeBackdropListeners();
-    await this.#afterAnimate();
+    this.#removeBackdropActions();
+    await this.#waitForTransitionAnimations();
     this.dialogTarget.close();
     this.#clearClosing();
     this.#focusPreviousActiveElement();
@@ -159,11 +158,7 @@ export default class ModalController extends Controller {
 
   // == Transition helpers ==
 
-  async #afterAnimate(): Promise<void> {
-    const targets = [this.backdropTarget, this.panelTarget];
-    const transitions = targets
-      .flatMap((el) => el.getAnimations())
-      .filter((animation) => animation instanceof CSSTransition);
-    await Promise.allSettled(transitions.map(({ finished }) => finished));
+  #waitForTransitionAnimations(): Promise<void> {
+    return waitForTransitionAnimations(this.backdropTarget, this.panelTarget);
   }
 }

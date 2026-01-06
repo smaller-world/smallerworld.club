@@ -17,6 +17,8 @@ import ImageTransformPlugin from "filepond-plugin-image-transform";
 import invariant from "tiny-invariant";
 import TrueCropper from "truecropper";
 
+import { addCleanupAction } from "#helpers/stimulus_helpers";
+
 interface EditInstructions {
   crop: {
     aspectRatio: number;
@@ -221,11 +223,12 @@ class FilepondController extends Controller<HTMLElement> {
       this.#clearBusy();
     });
     this.#pond = pond;
+    addCleanupAction(this, "destroy");
   }
 
   disconnect(): void {
     super.disconnect();
-    this.teardown();
+    this.destroy();
   }
 
   // == Actions ==
@@ -260,7 +263,7 @@ class FilepondController extends Controller<HTMLElement> {
     this.#destroyCropper();
   }
 
-  teardown(): void {
+  destroy(): void {
     this.#requestCloseEditorModal();
     this.#destroyCropper();
     this.#destroyPond();

@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 import invariant from "tiny-invariant";
 
+import { addCleanupAction } from "#helpers/stimulus_helpers";
+
 export default class FlashController extends Controller<HTMLElement> {
   // == Targets ==
 
@@ -27,9 +29,11 @@ export default class FlashController extends Controller<HTMLElement> {
   connect(): void {
     super.connect();
     invariant(this.textValue, "Missing textValue");
+    addCleanupAction(this, "restore");
   }
 
   disconnect(): void {
+    super.disconnect();
     this.restore();
   }
 
