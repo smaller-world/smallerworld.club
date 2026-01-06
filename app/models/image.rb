@@ -84,7 +84,7 @@ class Image < ActiveStorage::Blob
   def representation_path(representation)
     Rails.application.routes
       .url_helpers
-      .rails_representation_path(representation)
+      .rails_representation_path(representation, only_path: true)
   end
 
   sig { returns(T::Boolean) }
