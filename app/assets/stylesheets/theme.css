@@ -23,6 +23,7 @@
 
   /* Focus ring */
   --color-focus-ring: var(--color-primary-500);
+  --color-body: var(--color-white);
 
   /* Border radius */
   --radius-app-icon: 22.37%;
@@ -58,9 +59,12 @@
   :root {
     @media (prefers-color-scheme: dark) {
       --color-focus-ring: var(--color-primary-300);
+      --color-body: var(--color-shade-900);
     }
   }
+}
 
+@layer base {
   :where(:focus-visible) {
     @apply outline-2 outline-focus-ring;
   }
@@ -82,7 +86,7 @@
   }
 
   body {
-    @apply dark:bg-shade-900 dark:text-white;
+    @apply bg-body dark:text-white;
   }
 
   button {

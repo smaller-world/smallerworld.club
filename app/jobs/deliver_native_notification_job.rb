@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class NativeNotificationJob < ActionPushNative::NotificationJob
+class DeliverNativeNotificationJob < ActionPushNative::NotificationJob
   # Enable logging job arguments (default: false)
   self.log_arguments = true
 
