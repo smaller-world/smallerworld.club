@@ -18,6 +18,7 @@ export default class DropdownController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
+    this.element.ariaHasPopup ??= "true";
     addCleanupAction(this, "hide");
   }
 
