@@ -35,9 +35,16 @@
         tooltip_flash_duration_value: 2000,
         tooltip_flash_delay_value: 1000,
       },
+      disabled: !installation_id?,
     ) do %>
       <%= icon "bell", variant: :mini, class: "size-5" %>
-      <span>enable push notifications</span>
+      <span>
+        <% if installation_id? %>
+          enable push notifications
+        <% else %>
+          missing installation ID
+        <% end %>
+      </span>
     <% end %>
   </div>
 <% end %>
