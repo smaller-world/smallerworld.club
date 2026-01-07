@@ -7,10 +7,16 @@
         @space.icon.variant(:page_icon),
         class: "self-center rounded-app-icon size-28 cursor-copy shadow-lg",
         data: {
-          controller: "clipboard haptic-bridge",
-          action: "click->clipboard#copy clipboard:copied->haptic-bridge#vibrate",
-          clipboard_copy_text_value: space_url(@space, emulate_native_app: 1),
-          clipboard_copied_text_value: "space url copied to clipboard!",
+          controller: "clipboard haptic-bridge tooltip",
+          action: class_names(
+            "click->clipboard#copy",
+            "clipboard:copied->haptic-bridge#vibrate",
+            "clipboard:copied->tooltip#flash",
+          ),
+          clipboard_copy_value: space_url(@space, emulate_native_app: 1),
+          tooltip_trigger_value: "manual",
+          tooltip_content_value: "space link copied!",
+          tooltip_flash_duration_value: 1400,
         },
       ) %>
     <% end %>
@@ -59,9 +65,9 @@
       ) %>
     <% end %>
 
-    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
-      <li><%= render "spaces/posts/new", space: @space %></li>
+    <%= render "spaces/posts/new", space: @space, class: "mb-3" %>
 
+    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
       <% @posts.each do |post| %>
         <li><%= render "posts/card", post: %></li>
       <% end %>

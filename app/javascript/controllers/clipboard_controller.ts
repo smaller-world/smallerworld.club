@@ -1,34 +1,16 @@
 import { Controller } from "@hotwired/stimulus";
-import Toastify from "toastify-js";
 
 export default class ClipboardController extends Controller {
   static values = {
-    copyText: String,
-    copiedText: String,
-    toastDuration: {
-      type: Number,
-      default: 2000,
-    },
+    copy: String,
   };
-  declare readonly copyTextValue: string;
-  declare readonly copiedTextValue: string;
-  declare readonly toastDurationValue: number;
+  declare readonly copyValue: string;
 
   // == Actions ==
 
   copy() {
-    void navigator.clipboard.writeText(this.copyTextValue).then(() => {
+    void navigator.clipboard.writeText(this.copyValue).then(() => {
       this.dispatch("copied");
-      const toastify = Toastify({
-        text: this.copiedTextValue,
-        duration: this.toastDurationValue,
-        gravity: "top",
-        position: "center",
-        onClick: () => {
-          this.dispatch("toast-click");
-        },
-      });
-      toastify.showToast();
     });
   }
 }

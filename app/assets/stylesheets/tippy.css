@@ -1,1 +1,16 @@
-@import "tippy.js/dist/tippy.css" layer(components);
+@import "tippy.js/dist/tippy.css" layer(base);
+@import "tippy.js/animations/scale.css" layer(base);
+
+@layer components {
+  :where(.tippy-box) {
+    @apply rounded-xl bg-shade-900 dark:bg-shade-100;
+  }
+
+  :where(.tippy-arrow) {
+    @apply text-shade-900 dark:text-shade-100;
+  }
+
+  :where(.tippy-content) {
+    @apply text-shade-100 dark:text-shade-900;
+  }
+}

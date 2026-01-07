@@ -1,4 +1,8 @@
-<fieldset class="card flex flex-col gap-1 border-dashed pt-2">
+<%- class_name = local_assigns.delete(:class) -%>
+
+<%= tag.fieldset(
+  class: class_names("flex flex-col gap-1 pt-1", class_name),
+) do %>
   <legend class="text-shade-400 font-cursive w-fit px-2 text-center italic">
     share something from the heart...
   </legend>
@@ -7,7 +11,7 @@
     <% selectable_post_types.each do |type| %>
       <%= link_to(
         new_space_post_path(space, type:, emulate_native_app: 1),
-        class: "btn flex-col gap-0.5 py-1 px-2 rounded-xl",
+        class: "btn flex-col gap-1 py-1 px-2 rounded-xl",
       ) do %>
         <%= post_type_icon(type, class: "size-6") %>
 
@@ -17,4 +21,4 @@
       <% end %>
     <% end %>
   </div>
-</fieldset>
+<% end %>
