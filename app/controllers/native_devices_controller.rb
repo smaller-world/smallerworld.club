@@ -15,7 +15,7 @@ class NativeDevicesController < ApplicationController
         current_user = authenticate_user!
         device_params = params.expect(native_device: :token)
         @native_device = current_user.native_devices.find_or_create_by(
-          installation_id: cookies.fetch(:installation_id),
+          installation_id:,
           **device_params,
         ) do |device|
           device.platform = parse_platform(request.user_agent)
@@ -43,6 +43,11 @@ class NativeDevicesController < ApplicationController
   private
 
   # == Helpers ==
+
+  sig { returns(String) }
+  def installation_id
+    cookies[:installation_id] or raise "Missing installation ID"
+  end
 
   sig { params(scope: NativeDevice::PrivateRelation).returns(NativeDevice) }
   def find_native_device(scope: NativeDevice.all)
