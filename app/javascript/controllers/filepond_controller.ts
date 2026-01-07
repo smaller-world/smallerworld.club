@@ -74,10 +74,6 @@ class FilepondController extends Controller<HTMLElement> {
     this.dispatch("request-open-editor-modal");
   }
 
-  #requestCloseEditorModal(): void {
-    this.dispatch("request-close-editor-modal");
-  }
-
   #resetEditor(): void {
     this.#editor.instructions = null;
     this.#editor.onconfirm = () => {};
@@ -264,7 +260,6 @@ class FilepondController extends Controller<HTMLElement> {
   }
 
   destroy(): void {
-    this.#requestCloseEditorModal();
     this.#destroyCropper();
     this.#destroyPond();
   }
@@ -272,11 +267,11 @@ class FilepondController extends Controller<HTMLElement> {
   // == Status helpers ==
 
   #markBusy(): void {
-    this.element.setAttribute("aria-busy", "true");
+    this.element.ariaBusy = "true";
   }
 
   #clearBusy(): void {
-    this.element.removeAttribute("aria-busy");
+    this.element.ariaBusy = null;
   }
 
   // == Conversion helpers ==
