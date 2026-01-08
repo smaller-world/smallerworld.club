@@ -103,9 +103,13 @@ class Post < ApplicationRecord
 
   sig { returns(String) }
   def body_text
-    fragment = Nokogiri::HTML5.fragment(body_html)
-    reshape_body_fragment_for_text_rendering!(fragment)
-    Html2Text.new(fragment).convert
+    if (html = body_html)
+      fragment = Nokogiri::HTML5.fragment(html)
+      reshape_body_fragment_for_text_rendering!(fragment)
+      Html2Text.new(fragment).convert
+    else
+      body.to_plain_text
+    end
   end
 
   sig { params(text: String).void }
