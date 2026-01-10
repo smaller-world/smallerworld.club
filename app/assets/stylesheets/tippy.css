@@ -1,4 +1,5 @@
 @import "tippy.js/dist/tippy.css" layer(base);
+@import "tippy.js/dist/svg-arrow.css" layer(base);
 @import "tippy.js/animations/scale.css" layer(base);
 
 @layer components {
@@ -10,7 +11,30 @@
     @apply text-shade-900 dark:text-shade-100;
   }
 
+  :where(.tippy-svg-arrow) {
+    @apply fill-shade-900 dark:fill-shade-100;
+  }
+
+  :where(.tippy-arrow),
+  :where(.tippy-svg-arrow) {
+    @apply absolute;
+
+    .tippy-box[data-placement="bottom-start"] &,
+    .tippy-box[data-placement="top-start"] & {
+      @apply left-4!;
+
+      transform: translateX(0%) !important;
+    }
+
+    .tippy-box[data-placement="bottom-end"] &,
+    .tippy-box[data-placement="top-end"] & {
+      @apply right-4 left-auto!;
+
+      transform: translateX(0%) !important;
+    }
+  }
+
   :where(.tippy-content) {
-    @apply text-shade-100 dark:text-shade-900;
+    @apply text-base text-shade-100 dark:text-shade-900;
   }
 }

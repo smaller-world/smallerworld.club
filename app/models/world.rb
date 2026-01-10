@@ -75,8 +75,8 @@ class World < ApplicationRecord
   # == Attachments ==
 
   has_one_attached :icon do |attachable|
-    attachable.variant :icon, resize_to_limit: [ 128, 128 ]
-    attachable.variant :page_icon, resize_to_limit: [ 256, 256 ]
+    attachable.variant(:icon, resize_to_limit: [ 128, 128 ])
+    attachable.variant(:page_icon, resize_to_limit: [ 256, 256 ])
   end
 
   sig { returns(T::Boolean) }
@@ -108,7 +108,7 @@ class World < ApplicationRecord
             presence: true,
             length: { minimum: 2 },
             exclusion: { in: %i[kai], message: "is reserved" }
-  validates :icon_blob, presence: true, opaque_image: true
+  validates :icon, presence: true, opaque_image: true
   validates :reply_to_number_override,
             phone: { possible: true, types: :mobile, extensions: false },
             allow_nil: true

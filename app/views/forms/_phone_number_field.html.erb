@@ -1,0 +1,61 @@
+<%- class_name = local_assigns.delete(:class) %>
+<%- data = local_assigns.delete(:data) || {} -%>
+<%- phone = Phonelib.parse(form.object.send(name)) -%>
+<%- controller = data.delete(:controller) -%>
+<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- input_attributes = delete_from(local_assigns, :required, :placeholder) -%>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("phone_number_field", class_name),
+  data: {
+    controller: class_names("phone-number-input", controller),
+    action: "imask:complete->phone-number-input#update",
+    **data,
+  },
+  **local_assigns,
+) do %>
+  <%= form.hidden_field name, data: { phone_number_input_target: "input" } %>
+
+  <div class="flex gap-2">
+    <%= tag.input(
+      class: "form-input field-sizing-content min-w-11 p-2",
+      id: form.field_id(name, "country_code"),
+      type: "text",
+      autocomplete: "tel-country-code mobile",
+      value: phone.country_code || "+1",
+      placeholder: "+1",
+      data: {
+        controller: "imask",
+        action: "phone-number-input#update blur->imask#setDefaultIfIncomplete",
+        phone_number_input_target: "countryCodeInput",
+        imask_mask_value: "+0[00]",
+        error: error.present?,
+      }.compact_blank,
+      aria: {
+        describedby: (form.field_id(name, "error") if error.present?),
+      },
+      **input_attributes,
+    ) %>
+
+    <%= tag.input(
+      class: "form-input p-2 flex-1 min-w-0",
+      id: form.field_id(name, "national_number"),
+      type: "text",
+      autocomplete: "tel-national mobile",
+      value: phone.national_number,
+      placeholder: "444-444-4444",
+      data: {
+        controller: "imask",
+        action: "phone-number-input#update",
+        phone_number_input_target: "nationalNumberInput",
+        imask_mask_value: "000-000-0000",
+        error: error.present?,
+      }.compact_blank,
+      aria: {
+        describedby: (form.field_id(name, "error") if error.present?),
+      },
+      **input_attributes,
+    ) %>
+  </div>
+<% end %>

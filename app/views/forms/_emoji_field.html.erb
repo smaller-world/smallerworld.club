@@ -1,12 +1,14 @@
 <%- class_name = local_assigns.delete(:class) -%>
-<%- data = local_assigns.delete(:data) -%>
+<%- data = local_assigns.delete(:data) || {} -%>
+<%- controller = data.delete(:controller) -%>
 <%- error = form.object.errors.full_messages_for(name).first -%>
+<%- input_attributes = delete_from(local_assigns, :required) -%>
 
 <%= render(
   "forms/field_wrapper",
   class: class_names("emoji_field", class_name),
   data: {
-    controller: "emoji-picker",
+    controller: class_names("emoji-picker", controller),
     **data,
   },
   **local_assigns,
@@ -14,8 +16,9 @@
   <div class="relative" data-controller="modal">
     <%= form.text_field(
       name,
-      class: "form-input",
+      class: "form-input emoji_field_input",
       placeholder: "dummy",
+      readonly: true,
       data: {
         controller: "emoji-toggle-input",
         action: class_names(
@@ -31,11 +34,10 @@
         controls: "menu",
         describedby: (form.field_id(name, "error") if error.present?),
       },
-      readonly: true,
-      **local_assigns.slice(:required),
+      **input_attributes,
     ) %>
 
-    <div class="emoji_field-placeholder">
+    <div class="emoji_field_placeholder">
       <%= icon(
         "face-smile-plus",
         library: :sidekickicons,

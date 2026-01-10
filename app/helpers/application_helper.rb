@@ -34,8 +34,18 @@ module ApplicationHelper
     end
   end
 
-  sig { params(options: T.untyped).returns(String) }
-  def new_session_with_redirect_path(**options)
-    new_session_path(redirect_to: request.fullpath, **options)
+  sig do
+    params(hash: T::Hash[Symbol, T.untyped], keys: Symbol)
+      .returns(T::Hash[Symbol, T.untyped])
+  end
+  def delete_from(hash, *keys)
+    removed_values = T.let({}, T::Hash[Symbol, T.untyped])
+    keys.each do |key|
+      removed_values[key] = hash.delete(key) do
+        raise KeyError
+      end
+    rescue KeyError
+    end
+    removed_values
   end
 end

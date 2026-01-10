@@ -1,0 +1,41 @@
+<%- class_name = local_assigns.delete(:class) %>
+<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- data = local_assigns.delete(:data) || {} -%>
+<%- controller = data.delete(:controller) -%>
+<%- otp_container_attributes = local_assigns.delete(:otp_container) || {} -%>
+<%- otp_container_data = otp_container_attributes.delete(:data) || {} -%>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("otp_field", class_name),
+  data: {
+    controller: class_names("otp-input", controller),
+    **data,
+  },
+  **local_assigns,
+) do %>
+  <%= form.hidden_field name, data: { otp_input_target: "input" } %>
+
+  <%= tag.div(
+    class: "flex gap-2",
+    data: {
+      otp_input_target: "container",
+      **otp_container_data,
+    },
+    **otp_container_attributes,
+  ) do %>
+    <% 1..6.times do |index| %>
+      <%= tag.input(
+        id: form.field_id(name, "otp", index),
+        class: "form-input otp_field_otp_input",
+        type: "text",
+        autocomplete: ("one-time-code" if index == 0),
+        data: {
+          action: "focus->otp-input#selectInputText",
+          error: error.present?,
+        }.compact_blank,
+        aria: { describedby: (form.field_id(name, "error") if error.present?) },
+      ) %>
+    <% end %>
+  <% end %>
+<% end %>

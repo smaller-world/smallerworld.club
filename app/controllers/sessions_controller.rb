@@ -8,14 +8,16 @@ class SessionsController < ApplicationController
   def new
     respond_to do |format|
       format.html do
-        pwa_scope = params[:pwa_scope]
         if signed_in?
           redirect_to(
-            user_world_path(pwa_scope:),
-            notice: "You are already signed in :)",
+            user_world_path(params.permit(:pwa_scope)),
+            notice: "you are already signed in :)",
           )
         else
-          render(inertia: "LoginPage")
+          if (redirect_url = params[:redirect_to])
+            session[:return_to_after_authenticating] = redirect_url
+          end
+          @login_request = LoginRequest.new
         end
       end
     end
@@ -23,30 +25,26 @@ class SessionsController < ApplicationController
 
   # POST /login
   def create
+    login_request_params = params.expect(
+      login_request: %i[phone_number login_code],
+    )
+    @login_request = LoginRequest.find_valid(
+      **login_request_params.to_h.symbolize_keys,
+    )
     respond_to do |format|
-      format.json do
-        login_params = params.expect(login: %i[phone_number login_code])
-        if (login_request = LoginRequest.find_valid(
-          **login_params.to_h.symbolize_keys,
-        ))
-          registered = if (user = User.find_by_phone_number(
-            login_request.phone_number,
-          ))
+      format.html do
+        if @login_request
+          if (user = User.find_by_phone_number(@login_request.phone_number))
             start_new_session_for!(user)
-            true
+            redirect_to(after_authentication_path)
           else
-            self.registration_token = login_request.generate_registration_token
-            false
+            self.registration_token = @login_request.generate_registration_token
+            redirect_to(new_registration_path)
           end
-          login_request.mark_as_completed!
-          render(json: { registered: })
+          @login_request.mark_as_completed!
         else
-          render(
-            json: {
-              errors: { login_code: "invalid login code" },
-            },
-            status: :unprocessable_content,
-          )
+          @login_request = LoginRequest.new
+          render(:new, status: :unprocessable_content)
         end
       end
     end
@@ -62,6 +60,21 @@ class SessionsController < ApplicationController
       format.json do
         terminate_session!
         render(json: {})
+      end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def after_authentication_path
+    session.fetch(:return_to_after_authenticating) do
+      if hotwire_native_app?
+        spaces_path
+      else
+        user_world_path
       end
     end
   end

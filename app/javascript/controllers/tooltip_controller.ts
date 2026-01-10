@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import tippy, { type Instance } from "tippy.js";
+import tippy, { type Instance, type Placement, roundArrow } from "tippy.js";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
@@ -8,12 +8,16 @@ export default class TooltipController extends Controller<HTMLElement> {
   static values = {
     content: String,
     trigger: String,
+    placement: String,
+    hideOnClick: { type: Boolean, default: true },
     flashImmediately: Boolean,
-    flashDuration: Number,
+    flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
   };
   declare readonly contentValue: string;
   declare readonly triggerValue: string;
+  declare readonly placementValue: Placement;
+  declare readonly hideOnClickValue: boolean;
   declare readonly flashImmediatelyValue: boolean;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
@@ -31,12 +35,14 @@ export default class TooltipController extends Controller<HTMLElement> {
     this.#tooltip = tippy(this.element, {
       content: this.contentValue,
       inertia: true,
+      arrow: roundArrow,
       animation: "scale",
+      placement: this.placementValue,
+      hideOnClick: this.hideOnClickValue,
     });
     if (this.triggerValue) {
       this.#tooltip.setProps({
         trigger: this.triggerValue,
-        hideOnClick: this.triggerValue !== "manual",
       });
     }
     if (this.flashImmediatelyValue) {
@@ -57,10 +63,10 @@ export default class TooltipController extends Controller<HTMLElement> {
       return;
     }
     this.#showFlashTimeout = setTimeout(() => {
-      if (!this.element.checkVisibility()) {
+      if (!this.element.checkVisibility() || !this.#tooltip) {
         return;
       }
-      this.#tooltip?.show();
+      this.#tooltip.show();
       if (this.flashDurationValue) {
         this.#hideFlashTimeout = setTimeout(() => {
           this.#tooltip?.hide();

@@ -112,10 +112,10 @@ class Post < ApplicationRecord
     end
   end
 
-  sig { params(text: String).void }
-  def body_text=(text)
-    self.body_html = format_body_html(text)
-  end
+  # sig { params(text: String).void }
+  # def body_text=(text)
+  #   self.body_html = format_body_html(text)
+  # end
 
   sig { returns(T.nilable(T::Boolean)) }
   def title_visible?

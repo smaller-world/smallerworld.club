@@ -104,3 +104,11 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   Enabled: true
   EnforcedStyleForMultiline: diff_comma
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowedMethods:
+    - require
+    - raise
+    - puts
+    - render
+    - head

@@ -1,12 +1,13 @@
 <%- class_name = local_assigns.delete(:class) -%>
-<%- tooltip = local_assigns.delete(:tooltip) -%>
+<%- button_attributes = local_assigns.delete(:button) || {} -%>
+<%- button_data = button_attributes.delete(:data) || {} -%>
+<%- button_controller = button_attributes.delete(:controller) -%>
+<%- button_action = button_attributes.delete(:action) -%>
 
 <%= form_with(
   model: NativeDevice.new,
   class: class_names("hidden with-notification-token-bridge:block", class_name),
-  data: {
-    controller: "form",
-  },
+  data: { controller: "form" },
 ) do |form| %>
   <div
     class="flex flex-col"
@@ -23,21 +24,18 @@
         "starting:scale-90 starting:opacity-0 scale-100 opacity-100",
       ),
       data: {
-        controller: class_names(
-          "notification-token-bridge",
-          "tooltip": tooltip,
-        ),
+        controller: class_names("notification-token-bridge", button_controller),
         action: class_names(
           "notification-token-bridge#get:prevent",
           "notification-token-bridge:retrieved->input-from-event#set",
+          button_action,
         ),
-        tooltip_content_value: tooltip,
-        tooltip_flash_duration_value: 2000,
-        tooltip_flash_delay_value: 1000,
+        **button_data,
       },
       disabled: !installation_id?,
     ) do %>
       <%= icon "bell", variant: :mini, class: "size-5" %>
+
       <span>
         <% if installation_id? %>
           enable push notifications

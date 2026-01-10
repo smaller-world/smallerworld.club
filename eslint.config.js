@@ -20,8 +20,6 @@ const prettierIgnores = readFileSync(".prettierignore", "utf8")
 export default defineConfig([
   { ignores: prettierIgnores },
   js.configs.recommended,
-  ts.configs.recommendedTypeChecked,
-  ts.configs.stylisticTypeChecked,
   // @ts-expect-error - Bad typing, but it works
   importX.flatConfigs.recommended,
   // @ts-expect-error - Bad typing, but it works
@@ -43,14 +41,25 @@ export default defineConfig([
     },
   },
   {
-    files: ["*.js"],
-    ...ts.configs.disableTypeChecked,
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      ...ts.configs.recommendedTypeChecked,
+      ...ts.configs.stylisticTypeChecked,
+    ],
   },
   {
     files: ["*.config.js"],
     languageOptions: {
       globals: {
         ...globals.node,
+      },
+    },
+  },
+  {
+    files: ["app/javascript/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
       },
     },
   },
@@ -86,6 +95,7 @@ export default defineConfig([
           fixMixedExportsWithInlineTypeSpecifier: true,
         },
       ],
+      "@typescript-eslint/class-literal-property-style": "off",
     },
   },
   {

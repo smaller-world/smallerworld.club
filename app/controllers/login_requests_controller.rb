@@ -13,34 +13,35 @@ class LoginRequestsController < ApplicationController
 
   # POST /login_requests
   def create
+    login_request_params = params.expect(
+      login_request: [ :phone_number ],
+    )
+    @login_request = LoginRequest.create(**login_request_params)
+    tag_logger do
+      logger.info(
+        "Sending login code #{@login_request.login_code} to " \
+          "#{@login_request.phone_number}",
+      )
+    end
     respond_to do |format|
       format.json do
-        login_request_params = params.expect(
-          login_request: [ :phone_number ],
-        )
-        login_request = LoginRequest.new(login_request_params)
-        tag_logger do
-          logger.info(
-            "Sending login code #{login_request.login_code} to " \
-              "#{login_request.phone_number}",
-          )
-        end
-        if login_request.save
+        if @login_request.persisted?
           data = if Rails.env.production?
             {}
           else
-            { "loginRequest" => LoginRequestSerializer.one(login_request) }
+            { "loginRequest" => LoginRequestSerializer.one(@login_request) }
           end
           render(json: data, status: :created)
         else
           render(
             json: {
-              errors: login_request.form_errors,
+              errors: @login_request.form_errors,
             },
             status: :unprocessable_content,
           )
         end
       end
+      format.turbo_stream
     end
   end
 

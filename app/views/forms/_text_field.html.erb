@@ -1,5 +1,15 @@
 <%- class_name = local_assigns.delete(:class) %>
 <%- error = form.object.errors.full_messages_for(name).first -%>
+<%- input_attributes = local_assigns.delete(:input) || {} -%>
+
+<%- input_attributes.merge!(delete_from(
+  local_assigns,
+  :value,
+  :required,
+  :placeholder,
+)) -%>
+
+<%- input_data = input_attributes.delete(:data) || {} -%>
 
 <%= render(
   "forms/field_wrapper",
@@ -9,10 +19,13 @@
   <%= form.text_field(
     name,
     class: "form-input p-2",
-    data: { error: error.present? }.compact_blank,
+    data: {
+      error: error.present?,
+      **input_data,
+    }.compact_blank,
     aria: {
       describedby: (form.field_id(name, "error") if error.present?),
     },
-    **local_assigns.slice(:required, :placeholder),
+    **input_attributes,
   ) %>
 <% end %>

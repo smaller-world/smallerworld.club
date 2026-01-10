@@ -12,7 +12,7 @@
 ) do %>
   <%= tag.div(
     class: class_names(
-      "form-input border-dashed size-36 mt-1",
+      "form-input icon_field_input_container",
       "mx-auto" => center,
     ),
     data: {
@@ -53,10 +53,10 @@
       </div>
     </template>
 
-    <%= render "overlays/modal_dialog", class: "icon_field-modal_dialog" do %>
+    <%= render "overlays/modal_dialog", class: "icon_field_modal_dialog" do %>
       <img data-filepond-target="editorImage" alt="">
 
-      <div class="icon_field-modal_dialog_footer">
+      <div class="icon_field_modal_dialog_footer">
         <button
           type="button"
           class="btn btn-action text-sm"

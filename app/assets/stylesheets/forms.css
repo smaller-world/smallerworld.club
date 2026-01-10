@@ -16,7 +16,7 @@
     [multiple],
     textarea,
     select {
-      @apply placeholder:text-shade-400 dark:bg-shade-950 dark:placeholder:text-shade-500;
+      @apply placeholder:text-shade-400 dark:bg-shade-900 dark:placeholder:text-shade-500;
     }
 
     [type="checkbox"],
@@ -39,8 +39,8 @@
   :where(.form-textarea),
   :where(.form-select),
   :where(.form-multiselect) {
-    @apply rounded-2xl border border-shade-300 dark:border-shade-700;
-    @apply leading-snug;
+    @apply rounded-2xl border;
+    @apply text-xl leading-snug;
 
     &:focus-visible {
       @apply border-focus-ring ring-focus-ring;
@@ -60,32 +60,32 @@
   :where(.field_with_errors) {
     @apply contents;
   }
+}
 
+@layer components {
   :where(.field_wrapper) {
-    @apply flex flex-col items-stretch gap-0.5;
+    @apply flex flex-col items-stretch gap-1.5;
   }
 
-  :where(.field_wrapper-label) {
-    @apply block font-headings text-sm leading-tight font-medium;
+  :where(.field_wrapper_label) {
+    @apply block font-headings text-sm leading-tight font-medium text-shade-600 dark:text-shade-300;
   }
 
-  :where(.field_wrapper-description) {
-    @apply text-xs text-shade-500;
-
-    line-height: 1.2;
+  :where(.field_wrapper_description) {
+    @apply text-xs leading-tight font-light text-shade-400 dark:text-shade-500;
   }
 
-  :where(.field_wrapper-error) {
+  :where(.field_wrapper_error) {
     @apply text-sm text-red-600;
   }
+}
 
-  :where(.icon_field) {
-    .form-input {
-      @apply rounded-app-icon;
+@layer components {
+  :where(.icon_field_input_container) {
+    @apply mt-1 size-36 rounded-app-icon border-dashed;
 
-      &:not(:has(> .filepond--root)) {
-        @apply animate-pulse bg-shade-300;
-      }
+    &:not(:has(> .filepond--root)) {
+      @apply animate-pulse bg-shade-300;
     }
 
     .filepond--root[data-style-panel-layout~="circle"] {
@@ -97,7 +97,7 @@
     }
   }
 
-  :where(.icon_field-modal_dialog) {
+  :where(.icon_field_modal_dialog) {
     .modal_panel {
       @apply mb-12 max-w-xl bg-transparent p-0 shadow-none;
       @apply focus-visible:ring-0;
@@ -126,12 +126,14 @@
     }
   }
 
-  :where(.icon_field-modal_dialog_footer) {
+  :where(.icon_field_modal_dialog_footer) {
     @apply absolute right-0 -bottom-12 left-0;
     @apply flex flex-col items-center;
     @apply pointer-events-none *:pointer-events-auto;
   }
+}
 
+@layer components {
   :where(.rich_text_area) {
     lexxy-editor {
       @apply min-h-56;
@@ -152,23 +154,29 @@
       }
     }
   }
+}
 
-  :where(.emoji_field) {
-    .form-input {
-      @apply size-10 p-2;
-      @apply text-center text-xl;
-      @apply cursor-pointer placeholder:text-transparent;
-      @apply hover:border-primary-400 aria-expanded:border-primary-400;
-    }
+@layer components {
+  :where(.emoji_field_input) {
+    @apply w-11 p-2;
+    @apply text-center text-xl;
+    @apply cursor-pointer placeholder:text-transparent;
+    @apply hover:border-primary-400 aria-expanded:border-primary-400;
   }
 
-  :where(.emoji_field-placeholder) {
+  :where(.emoji_field_placeholder) {
     @apply invisible absolute inset-0 z-0;
     @apply flex items-center justify-center;
     @apply pointer-events-none;
 
-    .form-input:placeholder-shown + & {
+    .emoji_field_input:placeholder-shown + & {
       @apply visible;
     }
+  }
+}
+
+@layer components {
+  :where(.otp_field_otp_input) {
+    @apply w-11 p-2 text-center;
   }
 }

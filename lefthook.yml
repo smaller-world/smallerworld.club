@@ -27,9 +27,14 @@ check:
       run: bin/rubocop --force-exclusion {files}
       glob: "*.{rb,rbi}"
       tags: rb
-    check-herb:
+    check-herb-lint:
       files: *modified-files
       run: npx herb-lint {files}
+      glob: "*.{html.erb}"
+      tags: erb
+    check-herb-format:
+      files: *modified-files
+      run: npx herb-format --check {files}
       glob: "*.{html.erb}"
       tags: erb
 
@@ -53,9 +58,14 @@ fix:
       run: bin/rubocop --force-exclusion --autocorrect {files}
       glob: "*.{rb,rbi}"
       tags: rb
-    fix-herb:
+    fix-herb-lint:
       files: *modified-files
-      run: npx herb-lint --fix
+      run: npx herb-lint --fix {files}
+      glob: "*.{html.erb}"
+      tags: erb
+    fix-herb-format:
+      files: *modified-files
+      run: npx herb-format {files}
       glob: "*.{html.erb}"
       tags: erb
 
@@ -94,8 +104,12 @@ pre-commit:
       run: bin/rubocop --force-exclusion --cache=true {staged_files}
       glob: "*.{rb,rbi}"
       tags: rb
-    check-herb:
+    check-herb-lint:
       run: npx herb-lint {staged_files}
+      glob: "*.{html.erb}"
+      tags: erb
+    check-herb-format:
+      run: npx herb-format --check {staged_files}
       glob: "*.{html.erb}"
       tags: erb
 

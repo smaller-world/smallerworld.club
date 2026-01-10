@@ -1,8 +1,7 @@
 @layer components {
   :where(.card) {
     @apply block rounded-3xl p-4;
-    @apply bg-body;
-    @apply border border-shade-300 dark:border-shade-700;
+    @apply bg-shade-body;
 
     a > & {
       @apply hover:border-focus-ring;

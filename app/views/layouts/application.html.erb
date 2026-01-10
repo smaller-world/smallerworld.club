@@ -69,14 +69,7 @@
   </head>
 
   <body>
-    <header class="app_header">
-      <%= link_to web_start_path, class: "btn app_header-logo_btn" do %>
-        <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
-        <span class="font-headings font-bold">smaller world</span>
-      <% end %>
-
-      <%= render "layouts/app_menu" %>
-    </header>
+    <header class="app_header"><%= render "layouts/app_menu" %></header>
 
     <main class="app_main"><%= render "layouts/flash" %><%= yield %></main>
   </body>

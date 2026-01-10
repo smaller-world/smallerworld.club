@@ -30,6 +30,7 @@ interface EditInstructions {
   };
 }
 
+// TODO: Split out editor functionality into a separate controller.
 class FilepondController extends Controller<HTMLElement> {
   // == Targets ==
 

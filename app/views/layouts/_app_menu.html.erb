@@ -1,17 +1,18 @@
 <div data-controller="dropdown" class="relative">
   <button
     type="button"
-    class="btn px-3 py-1 text-black dark:text-white"
+    class="btn text-shade-contrast gap-1 py-1 pr-3 pl-2"
     data-dropdown-target="trigger"
     data-action="dropdown#toggle"
     aria-haspopup="menu"
   >
-    <%= icon "bars-3", variant: :micro, class: "size-4" %>
-    <span>menu</span>
+    <%= vite_image_tag "assets/images/logo.png", class: "size-6" %>
+    <span class="text-lg font-bold">smaller world</span>
+    <%= icon "chevron-down", variant: :micro, class: "size-4 ml-0.5" %>
   </button>
 
   <div
-    class="dropdown_menu dropdown_menu-top_right card menu_card hidden min-w-52"
+    class="dropdown_menu dropdown_menu-top card menu_card hidden"
     data-dropdown-target="menu"
   >
     <% if (user = current_user) %>
@@ -44,14 +45,14 @@
       <% else %>
         <li role="presentation">
           <%= link_to(
-            new_session_with_redirect_path,
+            new_session_path,
             role: "menuitem",
             data: {
               action: "dropdown#toggle",
             },
           ) do %>
             <%= icon "arrow-right-end-on-rectangle", variant: :micro, class: "size-4" %>
-            <span class="font-headings text-sm"> sign in </span>
+            <span class="font-headings text-sm">sign in</span>
           <% end %>
         </li>
       <% end %>

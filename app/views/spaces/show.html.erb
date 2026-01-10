@@ -61,7 +61,14 @@
       <%= render(
         "native_devices/form",
         class: "self-center",
-        tooltip: "hear about happenings in this space!",
+        button: {
+          data: {
+            tooltip_content_value: tooltip,
+            tooltip_trigger_value: "manual",
+            tooltip_flash_immediately_value: true,
+            tooltip_flash_delay_value: 1000,
+          },
+        },
       ) %>
     <% end %>
 

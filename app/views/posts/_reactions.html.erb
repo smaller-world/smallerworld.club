@@ -20,9 +20,7 @@
       model: post.reactions.build,
       url: post_reactions_path(post),
       class: "relative",
-      data: {
-        controller: "form modal emoji-picker",
-      }
+      data: { controller: "form modal emoji-picker" },
     ) do |form| %>
       <%= form.hidden_field :emoji, data: { emoji_picker_target: "input" } %>
 

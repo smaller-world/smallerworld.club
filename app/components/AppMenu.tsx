@@ -104,7 +104,7 @@ const AppMenu: FC<AppMenuProps> = ({ ...otherProps }) => {
             </LinkItem>
             <Menu.Item
               leftSection={<SignInIcon />}
-              component={Link}
+              component="a"
               href={loginPath}
             >
               sign in

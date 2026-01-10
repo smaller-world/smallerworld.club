@@ -61,7 +61,7 @@ class User < ApplicationRecord
   has_one :world,
           inverse_of: :owner,
           foreign_key: :owner_id,
-          dependent: :nullify
+          dependent: :destroy
   accepts_nested_attributes_for :world, update_only: true
 
   has_many :native_devices,
