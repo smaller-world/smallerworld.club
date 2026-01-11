@@ -1,12 +1,13 @@
 @layer components {
   .flash {
-    @apply border-dashed border-primary-500 font-medium;
-    @apply bg-primary-50 text-primary-500 dark:bg-primary-950 dark:text-primary-400;
     @apply mx-4 rounded-2xl px-3 py-2;
+    @apply border-dashed border-primary-500;
+    @apply bg-primary-50 text-primary-500 dark:bg-primary-950 dark:text-primary-400;
+    @apply text-center font-medium;
   }
 
   .flash-alert {
-    @apply border-red-500;
-    @apply bg-red-50 text-red-500 dark:bg-red-950 dark:text-red-400;
+    @apply border-error-500;
+    @apply bg-error-50 text-error-500 dark:bg-error-950 dark:text-error-400;
   }
 }

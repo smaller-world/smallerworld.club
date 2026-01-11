@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
           if (redirect_url = params[:redirect_to])
             session[:return_to_after_authenticating] = redirect_url
           end
-          @page_title = "enter your phone #"
+          @page_title = "enter your phone #" unless hotwire_native_app?
           @login_request = LoginRequest.new
         end
       end
@@ -62,7 +62,11 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html do
         terminate_session!
-        redirect_to(root_path)
+        if hotwire_native_app?
+          refresh_or_redirect_to(app_start_path)
+        else
+          redirect_to(root_path)
+        end
       end
       format.json do
         terminate_session!
@@ -102,9 +106,9 @@ class SessionsController < ApplicationController
   sig { returns(String) }
   def default_after_authentication_path
     if hotwire_native_app?
-      spaces_path
+      app_start_path
     else
-      user_world_path
+      web_start_path
     end
   end
 end

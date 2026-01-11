@@ -53,7 +53,7 @@ class LoginRequestsController < ApplicationController
   def complete
     respond_to do |format|
       format.html do
-        @page_title = "check your phone"
+        @page_title = "check your phone" unless hotwire_native_app?
         @login_request = stored_login_request
       end
     end

@@ -15,7 +15,7 @@
       }
     },
     {
-      "patterns": ["^/login$", "^/settings$", "/new$", "/edit$"],
+      "patterns": ["^/login", "^/settings$", "/new$", "/edit$"],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false
