@@ -24,7 +24,7 @@
   /* Focus ring */
   --color-focus-ring: var(--color-primary-700);
   --color-shade-body: var(--color-white);
-  --color-shade-text: var(--color-primary-950);
+  --color-shade-text: var(--color-primary-900);
   --color-shade-contrast: var(--color-black);
   --color-shade-dimmed: var(--color-shade-600);
   --color-input-border: var(--color-shade-500);
@@ -100,7 +100,7 @@
     @media (prefers-color-scheme: dark) {
       --color-focus-ring: var(--color-primary-300);
       --color-shade-body: var(--color-shade-950);
-      --color-shade-text: var(--color-primary-50);
+      --color-shade-text: var(--color-primary-100);
       --color-shade-contrast: var(--color-white);
       --color-shade-dimmed: var(--color-shade-300);
     }

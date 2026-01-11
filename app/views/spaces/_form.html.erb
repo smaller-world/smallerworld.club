@@ -41,17 +41,17 @@
 
   <% if current_user.admin? %>
     <fieldset class="card pt-1.5">
-      <legend class="bg-body w-fit px-2 text-center font-medium">
+      <legend class="bg-body w-fit px-3 text-center text-xl font-medium">
         advanced settings
       </legend>
 
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <%= form.check_box :public, class: "form-checkbox" %>
 
         <%= form.label(
           :public,
           "show on spaces tab for all users",
-          class: "text-sm leading-tight"
+          class: "leading-tight text-lg"
         ) %>
       </div>
     </fieldset>
