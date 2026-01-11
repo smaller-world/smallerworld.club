@@ -2,7 +2,8 @@
 <%- error = form.object.errors.full_messages_for(name).first -%>
 <%- data = local_assigns.delete(:data) || {} -%>
 <%- controller = data.delete(:controller) -%>
-<%- input_attributes = delete_from(local_assigns, :required) -%>
+<%- input_attributes = delete_from(local_assigns, :value) -%>
+<%- otp_input_attributes = delete_from(local_assigns, :required) -%>
 <%- otp_container_attributes = local_assigns.delete(:otp_container) || {} -%>
 <%- otp_container_class = otp_container_attributes.delete(:class) %>
 <%- otp_container_data = otp_container_attributes.delete(:data) || {} -%>
@@ -16,7 +17,11 @@
   },
   **local_assigns,
 ) do %>
-  <%= form.hidden_field name, data: { otp_input_target: "input" } %>
+  <%= form.hidden_field(
+    name,
+    data: { otp_input_target: "input" },
+    **input_attributes,
+  ) %>
 
   <%= tag.div(
     class: class_names("flex gap-2", otp_container_class),
@@ -39,7 +44,7 @@
         aria: {
           describedby: (form.field_id(name, "error") if error.present?),
         },
-        **input_attributes,
+        **otp_input_attributes,
       ) %>
     <% end %>
   <% end %>

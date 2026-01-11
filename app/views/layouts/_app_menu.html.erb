@@ -1,7 +1,7 @@
 <div data-controller="dropdown" class="relative">
   <button
     type="button"
-    class="btn text-shade-contrast gap-1 py-1 pr-3 pl-2"
+    class="btn gap-1 py-1 pr-3 pl-2"
     data-dropdown-target="trigger"
     data-action="dropdown#toggle"
     aria-haspopup="menu"
@@ -18,8 +18,8 @@
     <% if (user = current_user) %>
       <div
         class="
-          font-headings dark:text-shade-500 text-shade-400 px-2 py-1
-          text-center text-xs leading-none font-light
+          font-headings text-shade-dimmed px-2 py-1 text-center text-xs
+          leading-none font-light
         "
       >
         signed in as
@@ -34,6 +34,7 @@
             destroy_session_path,
             role: "menuitem",
             form_class: "flex flex-col",
+            class: "text-destructive-600 dark:text-destructive-400",
             data: {
               action: "dropdown#toggle",
             },

@@ -2,6 +2,7 @@
   <%= back_link_to(
     @space.name,
     space_path(@space, post_id: @post.id, emulate_native_app: 1),
+    class: "self-center",
   ) do %>
     <%= icon "arrow-uturn-left", variant: :micro, class: "size-5" %>
     <span class="overflow-ellipsis">back to <%= @space.name %></span>

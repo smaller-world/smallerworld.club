@@ -10,6 +10,6 @@ export default class FormController extends Controller<HTMLFormElement> {
   // == Helpers ==
 
   get #submitButton(): HTMLButtonElement | null {
-    return this.element.querySelector("button[type='submit']");
+    return this.element.querySelector('button[type="submit"]');
   }
 }

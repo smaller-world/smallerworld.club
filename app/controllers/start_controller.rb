@@ -42,11 +42,11 @@ class StartController < ApplicationController
   def app
     respond_to do |format|
       format.html do
-        # if signed_in?
-        redirect_to(spaces_path)
-        # else
-        #   render(inertia: "SplashPage")
-        # end
+        if signed_in?
+          redirect_to(spaces_path)
+        else
+          redirect_to(new_session_path)
+        end
       end
     end
   end

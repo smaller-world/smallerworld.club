@@ -26,9 +26,11 @@
       class: "self-center",
     ) %>
 
-      <span class="text-error-600 dark:text-error-400 text-center text-xs">
-        (auto-filled during development)
-      </span>
+      <% if Rails.env.development? %>
+        <span class="text-error-600 dark:text-error-400 text-center text-xs">
+          (auto-filled during development)
+        </span>
+      <% end %>
     </div>
 
     <%= form.button class: "btn btn-action self-center" do %>

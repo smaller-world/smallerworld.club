@@ -16,7 +16,7 @@
     [multiple],
     textarea,
     select {
-      @apply placeholder:text-shade-400 dark:bg-shade-900 dark:placeholder:text-shade-500;
+      @apply placeholder:text-shade-400 dark:bg-shade-950 dark:placeholder:text-shade-500;
       @apply text-xl leading-snug;
       @apply px-3.5 py-2.5;
     }
@@ -41,14 +41,14 @@
   :where(.form-textarea),
   :where(.form-select),
   :where(.form-multiselect) {
-    @apply rounded-2xl border;
+    @apply rounded-2xl border-2 border-primary-500;
 
     &:focus-visible {
       @apply border-focus-ring ring-focus-ring;
     }
 
     &[data-error] {
-      @apply border-red-500 focus:border-red-500;
+      @apply border-error-500 focus:border-error-500;
     }
   }
 
@@ -83,7 +83,8 @@
 
 @layer components {
   :where(.icon_field_input_container) {
-    @apply mt-1 size-36 rounded-app-icon border-dashed;
+    @apply mt-1 size-36;
+    @apply rounded-app-icon border-dashed border-shade-500;
 
     &:not(:has(> .filepond--root)) {
       @apply animate-pulse bg-shade-300;

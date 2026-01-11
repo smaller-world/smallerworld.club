@@ -1,5 +1,9 @@
 <div class="page-container flex flex-col gap-6">
-  <%= back_link_to @space.name, space_path(@space, emulate_native_app: 1) %>
+  <%= back_link_to(
+    @space.name,
+    space_path(@space, emulate_native_app: 1),
+    class: "self-center",
+  ) %>
 
   <%= turbo_frame_tag dom_id(@space, :edit), target: "_top" do %>
     <%= render "spaces/form", space: @space %>

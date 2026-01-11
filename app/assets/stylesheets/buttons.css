@@ -1,11 +1,11 @@
 @layer components {
   :where(.btn) {
     @apply flex items-center justify-center gap-2 rounded-3xl px-4 py-2;
-    @apply font-headings font-semibold text-primary-600 dark:text-primary-500;
+    @apply font-headings text-lg font-semibold text-shade-contrast;
     @apply transition-colors duration-200 ease-out;
     @apply cursor-pointer;
     @apply ring-offset-2 dark:ring-offset-0;
-    @apply hover:bg-primary-200/50 hover:dark:bg-primary-900/50;
+    @apply hover:bg-primary-100 hover:dark:bg-primary-900;
 
     @media (pointer: coarse) {
       -webkit-touch-callout: none;
@@ -51,8 +51,8 @@
   }
 
   :where(.btn-action) {
-    @apply bg-primary-600 text-white;
-    @apply hover:bg-primary-700;
+    @apply bg-black text-white dark:bg-white dark:text-black;
+    @apply hover:bg-primary-700 dark:hover:bg-primary-300;
   }
 
   :where(.btn-readonly) {

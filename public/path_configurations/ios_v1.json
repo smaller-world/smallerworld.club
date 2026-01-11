@@ -9,13 +9,13 @@
       }
     },
     {
-      "patterns": ["^/spaces$"],
+      "patterns": ["^/spaces$", "^/login"],
       "properties": {
         "presentation": "replace_root"
       }
     },
     {
-      "patterns": ["^/login", "^/settings$", "/new$", "/edit$"],
+      "patterns": ["^/settings$", "/new$", "/edit$"],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false

@@ -19,17 +19,12 @@
     &::before {
       @apply absolute inset-0 -bottom-2 backdrop-blur-xs;
 
-      --color-background: var(--color-white);
-      @media (prefers-color-scheme: dark) {
-        --color-background: var(--color-shade-900);
-      }
-
       z-index: -1;
       content: "";
       background-image: linear-gradient(
         to top,
         transparent,
-        --alpha(var(--color-background) / 80%)
+        --alpha(var(--color-shade-body) / 80%)
       );
       mask: linear-gradient(to top, transparent, black --spacing(6));
     }
