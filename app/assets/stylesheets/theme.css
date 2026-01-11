@@ -26,6 +26,7 @@
   --color-shade-body: var(--color-white);
   --color-shade-text: var(--color-primary-950);
   --color-shade-contrast: var(--color-black);
+  --color-shade-dimmed: var(--color-shade-600);
 
   /* Border radius */
   --radius-app-icon: 22.37%;
@@ -55,6 +56,18 @@
   --color-shade-800: var(--color-gray-800);
   --color-shade-900: var(--color-gray-900);
   --color-shade-950: var(--color-gray-950);
+
+  --color-error-50: var(--color-red-50);
+  --color-error-100: var(--color-red-100);
+  --color-error-200: var(--color-red-200);
+  --color-error-300: var(--color-red-300);
+  --color-error-400: var(--color-red-400);
+  --color-error-500: var(--color-red-500);
+  --color-error-600: var(--color-red-600);
+  --color-error-700: var(--color-red-700);
+  --color-error-800: var(--color-red-800);
+  --color-error-900: var(--color-red-900);
+  --color-error-950: var(--color-red-950);
 }
 
 @layer base {
@@ -64,6 +77,7 @@
       --color-shade-body: var(--color-shade-900);
       --color-shade-text: var(--color-primary-50);
       --color-shade-contrast: var(--color-white);
+      --color-shade-dimmed: var(--color-shade-300);
     }
   }
 }

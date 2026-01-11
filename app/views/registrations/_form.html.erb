@@ -1,0 +1,57 @@
+<%= form_with model: world, class: "flex flex-col gap-3.5 p-4" do |form| %>
+  <%= render(
+    "forms/text_field",
+    form:,
+    name: :name,
+    label: "your name",
+    placeholder: "jimmy",
+    required: true,
+  ) %>
+
+  <% if login_request.persisted? %>
+    <%= render(
+      "forms/otp_field",
+      form:,
+      name: :login_code,
+      description: "enter the code sent to your phone",
+      value: (login_request.login_code if Rails.env.development?),
+      otp_container: {
+        data: {
+          controller: class_names(tooltip: Rails.env.development?),
+          tooltip_content_value: "(auto-filled during development)",
+          tooltip_trigger_value: "manual",
+          tooltip_flash_immediately_value: true,
+          tooltip_flash_duration_value: 1600,
+          tooltip_flash_delay_value: 200,
+          tooltip_placement_value: "bottom-start",
+        },
+      },
+    ) %>
+  <% end %>
+
+  <div class="flex flex-col gap-1.5">
+    <%= form.button class: "btn btn-action", data: { controller: "tooltip", tooltip_content_value: "suckkk", tooltip_placement_value: "bottom" } do %>
+      <% if login_request.persisted? %>
+        <%= icon(
+          "arrow-right-end-on-rectangle",
+          variant: :micro,
+          class: "size-5",
+        ) %>
+        <span>sign in</span>
+      <% else %>
+        <%= icon "device-phone-mobile", variant: :micro, class: "size-5" %>
+        <span>send login code</span>
+      <% end %>
+    <% end %>
+
+    <div
+      class="
+        text-shade-400 dark:text-shade-500 max-w-60 self-center text-center
+        text-xs leading-tight
+      "
+    >
+      by continuing, you agree to receive sms messages from
+      <span class="font-medium">smaller world</span>
+    </div>
+  </div>
+<% end %>

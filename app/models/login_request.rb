@@ -53,9 +53,6 @@ class LoginRequest < ApplicationRecord
   # == Scopes ==
 
   scope :incomplete, -> { where(completed_at: nil) }
-  scope :valid, -> {
-    incomplete.where("created_at > ?", EXPIRATION_DURATION.ago)
-  }
 
   # == Methods ==
 
@@ -69,9 +66,24 @@ class LoginRequest < ApplicationRecord
     "your smaller world login code is: #{login_code}"
   end
 
-  sig { void }
-  def mark_as_completed!
-    update!(completed_at: Time.current) unless completed?
+  sig { returns(T::Boolean) }
+  def expired?
+    created_at < EXPIRATION_DURATION.ago
+  end
+
+  sig { params(login_code: String).returns(T::Boolean) }
+  def authenticate(login_code)
+    if completed? || expired?
+      errors.add(:login_code, :invalid, message: "is no longer valid")
+      return false
+    end
+
+    if login_code != self.login_code
+      errors.add(:login_code, :invalid, message: "bad code")
+      return false
+    end
+
+    update(completed_at: Time.current)
   end
 
   sig { void }
@@ -89,6 +101,11 @@ class LoginRequest < ApplicationRecord
     generate_token_for(:registration)
   end
 
+  sig { returns(Phonelib::Phone) }
+  def phone
+    Phonelib.parse(phone_number)
+  end
+
   # == Helpers ==
 
   sig { returns(String) }
@@ -96,25 +113,6 @@ class LoginRequest < ApplicationRecord
     format("%06d", rand(0..999_999))
   end
 
-  sig do
-    params(phone_number: String, login_code: String)
-      .returns(T.nilable(LoginRequest))
-  end
-  def self.find_valid(phone_number:, login_code:)
-    phone_number = normalize_value_for(:phone_number, phone_number)
-    login_code.strip!
-    if login_code == special_occasion_verification_code
-      valid.reverse_chronological.find_by(phone_number:)
-    else
-      valid.find_by(phone_number:, login_code:)
-    end
-  end
-
-  sig { returns(T.nilable(String)) }
-  private_class_method def self.special_occasion_verification_code
-    Rails.application.credentials.authentication
-      &.special_occasion_verification_code
-  end
 
   sig { params(token: String).returns(LoginRequest) }
   def self.find_by_registration_token!(token)

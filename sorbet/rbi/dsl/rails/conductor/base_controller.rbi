@@ -30,6 +30,7 @@ class Rails::Conductor::BaseController
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
     include ::FormsHelper
+    include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
     include ::LocalTimeHelper

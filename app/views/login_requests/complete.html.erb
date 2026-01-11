@@ -1,0 +1,50 @@
+<div class="page-container flex max-w-sm flex-1 flex-col justify-center gap-5">
+  <div class="flex flex-col gap-1 text-center">
+    <h1 class="text-3xl leading-tight font-bold">
+      check your phone
+    </h1>
+
+    <p class="text-shade-dimmed leading-tight">
+      then enter the login code sent to you:
+    </p>
+  </div>
+
+  <%= form_with(
+    model: @login_request,
+    url: session_path,
+    method: :post,
+    class: "flex flex-col gap-6",
+  ) do |form| %>
+    <div class="flex flex-col gap-2">
+      <%= render(
+      "forms/otp_field",
+      form:,
+      name: :login_code,
+      label: false,
+      value: (@login_request.login_code if Rails.env.development?),
+      required: true,
+      class: "self-center",
+    ) %>
+
+      <span class="text-error-600 dark:text-error-400 text-center text-xs">
+        (auto-filled during development)
+      </span>
+    </div>
+
+    <%= form.button class: "btn btn-action self-center" do %>
+      <%= icon(
+        "arrow-right-end-on-rectangle",
+        variant: :micro,
+        class: "size-5",
+      ) %>
+
+      <span>sign in</span>
+    <% end %>
+  <% end %>
+
+  <p class="text-shade-dimmed text-center text-xs">
+    the code sent to
+    <span class="text-shade-contrast font-medium"><%= @login_request.phone.international %></span>
+    will work for <%= LoginRequest::EXPIRATION_DURATION.inspect %>.
+  </p>
+</div>

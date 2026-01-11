@@ -60,4 +60,8 @@
       @apply cursor-default opacity-100;
     }
   }
+
+  /* :where(.btn-lg) {
+    @apply px-4 py-3 text-xl;
+  } */
 }

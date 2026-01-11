@@ -11,12 +11,7 @@ import {
   Skeleton,
   Text,
 } from "@mantine/core";
-import {
-  type ComponentPropsWithoutRef,
-  type FC,
-  useEffect,
-  useState,
-} from "react";
+import { type ComponentPropsWithoutRef, type FC, useState } from "react";
 
 import { useCurrentUser } from "~/helpers/authentication";
 import { useContact } from "~/helpers/contact";
@@ -42,19 +37,6 @@ export interface AppMenuProps
 const AppMenu: FC<AppMenuProps> = ({ ...otherProps }) => {
   const currentUser = useCurrentUser();
   const [opened, setOpened] = useState(false);
-
-  const [loginPath, setLoginPath] = useState<string>(
-    routes.sessions.new.path(),
-  );
-  useEffect(() => {
-    setLoginPath(
-      routes.sessions.new.path({
-        query: {
-          redirect_to: location.pathname + location.search,
-        },
-      }),
-    );
-  }, []);
 
   return (
     <Menu
@@ -105,7 +87,7 @@ const AppMenu: FC<AppMenuProps> = ({ ...otherProps }) => {
             <Menu.Item
               leftSection={<SignInIcon />}
               component="a"
-              href={loginPath}
+              href={routes.sessions.new.path()}
             >
               sign in
             </Menu.Item>

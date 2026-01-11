@@ -1,10 +1,37 @@
-<div class="page-container flex max-w-sm flex-1 flex-col justify-center gap-2">
-  <div class="px-4 py-3">
-    <h1 class="text-center text-2xl leading-tight font-bold">
-      <span class="text-shade-600 dark:text-shade-300"> get into</span>
-      <span class="text-shade-contrast">smaller world</span>
-    </h1>
-  </div>
+<div class="page-container flex max-w-sm flex-1 flex-col justify-center gap-5">
+  <h1 class="text-center text-3xl leading-tight font-bold">
+    <span class="text-shade-dimmed"> get into</span>
+    <span class="text-shade-contrast">smaller world</span>
+  </h1>
 
-  <%= render "sessions/form", login_request: @login_request %>
+  <%= form_with(
+    model: @login_request,
+    url: (session_path if @login_request.persisted?),
+    method: :post,
+    class: "flex flex-col gap-6",
+  ) do |form| %>
+    <%= render(
+      "forms/phone_number_field",
+      form:,
+      name: :phone_number,
+      label: false,
+      placeholder: "enter your phone #...",
+      required: true,
+    ) %>
+
+    <%= form.button class: "btn btn-action self-center" do %>
+      <%= icon "device-phone-mobile", variant: :micro, class: "size-5" %>
+      <span>send login code</span>
+    <% end %>
+  <% end %>
+
+  <div
+    class="
+      text-shade-400 dark:text-shade-500 max-w-60 self-center text-center
+      text-xs leading-tight
+    "
+  >
+    by continuing, you agree to receive sms messages from
+    <span class="font-medium">smaller world</span>
+  </div>
 </div>

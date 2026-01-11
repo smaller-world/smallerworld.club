@@ -109,6 +109,9 @@ Rails.application.routes.draw do
   # == Login requests ==
 
   resources :login_requests, only: :create, export: true
+  get "/login/enter_code",
+      to: "login_requests#complete",
+      as: :complete_login_request
 
   # == Sessions ==
 

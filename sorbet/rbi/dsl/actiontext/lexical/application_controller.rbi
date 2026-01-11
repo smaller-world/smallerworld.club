@@ -31,6 +31,7 @@ class Actiontext::Lexical::ApplicationController
     include ::Actiontext::Lexical::ApplicationHelper
     include ::ApplicationHelper
     include ::FormsHelper
+    include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
     include ::LocalTimeHelper

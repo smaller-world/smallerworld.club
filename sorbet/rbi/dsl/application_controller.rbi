@@ -22,14 +22,15 @@ class ApplicationController
     include ::ActionView::Helpers::TagHelper
     include ::Turbo::Streams::ActionHelper
     include ::ActionText::ContentHelper
-    include ::Lexxy::TagHelper
     include ::ActionText::TagHelper
+    include ::Lexxy::TagHelper
     include ::InertiaRails::Helper
     include ::InertiaRails::AssetHelper
     include ::ViteRails::TagHelpers
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
     include ::FormsHelper
+    include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
     include ::LocalTimeHelper

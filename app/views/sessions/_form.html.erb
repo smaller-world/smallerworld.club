@@ -40,12 +40,6 @@
   <div class="flex flex-col gap-3">
     <%= form.button class: "btn btn-action self-center" do %>
       <% if login_request.persisted? %>
-        <%= icon(
-          "arrow-right-end-on-rectangle",
-          variant: :micro,
-          class: "size-5",
-        ) %>
-        <span>sign in</span>
       <% else %>
         <%= icon "device-phone-mobile", variant: :micro, class: "size-5" %>
         <span>send login code</span>

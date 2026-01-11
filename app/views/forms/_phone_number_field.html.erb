@@ -5,6 +5,18 @@
 <%- error = form.object.errors.full_messages_for(name).first -%>
 <%- input_attributes = delete_from(local_assigns, :required, :placeholder) -%>
 
+<%- country_code_input_attributes = input_attributes.merge(
+  local_assigns.delete(:country_code_input) || {},
+) -%>
+
+<%- country_code_input_class = country_code_input_attributes.delete(:class) %>
+
+<%- national_number_input_attributes = input_attributes.merge(
+  local_assigns.delete(:national_number_input) || {},
+) -%>
+
+<%- national_number_input_class = national_number_input_attributes.delete(:class) %>
+
 <%= render(
   "forms/field_wrapper",
   class: class_names("phone_number_field", class_name),
@@ -19,7 +31,10 @@
 
   <div class="flex gap-2">
     <%= tag.input(
-      class: "form-input field-sizing-content min-w-11 p-2",
+      class: class_names(
+        "form-input field-sizing-content min-w-11",
+        country_code_input_class,
+      ),
       id: form.field_id(name, "country_code"),
       type: "text",
       autocomplete: "tel-country-code mobile",
@@ -35,11 +50,14 @@
       aria: {
         describedby: (form.field_id(name, "error") if error.present?),
       },
-      **input_attributes,
+      **country_code_input_attributes,
     ) %>
 
     <%= tag.input(
-      class: "form-input p-2 flex-1 min-w-0",
+      class: class_names(
+        "form-input flex-1 min-w-0",
+        national_number_input_class,
+      ),
       id: form.field_id(name, "national_number"),
       type: "text",
       autocomplete: "tel-national mobile",
@@ -55,7 +73,7 @@
       aria: {
         describedby: (form.field_id(name, "error") if error.present?),
       },
-      **input_attributes,
+      **national_number_input_attributes,
     ) %>
   </div>
 <% end %>
