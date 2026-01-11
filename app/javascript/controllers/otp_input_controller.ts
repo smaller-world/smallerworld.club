@@ -41,9 +41,11 @@ export default class OTPInputController extends Controller<HTMLElement> {
 
   // == Actions ==
 
-  selectInputText(event: FocusEvent): void {
-    if (event.target instanceof HTMLInputElement) {
-      event.target.select();
+  selectInputText({ target }: FocusEvent): void {
+    if (target instanceof HTMLInputElement) {
+      requestAnimationFrame(() => {
+        target.select();
+      });
     }
   }
 }

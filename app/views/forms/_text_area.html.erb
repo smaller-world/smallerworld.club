@@ -1,7 +1,17 @@
 <%- class_name = local_assigns.delete(:class) -%>
 <%- error = form.object.errors.full_messages_for(name).first -%>
-<%- required = local_assigns.delete(:required) -%>
-<%- placeholder = local_assigns.delete(:placeholder) -%>
+<%- input_attributes = local_assigns.delete(:input) || {} -%>
+
+<%- input_attributes.merge!(delete_from(
+  local_assigns,
+  :required,
+  :placeholder,
+  :value,
+)) -%>
+
+<%- input_class = input_attributes.delete(:class) %>
+<%- input_data = input_attributes.delete(:data) || {} -%>
+<%- input_controller = input_attributes.delete(:controller) -%>
 
 <%= render(
   "forms/field_wrapper",
@@ -10,15 +20,15 @@
 ) do %>
   <%= form.text_area(
     name,
-    class: "form-textarea p-2",
-    required:,
-    placeholder:,
+    class: class_names("form-textarea p-2", input_class),
     data: {
-      controller: "textarea-autogrow",
+      controller: class_names("textarea-autogrow", input_controller),
       error: error.present? ,
+      **input_data,
     }.compact_blank,
     aria: {
       describedby: (form.field_id(name, "error") if error.present?),
     },
+    **input_attributes,
   ) %>
 <% end %>

@@ -2,7 +2,7 @@
 
 <%= form_with(
   model: space,
-  class: class_names("flex flex-col gap-4", class_name),
+  class: class_names("flex flex-col gap-6", class_name),
   data: {
     controller: "busy-reporter haptic-bridge",
     action: "turbo:submit-end->haptic-bridge#vibrate",
@@ -21,11 +21,13 @@
     "forms/text_area",
     form:,
     name: :description,
-    label: "purpose",
+    label: "your space's purpose",
     description: "what do people write about in this space?",
     placeholder: "a space to share project progress updates",
     required: true,
-    class: "min-h-24",
+    input: {
+      class: "min-h-24",
+    }
   ) %>
 
   <%= render(

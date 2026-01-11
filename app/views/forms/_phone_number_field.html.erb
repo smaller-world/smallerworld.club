@@ -31,19 +31,22 @@
 
   <div class="flex gap-2">
     <%= tag.input(
+      id: form.field_id(name, "country_code"),
       class: class_names(
         "form-input field-sizing-content min-w-11",
         country_code_input_class,
       ),
-      id: form.field_id(name, "country_code"),
-      type: "tel",
       inputmode: "tel",
       autocomplete: "tel-country-code mobile",
       value: phone.country_code || "+1",
       placeholder: "+1",
       data: {
         controller: "imask",
-        action: "phone-number-input#update blur->imask#setDefaultIfIncomplete",
+        action: class_names(
+          "phone-number-input#update",
+          "focus->phone-number-input#selectCountryCodeNumber",
+          "blur->imask#setDefaultIfIncomplete",
+        ),
         phone_number_input_target: "countryCodeInput",
         imask_mask_value: "+0[00]",
         error: error.present?,
@@ -55,12 +58,13 @@
     ) %>
 
     <%= tag.input(
+      id: form.field_id(name, "national_number"),
       class: class_names(
         "form-input flex-1 min-w-0",
         national_number_input_class,
       ),
-      id: form.field_id(name, "national_number"),
-      type: "text",
+      type: "tel",
+      inputmode: "tel",
       autocomplete: "tel-national mobile",
       value: phone.national_number,
       placeholder: "444-444-4444",

@@ -61,6 +61,8 @@
     --lexxy-color-accent-medium: var(--color-primary-400);
     --lexxy-radius: var(--radius-xl);
 
+    @apply border-2 border-input-border;
+
     @media (prefers-color-scheme: dark) {
       --lexxy-color-text: var(--color-white);
       --lexxy-color-canvas: var(--color-shade-950);
@@ -96,6 +98,7 @@
 
   :where(lexxy-toolbar) {
     @apply p-1;
+    @apply border-b-2 border-input-border;
 
     button,
     summary {

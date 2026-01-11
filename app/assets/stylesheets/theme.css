@@ -27,6 +27,7 @@
   --color-shade-text: var(--color-primary-950);
   --color-shade-contrast: var(--color-black);
   --color-shade-dimmed: var(--color-shade-600);
+  --color-input-border: var(--color-shade-500);
 
   /* Border radius */
   --radius-app-icon: 22.37%;

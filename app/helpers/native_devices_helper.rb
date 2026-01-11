@@ -11,6 +11,6 @@ module NativeDevicesHelper
 
   sig { returns(T::Boolean) }
   def installation_id?
-    cookies.include?(:installation_id)
+    cookies.key?(:installation_id)
   end
 end

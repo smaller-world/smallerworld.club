@@ -16,8 +16,8 @@
     [multiple],
     textarea,
     select {
-      @apply placeholder:text-shade-400 dark:bg-shade-950 dark:placeholder:text-shade-500;
-      @apply text-xl leading-snug;
+      @apply bg-shade-body placeholder:text-shade-400 dark:placeholder:text-shade-500;
+      @apply text-lg leading-snug;
       @apply px-3.5 py-2.5;
     }
 
@@ -41,7 +41,7 @@
   :where(.form-textarea),
   :where(.form-select),
   :where(.form-multiselect) {
-    @apply rounded-2xl border-2 border-primary-500;
+    @apply rounded-2xl border-2 border-input-border;
 
     &:focus-visible {
       @apply border-focus-ring ring-focus-ring;
@@ -50,6 +50,10 @@
     &[data-error] {
       @apply border-error-500 focus:border-error-500;
     }
+  }
+
+  :where(.form-input-lg) {
+    @apply text-xl;
   }
 
   :where(.form-checkbox),
@@ -65,15 +69,15 @@
 
 @layer components {
   :where(.field_wrapper) {
-    @apply flex flex-col items-stretch gap-1.5;
+    @apply flex flex-col items-stretch gap-1;
   }
 
   :where(.field_wrapper_label) {
-    @apply block font-headings text-sm leading-tight font-medium text-shade-600 dark:text-shade-300;
+    @apply block font-headings text-sm leading-tight font-medium text-shade-700 dark:text-shade-200;
   }
 
   :where(.field_wrapper_description) {
-    @apply text-xs leading-tight font-light text-shade-400 dark:text-shade-500;
+    @apply mb-1 text-xs leading-tight text-shade-dimmed;
   }
 
   :where(.field_wrapper_error) {
@@ -84,7 +88,7 @@
 @layer components {
   :where(.icon_field_input_container) {
     @apply mt-1 size-36;
-    @apply rounded-app-icon border-dashed border-shade-500;
+    @apply rounded-app-icon border-dashed border-input-border;
 
     &:not(:has(> .filepond--root)) {
       @apply animate-pulse bg-shade-300;
@@ -147,7 +151,7 @@
     }
 
     lexxy-toolbar {
-      @apply rounded-t-2xl dark:bg-shade-900;
+      @apply rounded-t-2xl bg-shade-body;
 
       :has(> [name="highlight"]),
       [name="upload"],
@@ -155,13 +159,17 @@
         @apply hidden;
       }
     }
+
+    .lexxy-editor__content {
+      @apply text-lg;
+    }
   }
 }
 
 @layer components {
   :where(.emoji_field_input) {
     @apply w-11 p-2;
-    @apply text-center text-xl;
+    @apply text-center;
     @apply cursor-pointer placeholder:text-transparent;
     @apply hover:border-primary-400 aria-expanded:border-primary-400;
   }

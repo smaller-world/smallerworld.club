@@ -2,13 +2,6 @@
   "settings": {},
   "rules": [
     {
-      "patterns": [".*"],
-      "properties": {
-        "context": "default",
-        "pull_to_refresh_enabled": true
-      }
-    },
-    {
       "patterns": ["^/spaces$", "^/login"],
       "properties": {
         "presentation": "replace_root"

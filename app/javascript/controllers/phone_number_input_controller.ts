@@ -49,4 +49,16 @@ export default class PhoneNumberInputController extends Controller<HTMLElement> 
       this.inputTarget.value = "";
     }
   }
+
+  selectCountryCodeNumber({ target }: FocusEvent): void {
+    if (target instanceof HTMLInputElement) {
+      requestAnimationFrame(() => {
+        if (target.value.length > 1) {
+          target.setSelectionRange(1, target.value.length);
+        } else {
+          target.select();
+        }
+      });
+    }
+  }
 }

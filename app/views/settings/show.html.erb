@@ -1,34 +1,39 @@
 <div class="page-container flex flex-col gap-6">
-  <fieldset class="card flex flex-col pt-1">
-    <legend class="bg-body w-fit px-2 text-center font-medium">
-      notifications
-    </legend>
+  <% if hotwire_native_app? %>
+    <fieldset class="card flex flex-col pt-1">
+      <legend class="bg-body w-fit px-2 text-center font-medium">
+        notifications
+      </legend>
 
-    <% if (native_device = current_native_device) %>
-      <%= button_to(
-        test_native_device_path(native_device),
-        id: dom_id(native_device, :test),
-        class: "btn btn-action",
-        form: {
-          class: "flex flex-col",
-          data: {
-            controller: "flash",
-            action: "turbo:submit-end->flash#show",
-            flash_text_value: "notification sent!",
+      <% if (native_device = current_native_device) %>
+        <%= button_to(
+          test_native_device_path(native_device),
+          id: dom_id(native_device, :test),
+          class: "btn btn-action",
+          form: {
+            class: "flex flex-col",
+            data: {
+              controller: "flash",
+              action: "turbo:submit-end->flash#show",
+              flash_text_value: "notification sent!",
+            },
           },
-        },
-      ) do %>
-        <%= icon "paper-airplane", variant: :mini, class: "size-5" %>
-        <span data-flash-target="textContainer">send test notification</span>
+        ) do %>
+          <%= icon "paper-airplane", variant: :mini, class: "size-5" %>
+          <span data-flash-target="textContainer">send test notification</span>
+        <% end %>
+      <% else %>
+        <%= render "native_devices/form" %>
       <% end %>
-    <% else %>
-      <%= render "native_devices/form" %>
-    <% end %>
-  </fieldset>
+    </fieldset>
+  <% end %>
 
   <%= button_to(
     destroy_session_path,
-    class: "btn btn-action bg-destructive-600 dark:bg-destructive-400",
+    class: class_names(
+      "btn btn-action self-center",
+      "bg-destructive-500 dark:bg-destructive-700 text-white",
+    ),
     form_class: "flex flex-col",
     data: {
       action: "dropdown#toggle",
