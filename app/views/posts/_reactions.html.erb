@@ -4,14 +4,14 @@
 
     <%= post_reaction_group_button(
       group,
-      class: "btn btn-readonly post_card-reaction_button",
+      class: "btn btn-readonly post_card_reaction_button",
       disabled: !allowed_to?(:react?, post),
       aria: {
         pressed: reacted,
       },
     ) do %>
-      <span class="post_card-reaction_emoji"><%= group.emoji %></span>
-      <span class="post_card-reaction_count"><%= group.count %></span>
+      <span class="post_card_reaction_emoji"><%= group.emoji %></span>
+      <span class="post_card_reaction_count"><%= group.count %></span>
     <% end %>
   <% end %>
 

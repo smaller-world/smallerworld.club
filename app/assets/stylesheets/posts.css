@@ -3,19 +3,19 @@
     @apply relative;
   }
 
-  .post_card-header {
+  .post_card_header {
     @apply flex justify-between gap-1 text-xs text-shade-500;
   }
 
-  .post_card-content {
+  .post_card_content {
     @apply flex flex-col gap-1;
   }
 
-  .post_card-footer {
+  .post_card_footer {
     @apply flex justify-between;
   }
 
-  .post_card-loading_overlay {
+  .post_card_loading_overlay {
     @apply absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xs;
     @apply pointer-events-none opacity-0 transition-opacity duration-200 ease-out;
     @apply text-white dark:text-primary-500;
@@ -26,7 +26,7 @@
     }
   }
 
-  .post_card-reaction_button {
+  .post_card_reaction_button {
     @apply gap-1 py-0.5 pr-2 pl-1.5;
     @apply leading-0;
 
@@ -37,11 +37,11 @@
     }
   }
 
-  .post_card-reaction_emoji {
+  .post_card_reaction_emoji {
     @apply font-emoji text-base;
   }
 
-  .post_card-reaction_count {
+  .post_card_reaction_count {
     @apply font-headings text-xs leading-none;
 
     :disabled & {
