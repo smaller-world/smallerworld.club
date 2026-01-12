@@ -2,7 +2,7 @@
 
 _your new secret blog, for close friends only._
 
-## setup
+## dev setup
 
 ```bash
 # install tools
