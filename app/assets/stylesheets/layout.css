@@ -5,7 +5,7 @@
 }
 
 @layer components {
-  :where(.page-container) {
+  :where(.page_container) {
     @apply w-full max-w-xl self-center p-4 native:py-0;
   }
 }

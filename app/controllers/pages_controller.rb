@@ -7,7 +7,9 @@ class PagesController < ApplicationController
   # GET /
   def landing
     respond_to do |format|
-      format.html
+      format.html do
+        render(inertia: "LandingPage")
+      end
     end
   end
 end

@@ -8,7 +8,7 @@ export default class TooltipController extends Controller<HTMLElement> {
   static values = {
     content: String,
     trigger: String,
-    placement: String,
+    placement: { type: String, default: "top" },
     hideOnClick: { type: Boolean, default: true },
     flashImmediately: Boolean,
     flashDuration: { type: Number, default: 2000 },
