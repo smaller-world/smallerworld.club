@@ -98,7 +98,7 @@
 
   :where(lexxy-toolbar) {
     @apply p-1;
-    @apply border-b-2 border-input-border;
+    @apply border-b border-input-border/40;
 
     button,
     summary {
