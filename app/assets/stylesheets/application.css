@@ -1,0 +1,52 @@
+/* Global styles */
+@layer base {
+  :where(:focus-visible) {
+    @apply outline-2 outline-offset-2 outline-focus-ring;
+  }
+
+  html,
+  :host {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-headings;
+    }
+  }
+
+  fieldset {
+    @apply font-headings;
+  }
+
+  body {
+    @apply bg-shade-body text-shade-text;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+/* Global utilities */
+@layer utilities {
+  .overflow-anchor-none {
+    overflow-anchor: none;
+  }
+}
+
+/* Override hover variant */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @slot;
+    }
+  }
+}

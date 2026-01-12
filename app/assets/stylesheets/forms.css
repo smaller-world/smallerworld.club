@@ -1,8 +1,12 @@
 @layer components {
-  :where(.form-input),
-  :where(.form-textarea),
-  :where(.form-select),
-  :where(.form-multiselect) {
+  :where(.field_with_errors) {
+    @apply contents;
+  }
+
+  :where(.form_input),
+  :where(.form_textarea),
+  :where(.form_select),
+  :where(.form_multiselect) {
     @apply bg-shade-body px-3.5 py-2.5;
     @apply rounded-2xl border-2 border-input-border;
     @apply placeholder:text-shade-400 dark:placeholder:text-shade-500;
@@ -17,12 +21,12 @@
     }
   }
 
-  :where(.form-input-lg) {
+  :where(.form_input-lg) {
     @apply text-xl;
   }
 
-  :where(.form-checkbox),
-  :where(.form-radio) {
+  :where(.form_checkbox),
+  :where(.form_radio) {
     @apply size-6 rounded-3xl border-2 text-shade-contrast;
 
     /* CSS specifier trick to override white border from Tailwind form plugin */
@@ -39,10 +43,6 @@
     &:focus {
       @apply ring-0 ring-offset-0 outline-focus-ring;
     }
-  }
-
-  :where(.field_with_errors) {
-    @apply contents;
   }
 }
 

@@ -34,7 +34,7 @@
     <% 1..6.times do |index| %>
       <%= tag.input(
         id: form.field_id(name, "otp", index),
-        class: "form-input otp_field_otp_input",
+        class: "form_input otp_field_otp_input",
         type: "text",
         autocomplete: ("one-time-code" if index == 0),
         data: {

@@ -21,14 +21,6 @@
   /* Z-indices */
   --z-flash: 40;
 
-  /* Colors */
-  --color-focus-ring: var(--color-primary-700);
-  --color-shade-body: var(--color-white);
-  --color-shade-text: var(--color-primary-900);
-  --color-shade-contrast: var(--color-black);
-  --color-shade-dimmed: var(--color-shade-600);
-  --color-input-border: var(--color-shade-500);
-
   /* Radiuses */
   --radius-app-icon: 22.37%;
 }
@@ -95,48 +87,24 @@
   --color-destructive-950: var(--color-red-950);
 }
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-focus-ring: var(--color-primary-300);
-    --color-shade-body: var(--color-shade-950);
-    --color-shade-text: var(--color-primary-100);
-    --color-shade-contrast: var(--color-white);
-    --color-shade-dimmed: var(--color-shade-300);
-  }
+@theme {
+  --color-focus-ring: var(--color-primary-700);
+  --color-shade-body: var(--color-white);
+  --color-shade-text: var(--color-primary-900);
+  --color-shade-contrast: var(--color-black);
+  --color-shade-dimmed: var(--color-shade-600);
+  --color-input-border: var(--color-shade-500);
 }
 
-@layer base {
-  :where(:focus-visible) {
-    @apply outline-2 outline-offset-2 outline-focus-ring;
-  }
-
-  html,
-  :host {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply font-headings;
+@layer theme {
+  @media (prefers-color-scheme: dark) {
+    :root,
+    :host {
+      --color-focus-ring: var(--color-primary-300);
+      --color-shade-body: var(--color-shade-950);
+      --color-shade-text: var(--color-primary-100);
+      --color-shade-contrast: var(--color-white);
+      --color-shade-dimmed: var(--color-shade-300);
     }
-  }
-
-  fieldset {
-    @apply font-headings;
-  }
-
-  body {
-    @apply bg-shade-body text-shade-text;
-  }
-
-  button {
-    @apply cursor-pointer;
-  }
-}
-
-@layer utilities {
-  .overflow-anchor-none {
-    overflow-anchor: none;
   }
 }

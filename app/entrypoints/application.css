@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-@import "../assets/stylesheets/variants.css";
 @import "../assets/stylesheets/theme.css";
+@import "../assets/stylesheets/application.css";
 @import "../assets/stylesheets/hotwire.css";
 @import "../assets/stylesheets/animation.css";
 @import "../assets/stylesheets/spinners.css";
@@ -18,10 +18,9 @@
 @import "../assets/stylesheets/lexxy.css";
 @import "../assets/stylesheets/posts.css";
 @import "../assets/stylesheets/notifications.css";
+@import "../assets/stylesheets/landing.css";
 
 @plugin "@tailwindcss/forms" {
   strategy: "base";
 }
 @plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/aspect-ratio";
-@plugin "@tailwindcss/container-queries";
