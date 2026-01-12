@@ -120,7 +120,7 @@ const LogoutItem: FC<LogoutItemProps> = ({ onClose, ...otherProps }) => {
   const { trigger, mutating } = useRouteMutation(routes.sessions.destroy, {
     descriptor: "sign out",
     onSuccess: () => {
-      visit(routes.landing.show.path());
+      visit(routes.pages.landing.path());
       onClose();
     },
   });

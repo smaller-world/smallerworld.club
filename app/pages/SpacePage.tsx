@@ -243,7 +243,7 @@ SpacePage.layout = (page) => (
   <AppLayout<SpacePageProps>
     title={({ space }) => space.name}
     manifestUrl={routes.userManifest.show.path()}
-    pwaScope={withTrailingSlash(routes.landing.show.path())}
+    pwaScope={withTrailingSlash(routes.pages.landing.path())}
     footer={({ currentUser, userWorld }) =>
       currentUser ? <UserFooter {...{ currentUser }} world={userWorld} /> : null
     }

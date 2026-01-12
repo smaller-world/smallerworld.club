@@ -358,7 +358,7 @@ Rails.application.routes.draw do
 
   # == Pages ==
 
-  root "landing#show", export: true
+  root "pages#landing", export: true
   get "/src" => redirect(
     "https://github.com/hulloitskai/smallerworld",
     status: 302,
