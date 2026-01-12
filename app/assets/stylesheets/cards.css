@@ -1,10 +1,10 @@
 @layer components {
   :where(.card) {
-    @apply block rounded-3xl p-4;
-    @apply border border-shade-300 bg-shade-body dark:border-shade-700;
+    @apply block rounded-3xl bg-shade-body p-4;
+    @apply border border-shade-300 dark:border-shade-700;
 
     a > & {
-      @apply hover:border-focus-ring;
+      @apply hover:border-shade-600 dark:hover:border-shade-400;
     }
   }
 }
