@@ -3,7 +3,7 @@
 
 require "sorbet-runtime"
 
-module Contact
+module ContactUs
   extend T::Sig
 
   # == Accessors

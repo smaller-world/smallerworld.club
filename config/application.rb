@@ -38,7 +38,7 @@ module SmallerWorld
     require "fullstory"
     require "clarity"
     require "amplitude"
-    require "contact"
+    require "contact_us"
     require "service_worker_app"
     require "overpowered"
     require "canny"

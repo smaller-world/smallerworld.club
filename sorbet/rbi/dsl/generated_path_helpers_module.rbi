@@ -67,6 +67,9 @@ module GeneratedPathHelpersModule
   def edit_user_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def email_contact_us_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def feedback_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -296,6 +299,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def shortlinks_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def sms_contact_us_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def space_path(*args); end

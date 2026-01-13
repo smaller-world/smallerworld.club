@@ -66,9 +66,13 @@ Rails.application.routes.draw do
     end
   end
 
-  # == Contact ==
+  # == Contact us ==
 
   resource :contact_url, only: :show, export: { namespace: "contactUrl" }
+  resource :contact_us, only: [] do
+    post :sms
+    post :email
+  end
 
   # == Push Subscriptions ==
 

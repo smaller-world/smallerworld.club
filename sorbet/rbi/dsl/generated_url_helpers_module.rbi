@@ -67,6 +67,9 @@ module GeneratedUrlHelpersModule
   def edit_user_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def email_contact_us_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def feedback_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -296,6 +299,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def shortlinks_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def sms_contact_us_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def space_post_url(*args); end

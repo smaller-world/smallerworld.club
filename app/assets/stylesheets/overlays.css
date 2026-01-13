@@ -19,11 +19,7 @@
     @apply transition-opacity transition-discrete duration-300 ease-out;
 
     dialog[open] & {
-      @apply opacity-100;
-
-      @starting-style {
-        @apply opacity-0;
-      }
+      @apply opacity-100 starting:opacity-0;
     }
 
     dialog[open][data-closing] & {
@@ -43,11 +39,9 @@
     margin-bottom: env(safe-area-inset-bottom);
 
     dialog[open] & {
-      @apply translate-y-0 scale-100 opacity-100;
-
-      @starting-style {
-        @apply translate-y-4 scale-95 opacity-0;
-      }
+      @apply translate-y-0 starting:translate-y-4;
+      @apply scale-100 starting:scale-95;
+      @apply opacity-100 starting:opacity-0;
     }
 
     dialog[open][data-closing] & {
@@ -76,14 +70,14 @@
       }
     }
 
-    li {
-      @apply rounded-xl;
-      @apply hover:bg-shade-100 dark:hover:bg-shade-900;
+    [role="separator"] {
+      @apply border-t border-shade-200 dark:border-shade-800;
+    }
 
-      [role="menuitem"] {
-        @apply flex items-center gap-2 rounded-xl p-2;
-        @apply font-headings font-semibold;
-      }
+    [role="menuitem"] {
+      @apply flex items-center gap-2 rounded-xl px-2 py-1;
+      @apply font-headings text-sm font-semibold;
+      @apply hover:bg-shade-100 dark:hover:bg-shade-900;
     }
   }
 
@@ -92,10 +86,7 @@
   }
 
   :where(.dropdown_menu-top) {
-    @apply top-0 origin-top;
-
-    left: 50%;
-    transform: translateX(-50%);
+    @apply top-0 left-1/2 origin-top -translate-x-1/2;
   }
 
   :where(.dropdown_menu-top_left) {
@@ -112,7 +103,7 @@
   }
 
   :where(.menu_card) {
-    @apply min-w-60 rounded-2xl p-1;
+    @apply flex min-w-60 flex-col gap-1 rounded-2xl p-2;
     @apply border border-primary-300 dark:border-primary-700;
     @apply shadow-md;
   }

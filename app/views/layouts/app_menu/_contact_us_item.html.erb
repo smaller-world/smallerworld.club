@@ -1,0 +1,19 @@
+<li role="presentation">
+  <%= button_to(
+    sms_contact_us_path,
+    role: "menuitem",
+    data: {
+      action: "dropdown#toggle",
+    },
+    form: {
+      class: "flex flex-col",
+      data: { turbo: false },
+    },
+    params: {
+      body: "i'm contacting u about smaller world! my name is ",
+    },
+  ) do %>
+    <%= icon "chat-bubble-oval-left", variant: :micro, class: "size-4" %>
+    <span>contact the creator</span>
+  <% end %>
+</li>

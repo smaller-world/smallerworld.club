@@ -25,7 +25,7 @@
   --radius-app-icon: 22.37%;
 
   /* Borders */
-  --default-border-width: 1.5px;
+  /* --default-border-width: 1.5px; */
 }
 
 @theme inline {
