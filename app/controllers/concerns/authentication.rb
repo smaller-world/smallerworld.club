@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-module AuthenticatesUsers
+module Authentication
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
@@ -124,10 +124,14 @@ module AuthenticatesUsers
   def handle_not_authenticated(error)
     respond_to do |format|
       format.html do
-        redirect_to(
-          new_session_path(redirect_to: request.fullpath),
-          alert: "please sign in to continue",
-        )
+        if hotwire_native_app?
+          head :unauthorized
+        else
+          redirect_to(
+            new_session_path(redirect_to: request.fullpath),
+            alert: "please sign in to continue",
+          )
+        end
       end
       format.json do
         render(

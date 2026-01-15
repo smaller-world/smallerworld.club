@@ -1,0 +1,11 @@
+<% if allowed_to?(:manage?, @world) %>
+  <%= link_to "settings", settings_path, class: "hidden", data: {
+    controller: "button-bridge",
+    bridge_title: "settings",
+    bridge_ios_image: "gearshape.fill",
+  } %>
+<% end %>
+
+<div class="page_container flex flex-col gap-6">
+  <h1 class="text-2xl font-bold ta-center">your world</h1>
+</div>

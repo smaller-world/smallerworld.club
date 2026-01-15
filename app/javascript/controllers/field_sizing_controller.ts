@@ -1,35 +1,30 @@
 import { Controller } from "@hotwired/stimulus";
-import invariant from "tiny-invariant";
+// @ts-expect-error No types for this package
+import autosizeInput from "autosize-input";
 
-export default class FieldSizingController extends Controller<HTMLElement> {
+export default class FieldSizingController extends Controller<HTMLInputElement> {
   // == Configuration ==
   static get shouldLoad(): boolean {
     return !CSS.supports("field-sizing: content");
   }
 
-  // == Targets ==
+  // == State ==
 
-  static targets = ["sizer"];
-  declare readonly sizerTarget: HTMLElement;
-  declare readonly hasSizerTarget: boolean;
+  #cleanupAutosizer?: (() => void) | null;
 
   // == Lifecycle ==
 
   connect(): void {
     super.connect();
-    invariant(this.hasSizerTarget, "Missing sizer target");
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    this.#cleanupAutosizer = autosizeInput(this.element);
   }
 
   disconnect(): void {
     super.disconnect();
-  }
-
-  // == Actions ==
-
-  resize({ target }: InputEvent): void {
-    if (!(target instanceof HTMLInputElement)) {
-      return;
+    if (this.#cleanupAutosizer) {
+      this.#cleanupAutosizer();
+      this.#cleanupAutosizer = null;
     }
-    // this.sizerTarget.style.width = target.get
   }
 }

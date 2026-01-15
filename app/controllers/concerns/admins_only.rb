@@ -6,7 +6,7 @@ module AdminsOnly
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  include AuthenticatesUsers
+  include Authentication
 
   requires_ancestor { ActionController::Base }
 

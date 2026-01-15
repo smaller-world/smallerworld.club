@@ -3,17 +3,16 @@
 <%- phone = Phonelib.parse(form.object.send(name)) -%>
 <%- controller = data.delete(:controller) -%>
 <%- error = form.object.errors.full_messages_for(name).first -%>
-<%- input_attributes = delete_from(local_assigns, :required, :placeholder) -%>
+<%- shared_input_attributes = delete_from(local_assigns, :required) -%>
 
-<%- country_code_input_attributes = input_attributes.merge(
-  local_assigns.delete(:country_code_input) || {},
-) -%>
+<%- country_code_input_attributes = shared_input_attributes
+  .merge(local_assigns.delete(:country_code_input) || {}) -%>
 
 <%- country_code_input_class = country_code_input_attributes.delete(:class) %>
 
-<%- national_number_input_attributes = input_attributes.merge(
-  local_assigns.delete(:national_number_input) || {},
-) -%>
+<%- national_number_input_attributes = shared_input_attributes
+  .merge(delete_from(local_assigns, :placeholder, :autofocus))
+  .merge(local_assigns.delete(:national_number_input) || {}) -%>
 
 <%- national_number_input_class = national_number_input_attributes.delete(:class) %>
 
@@ -33,15 +32,16 @@
     <%= tag.input(
       id: form.field_id(name, "country_code"),
       class: class_names(
-        "form_input field-sizing-content min-w-11",
+        "form_input field-sizing-content min-w-11 max-w-20",
         country_code_input_class,
       ),
       inputmode: "tel",
       autocomplete: "tel-country-code mobile",
-      value: phone.country_code || "+1",
       placeholder: "+1",
+      maxlength: 4,
+      value: phone.country_code || "+1",
       data: {
-        controller: "imask",
+        controller: "imask field-sizing",
         action: class_names(
           "phone-number-input#update",
           "focus->phone-number-input#selectCountryCodeNumber",
@@ -67,7 +67,7 @@
       inputmode: "tel",
       autocomplete: "tel-national mobile",
       value: phone.national_number,
-      placeholder: "444-444-4444",
+      placeholder: placeholder || "444-444-4444",
       data: {
         controller: "imask",
         action: "phone-number-input#update",

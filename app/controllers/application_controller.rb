@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Method
   include Logging
   include RendersJsonException
-  include AuthenticatesUsers
+  include Authentication
   include AuthenticatesFriends
   include LoadsNativeDevices
   include SharesApplicationProps

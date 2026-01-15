@@ -12,39 +12,43 @@ module Users
     def show
       respond_to do |format|
         format.html do
-          world = current_world or next redirect_to(new_registration_path)
-          latest_friends = world.friends
-            .reverse_chronological
-            .where.associated(:push_registrations)
-            .distinct
-            .select(:id, :created_at, :emoji)
-            .first(3)
-          if latest_friends.size < 3
-            latest_friends += world.friends
+          @world = current_world or next redirect_to(new_registration_path)
+          if hotwire_native_app?
+            render "worlds/show"
+          else
+            latest_friends = @world.friends
               .reverse_chronological
-              .where.missing(:push_registrations)
+              .where.associated(:push_registrations)
               .distinct
               .select(:id, :created_at, :emoji)
-              .first(3 - latest_friends.size)
+              .first(3)
+            if latest_friends.size < 3
+              latest_friends += @world.friends
+                .reverse_chronological
+                .where.missing(:push_registrations)
+                .distinct
+                .select(:id, :created_at, :emoji)
+                .first(3 - latest_friends.size)
+            end
+            user_created_posts = @world.posts
+              .where.not(id: @world.posts.auto_generated.select(:id))
+            render(
+              inertia: "UserWorldPage",
+              world_theme: @world.theme,
+              props: {
+                "faviconLinks" => world_favicon_links(
+                  @world,
+                  except_apple_touch_icon: true,
+                ),
+                world: WorldSerializer.one(@world),
+                "latestFriendEmojis" => latest_friends.map(&:emoji),
+                "pendingJoinRequests" => @world.join_requests.pending.count,
+                "pendingInvitations" => @world.invitations.pending.count,
+                "hasAtLeastOneUserCreatedPost" =>
+                  user_created_posts.exists?,
+              },
+            )
           end
-          user_created_posts = world.posts
-            .where.not(id: world.posts.auto_generated.select(:id))
-          render(
-            inertia: "UserWorldPage",
-            world_theme: world.theme,
-            props: {
-              "faviconLinks" => world_favicon_links(
-                world,
-                except_apple_touch_icon: true,
-              ),
-              world: WorldSerializer.one(world),
-              "latestFriendEmojis" => latest_friends.map(&:emoji),
-              "pendingJoinRequests" => world.join_requests.pending.count,
-              "pendingInvitations" => world.invitations.pending.count,
-              "hasAtLeastOneUserCreatedPost" =>
-                user_created_posts.exists?,
-            },
-          )
         end
       end
     end

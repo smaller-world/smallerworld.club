@@ -352,6 +352,9 @@ module GeneratedPathHelpersModule
   def turbo_resume_historical_location_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def universe_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def unpause_user_world_friend_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -12,27 +12,29 @@ class WorldsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        world = find_world!(scope: World.includes(:owner))
-        if (current_user = self.current_user)
-          invitation_requested = world
-            .join_requests
-            .exists?(phone_number: current_user.phone_number)
+        @world = find_world(scope: World.includes(:owner))
+        unless hotwire_native_app?
+          if (current_user = self.current_user)
+            invitation_requested = @world
+              .join_requests
+              .exists?(phone_number: current_user.phone_number)
+          end
+          if (friend = current_friend)
+            reply_to_number = @world.reply_to_number
+            last_sent_encouragement = friend.latest_visible_encouragement
+          end
+          props = {
+            world: WorldProfileSerializer.one(@world),
+            "replyToNumber" => reply_to_number,
+            "lastSentEncouragement" => EncouragementSerializer
+              .one_if(last_sent_encouragement),
+            "invitationRequested" => invitation_requested || false,
+          }
+          unless params[:manifest_icon_type] == "generic"
+            props["faviconLinks"] = world_favicon_links(@world)
+          end
+          render(inertia: "WorldPage", world_theme: @world.theme, props:)
         end
-        if (friend = current_friend)
-          reply_to_number = world.reply_to_number
-          last_sent_encouragement = friend.latest_visible_encouragement
-        end
-        props = {
-          world: WorldProfileSerializer.one(world),
-          "replyToNumber" => reply_to_number,
-          "lastSentEncouragement" => EncouragementSerializer
-            .one_if(last_sent_encouragement),
-          "invitationRequested" => invitation_requested || false,
-        }
-        unless params[:manifest_icon_type] == "generic"
-          props["faviconLinks"] = world_favicon_links(world)
-        end
-        render(inertia: "WorldPage", world_theme: world.theme, props:)
       end
     end
   end
@@ -41,7 +43,7 @@ class WorldsController < ApplicationController
   def join
     respond_to do |format|
       format.html do
-        world = find_world!
+        world = find_world
         redirect_to(world_path(world, intent: "join"))
       end
     end
@@ -52,7 +54,7 @@ class WorldsController < ApplicationController
   # == Helpers ==
 
   sig { params(scope: World::PrivateRelation).returns(World) }
-  def find_world!(scope: World.all)
+  def find_world(scope: World.all)
     scope.friendly.find(params.fetch(:id))
   end
 end

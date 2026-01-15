@@ -2,9 +2,17 @@
   "settings": {},
   "rules": [
     {
-      "patterns": ["^/spaces$", "^/login"],
+      "patterns": ["^/spaces$", "^/world$", "^/universe$"],
       "properties": {
         "presentation": "replace_root"
+      }
+    },
+    {
+      "patterns": ["^/login"],
+      "properties": {
+        "context": "modal",
+        "presentation": "replace",
+        "modal_dismiss_gesture_enabled": false
       }
     },
     {

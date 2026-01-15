@@ -165,6 +165,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # == Universe ==
+  resource :universe, only: :show
+
   # == Spaces ==
 
   resources :spaces, except: :destroy, export: true do

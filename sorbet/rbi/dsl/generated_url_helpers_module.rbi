@@ -352,6 +352,9 @@ module GeneratedUrlHelpersModule
   def turbo_resume_historical_location_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def universe_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def unpause_user_world_friend_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

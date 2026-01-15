@@ -45,7 +45,10 @@ class SessionsController < ApplicationController
           session.delete(:login_request_id)
           if (user = User.find_by_phone_number(@login_request.phone_number))
             start_new_session_for!(user)
-            redirect_to(after_authentication_path, status: :see_other)
+            redirect_to(
+              after_authentication_path,
+              status: :see_other,
+            )
           else
             self.registration_token = @login_request.generate_registration_token
             redirect_to(new_registration_path, status: :see_other)
@@ -62,11 +65,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html do
         terminate_session!
-        if hotwire_native_app?
-          refresh_or_redirect_to(app_start_path)
-        else
-          redirect_to(root_path)
-        end
+        refresh_or_redirect_to(root_path)
       end
       format.json do
         terminate_session!
