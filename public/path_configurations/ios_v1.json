@@ -8,18 +8,16 @@
       }
     },
     {
-      "patterns": ["^/login"],
-      "properties": {
-        "context": "modal",
-        "presentation": "replace",
-        "modal_dismiss_gesture_enabled": false
-      }
-    },
-    {
-      "patterns": ["^/settings$", "/new$", "/edit$"],
+      "patterns": ["^/settings$", "/new$", "/edit$", "^/login"],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["^/login"],
+      "properties": {
+        "modal_dismiss_gesture_enabled": false
       }
     }
   ]
