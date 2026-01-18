@@ -52,6 +52,32 @@ module Users::Worlds
       end
     end
 
+    # GET /world/posts/new?type=...
+    def new
+      respond_to do |format|
+        format.html do
+          post_type = T.let(params.fetch(:type), String)
+          @world = current_world!
+          authorize!(@world, to: :post?)
+          current_user = authenticate_user!
+          @page_title = "new #{post_type.humanize(capitalize: false)}"
+          @post = @world.posts.build(type: post_type, author: current_user)
+        end
+      end
+    end
+
+    # GET /world/posts/:id/edit
+    def edit
+      respond_to do |format|
+        format.html do
+          @world = current_world!
+          @post = find_post(scope: @world.posts)
+          authorize!(@post)
+          @page_title = "edit #{@post.type.humanize(capitalize: false)}"
+        end
+      end
+    end
+
     # GET /world/posts/pinned
     def pinned
       respond_to do |format|
@@ -73,7 +99,7 @@ module Users::Worlds
     def stats
       respond_to do |format|
         format.json do
-          post = find_post!
+          post = find_post
           authorize!(post, to: :manage?)
           repliers = post.reply_receipts
             .count("DISTINCT (replier_id, replier_type)")
@@ -90,7 +116,7 @@ module Users::Worlds
     def viewers
       respond_to do |format|
         format.json do
-          post = find_post!
+          post = find_post
           authorize!(post)
           views = PostView
             .where(
@@ -134,7 +160,7 @@ module Users::Worlds
     def audience
       respond_to do |format|
         format.json do
-          post = find_post!
+          post = find_post
           authorize!(post)
           notified_ids = post.notifications.to_friends.pluck(:recipient_id) +
             post.text_blasts.pluck(:friend_id)
@@ -193,7 +219,7 @@ module Users::Worlds
     def update
       respond_to do |format|
         format.json do
-          post = find_post!(
+          post = find_post(
             scope: Post
               .where.associated(:world)
               .with_attached_images
@@ -231,7 +257,7 @@ module Users::Worlds
     def destroy
       respond_to do |format|
         format.json do
-          post = find_post!
+          post = find_post
           authorize!(post)
           world_id = post.world_id!
           if post.destroy
@@ -253,7 +279,7 @@ module Users::Worlds
       respond_to do |format|
         format.json do
           current_user = authenticate_user!
-          post = find_post!
+          post = find_post
           authorize!(post)
           share = post.shares.find_or_create_by!(sharer: current_user)
           render(json: {
@@ -267,8 +293,16 @@ module Users::Worlds
 
     # == Helpers ==
 
-    sig { params(scope: Post::PrivateRelation).returns(Post) }
-    def find_post!(scope: Post.where.associated(:world))
+    sig do
+      params(
+        scope: T.any(
+          Post::PrivateRelation,
+          Post::PrivateCollectionProxy,
+          Post::PrivateAssociationRelation,
+        ),
+      ).returns(Post)
+    end
+    def find_post(scope: Post.where.associated(:world))
       scope.find(params.fetch(:id))
     end
   end

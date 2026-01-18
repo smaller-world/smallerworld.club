@@ -68,4 +68,22 @@ module PostsHelper
       "um, actually..."
     end
   end
+
+  sig { params(post: Post, options: T.untyped).returns(String) }
+  def edit_post_path(post, **options)
+    if (space_id = post.space_id)
+      edit_space_post_path(space_id, post, **options)
+    else
+      edit_user_world_post_path(post, **options)
+    end
+  end
+
+  sig { params(post: Post, options: T.untyped).returns(String) }
+  def post_path(post, **options)
+    if (space_id = post.space_id)
+      space_post_path(space_id, post, **options)
+    else
+      user_world_post_path(post, **options)
+    end
+  end
 end

@@ -7,5 +7,96 @@
 <% end %>
 
 <div class="page_container flex flex-col gap-6">
-  <h1 class="text-2xl font-bold ta-center">your world</h1>
+  <div class="flex flex-col gap-3">
+    <%= image_tag(
+    @world.icon.variant(:page_icon),
+    class: class_names(
+      "rounded-app-icon object-cover size-28 shadow-lg cursor-copy",
+      "self-center",
+    ),
+    data: {
+      controller: "clipboard haptic-bridge tooltip",
+      action: class_names(
+        "click->clipboard#copy",
+        "clipboard:copied->haptic-bridge#vibrate",
+        "clipboard:copied->tooltip#flash",
+      ),
+      clipboard_copy_value: world_url(@world, emulate_native_app: 1),
+      tooltip_trigger_value: "manual",
+      tooltip_content_value: "space link copied!",
+      tooltip_flash_duration_value: 1400,
+    },
+  ) %>
+
+    <div class="flex flex-row justify-between items-center gap-1">
+      <% if allowed_to?(:manage?, @world) %>
+        <div class="with-button-bridge:hidden w-9"></div>
+      <% end %>
+
+      <h1 class="text-2xl font-bold text-center flex-1"><%= @world.name %></h1>
+
+      <% if allowed_to?(:manage?, @world) %>
+        <%= link_to(
+          edit_user_world_path,
+          class: "btn p-1 rounded-full with-button-bridge:hidden",
+          aria: {
+            label: "space settings"
+          },
+          data: {
+            controller: "button-bridge",
+            bridge_title: "settings",
+            bridge_ios_image: "gearshape.fill",
+          },
+        ) do %>
+          <%= icon "cog-6-tooth", variant: :solid, class: "size-6" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if allowed_to?(:manage?, @world) %>
+      <%= link_to(
+        user_world_friends_path,
+        class: "btn self-center border-2 border-shade-dimmed",
+      ) do %>
+        <span>your friends</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <% if hotwire_native_app? && !current_native_device %>
+      <%= render(
+        "native_devices/form",
+        class: "self-center",
+        button: {
+          data: {
+            tooltip_content_value: "hear about happenings in this space!",
+            tooltip_trigger_value: "manual",
+            tooltip_flash_immediately_value: true,
+            tooltip_flash_delay_value: 1000,
+          },
+        },
+      ) %>
+    <% end %>
+
+    <%= render "worlds/posts/new", world: @world, class: "mb-3" %>
+
+    <ul id="<%= dom_id(@world, :posts) %>" class="space-y-4">
+      <% @posts.each do |post| %>
+        <li><%= render "posts/card", post: %></li>
+      <% end %>
+    </ul>
+
+    <% if (page = @pagy.next) %>
+      <%= render "worlds/posts/pagination_button", world: @world, page: %>
+    <% end %>
+
+    <% if @posts.none? %>
+      <p class="text-shade-400 text-center text-sm">
+        you haven&apos;t written any posts yet <span class="ml-1">:<</span>
+        <br>
+        (maybe you should do something about that...)
+      </p>
+    <% end %>
+  </div>
 </div>

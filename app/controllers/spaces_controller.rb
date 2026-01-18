@@ -39,7 +39,6 @@ class SpacesController < ApplicationController
   # GET /spaces/:id
   def show
     @space = find_space(scope: Space.with_attached_icon)
-    @page_title = @space.name unless hotwire_native_app?
     @pagy, @posts = scoped do
       scope = @space.posts
         .order(created_at: :desc, id: :asc)
@@ -52,6 +51,7 @@ class SpacesController < ApplicationController
     respond_to do |format|
       format.html do
         unless hotwire_native_app?
+          @page_title = @space.name
           user_world = current_user&.world
           render(inertia: "SpacePage", world_theme: "cloudflow", props: {
             space: SpaceSerializer.one(@space),
@@ -59,6 +59,7 @@ class SpacesController < ApplicationController
           })
         end
       end
+      format.turbo_stream
     end
   end
 

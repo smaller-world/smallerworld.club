@@ -7,7 +7,6 @@
     "Gemfile.lock": "plaintext",
     "test/fixtures/active_storage/blobs.yml": "erb"
   },
-
   // == ESLint
   "eslint.probe": [
     "javascript",
@@ -17,11 +16,9 @@
     "html",
     "markdown"
   ],
-
   // == Rubocop
   "rubocop.mode": "enableViaGemfile",
   "rubocop.bundleCommandPath": "mise x -- bundle",
-
   // == CSS & Tailwind
   "cssVariables.languages": [
     "scss",
@@ -47,13 +44,17 @@
     "public/dist-dev",
     "public/dist-test"
   ],
-  "tailwindCSS.experimental.classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"],
-
+  "tailwindCSS.includeLanguages": {
+    "ruby": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "class:\\s*['\"]([^'\"]*)['\"]",
+    ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
+  ],
   // == YAML
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": "${workspaceFolder}/.github/workflows/deploy.yml"
   },
-
   // == Formatting
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

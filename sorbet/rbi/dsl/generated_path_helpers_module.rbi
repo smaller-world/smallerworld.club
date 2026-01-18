@@ -67,6 +67,9 @@ module GeneratedPathHelpersModule
   def edit_user_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_user_world_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def email_contact_us_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -143,6 +146,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_user_space_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_user_world_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def notification_settings_friend_path(*args); end

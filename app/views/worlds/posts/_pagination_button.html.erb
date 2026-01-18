@@ -1,9 +1,9 @@
 <%= button_to(
-  space_path(space),
+  user_world_path,
   method: :get,
   class: "btn",
   form: {
-    id: dom_id(space, :pagination),
+    id: dom_id(world, :pagination),
     class: "self-center overflow-anchor-none",
   },
   data: {

@@ -5,7 +5,10 @@
     <% if @space.icon.attached? %>
       <%= image_tag(
         @space.icon.variant(:page_icon),
-        class: "self-center rounded-app-icon size-28 cursor-copy shadow-lg",
+        class: class_names(
+          "rounded-app-icon object-cover size-28 shadow-lg cursor-copy",
+          "self-center",
+        ),
         data: {
           controller: "clipboard haptic-bridge tooltip",
           action: class_names(

@@ -81,7 +81,7 @@
             <ul role="menu">
               <li role="presentation">
                 <%= link_to(
-                  polymorphic_path([ :edit, post.space, post ], emulate_native_app: 1),
+                  edit_post_path(post, emulate_native_app: 1),
                   role: "menuitem",
                   data: {
                     action: "dropdown#toggle",
@@ -94,7 +94,7 @@
 
               <li role="presentation">
                 <%= button_to(
-                  [ post.space, post ],
+                  post_path(post),
                   role: "menuitem",
                   method: :delete,
                   data: {

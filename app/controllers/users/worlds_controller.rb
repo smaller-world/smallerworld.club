@@ -6,6 +6,10 @@ module Users
     include RendersManifestIcons
     include RendersWorldFavicons
 
+    # == Constants ==
+
+    POSTS_PER_PAGE = 5
+
     # == Actions ==
 
     # GET /world?intent=(installation_instructions|install)
@@ -14,6 +18,7 @@ module Users
         format.html do
           @world = current_world or next redirect_to(new_registration_path)
           if hotwire_native_app?
+            set_posts(@world)
             render "worlds/show"
           else
             latest_friends = @world.friends
@@ -50,7 +55,22 @@ module Users
             )
           end
         end
+        format.turbo_stream do
+          @world = current_world!
+          set_posts(@world)
+          render "worlds/show"
+        end
       end
+    end
+
+    sig { params(world: World).void }
+    private def set_posts(world)
+      scope = world.posts
+        .order(created_at: :desc, id: :asc)
+        .with_attached_images
+        .with_quoted_post_and_attached_images
+        .with_rich_text_body_and_embeds
+      @pagy, @posts = pagy(:keyset, scope, limit: POSTS_PER_PAGE)
     end
 
     # GET /world/edit

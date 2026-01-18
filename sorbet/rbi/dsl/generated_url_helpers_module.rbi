@@ -64,6 +64,9 @@ module GeneratedUrlHelpersModule
   def edit_user_space_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_user_world_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_user_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -143,6 +146,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_user_space_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_user_world_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def notification_settings_friend_url(*args); end

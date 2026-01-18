@@ -1,0 +1,24 @@
+<%- class_name = local_assigns.delete(:class) -%>
+
+<%= tag.fieldset(
+  class: class_names("flex flex-col gap-1 pt-1", class_name),
+) do %>
+  <legend class="text-shade-400 font-cursive w-fit px-2 text-center italic">
+    share something from the heart...
+  </legend>
+
+  <div class="flex items-start justify-center gap-1">
+    <% selectable_post_types.each do |type| %>
+      <%= link_to(
+        new_user_world_post_path(world, type:, emulate_native_app: 1),
+        class: "btn flex-col gap-1 py-1 px-2 rounded-xl",
+      ) do %>
+        <%= post_type_icon(type, class: "size-6") %>
+
+        <p class="font-headings w-14 text-center text-xs leading-[1.1]">
+          <%= type.humanize(capitalize: false) %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

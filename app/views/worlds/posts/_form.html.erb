@@ -1,0 +1,102 @@
+<% class_name = local_assigns.delete(:class) %>
+<% title_placeholder = post_title_placeholder(type: post.type) %>
+
+<%= form_with(
+  model: post,
+  url: user_world_posts_path,
+  class: class_names("flex flex-col gap-6", class_name),
+  data: {
+    controller: "busy-reporter haptic-bridge",
+    action: "turbo:submit-end->haptic-bridge#vibrate",
+  },
+) do |form| %>
+  <%= form.hidden_field :type %>
+
+  <div class="flex flex-col gap-2">
+    <div>
+      <% if title_placeholder %>
+        <div class="post_form_emoji_hint mb-1 ml-3 flex items-center gap-1.5">
+          <%= icon(
+            "arrow-bend-left-down",
+            library: :phosphor,
+            fill: "currentColor",
+            class: "size-5 mt-3",
+          ) %>
+
+          <span class="font-cursive">tag your post with an emoji</span>
+        </div>
+      <% end %>
+
+      <div class="<%= class_names("flex gap-2", "items-center": !title_placeholder) %>">
+        <%= render(
+            "forms/emoji_field",
+            form:,
+            name: :emoji,
+            label: false,
+          ) %>
+
+        <% if title_placeholder %>
+          <%= render(
+          "forms/text_field",
+          form:,
+          name: :title,
+          label: false,
+          placeholder: title_placeholder,
+          class: "flex-1",
+        ) %>
+        <% else %>
+          <div class="post_form-emoji_hint flex items-center gap-1">
+            <%= icon "arrow-long-left", class: "size-5" %>
+            <span class="font-cursive">tag your post with an emoji</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render(
+      "forms/rich_text_area",
+      form:,
+      name: :body,
+      label: false,
+      value: post.body_html || post.body&.to_trix_html,
+      placeholder: post_body_placeholder(type: post.type),
+      required: true,
+    ) %>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div data-controller="reveal" class="flex flex-col">
+      <%= tag.button(
+        "post under an anonymous pen name",
+        type: "button",
+        class: class_names(
+          "text-shade-500 self-center text-sm hover:underline",
+          "hidden" => post.pen_name?,
+        ),
+        data: {
+          reveal_target: "item",
+          action: "reveal#toggle",
+        },
+      ) %>
+
+      <%= render(
+        "forms/text_field",
+        form:,
+        name: :pen_name,
+        placeholder: "the mysterious john darby",
+        class: class_names("hidden": !post.pen_name?),
+        data: {
+          reveal_target: "item",
+        },
+      ) %>
+    </div>
+
+    <%= form.button class: "btn btn-action text-xl py-2.5" do %>
+      <span><%= post.new_record? ? "post" : "save changes" %></span>
+
+      <% if post.new_record? %>
+        <%= icon "paper-airplane", variant: :micro, class: "size-5" %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

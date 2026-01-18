@@ -1,0 +1,3 @@
+<% if @post.destroyed? %>
+  <%= turbo_stream.remove dom_id(@post, :card) %>
+<% end %>

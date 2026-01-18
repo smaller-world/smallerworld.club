@@ -216,11 +216,7 @@ Rails.application.routes.draw do
         resources :join_requests,
                   only: %i[index destroy],
                   export: { namespace: "userWorldJoinRequests" }
-        resources(
-          :posts,
-          only: %i[index create update destroy],
-          export: { namespace: "userWorldPosts" },
-        ) do
+        resources :posts, export: { namespace: "userWorldPosts" } do
           collection do
             get :pinned
           end
