@@ -39,6 +39,7 @@ class SpacesController < ApplicationController
   # GET /spaces/:id
   def show
     @space = find_space(scope: Space.with_attached_icon)
+    # TODO: Move this to spaces/posts/index
     @pagy, @posts = scoped do
       scope = @space.posts
         .order(created_at: :desc, id: :asc)

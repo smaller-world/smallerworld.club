@@ -75,7 +75,7 @@
     }
 
     [role="menuitem"] {
-      @apply flex items-center gap-2 rounded-xl px-2 py-1;
+      @apply flex items-center gap-2 rounded-xl px-2 py-1.5;
       @apply font-headings text-sm font-semibold;
       @apply hover:bg-shade-100 dark:hover:bg-shade-900;
     }

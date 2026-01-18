@@ -10,7 +10,7 @@
   <div class="flex items-start justify-center gap-1">
     <% selectable_post_types.each do |type| %>
       <%= link_to(
-        new_user_world_post_path(world, type:, emulate_native_app: 1),
+        new_user_world_post_path(type:, emulate_native_app: 1),
         class: "btn flex-col gap-1 py-1 px-2 rounded-xl",
       ) do %>
         <%= post_type_icon(type, class: "size-6") %>

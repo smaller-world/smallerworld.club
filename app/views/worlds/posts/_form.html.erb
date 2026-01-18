@@ -3,7 +3,7 @@
 
 <%= form_with(
   model: post,
-  url: user_world_posts_path,
+  url: post.new_record? ? user_world_posts_path : user_world_post_path(post),
   class: class_names("flex flex-col gap-6", class_name),
   data: {
     controller: "busy-reporter haptic-bridge",
@@ -62,35 +62,18 @@
       placeholder: post_body_placeholder(type: post.type),
       required: true,
     ) %>
+
+    <%= render "forms/field_wrapper", form: form, name: :visibility do %>
+      <%= form.select(
+        :visibility,
+        Post.visibility.values,
+        class: "form_select",
+        selected: post.visibility || :friends,
+      ) %>
+    <% end %>
   </div>
 
   <div class="flex flex-col gap-2">
-    <div data-controller="reveal" class="flex flex-col">
-      <%= tag.button(
-        "post under an anonymous pen name",
-        type: "button",
-        class: class_names(
-          "text-shade-500 self-center text-sm hover:underline",
-          "hidden" => post.pen_name?,
-        ),
-        data: {
-          reveal_target: "item",
-          action: "reveal#toggle",
-        },
-      ) %>
-
-      <%= render(
-        "forms/text_field",
-        form:,
-        name: :pen_name,
-        placeholder: "the mysterious john darby",
-        class: class_names("hidden": !post.pen_name?),
-        data: {
-          reveal_target: "item",
-        },
-      ) %>
-    </div>
-
     <%= form.button class: "btn btn-action text-xl py-2.5" do %>
       <span><%= post.new_record? ? "post" : "save changes" %></span>
 

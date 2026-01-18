@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   def print
     respond_to do |format|
       format.html do
-        post = find_post!
+        post = find_post
         unless post.visibility == :public
           raise "Only public posts can be printed"
         end
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.json do
         current_friend = authenticate_friend!
-        post = find_post!
+        post = find_post
         authorize!(post)
         share = post.shares.find_or_create_by!(sharer: current_friend)
         render(json: {
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.json do
         viewer = require_authentication!
-        post = find_post!
+        post = find_post
         authorize!(post)
         viewer.post_views.find_or_create_by!(post:)
         render(json: {
@@ -67,7 +67,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.json do
         replier = require_authentication!
-        post = find_post!
+        post = find_post
         authorize!(post)
         replier.post_reply_receipts.find_or_create_by!(post:)
         render(json: {
@@ -80,7 +80,7 @@ class PostsController < ApplicationController
   private
 
   sig { params(scope: Post::PrivateRelation).returns(Post) }
-  def find_post!(scope: Post.all)
+  def find_post(scope: Post.all)
     scope.find(params.fetch(:id))
   end
 end

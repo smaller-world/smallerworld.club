@@ -62,6 +62,7 @@ module Users::Worlds
           current_user = authenticate_user!
           @page_title = "new #{post_type.humanize(capitalize: false)}"
           @post = @world.posts.build(type: post_type, author: current_user)
+          render "worlds/posts/new"
         end
       end
     end
@@ -74,6 +75,7 @@ module Users::Worlds
           @post = find_post(scope: @world.posts)
           authorize!(@post)
           @page_title = "edit #{@post.type.humanize(capitalize: false)}"
+          render "worlds/posts/edit"
         end
       end
     end
@@ -212,6 +214,28 @@ module Users::Worlds
             )
           end
         end
+        format.html do
+          post_params = params.expect(post: [
+            :type,
+            :title,
+            :body,
+            :emoji,
+            :visibility,
+          ])
+          @world = current_world!
+          @post = @world.posts.build(
+            author: current_user,
+            **post_params,
+          )
+          if @post.save
+            refresh_or_redirect_to(
+              user_world_post_path(post_id: @post.id, emulate_native_app: 1),
+              status: :see_other,
+            )
+          else
+            render :new, status: :unprocessable_content
+          end
+        end
       end
     end
 
@@ -248,6 +272,24 @@ module Users::Worlds
               json: { errors: post.form_errors },
               status: :unprocessable_content,
             )
+          end
+        end
+        format.html do
+          post_params = params.expect(post: [
+            :title,
+            :body,
+            :emoji,
+            :visibility,
+          ])
+          @post = find_post
+          authorize!(@post)
+          if @post.update(post_params)
+            refresh_or_redirect_to(
+              user_world_post_path(post_id: @post.id, emulate_native_app: 1),
+              status: :see_other,
+            )
+          else
+            render :edit, status: :unprocessable_content
           end
         end
       end
