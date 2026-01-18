@@ -4,6 +4,10 @@
 class WorldsController < ApplicationController
   include RendersWorldFavicons
 
+  # == Constants ==
+
+  POSTS_PER_PAGE = 5
+
   # == Actions ==
 
   # GET /@:id?intent=(join|install)
@@ -11,9 +15,11 @@ class WorldsController < ApplicationController
   #          &friend_token=...
   def show
     respond_to do |format|
+      @world = find_world(scope: World.includes(:owner))
       format.html do
-        @world = find_world(scope: World.includes(:owner))
-        unless hotwire_native_app?
+        if hotwire_native_app?
+          set_posts(@world)
+        else
           if (current_user = self.current_user)
             invitation_requested = @world
               .join_requests
@@ -36,7 +42,36 @@ class WorldsController < ApplicationController
           render(inertia: "WorldPage", world_theme: @world.theme, props:)
         end
       end
+      format.turbo_stream do
+        set_posts(@world)
+      end
     end
+  end
+
+  sig { params(world: World).void }
+  private def set_posts(world)
+    scope = authorized_scope(world.posts)
+      .order(created_at: :desc, id: :asc)
+      .with_attached_images
+      .with_quoted_post_and_attached_images
+      .with_rich_text_body_and_embeds
+    @pagy, @posts = if (friend = current_friend)
+      paginate_posts(scope.visible_to(friend))
+    else
+      paginate_posts(scope.visible_to_friends).tap do |_, paged_posts|
+        paged_posts.map! do |post|
+          post.visibility == :public ? post : post.becomes(MaskedPost)
+        end
+      end
+    end
+  end
+
+  private def paginate_posts(scope)
+    pagy(
+      :keyset,
+      scope,
+      limit: POSTS_PER_PAGE,
+    )
   end
 
   # GET /@:id/join

@@ -12,7 +12,7 @@ class UniversesController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @page_title = "your smaller universe" unless hotwire_native_app?
+        @page_title = "your smaller universe"
         current_user = authenticate_user!
         associated_friends = scoped do
           friends = current_user.associated_friends
@@ -34,6 +34,10 @@ class UniversesController < ApplicationController
           )
           .order("last_post_created_at DESC NULLS LAST")
           .with_attached_icon
+        @access_tokens_by_world_id = associated_friends
+          .select("DISTINCT ON (world_id) world_id, access_token")
+          .map { |friend| [ friend.world_id, friend.access_token ] }
+          .to_h
       end
     end
   end
