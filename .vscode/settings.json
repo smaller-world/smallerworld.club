@@ -7,6 +7,7 @@
     "Gemfile.lock": "plaintext",
     "test/fixtures/active_storage/blobs.yml": "erb"
   },
+
   // == ESLint
   "eslint.probe": [
     "javascript",
@@ -16,9 +17,11 @@
     "html",
     "markdown"
   ],
+
   // == Rubocop
   "rubocop.mode": "enableViaGemfile",
   "rubocop.bundleCommandPath": "mise x -- bundle",
+
   // == CSS & Tailwind
   "cssVariables.languages": [
     "scss",
@@ -51,10 +54,12 @@
     "class:\\s*['\"]([^'\"]*)['\"]",
     ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
   ],
+
   // == YAML
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": "${workspaceFolder}/.github/workflows/deploy.yml"
   },
+
   // == Formatting
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -65,7 +70,13 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
@@ -80,13 +91,10 @@
   "[dotenv]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[ignore]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[erb]": {
+    "editor.defaultFormatter": "marcoroth.herb-lsp"
   },
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[erb]": {
-    "editor.defaultFormatter": "marcoroth.herb-lsp"
   }
 }

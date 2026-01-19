@@ -19,6 +19,11 @@ mise install
 bin/setup
 ```
 
+> [!NOTE]
+>
+> There's an issue with Prettier v12+; please use the Prettier v11 extension to
+> properly format CSS and JSONC files.
+
 ## todos
 
 ### oct 2025
