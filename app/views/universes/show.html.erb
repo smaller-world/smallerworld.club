@@ -3,15 +3,11 @@
     <% @worlds.each do |world| %>
       <li>
         <%= link_to(
-          if allowed_to?(:manage?, world)
-            user_world_path(emulate_native_app: 1)
-          else
-            world_path(
-              world,
-              friend_token: @access_tokens_by_world_id[world.id],
-              emulate_native_app: 1
-            )
-          end,
+          user_aware_world_path(
+            world,
+            friend_token: @access_tokens_by_world_id[world.id],
+            emulate_native_app: 1,
+          ),
           class: "flex flex-col items-center gap-2 hover:underline",
         ) do %>
           <%= image_tag(

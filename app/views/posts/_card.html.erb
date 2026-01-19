@@ -27,7 +27,7 @@
         <% if !post.pen_name? && (world = post.author.world) %>
           <%= link_to(
             post.author.name,
-            world_path(world),
+            user_aware_world_path(world, emulate_native_app: 1),
             class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
           ) %>
         <% else %>

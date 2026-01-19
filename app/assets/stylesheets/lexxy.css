@@ -54,29 +54,6 @@
     pre[data-language] {
       @apply my-2;
     }
-
-    /* ul,
-    ol,
-    dl {
-      list-style: revert;
-      margin-top: 0;
-      padding: revert;
-      padding-inline-start: 1.625em;
-
-      > li {
-        padding-inline-start: 0.375em;
-      }
-    }
-
-    .horizontal-divider {
-      @apply flex rounded-xs text-shade-400 dark:text-shade-600;
-
-      padding-top: 0.5em;
-
-      > hr {
-        @apply flex-1;
-      }
-    } */
   }
 
   :where(lexxy-editor) {
@@ -110,24 +87,6 @@
     code[data-language] {
       @apply my-2;
     }
-
-    /* @apply dark:border-shade-700 dark:bg-shade-950;
-
-    lexxy-toolbar {
-      @apply dark:border-shade-700;
-    }
-
-    button {
-      @apply dark:bg-shade-950;
-
-      &:hover:not([aria-disabled="true"]) {
-        @apply bg-shade-50;
-      }
-
-      &[aria-pressed="true"] {
-        @apply bg-primary-200;
-      }
-    } */
   }
 
   :where(lexxy-toolbar) {

@@ -45,9 +45,12 @@ Layout/ExtraSpacing:
   Enabled: true
 Layout/FirstArgumentIndentation:
   Enabled: true
+  EnforcedStyle: consistent
 Layout/FirstHashElementIndentation:
   Enabled: true
   EnforcedStyle: consistent
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
 Layout/HashAlignment:
   Enabled: true
 Layout/IndentationWidth:
