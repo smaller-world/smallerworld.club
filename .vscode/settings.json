@@ -86,7 +86,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[ruby]": {
-    "editor.defaultFormatter": "Shopify.ruby-lsp"
+    "editor.defaultFormatter": "rubocop.vscode-rubocop"
   },
   "[dotenv]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

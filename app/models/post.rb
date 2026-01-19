@@ -249,18 +249,15 @@ class Post < ApplicationRecord
   validates :world_id, presence: true, unless: :in_space?
   validates :pen_name, absence: true, unless: :in_space?
   validate :validate_quoted_post
-  validate :validate_hidden_from_ids
-  validate :validate_visible_to_ids
   validate :validate_no_nested_quoting, if: :quoted_post?
   validate :validate_spotify_track_id,
            if: %i[spotify_track_id? spotify_track_id_changed?]
 
   # == Callbacks ==
 
-  before_validation :remove_invalid_hidden_from_ids,
-                    if: %i[hidden_from_ids? hidden_from_ids_changed?]
-  before_validation :remove_invalid_visible_to_ids,
-                    if: %i[visible_to_ids? visible_to_ids_changed?]
+  after_initialize :set_default_hidden_from_ids, if: :new_record?
+  before_save :remove_invalid_hidden_from_ids
+  before_save :remove_invalid_visible_to_ids
   after_save :create_notifications!, if: :send_notifications?
   after_save :save_images_ids!, if: :images_changed?
 
@@ -541,10 +538,12 @@ class Post < ApplicationRecord
   end
 
   sig do
-    returns(T.any(
-              Friend::PrivateCollectionProxy,
-              Friend::PrivateAssociationRelation,
-            ))
+    returns(
+      T.any(
+        Friend::PrivateCollectionProxy,
+        Friend::PrivateAssociationRelation,
+      ),
+    )
   end
   def hidden_from
     if (hidden_from_ids = self.hidden_from_ids.presence)
@@ -613,44 +612,6 @@ class Post < ApplicationRecord
   end
 
   sig { void }
-  def validate_hidden_from_ids
-    if hidden_from_ids.present?
-      if in_space?
-        errors.add(
-          :hidden_from_ids,
-          :invalid,
-          message: "cannot be set for posts in a space",
-        )
-      elsif visibility == :secret
-        errors.add(
-          :hidden_from_ids,
-          :invalid,
-          message: "cannot be set for secret posts",
-        )
-      end
-    end
-  end
-
-  sig { void }
-  def validate_visible_to_ids
-    if visible_to_ids.present?
-      if in_space?
-        errors.add(
-          :visible_to_ids,
-          :invalid,
-          message: "cannot be set for posts in a space",
-        )
-      elsif visibility != :secret
-        errors.add(
-          :visible_to_ids,
-          :invalid,
-          message: "can only be set for secret posts",
-        )
-      end
-    end
-  end
-
-  sig { void }
   def validate_quoted_post
     if follow_up? && quoted_post.blank?
       errors.add(
@@ -670,12 +631,27 @@ class Post < ApplicationRecord
   # == Callback Handlers ==
 
   sig { void }
+  def set_default_hidden_from_ids
+    if hidden_from_ids.blank? && world_id?
+      self.hidden_from_ids = world_friends.paused.pluck(:id)
+    end
+  end
+
+  sig { void }
   def remove_invalid_hidden_from_ids
-    self.hidden_from_ids = select_world_friend_ids(hidden_from_ids)
+    self.hidden_from_ids = if in_space? || visibility == :secret
+      []
+    else
+      select_world_friend_ids(hidden_from_ids)
+    end
   end
 
   sig { void }
   def remove_invalid_visible_to_ids
-    self.visible_to_ids = select_world_friend_ids(visible_to_ids)
+    self.visible_to_ids = if in_space? || visibility != :secret
+      []
+    else
+      select_world_friend_ids(visible_to_ids)
+    end
   end
 end

@@ -12,6 +12,10 @@
 ) do |form| %>
   <%= form.hidden_field :type %>
 
+  <% form.object.hidden_from_ids.each do |id| %>
+    <%= form.hidden_field :hidden_from_ids, value: id, multiple: true %>
+  <% end %>
+
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
       <div>
