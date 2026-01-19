@@ -31,6 +31,21 @@ module PostsHelper
     end
   end
 
+  sig do
+    params(
+      visibility: T.any(String, Symbol, Enumerize::Value),
+      options: T.untyped,
+    ).returns(String)
+  end
+  def post_visibility_icon(visibility, **options)
+    case visibility.to_s
+    when "public"
+      icon("globe-alt", **options)
+    when "secret"
+      icon("lock-closed", **options)
+    end
+  end
+
   sig { returns(T::Set[String]) }
   def selectable_post_types
     @selectable_post_types ||= %w[journal_entry poem invitation question].to_set

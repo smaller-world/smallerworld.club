@@ -1,6 +1,14 @@
 @layer components {
   .post_card {
     @apply relative;
+
+    &[data-visibility="secret"] {
+      @apply border-dashed;
+    }
+
+    &[data-visibility="public"] {
+      @apply border-shade-500;
+    }
   }
 
   .post_card_header {

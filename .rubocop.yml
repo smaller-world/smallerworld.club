@@ -51,6 +51,7 @@ Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 Layout/FirstMethodArgumentLineBreak:
   Enabled: true
+  AllowMultilineFinalElement: true
 Layout/HashAlignment:
   Enabled: true
 Layout/IndentationWidth:
