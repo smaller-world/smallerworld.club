@@ -24,9 +24,38 @@
 @layer components {
   /* Revert to default Lexxy styles that Tailwind messes up */
   :where(.lexxy-content) {
-    @apply font-light dark:text-shade-200;
+    @apply max-w-none font-light dark:text-shade-200;
+    @apply prose prose-lg dark:prose-invert;
 
-    ul,
+    --lexxy-radius: var(--radius-xl);
+    --lexxy-content-margin: 0px;
+    --lexxy-color-ink-lightest: var(--color-shade-200);
+    --lexxy-color-ink-lighter: var(--color-shade-300);
+    --lexxy-color-accent-dark: var(--color-primary-500);
+    --lexxy-color-accent-medium: var(--color-primary-400);
+    --tw-prose-bullets: var(--color-shade-700);
+
+    @media (prefers-color-scheme: dark) {
+      --lexxy-color-ink-lighter: var(--color-shade-600);
+      --lexxy-color-ink-lightest: var(--color-shade-700);
+      --lexxy-color-ink: var(--color-white);
+      --tw-prose-bold: var(--color-shade-300);
+    }
+
+    :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      @apply my-0;
+    }
+
+    :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      @apply my-4;
+    }
+
+    pre:is(pre),
+    pre[data-language] {
+      @apply my-2;
+    }
+
+    /* ul,
     ol,
     dl {
       list-style: revert;
@@ -47,7 +76,7 @@
       > hr {
         @apply flex-1;
       }
-    }
+    } */
   }
 
   :where(lexxy-editor) {
@@ -55,26 +84,31 @@
     --lexxy-focus-ring-color: var(--color-focus-ring);
     --lexxy-color-selected: var(--color-primary-200);
     --lexxy-color-selected-hover: --alpha(var(--color-primary-300) / 80%);
-    --lexxy-color-ink-lightest: var(--color-shade-200);
-    --lexxy-color-ink-lighter: var(--color-shade-300);
-    --lexxy-color-accent-dark: var(--color-primary-500);
-    --lexxy-color-accent-medium: var(--color-primary-400);
-    --lexxy-radius: var(--radius-xl);
 
     @apply border-2 border-input-border;
 
     @media (prefers-color-scheme: dark) {
       --lexxy-color-text: var(--color-white);
       --lexxy-color-canvas: var(--color-shade-950);
-      --lexxy-color-ink-lighter: var(--color-shade-600);
-      --lexxy-color-ink-lightest: var(--color-shade-700);
       --lexxy-color-selected: var(--color-primary-600);
       --lexxy-color-selected-hover: --alpha(var(--color-primary-700) / 80%);
-      --lexxy-color-ink: var(--color-white);
     }
 
     &.lexxy-editor--empty .lexxy-editor__content:not(:has(ul, ol))::before {
       @apply text-shade-400 opacity-100 dark:text-shade-500;
+    }
+
+    figure.horizontal-divider {
+      @apply py-4;
+
+      hr {
+        border-color: var(--tw-prose-hr);
+        inline-size: unset;
+      }
+    }
+
+    code[data-language] {
+      @apply my-2;
     }
 
     /* @apply dark:border-shade-700 dark:bg-shade-950;

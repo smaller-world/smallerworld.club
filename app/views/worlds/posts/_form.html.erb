@@ -12,31 +12,32 @@
 ) do |form| %>
   <%= form.hidden_field :type %>
 
-  <div class="flex flex-col gap-2">
-    <div>
-      <% if title_placeholder %>
-        <div class="post_form_emoji_hint mb-1 ml-3 flex items-center gap-1.5">
-          <%= icon(
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <div>
+        <% if title_placeholder %>
+          <div class="post_form_emoji_hint mb-1 ml-3 flex items-center gap-1.5">
+            <%= icon(
             "arrow-bend-left-down",
             library: :phosphor,
             fill: "currentColor",
             class: "size-5 mt-3",
           ) %>
 
-          <span class="font-cursive">tag your post with an emoji</span>
-        </div>
-      <% end %>
+            <span class="font-cursive">tag your post with an emoji</span>
+          </div>
+        <% end %>
 
-      <div class="<%= class_names("flex gap-2", "items-center": !title_placeholder) %>">
-        <%= render(
+        <div class="<%= class_names("flex gap-2", "items-center": !title_placeholder) %>">
+          <%= render(
             "forms/emoji_field",
             form:,
             name: :emoji,
             label: false,
           ) %>
 
-        <% if title_placeholder %>
-          <%= render(
+          <% if title_placeholder %>
+            <%= render(
           "forms/text_field",
           form:,
           name: :title,
@@ -44,16 +45,16 @@
           placeholder: title_placeholder,
           class: "flex-1",
         ) %>
-        <% else %>
-          <div class="post_form-emoji_hint flex items-center gap-1">
-            <%= icon "arrow-long-left", class: "size-5" %>
-            <span class="font-cursive">tag your post with an emoji</span>
-          </div>
-        <% end %>
+          <% else %>
+            <div class="post_form-emoji_hint flex items-center gap-1">
+              <%= icon "arrow-long-left", class: "size-5" %>
+              <span class="font-cursive">tag your post with an emoji</span>
+            </div>
+          <% end %>
+        </div>
       </div>
-    </div>
 
-    <%= render(
+      <%= render(
       "forms/rich_text_area",
       form:,
       name: :body,
@@ -62,13 +63,19 @@
       placeholder: post_body_placeholder(type: post.type),
       required: true,
     ) %>
+    </div>
 
-    <%= render "forms/field_wrapper", form: form, name: :visibility do %>
+    <%= render(
+      "forms/field_wrapper",
+      form:,
+      name: :visibility,
+      label: "who can see this post?",
+    ) do %>
       <%= form.select(
         :visibility,
-        Post.visibility.values,
-        class: "form_select",
-        selected: post.visibility || :friends,
+        options_for_select(post_visibility_options, "friends"),
+        {},
+        { class: "form_select" },
       ) %>
     <% end %>
   </div>

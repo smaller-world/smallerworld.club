@@ -8,7 +8,7 @@
   }
 
   .post_card_content {
-    /* @apply flex flex-col; */
+    @apply flex flex-col gap-y-0.5;
   }
 
   .post_card_footer {

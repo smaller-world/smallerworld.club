@@ -2,9 +2,7 @@
 # frozen_string_literal: true
 
 class SpacesController < ApplicationController
-  # == Configuration ==
-
-  POSTS_PER_PAGE = 5
+  include LoadsSpacePosts
 
   # == Filters ==
 
@@ -39,19 +37,11 @@ class SpacesController < ApplicationController
   # GET /spaces/:id
   def show
     @space = find_space(scope: Space.with_attached_icon)
-    # TODO: Move this to spaces/posts/index
-    @pagy, @posts = scoped do
-      scope = @space.posts
-        .order(created_at: :desc, id: :asc)
-        .with_author_world
-        .with_attached_images
-        .with_quoted_post_and_attached_images
-        .with_rich_text_body_and_embeds
-      pagy(:keyset, scope, limit: POSTS_PER_PAGE)
-    end
     respond_to do |format|
       format.html do
-        unless hotwire_native_app?
+        if hotwire_native_app?
+          @pagy, @posts = paginated_space_posts(@space)
+        else
           @page_title = @space.name
           user_world = current_user&.world
           render(inertia: "SpacePage", world_theme: "cloudflow", props: {
@@ -60,7 +50,6 @@ class SpacesController < ApplicationController
           })
         end
       end
-      format.turbo_stream
     end
   end
 

@@ -3,6 +3,8 @@
 
 module Users::Worlds
   class PostsController < ApplicationController
+    include LoadsWorldPosts
+
     # == Constants ==
 
     POSTS_PER_PAGE = 5
@@ -11,10 +13,10 @@ module Users::Worlds
 
     # GET /world/posts[?date=...][&type=...][&q=...]
     def index
+      @world = current_world!
       respond_to do |format|
         format.json do
-          world = current_world!
-          scope = authorized_scope(world.posts)
+          scope = authorized_scope(@world.posts)
             .with_attached_images
             .with_quoted_post_and_attached_images
             .with_encouragement
@@ -48,6 +50,9 @@ module Users::Worlds
               next: pagy.next,
             },
           })
+        end
+        format.turbo_stream do
+          @pagy, @posts = paginated_world_posts(@world)
         end
       end
     end
@@ -229,11 +234,11 @@ module Users::Worlds
           )
           if @post.save
             refresh_or_redirect_to(
-              user_world_post_path(post_id: @post.id, emulate_native_app: 1),
+              user_world_path(post_id: @post.id, emulate_native_app: 1),
               status: :see_other,
             )
           else
-            render :new, status: :unprocessable_content
+            render "worlds/posts/new", status: :unprocessable_content
           end
         end
       end
@@ -283,13 +288,14 @@ module Users::Worlds
           ])
           @post = find_post
           authorize!(@post)
-          if @post.update(post_params)
+          if @post.update(body_html: nil, **post_params)
             refresh_or_redirect_to(
-              user_world_post_path(post_id: @post.id, emulate_native_app: 1),
+              user_world_path(post_id: @post.id, emulate_native_app: 1),
               status: :see_other,
             )
           else
-            render :edit, status: :unprocessable_content
+            @world = @post.world!
+            render "worlds/posts/edit", status: :unprocessable_content
           end
         end
       end

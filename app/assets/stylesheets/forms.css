@@ -70,7 +70,7 @@
     @apply rounded-app-icon border-2 border-dashed border-input-border;
 
     &:not(:has(> .filepond--root)) {
-      @apply animate-pulse bg-shade-200 dark:bg-shade-800;
+      @apply animate-pulse bg-skeleton;
     }
 
     .filepond--root[data-style-panel-layout~="circle"] {
@@ -127,6 +127,10 @@
       summary {
         @apply bg-inherit;
       }
+
+      &:not(:has(> .lexxy-editor__content)) {
+        @apply animate-pulse bg-skeleton;
+      }
     }
 
     lexxy-toolbar {
@@ -137,10 +141,6 @@
       [name="heading"] {
         @apply hidden;
       }
-    }
-
-    .lexxy-editor__content {
-      @apply text-lg;
     }
   }
 }
