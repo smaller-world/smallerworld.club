@@ -7,21 +7,21 @@
       <span class="font-emoji"><%= friend.emoji %></span>
     <% end %>
 
-    <span class="font-headings font-medium"><%= friend.name %></span>
+    <span class="font-medium"><%= friend.name %></span>
   </div>
 
   <% if friend.paused? %>
-    <div class="badge pl-2">
+    <div class="badge">
       <%= icon "pause", class: "size-3.5" %>
       <span>paused</span>
     </div>
   <% elsif friend.notifiable? %>
-    <div class="badge pl-2">
+    <div class="badge">
       <%= icon "device-phone-mobile", class: "size-3.5" %>
       <span>installed</span>
     </div>
-  <% elsif (phone_number =friend.phone_number) %>
-    <div class="badge pl-2 gap-1.5">
+  <% elsif friend.phone_number? %>
+    <div class="badge">
       <%= icon "chat-bubble-bottom-center-text", class: "size-3.5" %>
       <span>texts only</span>
     </div>
