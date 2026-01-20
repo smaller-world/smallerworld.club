@@ -1,6 +1,6 @@
 <%= turbo_frame_tag(
   dom_id(post, :reactions),
-  class: "flex flex-wrap gap-1",
+  class: "flex flex-wrap gap-x-1 gap-y-0.5",
 ) do %>
   <% post_reaction_groups(post).each do |group| %>
     <% reacted = group.current_reaction_id.present? %>

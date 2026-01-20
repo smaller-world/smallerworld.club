@@ -95,6 +95,7 @@
   --color-shade-body: var(--color-white);
   --color-shade-text: var(--color-primary-900);
   --color-shade-contrast: var(--color-black);
+  --color-shade-inverted: var(--color-white);
   --color-shade-dimmed: var(--color-shade-600);
   --color-input-border: var(--color-shade-500);
   --color-skeleton: var(--color-shade-200);
@@ -108,6 +109,7 @@
       --color-shade-body: var(--color-shade-950);
       --color-shade-text: var(--color-primary-100);
       --color-shade-contrast: var(--color-white);
+      --color-shade-inverted: var(--color-black);
       --color-shade-dimmed: var(--color-shade-300);
       --color-skeleton: var(--color-shade-800);
     }

@@ -50,6 +50,12 @@
     }
   }
 
+  :where(.btn-outline) {
+    @apply border border-shade-200 dark:border-shade-800;
+    @apply bg-shade-100 dark:bg-shade-900;
+    @apply hover:bg-shade-200 dark:hover:bg-shade-800;
+  }
+
   :where(.btn-action) {
     @apply bg-black text-white dark:bg-white dark:text-black;
     @apply hover:bg-primary-700 dark:hover:bg-primary-300;

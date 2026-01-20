@@ -5,7 +5,7 @@
     class: "self-center",
   ) %>
 
-  <ul class="space-y-2.5">
+  <ul class="space-y-2.5 native:mt-2.5">
     <% @friends.each do |friend| %>
       <li><%= render "friends/card", friend: friend %></li>
     <% end %>

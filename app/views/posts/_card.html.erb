@@ -36,7 +36,7 @@
         <% end %>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2.5">
         <%= local_time(
           post.created_at,
           format: :short,
@@ -44,9 +44,9 @@
         ) %>
 
         <% if post.visibility.in?(["public", "secret"]) %>
-          <div class="flex items-center gap-0.5 text-shade-dimmed">
+          <div class="flex items-center gap-0.5 text-shade-contrast">
             <%= post_visibility_icon(post.visibility, class: "size-3 self-center") %>
-            <%= post.visibility.text %>
+            <span class="font-semibold"><%= post.visibility.text %></span>
           </div>
         <% end %>
       </div>
