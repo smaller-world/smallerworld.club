@@ -1,4 +1,6 @@
-postprint/
+# == Agents
+AGENTS.md
+.claude/
 
 # == GitHub Actions
 .github/
@@ -43,7 +45,7 @@ sorbet/
 !/app/assets/builds/.keep
 
 # Ignore bundler config.
-/.bundle
+/.bundle/
 
 # Ignore all default key files.
 /config/master.key
@@ -120,6 +122,7 @@ jspm_packages/
 
 # == IDE
 .vscode/
+.cursor/
 
 # == OS
 # macOS:
