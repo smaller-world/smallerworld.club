@@ -1,5 +1,5 @@
 <%- class_name = local_assigns.delete(:class) %>
-<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- error = form.object.errors.full_messages_for(field).first -%>
 <%- input_attributes = local_assigns.delete(:input) || {} -%>
 
 <%- input_attributes.merge!(delete_from(
@@ -18,14 +18,14 @@
   **local_assigns,
 ) do %>
   <%= form.text_field(
-    name,
+    field,
     class: class_names("form_input p-2", input_class),
     data: {
       error: error.present?,
       **input_data,
     }.compact_blank,
     aria: {
-      describedby: (form.field_id(name, "error") if error.present?),
+      describedby: (form.field_id(field, "error") if error.present?),
     },
     **input_attributes,
   ) %>

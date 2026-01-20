@@ -11,7 +11,7 @@
   <%= render(
     "forms/text_field",
     form:,
-    name: :name,
+    field: :name,
     label: "your space's name",
     placeholder: "new stadium",
     required: true,
@@ -20,7 +20,7 @@
   <%= render(
     "forms/text_area",
     form:,
-    name: :description,
+    field: :description,
     label: "your space's purpose",
     description: "what do people write about in this space?",
     placeholder: "a space to share project progress updates",
@@ -33,7 +33,7 @@
   <%= render(
     "forms/icon_field",
     form:,
-    name: :icon,
+    field: :icon,
     label: "icon (optional)",
     accept: "image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif",
     center: true,

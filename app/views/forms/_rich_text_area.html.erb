@@ -1,5 +1,5 @@
 <%- class_name = local_assigns.delete(:class) -%>
-<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- error = form.object.errors.full_messages_for(field).first -%>
 <%- required = local_assigns.delete(:required) -%>
 
 <%= render(
@@ -8,7 +8,7 @@
   **local_assigns,
 ) do %>
   <%= form.rich_text_area(
-    name,
+    field,
     class: "form_textarea lexxy-content max-w-none p-0",
     required:,
     attachment: false,
@@ -16,7 +16,7 @@
       error: error.present? ,
     }.compact_blank,
     aria: {
-      describedby: (form.field_id(name, "error") if error.present?),
+      describedby: (form.field_id(field, "error") if error.present?),
     },
     **local_assigns.slice(:value, :required, :placeholder),
   ) %>

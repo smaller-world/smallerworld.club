@@ -1,6 +1,5 @@
-<%- label = local_assigns.delete(:label) -%>
 <%- description = local_assigns.delete(:description) -%>
-<%- error = error_message_for(form.object, name) -%>
+<%- error = error_message_for(form.object, field) -%>
 
 <%= tag.div(
   class: class_names("field_wrapper", local_assigns[:class]),
@@ -8,10 +7,10 @@
 ) do %>
   <% if label != false || description %>
     <div>
-      <% unless label == false %>
+      <% if !local_assigns.key?(:label) || local_assigns[:label] %>
         <%= form.label(
-        name,
-        label || name.to_s.humanize(capitalize: false),
+        field,
+        local_assigns.fetch(:label) { field.to_s.humanize(capitalize: false) },
         class: class_names("field_wrapper_label", local_assigns[:label_class]),
       ) %>
       <% end %>
@@ -27,7 +26,7 @@
   <% if error %>
     <%= tag.span(
       error,
-      id: form.field_id(name, :error),
+      id: form.field_id(field, :error),
       class: class_names("field_wrapper_error", local_assigns[:error_class]),
     ) %>
   <% end %>

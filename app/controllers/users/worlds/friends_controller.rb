@@ -9,19 +9,27 @@ module Users::Worlds
     def index
       respond_to do |format|
         format.html do
-          world = current_world or next redirect_to(
+          @world = current_world or next redirect_to(
             new_registration_path,
             notice: "create a world to continue",
           )
-          pending_invitations = world.invitations.pending.count
-          render(
-            inertia: "UserWorldFriendsPage",
-            world_theme: world.theme,
-            props: {
-              world: WorldSerializer.one(world),
-              "pendingInvitationsCount" => pending_invitations,
-            },
-          )
+          if hotwire_native_app?
+            @page_title = "your friends"
+            @friends = @world.friends
+              .with_push_registrations
+              .reverse_chronological
+            render "friends/index"
+          else
+            pending_invitations = @world.invitations.pending.count
+            render(
+              inertia: "UserWorldFriendsPage",
+              world_theme: @world.theme,
+              props: {
+                world: WorldSerializer.one(@world),
+                "pendingInvitationsCount" => pending_invitations,
+              },
+            )
+          end
         end
         format.json do
           world = current_world!

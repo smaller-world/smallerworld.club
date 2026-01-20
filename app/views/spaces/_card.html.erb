@@ -1,8 +1,6 @@
-<% class_name = local_assigns.delete(:class) %>
-
 <%= tag.div(
   id: dom_id(space, :card),
-  class: class_names("card flex gap-4", class_name)
+  class: class_names("card flex gap-4", local_assigns[:class])
 ) do %>
   <% if space.icon.attached? %>
     <%= image_tag(

@@ -36,16 +36,16 @@
           <%= render(
             "forms/emoji_field",
             form:,
-            name: :emoji,
-            label: false,
+            field: :emoji,
+            label: nil,
           ) %>
 
           <% if title_placeholder %>
             <%= render(
           "forms/text_field",
           form:,
-          name: :title,
-          label: false,
+          field: :title,
+          label: nil,
           placeholder: title_placeholder,
           class: "flex-1",
         ) %>
@@ -61,8 +61,8 @@
       <%= render(
       "forms/rich_text_area",
       form:,
-      name: :body,
-      label: false,
+      field: :body,
+      label: nil,
       value: post.body_html || post.body&.to_trix_html,
       placeholder: post_body_placeholder(type: post.type),
       required: true,
@@ -72,7 +72,7 @@
     <%= render(
       "forms/field_wrapper",
       form:,
-      name: :visibility,
+      field: :visibility,
       label: "who can see this post?",
     ) do %>
       <%= form.select(

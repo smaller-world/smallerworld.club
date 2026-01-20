@@ -1,6 +1,6 @@
 <%- class_name = local_assigns.delete(:class) -%>
-<%- attachment = form.object.send(name) -%>
-<%- has_error = form.object.errors.include?(name) -%>
+<%- attachment = form.object.send(field) -%>
+<%- has_error = form.object.errors.key?(field) -%>
 <%- center = local_assigns.delete(:center) -%>
 <%- accept = local_assigns.delete(:accept) -%>
 
@@ -31,10 +31,10 @@
       turbo_permanent: true,
     },
   ) do %>
-    <%= form.hidden_field name, value: "" %>
+    <%= form.hidden_field field, value: "" %>
 
     <%= form.hidden_field(
-      name,
+      field,
       value: (attachment.signed_id if attachment.attached?),
       data: {
         filepond_target: "input",

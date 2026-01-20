@@ -1,0 +1,15 @@
+<%= form_with model: [world, friend] do |form| %>
+  <%= render(
+    "forms/emoji_field",
+    form: form,
+    field: :emoji,
+    label: nil,
+  ) %>
+
+  <%= render(
+    "forms/text_field",
+    form: form,
+    field: :name,
+    label: nil,
+  ) %>
+<% end %>

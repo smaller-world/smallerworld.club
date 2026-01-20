@@ -1,5 +1,5 @@
 <%- class_name = local_assigns.delete(:class) %>
-<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- error = form.object.errors.full_messages_for(field).first -%>
 <%- data = local_assigns.delete(:data) || {} -%>
 <%- controller = data.delete(:controller) -%>
 <%- input_attributes = delete_from(local_assigns, :value) -%>
@@ -18,7 +18,7 @@
   **local_assigns,
 ) do %>
   <%= form.hidden_field(
-    name,
+    field,
     data: { otp_input_target: "input" },
     **input_attributes,
   ) %>
@@ -33,7 +33,7 @@
   ) do %>
     <% 1..6.times do |index| %>
       <%= tag.input(
-        id: form.field_id(name, "otp", index),
+        id: form.field_id(field, "otp", index),
         class: "form_input otp_field_otp_input",
         type: "text",
         autocomplete: ("one-time-code" if index == 0),
@@ -42,7 +42,7 @@
           error: error.present?,
         }.compact_blank,
         aria: {
-          describedby: (form.field_id(name, "error") if error.present?),
+          describedby: (form.field_id(field, "error") if error.present?),
         },
         **otp_input_attributes,
       ) %>

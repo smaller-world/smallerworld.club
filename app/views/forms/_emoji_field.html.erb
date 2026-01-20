@@ -1,7 +1,7 @@
 <%- class_name = local_assigns.delete(:class) -%>
 <%- data = local_assigns.delete(:data) || {} -%>
 <%- controller = data.delete(:controller) -%>
-<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- error = form.object.errors.full_messages_for(field).first -%>
 <%- input_attributes = delete_from(local_assigns, :required) -%>
 
 <%= render(
@@ -15,7 +15,7 @@
 ) do %>
   <div class="relative" data-controller="modal">
     <%= form.text_field(
-      name,
+      field,
       class: "form_input emoji_field_input",
       placeholder: "dummy",
       readonly: true,
@@ -32,7 +32,7 @@
       aria: {
         haspopup: true,
         controls: "menu",
-        describedby: (form.field_id(name, "error") if error.present?),
+        describedby: (form.field_id(field, "error") if error.present?),
       },
       **input_attributes,
     ) %>

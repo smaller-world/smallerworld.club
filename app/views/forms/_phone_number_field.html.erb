@@ -1,8 +1,8 @@
 <%- class_name = local_assigns.delete(:class) %>
 <%- data = local_assigns.delete(:data) || {} -%>
-<%- phone = Phonelib.parse(form.object.send(name)) -%>
+<%- phone = Phonelib.parse(form.object.send(field)) -%>
 <%- controller = data.delete(:controller) -%>
-<%- error = form.object.errors.full_messages_for(name).first -%>
+<%- error = form.object.errors.full_messages_for(field).first -%>
 <%- shared_input_attributes = delete_from(local_assigns, :required) -%>
 
 <%- country_code_input_attributes = shared_input_attributes
@@ -26,11 +26,11 @@
   },
   **local_assigns,
 ) do %>
-  <%= form.hidden_field name, data: { phone_number_input_target: "input" } %>
+  <%= form.hidden_field field, data: { phone_number_input_target: "input" } %>
 
   <div class="flex gap-2">
     <%= tag.input(
-      id: form.field_id(name, "country_code"),
+      id: form.field_id(field, "country_code"),
       class: class_names(
         "form_input field-sizing-content min-w-11 max-w-20",
         country_code_input_class,
@@ -52,13 +52,13 @@
         error: error.present?,
       }.compact_blank,
       aria: {
-        describedby: (form.field_id(name, "error") if error.present?),
+        describedby: (form.field_id(field, "error") if error.present?),
       },
       **country_code_input_attributes,
     ) %>
 
     <%= tag.input(
-      id: form.field_id(name, "national_number"),
+      id: form.field_id(field, "national_number"),
       class: class_names(
         "form_input flex-1 min-w-0",
         national_number_input_class,
@@ -76,7 +76,7 @@
         error: error.present?,
       }.compact_blank,
       aria: {
-        describedby: (form.field_id(name, "error") if error.present?),
+        describedby: (form.field_id(field, "error") if error.present?),
       },
       **national_number_input_attributes,
     ) %>

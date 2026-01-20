@@ -2,7 +2,7 @@
   <%= render(
     "forms/text_field",
     form:,
-    name: :name,
+    field: :name,
     label: "your name",
     placeholder: "jimmy",
     required: true,
@@ -12,7 +12,7 @@
     <%= render(
       "forms/otp_field",
       form:,
-      name: :login_code,
+      field: :login_code,
       description: "enter the code sent to your phone",
       value: (login_request.login_code if Rails.env.development?),
       otp_container: {
