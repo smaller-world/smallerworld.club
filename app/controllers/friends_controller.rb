@@ -4,11 +4,25 @@
 class FriendsController < ApplicationController
   # == Filters ==
 
-  before_action :authenticate_friend!
+  before_action :authenticate_user!, only: %i[create invite]
+  before_action :authenticate_friend!, except: %i[create invite]
 
   # == Actions ==
 
-  # GET /friends/notification_settings?friend_token=...
+  # GET /@:world_id/friends/invite
+  def invite
+    respond_to do |format|
+      format.html do
+        @world = find_world
+        @qr = RQRCode::QRCode.new(
+          shortlinked.join_worlds_url(token: @world.generate_join_token),
+        )
+      end
+    end
+  end
+
+
+  # GET /friends/:token/notification_settings
   def notification_settings
     respond_to do |format|
       format.json do
@@ -21,7 +35,38 @@ class FriendsController < ApplicationController
     end
   end
 
-  # PUT /friends?friend_token=...
+
+  # POST /friends
+  def create
+    respond_to do |format|
+      format.html do
+        current_user = authenticate_user!
+        friend_params = params.expect(friend: %i[
+          join_token
+          name
+          emoji
+          time_zone
+        ])
+        join_token = friend_params.delete(:join_token)
+        @world = World.find_by_join_token(join_token) or
+          raise "Invalid join token"
+        @friend = @world.friends.build(
+          phone_number: current_user.phone_number,
+          **friend_params,
+        )
+        if @friend.save
+          redirect_to(
+            world_path(@world, friend_token: @friend.access_token),
+            status: :see_other,
+          )
+        else
+          render "worlds/join", status: :unprocessable_content
+        end
+      end
+    end
+  end
+
+  # PUT /friends/:token
   def update
     respond_to do |format|
       format.json do
@@ -40,5 +85,14 @@ class FriendsController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(World) }
+  def find_world
+    World.friendly.find(params.fetch(:world_id))
   end
 end

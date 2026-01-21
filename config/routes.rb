@@ -143,9 +143,16 @@ Rails.application.routes.draw do
   # == Worlds ==
 
   get "/@:id", to: "worlds#show", as: :world, trailing_slash: true, export: true
+  scope path: "/@:world_id", as: :world do
+    resources :friends, only: [] do
+      collection do
+        get :invite
+      end
+    end
+  end
   resources :worlds, only: [], export: true do
     collection do
-      get :join
+      get "join/:token", action: :join, as: :join
     end
     scope module: :worlds do
       resource :timeline, only: :show, export: { namespace: "worldTimelines" }
@@ -206,9 +213,6 @@ Rails.application.routes.draw do
           only: %i[index create update destroy],
           export: { namespace: "userWorldFriends" },
         ) do
-          collection do
-            get :invite
-          end
           member do
             get :invitation
             post :pause
@@ -258,8 +262,13 @@ Rails.application.routes.draw do
 
   # == Friend ==
 
-  resource :friend, only: :update, export: { namespace: "friend" } do
-    get :notification_settings
+  resources :friends,
+            param: :token,
+            only: %i[create update],
+            export: { namespace: "friend" } do
+    member do
+      get :notification_settings
+    end
 
     # == Friend Encouragements
     scope module: :friends do

@@ -147,8 +147,8 @@
 
 @layer components {
   :where(.emoji_field_input) {
-    @apply w-11 p-2;
-    @apply text-center;
+    @apply w-11 p-1;
+    @apply text-center text-2xl;
     @apply cursor-pointer placeholder:text-transparent;
     @apply hover:border-primary-400 aria-expanded:border-primary-400;
   }

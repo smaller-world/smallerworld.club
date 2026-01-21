@@ -9,6 +9,10 @@ class WorldsController < ApplicationController
 
   POSTS_PER_PAGE = 5
 
+  # == Filters ==
+
+  before_action :authenticate_user!, only: :join
+
   # == Actions ==
 
   # GET /@:id?intent=(join|install)
@@ -49,13 +53,18 @@ class WorldsController < ApplicationController
     end
   end
 
-  # GET /worlds/join?token=...
+  # GET /worlds/join/:token
   def join
     respond_to do |format|
       format.html do
-        if (token = params[:token]) &&
-            (@world = World.find_by_join_token(token))
+        current_user = authenticate_user!
+        token = params.fetch(:token)
+        if (@world = World.find_by_join_token(token))
           @page_title = "join #{@world.name}"
+          @friend = @world.friends.build(
+            phone_number: current_user.phone_number,
+            name: current_user.name,
+          )
         else
           @page_title = "join world"
         end

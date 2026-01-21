@@ -19,13 +19,20 @@
         tooltip_flash_duration_value: 1400,
       },
     ) %>
-    <h1 class="text-3xl font-semibold">
-      you&apos;re invited to <%= @world.name %>
-    </h1>
-    <p class="text-shade-dimmed">
-      this is my <span class="font-medium">smaller world</span>, an exclusive
-      space where i share what&apos;s really on my mind.
-    </p>
+    <div class="flex flex-col gap-2 items-center">
+      <h1 class="text-3xl leading-tight font-bold text-center">
+        <span class="text-shade-dimmed">you&apos;re invited to</span>
+        <span class="text-shade-contrast"><%= @world.name %></span>
+      </h1>
+
+      <p class="text-shade-dimmed max-w-xs text-center">
+        this is my <span class="font-medium">smaller world</span>, an exclusive
+        space where i share what&apos;s really on my mind.
+      </p>
+    </div>
+    <%= turbo_frame_tag dom_id(@friend, :new), target: "_top" do %>
+      <%= render "friends/form", friend: @friend %>
+    <% end %>
   <% else %>
     <div class="flex flex-col gap-2.5 items-center text-center">
       <div class="flex flex-col items-center gap-1">

@@ -1,15 +1,44 @@
-<%= form_with model: [world, friend] do |form| %>
-  <%= render(
+<%= form_with model: friend, class: "flex flex-col gap-3" do |form| %>
+  <%= form.hidden_field :join_token, value: friend.world.generate_join_token %>
+
+  <%= form.hidden_field(
+    :time_zone,
+    value: nil,
+    data: { controller: "current-time-zone-input" },
+  ) %>
+
+  <div class="flex max-w-xs w-full gap-2 self-center">
+    <%= render(
     "forms/emoji_field",
     form: form,
     field: :emoji,
     label: nil,
   ) %>
 
-  <%= render(
+    <%= render(
     "forms/text_field",
     form: form,
     field: :name,
     label: nil,
+    placeholder: "your name",
+    class: "flex-1",
   ) %>
+  </div>
+
+  <div class="flex flex-col gap-1.5 items-center">
+    <%= form.button class: "btn btn-action" do %>
+      <%= icon(
+        "door-open",
+        library: :phosphor,
+        fill: "currentColor",
+        class: "size-6",
+      ) %>
+
+      <span>join <%= friend.world.name %></span>
+    <% end %>
+
+    <% if (error = error_message_for(friend, :phone_number)) %>
+      <%= tag.span(error, class: "field_wrapper_error") %>
+    <% end %>
+  </div>
 <% end %>
