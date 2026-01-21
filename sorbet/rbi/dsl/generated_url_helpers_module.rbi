@@ -100,6 +100,12 @@ module GeneratedUrlHelpersModule
   def invitation_user_world_friend_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def invite_user_world_friends_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def join_worlds_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def login_requests_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

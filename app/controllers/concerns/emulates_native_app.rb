@@ -8,7 +8,7 @@ module EmulatesNativeApp
 
   # == Annotations ==
 
-  requires_ancestor { ActionController::Base }
+  requires_ancestor { ApplicationController }
   requires_ancestor { Turbo::Native::Navigation }
 
   # == Patches ==
@@ -18,7 +18,7 @@ module EmulatesNativeApp
     extend T::Helpers
     extend ActiveSupport::Concern
 
-    requires_ancestor { ActionController::Base }
+    requires_ancestor { ApplicationController }
     requires_ancestor { Turbo::Native::Navigation }
 
     # == Methods ==

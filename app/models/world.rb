@@ -52,6 +52,20 @@ class World < ApplicationRecord
 
   friendly_id :handle, use: :slugged, slug_column: :handle
 
+  # == Tokens ==
+
+  generates_token_for :join, expires_in: 7.days
+
+  sig { params(token: String).returns(T.nilable(World)) }
+  def self.find_by_join_token(token)
+    find_by_token_for(:join, token)
+  end
+
+  sig { returns(String) }
+  def generate_join_token
+    generate_token_for(:join)
+  end
+
   # == Associations ==
 
   belongs_to :owner, class_name: "User"

@@ -8,7 +8,7 @@ module Authentication
 
   include RendersJsonException
 
-  requires_ancestor { ActionController::Base }
+  requires_ancestor { ApplicationController }
 
   # == Errors ==
 
@@ -19,7 +19,7 @@ module Authentication
   end
 
   included do
-    T.bind(self, T.class_of(ActionController::Base))
+    T.bind(self, T.class_of(ApplicationController))
 
     # == Filters ==
 

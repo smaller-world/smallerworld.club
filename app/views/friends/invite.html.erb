@@ -1,0 +1,41 @@
+<div class="page_container flex flex-col gap-6">
+  <%= image_tag(
+    @world.icon.variant(:page_icon),
+    class: class_names(
+      "rounded-app-icon object-cover size-26 shadow-lg cursor-copy",
+      "self-center",
+    ),
+    data: {
+      controller: "clipboard haptic-bridge tooltip",
+      action: class_names(
+        "click->clipboard#copy",
+        "clipboard:copied->haptic-bridge#vibrate",
+        "clipboard:copied->tooltip#flash",
+      ),
+      clipboard_copy_value: world_url(@world, emulate_native_app: 1),
+      tooltip_trigger_value: "manual",
+      tooltip_content_value: "space link copied!",
+      tooltip_flash_duration_value: 1400,
+    },
+  ) %>
+
+  <h1 class="text-3xl leading-tight font-bold text-center">
+    <span class="text-shade-dimmed">you&apos;re invited to</span>
+    <span class="text-shade-contrast"><%= @world.name %></span>
+  </h1>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-shade-dimmed font-cursive text-xl text-center">
+      scan the QR code to join!
+    </p>
+
+    <%== @qr.as_svg(
+    color: :currentColor,
+    use_path: true,
+    viewbox: true,
+    svg_attributes: {
+      class: "max-w-xs mx-auto text-shade-contrast",
+    },
+  ) %>
+  </div>
+</div>

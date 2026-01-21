@@ -45,6 +45,7 @@ class User < ApplicationRecord
   ENCOURAGEMENTS_AVAILABLE_SINCE = Time.new(2025, 4, 11, 16, 0, 0, "-05:00")
 
   # == FriendlyId ==
+
   friendly_id :phone_number, use: :slugged, slug_column: :phone_number
 
   # == Attributes ==

@@ -95,19 +95,23 @@ class ErrorsController < ApplicationController
     ).void
   end
   def render_error_page(status:, title:, description:, error: nil)
-    code = Rack::Utils.status_code(status)
+    @status_code = Rack::Utils.status_code(status)
     respond_to do |format|
       format.html do
-        render(
-          inertia: "ErrorPage",
-          props: {
-            title:,
-            description:,
-            code:,
-            error: error&.message,
-          },
-          status:,
-        )
+        @title = title
+        @description = description
+        @error = error&.message
+        render :show
+        # render(
+        #   inertia: "ErrorPage",
+        #   props: {
+        #     title:,
+        #     description:,
+        #     code:,
+        #     error: error&.message,
+        #   },
+        #   status:,
+        # )
       end
       format.json do
         render(
@@ -118,7 +122,7 @@ class ErrorsController < ApplicationController
         )
       end
       format.any do
-        message = Rack::Utils::HTTP_STATUS_CODES[code]
+        message = Rack::Utils::HTTP_STATUS_CODES[@status_code]
         render(plain: message, status:)
       end
     end

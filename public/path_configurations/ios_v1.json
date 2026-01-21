@@ -8,7 +8,14 @@
       }
     },
     {
-      "patterns": ["^/settings$", "/new$", "/edit$", "^/login"],
+      "patterns": [
+        "^/settings$",
+        "/new$",
+        "/edit$",
+        "/join$",
+        "/invite$",
+        "^/login"
+      ],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false

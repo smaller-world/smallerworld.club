@@ -34,10 +34,10 @@ module ActionPushNative
   end
 end
 
-# source://action_push_native//lib/action_push_native/errors.rb#13
+# source://action_push_native//lib/action_push_native/errors.rb#14
 class ActionPushNative::BadDeviceTopicError < ::StandardError; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#7
+# source://action_push_native//lib/action_push_native/errors.rb#8
 class ActionPushNative::BadRequestError < ::StandardError; end
 
 # source://action_push_native//lib/action_push_native/configured_notification.rb#2
@@ -77,6 +77,9 @@ end
 
 # source://action_push_native//lib/action_push_native/errors.rb#5
 class ActionPushNative::ConnectionError < ::StandardError; end
+
+# source://action_push_native//lib/action_push_native/errors.rb#6
+class ActionPushNative::ConnectionPoolTimeoutError < ::StandardError; end
 
 class ActionPushNative::Device < ::ApplicationRecord
   include ::ActionPushNative::Device::GeneratedAttributeMethods
@@ -129,13 +132,13 @@ module ActionPushNative::Device::GeneratedAttributeMethods; end
 # source://action_push_native//lib/action_push_native/engine.rb#4
 class ActionPushNative::Engine < ::Rails::Engine; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#8
+# source://action_push_native//lib/action_push_native/errors.rb#9
 class ActionPushNative::ForbiddenError < ::StandardError; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#12
+# source://action_push_native//lib/action_push_native/errors.rb#13
 class ActionPushNative::InternalServerError < ::StandardError; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#14
+# source://action_push_native//lib/action_push_native/errors.rb#15
 class ActionPushNative::NotFoundError < ::StandardError; end
 
 # = Action Push Native Notification
@@ -465,7 +468,7 @@ class ActionPushNative::NotificationJob < ::ActiveJob::Base
   end
 end
 
-# source://action_push_native//lib/action_push_native/errors.rb#9
+# source://action_push_native//lib/action_push_native/errors.rb#10
 class ActionPushNative::PayloadTooLargeError < ::StandardError; end
 
 # source://action_push_native//lib/action_push_native/service/apns.rb#4
@@ -477,47 +480,33 @@ class ActionPushNative::Service::Apns
 
   # @return [Apns] a new instance of Apns
   #
-  # source://action_push_native//lib/action_push_native/service/apns.rb#11
+  # source://action_push_native//lib/action_push_native/service/apns.rb#8
   def initialize(config); end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#9
-  def httpx_sessions; end
-
-  # source://action_push_native//lib/action_push_native/service/apns.rb#9
-  def httpx_sessions=(val); end
-
-  # source://action_push_native//lib/action_push_native/service/apns.rb#15
+  # source://action_push_native//lib/action_push_native/service/apns.rb#12
   def push(notification); end
 
   private
 
   # Returns the value of attribute config.
   #
-  # source://action_push_native//lib/action_push_native/service/apns.rb#25
+  # source://action_push_native//lib/action_push_native/service/apns.rb#22
   def config; end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#75
+  # source://action_push_native//lib/action_push_native/service/apns.rb#74
   def handle_apns_error(response); end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#67
+  # source://action_push_native//lib/action_push_native/service/apns.rb#66
   def handle_error(response); end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#30
+  # source://action_push_native//lib/action_push_native/service/apns.rb#27
   def headers_from(notification); end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#62
+  # source://action_push_native//lib/action_push_native/service/apns.rb#61
   def httpx_session; end
 
-  # source://action_push_native//lib/action_push_native/service/apns.rb#42
+  # source://action_push_native//lib/action_push_native/service/apns.rb#39
   def payload_from(notification); end
-
-  class << self
-    # source://action_push_native//lib/action_push_native/service/apns.rb#9
-    def httpx_sessions; end
-
-    # source://action_push_native//lib/action_push_native/service/apns.rb#9
-    def httpx_sessions=(val); end
-  end
 end
 
 # Converts the legacy `apple_data` format from the Apnotic gem
@@ -539,8 +528,11 @@ ActionPushNative::Service::Apns::ApnoticLegacyConverter::APNS_HEADERS = T.let(T.
 # source://action_push_native//lib/action_push_native/service/apns/apnotic_legacy_converter.rb#8
 ActionPushNative::Service::Apns::ApnoticLegacyConverter::APS_FIELDS = T.let(T.unsafe(nil), Array)
 
-# source://action_push_native//lib/action_push_native/service/apns.rb#28
+# source://action_push_native//lib/action_push_native/service/apns.rb#25
 ActionPushNative::Service::Apns::HEADERS = T.let(T.unsafe(nil), Array)
+
+# source://action_push_native//lib/action_push_native/service/apns.rb#59
+ActionPushNative::Service::Apns::HTTPX_SESSIONS_KEY = T.let(T.unsafe(nil), Symbol)
 
 # source://action_push_native//lib/action_push_native/service/apns/httpx_session.rb#3
 class ActionPushNative::Service::Apns::HttpxSession
@@ -577,7 +569,7 @@ ActionPushNative::Service::Apns::HttpxSession::DEVELOPMENT_SERVER_URL = T.let(T.
 # source://action_push_native//lib/action_push_native/service/apns/httpx_session.rb#7
 ActionPushNative::Service::Apns::HttpxSession::PRODUCTION_SERVER_URL = T.let(T.unsafe(nil), String)
 
-# source://action_push_native//lib/action_push_native/service/apns.rb#27
+# source://action_push_native//lib/action_push_native/service/apns.rb#24
 ActionPushNative::Service::Apns::PRIORITIES = T.let(T.unsafe(nil), Hash)
 
 # source://action_push_native//lib/action_push_native/service/apns/token_provider.rb#3
@@ -625,56 +617,45 @@ class ActionPushNative::Service::Fcm
 
   # @return [Fcm] a new instance of Fcm
   #
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#11
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#8
   def initialize(config); end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#9
-  def httpx_sessions; end
-
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#9
-  def httpx_sessions=(val); end
-
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#15
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#12
   def push(notification); end
 
   private
 
   # Returns the value of attribute config.
   #
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#21
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#18
   def config; end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#47
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#46
   def deep_compact(payload); end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#65
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#64
   def handle_error(response); end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#73
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#72
   def handle_fcm_error(response); end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#23
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#22
   def httpx_session; end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#28
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#27
   def payload_from(notification); end
 
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#61
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#60
   def stringify(hash); end
 
   # FCM requires data values to be strings.
   #
-  # source://action_push_native//lib/action_push_native/service/fcm.rb#55
+  # source://action_push_native//lib/action_push_native/service/fcm.rb#54
   def stringify_data(google_data); end
-
-  class << self
-    # source://action_push_native//lib/action_push_native/service/fcm.rb#9
-    def httpx_sessions; end
-
-    # source://action_push_native//lib/action_push_native/service/fcm.rb#9
-    def httpx_sessions=(val); end
-  end
 end
+
+# source://action_push_native//lib/action_push_native/service/fcm.rb#20
+ActionPushNative::Service::Fcm::HTTPX_SESSIONS_KEY = T.let(T.unsafe(nil), Symbol)
 
 # source://action_push_native//lib/action_push_native/service/fcm/httpx_session.rb#3
 class ActionPushNative::Service::Fcm::HttpxSession
@@ -756,16 +737,16 @@ module ActionPushNative::Service::NetworkErrorHandling
   def handle_network_error(error); end
 end
 
-# source://action_push_native//lib/action_push_native/errors.rb#11
+# source://action_push_native//lib/action_push_native/errors.rb#12
 class ActionPushNative::ServiceUnavailableError < ::StandardError; end
 
 # source://action_push_native//lib/action_push_native/errors.rb#4
 class ActionPushNative::TimeoutError < ::StandardError; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#16
+# source://action_push_native//lib/action_push_native/errors.rb#17
 class ActionPushNative::TokenError < ::StandardError; end
 
-# source://action_push_native//lib/action_push_native/errors.rb#10
+# source://action_push_native//lib/action_push_native/errors.rb#11
 class ActionPushNative::TooManyRequestsError < ::StandardError; end
 
 # source://action_push_native//lib/action_push_native/version.rb#2

@@ -33,6 +33,7 @@ class Healthcheck::HealthchecksController
     include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
+    include ::WorldsHelper
     include ::LocalTimeHelper
   end
 

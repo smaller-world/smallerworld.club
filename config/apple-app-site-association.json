@@ -4,10 +4,9 @@
       {
         "appIDs": ["UB3SB3746X.club.smallerworld.ios"],
         "components": [
-          {
-            "/": "/spaces/*",
-            "comment": "Open space pages in the app"
-          }
+          { "/": "/", "exclude": true },
+          { "/": "/policies", "exclude": true },
+          { "/": "/*" }
         ]
       }
     ]

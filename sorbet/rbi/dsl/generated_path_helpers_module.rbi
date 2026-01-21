@@ -100,6 +100,12 @@ module GeneratedPathHelpersModule
   def invitation_user_world_friend_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def invite_user_world_friends_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def join_worlds_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def login_requests_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

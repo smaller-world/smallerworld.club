@@ -33,6 +33,7 @@ class Rails::Conductor::BaseController
     include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
+    include ::WorldsHelper
     include ::LocalTimeHelper
   end
 

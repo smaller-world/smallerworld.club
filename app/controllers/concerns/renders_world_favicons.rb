@@ -6,7 +6,7 @@ module RendersWorldFavicons
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  requires_ancestor { ActionController::Base }
+  requires_ancestor { ApplicationController }
 
   private
 

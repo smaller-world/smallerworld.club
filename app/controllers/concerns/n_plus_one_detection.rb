@@ -6,10 +6,10 @@ module NPlusOneDetection
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  requires_ancestor { ActionController::Base }
+  requires_ancestor { ApplicationController }
 
   included do
-    T.bind(self, T.class_of(ActionController::Base))
+    T.bind(self, T.class_of(ApplicationController))
 
     # == Filters ==
 

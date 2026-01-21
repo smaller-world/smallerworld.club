@@ -8,6 +8,8 @@ class NotificationsController < ApplicationController
 
   # == Actions ==
 
+  # TODO: Have delivery token by a signed_id instead a generates_token_for
+  #
   # POST /notifications/mark_delivered
   def mark_delivered
     respond_to do |format|

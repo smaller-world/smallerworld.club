@@ -6,7 +6,7 @@ module RendersWorldThemes
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  requires_ancestor { ActionController::Base }
+  requires_ancestor { ApplicationController }
 
   # == Patches ==
 
@@ -15,7 +15,7 @@ module RendersWorldThemes
     extend T::Helpers
     extend ActiveSupport::Concern
 
-    requires_ancestor { ActionController::Base }
+    requires_ancestor { ApplicationController }
 
     sig { params(args: T.untyped, kwargs: T.untyped).returns(T.untyped) }
     def render(*args, **kwargs)

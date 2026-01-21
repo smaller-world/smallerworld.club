@@ -36,6 +36,22 @@ class LoginRequest < ApplicationRecord
 
   generates_token_for :registration
 
+  sig { params(token: String).returns(LoginRequest) }
+  def self.find_by_registration_token!(token)
+    find_by_token_for!(:registration, token)
+  end
+
+  sig { params(token: String).returns(T.nilable(LoginRequest)) }
+  def self.find_by_registration_token(token)
+    find_by_token_for(:registration, token)
+  end
+
+  sig { returns(String) }
+  def generate_registration_token
+    generate_token_for(:registration)
+  end
+
+
   # == Normalizations ==
 
   normalizes_phone_number :phone_number
@@ -96,11 +112,6 @@ class LoginRequest < ApplicationRecord
     Rails.env.production?
   end
 
-  sig { returns(String) }
-  def generate_registration_token
-    generate_token_for(:registration)
-  end
-
   sig { returns(Phonelib::Phone) }
   def phone
     Phonelib.parse(phone_number)
@@ -111,16 +122,5 @@ class LoginRequest < ApplicationRecord
   sig { returns(String) }
   def self.generate_login_code
     format("%06d", rand(0..999_999))
-  end
-
-
-  sig { params(token: String).returns(LoginRequest) }
-  def self.find_by_registration_token!(token)
-    find_by_token_for!(:registration, token)
-  end
-
-  sig { params(token: String).returns(T.nilable(LoginRequest)) }
-  def self.find_by_registration_token(token)
-    find_by_token_for(:registration, token)
   end
 end

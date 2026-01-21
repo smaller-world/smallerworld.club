@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   include NPlusOneDetection
   include RendersWorldThemes
   include EmulatesNativeApp
+  include Shortlinking
   include EmulatesExpiredPage unless Rails.env.production?
 
   # == Errors ==
@@ -96,17 +97,10 @@ class ApplicationController < ActionController::Base
     Rails.error.report(error)
     respond_to do |format|
       format.html do
-        status = 500
-        render(
-          inertia: "ErrorPage",
-          props: {
-            title: "an unexpected error occurred",
-            description: error.message,
-            code: status,
-            error: nil,
-          },
-          status:,
-        )
+        @status_code = 500
+        @title = "internal system error"
+        @description = error.message
+        render "errors/show"
       end
       format.all do
         render_json_exception(error)

@@ -34,6 +34,7 @@ class Actiontext::Lexical::ApplicationController
     include ::NativeDevicesHelper
     include ::PostReactionsHelper
     include ::PostsHelper
+    include ::WorldsHelper
     include ::LocalTimeHelper
   end
 

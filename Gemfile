@@ -197,6 +197,12 @@ gem "local_time", "~> 3.0"
 # Send native push notifications
 gem "action_push_native", "~> 0.3.0"
 
+# Detect device name
+gem "device_detector", "~> 1.1"
+
+# Generate QR codes
+gem "rqrcode", "~> 3.2"
+
 group :development, :test do
   # Debug code with debug
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -270,5 +276,3 @@ group :production do
   # Fix request.ip and request.remote_ip in Rails when using Cloudflare
   gem "cloudflare-rails", "~> 7.0"
 end
-
-gem "device_detector", "~> 1.1"

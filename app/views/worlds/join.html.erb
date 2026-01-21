@@ -1,0 +1,46 @@
+<div class="page_container flex flex-col gap-6">
+  <% if @world %>
+    <%= image_tag(
+      @world.icon.variant(:page_icon),
+      class: class_names(
+        "rounded-app-icon object-cover size-28 shadow-lg cursor-copy",
+        "self-center",
+      ),
+      data: {
+        controller: "clipboard haptic-bridge tooltip",
+        action: class_names(
+          "click->clipboard#copy",
+          "clipboard:copied->haptic-bridge#vibrate",
+          "clipboard:copied->tooltip#flash",
+        ),
+        clipboard_copy_value: world_url(@world, emulate_native_app: 1),
+        tooltip_trigger_value: "manual",
+        tooltip_content_value: "space link copied!",
+        tooltip_flash_duration_value: 1400,
+      },
+    ) %>
+    <h1 class="text-3xl font-semibold">
+      you&apos;re invited to <%= @world.name %>
+    </h1>
+    <p class="text-shade-dimmed">
+      this is my <span class="font-medium">smaller world</span>, an exclusive
+      space where i share what&apos;s really on my mind.
+    </p>
+  <% else %>
+    <div class="flex flex-col gap-2.5 items-center text-center">
+      <div class="flex flex-col items-center gap-1">
+        <%= icon "exclamation-triangle", class: "size-7" %>
+
+        <h1 class="text-2xl font-semibold">invalid join token</h1>
+      </div>
+
+      <p class="text-shade-dimmed">
+        maybe the it&apos;s expired?
+        <br>
+        please scan the
+        <span class="text-shade-contrast inline-flex gap-1 mx-0.5 items-baseline"><%= icon "qr-code", class: "size-4 relative top-0.5" %> <span class="font-medium">qr code</span></span>
+        again.
+      </p>
+    </div>
+  <% end %>
+</div>

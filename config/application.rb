@@ -107,13 +107,14 @@ module SmallerWorld
 
     # == Shortlinking
     T::Sig::WithoutRuntime.sig do
-      returns(T.all(GeneratedUrlHelpersModule, GeneratedPathHelpersModule))
+      params(fallback_url_options: T::Hash[Symbol, T.untyped])
+        .returns(T.all(GeneratedUrlHelpersModule, GeneratedPathHelpersModule))
     end
-    def shortlinked_url_helpers
+    def shortlinked_url_helpers(fallback_url_options = {})
       @shortlinked_url_helpers ||= if Rails.env.production?
         ShortlinkedUrlHelpers.new(protocol: "https", host: "smlr.world")
       else
-        routes.url_helpers
+        ShortlinkedUrlHelpers.new(**fallback_url_options)
       end
     end
   end

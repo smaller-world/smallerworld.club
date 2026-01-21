@@ -5,6 +5,14 @@
     class: "self-center",
   ) %>
 
+  <%= link_to(
+    invite_user_world_friends_path,
+    class: "btn btn-outline self-center",
+  ) do %>
+    <%= icon "user-plus", class: "size-5" %>
+    <span>invite a friend to your world</span>
+  <% end %>
+
   <ul class="space-y-2.5 native:mt-2.5">
     <% @friends.each do |friend| %>
       <li><%= render "friends/card", friend: friend %></li>

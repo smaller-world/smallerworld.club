@@ -143,9 +143,11 @@ Rails.application.routes.draw do
   # == Worlds ==
 
   get "/@:id", to: "worlds#show", as: :world, trailing_slash: true, export: true
-  get "/@:id/join", to: "worlds#join"
   resources :worlds, only: [], export: true do
-    scope module: :worlds  do
+    collection do
+      get :join
+    end
+    scope module: :worlds do
       resource :timeline, only: :show, export: { namespace: "worldTimelines" }
       resources :join_requests,
                 only: :create,
@@ -204,6 +206,9 @@ Rails.application.routes.draw do
           only: %i[index create update destroy],
           export: { namespace: "userWorldFriends" },
         ) do
+          collection do
+            get :invite
+          end
           member do
             get :invitation
             post :pause

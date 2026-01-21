@@ -44,6 +44,23 @@ module Users::Worlds
       end
     end
 
+    # GET /world/friends/invite
+    def invite
+      respond_to do |format|
+        format.html do
+          @world = current_world!
+          @qr = RQRCode::QRCode.new(
+            shortlinked.join_worlds_url(
+              @world,
+              token: @world.generate_join_token,
+            ),
+          )
+          render "friends/invite"
+        end
+      end
+    end
+
+
     # PUT /world/friends/:id
     def update
       respond_to do |format|
