@@ -2,22 +2,7 @@
   <% if @world %>
     <%= image_tag(
       @world.icon.variant(:page_icon),
-      class: class_names(
-        "rounded-app-icon object-cover size-28 shadow-lg cursor-copy",
-        "self-center",
-      ),
-      data: {
-        controller: "clipboard haptic-bridge tooltip",
-        action: class_names(
-          "click->clipboard#copy",
-          "clipboard:copied->haptic-bridge#vibrate",
-          "clipboard:copied->tooltip#flash",
-        ),
-        clipboard_copy_value: world_url(@world, emulate_native_app: 1),
-        tooltip_trigger_value: "manual",
-        tooltip_content_value: "space link copied!",
-        tooltip_flash_duration_value: 1400,
-      },
+      class: "rounded-app-icon object-cover size-28 shadow-lg self-center",
     ) %>
     <div class="flex flex-col gap-2 items-center">
       <h1 class="text-3xl leading-tight font-bold text-center">

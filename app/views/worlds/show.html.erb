@@ -21,7 +21,11 @@
         "clipboard:copied->haptic-bridge#vibrate",
         "clipboard:copied->tooltip#flash",
       ),
-      clipboard_copy_value: world_url(@world, emulate_native_app: 1),
+      clipboard_copy_value: user_aware_world_url(
+        @world,
+        friend_token: current_friend&.access_token,
+        emulate_native_app: 1,
+      ),
       tooltip_trigger_value: "manual",
       tooltip_content_value: "space link copied!",
       tooltip_flash_duration_value: 1400,

@@ -24,8 +24,8 @@
 @layer components {
   /* Revert to default Lexxy styles that Tailwind messes up */
   :where(.lexxy-content) {
-    @apply max-w-none font-light dark:text-shade-200;
-    @apply prose prose-lg dark:prose-invert;
+    @apply max-w-none dark:text-shade-200;
+    @apply prose dark:prose-invert;
 
     --lexxy-radius: var(--radius-xl);
     --lexxy-content-margin: 0px;
@@ -41,6 +41,8 @@
       --lexxy-color-ink: var(--color-white);
       --tw-prose-bold: var(--color-shade-300);
     }
+
+    font-size: 17px;
 
     :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
       @apply my-0;

@@ -60,13 +60,10 @@ class WorldsController < ApplicationController
         current_user = authenticate_user!
         token = params.fetch(:token)
         if (@world = World.find_by_join_token(token))
-          @page_title = "join #{@world.name}"
           @friend = @world.friends.build(
             phone_number: current_user.phone_number,
             name: current_user.name,
           )
-        else
-          @page_title = "join world"
         end
       end
     end

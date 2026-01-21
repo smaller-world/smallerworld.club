@@ -8,39 +8,42 @@
 ) do %>
   <div class="flex flex-col gap-2">
     <div class="post_card_header">
-      <div class="flex items-baseline gap-1">
+      <div class="flex flex-wrap items-baseline gap-x-0.5">
         <span class="inline-flex items-baseline gap-1">
           <% if (emoji = post.emoji) %>
-            <span class="font-emoji relative top-px mr-0.5 text-sm">
+            <span class="font-emoji relative top-px mr-1 text-sm">
               <%= emoji %>
             </span>
           <% else %>
             <%= post_type_icon(post.type, class: "size-3 self-center") %>
           <% end %>
 
-          <span class="font-headings font-medium">
+          <span class="post_card_post_type">
             <%= post.type.humanize(capitalize: false) %>
           </span>
         </span>
-        from
-        <% if !post.pen_name? && (world = post.author.world) %>
-          <%= link_to(
-            post.author.name,
-            user_aware_world_path(world, emulate_native_app: 1),
-            class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
-          ) %>
-        <% else %>
-          <span class="font-semibold">
-            <%= post.pen_name || post.author.name %>
-          </span>
-        <% end %>
+
+        <span class="text-nowrap">
+          from
+          <% if !post.pen_name? && (world = post.author.world) %>
+            <%= link_to(
+              post.author.name,
+              user_aware_world_path(world, emulate_native_app: 1),
+              class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
+            ) %>
+          <% else %>
+            <span class="font-semibold">
+              <%= post.pen_name || post.author.name %>
+            </span>
+          <% end %>
+        </span>
       </div>
 
       <div class="flex items-center gap-2.5">
         <%= local_time(
           post.created_at,
           format: :short,
-          class: "font-headings lowercase",
+          class: "font-headings lowercase text-nowrap",
         ) %>
 
         <% if post.visibility.in?(["public", "secret"]) %>
@@ -54,13 +57,11 @@
 
     <div class="post_card_content">
       <% if (title = post.title) %>
-        <h3 class="text-2xl leading-tight font-semibold"><%= title %></h3>
+        <h3 class="text-xl leading-tight font-semibold"><%= title %></h3>
       <% end %>
 
       <% if (body_html = post.body_html) %>
-        <div class="prose prose-lg dark:prose-invert max-w-none">
-          <%== body_html -%>
-        </div>
+        <div class="prose dark:prose-invert max-w-none"><%== body_html -%></div>
       <% else %>
         <%= post.body -%>
       <% end %>
