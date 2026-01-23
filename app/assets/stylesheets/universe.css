@@ -1,0 +1,8 @@
+@layer components {
+  .universe_grid {
+    @apply grid place-content-center;
+
+    grid-template-columns: repeat(auto-fit, calc(var(--spacing) * 28));
+    justify-content: center;
+  }
+}

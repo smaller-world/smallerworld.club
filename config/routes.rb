@@ -150,10 +150,12 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :worlds, only: [], export: true do
-    collection do
-      get "join/:token", action: :join, as: :join
+  resources :worlds, param: :token, only: [] do
+    member do
+      get :join
     end
+  end
+  resources :worlds, only: [], export: true do
     scope module: :worlds do
       resource :timeline, only: :show, export: { namespace: "worldTimelines" }
       resources :join_requests,

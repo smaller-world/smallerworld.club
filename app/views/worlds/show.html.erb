@@ -60,7 +60,7 @@
     <% if allowed_to?(:manage?, @world) %>
       <%= link_to(
         user_world_friends_path(emulate_native_app: 1),
-        class: "btn btn-outline self-center  py-1",
+        class: "btn btn-outline self-center py-1",
       ) do %>
         <%= icon "user-group", class: "size-5" %>
         <span>your friends</span>

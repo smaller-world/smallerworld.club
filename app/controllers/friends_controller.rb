@@ -15,7 +15,7 @@ class FriendsController < ApplicationController
       format.html do
         @world = find_world
         @qr = RQRCode::QRCode.new(
-          shortlinked.join_worlds_url(token: @world.generate_join_token),
+          shortlinked.join_world_url(token: @world.generate_join_token),
         )
       end
     end

@@ -12,7 +12,7 @@
 ) do |form| %>
   <%= form.hidden_field :type %>
 
-  <% form.object.hidden_from_ids.each do |id| %>
+  <% post.hidden_from_ids.each do |id| %>
     <%= form.hidden_field :hidden_from_ids, value: id, multiple: true %>
   <% end %>
 
@@ -74,13 +74,36 @@
       form:,
       field: :visibility,
       label: "who can see this post?",
+      data: {
+        controller: "post-visibility-field-hidden-from-notice",
+      },
+      container: {
+        class: "gap-y-1",
+      },
     ) do %>
       <%= form.select(
         :visibility,
         options_for_select(post_visibility_options, "friends"),
         {},
-        { class: "form_select" },
+        class: "form_select",
+        data: {
+          post_visibility_field_hidden_from_notice_target: "input",
+          action: "post-visibility-field-hidden-from-notice#updateVisibility",
+        },
       ) %>
+
+      <% if (description = post_hidden_from_description(post)) %>
+        <div
+          class="
+            hidden starting:opacity-0 opacity-100 transition-opacity
+            duration-200 ease-out text-center text-shade-dimmed text-sm
+          "
+          data-post-visibility-field-hidden-from-notice-target="notice"
+          aria-hidden="true"
+        >
+          hidden from <span class="font-medium"><%== description %></span>
+        </div>
+      <% end %>
     <% end %>
   </div>
 

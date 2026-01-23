@@ -30,6 +30,7 @@ import ModalController from "./modal_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import OTPInputController from "./otp_input_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
+import PostVisibilityFieldHiddenFromNoticeController from "./post_visibility_field_hidden_from_notice_controller";
 import ToastController from "./toast_controller";
 import TooltipController from "./tooltip_controller";
 
@@ -74,3 +75,7 @@ application.register("tooltip", TooltipController);
 application.register("imask", IMaskController);
 application.register("field-sizing", FieldSizingController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
+application.register(
+  "post-visibility-field-hidden-from-notice",
+  PostVisibilityFieldHiddenFromNoticeController,
+);

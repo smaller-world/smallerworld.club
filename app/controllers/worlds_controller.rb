@@ -53,7 +53,7 @@ class WorldsController < ApplicationController
     end
   end
 
-  # GET /worlds/join/:token
+  # GET /worlds/:token/join
   def join
     respond_to do |format|
       format.html do

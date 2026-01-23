@@ -106,7 +106,7 @@ module GeneratedPathHelpersModule
   def invite_world_friends_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def join_worlds_path(*args); end
+  def join_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def login_requests_path(*args); end

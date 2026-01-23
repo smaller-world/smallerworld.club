@@ -106,7 +106,7 @@ module GeneratedUrlHelpersModule
   def invite_world_friends_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def join_worlds_url(*args); end
+  def join_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def login_requests_url(*args); end

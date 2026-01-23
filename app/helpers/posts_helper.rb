@@ -107,4 +107,17 @@ module PostsHelper
     values = Post.visibility.values.excluding("chosen_family")
     values.map { |value| [ value.text, value ] }
   end
+
+  sig { params(post: Post).returns(T.nilable(String)) }
+  def post_hidden_from_description(post)
+    case post.hidden_from.count
+    when 0
+      nil
+    when 1..3
+      post.hidden_from.pluck(:name).to_sentence
+    else
+      post.hidden_from.limit(2).pluck(:name).to_sentence +
+        "and #{post.hidden_from.count - 2} others"
+    end
+  end
 end

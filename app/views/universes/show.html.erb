@@ -1,21 +1,34 @@
 <div class="page_container flex flex-col gap-6">
-  <ul class="flex flex-wrap justify-around gap-4">
+  <% if hotwire_native_app? %>
+    <a href="/scan_qr_code" class="btn btn-outline self-center py-1">
+      <%= icon "qr-code", class: "size-5" %>
+      <span>join a world</span>
+    </a>
+  <% end %>
+
+  <ul class="universe_grid">
     <% @worlds.each do |world| %>
-      <li>
+      <li class="w-28">
         <%= link_to(
           user_aware_world_path(
             world,
             friend_token: @access_tokens_by_world_id[world.id],
             emulate_native_app: 1,
           ),
-          class: "flex flex-col items-center gap-2 hover:underline",
+          class: class_names(
+            "rounded-xl p-1.5 pb-1",
+            "flex flex-col items-center gap-2",
+            "hover:underline",
+          ),
         ) do %>
           <%= image_tag(
             world.icon.variant(:page_icon),
             class: "self-center rounded-app-icon size-20 shadow-lg object-cover"
           ) %>
 
-          <p class="font-medium text-sm font-headings"><%= world.name %></p>
+          <p class="font-medium text-sm font-headings leading-tight">
+            <%= world.name %>
+          </p>
         <% end %>
       </li>
     <% end %>

@@ -22,6 +22,13 @@
       }
     },
     {
+      "patterns": ["^/scan_qr_code$"],
+      "properties": {
+        "view_controller": "qr_code_scanner",
+        "context": "modal"
+      }
+    },
+    {
       "patterns": ["^/login"],
       "properties": {
         "modal_dismiss_gesture_enabled": false

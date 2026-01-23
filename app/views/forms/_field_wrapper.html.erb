@@ -1,5 +1,7 @@
 <%- description = local_assigns.delete(:description) -%>
 <%- error = error_message_for(form.object, field) -%>
+<%- container = local_assigns.delete(:container) || {} -%>
+<%- container_class = container.delete(:class) %>
 
 <%= tag.div(
   class: class_names("field_wrapper", local_assigns[:class]),
@@ -21,7 +23,11 @@
     </div>
   <% end %>
 
-  <div class="relative flex flex-col items-stretch"><%= yield %></div>
+  <%= tag.div(
+    yield,
+    class: class_names("relative flex flex-col items-stretch", container_class),
+    **container,
+  ) %>
 
   <% if error %>
     <%= tag.span(
