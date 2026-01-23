@@ -56,7 +56,12 @@ class FriendsController < ApplicationController
         )
         if @friend.save
           redirect_to(
-            world_path(@world, friend_token: @friend.access_token),
+            world_path(
+              @world,
+              friend_token: @friend.access_token,
+              emulate_native_app: 1,
+            ),
+            notice: "you're in!",
             status: :see_other,
           )
         else

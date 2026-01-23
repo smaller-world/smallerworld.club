@@ -47,9 +47,6 @@ class WorldsController < ApplicationController
           render(inertia: "WorldPage", world_theme: @world.theme, props:)
         end
       end
-      format.turbo_stream do
-        @pagy, @posts = paginated_world_posts(@world)
-      end
     end
   end
 
