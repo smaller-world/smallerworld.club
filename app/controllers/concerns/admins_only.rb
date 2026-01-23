@@ -8,10 +8,10 @@ module AdminsOnly
 
   include Authentication
 
-  requires_ancestor { ApplicationController }
+  requires_ancestor { ActionController::Base }
 
   included do
-    T.bind(self, T.class_of(ApplicationController))
+    T.bind(self, T.class_of(ActionController::Base))
 
     # == Filters ==
 

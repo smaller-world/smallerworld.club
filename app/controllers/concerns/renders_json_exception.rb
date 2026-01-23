@@ -6,7 +6,7 @@ module RendersJsonException
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  requires_ancestor { ApplicationController }
+  requires_ancestor { ActionController::Base }
 
   private
 
