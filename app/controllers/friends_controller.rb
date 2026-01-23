@@ -22,7 +22,7 @@ class FriendsController < ApplicationController
   end
 
 
-  # GET /friends/:token/notification_settings
+  # GET /friends/notification_settings?friend_token=...
   def notification_settings
     respond_to do |format|
       format.json do
@@ -66,7 +66,7 @@ class FriendsController < ApplicationController
     end
   end
 
-  # PUT /friends/:token
+  # PUT /friends?friend_token=...
   def update
     respond_to do |format|
       format.json do

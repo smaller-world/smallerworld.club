@@ -150,11 +150,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :worlds, param: :token, only: [] do
-    member do
-      get :join
-    end
-  end
   resources :worlds, only: [], export: true do
     scope module: :worlds do
       resource :timeline, only: :show, export: { namespace: "worldTimelines" }
@@ -177,7 +172,9 @@ Rails.application.routes.draw do
   end
 
   # == Universe ==
+
   resource :universe, only: :show
+  get "/universe/add", to: "worlds#join", as: :join_world
 
   # == Spaces ==
 
@@ -264,10 +261,9 @@ Rails.application.routes.draw do
 
   # == Friend ==
 
-  resources :friends,
-            param: :token,
-            only: %i[create update],
-            export: { namespace: "friend" } do
+  resource :friends,
+           only: %i[create update],
+           export: { namespace: "friend" } do
     member do
       get :notification_settings
     end

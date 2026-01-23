@@ -82,10 +82,7 @@ module GeneratedUrlHelpersModule
   def filepond_file_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def friend_encouragements_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def friend_url(*args); end
+  def friends_encouragements_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def friends_url(*args); end
@@ -160,7 +157,7 @@ module GeneratedUrlHelpersModule
   def new_user_world_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def notification_settings_friend_url(*args); end
+  def notification_settings_friends_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def pause_user_world_friend_url(*args); end

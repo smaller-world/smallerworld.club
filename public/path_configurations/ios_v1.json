@@ -12,7 +12,7 @@
         "^/settings$",
         "/new$",
         "/edit$",
-        "/join$",
+        "/add$",
         "/invite$",
         "^/login"
       ],

@@ -82,10 +82,7 @@ module GeneratedPathHelpersModule
   def filepond_file_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def friend_encouragements_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def friend_path(*args); end
+  def friends_encouragements_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def friends_path(*args); end
@@ -160,7 +157,7 @@ module GeneratedPathHelpersModule
   def new_user_world_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def notification_settings_friend_path(*args); end
+  def notification_settings_friends_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def pause_user_world_friend_path(*args); end

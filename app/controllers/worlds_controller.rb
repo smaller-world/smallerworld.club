@@ -53,13 +53,13 @@ class WorldsController < ApplicationController
     end
   end
 
-  # GET /worlds/:token/join
+  # GET /universe/add?token=...
   def join
     respond_to do |format|
       format.html do
         current_user = authenticate_user!
-        token = params.fetch(:token)
-        if (@world = World.find_by_join_token(token))
+        if (token = params[:token]) &&
+            (@world = World.find_by_join_token(token))
           @friend = @world.friends.build(
             phone_number: current_user.phone_number,
             name: current_user.name,
