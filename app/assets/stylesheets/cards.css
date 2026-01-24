@@ -1,5 +1,5 @@
 @layer components {
-  :where(.card) {
+  .card {
     @apply block rounded-3xl bg-shade-body p-4 shadow-lg;
     @apply border border-shade-300 dark:border-shade-700;
 

@@ -1,0 +1,18 @@
+@layer components {
+  .friend_card {
+    @apply flex items-start gap-2;
+
+    &:has(form[aria-busy="true"]) {
+      @apply loading;
+    }
+  }
+
+  .friend_card_header {
+    @apply flex flex-1 items-baseline gap-2;
+    @apply text-lg leading-tight;
+  }
+
+  .friend_card_status_badge {
+    @apply shrink-0;
+  }
+}

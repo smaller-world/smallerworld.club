@@ -1,9 +1,0 @@
-@layer components {
-  /* .native_device_form {
-    &:not([data-bridge-permission]),
-    &[data-bridge-permission="granted"],
-    &[data-bridge-permission="denied"] {
-      @apply hidden;
-    }
-  } */
-}

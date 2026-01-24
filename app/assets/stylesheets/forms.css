@@ -1,12 +1,12 @@
 @layer components {
-  :where(.field_with_errors) {
+  .field_with_errors {
     @apply contents;
   }
 
-  :where(.form_input),
-  :where(.form_textarea),
-  :where(.form_select),
-  :where(.form_multiselect) {
+  .form_input,
+  .form_textarea,
+  .form_select,
+  .form_multiselect {
     @apply bg-shade-body px-3.5 py-2.5;
     @apply rounded-2xl border-2 border-input-border;
     @apply placeholder:text-shade-400 dark:placeholder:text-shade-500;
@@ -21,12 +21,12 @@
     }
   }
 
-  :where(.form_input-lg) {
+  .form_input-lg {
     @apply text-xl;
   }
 
-  :where(.form_checkbox),
-  :where(.form_radio) {
+  .form_checkbox,
+  .form_radio {
     @apply size-6 rounded-3xl border-2 text-shade-contrast;
 
     /* CSS specifier trick to override white border from Tailwind form plugin */
@@ -47,25 +47,25 @@
 }
 
 @layer components {
-  :where(.field_wrapper) {
+  .field_wrapper {
     @apply flex flex-col items-stretch gap-1;
   }
 
-  :where(.field_wrapper_label) {
+  .field_wrapper_label {
     @apply block font-headings text-sm leading-tight font-medium text-shade-700 dark:text-shade-200;
   }
 
-  :where(.field_wrapper_description) {
+  .field_wrapper_description {
     @apply mb-1 text-xs leading-tight text-shade-dimmed;
   }
 
-  :where(.field_wrapper_error) {
+  .field_wrapper_error {
     @apply text-sm leading-tight text-red-600 dark:text-red-500;
   }
 }
 
 @layer components {
-  :where(.icon_field_input_container) {
+  .icon_field_input_container {
     @apply mt-1 size-36;
     @apply rounded-app-icon border-2 border-dashed border-input-border;
 
@@ -82,7 +82,7 @@
     }
   }
 
-  :where(.icon_field_modal_dialog) {
+  .icon_field_modal_dialog {
     .modal_panel {
       @apply mb-12 max-w-xl bg-transparent p-0 shadow-none;
       @apply focus-visible:ring-0;
@@ -111,7 +111,7 @@
     }
   }
 
-  :where(.icon_field_modal_dialog_footer) {
+  .icon_field_modal_dialog_footer {
     @apply absolute right-0 -bottom-12 left-0;
     @apply flex flex-col items-center;
     @apply pointer-events-none *:pointer-events-auto;
@@ -119,7 +119,7 @@
 }
 
 @layer components {
-  :where(.rich_text_area) {
+  .rich_text_area {
     lexxy-editor {
       @apply min-h-56;
 
@@ -146,14 +146,14 @@
 }
 
 @layer components {
-  :where(.emoji_field_input) {
+  .emoji_field_input {
     @apply w-11 p-1;
     @apply text-center text-2xl;
     @apply cursor-pointer placeholder:text-transparent;
     @apply hover:border-primary-400 aria-expanded:border-primary-400;
   }
 
-  :where(.emoji_field_placeholder) {
+  .emoji_field_placeholder {
     @apply invisible absolute inset-0 z-0;
     @apply flex items-center justify-center;
     @apply pointer-events-none;
@@ -165,7 +165,7 @@
 }
 
 @layer components {
-  :where(.otp_field_otp_input) {
+  .otp_field_otp_input {
     @apply w-11 p-2 text-center;
   }
 }

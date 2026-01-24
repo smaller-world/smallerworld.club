@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 @import "../assets/stylesheets/theme.css";
-@import "../assets/stylesheets/application.css";
 @import "../assets/stylesheets/hotwire.css";
-@import "../assets/stylesheets/animation.css";
-@import "../assets/stylesheets/spinners.css";
-@import "../assets/stylesheets/tippy.css";
-@import "../assets/stylesheets/layout.css";
-@import "../assets/stylesheets/flash.css";
+
+@import "../assets/stylesheets/loading.css";
 @import "../assets/stylesheets/buttons.css";
 @import "../assets/stylesheets/badges.css";
 @import "../assets/stylesheets/cards.css";
 @import "../assets/stylesheets/forms.css";
+@import "../assets/stylesheets/flash.css";
+
+@import "../assets/stylesheets/modals.css";
+@import "../assets/stylesheets/dropdowns.css";
+
 @import "../assets/stylesheets/filepond.css";
-@import "../assets/stylesheets/overlays.css";
 @import "../assets/stylesheets/toastify.css";
 @import "../assets/stylesheets/truecropper.css";
+@import "../assets/stylesheets/tippy.css";
 @import "../assets/stylesheets/lexxy.css";
+
+@import "../assets/stylesheets/application.css";
+@import "../assets/stylesheets/layout.css";
+
 @import "../assets/stylesheets/posts.css";
-@import "../assets/stylesheets/notifications.css";
+@import "../assets/stylesheets/friends.css";
 @import "../assets/stylesheets/landing.css";
 @import "../assets/stylesheets/universe.css";
 

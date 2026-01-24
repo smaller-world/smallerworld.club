@@ -1,7 +1,7 @@
-@import "toastify-js/src/toastify.css" layer(base);
+@import "toastify-js/src/toastify.css" layer(components);
 
 @layer components {
-  :where(.toastify) {
+  .toastify {
     @apply rounded-2xl px-3 py-2 shadow-2xl;
     @apply bg-linear-to-r from-primary-500 to-primary-700;
 

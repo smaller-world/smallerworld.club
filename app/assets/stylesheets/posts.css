@@ -1,6 +1,6 @@
 @layer components {
   .post_card {
-    @apply relative;
+    @apply relative flex flex-col gap-2;
 
     &[data-visibility="secret"] {
       @apply border-dashed;
@@ -8,6 +8,10 @@
 
     &[data-visibility="public"] {
       @apply border-shade-500;
+    }
+
+    &:has(form[aria-busy="true"]) {
+      @apply loading;
     }
   }
 
@@ -27,17 +31,6 @@
 
   .post_card_footer {
     @apply flex justify-between;
-  }
-
-  .post_card_loading_overlay {
-    @apply absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xs;
-    @apply pointer-events-none opacity-0 transition-opacity duration-200 ease-out;
-    @apply text-white dark:text-primary-500;
-    @apply flex items-center justify-center;
-
-    .post_card[aria-busy="true"] & {
-      @apply pointer-events-auto opacity-100;
-    }
   }
 
   .post_card_reaction_button {

@@ -1,7 +1,7 @@
 @layer components {
   .badge {
-    @apply flex items-center gap-1 rounded-2xl px-2.5 py-0.5;
-    @apply font-headings text-sm leading-1 font-bold text-shade-contrast;
+    @apply flex items-center gap-1 rounded-2xl px-1.5 py-0.5;
+    @apply font-headings text-sm leading-tight font-bold text-shade-contrast;
     /* @apply bg-shade-700 text-shade-100 dark:bg-shade-300 dark:text-shade-700; */
   }
 }

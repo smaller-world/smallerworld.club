@@ -1,0 +1,60 @@
+@layer components {
+  .dropdown_menu {
+    @apply absolute z-50 transform transition;
+    @apply transition-all transition-discrete duration-200 ease-out;
+    @apply shadow-lg;
+
+    &.hidden {
+      @apply scale-90 opacity-0;
+
+      @starting-style {
+        @apply scale-100 opacity-100;
+      }
+    }
+
+    &:not(.hidden) {
+      @apply scale-100 opacity-100;
+
+      @starting-style {
+        @apply scale-90 opacity-0;
+      }
+    }
+
+    [role="separator"] {
+      @apply border-t border-shade-200 dark:border-shade-800;
+    }
+
+    [role="menuitem"] {
+      @apply flex items-center gap-2 rounded-xl px-2 py-1.5;
+      @apply font-headings text-sm font-semibold;
+      @apply hover:bg-shade-100 dark:hover:bg-shade-900;
+    }
+
+    &&-top_right {
+      @apply top-0 right-0 origin-top-right;
+    }
+
+    &&-top {
+      @apply top-0 left-1/2 origin-top -translate-x-1/2;
+    }
+
+    &&-bottom_right {
+      @apply right-0 bottom-0 origin-bottom-right;
+    }
+
+    &&-bottom {
+      @apply bottom-0 left-1/2 origin-bottom -translate-x-1/2;
+    }
+  }
+
+  .btn.menu_btn {
+    @apply px-3 py-1;
+    @apply text-sm;
+  }
+
+  .card.menu_card {
+    @apply flex min-w-60 flex-col gap-1 rounded-2xl p-2;
+    @apply border border-primary-300 dark:border-primary-700;
+    @apply shadow-md;
+  }
+}

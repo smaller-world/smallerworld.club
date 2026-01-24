@@ -1,22 +1,22 @@
-@import "tippy.js/dist/tippy.css" layer(base);
-@import "tippy.js/dist/svg-arrow.css" layer(base);
-@import "tippy.js/animations/scale.css" layer(base);
+@import "tippy.js/dist/tippy.css" layer(components);
+@import "tippy.js/dist/svg-arrow.css" layer(components);
+@import "tippy.js/animations/scale.css" layer(components);
 
 @layer components {
-  :where(.tippy-box) {
+  .tippy-box {
     @apply rounded-xl bg-shade-900 dark:bg-shade-100;
   }
 
-  :where(.tippy-arrow) {
+  .tippy-arrow {
     @apply text-shade-900 dark:text-shade-100;
   }
 
-  :where(.tippy-svg-arrow) {
+  .tippy-svg-arrow {
     @apply fill-shade-900 dark:fill-shade-100;
   }
 
-  :where(.tippy-arrow),
-  :where(.tippy-svg-arrow) {
+  .tippy-arrow,
+  .tippy-svg-arrow {
     @apply absolute;
 
     .tippy-box[data-placement="bottom-start"] &,
@@ -34,7 +34,7 @@
     }
   }
 
-  :where(.tippy-content) {
+  .tippy-content {
     @apply text-base text-shade-100 dark:text-shade-900;
   }
 }

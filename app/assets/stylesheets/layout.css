@@ -7,7 +7,7 @@
 @layer components {
   :where(.page_container) {
     @apply w-full max-w-xl flex-1 self-center;
-    @apply p-4 native:py-0;
+    @apply p-4 native:py-2;
   }
 }
 

@@ -1,5 +1,5 @@
 @layer components {
-  :where(.btn) {
+  .btn {
     @apply flex items-center justify-center gap-2 rounded-3xl px-4 py-2;
     @apply font-headings text-lg font-semibold text-shade-contrast;
     @apply transition-colors duration-200 ease-out;
@@ -30,13 +30,14 @@
         }
 
         &::after {
+          @apply absolute;
+
           --mask: no-repeat radial-gradient(#000 68%, #0000 71%);
           --size: 1.25em;
 
-          @apply absolute;
-
           -webkit-mask: var(--mask), var(--mask), var(--mask);
           -webkit-mask-size: 28% 45%;
+
           animation: submitting 1s infinite linear;
           aspect-ratio: 8/5;
           background: currentColor;
@@ -50,18 +51,18 @@
     }
   }
 
-  :where(.btn-outline) {
+  .btn-outline {
     @apply border border-shade-200 dark:border-shade-800;
     @apply bg-shade-100 dark:bg-shade-900;
     @apply hover:bg-shade-200 dark:hover:bg-shade-800;
   }
 
-  :where(.btn-action) {
+  .btn-action {
     @apply bg-black text-white dark:bg-white dark:text-black;
     @apply hover:bg-primary-700 dark:hover:bg-primary-300;
   }
 
-  :where(.btn-readonly) {
+  .btn-readonly {
     &:disabled {
       @apply cursor-default opacity-100;
     }
