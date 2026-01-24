@@ -1,8 +1,6 @@
 ---
 name: rails-hotwire
-description:
-  Use when hotwire (Turbo and Stimulus) for building modern reactive Rails
-  applications without complex JavaScript frameworks.
+description: Use when hotwire (Turbo and Stimulus) for building modern reactive Rails applications without complex JavaScript frameworks.
 allowed-tools:
   - Read
   - Write
@@ -14,8 +12,8 @@ allowed-tools:
 
 # Rails Hotwire
 
-Master Hotwire for building modern, reactive Rails applications using Turbo and
-Stimulus without requiring heavy JavaScript frameworks.
+Master Hotwire for building modern, reactive Rails applications using Turbo
+and Stimulus without requiring heavy JavaScript frameworks.
 
 ## Overview
 
@@ -251,33 +249,33 @@ end
 
 ```javascript
 // app/javascript/controllers/clipboard_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["source", "button"];
+  static targets = ["source", "button"]
   static values = {
     successMessage: String,
-    errorMessage: String,
-  };
+    errorMessage: String
+  }
 
   copy(event) {
-    event.preventDefault();
+    event.preventDefault()
 
     navigator.clipboard.writeText(this.sourceTarget.value).then(
       () => this.showSuccess(),
-      () => this.showError(),
-    );
+      () => this.showError()
+    )
   }
 
   showSuccess() {
-    this.buttonTarget.textContent = this.successMessageValue || "Copied!";
+    this.buttonTarget.textContent = this.successMessageValue || "Copied!"
     setTimeout(() => {
-      this.buttonTarget.textContent = "Copy";
-    }, 2000);
+      this.buttonTarget.textContent = "Copy"
+    }, 2000)
   }
 
   showError() {
-    this.buttonTarget.textContent = this.errorMessageValue || "Failed!";
+    this.buttonTarget.textContent = this.errorMessageValue || "Failed!"
   }
 }
 ```
@@ -301,53 +299,53 @@ export default class extends Controller {
 
 ```javascript
 // app/javascript/controllers/form_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["email", "password", "submit"];
-  static classes = ["error"];
+  static targets = ["email", "password", "submit"]
+  static classes = ["error"]
 
   connect() {
-    this.validateForm();
+    this.validateForm()
   }
 
   validateField(event) {
-    const field = event.target;
-    const isValid = field.checkValidity();
+    const field = event.target
+    const isValid = field.checkValidity()
 
     if (isValid) {
-      field.classList.remove(this.errorClass);
+      field.classList.remove(this.errorClass)
     } else {
-      field.classList.add(this.errorClass);
+      field.classList.add(this.errorClass)
     }
 
-    this.validateForm();
+    this.validateForm()
   }
 
   validateForm() {
-    const isValid = this.element.checkValidity();
-    this.submitTarget.disabled = !isValid;
+    const isValid = this.element.checkValidity()
+    this.submitTarget.disabled = !isValid
   }
 
   async submit(event) {
-    event.preventDefault();
+    event.preventDefault()
 
     if (!this.element.checkValidity()) {
-      return;
+      return
     }
 
-    const formData = new FormData(this.element);
+    const formData = new FormData(this.element)
     const response = await fetch(this.element.action, {
       method: this.element.method,
       body: formData,
       headers: {
-        Accept: "text/vnd.turbo-stream.html",
-      },
-    });
+        "Accept": "text/vnd.turbo-stream.html"
+      }
+    })
 
     if (response.ok) {
-      const html = await response.text();
-      Turbo.renderStreamMessage(html);
+      const html = await response.text()
+      Turbo.renderStreamMessage(html)
     }
   }
 }
@@ -379,59 +377,59 @@ export default class extends Controller {
 
 ```javascript
 // app/javascript/controllers/infinite_scroll_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["entries", "pagination"];
+  static targets = ["entries", "pagination"]
   static values = {
     url: String,
-    page: Number,
-  };
+    page: Number
+  }
 
   initialize() {
-    this.scroll = this.scroll.bind(this);
+    this.scroll = this.scroll.bind(this)
   }
 
   connect() {
-    this.createObserver();
+    this.createObserver()
   }
 
   disconnect() {
-    this.observer.disconnect();
+    this.observer.disconnect()
   }
 
   createObserver() {
     this.observer = new IntersectionObserver(
-      (entries) => this.handleIntersect(entries),
-      { threshold: 1.0 },
-    );
-    this.observer.observe(this.paginationTarget);
+      entries => this.handleIntersect(entries),
+      { threshold: 1.0 }
+    )
+    this.observer.observe(this.paginationTarget)
   }
 
   handleIntersect(entries) {
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        this.loadMore();
+        this.loadMore()
       }
-    });
+    })
   }
 
   async loadMore() {
-    const url = this.paginationTarget.querySelector("a[rel='next']")?.href;
+    const url = this.paginationTarget.querySelector("a[rel='next']")?.href
 
-    if (!url) return;
+    if (!url) return
 
-    this.pageValue++;
+    this.pageValue++
 
     const response = await fetch(url, {
       headers: {
-        Accept: "text/vnd.turbo-stream.html",
-      },
-    });
+        Accept: "text/vnd.turbo-stream.html"
+      }
+    })
 
     if (response.ok) {
-      const html = await response.text();
-      Turbo.renderStreamMessage(html);
+      const html = await response.text()
+      Turbo.renderStreamMessage(html)
     }
   }
 }
@@ -463,31 +461,29 @@ export default class extends Controller {
 
 ```javascript
 // app/javascript/controllers/modal_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "backdrop"];
+  static targets = ["container", "backdrop"]
 
   connect() {
-    document.body.classList.add("overflow-hidden");
+    document.body.classList.add("overflow-hidden")
   }
 
   disconnect() {
-    document.body.classList.remove("overflow-hidden");
+    document.body.classList.remove("overflow-hidden")
   }
 
   close(event) {
-    if (
-      event.target === this.backdropTarget ||
-      event.currentTarget.dataset.closeModal === "true"
-    ) {
-      this.element.remove();
+    if (event.target === this.backdropTarget ||
+        event.currentTarget.dataset.closeModal === "true") {
+      this.element.remove()
     }
   }
 
   closeWithKeyboard(event) {
     if (event.key === "Escape") {
-      this.element.remove();
+      this.element.remove()
     }
   }
 }
@@ -528,35 +524,35 @@ export default class extends Controller {
 
 ```javascript
 // app/javascript/controllers/autosave_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["status"];
+  static targets = ["status"]
   static values = {
     delay: { type: Number, default: 1000 },
-    url: String,
-  };
+    url: String
+  }
 
   connect() {
-    this.timeout = null;
-    this.saving = false;
+    this.timeout = null
+    this.saving = false
   }
 
   save() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
 
     this.timeout = setTimeout(() => {
-      this.persist();
-    }, this.delayValue);
+      this.persist()
+    }, this.delayValue)
   }
 
   async persist() {
-    if (this.saving) return;
+    if (this.saving) return
 
-    this.saving = true;
-    this.showStatus("Saving...");
+    this.saving = true
+    this.showStatus("Saving...")
 
-    const formData = new FormData(this.element);
+    const formData = new FormData(this.element)
 
     try {
       const response = await fetch(this.urlValue, {
@@ -564,29 +560,29 @@ export default class extends Controller {
         body: formData,
         headers: {
           "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
-          Accept: "application/json",
-        },
-      });
+          "Accept": "application/json"
+        }
+      })
 
       if (response.ok) {
-        this.showStatus("Saved", "success");
+        this.showStatus("Saved", "success")
       } else {
-        this.showStatus("Error saving", "error");
+        this.showStatus("Error saving", "error")
       }
     } catch (error) {
-      this.showStatus("Error saving", "error");
+      this.showStatus("Error saving", "error")
     } finally {
-      this.saving = false;
+      this.saving = false
     }
   }
 
   showStatus(message, type = "info") {
-    this.statusTarget.textContent = message;
-    this.statusTarget.className = `status-${type}`;
+    this.statusTarget.textContent = message
+    this.statusTarget.className = `status-${type}`
 
     setTimeout(() => {
-      this.statusTarget.textContent = "";
-    }, 2000);
+      this.statusTarget.textContent = ""
+    }, 2000)
   }
 }
 ```
@@ -608,53 +604,53 @@ export default class extends Controller {
 
 ```javascript
 // app/javascript/controllers/search_controller.js
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "results"];
+  static targets = ["input", "results"]
   static values = {
     url: String,
-    delay: { type: Number, default: 300 },
-  };
+    delay: { type: Number, default: 300 }
+  }
 
   connect() {
-    this.timeout = null;
+    this.timeout = null
   }
 
   search() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
 
     this.timeout = setTimeout(() => {
-      this.performSearch();
-    }, this.delayValue);
+      this.performSearch()
+    }, this.delayValue)
   }
 
   async performSearch() {
-    const query = this.inputTarget.value;
+    const query = this.inputTarget.value
 
     if (query.length < 2) {
-      this.resultsTarget.innerHTML = "";
-      return;
+      this.resultsTarget.innerHTML = ""
+      return
     }
 
-    const url = new URL(this.urlValue);
-    url.searchParams.set("q", query);
+    const url = new URL(this.urlValue)
+    url.searchParams.set("q", query)
 
     const response = await fetch(url, {
       headers: {
-        Accept: "text/vnd.turbo-stream.html",
-      },
-    });
+        Accept: "text/vnd.turbo-stream.html"
+      }
+    })
 
     if (response.ok) {
-      const html = await response.text();
-      Turbo.renderStreamMessage(html);
+      const html = await response.text()
+      Turbo.renderStreamMessage(html)
     }
   }
 
   clear() {
-    this.inputTarget.value = "";
-    this.resultsTarget.innerHTML = "";
+    this.inputTarget.value = ""
+    this.resultsTarget.innerHTML = ""
   }
 }
 ```

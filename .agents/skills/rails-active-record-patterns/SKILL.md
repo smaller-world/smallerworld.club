@@ -1,8 +1,6 @@
 ---
 name: rails-active-record-patterns
-description:
-  Use when active Record patterns including models, associations, queries,
-  validations, and callbacks.
+description: Use when active Record patterns including models, associations, queries, validations, and callbacks.
 allowed-tools:
   - Read
   - Write
@@ -20,9 +18,9 @@ associations, validations, scopes, and query optimization.
 ## Overview
 
 Active Record is Rails' Object-Relational Mapping (ORM) layer that connects
-model classes to database tables. It implements the Active Record pattern, where
-each object instance represents a row in the database and includes both data and
-behavior.
+model classes to database tables. It implements the Active Record pattern,
+where each object instance represents a row in the database and includes both
+data and behavior.
 
 ## Installation and Setup
 

@@ -5,6 +5,7 @@ test/fixtures/active_storage/blobs.yml
 # == System
 .ruby-lsp/
 .bundle/
+.agents/skills/
 bin/
 dist/
 db/
