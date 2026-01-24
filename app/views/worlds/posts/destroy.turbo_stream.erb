@@ -1,3 +1,9 @@
 <% if @post.destroyed? %>
   <%= turbo_stream.remove dom_id(@post, :card) %>
+<% else %>
+  <%= turbo_stream.append "notifications" do %>
+    <template data-controller="toast">
+      <%= @post.errors.full_messages.first || "couldn't delete post" %>
+    </template>
+  <% end %>
 <% end %>

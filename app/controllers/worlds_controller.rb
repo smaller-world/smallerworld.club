@@ -66,7 +66,6 @@ class WorldsController < ApplicationController
     end
   end
 
-
   private
 
   # == Helpers ==

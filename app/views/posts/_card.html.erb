@@ -2,135 +2,127 @@
   id: dom_id(post, :card),
   class: class_names("card post_card", local_assigns[:class]),
   data: {
-    controller: "busy-reporter",
     visibility: post.visibility,
   },
 ) do %>
-  <div class="flex flex-col gap-2">
-    <div class="post_card_header">
-      <div class="flex flex-wrap items-baseline gap-x-0.5">
-        <span class="inline-flex items-baseline gap-1">
-          <% if (emoji = post.emoji) %>
-            <span class="font-emoji relative top-px mr-1 text-sm">
-              <%= emoji %>
-            </span>
-          <% else %>
-            <%= post_type_icon(post.type, class: "size-3 self-center") %>
-          <% end %>
-
-          <span class="post_card_post_type">
-            <%= post.type.humanize(capitalize: false) %>
+  <div class="post_card_header">
+    <div class="flex flex-wrap items-baseline gap-x-0.5">
+      <span class="inline-flex items-baseline gap-1">
+        <% if (emoji = post.emoji) %>
+          <span class="font-emoji relative top-px mr-1 text-sm">
+            <%= emoji %>
           </span>
-        </span>
-
-        <span class="text-nowrap">
-          from
-          <% if !post.pen_name? && (world = post.author.world) %>
-            <%= link_to(
-              post.author.name,
-              user_aware_world_path(world, emulate_native_app: 1),
-              class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
-            ) %>
-          <% else %>
-            <span class="font-semibold">
-              <%= post.pen_name || post.author.name %>
-            </span>
-          <% end %>
-        </span>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <%= local_time(
-          post.created_at,
-          format: :short,
-          class: "font-headings lowercase text-nowrap",
-        ) %>
-
-        <% if post.visibility.in?(["public", "secret"]) %>
-          <div class="flex items-center gap-0.5 text-shade-contrast">
-            <%= post_visibility_icon(post.visibility, class: "size-3 self-center") %>
-            <span class="font-semibold"><%= post.visibility.text %></span>
-          </div>
+        <% else %>
+          <%= post_type_icon(post.type, class: "size-3 self-center") %>
         <% end %>
-      </div>
+
+        <span class="post_card_post_type">
+          <%= post.type.humanize(capitalize: false) %>
+        </span>
+      </span>
+
+      <span class="text-nowrap">
+        from
+        <% if !post.pen_name? && (world = post.author.world) %>
+          <%= link_to(
+            post.author.name,
+            user_aware_world_path(world, emulate_native_app: 1),
+            class: "rounded-xs font-semibold text-primary-500 hover:text-primary-600",
+          ) %>
+        <% else %>
+          <span class="font-semibold">
+            <%= post.pen_name || post.author.name %>
+          </span>
+        <% end %>
+      </span>
     </div>
 
-    <div class="post_card_content">
-      <% if (title = post.title) %>
-        <h3 class="text-xl leading-tight font-semibold"><%= title %></h3>
-      <% end %>
+    <div class="flex items-center gap-2">
+      <%= local_time(
+        post.created_at,
+        format: :short,
+        class: "font-headings lowercase text-nowrap",
+      ) %>
 
-      <% if (body_html = post.body_html) %>
-        <div class="prose dark:prose-invert max-w-none"><%== body_html -%></div>
-      <% else %>
-        <%= post.body -%>
-      <% end %>
-    </div>
-
-    <div class="post_card_footer">
-      <%= render "posts/reactions", post: %>
-
-      <% if allowed_to?(:manage?, post) %>
-        <div class="relative -mr-1 -mb-1" data-controller="dropdown">
-          <button
-            type="button"
-            class="btn menu_btn"
-            data-dropdown-target="trigger"
-            data-action="dropdown#toggle"
-            aria-haspopup="menu"
-          >
-            <%= icon "pencil-square", variant: :micro, class: "size-4" %>
-            <span>actions</span>
-          </button>
-
-          <div
-            class="card dropdown_menu menu_card dropdown_menu-bottom_right hidden"
-            data-dropdown-target="menu"
-          >
-            <ul role="menu">
-              <li role="presentation">
-                <%= link_to(
-                  edit_post_path(post, emulate_native_app: 1),
-                  role: "menuitem",
-                  data: {
-                    action: "dropdown#toggle",
-                  },
-                ) do %>
-                  <%= icon "pencil", variant: :micro, class: "size-4" %>
-                  <span class="font-headings text-sm">edit post</span>
-                <% end %>
-              </li>
-
-              <li role="presentation">
-                <%= button_to(
-                  post_path(post),
-                  role: "menuitem",
-                  method: :delete,
-                  data: {
-                    action: "dropdown#toggle alert-bridge#show",
-                  },
-                  form: {
-                    class: "flex flex-col",
-                    data: {
-                      controller: "haptic-bridge",
-                      action: "turbo:submit-end->haptic-bridge#vibrate",
-                      busy_reporter_target: "busyable",
-                      turbo_confirm: "really delete post?",
-                    },
-                  },
-                ) do %>
-                  <%= icon "trash", variant: :micro, class: "size-4" %>
-                  <span class="font-headings text-sm">delete post</span>
-                <% end %>
-              </li>
-            </ul>
-          </div>
+      <% if post.visibility.in?(["public", "secret"]) %>
+        <div class="flex items-center gap-0.5 text-shade-contrast">
+          <%= post_visibility_icon(post.visibility, class: "size-3 self-center") %>
+          <span class="font-semibold"><%= post.visibility.text %></span>
         </div>
       <% end %>
     </div>
   </div>
 
-  <div class="post_card_loading_overlay">
-    <div class="spinner"></div>
+  <div class="post_card_content">
+    <% if (title = post.title) %>
+      <h3 class="text-xl leading-tight font-semibold"><%= title %></h3>
+    <% end %>
+
+    <% if (body_html = post.body_html) %>
+      <div class="prose dark:prose-invert max-w-none"><%== body_html -%></div>
+    <% else %>
+      <%= post.body -%>
+    <% end %>
+  </div>
+
+  <div class="post_card_footer">
+    <%= render "posts/reactions", post: %>
+
+    <% if allowed_to?(:manage?, post) %>
+      <div class="relative -mr-1 -mb-1" data-controller="dropdown">
+        <button
+          type="button"
+          class="btn menu_btn"
+          data-dropdown-target="trigger"
+          data-action="dropdown#toggle"
+          aria-haspopup="menu"
+        >
+          <%= icon "pencil-square", variant: :micro, class: "size-4" %>
+          <span>actions</span>
+        </button>
+
+        <div
+          class="card dropdown_menu menu_card dropdown_menu-bottom_right hidden"
+          data-dropdown-target="menu"
+        >
+          <ul role="menu">
+            <li role="presentation">
+              <%= link_to(
+                edit_post_path(post, emulate_native_app: 1),
+                role: "menuitem",
+                data: {
+                  action: "dropdown#toggle",
+                },
+              ) do %>
+                <%= icon "pencil", variant: :micro, class: "size-4" %>
+                <span class="font-headings text-sm">edit post</span>
+              <% end %>
+            </li>
+
+            <li role="presentation">
+              <%= button_to(
+                post_path(post),
+                role: "menuitem",
+                method: :delete,
+                data: {
+                  action: "dropdown#toggle alert-bridge#show",
+                },
+                form: {
+                  class: "flex flex-col",
+                  data: {
+                    controller: "haptic-bridge",
+                    action: "turbo:submit-end->haptic-bridge#vibrate",
+                    turbo_confirm: "really delete post?",
+                  },
+                },
+              ) do %>
+                <%= icon "trash", variant: :micro, class: "size-4" %>
+                <span class="font-headings text-sm">delete post</span>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% end %>

@@ -303,21 +303,25 @@ module Users::Worlds
 
     # DELETE /world/posts/:id
     def destroy
+      @world = current_world!
+      @post = find_post(scope: @world.posts)
+      authorize!(@post)
       respond_to do |format|
         format.json do
-          post = find_post
-          authorize!(post)
-          world_id = post.world_id!
-          if post.destroy
+          world_id = @post.world_id!
+          if @post.destroy
             render(json: { "worldId" => world_id })
           else
             render(
               json: {
-                errors: post.errors.full_messages,
+                errors: @post.errors.full_messages,
               },
               status: :unprocessable_content,
             )
           end
+        end
+        format.turbo_stream do
+          @post.destroy
         end
       end
     end
