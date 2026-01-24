@@ -122,8 +122,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@eslint/js": "^9.39.2",
-    "@herb-tools/formatter": "^0.8.7",
-    "@herb-tools/linter": "^0.8.7",
+    "@herb-tools/formatter": "^0.8.8",
+    "@herb-tools/linter": "^0.8.8",
     "@iconify-json/basil": "^1.1.5",
     "@iconify-json/heroicons": "^1.2.0",
     "@iconify-json/ri": "^1.1.22",
