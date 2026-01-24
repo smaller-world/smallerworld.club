@@ -51,9 +51,7 @@ const WorldPageNotificationsButtonCard: FC<
   } = useWebPush();
 
   // == Load notification settings
-  const { notificationSettings } = useFriendNotificationSettings(
-    currentFriend.access_token,
-  );
+  const { notificationSettings } = useFriendNotificationSettings(currentFriend);
 
   // == Notification settings form
   const [defaultNotificationSettings] = useState<FriendNotificationSettings>(

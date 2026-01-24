@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class BusyReporterController extends Controller<HTMLFormElement> {
+export default class BusyReporterController extends Controller<HTMLElement> {
   static targets = ["busyable"];
   declare readonly busyableTargets: readonly HTMLElement[];
 

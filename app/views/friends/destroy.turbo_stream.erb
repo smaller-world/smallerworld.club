@@ -1,0 +1,9 @@
+<% if @friend.destroyed? %>
+  <%= turbo_stream.remove dom_id(@friend, :card) %>
+<% else %>
+  <%= turbo_stream.append "notifications" do %>
+    <template data-controller="toast">
+      <%= @friend.errors.full_messages.first || "couldn't remove friend" %>
+    </template>
+  <% end %>
+<% end %>

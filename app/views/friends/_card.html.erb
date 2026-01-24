@@ -1,29 +1,89 @@
 <%= tag.div(
   id: dom_id(friend, :card),
-  class: class_names("card flex gap-2 justify-between", local_assigns[:class])
+  class: class_names("card friend_card", local_assigns[:class])
 ) do %>
-  <div class="flex items-baseline gap-2 text-lg">
+  <div class="friend_card_header">
     <% if friend.emoji %>
       <span class="font-emoji"><%= friend.emoji %></span>
     <% end %>
 
-    <span class="font-medium"><%= friend.name %></span>
+    <span class="font-medium wrap-anywhere"><%= friend.name %></span>
   </div>
 
-  <% if friend.paused? %>
-    <div class="badge">
-      <%= icon "pause", class: "size-3.5" %>
-      <span>paused</span>
+  <div class="flex gap-1">
+    <% if friend.paused? %>
+      <div class="badge friend_card_status_badge">
+        <%= icon "pause", class: "size-3.5" %>
+        <span>paused</span>
+      </div>
+    <% elsif friend.notifiable? %>
+      <div class="badge friend_card_status_badge">
+        <%= icon "device-phone-mobile", class: "size-3.5" %>
+        <span>installed</span>
+      </div>
+    <% elsif friend.phone_number? %>
+      <div class="badge friend_card_status_badge">
+        <%= icon "chat-bubble-bottom-center-text", class: "size-3.5" %>
+        <span>texts only</span>
+      </div>
+    <% end %>
+
+    <div class="relative" data-controller="dropdown">
+      <button
+        type="button"
+        class="btn menu_btn p-1"
+        data-dropdown-target="trigger"
+        data-action="dropdown#toggle"
+        aria-haspopup="menu"
+      >
+        <%= icon "ellipsis-vertical", variant: :micro, class: "size-4" %>
+      </button>
+
+      <div
+        class="card dropdown_menu menu_card dropdown_menu-top_right hidden"
+        data-dropdown-target="menu"
+      >
+        <ul role="menu">
+          <% if false # TODO: Implement edit friend %>
+            <li role="presentation">
+              <%= link_to(
+              edit_post_path(post, emulate_native_app: 1),
+              role: "menuitem",
+              data: {
+                action: "dropdown#toggle",
+              },
+            ) do %>
+                <%= icon "pencil", variant: :micro, class: "size-4" %>
+                <span class="font-headings text-sm">edit post</span>
+              <% end %>
+            </li>
+          <% end %>
+
+          <li role="presentation">
+            <%= button_to(
+              friend,
+              role: "menuitem",
+              method: :delete,
+              class: "text-destructive-600 dark:text-destructive-400",
+              data: {
+                action: "dropdown#toggle alert-bridge#show",
+              },
+              form: {
+                class: "flex flex-col",
+                data: {
+                  controller: "haptic-bridge",
+                  action: "turbo:submit-end->haptic-bridge#vibrate",
+                  busy_reporter_target: "busyable",
+                  turbo_confirm: "really remove friend?",
+                },
+              },
+            ) do %>
+              <%= icon "minus-circle", variant: :micro, class: "size-4" %>
+              <span class="font-headings text-sm">remove friend</span>
+            <% end %>
+          </li>
+        </ul>
+      </div>
     </div>
-  <% elsif friend.notifiable? %>
-    <div class="badge">
-      <%= icon "device-phone-mobile", class: "size-3.5" %>
-      <span>installed</span>
-    </div>
-  <% elsif friend.phone_number? %>
-    <div class="badge">
-      <%= icon "chat-bubble-bottom-center-text", class: "size-3.5" %>
-      <span>texts only</span>
-    </div>
-  <% end %>
+  </div>
 <% end %>

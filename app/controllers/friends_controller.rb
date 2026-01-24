@@ -4,8 +4,8 @@
 class FriendsController < ApplicationController
   # == Filters ==
 
-  before_action :authenticate_user!, only: %i[create invite]
-  before_action :authenticate_friend!, except: %i[create invite]
+  before_action :authenticate_user!, only: %i[create invite destroy]
+  before_action :authenticate_friend!, only: :notification_settings
 
   # == Actions ==
 
@@ -14,7 +14,7 @@ class FriendsController < ApplicationController
     respond_to do |format|
       format.html do
         @world = find_world
-        @qr = RQRCode::QRCode.new(
+        @qr_code = RQRCode::QRCode.new(
           shortlinked.join_world_url(token: @world.generate_join_token),
         )
       end
@@ -22,7 +22,7 @@ class FriendsController < ApplicationController
   end
 
 
-  # GET /friends/notification_settings?friend_token=...
+  # GET /friends/:id/notification_settings[?friend_token=...]
   def notification_settings
     respond_to do |format|
       format.json do
@@ -71,7 +71,7 @@ class FriendsController < ApplicationController
     end
   end
 
-  # PUT /friends?friend_token=...
+  # PUT /friends/:id[?friend_token=...]
   def update
     respond_to do |format|
       format.json do
@@ -92,6 +92,17 @@ class FriendsController < ApplicationController
     end
   end
 
+  # DELETE /friends/:id
+  def destroy
+    respond_to do |format|
+      format.turbo_stream do
+        @friend = find_friend
+        authorize!(@friend)
+        @friend.destroy
+      end
+    end
+  end
+
   private
 
   # == Helpers ==
@@ -99,5 +110,10 @@ class FriendsController < ApplicationController
   sig { returns(World) }
   def find_world
     World.friendly.find(params.fetch(:world_id))
+  end
+
+  sig { params(scope: Friend::PrivateRelation).returns(Friend) }
+  def find_friend(scope: Friend.all)
+    scope.find(params.fetch(:id))
   end
 end

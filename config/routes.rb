@@ -261,9 +261,7 @@ Rails.application.routes.draw do
 
   # == Friend ==
 
-  resource :friends,
-           only: %i[create update],
-           export: { namespace: "friend" } do
+  resources :friends, only: %i[create update destroy], export: true do
     member do
       get :notification_settings
     end

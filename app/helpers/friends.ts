@@ -18,14 +18,17 @@ export const prettyFriendName = (
   return [emoji, name].filter(Boolean).join(" ");
 };
 
-export const useFriendNotificationSettings = (friendAccessToken: string) => {
+export const useFriendNotificationSettings = (
+  friend: Pick<Friend, "id" | "access_token">,
+) => {
   const { data, ...swrResponse } = useRouteSWR<{
     notificationSettings: FriendNotificationSettings;
-  }>(routes.friend.notificationSettings, {
+  }>(routes.friends.notificationSettings, {
     descriptor: "load notification settings",
     params: {
+      id: friend.id,
       query: {
-        friend_token: friendAccessToken,
+        friend_token: friend.access_token,
       },
     },
   });
@@ -84,8 +87,9 @@ export const useFriendNotificationSettingsForm = ({
       values: FriendNotificationSettingsFormValues,
     ) => FriendNotificationSettingsFormSubmission
   >({
-    action: routes.friend.update,
+    action: routes.friends.update,
     params: {
+      id: currentFriend.id,
       query: {
         friend_token: currentFriend.access_token,
       },
@@ -94,7 +98,8 @@ export const useFriendNotificationSettingsForm = ({
     initialValues,
     transformValues: (values) => ({ notification_settings: values }),
     onSuccess: (data, form) => {
-      void mutateRoute(routes.friend.notificationSettings, {
+      void mutateRoute(routes.friends.notificationSettings, {
+        id: currentFriend.id,
         query: {
           friend_token: currentFriend.access_token,
         },
