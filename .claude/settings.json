@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "rails-simplifier@rails": true
+  }
+}

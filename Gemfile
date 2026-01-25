@@ -23,20 +23,16 @@ gem "rgeo-geojson", "~> 2.2"
 gem "rgeo-activerecord", "~> 8.0"
 
 # Enable additional operators and utilities for Active Record with PostgreSQL
-gem "active_record_extended",
-    github: "GeorgeKaraszi/ActiveRecordExtended",
-    branch: "feature/rails80"
+gem "active_record_extended", "~> 3.4"
 
 # Use PostGIS extensions for PostgreSQL
-gem "activerecord-postgis-adapter",
-    github: "rgeo/activerecord-postgis-adapter",
-    ref: "32d58f3d3df94779acabba3a2e510de56a2bce63"
+gem "activerecord-postgis-adapter", "~> 11.1"
 
 # Use enhanced PostgreSQL adapter for Action Cable
 gem "actioncable-enhanced-postgresql-adapter", "~> 1.0"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.6.0"
+gem "puma", "~> 7.1"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -242,6 +238,9 @@ group :development do
 
   # Wipe out inconsistent DB and schema.rb when switching branches
   gem "actual_db_schema", "~> 0.7.9"
+
+  # Provide Rails context to AI agents
+  gem "rails-mcp-server", "~> 1.5"
 
   # Rerun programs when files change
   gem "rerun", "~> 0.14.0", require: false

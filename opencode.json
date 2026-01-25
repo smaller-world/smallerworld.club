@@ -5,6 +5,15 @@
       "type": "remote",
       "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=database%2Cdocs",
       "oauth": {}
+    },
+    "railsMcpServer": {
+      "type": "local",
+      "command": [
+        "bundle",
+        "exec",
+        "rails-mcp-server",
+        "--single-project"
+      ]
     }
   }
 }
