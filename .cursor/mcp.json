@@ -9,10 +9,6 @@
     "exa": {
       "type": "http",
       "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa"
-    },
-    "tidewave": {
-      "type": "http",
-      "url": "http://localhost:3000/tidewave/mcp"
     }
   }
 }

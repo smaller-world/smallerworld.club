@@ -263,9 +263,6 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem "rack-mini-profiler"
   gem "memory_profiler"
-
-  # MCP server to provide Rails context to AI agents
-  gem "tidewave", "~> 0.4.1"
 end
 
 group :test do
