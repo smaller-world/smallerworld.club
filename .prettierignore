@@ -2,10 +2,18 @@
 config/push.yml
 test/fixtures/active_storage/blobs.yml
 
+# == Agents
+.agents/skills/
+.codex/skills/
+.cursor/
+.gemini/
+.opencode/
+opencode.json
+.mcp.json
+
 # == System
 .ruby-lsp/
 .bundle/
-.agents/skills/
 bin/
 dist/
 db/
