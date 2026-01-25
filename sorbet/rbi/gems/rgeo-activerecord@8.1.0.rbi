@@ -8,12 +8,6 @@
 # source://rgeo-activerecord//lib/rgeo/active_record/spatial_expressions.rb#248
 module Arel
   class << self
-    # source://activerecord/8.0.1/lib/arel.rb#64
-    def arel_node?(value); end
-
-    # source://activerecord/8.0.1/lib/arel.rb#68
-    def fetch_attribute(value, &block); end
-
     # Create a spatial constant node.
     # This node wraps a spatial value (such as an RGeo feature or a text
     # string in WKT format). It supports chaining with the functions
@@ -21,12 +15,6 @@ module Arel
     #
     # source://rgeo-activerecord//lib/rgeo/active_record/spatial_expressions.rb#253
     def spatial(arg); end
-
-    # source://activerecord/8.0.1/lib/arel.rb#52
-    def sql(sql_string, *positional_binds, retryable: T.unsafe(nil), **named_binds); end
-
-    # source://activerecord/8.0.1/lib/arel.rb#60
-    def star; end
   end
 end
 
@@ -37,30 +25,8 @@ end
 module Arel::Visitors; end
 
 class Arel::Visitors::Visitor
-  # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#6
-  def initialize; end
-
-  # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#10
-  def accept(object, collector = T.unsafe(nil)); end
-
   # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#79
   def visit_RGeo_ActiveRecord_SpatialConstantNode(node, collector); end
-
-  private
-
-  # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#15
-  def dispatch; end
-
-  # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#23
-  def get_dispatch_cache; end
-
-  # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#27
-  def visit(object, collector = T.unsafe(nil)); end
-
-  class << self
-    # source://activerecord/8.0.1/lib/arel/visitors/visitor.rb#17
-    def dispatch_cache; end
-  end
 end
 
 # source://rgeo-activerecord//lib/rgeo/active_record/version.rb#3
@@ -321,6 +287,7 @@ end
 
 # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#5
 class RGeo::ActiveRecord::SpatialFactoryStore
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -397,7 +364,10 @@ class RGeo::ActiveRecord::SpatialFactoryStore
   class << self
     private
 
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#6
     def allocate; end
+
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#6
     def new(*_arg0); end
   end
 end
@@ -407,30 +377,47 @@ class RGeo::ActiveRecord::SpatialFactoryStore::Entry < ::Struct
   # Returns the value of attribute attrs
   #
   # @return [Object] the current value of attrs
+  #
+  # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
   def attrs; end
 
   # Sets the attribute attrs
   #
   # @param value [Object] the value to set the attribute attrs to.
   # @return [Object] the newly set value
+  #
+  # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
   def attrs=(_); end
 
   # Returns the value of attribute factory
   #
   # @return [Object] the current value of factory
+  #
+  # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
   def factory; end
 
   # Sets the attribute factory
   #
   # @param value [Object] the value to set the attribute factory to.
   # @return [Object] the newly set value
+  #
+  # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
   def factory=(_); end
 
   class << self
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
     def [](*_arg0); end
+
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
     def inspect; end
+
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
     def keyword_init?; end
+
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
     def members; end
+
+    # source://rgeo-activerecord//lib/rgeo/active_record/spatial_factory_store.rb#7
     def new(*_arg0); end
   end
 end
@@ -449,14 +436,17 @@ class RGeo::ActiveRecord::SpatialNamedFunction < ::Arel::Nodes::NamedFunction
   # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#100
   def initialize(name, expr, spatial_flags = T.unsafe(nil), aliaz = T.unsafe(nil)); end
 
+  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#118
+  def alias; end
+
   # @return [Boolean]
   #
-  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#109
+  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#114
   def spatial_argument?(index); end
 
   # @return [Boolean]
   #
-  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#105
+  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#110
   def spatial_result?; end
 end
 
@@ -487,7 +477,7 @@ module RGeo::ActiveRecord::SpatialToSql
   # The node must be a string (in which case it is treated as WKT),
   # an RGeo feature, or a spatial attribute.
   #
-  # source://activerecord-postgis-adapter/10.0.1-32d58f3d3df94779acabba3a2e510de56a2bce63/lib/active_record/connection_adapters/postgis/arel_tosql.rb#8
+  # source://rgeo-activerecord//lib/rgeo/active_record/arel_spatial_queries.rb#45
   def visit_in_spatial_context(node, collector); end
 end
 

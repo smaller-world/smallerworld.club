@@ -25,21 +25,7 @@
 #     }
 #
 # source://can_has_validations//lib/can_has_validations/validators/array_validator.rb#35
-module ActiveModel
-  class << self
-    # source://activemodel/7.1.5/lib/active_model/deprecator.rb#4
-    def deprecator; end
-
-    # source://activemodel/7.1.5/lib/active_model.rb#76
-    def eager_load!; end
-
-    # source://activemodel/7.1.5/lib/active_model/gem_version.rb#5
-    def gem_version; end
-
-    # source://activemodel/7.1.5/lib/active_model/version.rb#7
-    def version; end
-  end
-end
+module ActiveModel; end
 
 # write-once, read-many
 #   Allows a value to be set to a non-nil value once, and then makes it immutable.
@@ -63,44 +49,9 @@ module ActiveModel::Validations
   mixes_in_class_methods ::ActiveModel::Translation
   mixes_in_class_methods ::ActiveModel::Validations::HelperMethods
 
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#330
-  def errors; end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#402
-  def invalid?(context = T.unsafe(nil)); end
-
-  def read_attribute_for_validation(*_arg0); end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#363
-  def valid?(context = T.unsafe(nil)); end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#363
-  def validate(context = T.unsafe(nil)); end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#411
-  def validate!(context = T.unsafe(nil)); end
-
-  # source://activemodel/7.1.5/lib/active_model/validations/with.rb#144
-  def validates_with(*args, &block); end
-
-  private
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#434
-  def init_internals; end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#312
-  def initialize_dup(other); end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#445
-  def raise_validation_error; end
-
-  # source://activemodel/7.1.5/lib/active_model/validations.rb#440
-  def run_validations!; end
-
   module GeneratedClassMethods
     def __callbacks; end
     def __callbacks=(value); end
-    def __callbacks?; end
     def _validators; end
     def _validators=(value); end
     def _validators?; end
@@ -108,7 +59,6 @@ module ActiveModel::Validations
 
   module GeneratedInstanceMethods
     def __callbacks; end
-    def __callbacks?; end
     def _validators; end
     def _validators?; end
   end
@@ -249,19 +199,8 @@ end
 
 # source://can_has_validations//lib/can_has_validations/validators/url_validator.rb#15
 class ActiveModel::Validations::UrlValidator < ::ActiveModel::EachValidator
-  # source://validate_url/1.0.15/lib/validate_url.rb#11
-  def initialize(options); end
-
-  # source://validate_url/1.0.15/lib/validate_url.rb#21
+  # source://can_has_validations//lib/can_has_validations/validators/url_validator.rb#16
   def validate_each(record, attribute, value); end
-
-  protected
-
-  # source://validate_url/1.0.15/lib/validate_url.rb#46
-  def filtered_options(value); end
-
-  # source://validate_url/1.0.15/lib/validate_url.rb#52
-  def validate_url(record, attribute, value, schemes); end
 end
 
 # source://can_has_validations//lib/can_has_validations/validators/write_once_validator.rb#10

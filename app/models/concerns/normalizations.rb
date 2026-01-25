@@ -7,14 +7,14 @@ module Normalizations
   extend ActiveSupport::Concern
 
   requires_ancestor { ActiveRecord::Base }
-  requires_ancestor { ActiveRecord::Normalization }
+  requires_ancestor { ActiveModel::Attributes::Normalization }
 
   class_methods do
     extend T::Sig
     extend T::Helpers
 
     requires_ancestor { T.class_of(ActiveRecord::Base) }
-    requires_ancestor { ActiveRecord::Normalization::ClassMethods }
+    requires_ancestor { ActiveModel::Attributes::Normalization::ClassMethods }
 
     # == Helpers ==
 

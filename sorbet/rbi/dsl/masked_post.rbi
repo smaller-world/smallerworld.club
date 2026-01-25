@@ -1029,16 +1029,16 @@ class MaskedPost
     sig { void }
     def created_at_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def emoji; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def emoji=(value); end
 
     sig { returns(T::Boolean) }
     def emoji?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def emoji_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1047,28 +1047,28 @@ class MaskedPost
     sig { returns(T::Boolean) }
     def emoji_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def emoji_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def emoji_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def emoji_in_database; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def emoji_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def emoji_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def emoji_was; end
 
     sig { void }
@@ -1299,16 +1299,16 @@ class MaskedPost
     sig { void }
     def images_ids_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def pen_name; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def pen_name=(value); end
 
     sig { returns(T::Boolean) }
     def pen_name?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def pen_name_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1317,28 +1317,28 @@ class MaskedPost
     sig { returns(T::Boolean) }
     def pen_name_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def pen_name_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def pen_name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def pen_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def pen_name_in_database; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def pen_name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def pen_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def pen_name_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def pen_name_was; end
 
     sig { void }
@@ -1560,7 +1560,7 @@ class MaskedPost
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_emoji; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1596,7 +1596,7 @@ class MaskedPost
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_images_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_pen_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1632,7 +1632,7 @@ class MaskedPost
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_spotify_track_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_title; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1758,16 +1758,16 @@ class MaskedPost
     sig { void }
     def spotify_track_id_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def title; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def title=(value); end
 
     sig { returns(T::Boolean) }
     def title?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def title_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1776,28 +1776,28 @@ class MaskedPost
     sig { returns(T::Boolean) }
     def title_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def title_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def title_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def title_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def title_in_database; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def title_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def title_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def title_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def title_was; end
 
     sig { void }

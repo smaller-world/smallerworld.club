@@ -33,7 +33,6 @@ module ActiveRecord
       as: nil,
       &blk
     ); end
-
     sig do
       params(
         table_name: T.any(String, Symbol),
@@ -86,7 +85,6 @@ module ActiveRecord
       force: false,
       &blk
     ); end
-
     sig do
       params(
         table_1: T.any(String, Symbol),

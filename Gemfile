@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.4.8"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1"
 
 # JSON-backed, nestable models
 gem "store_model", "~> 1.6"
@@ -23,7 +23,9 @@ gem "rgeo-geojson", "~> 2.2"
 gem "rgeo-activerecord", "~> 8.0"
 
 # Enable additional operators and utilities for Active Record with PostgreSQL
-gem "active_record_extended", "~> 3.4"
+gem "active_record_extended",
+    github: "GeorgeKaraszi/ActiveRecordExtended",
+    ref: "fe0e094"
 
 # Use PostGIS extensions for PostgreSQL
 gem "activerecord-postgis-adapter", "~> 11.1"

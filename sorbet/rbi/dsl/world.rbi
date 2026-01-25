@@ -1033,16 +1033,16 @@ class World
     sig { void }
     def owner_id_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def reply_to_number_override; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def reply_to_number_override=(value); end
 
     sig { returns(T::Boolean) }
     def reply_to_number_override?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def reply_to_number_override_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1051,28 +1051,28 @@ class World
     sig { returns(T::Boolean) }
     def reply_to_number_override_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def reply_to_number_override_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def reply_to_number_override_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def reply_to_number_override_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def reply_to_number_override_in_database; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def reply_to_number_override_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def reply_to_number_override_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def reply_to_number_override_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def reply_to_number_override_was; end
 
     sig { void }
@@ -1159,7 +1159,7 @@ class World
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_owner_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_reply_to_number_override; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

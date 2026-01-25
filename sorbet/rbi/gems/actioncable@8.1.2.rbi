@@ -170,7 +170,7 @@ class ActionCable::Channel::Base
 
   # @return [Base] a new instance of Base
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def initialize(connection, identifier, params = T.unsafe(nil)); end
 
   # source://actioncable//lib/action_cable/channel/base.rb#110
@@ -180,7 +180,13 @@ class ActionCable::Channel::Base
   def _run_subscribe_callbacks(&block); end
 
   # source://actioncable//lib/action_cable/channel/base.rb#110
+  def _run_subscribe_callbacks!(&block); end
+
+  # source://actioncable//lib/action_cable/channel/base.rb#110
   def _run_unsubscribe_callbacks(&block); end
+
+  # source://actioncable//lib/action_cable/channel/base.rb#110
+  def _run_unsubscribe_callbacks!(&block); end
 
   # source://actioncable//lib/action_cable/channel/base.rb#110
   def _subscribe_callbacks; end
@@ -210,7 +216,7 @@ class ActionCable::Channel::Base
   # The process will ensure that the action requested is a public method on the
   # channel declared by the user (so not one of the callbacks like #subscribed).
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def perform_action(data); end
 
   # source://actioncable//lib/action_cable/channel/base.rb#111
@@ -228,89 +234,94 @@ class ActionCable::Channel::Base
   # This method is called after subscription has been added to the connection and
   # confirms or rejects the subscription.
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def subscribe_to_channel; end
 
   # Called by the cable connection when it's cut, so the channel has a chance to
   # cleanup with callbacks. This method is not intended to be called directly by
   # the user. Instead, override the #unsubscribed callback.
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def unsubscribe_from_channel; end
+
+  # @return [Boolean]
+  #
+  # source://actioncable//lib/action_cable/channel/base.rb#154
+  def unsubscribed?; end
 
   private
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def action_signature(action, data); end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def defer_subscription_confirmation!; end
 
   # @return [Boolean]
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def defer_subscription_confirmation?; end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def delegate_connection_identifiers; end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def dispatch_action(action, data); end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def ensure_confirmation_sent; end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def extract_action(data); end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def parameter_filter; end
 
   # @return [Boolean]
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def processable_action?(action); end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def reject; end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def reject_subscription; end
 
   # Called once a consumer has become a subscriber of the channel. Usually the
   # place to set up any streams you want this channel to be sending to the
   # subscriber.
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def subscribed; end
 
   # @return [Boolean]
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def subscription_confirmation_sent?; end
 
   # @return [Boolean]
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def subscription_rejected?; end
 
   # Transmit a hash of data to the subscriber. The hash will automatically be
   # wrapped in a JSON envelope with the proper channel identifier marked as the
   # recipient.
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def transmit(data, via: T.unsafe(nil)); end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def transmit_subscription_confirmation; end
 
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def transmit_subscription_rejection; end
 
   # Called once a consumer has cut its cable connection. Can be used for cleaning
   # up connections or marking users as offline or the like.
   #
-  # source://actioncable//lib/action_cable/channel/base.rb#150
+  # source://actioncable//lib/action_cable/channel/base.rb#154
   def unsubscribed; end
 
   class << self
@@ -385,12 +396,15 @@ class ActionCable::Channel::Base
     # ::clear_action_methods! allows you to do that, so next time you run
     # action_methods, they will be recalculated.
     #
-    # source://actioncable//lib/action_cable/channel/base.rb#144
+    # source://actioncable//lib/action_cable/channel/base.rb#148
     def clear_action_methods!; end
+
+    # source://actioncable//lib/action_cable/channel/base.rb#158
+    def internal_methods; end
 
     # Refresh the cached action_methods when a new action_method is added.
     #
-    # source://actioncable//lib/action_cable/channel/base.rb#149
+    # source://actioncable//lib/action_cable/channel/base.rb#153
     def method_added(name); end
   end
 end
@@ -410,20 +424,20 @@ end
 
 # source://actioncable//lib/action_cable/channel/broadcasting.rb#12
 module ActionCable::Channel::Broadcasting::ClassMethods
-  # Broadcast a hash to a unique broadcasting for this `model` in this channel.
+  # Broadcast a hash to a unique broadcasting for this array of `broadcastables` in this channel.
   #
   # source://actioncable//lib/action_cable/channel/broadcasting.rb#14
-  def broadcast_to(model, message); end
+  def broadcast_to(broadcastables, message); end
 
   # Returns a unique broadcasting identifier for this `model` in this channel:
   #
   #     CommentsChannel.broadcasting_for("all") # => "comments:all"
   #
-  # You can pass any object as a target (e.g. Active Record model), and it would
+  # You can pass an array of objects as a target (e.g. Active Record model), and it would
   # be serialized into a string under the hood.
   #
   # source://actioncable//lib/action_cable/channel/broadcasting.rb#24
-  def broadcasting_for(model); end
+  def broadcasting_for(broadcastables); end
 
   private
 
@@ -481,7 +495,7 @@ module ActionCable::Channel::Callbacks
   end
 end
 
-# source://actioncable//lib/action_cable/channel/callbacks.rb#47
+# source://actioncable//lib/action_cable/channel/callbacks.rb#49
 module ActionCable::Channel::Callbacks::ClassMethods
   # This callback will be triggered after the Base#subscribed method is called,
   # even if the subscription was rejected with the Base#reject method.
@@ -491,16 +505,16 @@ module ActionCable::Channel::Callbacks::ClassMethods
   #
   #     after_subscribe :my_method, unless: :subscription_rejected?
   #
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#60
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#62
   def after_subscribe(*methods, &block); end
 
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#69
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#71
   def after_unsubscribe(*methods, &block); end
 
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#48
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#50
   def before_subscribe(*methods, &block); end
 
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#65
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#67
   def before_unsubscribe(*methods, &block); end
 
   # This callback will be triggered after the Base#subscribed method is called,
@@ -511,12 +525,20 @@ module ActionCable::Channel::Callbacks::ClassMethods
   #
   #     after_subscribe :my_method, unless: :subscription_rejected?
   #
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#63
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#65
   def on_subscribe(*methods, &block); end
 
-  # source://actioncable//lib/action_cable/channel/callbacks.rb#72
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#74
   def on_unsubscribe(*methods, &block); end
+
+  private
+
+  # source://actioncable//lib/action_cable/channel/callbacks.rb#77
+  def internal_methods; end
 end
+
+# source://actioncable//lib/action_cable/channel/callbacks.rb#42
+ActionCable::Channel::Callbacks::INTERNAL_METHODS = T.let(T.unsafe(nil), Array)
 
 # # Action Cable Channel Stub
 #
@@ -764,25 +786,25 @@ end
 module ActionCable::Channel::Streams
   extend ::ActiveSupport::Concern
 
-  # source://actioncable//lib/action_cable/channel/streams.rb#153
+  # source://actioncable//lib/action_cable/channel/streams.rb#155
   def pubsub(*_arg0, **_arg1, &_arg2); end
 
   # Unsubscribes all streams associated with this channel from the pubsub queue.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#135
+  # source://actioncable//lib/action_cable/channel/streams.rb#137
   def stop_all_streams; end
 
   # Unsubscribes streams for the `model`.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#130
+  # source://actioncable//lib/action_cable/channel/streams.rb#132
   def stop_stream_for(model); end
 
   # Unsubscribes streams from the named `broadcasting`.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#121
+  # source://actioncable//lib/action_cable/channel/streams.rb#123
   def stop_stream_from(broadcasting); end
 
-  # Start streaming the pubsub queue for the `model` in this channel. Optionally,
+  # Start streaming the pubsub queue for the `broadcastables` in this channel. Optionally,
   # you can pass a `callback` that'll be used instead of the default of just
   # transmitting the updates straight to the subscriber.
   #
@@ -790,8 +812,8 @@ module ActionCable::Channel::Streams
   # the callback. Defaults to `coder: nil` which does no decoding, passes raw
   # messages.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#116
-  def stream_for(model, callback = T.unsafe(nil), coder: T.unsafe(nil), &block); end
+  # source://actioncable//lib/action_cable/channel/streams.rb#118
+  def stream_for(broadcastables, callback = T.unsafe(nil), coder: T.unsafe(nil), &block); end
 
   # Start streaming from the named `broadcasting` pubsub queue. Optionally, you
   # can pass a `callback` that'll be used instead of the default of just
@@ -806,7 +828,7 @@ module ActionCable::Channel::Streams
   # Calls stream_for with the given `model` if it's present to start streaming,
   # otherwise rejects the subscription.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#144
+  # source://actioncable//lib/action_cable/channel/streams.rb#146
   def stream_or_reject_for(model); end
 
   private
@@ -820,13 +842,13 @@ module ActionCable::Channel::Streams
   # no-op when pubsub and connection are both JSON-encoded. Then we can skip
   # decode+encode if we're just proxying messages.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#189
+  # source://actioncable//lib/action_cable/channel/streams.rb#191
   def default_stream_handler(broadcasting, coder:); end
 
-  # source://actioncable//lib/action_cable/channel/streams.rb#210
+  # source://actioncable//lib/action_cable/channel/streams.rb#212
   def identity_handler; end
 
-  # source://actioncable//lib/action_cable/channel/streams.rb#194
+  # source://actioncable//lib/action_cable/channel/streams.rb#196
   def stream_decoder(handler = T.unsafe(nil), coder:); end
 
   # May be overridden to add instrumentation, logging, specialized error handling,
@@ -834,19 +856,19 @@ module ActionCable::Channel::Streams
   #
   # TODO: Tests demonstrating this.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#173
+  # source://actioncable//lib/action_cable/channel/streams.rb#175
   def stream_handler(broadcasting, user_handler, coder: T.unsafe(nil)); end
 
-  # source://actioncable//lib/action_cable/channel/streams.rb#202
+  # source://actioncable//lib/action_cable/channel/streams.rb#204
   def stream_transmitter(handler = T.unsafe(nil), broadcasting:); end
 
-  # source://actioncable//lib/action_cable/channel/streams.rb#155
+  # source://actioncable//lib/action_cable/channel/streams.rb#157
   def streams; end
 
   # Always wrap the outermost handler to invoke the user handler on the worker
   # pool rather than blocking the event loop.
   #
-  # source://actioncable//lib/action_cable/channel/streams.rb#161
+  # source://actioncable//lib/action_cable/channel/streams.rb#163
   def worker_pool_stream_handler(broadcasting, user_handler, coder: T.unsafe(nil)); end
 end
 
@@ -953,7 +975,6 @@ end
 # source://actioncable//lib/action_cable/channel/test_case.rb#190
 class ActionCable::Channel::TestCase < ::ActiveSupport::TestCase
   include ::ActiveSupport::Testing::ConstantLookup
-  include ::ActionCable::TestHelper
   include ::ActionCable::Channel::TestCase::Behavior
   extend ::ActiveSupport::Testing::ConstantLookup::ClassMethods
   extend ::ActionCable::Channel::TestCase::Behavior::ClassMethods
@@ -1238,7 +1259,10 @@ class ActionCable::Connection::Base
   def _command_callbacks; end
 
   # source://actioncable//lib/action_cable/connection/base.rb#61
-  def _run_command_callbacks(&block); end
+  def _run_command_callbacks; end
+
+  # source://actioncable//lib/action_cable/connection/base.rb#61
+  def _run_command_callbacks!(&block); end
 
   # source://actioncable//lib/action_cable/connection/base.rb#147
   def beat; end
@@ -1807,13 +1831,13 @@ class ActionCable::Connection::StreamEventLoop
 
   private
 
-  # source://actioncable//lib/action_cable/connection/stream_event_loop.rb#86
+  # source://actioncable//lib/action_cable/connection/stream_event_loop.rb#87
   def run; end
 
   # source://actioncable//lib/action_cable/connection/stream_event_loop.rb#62
   def spawn; end
 
-  # source://actioncable//lib/action_cable/connection/stream_event_loop.rb#82
+  # source://actioncable//lib/action_cable/connection/stream_event_loop.rb#83
   def wakeup; end
 end
 
@@ -2471,50 +2495,52 @@ end
 #     ActionCable.server.broadcast \
 #       "web_notifications_1", { title: "New things!", body: "All that's fit for print" }
 #
-#     # Client-side CoffeeScript, which assumes you've already requested the right to send web notifications:
-#     App.cable.subscriptions.create "WebNotificationsChannel",
-#       received: (data) ->
-#         new Notification data['title'], body: data['body']
+#     # Client-side JavaScript, which assumes you've already requested the right to send web notifications:
+#     App.cable.subscriptions.create("WebNotificationsChannel", {
+#       received: function(data) {
+#         new Notification(data['title'], { body: data['body'] })
+#       }
+#     })
 #
-# source://actioncable//lib/action_cable/server/broadcasting.rb#28
+# source://actioncable//lib/action_cable/server/broadcasting.rb#30
 module ActionCable::Server::Broadcasting
   # Broadcast a hash directly to a named `broadcasting`. This will later be JSON
   # encoded.
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#31
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#33
   def broadcast(broadcasting, message, coder: T.unsafe(nil)); end
 
   # Returns a broadcaster for a named `broadcasting` that can be reused. Useful
   # when you have an object that may need multiple spots to transmit to a specific
   # broadcasting over and over.
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#38
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#40
   def broadcaster_for(broadcasting, coder: T.unsafe(nil)); end
 end
 
-# source://actioncable//lib/action_cable/server/broadcasting.rb#43
+# source://actioncable//lib/action_cable/server/broadcasting.rb#45
 class ActionCable::Server::Broadcasting::Broadcaster
   # @return [Broadcaster] a new instance of Broadcaster
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#46
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#48
   def initialize(server, broadcasting, coder:); end
 
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#50
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#52
   def broadcast(message); end
 
   # Returns the value of attribute broadcasting.
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#44
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#46
   def broadcasting; end
 
   # Returns the value of attribute coder.
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#44
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#46
   def coder; end
 
   # Returns the value of attribute server.
   #
-  # source://actioncable//lib/action_cable/server/broadcasting.rb#44
+  # source://actioncable//lib/action_cable/server/broadcasting.rb#46
   def server; end
 end
 
@@ -2760,6 +2786,9 @@ class ActionCable::Server::Worker
 
   # source://actioncable//lib/action_cable/server/worker.rb#16
   def _run_work_callbacks(&block); end
+
+  # source://actioncable//lib/action_cable/server/worker.rb#16
+  def _run_work_callbacks!(&block); end
 
   # source://actioncable//lib/action_cable/server/worker.rb#16
   def _work_callbacks; end
@@ -3073,9 +3102,7 @@ class ActionCable::SubscriptionAdapter::Test < ::ActionCable::SubscriptionAdapte
 end
 
 # source://actioncable//lib/action_cable/test_case.rb#8
-class ActionCable::TestCase < ::ActiveSupport::TestCase
-  include ::ActionCable::TestHelper
-end
+class ActionCable::TestCase < ::ActiveSupport::TestCase; end
 
 # Provides helper methods for testing Action Cable broadcasting
 #
@@ -3197,7 +3224,7 @@ ActionCable::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionCable::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://actioncable//lib/action_cable/gem_version.rb#15
-ActionCable::VERSION::PRE = T.let(T.unsafe(nil), String)
+ActionCable::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
 
 # source://actioncable//lib/action_cable/gem_version.rb#17
 ActionCable::VERSION::STRING = T.let(T.unsafe(nil), String)
