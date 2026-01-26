@@ -193,7 +193,13 @@ module GeneratedPathHelpersModule
   def post_stickers_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def posts_space_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def posts_user_universe_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def posts_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def print_post_path(*args); end

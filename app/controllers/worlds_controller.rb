@@ -50,6 +50,16 @@ class WorldsController < ApplicationController
     end
   end
 
+  # GET /world/:id/posts
+  def posts
+    respond_to do |format|
+      format.turbo_stream do
+        @world = find_world
+        @pagy, @posts = paginated_world_posts(@world)
+      end
+    end
+  end
+
   # GET /universe/add?token=...
   def join
     respond_to do |format|

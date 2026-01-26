@@ -193,7 +193,13 @@ module GeneratedUrlHelpersModule
   def post_stickers_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def posts_space_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def posts_user_universe_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def posts_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def print_post_url(*args); end

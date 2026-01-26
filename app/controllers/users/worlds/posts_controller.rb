@@ -3,8 +3,6 @@
 
 module Users::Worlds
   class PostsController < ApplicationController
-    include LoadsWorldPosts
-
     # == Constants ==
 
     POSTS_PER_PAGE = 5
@@ -13,10 +11,10 @@ module Users::Worlds
 
     # GET /world/posts[?date=...][&type=...][&q=...]
     def index
-      @world = current_world!
       respond_to do |format|
         format.json do
-          scope = authorized_scope(@world.posts)
+          world = current_world!
+          scope = authorized_scope(world.posts)
             .with_attached_images
             .with_quoted_post_and_attached_images
             .with_encouragement
@@ -50,9 +48,6 @@ module Users::Worlds
               next: pagy.next,
             },
           })
-        end
-        format.turbo_stream do
-          @pagy, @posts = paginated_world_posts(@world)
         end
       end
     end

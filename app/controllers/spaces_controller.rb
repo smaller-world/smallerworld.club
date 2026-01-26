@@ -2,7 +2,9 @@
 # frozen_string_literal: true
 
 class SpacesController < ApplicationController
-  include LoadsSpacePosts
+  # == Constants ==
+
+  POSTS_PER_PAGE = 5
 
   # == Filters ==
 
@@ -40,7 +42,7 @@ class SpacesController < ApplicationController
     respond_to do |format|
       format.html do
         if hotwire_native_app?
-          @pagy, @posts = paginated_space_posts(@space)
+          @pagy, @posts = paginated_posts(@space)
         else
           @page_title = @space.name
           user_world = current_user&.world
@@ -49,6 +51,16 @@ class SpacesController < ApplicationController
             "userWorld" => WorldSerializer.one_if(user_world),
           })
         end
+      end
+    end
+  end
+
+  # GET /spaces/:id/posts
+  def posts
+    respond_to do |format|
+      format.turbo_stream do
+        @space = find_space
+        @pagy, @posts = paginated_posts(@space)
       end
     end
   end
@@ -128,5 +140,16 @@ class SpacesController < ApplicationController
       allowed_attributes << :public
     end
     allowed_attributes
+  end
+
+  sig { params(space: Space).returns([ Pagy, T::Enumerable[Post] ]) }
+  def paginated_posts(space)
+    scope = authorized_scope(space.posts)
+      .order(created_at: :desc, id: :asc)
+      .with_author_world
+      .with_attached_images
+      .with_quoted_post_and_attached_images
+      .with_rich_text_body_and_embeds
+    pagy(:keyset, scope, limit: POSTS_PER_PAGE)
   end
 end

@@ -3,8 +3,6 @@
 
 module Spaces
   class PostsController < ApplicationController
-    include LoadsSpacePosts
-
     # == Constants ==
 
     POSTS_PER_PAGE = 5
@@ -13,10 +11,10 @@ module Spaces
 
     # GET /spaces/:space_id/posts[?type=...][&q=...]
     def index
-      @space = find_space
       respond_to do |format|
         format.json do
-          scope = authorized_scope(@space.posts)
+          space = find_space
+          scope = authorized_scope(space.posts)
             .with_author_world
             .with_attached_images
             .with_quoted_post_and_attached_images
@@ -42,9 +40,6 @@ module Spaces
               next: pagy.next,
             },
           })
-        end
-        format.turbo_stream do
-          @pagy, @posts = paginated_space_posts(@space)
         end
       end
     end

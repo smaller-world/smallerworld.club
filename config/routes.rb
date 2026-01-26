@@ -151,6 +151,10 @@ Rails.application.routes.draw do
     end
   end
   resources :worlds, only: [], export: true do
+    member do
+      get :posts
+    end
+
     scope module: :worlds do
       resource :timeline, only: :show, export: { namespace: "worldTimelines" }
       resources :join_requests,
@@ -159,12 +163,9 @@ Rails.application.routes.draw do
       resources :activity_coupons,
                 only: :index,
                 export: { namespace: "worldActivityCoupons" }
-      resources(
-        :posts,
-        only: :index,
-        export: { namespace: "worldPosts" },
-      ) do
+      resources :posts, only: [], export: { namespace: "worldPosts" } do
         collection do
+          get :index, constraints: { format: :json }
           get :pinned
         end
       end
@@ -181,10 +182,15 @@ Rails.application.routes.draw do
   # == Spaces ==
 
   resources :spaces, except: :destroy, export: true do
+    member do
+      get :posts
+    end
+
     scope module: :spaces do
       # == Space posts
-      resources :posts, export: { namespace: "spacePosts" } do
+      resources :posts, except: :index, export: { namespace: "spacePosts" } do
         collection do
+          get :index, constraints: { format: :json }
           get :pinned
         end
       end
@@ -198,9 +204,7 @@ Rails.application.routes.draw do
       only: %i[edit update],
       export: { namespace: "userWorld" },
     ) do
-      member do
-        get :show, trailing_slash: true
-      end
+      get :show, trailing_slash: true
 
       scope module: :worlds do
         resources :activities,
