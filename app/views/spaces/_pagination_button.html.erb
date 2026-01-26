@@ -1,0 +1,20 @@
+<%= button_to(
+  space_posts_path(space),
+  method: :get,
+  class: "btn",
+  form: {
+    id: "pagination",
+    class: "self-center overflow-anchor-none",
+  },
+  params: {
+    emulate_native_app: 1,
+    page:,
+  },
+  data: {
+    controller: "click-on-appear",
+    action: "click-on-appear:appear->click-on-appear#click",
+    turbo_stream: true,
+  },
+) do %>
+  <span class="text-xs">see more posts...</span>
+<% end %>

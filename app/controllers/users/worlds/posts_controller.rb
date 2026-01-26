@@ -39,7 +39,7 @@ module Users::Worlds
           ordering = { created_at: :desc, id: :asc }
           pagy, posts = if (query = params[:q])
             scope = scope.search(query).order(**ordering)
-            pagy(:offset, scope, limit: POSTS_PER_PAGE)
+            pagy(:countish, scope, limit: POSTS_PER_PAGE)
           else
             scope = scope.order(**ordering)
             pagy(:keyset, scope, limit: POSTS_PER_PAGE)

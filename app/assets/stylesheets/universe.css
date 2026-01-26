@@ -5,4 +5,22 @@
     grid-template-columns: repeat(auto-fit, calc(var(--spacing) * 28));
     justify-content: center;
   }
+
+  .universe_world {
+    @apply w-28;
+
+    > a {
+      @apply rounded-xl p-1.5 pb-1;
+      @apply flex flex-col items-center gap-2;
+      @apply text-center hover:underline;
+
+      > img {
+        @apply size-20 rounded-app-icon object-cover shadow-lg;
+      }
+
+      > p {
+        @apply font-headings text-sm leading-tight font-medium;
+      }
+    }
+  }
 }

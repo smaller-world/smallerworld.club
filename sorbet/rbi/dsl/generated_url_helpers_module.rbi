@@ -463,5 +463,8 @@ module GeneratedUrlHelpersModule
   def world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def worlds_universe_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def worlds_user_universe_url(*args); end
 end

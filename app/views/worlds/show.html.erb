@@ -88,14 +88,14 @@
       <%= render "worlds/posts/new", world: @world, class: "mb-3" %>
     <% end %>
 
-    <ul id="<%= dom_id(@world, :posts) %>" class="space-y-4">
+    <ul id="posts" class="space-y-4">
       <% @posts.each do |post| %>
         <li><%= render "posts/card", post: %></li>
       <% end %>
     </ul>
 
     <% if (page = @pagy.next) %>
-      <%= render "worlds/posts/pagination_button", world: @world, page: %>
+      <%= render "worlds/pagination_button", world: @world, page: %>
     <% end %>
 
     <% if @posts.none? %>

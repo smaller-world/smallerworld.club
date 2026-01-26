@@ -1,13 +1,13 @@
-<%= turbo_stream.append dom_id(@space, :posts) do %>
+<%= turbo_stream.append :posts do %>
   <% @posts.each do |post| %>
     <li><%= render "posts/card", post: %></li>
   <% end %>
 <% end %>
 
 <% if (page = @pagy.next) %>
-  <%= turbo_stream.replace dom_id(@space, :pagination) do %>
-    <%= render "spaces/posts/pagination_button", space: @space, page: %>
+  <%= turbo_stream.replace :pagination do %>
+    <%= render "spaces/pagination_button", space: @space, page: %>
   <% end %>
 <% else %>
-  <%= turbo_stream.remove dom_id(@space, :pagination) %>
+  <%= turbo_stream.remove :pagination %>
 <% end %>

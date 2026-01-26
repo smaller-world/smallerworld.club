@@ -1,0 +1,15 @@
+<%- friend_token = local_assigns.delete(:friend_token) -%>
+
+<li class="universe_world">
+  <%= link_to(
+    user_aware_world_path(
+      world,
+      friend_token:,
+      emulate_native_app: 1,
+    ),
+  ) do %>
+    <%= image_tag world.icon.variant(:page_icon) %>
+
+    <p><%= world.name %></p>
+  <% end %>
+</li>

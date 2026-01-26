@@ -1,0 +1,17 @@
+<%= turbo_stream.append :worlds do %>
+  <% @worlds.each do |world| %>
+    <%= render(
+      "universes/world",
+      world:,
+      friend_token: world[:friend_token],
+    ) %>
+  <% end %>
+<% end %>
+
+<% if (page = @pagy.next) %>
+  <%= turbo_stream.replace :pagination do %>
+    <%= render "universes/pagination_button", page: %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove :pagination %>
+<% end %>

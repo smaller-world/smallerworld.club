@@ -1,13 +1,13 @@
-<%= turbo_stream.append dom_id(@world, :posts) do %>
+<%= turbo_stream.append :posts do %>
   <% @posts.each do |post| %>
     <li><%= render "posts/card", post: %></li>
   <% end %>
 <% end %>
 
 <% if (page = @pagy.next) %>
-  <%= turbo_stream.replace dom_id(@world, :pagination) do %>
-    <%= render "worlds/posts/pagination_button", world: @world, page: %>
+  <%= turbo_stream.replace :pagination do %>
+    <%= render "worlds/pagination_button", world: @world, page: %>
   <% end %>
 <% else %>
-  <%= turbo_stream.remove dom_id(@world, :pagination) %>
+  <%= turbo_stream.remove :pagination %>
 <% end %>

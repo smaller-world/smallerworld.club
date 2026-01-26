@@ -77,14 +77,14 @@
 
     <%= render "spaces/posts/new", space: @space, class: "mb-3" %>
 
-    <ul id="<%= dom_id(@space, :posts) %>" class="space-y-4">
+    <ul id="posts" class="space-y-4">
       <% @posts.each do |post| %>
         <li><%= render "posts/card", post: %></li>
       <% end %>
     </ul>
 
     <% if (page = @pagy.next) %>
-      <%= render "spaces/posts/pagination_button", space: @space, page: %>
+      <%= render "spaces/pagination_button", space: @space, page: %>
     <% end %>
 
     <% if @posts.none? %>

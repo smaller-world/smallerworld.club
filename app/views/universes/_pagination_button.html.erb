@@ -1,19 +1,17 @@
 <%= button_to(
-  user_world_posts_path,
+  worlds_universe_path,
   method: :get,
   class: "btn",
   form: {
-    id: dom_id(world, :pagination),
+    id: "pagination",
     class: "self-center overflow-anchor-none",
   },
+  params: { page: },
   data: {
     controller: "click-on-appear",
     action: "click-on-appear:appear->click-on-appear#click",
     turbo_stream: true,
   },
 ) do %>
-  <input type="hidden" name="emulate_native_app" value="1">
-  <input type="hidden" name="page" value="<%= page %>">
-
-  <span class="text-xs">see more posts...</span>
+  <span class="text-xs">see more worlds...</span>
 <% end %>

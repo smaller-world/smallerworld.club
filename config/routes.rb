@@ -173,7 +173,9 @@ Rails.application.routes.draw do
 
   # == Universe ==
 
-  resource :universe, only: :show
+  resource :universe, only: :show do
+    get :worlds
+  end
   get "/universe/add", to: "worlds#join", as: :join_world
 
   # == Spaces ==

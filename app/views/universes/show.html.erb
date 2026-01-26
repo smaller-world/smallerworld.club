@@ -6,31 +6,19 @@
     </a>
   <% end %>
 
-  <ul class="universe_grid">
-    <% @worlds.each do |world| %>
-      <li class="w-28">
-        <%= link_to(
-          user_aware_world_path(
-            world,
-            friend_token: @access_tokens_by_world_id[world.id],
-            emulate_native_app: 1,
-          ),
-          class: class_names(
-            "p-1.5 pb-1 rounded-xl",
-            "flex flex-col items-center gap-2",
-            "text-center hover:underline",
-          ),
-        ) do %>
-          <%= image_tag(
-            world.icon.variant(:page_icon),
-            class: "rounded-app-icon size-20 shadow-lg object-cover"
-          ) %>
+  <div>
+    <ul id="worlds" class="universe_grid">
+      <% @worlds.each do |world| %>
+        <%= render(
+          "universes/world",
+          world:,
+          friend_token: world[:friend_token],
+        ) %>
+      <% end %>
+    </ul>
+  </div>
 
-          <p class="font-medium text-sm font-headings leading-tight">
-            <%= world.name %>
-          </p>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+  <% if (page = @pagy.next) %>
+    <%= render "universes/pagination_button", page: %>
+  <% end %>
 </div>
