@@ -1,7 +1,7 @@
 @import "../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css"
   layer(components);
 
-@layer utilities {
+/* @layer utilities {
   .prose.lexxy-content {
     :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
       margin-block: var(--lexxy-content-margin);
@@ -19,7 +19,7 @@
       @apply mb-0;
     }
   }
-}
+} */
 
 @layer components {
   /* Revert to default Lexxy styles that Tailwind messes up */
@@ -34,6 +34,7 @@
     --lexxy-color-accent-dark: var(--color-primary-500);
     --lexxy-color-accent-medium: var(--color-primary-400);
     --tw-prose-bullets: var(--color-shade-700);
+    --tw-prose-pre-bg: var(--color-shade-800);
 
     @media (prefers-color-scheme: dark) {
       --lexxy-color-ink-lighter: var(--color-shade-600);
@@ -43,6 +44,10 @@
     }
 
     font-size: 17px;
+
+    :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      margin-block: 0px;
+    }
 
     :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
       @apply my-0;
