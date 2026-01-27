@@ -2,7 +2,18 @@
 <%- data = local_assigns.delete(:data) || {} -%>
 <%- controller = data.delete(:controller) -%>
 <%- error = form.object.errors.full_messages_for(field).first -%>
-<%- input_attributes = delete_from(local_assigns, :required) -%>
+<%- input_attributes = local_assigns.delete(:input) || {} -%>
+
+<%- input_attributes.merge!(delete_from(
+  local_assigns,
+  :value,
+  :required,
+)) -%>
+
+<%- input_class = input_attributes.delete(:class) %>
+<%- input_data = input_attributes.delete(:data) || {} -%>
+<%- input_controller = input_data.delete(:controller) -%>
+<%- input_action = input_data.delete(:action) -%>
 
 <%= render(
   "forms/field_wrapper",
@@ -16,14 +27,15 @@
   <div class="relative" data-controller="modal">
     <%= form.text_field(
       field,
-      class: "form_input emoji_field_input",
+      class: class_names("form_input emoji_field_input", input_class),
       placeholder: "dummy",
       readonly: true,
       data: {
-        controller: "emoji-toggle-input",
+        controller: class_names("emoji-toggle-input", input_controller),
         action: class_names(
           "click->emoji-toggle-input#clearEmojiOrOpenPicker",
           "emoji-toggle-input:open-picker->modal#open",
+          input_action,
         ),
         emoji_picker_target: "input",
         dropdown_target: "trigger",

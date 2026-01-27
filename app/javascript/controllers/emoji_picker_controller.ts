@@ -8,5 +8,6 @@ export default class EmojiPickerController extends Controller<HTMLElement> {
 
   setEmoji(event: CustomEvent<{ native: string }>): void {
     this.inputTarget.value = event.detail.native;
+    this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }));
   }
 }

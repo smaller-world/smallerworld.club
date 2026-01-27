@@ -1,6 +1,17 @@
 <%- class_name = local_assigns.delete(:class) -%>
 <%- error = form.object.errors.full_messages_for(field).first -%>
 <%- required = local_assigns.delete(:required) -%>
+<%- input_attributes = local_assigns.delete(:input) || {} -%>
+
+<%- input_attributes.merge!(delete_from(
+  local_assigns,
+  :value,
+  :required,
+  :placeholder,
+)) -%>
+
+<%- input_data = input_attributes.delete(:data) || {} -%>
+<%- input_class = input_attributes.delete(:class) %>
 
 <%= render(
   "forms/field_wrapper",
@@ -9,15 +20,18 @@
 ) do %>
   <%= form.rich_text_area(
     field,
-    class: "form_textarea lexxy-content max-w-none p-0",
-    required:,
+    class: class_names(
+      "form_textarea lexxy-content max-w-none p-0",
+      input_class,
+    ),
     attachment: false,
     data: {
       error: error.present? ,
+      **input_data,
     }.compact_blank,
     aria: {
       describedby: (form.field_id(field, "error") if error.present?),
     },
-    **local_assigns.slice(:value, :required, :placeholder),
+    **input_attributes,
   ) %>
 <% end %>

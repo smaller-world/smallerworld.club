@@ -5,8 +5,15 @@
   model: [ post.space!, post ],
   class: class_names("flex flex-col gap-6", class_name),
   data: {
-    controller: "busy-reporter haptic-bridge",
-    action: "turbo:submit-end->haptic-bridge#vibrate",
+    controller: class_names(
+      "busy-reporter haptic-bridge",
+      "post-draft": post.new_record?,
+    ),
+    action: class_names(
+      "turbo:submit-end->haptic-bridge#vibrate",
+      "turbo:submit-end->post-draft#clear",
+    ),
+    post_draft_local_storage_key_value: "post_draft:space/#{post.space_id}",
   },
 ) do |form| %>
   <%= form.hidden_field :type %>
@@ -32,6 +39,11 @@
             form:,
             field: :emoji,
             label: nil,
+            input: {
+              data: {
+                action: "change->post-draft#save",
+              },
+            },
           ) %>
 
         <% if title_placeholder %>
@@ -42,6 +54,11 @@
           label: nil,
           placeholder: title_placeholder,
           class: "flex-1",
+          input: {
+            data: {
+              action: "post-draft#save",
+            },
+          },
         ) %>
         <% else %>
           <div class="post_form-emoji_hint flex items-center gap-1">
@@ -60,6 +77,14 @@
       value: post.body_html || post.body&.to_trix_html,
       placeholder: post_body_placeholder(type: post.type),
       required: true,
+      input: {
+        data: {
+          action: class_names(
+            "lexxy:initialize->post-draft#restore",
+            "lexxy:change->post-draft#save",
+          ),
+        },
+      },
     ) %>
   </div>
 

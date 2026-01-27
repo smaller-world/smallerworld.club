@@ -6,6 +6,7 @@ export default class EmojiToggleInputController extends Controller<HTMLInputElem
   clearEmojiOrOpenPicker(): void {
     if (this.element.value) {
       this.element.value = "";
+      this.element.dispatchEvent(new Event("change", { bubbles: true }));
     } else {
       this.dispatch("open-picker");
     }

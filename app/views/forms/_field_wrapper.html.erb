@@ -2,14 +2,15 @@
 <%- error = error_message_for(form.object, field) -%>
 <%- container = local_assigns.delete(:container) || {} -%>
 <%- container_class = container.delete(:class) %>
+<%- show_label = !local_assigns.key?(:label) || !!local_assigns[:label] %>
 
 <%= tag.div(
   class: class_names("field_wrapper", local_assigns[:class]),
   **local_assigns.slice(:data),
 ) do %>
-  <% if label != false || description %>
+  <% if show_label || description %>
     <div>
-      <% if !local_assigns.key?(:label) || local_assigns[:label] %>
+      <% if show_label %>
         <%= form.label(
         field,
         local_assigns.fetch(:label) { field.to_s.humanize(capitalize: false) },

@@ -26,6 +26,11 @@ bin/setup
 
 ## todos
 
+### jan 2026
+
+- [ ] use [maquina components](https://maquina.app/documentation/components/)
+      for the UI?
+
 ### oct 2025
 
 - [ ] needs to refresh after signup for the 'pin to home screen' to work

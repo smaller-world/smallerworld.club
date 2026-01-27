@@ -6,8 +6,15 @@
   url: post.new_record? ? user_world_posts_path : user_world_post_path(post),
   class: class_names("flex flex-col gap-6", class_name),
   data: {
-    controller: "busy-reporter haptic-bridge",
-    action: "turbo:submit-end->haptic-bridge#vibrate",
+    controller: class_names(
+      "busy-reporter haptic-bridge",
+      "post-draft": post.new_record?,
+    ),
+    action: class_names(
+      "turbo:submit-end->haptic-bridge#vibrate",
+      "turbo:submit-end->post-draft#clear",
+    ),
+    post_draft_local_storage_key_value: "post_draft:world/#{post.world_id}",
   },
 ) do |form| %>
   <%= form.hidden_field :type %>
@@ -38,17 +45,27 @@
             form:,
             field: :emoji,
             label: nil,
+            input: {
+              data: {
+                action: "change->post-draft#save",
+              },
+            },
           ) %>
 
           <% if title_placeholder %>
             <%= render(
-          "forms/text_field",
-          form:,
-          field: :title,
-          label: nil,
-          placeholder: title_placeholder,
-          class: "flex-1",
-        ) %>
+              "forms/text_field",
+              form:,
+              field: :title,
+              label: nil,
+              placeholder: title_placeholder,
+              class: "flex-1",
+              input: {
+                data: {
+                  action: "post-draft#save",
+                },
+              },
+            ) %>
           <% else %>
             <div class="post_form-emoji_hint flex items-center gap-1">
               <%= icon "arrow-long-left", class: "size-5" %>
@@ -60,13 +77,21 @@
 
       <%= render(
       "forms/rich_text_area",
-      form:,
-      field: :body,
-      label: nil,
-      value: post.body_html || post.body&.to_trix_html,
-      placeholder: post_body_placeholder(type: post.type),
-      required: true,
-    ) %>
+        form:,
+        field: :body,
+        label: nil,
+        value: post.body_html || post.body&.to_trix_html,
+        placeholder: post_body_placeholder(type: post.type),
+        required: true,
+        input: {
+          data: {
+            action: class_names(
+              "lexxy:change->post-draft#save",
+              "lexxy:initialize->post-draft#restore",
+            ),
+          },
+        },
+      ) %>
     </div>
 
     <%= render(
@@ -78,7 +103,7 @@
         controller: "post-visibility-field-hidden-from-notice",
       },
       container: {
-        class: "gap-y-1",
+        class: "gap-y-1.5",
       },
     ) do %>
       <%= form.select(
@@ -92,7 +117,10 @@
         },
       ) %>
 
-      <% if (description = post_hidden_from_description(post)) %>
+      <% if (description = post_hidden_from_description(
+        post,
+        name_class: "text-shade-contrast"
+      )) %>
         <div
           class="
             hidden starting:opacity-0 opacity-100 transition-opacity

@@ -108,15 +108,25 @@ module PostsHelper
     values.map { |value| [ value.text, value ] }
   end
 
-  sig { params(post: Post).returns(T.nilable(String)) }
-  def post_hidden_from_description(post)
+  sig do
+ params(
+   post: Post,
+   name_class: T.nilable(String),
+ ).returns(T.nilable(String)) end
+  def post_hidden_from_description(post, name_class: nil)
     case post.hidden_from.count
     when 0
       nil
     when 1..3
-      post.hidden_from.pluck(:name).to_sentence
+      names = post.hidden_from.pluck(:name).map do |name|
+        tag.span(name, class: name_class)
+      end
+      names.to_sentence
     else
-      post.hidden_from.limit(2).pluck(:name).to_sentence +
+      names = post.hidden_from.limit(2).pluck(:name).map do |name|
+        tag.span(name, class: name_class)
+      end
+      names.to_sentence +
         "and #{post.hidden_from.count - 2} others"
     end
   end
