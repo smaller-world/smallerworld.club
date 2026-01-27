@@ -10,7 +10,7 @@
       @apply border-shade-500;
     }
 
-    &:has(form[aria-busy="true"]) {
+    &:has(form[id^="delete_post_"][aria-busy="true"]) {
       @apply loading;
     }
   }
