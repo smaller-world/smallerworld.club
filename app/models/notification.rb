@@ -102,7 +102,14 @@ class Notification < ApplicationRecord
     PushRegistration.where(owner: recipient).find_each do |registration|
       registration.push(self)
     end
-    deliver_to_native_devices(recipient) if recipient.is_a?(User)
+    case recipient
+    when User
+      deliver_to_native_devices(recipient)
+    when Friend
+      if (user = recipient.associated_user)
+        deliver_to_native_devices(user)
+      end
+    end
     mark_as_pushed!
   end
 

@@ -231,6 +231,13 @@ class Friend < ApplicationRecord
     notifications.create!(recipient: world_owner!)
   end
 
+  sig { returns(T.nilable(User)) }
+  def associated_user
+    if (phone_number = self.phone_number)
+      User.find_by(phone_number:)
+    end
+  end
+
   # == Helpers ==
 
   sig { params(phone_number: String).returns(T.nilable(Friend)) }
