@@ -20,7 +20,14 @@
   <%= form.hidden_field :type %>
 
   <% post.hidden_from_ids.each do |id| %>
-    <%= form.hidden_field :hidden_from_ids, value: id, multiple: true %>
+    <%= form.hidden_field(
+      :hidden_from_ids,
+      value: id,
+      multiple: true,
+      data: {
+        post_draft_ignore: true,
+      },
+    ) %>
   <% end %>
 
   <div class="flex flex-col gap-4">

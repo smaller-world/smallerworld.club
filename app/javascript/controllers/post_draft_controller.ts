@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 import { useDebounce } from "stimulus-use";
 import invariant from "tiny-invariant";
 
+import { namespacedKey } from "#helpers/application_helpers";
 import { hasValueSetter } from "#helpers/form_helpers";
 
 export default class PostDraftController extends Controller<HTMLFormElement> {
@@ -14,6 +15,12 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
   static values = { localStorageKey: String };
   declare readonly localStorageKeyValue: string;
 
+  // == Computed Values
+
+  get #namespacedKey(): string {
+    return namespacedKey(this.localStorageKeyValue);
+  }
+
   // == Lifecycle ==
 
   initialize(): void {
@@ -23,7 +30,7 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
 
   connect(): void {
     super.connect();
-    invariant(this.localStorageKeyValue, "Missing localStorageKey value");
+    invariant(this.#namespacedKey, "Missing localStorageKey value");
     this.restore();
   }
 
@@ -45,6 +52,9 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
         return;
       }
       const input = this.element.elements.namedItem(key);
+      if (input instanceof HTMLElement && input.dataset.postDraftIgnore) {
+        return;
+      }
       if (
         input instanceof HTMLInputElement ||
         input instanceof HTMLSelectElement ||
@@ -67,14 +77,27 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
     const formData = new FormData(this.element);
     formData.delete("authenticity_token");
     formData.delete("_method");
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const searchParams = new URLSearchParams(formData as any);
+    for (const el of this.element.elements) {
+      if (
+        el instanceof HTMLInputElement &&
+        el.dataset.postDraftIgnore &&
+        el.name
+      ) {
+        formData.delete(el.name);
+      }
+    }
+    const searchParams = new URLSearchParams();
+    formData.forEach((value, key) => {
+      if (typeof value === "string") {
+        searchParams.append(key, value);
+      }
+    });
     return searchParams.toString();
   }
 
   #reconstructFormData(): FormData {
     const formData = new FormData();
-    const value = localStorage.getItem(this.localStorageKeyValue);
+    const value = localStorage.getItem(this.#namespacedKey);
     if (value) {
       const searchParams = new URLSearchParams(value);
       searchParams.forEach((value, key) => {
