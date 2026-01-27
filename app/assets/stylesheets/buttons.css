@@ -26,22 +26,22 @@
         @apply loading relative *:invisible;
       }
     }
-  }
 
-  .btn-outline {
-    @apply border border-shade-200 dark:border-shade-800;
-    @apply bg-shade-100 dark:bg-shade-900;
-    @apply hover:bg-shade-200 dark:hover:bg-shade-800;
-  }
+    &.btn-outline {
+      @apply border border-shade-200 dark:border-shade-800;
+      @apply bg-shade-100 dark:bg-shade-900;
+      @apply hover:bg-shade-200 dark:hover:bg-shade-800;
+    }
 
-  .btn-action {
-    @apply bg-black text-white dark:bg-white dark:text-black;
-    @apply hover:bg-primary-700 dark:hover:bg-primary-300;
-  }
+    &.btn-action {
+      @apply bg-black text-white dark:bg-white dark:text-black;
+      @apply hover:bg-primary-700 dark:hover:bg-primary-300;
+    }
 
-  .btn-readonly {
-    &:disabled {
-      @apply cursor-default opacity-100;
+    &.btn-readonly {
+      &:disabled {
+        @apply cursor-default opacity-100;
+      }
     }
   }
 
