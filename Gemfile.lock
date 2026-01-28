@@ -408,13 +408,6 @@ GEM
     pg_search (2.3.7)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
-    phlex (2.4.0)
-      refract (~> 1.0)
-      zeitwerk (~> 2.7)
-    phlex-rails (2.4.0)
-      phlex (~> 2.4.0)
-      railties (>= 7.1, < 9)
-      zeitwerk (~> 2.7)
     phonelib (0.10.10)
     playwright-ruby-client (1.56.0)
       concurrent-ruby (>= 1.1.6)
@@ -517,9 +510,6 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    refract (1.1.0)
-      prism
-      zeitwerk
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -751,7 +741,6 @@ DEPENDENCIES
   pg (~> 1.5)
   pg_query
   pg_search (~> 2.3)
-  phlex-rails (~> 2.4)
   phonelib (~> 0.10.10)
   premailer-rails
   prosopite

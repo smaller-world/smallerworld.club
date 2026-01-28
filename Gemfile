@@ -188,7 +188,7 @@ gem "device_detector", "~> 1.1"
 gem "rqrcode", "~> 3.2"
 
 # Build HTML and SVG view components in Ruby
-gem "phlex-rails", "~> 2.4"
+# gem "phlex-rails", "~> 2.4"
 
 group :development, :test do
   # Debug code with debug
