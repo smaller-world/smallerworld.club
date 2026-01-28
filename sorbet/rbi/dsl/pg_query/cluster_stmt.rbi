@@ -9,7 +9,7 @@ class PgQuery::ClusterStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       indexname: T.nilable(String),
-      params: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      params: T.nilable(T::Array[PgQuery::Node]),
       relation: T.nilable(PgQuery::RangeVar)
     ).void
   end

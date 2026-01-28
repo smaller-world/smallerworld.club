@@ -10,10 +10,10 @@ class PgQuery::ImportForeignSchemaStmt < Google::Protobuf::AbstractMessage
     params(
       list_type: T.nilable(T.any(Symbol, Integer)),
       local_schema: T.nilable(String),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       remote_schema: T.nilable(String),
       server_name: T.nilable(String),
-      table_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      table_list: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(list_type: nil, local_schema: nil, options: T.unsafe(nil), remote_schema: nil, server_name: nil, table_list: T.unsafe(nil)); end

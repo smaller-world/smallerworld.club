@@ -9,8 +9,8 @@ class PgQuery::VacuumStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       is_vacuumcmd: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      rels: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      options: T.nilable(T::Array[PgQuery::Node]),
+      rels: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(is_vacuumcmd: nil, options: T.unsafe(nil), rels: T.unsafe(nil)); end

@@ -6,12 +6,7 @@
 
 
 class PgQuery::A_Indirection < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      arg: T.nilable(PgQuery::Node),
-      indirection: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(arg: T.nilable(PgQuery::Node), indirection: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(arg: nil, indirection: T.unsafe(nil)); end
 
   sig { returns(T.nilable(PgQuery::Node)) }

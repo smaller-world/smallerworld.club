@@ -8,13 +8,13 @@
 class PgQuery::RangeTblFunction < Google::Protobuf::AbstractMessage
   sig do
     params(
-      funccolcollations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funccolcollations: T.nilable(T::Array[PgQuery::Node]),
       funccolcount: T.nilable(Integer),
-      funccolnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      funccoltypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      funccoltypmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funccolnames: T.nilable(T::Array[PgQuery::Node]),
+      funccoltypes: T.nilable(T::Array[PgQuery::Node]),
+      funccoltypmods: T.nilable(T::Array[PgQuery::Node]),
       funcexpr: T.nilable(PgQuery::Node),
-      funcparams: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer]))
+      funcparams: T.nilable(T::Array[Integer])
     ).void
   end
   def initialize(funccolcollations: T.unsafe(nil), funccolcount: nil, funccolnames: T.unsafe(nil), funccoltypes: T.unsafe(nil), funccoltypmods: T.unsafe(nil), funcexpr: nil, funcparams: T.unsafe(nil)); end

@@ -8,21 +8,21 @@
 class PgQuery::TableFunc < Google::Protobuf::AbstractMessage
   sig do
     params(
-      colcollations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      coldefexprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      colexprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      colnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      coltypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      coltypmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      colvalexprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      colcollations: T.nilable(T::Array[PgQuery::Node]),
+      coldefexprs: T.nilable(T::Array[PgQuery::Node]),
+      colexprs: T.nilable(T::Array[PgQuery::Node]),
+      colnames: T.nilable(T::Array[PgQuery::Node]),
+      coltypes: T.nilable(T::Array[PgQuery::Node]),
+      coltypmods: T.nilable(T::Array[PgQuery::Node]),
+      colvalexprs: T.nilable(T::Array[PgQuery::Node]),
       docexpr: T.nilable(PgQuery::Node),
       functype: T.nilable(T.any(Symbol, Integer)),
       location: T.nilable(Integer),
-      notnulls: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer])),
-      ns_names: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      ns_uris: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      notnulls: T.nilable(T::Array[Integer]),
+      ns_names: T.nilable(T::Array[PgQuery::Node]),
+      ns_uris: T.nilable(T::Array[PgQuery::Node]),
       ordinalitycol: T.nilable(Integer),
-      passingvalexprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      passingvalexprs: T.nilable(T::Array[PgQuery::Node]),
       plan: T.nilable(PgQuery::Node),
       rowexpr: T.nilable(PgQuery::Node)
     ).void

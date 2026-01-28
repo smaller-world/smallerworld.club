@@ -113,8 +113,34 @@ class PostSticker
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::PostSticker, Integer, String, T::Enumerable[T.any(::PostSticker, Integer, String, T::Enumerable[::PostSticker])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::PostSticker, Integer, String, T::Enumerable[T.any(::PostSticker, Integer, String, T::Enumerable[::PostSticker])])
+      ).returns(T::Array[::PostSticker])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::PostSticker]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::PostSticker]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::PostSticker]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -260,7 +286,7 @@ class PostSticker
     sig { returns(::PostSticker) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

@@ -6,12 +6,7 @@
 
 
 class PgQuery::CompositeTypeStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      coldeflist: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      typevar: T.nilable(PgQuery::RangeVar)
-    ).void
-  end
+  sig { params(coldeflist: T.nilable(T::Array[PgQuery::Node]), typevar: T.nilable(PgQuery::RangeVar)).void }
   def initialize(coldeflist: T.unsafe(nil), typevar: nil); end
 
   sig { void }

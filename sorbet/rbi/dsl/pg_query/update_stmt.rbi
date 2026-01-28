@@ -8,10 +8,10 @@
 class PgQuery::UpdateStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      from_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      from_clause: T.nilable(T::Array[PgQuery::Node]),
       relation: T.nilable(PgQuery::RangeVar),
-      returning_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      target_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      returning_list: T.nilable(T::Array[PgQuery::Node]),
+      target_list: T.nilable(T::Array[PgQuery::Node]),
       where_clause: T.nilable(PgQuery::Node),
       with_clause: T.nilable(PgQuery::WithClause)
     ).void

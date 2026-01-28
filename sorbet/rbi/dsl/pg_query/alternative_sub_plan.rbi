@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlternativeSubPlan < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      subplans: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      xpr: T.nilable(PgQuery::Node)
-    ).void
-  end
+  sig { params(subplans: T.nilable(T::Array[PgQuery::Node]), xpr: T.nilable(PgQuery::Node)).void }
   def initialize(subplans: T.unsafe(nil), xpr: nil); end
 
   sig { void }

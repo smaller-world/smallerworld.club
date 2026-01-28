@@ -10,8 +10,8 @@ class PgQuery::AlterSubscriptionStmt < Google::Protobuf::AbstractMessage
     params(
       conninfo: T.nilable(String),
       kind: T.nilable(T.any(Symbol, Integer)),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      publication: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
+      publication: T.nilable(T::Array[PgQuery::Node]),
       subname: T.nilable(String)
     ).void
   end

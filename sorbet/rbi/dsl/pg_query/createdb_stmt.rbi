@@ -6,12 +6,7 @@
 
 
 class PgQuery::CreatedbStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      dbname: T.nilable(String),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(dbname: T.nilable(String), options: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(dbname: nil, options: T.unsafe(nil)); end
 
   sig { void }

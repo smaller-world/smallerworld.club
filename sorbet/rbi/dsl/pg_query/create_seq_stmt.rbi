@@ -10,7 +10,7 @@ class PgQuery::CreateSeqStmt < Google::Protobuf::AbstractMessage
     params(
       for_identity: T.nilable(T::Boolean),
       if_not_exists: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       owner_id: T.nilable(Integer),
       sequence: T.nilable(PgQuery::RangeVar)
     ).void

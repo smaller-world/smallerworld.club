@@ -9,7 +9,7 @@ class PgQuery::CreateTableSpaceStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       location: T.nilable(String),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       owner: T.nilable(PgQuery::RoleSpec),
       tablespacename: T.nilable(String)
     ).void

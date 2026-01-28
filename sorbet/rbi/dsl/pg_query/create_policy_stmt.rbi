@@ -12,7 +12,7 @@ class PgQuery::CreatePolicyStmt < Google::Protobuf::AbstractMessage
       permissive: T.nilable(T::Boolean),
       policy_name: T.nilable(String),
       qual: T.nilable(PgQuery::Node),
-      roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      roles: T.nilable(T::Array[PgQuery::Node]),
       table: T.nilable(PgQuery::RangeVar),
       with_check: T.nilable(PgQuery::Node)
     ).void

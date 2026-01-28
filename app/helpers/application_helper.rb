@@ -44,12 +44,9 @@ module ApplicationHelper
       .returns(T::Hash[Symbol, T.untyped])
   end
   def delete_from(hash, *keys)
-    removed_values = T.let({}, T::Hash[Symbol, T.untyped])
+    removed_values = {}
     keys.each do |key|
-      removed_values[key] = hash.delete(key) do
-        raise KeyError
-      end
-    rescue KeyError
+      removed_values[key] = hash.delete(key) if hash.key?(key)
     end
     removed_values
   end

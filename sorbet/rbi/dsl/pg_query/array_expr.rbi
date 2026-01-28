@@ -11,7 +11,7 @@ class PgQuery::ArrayExpr < Google::Protobuf::AbstractMessage
       array_collid: T.nilable(Integer),
       array_typeid: T.nilable(Integer),
       element_typeid: T.nilable(Integer),
-      elements: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      elements: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       multidims: T.nilable(T::Boolean),
       xpr: T.nilable(PgQuery::Node)

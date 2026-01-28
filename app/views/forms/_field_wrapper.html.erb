@@ -1,5 +1,5 @@
 <%- description = local_assigns.delete(:description) -%>
-<%- error = error_message_for(form.object, field) -%>
+<%- error = local_assigns.delete(:error) || form.object ? error_message_for(form.object, field) : nil -%>
 <%- container = local_assigns.delete(:container) || {} -%>
 <%- container_class = container.delete(:class) %>
 <%- show_label = !local_assigns.key?(:label) || !!local_assigns[:label] %>

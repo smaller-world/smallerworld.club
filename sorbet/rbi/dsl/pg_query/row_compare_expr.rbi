@@ -8,11 +8,11 @@
 class PgQuery::RowCompareExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      inputcollids: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      largs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opfamilies: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opnos: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      rargs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      inputcollids: T.nilable(T::Array[PgQuery::Node]),
+      largs: T.nilable(T::Array[PgQuery::Node]),
+      opfamilies: T.nilable(T::Array[PgQuery::Node]),
+      opnos: T.nilable(T::Array[PgQuery::Node]),
+      rargs: T.nilable(T::Array[PgQuery::Node]),
       rctype: T.nilable(T.any(Symbol, Integer)),
       xpr: T.nilable(PgQuery::Node)
     ).void

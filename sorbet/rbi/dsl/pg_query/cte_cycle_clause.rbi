@@ -8,7 +8,7 @@
 class PgQuery::CTECycleClause < Google::Protobuf::AbstractMessage
   sig do
     params(
-      cycle_col_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      cycle_col_list: T.nilable(T::Array[PgQuery::Node]),
       cycle_mark_collation: T.nilable(Integer),
       cycle_mark_column: T.nilable(String),
       cycle_mark_default: T.nilable(PgQuery::Node),

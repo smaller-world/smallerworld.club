@@ -11,9 +11,9 @@ class PgQuery::CreateOpClassStmt < Google::Protobuf::AbstractMessage
       amname: T.nilable(String),
       datatype: T.nilable(PgQuery::TypeName),
       is_default: T.nilable(T::Boolean),
-      items: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opclassname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opfamilyname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      items: T.nilable(T::Array[PgQuery::Node]),
+      opclassname: T.nilable(T::Array[PgQuery::Node]),
+      opfamilyname: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(amname: nil, datatype: nil, is_default: nil, items: T.unsafe(nil), opclassname: T.unsafe(nil), opfamilyname: T.unsafe(nil)); end

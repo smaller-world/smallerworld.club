@@ -10,7 +10,7 @@ class PgQuery::VacuumRelation < Google::Protobuf::AbstractMessage
     params(
       oid: T.nilable(Integer),
       relation: T.nilable(PgQuery::RangeVar),
-      va_cols: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      va_cols: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(oid: nil, relation: nil, va_cols: T.unsafe(nil)); end

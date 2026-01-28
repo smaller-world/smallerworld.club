@@ -8,7 +8,7 @@
 class PgQuery::PrepareStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      argtypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      argtypes: T.nilable(T::Array[PgQuery::Node]),
       name: T.nilable(String),
       query: T.nilable(PgQuery::Node)
     ).void

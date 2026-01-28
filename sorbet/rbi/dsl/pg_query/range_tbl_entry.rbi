@@ -9,23 +9,23 @@ class PgQuery::RangeTblEntry < Google::Protobuf::AbstractMessage
   sig do
     params(
       alias: T.nilable(PgQuery::Alias),
-      colcollations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      coltypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      coltypmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      colcollations: T.nilable(T::Array[PgQuery::Node]),
+      coltypes: T.nilable(T::Array[PgQuery::Node]),
+      coltypmods: T.nilable(T::Array[PgQuery::Node]),
       ctelevelsup: T.nilable(Integer),
       ctename: T.nilable(String),
       enrname: T.nilable(String),
       enrtuples: T.nilable(Float),
       eref: T.nilable(PgQuery::Alias),
       funcordinality: T.nilable(T::Boolean),
-      functions: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      functions: T.nilable(T::Array[PgQuery::Node]),
       in_from_cl: T.nilable(T::Boolean),
       inh: T.nilable(T::Boolean),
       join_using_alias: T.nilable(PgQuery::Alias),
-      joinaliasvars: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      joinleftcols: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      joinaliasvars: T.nilable(T::Array[PgQuery::Node]),
+      joinleftcols: T.nilable(T::Array[PgQuery::Node]),
       joinmergedcols: T.nilable(Integer),
-      joinrightcols: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      joinrightcols: T.nilable(T::Array[PgQuery::Node]),
       jointype: T.nilable(T.any(Symbol, Integer)),
       lateral: T.nilable(T::Boolean),
       perminfoindex: T.nilable(Integer),
@@ -34,12 +34,12 @@ class PgQuery::RangeTblEntry < Google::Protobuf::AbstractMessage
       rellockmode: T.nilable(Integer),
       rtekind: T.nilable(T.any(Symbol, Integer)),
       security_barrier: T.nilable(T::Boolean),
-      security_quals: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      security_quals: T.nilable(T::Array[PgQuery::Node]),
       self_reference: T.nilable(T::Boolean),
       subquery: T.nilable(PgQuery::Query),
       tablefunc: T.nilable(PgQuery::TableFunc),
       tablesample: T.nilable(PgQuery::TableSampleClause),
-      values_lists: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      values_lists: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(alias: nil, colcollations: T.unsafe(nil), coltypes: T.unsafe(nil), coltypmods: T.unsafe(nil), ctelevelsup: nil, ctename: nil, enrname: nil, enrtuples: nil, eref: nil, funcordinality: nil, functions: T.unsafe(nil), in_from_cl: nil, inh: nil, join_using_alias: nil, joinaliasvars: T.unsafe(nil), joinleftcols: T.unsafe(nil), joinmergedcols: nil, joinrightcols: T.unsafe(nil), jointype: nil, lateral: nil, perminfoindex: nil, relid: nil, relkind: nil, rellockmode: nil, rtekind: nil, security_barrier: nil, security_quals: T.unsafe(nil), self_reference: nil, subquery: nil, tablefunc: nil, tablesample: nil, values_lists: T.unsafe(nil)); end

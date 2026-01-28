@@ -6,12 +6,7 @@
 
 
 class PgQuery::CreateOpFamilyStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      amname: T.nilable(String),
-      opfamilyname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(amname: T.nilable(String), opfamilyname: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(amname: nil, opfamilyname: T.unsafe(nil)); end
 
   sig { returns(String) }

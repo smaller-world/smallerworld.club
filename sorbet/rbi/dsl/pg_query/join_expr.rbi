@@ -16,7 +16,7 @@ class PgQuery::JoinExpr < Google::Protobuf::AbstractMessage
       quals: T.nilable(PgQuery::Node),
       rarg: T.nilable(PgQuery::Node),
       rtindex: T.nilable(Integer),
-      using_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      using_clause: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(alias: nil, is_natural: nil, join_using_alias: nil, jointype: nil, larg: nil, quals: nil, rarg: nil, rtindex: nil, using_clause: T.unsafe(nil)); end

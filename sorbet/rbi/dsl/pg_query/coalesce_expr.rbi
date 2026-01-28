@@ -8,7 +8,7 @@
 class PgQuery::CoalesceExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       coalescecollid: T.nilable(Integer),
       coalescetype: T.nilable(Integer),
       location: T.nilable(Integer),

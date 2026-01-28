@@ -9,7 +9,7 @@ class PgQuery::AlterRoleStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       action: T.nilable(Integer),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       role: T.nilable(PgQuery::RoleSpec)
     ).void
   end

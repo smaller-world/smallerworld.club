@@ -15,12 +15,12 @@
 
 <%= render(
   "forms/field_wrapper",
-  class: class_names("text-area", class_name),
+  class: class_names("text_area", class_name),
   **local_assigns,
 ) do %>
   <%= form.text_area(
     field,
-    class: class_names("form_textarea p-2", input_class),
+    class: class_names("form_textarea", input_class),
     data: {
       controller: class_names("textarea-autogrow", input_controller),
       error: error.present? ,

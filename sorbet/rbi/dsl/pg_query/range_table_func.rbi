@@ -9,11 +9,11 @@ class PgQuery::RangeTableFunc < Google::Protobuf::AbstractMessage
   sig do
     params(
       alias: T.nilable(PgQuery::Alias),
-      columns: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      columns: T.nilable(T::Array[PgQuery::Node]),
       docexpr: T.nilable(PgQuery::Node),
       lateral: T.nilable(T::Boolean),
       location: T.nilable(Integer),
-      namespaces: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      namespaces: T.nilable(T::Array[PgQuery::Node]),
       rowexpr: T.nilable(PgQuery::Node)
     ).void
   end

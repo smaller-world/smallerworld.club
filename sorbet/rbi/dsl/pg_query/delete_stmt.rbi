@@ -9,8 +9,8 @@ class PgQuery::DeleteStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       relation: T.nilable(PgQuery::RangeVar),
-      returning_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      using_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      returning_list: T.nilable(T::Array[PgQuery::Node]),
+      using_clause: T.nilable(T::Array[PgQuery::Node]),
       where_clause: T.nilable(PgQuery::Node),
       with_clause: T.nilable(PgQuery::WithClause)
     ).void

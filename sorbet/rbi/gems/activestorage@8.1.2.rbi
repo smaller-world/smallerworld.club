@@ -6,20 +6,11 @@
 
 
 class ActiveRecord::Base
-  include ::StoreModel::ParentAssignment
   include ::ActiveModel::ForbiddenAttributesProtection
   include ::ActiveModel::AttributeAssignment
   include ::ActiveModel::Access
   include ::ActiveModel::Serialization
-  include ::ActiveStorage::Attached::Model
-  include ::ActiveStorage::Reflection::ActiveRecordExtensions
-  extend ::ActiveStorage::Attached::Model::ClassMethods
-  extend ::ActiveStorage::Reflection::ActiveRecordExtensions::ClassMethods
   extend ::ActiveRecord::SignedId::DeprecateSignedIdVerifierSecret
-end
-
-module ActiveRecord::Reflection
-  extend ::ActiveStorage::Reflection::ReflectionExtension
 end
 
 # :markup: markdown
@@ -1053,20 +1044,14 @@ class ActiveStorage::BaseController < ::ActionController::Base
   def _layout_from_proc; end
 
   class << self
-    def _routes; end
-
     private
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
     def __class_attr_etag_with_template_digest; end
     def __class_attr_etag_with_template_digest=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -1268,7 +1253,6 @@ module ActiveStorage::Blobs; end
 class ActiveStorage::Blobs::ProxyController < ::ActiveStorage::BaseController
   include ::ActiveStorage::SetBlob
   include ::ActionController::Live
-  include ::Sentry::Rails::Overrides::StreamingReporter
   include ::ActiveStorage::Streaming
   include ::ActiveStorage::DisableSession
   extend ::ActionController::Live::ClassMethods
@@ -1289,12 +1273,8 @@ class ActiveStorage::Blobs::ProxyController < ::ActiveStorage::BaseController
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_live_streaming_excluded_keys; end
     def __class_attr_live_streaming_excluded_keys=(new_value); end
     def __class_attr_middleware_stack; end
@@ -1317,12 +1297,8 @@ class ActiveStorage::Blobs::RedirectController < ::ActiveStorage::BaseController
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -1353,12 +1329,8 @@ class ActiveStorage::DirectUploadsController < ::ActiveStorage::BaseController
   class << self
     private
 
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -1388,12 +1360,8 @@ class ActiveStorage::DiskController < ::ActiveStorage::BaseController
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -1977,12 +1945,8 @@ class ActiveStorage::Representations::BaseController < ::ActiveStorage::BaseCont
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -1990,7 +1954,6 @@ end
 
 class ActiveStorage::Representations::ProxyController < ::ActiveStorage::Representations::BaseController
   include ::ActionController::Live
-  include ::Sentry::Rails::Overrides::StreamingReporter
   include ::ActiveStorage::Streaming
   include ::ActiveStorage::DisableSession
   extend ::ActionController::Live::ClassMethods
@@ -2011,12 +1974,8 @@ class ActiveStorage::Representations::ProxyController < ::ActiveStorage::Represe
 
     def __class_attr___callbacks; end
     def __class_attr___callbacks=(new_value); end
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_live_streaming_excluded_keys; end
     def __class_attr_live_streaming_excluded_keys=(new_value); end
     def __class_attr_middleware_stack; end
@@ -2035,12 +1994,8 @@ class ActiveStorage::Representations::RedirectController < ::ActiveStorage::Repr
   class << self
     private
 
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
     def __class_attr_config; end
     def __class_attr_config=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
     def __class_attr_middleware_stack; end
     def __class_attr_middleware_stack=(new_value); end
   end
@@ -2260,77 +2215,6 @@ class ActiveStorage::Service::Configurator
     # source://activestorage//lib/active_storage/service/configurator.rb#7
     def build(service_name, configurations); end
   end
-end
-
-# source://activestorage//lib/active_storage/service/disk_service.rb#13
-class ActiveStorage::Service::DiskService < ::ActiveStorage::Service
-  # source://activestorage//lib/active_storage/service/disk_service.rb#16
-  def initialize(root:, public: T.unsafe(nil), **options); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#105
-  def compose(source_keys, destination_key, **_arg2); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#53
-  def delete(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#61
-  def delete_prefixed(prefix); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#28
-  def download(key, &block); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#42
-  def download_chunk(key, range); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#69
-  def exist?(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#97
-  def headers_for_direct_upload(key, content_type:, **_arg2); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#101
-  def path_for(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#14
-  def root; end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#14
-  def root=(_arg0); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#21
-  def upload(key, io, checksum: T.unsafe(nil), **_arg3); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#77
-  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:, custom_metadata: T.unsafe(nil)); end
-
-  private
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#163
-  def ensure_integrity_of(key, checksum); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#155
-  def folder_for(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#124
-  def generate_url(key, expires_in:, filename:, content_type:, disposition:); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#159
-  def make_path_for(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#116
-  def private_url(key, expires_in:, filename:, content_type:, disposition:, **_arg5); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#120
-  def public_url(key, filename:, content_type: T.unsafe(nil), disposition: T.unsafe(nil), **_arg4); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#145
-  def stream(key); end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#170
-  def url_helpers; end
-
-  # source://activestorage//lib/active_storage/service/disk_service.rb#174
-  def url_options; end
 end
 
 # source://activestorage//lib/active_storage/service/registry.rb#4

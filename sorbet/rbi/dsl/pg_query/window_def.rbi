@@ -12,8 +12,8 @@ class PgQuery::WindowDef < Google::Protobuf::AbstractMessage
       frame_options: T.nilable(Integer),
       location: T.nilable(Integer),
       name: T.nilable(String),
-      order_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      partition_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      order_clause: T.nilable(T::Array[PgQuery::Node]),
+      partition_clause: T.nilable(T::Array[PgQuery::Node]),
       refname: T.nilable(String),
       start_offset: T.nilable(PgQuery::Node)
     ).void

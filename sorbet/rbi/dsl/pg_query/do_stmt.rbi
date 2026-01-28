@@ -6,7 +6,7 @@
 
 
 class PgQuery::DoStmt < Google::Protobuf::AbstractMessage
-  sig { params(args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))).void }
+  sig { params(args: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(args: T.unsafe(nil)); end
 
   sig { returns(Google::Protobuf::RepeatedField[PgQuery::Node]) }

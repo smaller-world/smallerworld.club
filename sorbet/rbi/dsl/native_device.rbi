@@ -123,8 +123,34 @@ class NativeDevice
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::NativeDevice, Integer, String, T::Enumerable[T.any(::NativeDevice, Integer, String, T::Enumerable[::NativeDevice])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::NativeDevice, Integer, String, T::Enumerable[T.any(::NativeDevice, Integer, String, T::Enumerable[::NativeDevice])])
+      ).returns(T::Array[::NativeDevice])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::NativeDevice]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::NativeDevice]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::NativeDevice]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -275,7 +301,7 @@ class NativeDevice
     sig { returns(::NativeDevice) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

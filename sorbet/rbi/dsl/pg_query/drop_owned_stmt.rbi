@@ -6,12 +6,7 @@
 
 
 class PgQuery::DropOwnedStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      behavior: T.nilable(T.any(Symbol, Integer)),
-      roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(behavior: T.nilable(T.any(Symbol, Integer)), roles: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(behavior: nil, roles: T.unsafe(nil)); end
 
   sig { returns(T.any(Symbol, Integer)) }

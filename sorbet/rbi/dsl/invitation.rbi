@@ -113,8 +113,34 @@ class Invitation
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::Invitation, Integer, String, T::Enumerable[T.any(::Invitation, Integer, String, T::Enumerable[::Invitation])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::Invitation, Integer, String, T::Enumerable[T.any(::Invitation, Integer, String, T::Enumerable[::Invitation])])
+      ).returns(T::Array[::Invitation])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::Invitation]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::Invitation]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::Invitation]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -260,7 +286,7 @@ class Invitation
     sig { returns(::Invitation) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

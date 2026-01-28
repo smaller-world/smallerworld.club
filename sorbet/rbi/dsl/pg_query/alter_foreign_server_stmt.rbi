@@ -9,7 +9,7 @@ class PgQuery::AlterForeignServerStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       has_version: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       servername: T.nilable(String),
       version: T.nilable(String)
     ).void

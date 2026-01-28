@@ -13,10 +13,10 @@ class PgQuery::SubscriptingRef < Google::Protobuf::AbstractMessage
       refcontainertype: T.nilable(Integer),
       refelemtype: T.nilable(Integer),
       refexpr: T.nilable(PgQuery::Node),
-      reflowerindexpr: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      reflowerindexpr: T.nilable(T::Array[PgQuery::Node]),
       refrestype: T.nilable(Integer),
       reftypmod: T.nilable(Integer),
-      refupperindexpr: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      refupperindexpr: T.nilable(T::Array[PgQuery::Node]),
       xpr: T.nilable(PgQuery::Node)
     ).void
   end

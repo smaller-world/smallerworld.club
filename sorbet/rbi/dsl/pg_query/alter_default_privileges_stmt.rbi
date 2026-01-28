@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlterDefaultPrivilegesStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      action: T.nilable(PgQuery::GrantStmt),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(action: T.nilable(PgQuery::GrantStmt), options: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(action: nil, options: T.unsafe(nil)); end
 
   sig { returns(T.nilable(PgQuery::GrantStmt)) }

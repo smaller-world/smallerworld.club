@@ -9,7 +9,7 @@ class PgQuery::CaseExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
       arg: T.nilable(PgQuery::Node),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       casecollid: T.nilable(Integer),
       casetype: T.nilable(Integer),
       defresult: T.nilable(PgQuery::Node),

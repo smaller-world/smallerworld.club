@@ -11,7 +11,7 @@ class PgQuery::A_Expr < Google::Protobuf::AbstractMessage
       kind: T.nilable(T.any(Symbol, Integer)),
       lexpr: T.nilable(PgQuery::Node),
       location: T.nilable(Integer),
-      name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      name: T.nilable(T::Array[PgQuery::Node]),
       rexpr: T.nilable(PgQuery::Node)
     ).void
   end

@@ -6,12 +6,7 @@
 
 
 class PgQuery::Alias < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      aliasname: T.nilable(String),
-      colnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(aliasname: T.nilable(String), colnames: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(aliasname: nil, colnames: T.unsafe(nil)); end
 
   sig { returns(String) }

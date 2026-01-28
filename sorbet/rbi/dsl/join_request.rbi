@@ -113,8 +113,34 @@ class JoinRequest
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::JoinRequest, Integer, String, T::Enumerable[T.any(::JoinRequest, Integer, String, T::Enumerable[::JoinRequest])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::JoinRequest, Integer, String, T::Enumerable[T.any(::JoinRequest, Integer, String, T::Enumerable[::JoinRequest])])
+      ).returns(T::Array[::JoinRequest])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::JoinRequest]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::JoinRequest]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::JoinRequest]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -260,7 +286,7 @@ class JoinRequest
     sig { returns(::JoinRequest) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -846,16 +872,16 @@ class JoinRequest
     sig { void }
     def id_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(::String) }
     def name; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: ::String).returns(::String) }
     def name=(value); end
 
     sig { returns(T::Boolean) }
     def name?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -864,43 +890,43 @@ class JoinRequest
     sig { returns(T::Boolean) }
     def name_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_was; end
 
     sig { void }
     def name_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(::String) }
     def phone_number; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: ::String).returns(::String) }
     def phone_number=(value); end
 
     sig { returns(T::Boolean) }
     def phone_number?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -909,28 +935,28 @@ class JoinRequest
     sig { returns(T::Boolean) }
     def phone_number_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_was; end
 
     sig { void }
@@ -984,13 +1010,13 @@ class JoinRequest
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_phone_number; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

@@ -9,7 +9,7 @@ class PgQuery::TruncateStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       behavior: T.nilable(T.any(Symbol, Integer)),
-      relations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      relations: T.nilable(T::Array[PgQuery::Node]),
       restart_seqs: T.nilable(T::Boolean)
     ).void
   end

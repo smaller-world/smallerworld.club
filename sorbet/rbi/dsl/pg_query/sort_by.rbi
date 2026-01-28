@@ -12,7 +12,7 @@ class PgQuery::SortBy < Google::Protobuf::AbstractMessage
       node: T.nilable(PgQuery::Node),
       sortby_dir: T.nilable(T.any(Symbol, Integer)),
       sortby_nulls: T.nilable(T.any(Symbol, Integer)),
-      use_op: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      use_op: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(location: nil, node: nil, sortby_dir: nil, sortby_nulls: nil, use_op: T.unsafe(nil)); end

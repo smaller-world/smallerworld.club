@@ -10,7 +10,7 @@ class PgQuery::LockStmt < Google::Protobuf::AbstractMessage
     params(
       mode: T.nilable(Integer),
       nowait: T.nilable(T::Boolean),
-      relations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      relations: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(mode: nil, nowait: nil, relations: T.unsafe(nil)); end

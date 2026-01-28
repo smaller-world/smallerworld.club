@@ -143,8 +143,34 @@ class ActionMailbox::InboundEmail
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::ActionMailbox::InboundEmail, Integer, String, T::Enumerable[T.any(::ActionMailbox::InboundEmail, Integer, String, T::Enumerable[::ActionMailbox::InboundEmail])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::ActionMailbox::InboundEmail, Integer, String, T::Enumerable[T.any(::ActionMailbox::InboundEmail, Integer, String, T::Enumerable[::ActionMailbox::InboundEmail])])
+      ).returns(T::Array[::ActionMailbox::InboundEmail])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::ActionMailbox::InboundEmail]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::ActionMailbox::InboundEmail]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::ActionMailbox::InboundEmail]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end

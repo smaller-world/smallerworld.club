@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlterOperatorStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      opername: T.nilable(PgQuery::ObjectWithArgs),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(opername: T.nilable(PgQuery::ObjectWithArgs), options: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(opername: nil, options: T.unsafe(nil)); end
 
   sig { void }

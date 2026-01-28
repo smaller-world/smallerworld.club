@@ -8,7 +8,7 @@
 class PgQuery::PublicationTable < Google::Protobuf::AbstractMessage
   sig do
     params(
-      columns: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      columns: T.nilable(T::Array[PgQuery::Node]),
       relation: T.nilable(PgQuery::RangeVar),
       where_clause: T.nilable(PgQuery::Node)
     ).void

@@ -6,11 +6,7 @@
 
 
 class PgQuery::AlterCollationStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      collname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(collname: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(collname: T.unsafe(nil)); end
 
   sig { void }

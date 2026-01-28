@@ -6,12 +6,7 @@
 
 
 class PgQuery::CreateRangeStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      params: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      type_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(params: T.nilable(T::Array[PgQuery::Node]), type_name: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(params: T.unsafe(nil), type_name: T.unsafe(nil)); end
 
   sig { void }

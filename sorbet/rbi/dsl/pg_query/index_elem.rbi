@@ -8,13 +8,13 @@
 class PgQuery::IndexElem < Google::Protobuf::AbstractMessage
   sig do
     params(
-      collation: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      collation: T.nilable(T::Array[PgQuery::Node]),
       expr: T.nilable(PgQuery::Node),
       indexcolname: T.nilable(String),
       name: T.nilable(String),
       nulls_ordering: T.nilable(T.any(Symbol, Integer)),
-      opclass: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opclassopts: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      opclass: T.nilable(T::Array[PgQuery::Node]),
+      opclassopts: T.nilable(T::Array[PgQuery::Node]),
       ordering: T.nilable(T.any(Symbol, Integer))
     ).void
   end

@@ -1,5 +1,5 @@
 # rubocop:disable Layout/LineLength
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 # Pagy initializer file (43.2.2)

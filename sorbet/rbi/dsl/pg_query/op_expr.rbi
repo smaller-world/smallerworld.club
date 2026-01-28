@@ -8,7 +8,7 @@
 class PgQuery::OpExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       inputcollid: T.nilable(Integer),
       location: T.nilable(Integer),
       opcollid: T.nilable(Integer),

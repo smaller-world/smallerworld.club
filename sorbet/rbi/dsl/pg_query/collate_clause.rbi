@@ -9,7 +9,7 @@ class PgQuery::CollateClause < Google::Protobuf::AbstractMessage
   sig do
     params(
       arg: T.nilable(PgQuery::Node),
-      collname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      collname: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer)
     ).void
   end

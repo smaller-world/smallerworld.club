@@ -10,13 +10,13 @@ class PgQuery::FuncCall < Google::Protobuf::AbstractMessage
     params(
       agg_distinct: T.nilable(T::Boolean),
       agg_filter: T.nilable(PgQuery::Node),
-      agg_order: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      agg_order: T.nilable(T::Array[PgQuery::Node]),
       agg_star: T.nilable(T::Boolean),
       agg_within_group: T.nilable(T::Boolean),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       func_variadic: T.nilable(T::Boolean),
       funcformat: T.nilable(T.any(Symbol, Integer)),
-      funcname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funcname: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       over: T.nilable(PgQuery::WindowDef)
     ).void

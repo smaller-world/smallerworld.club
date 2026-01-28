@@ -9,12 +9,12 @@ class PgQuery::JsonTable < Google::Protobuf::AbstractMessage
   sig do
     params(
       alias: T.nilable(PgQuery::Alias),
-      columns: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      columns: T.nilable(T::Array[PgQuery::Node]),
       context_item: T.nilable(PgQuery::JsonValueExpr),
       lateral: T.nilable(T::Boolean),
       location: T.nilable(Integer),
       on_error: T.nilable(PgQuery::JsonBehavior),
-      passing: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      passing: T.nilable(T::Array[PgQuery::Node]),
       pathspec: T.nilable(PgQuery::JsonTablePathSpec)
     ).void
   end

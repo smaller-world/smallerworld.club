@@ -8,10 +8,10 @@
 class PgQuery::CreateConversionStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      conversion_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      conversion_name: T.nilable(T::Array[PgQuery::Node]),
       def: T.nilable(T::Boolean),
       for_encoding_name: T.nilable(String),
-      func_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      func_name: T.nilable(T::Array[PgQuery::Node]),
       to_encoding_name: T.nilable(String)
     ).void
   end

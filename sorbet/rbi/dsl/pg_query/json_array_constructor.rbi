@@ -9,7 +9,7 @@ class PgQuery::JsonArrayConstructor < Google::Protobuf::AbstractMessage
   sig do
     params(
       absent_on_null: T.nilable(T::Boolean),
-      exprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      exprs: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       output: T.nilable(PgQuery::JsonOutput)
     ).void

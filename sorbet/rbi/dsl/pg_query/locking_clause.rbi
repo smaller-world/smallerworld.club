@@ -8,7 +8,7 @@
 class PgQuery::LockingClause < Google::Protobuf::AbstractMessage
   sig do
     params(
-      locked_rels: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      locked_rels: T.nilable(T::Array[PgQuery::Node]),
       strength: T.nilable(T.any(Symbol, Integer)),
       wait_policy: T.nilable(T.any(Symbol, Integer))
     ).void

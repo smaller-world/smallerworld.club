@@ -1,22 +1,16 @@
 # See https://github.com/Shopify/tapioca
 
 gem:
+  # Add your `gem` command parameters here:
+  #
   doc: true
-  typed_overrides:
-    activesupport: "true"
   exclude:
-    - pry-doc
-    - pry-rails
-    - pry-rescue
-    - pry-stack_explorer
-    - rails-pg-extras
-    - rubocop-rails
-    - rubocop-shopify
-    - rubocop-sorbet
-    - web-console
-    - yard
-    - yard-sorbet
+    - bundler-audit
+  # workers: 5
 
 dsl:
-  skip_constant:
-    - InertiaRails::Mailer
+  # Add your `dsl` command parameters here:
+  #
+  # exclude:
+  # - SomeGeneratorName
+  # workers: 5

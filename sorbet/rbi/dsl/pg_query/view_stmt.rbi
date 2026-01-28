@@ -8,8 +8,8 @@
 class PgQuery::ViewStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      aliases: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      aliases: T.nilable(T::Array[PgQuery::Node]),
+      options: T.nilable(T::Array[PgQuery::Node]),
       query: T.nilable(PgQuery::Node),
       replace: T.nilable(T::Boolean),
       view: T.nilable(PgQuery::RangeVar),

@@ -13,7 +13,7 @@ module ActionDispatch
     sig do
       params(supports_path: T.untyped).returns(
         T.all(
-          Module,
+          T::Module[T.anything],
           GeneratedUrlHelpersModule,
           GeneratedPathHelpersModule,
         ),

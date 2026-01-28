@@ -9,9 +9,9 @@ class PgQuery::ObjectWithArgs < Google::Protobuf::AbstractMessage
   sig do
     params(
       args_unspecified: T.nilable(T::Boolean),
-      objargs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      objfuncargs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      objname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      objargs: T.nilable(T::Array[PgQuery::Node]),
+      objfuncargs: T.nilable(T::Array[PgQuery::Node]),
+      objname: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(args_unspecified: nil, objargs: T.unsafe(nil), objfuncargs: T.unsafe(nil), objname: T.unsafe(nil)); end

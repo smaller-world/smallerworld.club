@@ -8,7 +8,7 @@
 class PgQuery::TableSampleClause < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       repeatable: T.nilable(PgQuery::Node),
       tsmhandler: T.nilable(Integer)
     ).void

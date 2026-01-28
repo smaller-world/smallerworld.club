@@ -6,12 +6,7 @@
 
 
 class PgQuery::ScanResult < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      tokens: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::ScanToken], T::Array[PgQuery::ScanToken])),
-      version: T.nilable(Integer)
-    ).void
-  end
+  sig { params(tokens: T.nilable(T::Array[PgQuery::ScanToken]), version: T.nilable(Integer)).void }
   def initialize(tokens: T.unsafe(nil), version: nil); end
 
   sig { void }

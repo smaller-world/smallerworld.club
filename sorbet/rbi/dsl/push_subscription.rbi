@@ -113,8 +113,34 @@ class PushSubscription
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::PushSubscription, Integer, String, T::Enumerable[T.any(::PushSubscription, Integer, String, T::Enumerable[::PushSubscription])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::PushSubscription, Integer, String, T::Enumerable[T.any(::PushSubscription, Integer, String, T::Enumerable[::PushSubscription])])
+      ).returns(T::Array[::PushSubscription])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::PushSubscription]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::PushSubscription]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::PushSubscription]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -265,7 +291,7 @@ class PushSubscription
     sig { returns(::PushSubscription) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

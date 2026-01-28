@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlterExtensionStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      extname: T.nilable(String),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(extname: T.nilable(String), options: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(extname: nil, options: T.unsafe(nil)); end
 
   sig { void }

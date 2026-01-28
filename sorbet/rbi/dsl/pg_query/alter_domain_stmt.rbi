@@ -13,7 +13,7 @@ class PgQuery::AlterDomainStmt < Google::Protobuf::AbstractMessage
       missing_ok: T.nilable(T::Boolean),
       name: T.nilable(String),
       subtype: T.nilable(String),
-      type_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      type_name: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(behavior: nil, def: nil, missing_ok: nil, name: nil, subtype: nil, type_name: T.unsafe(nil)); end

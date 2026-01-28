@@ -8,11 +8,11 @@
 class PgQuery::PartitionElem < Google::Protobuf::AbstractMessage
   sig do
     params(
-      collation: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      collation: T.nilable(T::Array[PgQuery::Node]),
       expr: T.nilable(PgQuery::Node),
       location: T.nilable(Integer),
       name: T.nilable(String),
-      opclass: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      opclass: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(collation: T.unsafe(nil), expr: nil, location: nil, name: nil, opclass: T.unsafe(nil)); end

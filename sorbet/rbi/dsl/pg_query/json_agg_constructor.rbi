@@ -9,7 +9,7 @@ class PgQuery::JsonAggConstructor < Google::Protobuf::AbstractMessage
   sig do
     params(
       agg_filter: T.nilable(PgQuery::Node),
-      agg_order: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      agg_order: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       output: T.nilable(PgQuery::JsonOutput),
       over: T.nilable(PgQuery::WindowDef)

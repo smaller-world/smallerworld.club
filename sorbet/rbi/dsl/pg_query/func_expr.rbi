@@ -8,7 +8,7 @@
 class PgQuery::FuncExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       funccollid: T.nilable(Integer),
       funcformat: T.nilable(T.any(Symbol, Integer)),
       funcid: T.nilable(Integer),

@@ -12,7 +12,7 @@ class PgQuery::AlterTableMoveAllStmt < Google::Protobuf::AbstractMessage
       nowait: T.nilable(T::Boolean),
       objtype: T.nilable(T.any(Symbol, Integer)),
       orig_tablespacename: T.nilable(String),
-      roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      roles: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(new_tablespacename: nil, nowait: nil, objtype: nil, orig_tablespacename: nil, roles: T.unsafe(nil)); end

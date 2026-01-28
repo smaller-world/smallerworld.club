@@ -1,28 +1,21 @@
 {
-  // == Associations
+  // == File Associations
   "files.associations": {
     "Procfile.dev": "procfile",
     "Procfile.test": "procfile",
     "Procfile.ci-test": "procfile",
     "Gemfile.lock": "plaintext",
-    "test/fixtures/active_storage/blobs.yml": "erb"
+    "test/fixtures/**/*.yml": "erb"
   },
-
-  // == ESLint
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "markdown"
-  ],
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "${workspaceFolder}/.github/workflows/deploy.yml"
+  },
 
   // == Rubocop
   "rubocop.mode": "enableViaGemfile",
   "rubocop.bundleCommandPath": "mise x -- bundle",
 
-  // == CSS & Tailwind
+  // == CSS
   "cssVariables.languages": [
     "scss",
     "postcss",
@@ -47,6 +40,8 @@
     "public/dist-dev",
     "public/dist-test"
   ],
+
+  // == Tailwind
   "tailwindCSS.includeLanguages": {
     "ruby": "html"
   },
@@ -54,11 +49,6 @@
     "class:\\s*['\"]([^'\"]*)['\"]",
     ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
   ],
-
-  // == YAML
-  "yaml.schemas": {
-    "https://json.schemastore.org/github-workflow.json": "${workspaceFolder}/.github/workflows/deploy.yml"
-  },
 
   // == Formatting
   "[markdown]": {

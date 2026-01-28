@@ -8,7 +8,7 @@
 class PgQuery::GroupingSet < Google::Protobuf::AbstractMessage
   sig do
     params(
-      content: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      content: T.nilable(T::Array[PgQuery::Node]),
       kind: T.nilable(T.any(Symbol, Integer)),
       location: T.nilable(Integer)
     ).void

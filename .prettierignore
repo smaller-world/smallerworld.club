@@ -2,16 +2,7 @@
 config/push.yml
 test/fixtures/active_storage/blobs.yml
 
-# == Agents
-.agents/skills/
-.codex/skills/
-.cursor/
-.gemini/
-.opencode/
-opencode.json
-.mcp.json
-
-# == System
+# == Rails
 .ruby-lsp/
 .bundle/
 bin/
@@ -22,9 +13,19 @@ node_modules/
 public/dist*/
 sorbet/
 storage/
+test/fixtures/*.yml
 tmp/
 vendor/
 package-lock.json
 **/*generated*
 Gemfile
 Gemfile.lock
+
+# == Agents
+.agents/skills/
+.codex/skills/
+.cursor/
+.gemini/
+.opencode/
+opencode.json
+.mcp.json

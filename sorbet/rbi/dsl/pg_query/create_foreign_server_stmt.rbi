@@ -10,7 +10,7 @@ class PgQuery::CreateForeignServerStmt < Google::Protobuf::AbstractMessage
     params(
       fdwname: T.nilable(String),
       if_not_exists: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       servername: T.nilable(String),
       servertype: T.nilable(String),
       version: T.nilable(String)

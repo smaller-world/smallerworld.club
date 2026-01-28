@@ -8,7 +8,7 @@
 class PgQuery::VariableSetStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       is_local: T.nilable(T::Boolean),
       kind: T.nilable(T.any(Symbol, Integer)),
       name: T.nilable(String)

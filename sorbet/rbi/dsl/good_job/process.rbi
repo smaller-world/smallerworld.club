@@ -117,8 +117,34 @@ class GoodJob::Process
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::GoodJob::Process, Integer, String, T::Enumerable[T.any(::GoodJob::Process, Integer, String, T::Enumerable[::GoodJob::Process])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::GoodJob::Process, Integer, String, T::Enumerable[T.any(::GoodJob::Process, Integer, String, T::Enumerable[::GoodJob::Process])])
+      ).returns(T::Array[::GoodJob::Process])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::GoodJob::Process]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::GoodJob::Process]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::GoodJob::Process]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -269,7 +295,7 @@ class GoodJob::Process
     sig { returns(::GoodJob::Process) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

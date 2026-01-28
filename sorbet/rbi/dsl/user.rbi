@@ -89,8 +89,34 @@ class User
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::User, Integer, String, T::Enumerable[T.any(::User, Integer, String, T::Enumerable[::User])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::User, Integer, String, T::Enumerable[T.any(::User, Integer, String, T::Enumerable[::User])])
+      ).returns(T::Array[::User])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::User]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::User]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::User]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -221,7 +247,7 @@ class User
     sig { returns(::User) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -1182,16 +1208,16 @@ class User
     sig { void }
     def membership_tier_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(::String) }
     def name; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: ::String).returns(::String) }
     def name=(value); end
 
     sig { returns(T::Boolean) }
     def name?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1200,28 +1226,28 @@ class User
     sig { returns(T::Boolean) }
     def name_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_was; end
 
     sig { void }
@@ -1272,16 +1298,16 @@ class User
     sig { void }
     def notifications_last_cleared_at_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(::String) }
     def phone_number; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: ::String).returns(::String) }
     def phone_number=(value); end
 
     sig { returns(T::Boolean) }
     def phone_number?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1290,28 +1316,28 @@ class User
     sig { returns(T::Boolean) }
     def phone_number_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_was; end
 
     sig { void }
@@ -1479,7 +1505,7 @@ class User
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_membership_tier?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1491,7 +1517,7 @@ class User
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_notifications_last_cleared_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_phone_number; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

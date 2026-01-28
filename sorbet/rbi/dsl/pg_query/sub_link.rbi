@@ -9,7 +9,7 @@ class PgQuery::SubLink < Google::Protobuf::AbstractMessage
   sig do
     params(
       location: T.nilable(Integer),
-      oper_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      oper_name: T.nilable(T::Array[PgQuery::Node]),
       sub_link_id: T.nilable(Integer),
       sub_link_type: T.nilable(T.any(Symbol, Integer)),
       subselect: T.nilable(PgQuery::Node),

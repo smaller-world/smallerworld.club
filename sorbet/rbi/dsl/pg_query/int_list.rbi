@@ -6,7 +6,7 @@
 
 
 class PgQuery::IntList < Google::Protobuf::AbstractMessage
-  sig { params(items: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))).void }
+  sig { params(items: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(items: T.unsafe(nil)); end
 
   sig { void }

@@ -9,9 +9,9 @@ class PgQuery::CreateEventTrigStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       eventname: T.nilable(String),
-      funcname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funcname: T.nilable(T::Array[PgQuery::Node]),
       trigname: T.nilable(String),
-      whenclause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      whenclause: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(eventname: nil, funcname: T.unsafe(nil), trigname: nil, whenclause: T.unsafe(nil)); end

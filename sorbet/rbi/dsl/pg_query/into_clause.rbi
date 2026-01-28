@@ -9,9 +9,9 @@ class PgQuery::IntoClause < Google::Protobuf::AbstractMessage
   sig do
     params(
       access_method: T.nilable(String),
-      col_names: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      col_names: T.nilable(T::Array[PgQuery::Node]),
       on_commit: T.nilable(T.any(Symbol, Integer)),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       rel: T.nilable(PgQuery::RangeVar),
       skip_data: T.nilable(T::Boolean),
       table_space_name: T.nilable(String),

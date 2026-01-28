@@ -9,9 +9,9 @@ class PgQuery::GroupingFunc < Google::Protobuf::AbstractMessage
   sig do
     params(
       agglevelsup: T.nilable(Integer),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
-      refs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      refs: T.nilable(T::Array[PgQuery::Node]),
       xpr: T.nilable(PgQuery::Node)
     ).void
   end

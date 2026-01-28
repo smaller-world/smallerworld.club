@@ -9,7 +9,7 @@ class PgQuery::CreateForeignTableStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       base_stmt: T.nilable(PgQuery::CreateStmt),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       servername: T.nilable(String)
     ).void
   end

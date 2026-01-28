@@ -83,8 +83,34 @@ class Activity
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::Activity).void)).returns(::Activity) }
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::Activity, Integer, String, T::Enumerable[T.any(::Activity, Integer, String, T::Enumerable[::Activity])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::Activity, Integer, String, T::Enumerable[T.any(::Activity, Integer, String, T::Enumerable[::Activity])])
+      ).returns(T::Array[::Activity])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::Activity]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::Activity]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::Activity]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -215,7 +241,7 @@ class Activity
     sig { returns(::Activity) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -685,16 +711,16 @@ class Activity
     sig { void }
     def description_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def emoji=(value); end
 
     sig { returns(T::Boolean) }
     def emoji?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -703,28 +729,28 @@ class Activity
     sig { returns(T::Boolean) }
     def emoji_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_was; end
 
     sig { void }
@@ -961,7 +987,7 @@ class Activity
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_description?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_emoji; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

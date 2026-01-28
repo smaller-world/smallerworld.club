@@ -10,7 +10,7 @@ class PgQuery::CTESearchClause < Google::Protobuf::AbstractMessage
     params(
       location: T.nilable(Integer),
       search_breadth_first: T.nilable(T::Boolean),
-      search_col_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      search_col_list: T.nilable(T::Array[PgQuery::Node]),
       search_seq_column: T.nilable(String)
     ).void
   end

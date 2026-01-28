@@ -10,12 +10,12 @@ class PgQuery::GrantStmt < Google::Protobuf::AbstractMessage
     params(
       behavior: T.nilable(T.any(Symbol, Integer)),
       grant_option: T.nilable(T::Boolean),
-      grantees: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      grantees: T.nilable(T::Array[PgQuery::Node]),
       grantor: T.nilable(PgQuery::RoleSpec),
       is_grant: T.nilable(T::Boolean),
-      objects: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      objects: T.nilable(T::Array[PgQuery::Node]),
       objtype: T.nilable(T.any(Symbol, Integer)),
-      privileges: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      privileges: T.nilable(T::Array[PgQuery::Node]),
       targtype: T.nilable(T.any(Symbol, Integer))
     ).void
   end

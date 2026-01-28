@@ -17,7 +17,7 @@ module Tapioca
           { fixed: T.class_of(::Oj::Serializer) }
         end
 
-        sig { override.returns(T::Enumerable[Module]) }
+        sig { override.returns(T::Enumerable[T::Class[::Oj::Serializer]]) }
         def self.gather_constants
           descendants_of(::Oj::Serializer)
         end

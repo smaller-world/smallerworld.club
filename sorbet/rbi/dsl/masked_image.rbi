@@ -119,8 +119,34 @@ class MaskedImage
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::MaskedImage, Integer, String, T::Enumerable[T.any(::MaskedImage, Integer, String, T::Enumerable[::MaskedImage])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::MaskedImage, Integer, String, T::Enumerable[T.any(::MaskedImage, Integer, String, T::Enumerable[::MaskedImage])])
+      ).returns(T::Array[::MaskedImage])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::MaskedImage]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::MaskedImage]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::MaskedImage]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -266,7 +292,7 @@ class MaskedImage
     sig { returns(::MaskedImage) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

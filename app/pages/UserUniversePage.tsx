@@ -85,7 +85,7 @@ const UserUniversePage: PageComponent<UserUniversePageProps> = ({
                         world.owner_id === currentUser.id
                           ? routes.userWorld.show.path()
                           : routes.worlds.show.path({
-                              id: world.id,
+                              id: world.handle,
                               query: {
                                 ...(!!world.associated_friend_access_token && {
                                   friend_token:

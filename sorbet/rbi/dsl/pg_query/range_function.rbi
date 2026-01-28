@@ -9,8 +9,8 @@ class PgQuery::RangeFunction < Google::Protobuf::AbstractMessage
   sig do
     params(
       alias: T.nilable(PgQuery::Alias),
-      coldeflist: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      functions: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      coldeflist: T.nilable(T::Array[PgQuery::Node]),
+      functions: T.nilable(T::Array[PgQuery::Node]),
       is_rowsfrom: T.nilable(T::Boolean),
       lateral: T.nilable(T::Boolean),
       ordinality: T.nilable(T::Boolean)

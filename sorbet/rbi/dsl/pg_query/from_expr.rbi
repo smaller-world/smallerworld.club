@@ -6,12 +6,7 @@
 
 
 class PgQuery::FromExpr < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      fromlist: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      quals: T.nilable(PgQuery::Node)
-    ).void
-  end
+  sig { params(fromlist: T.nilable(T::Array[PgQuery::Node]), quals: T.nilable(PgQuery::Node)).void }
   def initialize(fromlist: T.unsafe(nil), quals: nil); end
 
   sig { void }

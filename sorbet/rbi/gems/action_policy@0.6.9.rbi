@@ -65,10 +65,8 @@ ActionPolicy::AuthorizationContextMissing::MESSAGE_TEMPLATE = T.let(T.unsafe(nil
 #
 # source://action_policy//lib/action_policy/authorizer.rb#19
 module ActionPolicy::Authorizer
-  extend ::ActionPolicy::Rails::Authorizer
-
   class << self
-    # source://action_policy//lib/action_policy/rails/authorizer.rb#9
+    # source://action_policy//lib/action_policy/authorizer.rb#27
     def authorize(policy, rule); end
 
     # Performs authorization, raises an exception when check failed.
@@ -104,14 +102,13 @@ class ActionPolicy::Base
   extend ::ActionPolicy::Policy::Aliases::ClassMethods
   extend ::ActionPolicy::Policy::Scoping::ClassMethods
   extend ::ActionPolicy::Policy::Cache::ClassMethods
-  extend ::ActionPolicy::ScopeMatchers::ActionControllerParams
   extend ::ActionPolicy::ScopeMatchers::ActiveRecord
 
   # source://action_policy//lib/action_policy/policy/authorization.rb#72
   def user; end
 end
 
-# source://action_policy//lib/action_policy/base.rb#0
+# source://action_policy//lib/action_policy/base.rb#16
 class ActionPolicy::Base::APR < ::ActionPolicy::Policy::ExecutionResult
   include ::ActionPolicy::Policy::ResultFailureReasons
 end
@@ -229,7 +226,7 @@ module ActionPolicy::Behaviours::Memoized
   def __policy_memoize__(record, **options); end
 
   class << self
-    # source://action_policy//lib/action_policy/behaviours/memoized.rb#23
+    # source://action_policy//lib/action_policy/behaviours/memoized.rb#27
     def included(base); end
 
     # source://action_policy//lib/action_policy/behaviours/memoized.rb#23
@@ -302,7 +299,7 @@ end
 # source://action_policy//lib/action_policy/behaviours/namespaced.rb#60
 module ActionPolicy::Behaviours::Namespaced
   class << self
-    # source://action_policy//lib/action_policy/behaviours/namespaced.rb#65
+    # source://action_policy//lib/action_policy/behaviours/namespaced.rb#69
     def included(base); end
 
     # source://action_policy//lib/action_policy/behaviours/namespaced.rb#65
@@ -373,7 +370,7 @@ module ActionPolicy::Behaviours::Scoping
   #   - use `implicit_authorization_target` if none of the above works.
   # For backward compatibility
   #
-  # source://action_policy//lib/action_policy/behaviours/scoping.rb#13
+  # source://action_policy//lib/action_policy/behaviours/scoping.rb#26
   def authorized(target, type: T.unsafe(nil), as: T.unsafe(nil), scope_options: T.unsafe(nil), **options); end
 
   # Apply scope to the target of the specified type.
@@ -399,7 +396,7 @@ module ActionPolicy::Behaviours::ThreadMemoized
   def __policy_thread_memoize__(record, **options); end
 
   class << self
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#39
+    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#43
     def included(base); end
 
     # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#39
@@ -433,7 +430,7 @@ module ActionPolicy::Channel
   mixes_in_class_methods ::ActionPolicy::Channel::ClassMethods
 end
 
-# source://action_policy//lib/action_policy/rails/channel.rb#0
+# source://action_policy//lib/action_policy/rails/channel.rb#12
 module ActionPolicy::Channel::ClassMethods
   include ::ActionPolicy::Behaviour::ClassMethods
 end
@@ -488,7 +485,7 @@ module ActionPolicy::Controller
   def verify_authorized; end
 end
 
-# source://action_policy//lib/action_policy/rails/controller.rb#0
+# source://action_policy//lib/action_policy/rails/controller.rb#20
 module ActionPolicy::Controller::ClassMethods
   include ::ActionPolicy::Behaviour::ClassMethods
 
@@ -594,7 +591,7 @@ module ActionPolicy::LookupChain
 
     # Returns the value of attribute namespace_cache_enabled.
     #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#53
+    # source://action_policy//lib/action_policy/lookup_chain.rb#55
     def namespace_cache_enabled?; end
 
     private
@@ -1243,29 +1240,6 @@ module ActionPolicy::Policy::PreCheck::ClassMethods
   def skip_pre_check(*names, **options); end
 end
 
-# source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#5
-module ActionPolicy::Policy::Rails; end
-
-# Add ActiveSupport::Notifications support.
-#
-# Fires `action_policy.apply_rule` event on every `#apply` call.
-# Fires `action_policy.init` event on every policy initialization.
-#
-# source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#10
-module ActionPolicy::Policy::Rails::Instrumentation
-  # source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#14
-  def initialize(record = T.unsafe(nil), **params); end
-
-  # source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#19
-  def apply(rule); end
-end
-
-# source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#12
-ActionPolicy::Policy::Rails::Instrumentation::APPLY_EVENT_NAME = T.let(T.unsafe(nil), String)
-
-# source://action_policy//lib/action_policy/rails/policy/instrumentation.rb#11
-ActionPolicy::Policy::Rails::Instrumentation::INIT_EVENT_NAME = T.let(T.unsafe(nil), String)
-
 # Provides failure reasons tracking functionality.
 # That allows you to distinguish between the reasons why authorization was rejected.
 #
@@ -1509,20 +1483,6 @@ class ActionPolicy::PrettyPrint::Visitor
   def visit_or(ast); end
 end
 
-# source://action_policy//lib/action_policy/rails/authorizer.rb#4
-module ActionPolicy::Rails; end
-
-# Add instrumentation for `authorize!` method
-#
-# source://action_policy//lib/action_policy/rails/authorizer.rb#6
-module ActionPolicy::Rails::Authorizer
-  # source://action_policy//lib/action_policy/rails/authorizer.rb#9
-  def authorize(policy, rule); end
-end
-
-# source://action_policy//lib/action_policy/rails/authorizer.rb#7
-ActionPolicy::Rails::Authorizer::EVENT_NAME = T.let(T.unsafe(nil), String)
-
 # source://action_policy//lib/action_policy/railtie.rb#9
 class ActionPolicy::Railtie < ::Rails::Railtie; end
 
@@ -1611,17 +1571,8 @@ module ActionPolicy::Railtie::Config
   end
 end
 
-# source://action_policy//lib/action_policy/rails/scope_matchers/action_controller_params.rb#4
+# source://action_policy//lib/action_policy/rails/scope_matchers/active_record.rb#4
 module ActionPolicy::ScopeMatchers; end
-
-# Adds `params_filter` method as an alias
-# for `scope_for :action_controller_params`
-#
-# source://action_policy//lib/action_policy/rails/scope_matchers/action_controller_params.rb#7
-module ActionPolicy::ScopeMatchers::ActionControllerParams
-  # source://action_policy//lib/action_policy/rails/scope_matchers/action_controller_params.rb#8
-  def params_filter(*_arg0, **_arg1, &_arg2); end
-end
 
 # Adds `relation_scope` method as an alias
 # for `scope_for :active_record_relation`

@@ -8,12 +8,12 @@
 class PgQuery::XmlExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      arg_names: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      arg_names: T.nilable(T::Array[PgQuery::Node]),
+      args: T.nilable(T::Array[PgQuery::Node]),
       indent: T.nilable(T::Boolean),
       location: T.nilable(Integer),
       name: T.nilable(String),
-      named_args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      named_args: T.nilable(T::Array[PgQuery::Node]),
       op: T.nilable(T.any(Symbol, Integer)),
       type: T.nilable(Integer),
       typmod: T.nilable(Integer),

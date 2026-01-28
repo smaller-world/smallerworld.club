@@ -9,7 +9,7 @@ class PgQuery::InferClause < Google::Protobuf::AbstractMessage
   sig do
     params(
       conname: T.nilable(String),
-      index_elems: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      index_elems: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       where_clause: T.nilable(PgQuery::Node)
     ).void

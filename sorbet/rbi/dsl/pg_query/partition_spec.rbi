@@ -9,7 +9,7 @@ class PgQuery::PartitionSpec < Google::Protobuf::AbstractMessage
   sig do
     params(
       location: T.nilable(Integer),
-      part_params: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      part_params: T.nilable(T::Array[PgQuery::Node]),
       strategy: T.nilable(T.any(Symbol, Integer))
     ).void
   end

@@ -693,22 +693,3 @@ class InertiaRails::Renderer
   # source://inertia_rails//lib/inertia_rails/renderer.rb#75
   def shared_data; end
 end
-
-class InertiaRails::StaticController < ::ApplicationController
-  def static; end
-
-  private
-
-  def _layout(lookup_context, formats, keys); end
-
-  class << self
-    private
-
-    def __class_attr__wrapper_options; end
-    def __class_attr__wrapper_options=(new_value); end
-    def __class_attr_helpers_path; end
-    def __class_attr_helpers_path=(new_value); end
-    def __class_attr_middleware_stack; end
-    def __class_attr_middleware_stack=(new_value); end
-  end
-end

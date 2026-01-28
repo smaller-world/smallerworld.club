@@ -8,7 +8,7 @@
 class PgQuery::BoolExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       boolop: T.nilable(T.any(Symbol, Integer)),
       location: T.nilable(Integer),
       xpr: T.nilable(PgQuery::Node)

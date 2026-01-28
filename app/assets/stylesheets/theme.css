@@ -1,3 +1,5 @@
+@source not "../../../sorbet";
+
 @theme {
   --font-sans:
     Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,

@@ -8,7 +8,7 @@
 class PgQuery::WithClause < Google::Protobuf::AbstractMessage
   sig do
     params(
-      ctes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      ctes: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       recursive: T.nilable(T::Boolean)
     ).void

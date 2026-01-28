@@ -112,8 +112,34 @@ class Announcement
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::Announcement, Integer, String, T::Enumerable[T.any(::Announcement, Integer, String, T::Enumerable[::Announcement])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::Announcement, Integer, String, T::Enumerable[T.any(::Announcement, Integer, String, T::Enumerable[::Announcement])])
+      ).returns(T::Array[::Announcement])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::Announcement]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::Announcement]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::Announcement]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -264,7 +290,7 @@ class Announcement
     sig { returns(::Announcement) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -759,22 +785,22 @@ class Announcement
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_message?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_test_recipient_phone_number; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_test_recipient_phone_number?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def test_recipient_phone_number; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def test_recipient_phone_number=(value); end
 
     sig { returns(T::Boolean) }
     def test_recipient_phone_number?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def test_recipient_phone_number_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -783,28 +809,28 @@ class Announcement
     sig { returns(T::Boolean) }
     def test_recipient_phone_number_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def test_recipient_phone_number_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def test_recipient_phone_number_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def test_recipient_phone_number_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def test_recipient_phone_number_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def test_recipient_phone_number_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def test_recipient_phone_number_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def test_recipient_phone_number_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def test_recipient_phone_number_was; end
 
     sig { void }

@@ -13,7 +13,7 @@ class PgQuery::AlterEnumStmt < Google::Protobuf::AbstractMessage
       new_val_neighbor: T.nilable(String),
       old_val: T.nilable(String),
       skip_if_new_val_exists: T.nilable(T::Boolean),
-      type_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      type_name: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(new_val: nil, new_val_is_after: nil, new_val_neighbor: nil, old_val: nil, skip_if_new_val_exists: nil, type_name: T.unsafe(nil)); end

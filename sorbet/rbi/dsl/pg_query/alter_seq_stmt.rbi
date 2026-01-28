@@ -10,7 +10,7 @@ class PgQuery::AlterSeqStmt < Google::Protobuf::AbstractMessage
     params(
       for_identity: T.nilable(T::Boolean),
       missing_ok: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       sequence: T.nilable(PgQuery::RangeVar)
     ).void
   end

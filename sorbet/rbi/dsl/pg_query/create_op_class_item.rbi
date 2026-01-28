@@ -8,11 +8,11 @@
 class PgQuery::CreateOpClassItem < Google::Protobuf::AbstractMessage
   sig do
     params(
-      class_args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      class_args: T.nilable(T::Array[PgQuery::Node]),
       itemtype: T.nilable(Integer),
       name: T.nilable(PgQuery::ObjectWithArgs),
       number: T.nilable(Integer),
-      order_family: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      order_family: T.nilable(T::Array[PgQuery::Node]),
       storedtype: T.nilable(PgQuery::TypeName)
     ).void
   end

@@ -113,8 +113,34 @@ class PushRegistration
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::PushRegistration, Integer, String, T::Enumerable[T.any(::PushRegistration, Integer, String, T::Enumerable[::PushRegistration])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::PushRegistration, Integer, String, T::Enumerable[T.any(::PushRegistration, Integer, String, T::Enumerable[::PushRegistration])])
+      ).returns(T::Array[::PushRegistration])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::PushRegistration]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::PushRegistration]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::PushRegistration]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -265,7 +291,7 @@ class PushRegistration
     sig { returns(::PushRegistration) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

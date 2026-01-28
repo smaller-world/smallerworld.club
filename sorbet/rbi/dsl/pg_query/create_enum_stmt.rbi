@@ -6,12 +6,7 @@
 
 
 class PgQuery::CreateEnumStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      type_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      vals: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(type_name: T.nilable(T::Array[PgQuery::Node]), vals: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(type_name: T.unsafe(nil), vals: T.unsafe(nil)); end
 
   sig { void }

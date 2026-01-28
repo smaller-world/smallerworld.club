@@ -9,7 +9,7 @@ class PgQuery::AlterTableSpaceOptionsStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       is_reset: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       tablespacename: T.nilable(String)
     ).void
   end

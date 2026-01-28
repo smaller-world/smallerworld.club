@@ -6,12 +6,7 @@
 
 
 class PgQuery::A_ArrayExpr < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      elements: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      location: T.nilable(Integer)
-    ).void
-  end
+  sig { params(elements: T.nilable(T::Array[PgQuery::Node]), location: T.nilable(Integer)).void }
   def initialize(elements: T.unsafe(nil), location: nil); end
 
   sig { void }

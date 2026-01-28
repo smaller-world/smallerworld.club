@@ -9,7 +9,7 @@ class PgQuery::JsonTableColumn < Google::Protobuf::AbstractMessage
   sig do
     params(
       coltype: T.nilable(T.any(Symbol, Integer)),
-      columns: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      columns: T.nilable(T::Array[PgQuery::Node]),
       format: T.nilable(PgQuery::JsonFormat),
       location: T.nilable(Integer),
       name: T.nilable(String),

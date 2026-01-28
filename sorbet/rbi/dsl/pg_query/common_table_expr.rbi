@@ -8,11 +8,11 @@
 class PgQuery::CommonTableExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      aliascolnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      ctecolcollations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      ctecolnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      ctecoltypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      ctecoltypmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      aliascolnames: T.nilable(T::Array[PgQuery::Node]),
+      ctecolcollations: T.nilable(T::Array[PgQuery::Node]),
+      ctecolnames: T.nilable(T::Array[PgQuery::Node]),
+      ctecoltypes: T.nilable(T::Array[PgQuery::Node]),
+      ctecoltypmods: T.nilable(T::Array[PgQuery::Node]),
       ctematerialized: T.nilable(T.any(Symbol, Integer)),
       ctename: T.nilable(String),
       ctequery: T.nilable(PgQuery::Node),

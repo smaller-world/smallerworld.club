@@ -8,7 +8,7 @@
 class PgQuery::AlterStatsStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      defnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      defnames: T.nilable(T::Array[PgQuery::Node]),
       missing_ok: T.nilable(T::Boolean),
       stxstattarget: T.nilable(PgQuery::Node)
     ).void

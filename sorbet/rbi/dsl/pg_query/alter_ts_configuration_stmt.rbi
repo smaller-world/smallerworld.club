@@ -8,13 +8,13 @@
 class PgQuery::AlterTSConfigurationStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      cfgname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      dicts: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      cfgname: T.nilable(T::Array[PgQuery::Node]),
+      dicts: T.nilable(T::Array[PgQuery::Node]),
       kind: T.nilable(T.any(Symbol, Integer)),
       missing_ok: T.nilable(T::Boolean),
       override: T.nilable(T::Boolean),
       replace: T.nilable(T::Boolean),
-      tokentype: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      tokentype: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(cfgname: T.unsafe(nil), dicts: T.unsafe(nil), kind: nil, missing_ok: nil, override: nil, replace: nil, tokentype: T.unsafe(nil)); end

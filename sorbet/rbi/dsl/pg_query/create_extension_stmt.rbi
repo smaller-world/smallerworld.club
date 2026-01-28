@@ -10,7 +10,7 @@ class PgQuery::CreateExtensionStmt < Google::Protobuf::AbstractMessage
     params(
       extname: T.nilable(String),
       if_not_exists: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      options: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(extname: nil, if_not_exists: nil, options: T.unsafe(nil)); end

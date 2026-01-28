@@ -9,8 +9,8 @@ class PgQuery::CreateFdwStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       fdwname: T.nilable(String),
-      func_options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      func_options: T.nilable(T::Array[PgQuery::Node]),
+      options: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(fdwname: nil, func_options: T.unsafe(nil), options: T.unsafe(nil)); end

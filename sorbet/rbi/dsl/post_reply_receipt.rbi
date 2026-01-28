@@ -113,8 +113,34 @@ class PostReplyReceipt
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::PostReplyReceipt, Integer, String, T::Enumerable[T.any(::PostReplyReceipt, Integer, String, T::Enumerable[::PostReplyReceipt])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::PostReplyReceipt, Integer, String, T::Enumerable[T.any(::PostReplyReceipt, Integer, String, T::Enumerable[::PostReplyReceipt])])
+      ).returns(T::Array[::PostReplyReceipt])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::PostReplyReceipt]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::PostReplyReceipt]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::PostReplyReceipt]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -265,7 +291,7 @@ class PostReplyReceipt
     sig { returns(::PostReplyReceipt) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

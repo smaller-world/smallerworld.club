@@ -11,7 +11,7 @@ class PgQuery::DropStmt < Google::Protobuf::AbstractMessage
       behavior: T.nilable(T.any(Symbol, Integer)),
       concurrent: T.nilable(T::Boolean),
       missing_ok: T.nilable(T::Boolean),
-      objects: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      objects: T.nilable(T::Array[PgQuery::Node]),
       remove_type: T.nilable(T.any(Symbol, Integer))
     ).void
   end

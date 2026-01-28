@@ -9,8 +9,8 @@ class PgQuery::CreateDomainStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       coll_clause: T.nilable(PgQuery::CollateClause),
-      constraints: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      domainname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      constraints: T.nilable(T::Array[PgQuery::Node]),
+      domainname: T.nilable(T::Array[PgQuery::Node]),
       type_name: T.nilable(PgQuery::TypeName)
     ).void
   end

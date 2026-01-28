@@ -8,7 +8,7 @@
 class PgQuery::AlterFunctionStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      actions: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      actions: T.nilable(T::Array[PgQuery::Node]),
       func: T.nilable(PgQuery::ObjectWithArgs),
       objtype: T.nilable(T.any(Symbol, Integer))
     ).void

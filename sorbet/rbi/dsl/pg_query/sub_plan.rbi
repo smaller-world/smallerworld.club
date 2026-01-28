@@ -8,17 +8,17 @@
 class PgQuery::SubPlan < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       first_col_collation: T.nilable(Integer),
       first_col_type: T.nilable(Integer),
       first_col_typmod: T.nilable(Integer),
-      par_param: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      par_param: T.nilable(T::Array[PgQuery::Node]),
       parallel_safe: T.nilable(T::Boolean),
-      param_ids: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      param_ids: T.nilable(T::Array[PgQuery::Node]),
       per_call_cost: T.nilable(Float),
       plan_id: T.nilable(Integer),
       plan_name: T.nilable(String),
-      set_param: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      set_param: T.nilable(T::Array[PgQuery::Node]),
       startup_cost: T.nilable(Float),
       sub_link_type: T.nilable(T.any(Symbol, Integer)),
       testexpr: T.nilable(PgQuery::Node),

@@ -152,7 +152,10 @@ Rails.application.routes.draw do
   end
   resources :worlds, only: [], export: true do
     member do
-      get :posts
+      # TODO: Remove constraint when Inertia frontend is removed
+      constraints ->(request) { request.format.turbo_stream? } do
+        get :posts
+      end
     end
 
     scope module: :worlds do
@@ -163,9 +166,8 @@ Rails.application.routes.draw do
       resources :activity_coupons,
                 only: :index,
                 export: { namespace: "worldActivityCoupons" }
-      resources :posts, only: [], export: { namespace: "worldPosts" } do
+      resources :posts, only: :index, export: { namespace: "worldPosts" } do
         collection do
-          get :index, constraints: { format: :json }
           get :pinned
         end
       end
@@ -183,14 +185,16 @@ Rails.application.routes.draw do
 
   resources :spaces, except: :destroy, export: true do
     member do
-      get :posts
+      # TODO: Remove constraint when Inertia frontend is removed
+      constraints ->(request) { request.format.turbo_stream? } do
+        get :posts
+      end
     end
 
     scope module: :spaces do
       # == Space posts
-      resources :posts, except: :index, export: { namespace: "spacePosts" } do
+      resources :posts, export: { namespace: "spacePosts" } do
         collection do
-          get :index, constraints: { format: :json }
           get :pinned
         end
       end
@@ -245,16 +249,13 @@ Rails.application.routes.draw do
     end
 
     # == User Universe
-    resource :universe, only: [], export: false do
-      scope export: { namespace: "userUniverse" } do
-        get :worlds
-        get :posts
-      end
+    resource :universe,
+             path: "/world/universe",
+             only: :show,
+             export: { namespace: "userUniverse" } do
+      get :worlds
+      get :posts
     end
-    get "/world/universe",
-        to: "universes#show",
-        as: :universe,
-        export: { namespace: "userUniverse" }
 
     # == User Spaces
     resources(

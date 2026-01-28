@@ -10,7 +10,7 @@ class PgQuery::CallStmt < Google::Protobuf::AbstractMessage
     params(
       funccall: T.nilable(PgQuery::FuncCall),
       funcexpr: T.nilable(PgQuery::FuncExpr),
-      outargs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      outargs: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(funccall: nil, funcexpr: nil, outargs: T.unsafe(nil)); end

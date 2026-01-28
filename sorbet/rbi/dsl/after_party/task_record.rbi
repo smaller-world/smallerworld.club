@@ -128,8 +128,34 @@ class AfterParty::TaskRecord
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::AfterParty::TaskRecord, Integer, String, T::Enumerable[T.any(::AfterParty::TaskRecord, Integer, String, T::Enumerable[::AfterParty::TaskRecord])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::AfterParty::TaskRecord, Integer, String, T::Enumerable[T.any(::AfterParty::TaskRecord, Integer, String, T::Enumerable[::AfterParty::TaskRecord])])
+      ).returns(T::Array[::AfterParty::TaskRecord])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::AfterParty::TaskRecord]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::AfterParty::TaskRecord]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::AfterParty::TaskRecord]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end

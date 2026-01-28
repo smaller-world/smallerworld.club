@@ -89,8 +89,34 @@ class Image
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::Image).void)).returns(::Image) }
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::Image, Integer, String, T::Enumerable[T.any(::Image, Integer, String, T::Enumerable[::Image])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::Image, Integer, String, T::Enumerable[T.any(::Image, Integer, String, T::Enumerable[::Image])])
+      ).returns(T::Array[::Image])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::Image]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::Image]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::Image]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -221,7 +247,7 @@ class Image
     sig { returns(::Image) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

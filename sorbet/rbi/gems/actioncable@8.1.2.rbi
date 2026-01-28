@@ -38,7 +38,7 @@ module ActionCable
   end
 end
 
-# source://actioncable//lib/action_cable/server/base.rb#107
+# source://actioncable//lib/action_cable/channel/base.rb#9
 module ActionCable::Channel; end
 
 # # Action Cable Channel Base
@@ -143,7 +143,6 @@ module ActionCable::Channel; end
 #
 # source://actioncable//lib/action_cable/channel/base.rb#109
 class ActionCable::Channel::Base
-  include ::Sentry::Rails::ActionCableExtensions::Channel::Actions
   include ::ActiveSupport::Callbacks
   include ::ActionCable::Channel::Callbacks
   include ::ActionCable::Channel::PeriodicTimers
@@ -151,13 +150,6 @@ class ActionCable::Channel::Base
   include ::ActionCable::Channel::Naming
   include ::ActionCable::Channel::Broadcasting
   include ::ActiveSupport::Rescuable
-  include ::Sentry::Rails::ActionCableExtensions::Channel::Subscriptions
-  include ::ActionPolicy::Behaviours::PolicyFor
-  include ::ActionPolicy::Behaviours::Scoping
-  include ::ActionPolicy::Behaviour
-  include ::ActionPolicy::Behaviours::Namespaced
-  include ::ActionPolicy::Channel
-  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
   extend ::ActiveSupport::Callbacks::ClassMethods
   extend ::ActiveSupport::DescendantsTracker
   extend ::ActionCable::Channel::Callbacks::ClassMethods
@@ -165,8 +157,6 @@ class ActionCable::Channel::Base
   extend ::ActionCable::Channel::Naming::ClassMethods
   extend ::ActionCable::Channel::Broadcasting::ClassMethods
   extend ::ActiveSupport::Rescuable::ClassMethods
-  extend ::ActionPolicy::Behaviour::ClassMethods
-  extend ::ActionPolicy::Channel::ClassMethods
 
   # @return [Base] a new instance of Base
   #
@@ -1234,7 +1224,6 @@ class ActionCable::Connection::Authorization::UnauthorizedError < ::StandardErro
 #
 # source://actioncable//lib/action_cable/connection/base.rb#57
 class ActionCable::Connection::Base
-  include ::Sentry::Rails::ActionCableExtensions::Connection
   include ::ActionCable::Connection::Identification
   include ::ActionCable::Connection::InternalChannel
   include ::ActionCable::Connection::Authorization
@@ -2869,7 +2858,7 @@ module ActionCable::Server::Worker::ActiveRecordConnectionManagement
   def with_database_connections(&block); end
 end
 
-# source://actioncable//lib/action_cable/subscription_adapter/postgresql.rb#10
+# source://actioncable//lib/action_cable/subscription_adapter/async.rb#6
 module ActionCable::SubscriptionAdapter; end
 
 # source://actioncable//lib/action_cable/subscription_adapter/async.rb#7
@@ -3231,3 +3220,9 @@ ActionCable::VERSION::STRING = T.let(T.unsafe(nil), String)
 
 # source://actioncable//lib/action_cable/gem_version.rb#14
 ActionCable::VERSION::TINY = T.let(T.unsafe(nil), Integer)
+
+class ActiveSupport::TestCase < ::Minitest::Test
+  include ::Turbo::Broadcastable::TestHelper
+  include ::ActionCable::TestHelper
+  include ::Turbo::Streams::StreamName
+end

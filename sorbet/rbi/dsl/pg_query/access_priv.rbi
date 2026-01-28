@@ -6,12 +6,7 @@
 
 
 class PgQuery::AccessPriv < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      cols: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      priv_name: T.nilable(String)
-    ).void
-  end
+  sig { params(cols: T.nilable(T::Array[PgQuery::Node]), priv_name: T.nilable(String)).void }
   def initialize(cols: T.unsafe(nil), priv_name: nil); end
 
   sig { void }

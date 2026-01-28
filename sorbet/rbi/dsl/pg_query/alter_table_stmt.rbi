@@ -8,7 +8,7 @@
 class PgQuery::AlterTableStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      cmds: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      cmds: T.nilable(T::Array[PgQuery::Node]),
       missing_ok: T.nilable(T::Boolean),
       objtype: T.nilable(T.any(Symbol, Integer)),
       relation: T.nilable(PgQuery::RangeVar)

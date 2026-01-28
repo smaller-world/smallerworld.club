@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlterTypeStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      type_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(options: T.nilable(T::Array[PgQuery::Node]), type_name: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(options: T.unsafe(nil), type_name: T.unsafe(nil)); end
 
   sig { void }

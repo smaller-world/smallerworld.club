@@ -1606,6 +1606,7 @@ end
 # See also "Instance Public methods" below ( from #belongs_to ) for more details.
 #
 # === Singular associations (one-to-one)
+#                                     |            |  belongs_to  |
 #   generated methods                 | belongs_to | :polymorphic | has_one
 #   ----------------------------------+------------+--------------+---------
 #   other                             |     X      |      X       |    X
@@ -1618,6 +1619,7 @@ end
 #   other_previously_changed?         |     X      |      X       |
 #
 # === Collection associations (one-to-many / many-to-many)
+#                                     |       |          | has_many
 #   generated methods                 | habtm | has_many | :through
 #   ----------------------------------+-------+----------+----------
 #   others                            |   X   |    X     |    X
@@ -8560,7 +8562,7 @@ end
 #
 # source://activerecord//lib/active_record/base.rb#282
 class ActiveRecord::Base
-  include ::StoreModel::ParentAssignment
+  include ::ActionText::Encryption
   include ::ActiveModel::Validations
   include ::ActiveSupport::Callbacks
   include ::ActiveModel::Validations::HelperMethods
@@ -8626,8 +8628,10 @@ class ActiveRecord::Base
   include ::ActiveStorageValidations
   include ::CounterCulture::Extensions
   include ::CounterCulture::SkipUpdates
-  include ::GlobalID::Identification
-  include ::MoneyRails::ActiveRecord::Monetizable
+  include ::ActiveStorage::Attached::Model
+  include ::ActiveStorage::Reflection::ActiveRecordExtensions
+  include ::ActionText::Attribute
+  include ::Turbo::Broadcastable
   extend ::ActiveModel::Validations::ClassMethods
   extend ::ActiveModel::Naming
   extend ::ActiveModel::Callbacks
@@ -8688,7 +8692,10 @@ class ActiveRecord::Base
   extend ::ActiveRecord::SignedId::ClassMethods
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::CounterCulture::Extensions::ClassMethods
-  extend ::MoneyRails::ActiveRecord::Monetizable::ClassMethods
+  extend ::ActiveStorage::Attached::Model::ClassMethods
+  extend ::ActiveStorage::Reflection::ActiveRecordExtensions::ClassMethods
+  extend ::ActionText::Attribute::ClassMethods
+  extend ::Turbo::Broadcastable::ClassMethods
   extend ::ActiveRecord::SignedId::DeprecateSignedIdVerifierSecret
 
   # source://activerecord//lib/active_record/base.rb#283
@@ -8819,6 +8826,12 @@ class ActiveRecord::Base
 
   # source://activerecord//lib/active_record/base.rb#324
   def aggregate_reflections?; end
+
+  # source://activerecord//lib/active_record/base.rb#336
+  def attachment_reflections; end
+
+  # source://activerecord//lib/active_record/base.rb#336
+  def attachment_reflections?; end
 
   # source://activerecord//lib/active_record/base.rb#310
   def attribute_aliases; end
@@ -9011,6 +9024,9 @@ class ActiveRecord::Base
 
   # source://activerecord//lib/active_record/base.rb#303
   def store_full_sti_class?; end
+
+  # source://activerecord//lib/active_record/base.rb#336
+  def suppressed_turbo_broadcasts?(&_arg0); end
 
   # source://activerecord//lib/active_record/base.rb#302
   def table_name_prefix; end
@@ -9219,6 +9235,15 @@ class ActiveRecord::Base
 
     # source://activerecord//lib/active_record/base.rb#299
     def asynchronous_queries_tracker; end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def attachment_reflections; end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def attachment_reflections=(value); end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def attachment_reflections?; end
 
     # source://activerecord//lib/active_record/base.rb#310
     def attribute_aliases; end
@@ -9688,6 +9713,12 @@ class ActiveRecord::Base
     # source://activerecord//lib/active_record/base.rb#299
     def strict_loading_violation!(owner:, reflection:); end
 
+    # source://activerecord//lib/active_record/base.rb#336
+    def suppressed_turbo_broadcasts; end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def suppressed_turbo_broadcasts=(obj); end
+
     # source://activerecord//lib/active_record/base.rb#302
     def table_name_prefix; end
 
@@ -9779,6 +9810,12 @@ class ActiveRecord::Base
 
     # source://activerecord//lib/active_record/base.rb#324
     def __class_attr_aggregate_reflections=(new_value); end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def __class_attr_attachment_reflections; end
+
+    # source://activerecord//lib/active_record/base.rb#336
+    def __class_attr_attachment_reflections=(new_value); end
 
     # source://activerecord//lib/active_record/base.rb#310
     def __class_attr_attribute_aliases; end
@@ -20769,7 +20806,6 @@ ActiveRecord::ConnectionAdapters::StatementPool::DEFAULT_STATEMENT_LIMIT = T.let
 # source://activerecord//lib/active_record/connection_adapters/abstract/schema_definitions.rb#707
 class ActiveRecord::ConnectionAdapters::Table
   include ::ActiveRecord::ConnectionAdapters::ColumnMethods
-  include ::MoneyRails::ActiveRecord::MigrationExtensions::Table
   extend ::ActiveRecord::ConnectionAdapters::ColumnMethods::ClassMethods
 
   # @return [Table] a new instance of Table
@@ -21047,7 +21083,6 @@ end
 # source://activerecord//lib/active_record/connection_adapters/abstract/schema_definitions.rb#358
 class ActiveRecord::ConnectionAdapters::TableDefinition
   include ::ActiveRecord::ConnectionAdapters::ColumnMethods
-  include ::MoneyRails::ActiveRecord::MigrationExtensions::Table
   extend ::ActiveRecord::ConnectionAdapters::ColumnMethods::ClassMethods
 
   # @return [TableDefinition] a new instance of TableDefinition
@@ -26955,8 +26990,6 @@ class ActiveRecord::FixtureClassNotFound < ::ActiveRecord::ActiveRecordError; en
 #
 # source://activerecord//lib/active_record/fixtures.rb#527
 class ActiveRecord::FixtureSet
-  extend ::GlobalID::FixtureSet
-
   # @return [FixtureSet] a new instance of FixtureSet
   #
   # source://activerecord//lib/active_record/fixtures.rb#713
@@ -28810,9 +28843,6 @@ module ActiveRecord::Marshalling::Methods
   # source://activerecord//lib/active_record/marshalling.rb#24
   def _marshal_dump_7_1; end
 
-  # source://activerecord//lib/active_record/base.rb#336
-  def marshal_dump; end
-
   # source://activerecord//lib/active_record/marshalling.rb#43
   def marshal_load(state); end
 end
@@ -29431,8 +29461,6 @@ end
 #
 # source://activerecord//lib/active_record/migration.rb#570
 class ActiveRecord::Migration
-  include ::MoneyRails::ActiveRecord::MigrationExtensions::SchemaStatements
-
   # @return [Migration] a new instance of Migration
   #
   # source://activerecord//lib/active_record/migration.rb#805
@@ -30614,19 +30642,19 @@ ActiveRecord::Migration::Compatibility::V8_1 = ActiveRecord::Migration::Current
 # source://activerecord//lib/active_record/migration.rb#579
 class ActiveRecord::Migration::Current < ::ActiveRecord::Migration
   # source://activerecord//lib/active_record/migration.rb#588
-  # def change_table(table_name, **options); end
+  def change_table(table_name, **options); end
 
   # source://activerecord//lib/active_record/migration.rb#612
   def compatible_table_definition(t); end
 
   # source://activerecord//lib/active_record/migration.rb#596
-  # def create_join_table(table_1, table_2, **options); end
+  def create_join_table(table_1, table_2, **options); end
 
   # source://activerecord//lib/active_record/migration.rb#580
-  # def create_table(table_name, **options); end
+  def create_table(table_name, **options); end
 
   # source://activerecord//lib/active_record/migration.rb#604
-  # def drop_table(*table_names, **options); end
+  def drop_table(*table_names, **options); end
 end
 
 # This class is used by the schema dumper to format versions information.
@@ -35765,18 +35793,6 @@ end
 module ActiveRecord::Railties::ControllerRuntime::ClassMethods
   # source://activerecord//lib/active_record/railties/controller_runtime.rb#12
   def log_process_action(payload); end
-end
-
-# source://activerecord//lib/active_record/railties/job_checkpoints.rb#5
-module ActiveRecord::Railties::JobCheckpoints
-  # source://activerecord//lib/active_record/railties/job_checkpoints.rb#6
-  def checkpoint!; end
-end
-
-# source://activerecord//lib/active_record/railties/job_runtime.rb#7
-module ActiveRecord::Railties::JobRuntime
-  # source://activerecord//lib/active_record/railties/job_runtime.rb#8
-  def instrument(operation, payload = T.unsafe(nil), &block); end
 end
 
 # Raised when values that executed are out of range.
@@ -42357,8 +42373,6 @@ end
 #
 # source://activerecord//lib/active_record/type/internal/timezone.rb#4
 module ActiveRecord::Type
-  extend ::ActiveRecord::ConnectionAdapters::PostGIS::Type
-
   class << self
     # source://activerecord//lib/active_record/type.rb#49
     def adapter_name_from(model); end
@@ -43230,13 +43244,24 @@ module ActiveRecord::Validations::ClassMethods
   #  SELECT * FROM comments              |
   #  WHERE title = 'My Post'             |
   #                                      |
+  #                                      | # User 2 does the same thing and also
+  #                                      | # infers that their title is unique.
+  #                                      | SELECT * FROM comments
+  #                                      | WHERE title = 'My Post'
   #                                      |
   #  # User 1 inserts their comment.     |
   #  INSERT INTO comments                |
   #  (title, content) VALUES             |
   #  ('My Post', 'hi!')                  |
   #                                      |
+  #                                      | # User 2 does the same thing.
+  #                                      | INSERT INTO comments
+  #                                      | (title, content) VALUES
+  #                                      | ('My Post', 'hello!')
   #                                      |
+  #                                      | # ^^^^^^
+  #                                      | # Boom! We now have a duplicate
+  #                                      | # title!
   #
   # The best way to work around this problem is to add a unique index to the database table using
   # {connection.add_index}[rdoc-ref:ConnectionAdapters::SchemaStatements#add_index].
@@ -43303,7 +43328,7 @@ class ActiveRecord::Validations::UniquenessValidator < ::ActiveModel::EachValida
   def initialize(options); end
 
   # source://activerecord//lib/active_record/validations/uniqueness.rb#20
-  def validate_each(record, name, value); end
+  def validate_each(record, attribute, value); end
 
   private
 

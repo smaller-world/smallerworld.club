@@ -6,12 +6,7 @@
 
 
 class PgQuery::ReassignOwnedStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      newrole: T.nilable(PgQuery::RoleSpec),
-      roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(newrole: T.nilable(PgQuery::RoleSpec), roles: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(newrole: nil, roles: T.unsafe(nil)); end
 
   sig { void }

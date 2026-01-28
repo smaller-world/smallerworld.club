@@ -10,7 +10,7 @@ class PgQuery::CreateAmStmt < Google::Protobuf::AbstractMessage
     params(
       amname: T.nilable(String),
       amtype: T.nilable(String),
-      handler_name: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      handler_name: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(amname: nil, amtype: nil, handler_name: T.unsafe(nil)); end

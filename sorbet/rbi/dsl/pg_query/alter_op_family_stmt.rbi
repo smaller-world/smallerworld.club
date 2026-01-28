@@ -10,8 +10,8 @@ class PgQuery::AlterOpFamilyStmt < Google::Protobuf::AbstractMessage
     params(
       amname: T.nilable(String),
       is_drop: T.nilable(T::Boolean),
-      items: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      opfamilyname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      items: T.nilable(T::Array[PgQuery::Node]),
+      opfamilyname: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(amname: nil, is_drop: nil, items: T.unsafe(nil), opfamilyname: T.unsafe(nil)); end

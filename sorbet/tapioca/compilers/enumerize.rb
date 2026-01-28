@@ -22,7 +22,7 @@ module Tapioca
           }
         end
 
-        sig { override.returns(T::Enumerable[Module]) }
+        sig { override.returns(T::Enumerable[T::Class[ActiveRecord::Base]]) }
         def self.gather_constants
           descendants_of(::ActiveRecord::Base)
             .grep(::Enumerize::Base::ClassMethods)

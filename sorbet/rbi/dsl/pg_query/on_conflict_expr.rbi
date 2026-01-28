@@ -9,12 +9,12 @@ class PgQuery::OnConflictExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
       action: T.nilable(T.any(Symbol, Integer)),
-      arbiter_elems: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      arbiter_elems: T.nilable(T::Array[PgQuery::Node]),
       arbiter_where: T.nilable(PgQuery::Node),
       constraint: T.nilable(Integer),
       excl_rel_index: T.nilable(Integer),
-      excl_rel_tlist: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      on_conflict_set: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      excl_rel_tlist: T.nilable(T::Array[PgQuery::Node]),
+      on_conflict_set: T.nilable(T::Array[PgQuery::Node]),
       on_conflict_where: T.nilable(PgQuery::Node)
     ).void
   end

@@ -8,10 +8,10 @@
 class PgQuery::CreateFunctionStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      funcname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funcname: T.nilable(T::Array[PgQuery::Node]),
       is_procedure: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      parameters: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
+      parameters: T.nilable(T::Array[PgQuery::Node]),
       replace: T.nilable(T::Boolean),
       return_type: T.nilable(PgQuery::TypeName),
       sql_body: T.nilable(PgQuery::Node)

@@ -8,9 +8,9 @@
 class PgQuery::DefineStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      definition: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      defnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
+      definition: T.nilable(T::Array[PgQuery::Node]),
+      defnames: T.nilable(T::Array[PgQuery::Node]),
       if_not_exists: T.nilable(T::Boolean),
       kind: T.nilable(T.any(Symbol, Integer)),
       oldstyle: T.nilable(T::Boolean),

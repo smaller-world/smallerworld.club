@@ -8,14 +8,14 @@
 class PgQuery::TypeName < Google::Protobuf::AbstractMessage
   sig do
     params(
-      array_bounds: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      array_bounds: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
-      names: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      names: T.nilable(T::Array[PgQuery::Node]),
       pct_type: T.nilable(T::Boolean),
       setof: T.nilable(T::Boolean),
       type_oid: T.nilable(Integer),
       typemod: T.nilable(Integer),
-      typmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      typmods: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(array_bounds: T.unsafe(nil), location: nil, names: T.unsafe(nil), pct_type: nil, setof: nil, type_oid: nil, typemod: nil, typmods: T.unsafe(nil)); end

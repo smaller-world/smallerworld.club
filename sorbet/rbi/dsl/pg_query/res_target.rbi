@@ -8,7 +8,7 @@
 class PgQuery::ResTarget < Google::Protobuf::AbstractMessage
   sig do
     params(
-      indirection: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      indirection: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       name: T.nilable(String),
       val: T.nilable(PgQuery::Node)

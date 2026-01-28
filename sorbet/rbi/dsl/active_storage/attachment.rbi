@@ -134,8 +134,34 @@ class ActiveStorage::Attachment
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::ActiveStorage::Attachment, Integer, String, T::Enumerable[T.any(::ActiveStorage::Attachment, Integer, String, T::Enumerable[::ActiveStorage::Attachment])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::ActiveStorage::Attachment, Integer, String, T::Enumerable[T.any(::ActiveStorage::Attachment, Integer, String, T::Enumerable[::ActiveStorage::Attachment])])
+      ).returns(T::Array[::ActiveStorage::Attachment])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::ActiveStorage::Attachment]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::ActiveStorage::Attachment]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::ActiveStorage::Attachment]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -286,7 +312,7 @@ class ActiveStorage::Attachment
     sig { returns(::ActiveStorage::Attachment) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

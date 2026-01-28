@@ -6,12 +6,7 @@
 
 
 class PgQuery::ParseResult < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      stmts: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::RawStmt], T::Array[PgQuery::RawStmt])),
-      version: T.nilable(Integer)
-    ).void
-  end
+  sig { params(stmts: T.nilable(T::Array[PgQuery::RawStmt]), version: T.nilable(Integer)).void }
   def initialize(stmts: T.unsafe(nil), version: nil); end
 
   sig { void }

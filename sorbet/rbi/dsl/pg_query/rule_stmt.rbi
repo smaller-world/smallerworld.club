@@ -8,7 +8,7 @@
 class PgQuery::RuleStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      actions: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      actions: T.nilable(T::Array[PgQuery::Node]),
       event: T.nilable(T.any(Symbol, Integer)),
       instead: T.nilable(T::Boolean),
       relation: T.nilable(PgQuery::RangeVar),

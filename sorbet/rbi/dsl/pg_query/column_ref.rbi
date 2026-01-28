@@ -6,12 +6,7 @@
 
 
 class PgQuery::ColumnRef < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      fields: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      location: T.nilable(Integer)
-    ).void
-  end
+  sig { params(fields: T.nilable(T::Array[PgQuery::Node]), location: T.nilable(Integer)).void }
   def initialize(fields: T.unsafe(nil), location: nil); end
 
   sig { void }

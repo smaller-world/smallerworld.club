@@ -11,7 +11,7 @@ class PgQuery::OnConflictClause < Google::Protobuf::AbstractMessage
       action: T.nilable(T.any(Symbol, Integer)),
       infer: T.nilable(PgQuery::InferClause),
       location: T.nilable(Integer),
-      target_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      target_list: T.nilable(T::Array[PgQuery::Node]),
       where_clause: T.nilable(PgQuery::Node)
     ).void
   end

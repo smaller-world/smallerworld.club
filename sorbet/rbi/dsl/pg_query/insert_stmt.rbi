@@ -8,11 +8,11 @@
 class PgQuery::InsertStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      cols: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      cols: T.nilable(T::Array[PgQuery::Node]),
       on_conflict_clause: T.nilable(PgQuery::OnConflictClause),
       override: T.nilable(T.any(Symbol, Integer)),
       relation: T.nilable(PgQuery::RangeVar),
-      returning_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      returning_list: T.nilable(T::Array[PgQuery::Node]),
       select_stmt: T.nilable(PgQuery::Node),
       with_clause: T.nilable(PgQuery::WithClause)
     ).void

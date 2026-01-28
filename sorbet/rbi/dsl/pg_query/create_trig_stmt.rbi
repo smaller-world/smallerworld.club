@@ -8,19 +8,19 @@
 class PgQuery::CreateTrigStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      columns: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
+      columns: T.nilable(T::Array[PgQuery::Node]),
       constrrel: T.nilable(PgQuery::RangeVar),
       deferrable: T.nilable(T::Boolean),
       events: T.nilable(Integer),
-      funcname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      funcname: T.nilable(T::Array[PgQuery::Node]),
       initdeferred: T.nilable(T::Boolean),
       isconstraint: T.nilable(T::Boolean),
       relation: T.nilable(PgQuery::RangeVar),
       replace: T.nilable(T::Boolean),
       row: T.nilable(T::Boolean),
       timing: T.nilable(Integer),
-      transition_rels: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      transition_rels: T.nilable(T::Array[PgQuery::Node]),
       trigname: T.nilable(String),
       when_clause: T.nilable(PgQuery::Node)
     ).void

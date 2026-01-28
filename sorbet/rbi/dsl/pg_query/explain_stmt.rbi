@@ -6,12 +6,7 @@
 
 
 class PgQuery::ExplainStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      query: T.nilable(PgQuery::Node)
-    ).void
-  end
+  sig { params(options: T.nilable(T::Array[PgQuery::Node]), query: T.nilable(PgQuery::Node)).void }
   def initialize(options: T.unsafe(nil), query: nil); end
 
   sig { void }

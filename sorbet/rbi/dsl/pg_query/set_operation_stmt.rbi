@@ -9,10 +9,10 @@ class PgQuery::SetOperationStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       all: T.nilable(T::Boolean),
-      col_collations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      col_types: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      col_typmods: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      group_clauses: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      col_collations: T.nilable(T::Array[PgQuery::Node]),
+      col_types: T.nilable(T::Array[PgQuery::Node]),
+      col_typmods: T.nilable(T::Array[PgQuery::Node]),
+      group_clauses: T.nilable(T::Array[PgQuery::Node]),
       larg: T.nilable(PgQuery::Node),
       op: T.nilable(T.any(Symbol, Integer)),
       rarg: T.nilable(PgQuery::Node)

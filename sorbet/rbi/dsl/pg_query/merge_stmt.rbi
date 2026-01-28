@@ -9,9 +9,9 @@ class PgQuery::MergeStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       join_condition: T.nilable(PgQuery::Node),
-      merge_when_clauses: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      merge_when_clauses: T.nilable(T::Array[PgQuery::Node]),
       relation: T.nilable(PgQuery::RangeVar),
-      returning_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      returning_list: T.nilable(T::Array[PgQuery::Node]),
       source_relation: T.nilable(PgQuery::Node),
       with_clause: T.nilable(PgQuery::WithClause)
     ).void

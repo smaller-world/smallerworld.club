@@ -28,8 +28,11 @@ bin/setup
 
 ### jan 2026
 
-- [ ] use [maquina components](https://maquina.app/documentation/components/)
-      for the UI?
+- [ ] finish ios + android apps
+- [ ] start all over with a new rails 8 repo, solid cable/queue, bun, etc.
+- [ ] separate marsha puzzle into its own repo
+- [-] use [maquina components](https://maquina.app/documentation/components/)
+  for the UI?
 
 ### oct 2025
 

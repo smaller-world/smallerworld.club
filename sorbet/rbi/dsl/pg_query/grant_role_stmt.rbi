@@ -9,11 +9,11 @@ class PgQuery::GrantRoleStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       behavior: T.nilable(T.any(Symbol, Integer)),
-      granted_roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      grantee_roles: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      granted_roles: T.nilable(T::Array[PgQuery::Node]),
+      grantee_roles: T.nilable(T::Array[PgQuery::Node]),
       grantor: T.nilable(PgQuery::RoleSpec),
       is_grant: T.nilable(T::Boolean),
-      opt: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      opt: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(behavior: nil, granted_roles: T.unsafe(nil), grantee_roles: T.unsafe(nil), grantor: nil, is_grant: nil, opt: T.unsafe(nil)); end

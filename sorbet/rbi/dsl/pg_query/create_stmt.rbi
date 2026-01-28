@@ -9,16 +9,16 @@ class PgQuery::CreateStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       access_method: T.nilable(String),
-      constraints: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      constraints: T.nilable(T::Array[PgQuery::Node]),
       if_not_exists: T.nilable(T::Boolean),
-      inh_relations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      inh_relations: T.nilable(T::Array[PgQuery::Node]),
       of_typename: T.nilable(PgQuery::TypeName),
       oncommit: T.nilable(T.any(Symbol, Integer)),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       partbound: T.nilable(PgQuery::PartitionBoundSpec),
       partspec: T.nilable(PgQuery::PartitionSpec),
       relation: T.nilable(PgQuery::RangeVar),
-      table_elts: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      table_elts: T.nilable(T::Array[PgQuery::Node]),
       tablespacename: T.nilable(String)
     ).void
   end

@@ -11,7 +11,6 @@
 # source://activejob//lib/active_job/gem_version.rb#3
 module ActiveJob
   extend ::ActiveSupport::Autoload
-  extend ::ActiveJob::EnqueueAfterTransactionCommit::ActiveJobMethods
 
   class << self
     # source://activejob//lib/active_job/queue_adapter.rb#7
@@ -173,7 +172,6 @@ ActiveJob::Arguments::WITH_INDIFFERENT_ACCESS_KEY = T.let(T.unsafe(nil), String)
 #
 # source://activejob//lib/active_job/base.rb#63
 class ActiveJob::Base
-  include ::Sentry::Rails::ActiveJobExtensions
   include ::ActiveJob::Core
   include ::ActiveJob::QueueAdapter
   include ::ActiveJob::QueueName
@@ -187,8 +185,6 @@ class ActiveJob::Base
   include ::ActiveJob::Instrumentation
   include ::ActiveJob::Logging
   include ::ActiveJob::ExecutionState
-  include ::ActiveRecord::Railties::JobRuntime
-  include ::ActiveJob::EnqueueAfterTransactionCommit
   include ::ActiveJob::TestHelper::TestQueueAdapter
   extend ::ActiveJob::Core::ClassMethods
   extend ::ActiveJob::QueueAdapter::ClassMethods
@@ -492,7 +488,7 @@ module ActiveJob::Callbacks
     def _execute_callbacks; end
 
     # source://activejob//lib/active_job/callbacks.rb#24
-    def _run_execute_callbacks(&block); end
+    def _run_execute_callbacks; end
 
     # source://activejob//lib/active_job/callbacks.rb#24
     def _run_execute_callbacks!(&block); end
@@ -671,7 +667,6 @@ end
 #
 # source://activejob//lib/active_job/continuable.rb#13
 module ActiveJob::Continuable
-  include ::ActiveRecord::Railties::JobCheckpoints
   extend ::ActiveSupport::Concern
   include GeneratedInstanceMethods
 
@@ -2007,7 +2002,18 @@ ActiveJob::QueueAdapter::ClassMethods::QUEUE_ADAPTER_METHODS = T.let(T.unsafe(ni
 #
 # === Backends Features
 #
+#   |                   | Async | Queues | Delayed    | Priorities | Timeout | Retries |
 #   |-------------------|-------|--------|------------|------------|---------|---------|
+#   | Backburner        | Yes   | Yes    | Yes        | Yes        | Job     | Global  |
+#   | Delayed Job       | Yes   | Yes    | Yes        | Job        | Global  | Global  |
+#   | Que               | Yes   | Yes    | Yes        | Job        | No      | Job     |
+#   | queue_classic     | Yes   | Yes    | Yes*       | No         | No      | No      |
+#   | Resque            | Yes   | Yes    | Yes (Gem)  | Queue      | Global  | Yes     |
+#   | Sidekiq           | Yes   | Yes    | Yes        | Queue      | No      | Job     |
+#   | Sneakers          | Yes   | Yes    | No         | Queue      | Queue   | No      |
+#   | Active Job Async  | Yes   | Yes    | Yes        | No         | No      | No      |
+#   | Active Job Inline | No    | Yes    | N/A        | N/A        | N/A     | N/A     |
+#   | Active Job Test   | No    | Yes    | N/A        | N/A        | N/A     | N/A     |
 #
 # ==== Async
 #

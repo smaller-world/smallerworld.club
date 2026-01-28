@@ -140,8 +140,34 @@ class ActiveStorage::VariantRecord
     end
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::ActiveStorage::VariantRecord, Integer, String, T::Enumerable[T.any(::ActiveStorage::VariantRecord, Integer, String, T::Enumerable[::ActiveStorage::VariantRecord])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::ActiveStorage::VariantRecord, Integer, String, T::Enumerable[T.any(::ActiveStorage::VariantRecord, Integer, String, T::Enumerable[::ActiveStorage::VariantRecord])])
+      ).returns(T::Array[::ActiveStorage::VariantRecord])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::ActiveStorage::VariantRecord]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::ActiveStorage::VariantRecord]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::ActiveStorage::VariantRecord]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -292,7 +318,7 @@ class ActiveStorage::VariantRecord
     sig { returns(::ActiveStorage::VariantRecord) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do

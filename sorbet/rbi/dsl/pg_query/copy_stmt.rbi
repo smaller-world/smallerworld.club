@@ -8,11 +8,11 @@
 class PgQuery::CopyStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      attlist: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      attlist: T.nilable(T::Array[PgQuery::Node]),
       filename: T.nilable(String),
       is_from: T.nilable(T::Boolean),
       is_program: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       query: T.nilable(PgQuery::Node),
       relation: T.nilable(PgQuery::RangeVar),
       where_clause: T.nilable(PgQuery::Node)

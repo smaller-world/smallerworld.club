@@ -9,9 +9,9 @@ class PgQuery::SelectStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       all: T.nilable(T::Boolean),
-      distinct_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      from_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      group_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      distinct_clause: T.nilable(T::Array[PgQuery::Node]),
+      from_clause: T.nilable(T::Array[PgQuery::Node]),
+      group_clause: T.nilable(T::Array[PgQuery::Node]),
       group_distinct: T.nilable(T::Boolean),
       having_clause: T.nilable(PgQuery::Node),
       into_clause: T.nilable(PgQuery::IntoClause),
@@ -19,14 +19,14 @@ class PgQuery::SelectStmt < Google::Protobuf::AbstractMessage
       limit_count: T.nilable(PgQuery::Node),
       limit_offset: T.nilable(PgQuery::Node),
       limit_option: T.nilable(T.any(Symbol, Integer)),
-      locking_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      locking_clause: T.nilable(T::Array[PgQuery::Node]),
       op: T.nilable(T.any(Symbol, Integer)),
       rarg: T.nilable(PgQuery::SelectStmt),
-      sort_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      target_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      values_lists: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      sort_clause: T.nilable(T::Array[PgQuery::Node]),
+      target_list: T.nilable(T::Array[PgQuery::Node]),
+      values_lists: T.nilable(T::Array[PgQuery::Node]),
       where_clause: T.nilable(PgQuery::Node),
-      window_clause: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      window_clause: T.nilable(T::Array[PgQuery::Node]),
       with_clause: T.nilable(PgQuery::WithClause)
     ).void
   end

@@ -8,7 +8,7 @@
 class PgQuery::CreateRoleStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       role: T.nilable(String),
       stmt_type: T.nilable(T.any(Symbol, Integer))
     ).void

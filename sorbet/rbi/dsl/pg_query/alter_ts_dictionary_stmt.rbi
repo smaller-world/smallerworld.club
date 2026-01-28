@@ -6,12 +6,7 @@
 
 
 class PgQuery::AlterTSDictionaryStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      dictname: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
-    ).void
-  end
+  sig { params(dictname: T.nilable(T::Array[PgQuery::Node]), options: T.nilable(T::Array[PgQuery::Node])).void }
   def initialize(dictname: T.unsafe(nil), options: T.unsafe(nil)); end
 
   sig { void }

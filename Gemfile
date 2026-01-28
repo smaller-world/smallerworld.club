@@ -17,21 +17,10 @@ gem "pg", "~> 1.5"
 # Perform full text search with Postgres
 gem "pg_search", "~> 2.3"
 
-# Use RGeo geometry types
-gem "rgeo", "~> 3.0"
-gem "rgeo-geojson", "~> 2.2"
-gem "rgeo-activerecord", "~> 8.0"
-
 # Enable additional operators and utilities for Active Record with PostgreSQL
 gem "active_record_extended",
     github: "GeorgeKaraszi/ActiveRecordExtended",
     ref: "fe0e094"
-
-# Use PostGIS extensions for PostgreSQL
-gem "activerecord-postgis-adapter", "~> 11.1"
-
-# Use enhanced PostgreSQL adapter for Action Cable
-gem "actioncable-enhanced-postgresql-adapter", "~> 1.0"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 7.1"
@@ -45,6 +34,14 @@ gem "puma", "~> 7.1"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[windows jruby]
 
+# Use Good Job as the backend for Active Job
+gem "good_job", "~> 4.7.0"
+
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# gem "solid_cache"
+# gem "solid_queue"
+# gem "solid_cable"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -57,9 +54,6 @@ gem "ruby-vips", "~> 2.2", require: false
 
 # Use S3 as the backend for Active Storage
 gem "aws-sdk-s3", "~> 1.208", require: false
-
-# Use Good Job as the backend for Active Job
-gem "good_job", "~> 4.7.0"
 
 # Send emails with Mailjet
 gem "mailjet", "~> 1.7"
@@ -87,14 +81,6 @@ gem "validate_url", "~> 1.0"
 gem "date_validator", "~> 0.12.0"
 gem "active_storage_validations", "~> 0.9.6"
 
-# Introspect program at runtime with Pry
-gem "pry"
-gem "pry-rails"
-gem "pry-rescue"
-gem "pry-sorbet", require: false
-gem "pry-stack_explorer", require: false
-gem "break", require: false
-
 # Load environment variables from .env
 gem "dotenv", "~> 2.7", require: false
 
@@ -102,13 +88,13 @@ gem "dotenv", "~> 2.7", require: false
 gem "addressable", "~> 2.8"
 
 # Handle soft deletions with Discard
-gem "discard", "~> 1.2"
+gem "discard", "~> 1.4"
 
 # Typecheck code at runtime
 gem "sorbet-runtime"
 
 # Use Enumerize to enumerate attributes
-gem "enumerize", "~> 2.6"
+gem "enumerize", "~> 2.8"
 
 # Use Action Policy to authorize actions
 gem "action_policy", "~> 0.6.5"
@@ -120,14 +106,14 @@ gem "vite_rails", "~> 3.0"
 gem "inertia_rails", "~> 3.10.0"
 
 # Use Premailer to inline CSS into email templates
-gem "premailer-rails", "~> 1.12"
+gem "premailer-rails"
 
 # Use Sentry for error reporting
-gem "sentry-rails", "~> 5.9"
+gem "sentry-rails"
 gem "stackprof"
 
 # Run post-deploy tasks with after_party
-gem "after_party", "~> 1.11"
+gem "after_party"
 
 # Handle CORS requests
 gem "rack-cors", "~> 2.0"
@@ -136,10 +122,10 @@ gem "rack-cors", "~> 2.0"
 gem "counter_culture", "~> 3.5"
 
 # Serialize JSON with MultiJSON
-gem "multi_json", "~> 1.15"
+gem "multi_json"
 
 # Access YAML records
-gem "frozen_record", "~> 0.27.1"
+gem "frozen_record"
 
 # Fast JSON serialization
 gem "oj_serializers", "~> 2.0"
@@ -201,6 +187,9 @@ gem "device_detector", "~> 1.1"
 # Generate QR codes
 gem "rqrcode", "~> 3.2"
 
+# Build HTML and SVG view components in Ruby
+gem "phlex-rails", "~> 2.4"
+
 group :development, :test do
   # Debug code with debug
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -217,15 +206,13 @@ group :development, :test do
   gem "js_from_routes", "~> 4.0"
 
   # Use Rubocop to lint code
-  gem "rubocop", "~> 1.74", require: false
-  gem "rexml", ">= 3.3.6", require: false
+  gem "rubocop", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-sorbet", require: false
   gem "rubocop-rails-omakase", require: false
   gem "rubocop-capybara", require: false
   gem "ruby-lsp", require: false
-  # gem "rbs", require: false
 end
 
 group :development do
@@ -250,7 +237,7 @@ group :development do
   # Typecheck code
   gem "sorbet", require: false
   gem "spoom", require: false
-  gem "tapioca", "~> 0.17.7", require: false
+  gem "tapioca", require: false
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"

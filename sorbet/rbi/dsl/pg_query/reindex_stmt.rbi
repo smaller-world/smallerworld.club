@@ -10,7 +10,7 @@ class PgQuery::ReindexStmt < Google::Protobuf::AbstractMessage
     params(
       kind: T.nilable(T.any(Symbol, Integer)),
       name: T.nilable(String),
-      params: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      params: T.nilable(T::Array[PgQuery::Node]),
       relation: T.nilable(PgQuery::RangeVar)
     ).void
   end

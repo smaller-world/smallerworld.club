@@ -10,11 +10,11 @@ class PgQuery::RTEPermissionInfo < Google::Protobuf::AbstractMessage
     params(
       check_as_user: T.nilable(Integer),
       inh: T.nilable(T::Boolean),
-      inserted_cols: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer])),
+      inserted_cols: T.nilable(T::Array[Integer]),
       relid: T.nilable(Integer),
       required_perms: T.nilable(Integer),
-      selected_cols: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer])),
-      updated_cols: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer]))
+      selected_cols: T.nilable(T::Array[Integer]),
+      updated_cols: T.nilable(T::Array[Integer])
     ).void
   end
   def initialize(check_as_user: nil, inh: nil, inserted_cols: T.unsafe(nil), relid: nil, required_perms: nil, selected_cols: T.unsafe(nil), updated_cols: T.unsafe(nil)); end

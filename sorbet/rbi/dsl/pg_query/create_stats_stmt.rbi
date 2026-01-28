@@ -8,11 +8,11 @@
 class PgQuery::CreateStatsStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      defnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      exprs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      defnames: T.nilable(T::Array[PgQuery::Node]),
+      exprs: T.nilable(T::Array[PgQuery::Node]),
       if_not_exists: T.nilable(T::Boolean),
-      relations: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      stat_types: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      relations: T.nilable(T::Array[PgQuery::Node]),
+      stat_types: T.nilable(T::Array[PgQuery::Node]),
       stxcomment: T.nilable(String),
       transformed: T.nilable(T::Boolean)
     ).void

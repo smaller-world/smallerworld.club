@@ -8,8 +8,8 @@
 class PgQuery::RowExpr < Google::Protobuf::AbstractMessage
   sig do
     params(
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      colnames: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
+      colnames: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
       row_format: T.nilable(T.any(Symbol, Integer)),
       row_typeid: T.nilable(Integer),

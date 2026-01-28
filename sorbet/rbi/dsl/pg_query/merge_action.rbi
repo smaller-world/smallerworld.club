@@ -12,8 +12,8 @@ class PgQuery::MergeAction < Google::Protobuf::AbstractMessage
       match_kind: T.nilable(T.any(Symbol, Integer)),
       override: T.nilable(T.any(Symbol, Integer)),
       qual: T.nilable(PgQuery::Node),
-      target_list: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      update_colnos: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      target_list: T.nilable(T::Array[PgQuery::Node]),
+      update_colnos: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(command_type: nil, match_kind: nil, override: nil, qual: nil, target_list: T.unsafe(nil), update_colnos: T.unsafe(nil)); end

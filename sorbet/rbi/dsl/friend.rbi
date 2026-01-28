@@ -90,8 +90,34 @@ class Friend
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::Friend).void)).returns(::Friend) }
     def create_or_find_by!(attributes, &block); end
 
+    sig do
+      params(
+        records: T.any(::Friend, Integer, String, T::Enumerable[T.any(::Friend, Integer, String, T::Enumerable[::Friend])])
+      ).returns(Integer)
+    end
+    def delete(*records); end
+
+    sig { returns(Integer) }
+    def delete_all; end
+
+    sig { params(args: T.untyped).returns(Integer) }
+    def delete_by(args); end
+
+    sig do
+      params(
+        records: T.any(::Friend, Integer, String, T::Enumerable[T.any(::Friend, Integer, String, T::Enumerable[::Friend])])
+      ).returns(T::Array[::Friend])
+    end
+    def destroy(*records); end
+
     sig { returns(T::Array[::Friend]) }
     def destroy_all; end
+
+    sig { returns(T::Array[::Friend]) }
+    def destroy_all; end
+
+    sig { params(args: T.untyped).returns(T::Array[::Friend]) }
+    def destroy_by(args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -222,7 +248,7 @@ class Friend
     sig { returns(::Friend) }
     def fourth!; end
 
-    sig { returns(T::Array[T.untyped]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -1034,16 +1060,16 @@ class Friend
     sig { void }
     def deprecated_user_id_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def emoji=(value); end
 
     sig { returns(T::Boolean) }
     def emoji?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1052,28 +1078,28 @@ class Friend
     sig { returns(T::Boolean) }
     def emoji_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def emoji_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def emoji_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def emoji_was; end
 
     sig { void }
@@ -1214,16 +1240,16 @@ class Friend
     sig { void }
     def invitation_id_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(::String) }
     def name; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: ::String).returns(::String) }
     def name=(value); end
 
     sig { returns(T::Boolean) }
     def name?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1232,28 +1258,28 @@ class Friend
     sig { returns(T::Boolean) }
     def name_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def name_was; end
 
     sig { void }
@@ -1349,16 +1375,16 @@ class Friend
     sig { void }
     def paused_since_will_change!; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number; end
 
-    sig { params(value: T.untyped).returns(T.untyped) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def phone_number=(value); end
 
     sig { returns(T::Boolean) }
     def phone_number?; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1367,28 +1393,28 @@ class Friend
     sig { returns(T::Boolean) }
     def phone_number_came_from_user?; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def phone_number_change; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def phone_number_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_in_database; end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def phone_number_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def phone_number_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_previously_was; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T.nilable(::String)) }
     def phone_number_was; end
 
     sig { void }
@@ -1475,7 +1501,7 @@ class Friend
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_deprecated_user_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_emoji; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1499,7 +1525,7 @@ class Friend
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_invitation_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1517,7 +1543,7 @@ class Friend
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_paused_since?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_phone_number; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

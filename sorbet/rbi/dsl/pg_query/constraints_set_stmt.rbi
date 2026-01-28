@@ -6,12 +6,7 @@
 
 
 class PgQuery::ConstraintsSetStmt < Google::Protobuf::AbstractMessage
-  sig do
-    params(
-      constraints: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      deferred: T.nilable(T::Boolean)
-    ).void
-  end
+  sig { params(constraints: T.nilable(T::Array[PgQuery::Node]), deferred: T.nilable(T::Boolean)).void }
   def initialize(constraints: T.unsafe(nil), deferred: nil); end
 
   sig { void }

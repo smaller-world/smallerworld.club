@@ -15,7 +15,7 @@ class PgQuery::JsonFuncExpr < Google::Protobuf::AbstractMessage
       on_error: T.nilable(PgQuery::JsonBehavior),
       op: T.nilable(T.any(Symbol, Integer)),
       output: T.nilable(PgQuery::JsonOutput),
-      passing: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      passing: T.nilable(T::Array[PgQuery::Node]),
       pathspec: T.nilable(PgQuery::Node),
       quotes: T.nilable(T.any(Symbol, Integer)),
       wrapper: T.nilable(T.any(Symbol, Integer))

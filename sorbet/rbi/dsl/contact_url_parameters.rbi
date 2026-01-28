@@ -6,15 +6,19 @@
 
 
 class ContactUrlParameters
-  sig { returns(T.nilable(::String)) }
-  def body; end
+  include GeneratedAttributeMethods
 
-  sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-  def body=(value); end
+  module GeneratedAttributeMethods
+    sig { returns(T.nilable(::String)) }
+    def body; end
 
-  sig { returns(T.nilable(::String)) }
-  def subject; end
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def body=(value); end
 
-  sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-  def subject=(value); end
+    sig { returns(T.nilable(::String)) }
+    def subject; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def subject=(value); end
+  end
 end

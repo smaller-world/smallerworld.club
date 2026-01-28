@@ -10,7 +10,7 @@ class PgQuery::CreateSchemaStmt < Google::Protobuf::AbstractMessage
     params(
       authrole: T.nilable(PgQuery::RoleSpec),
       if_not_exists: T.nilable(T::Boolean),
-      schema_elts: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      schema_elts: T.nilable(T::Array[PgQuery::Node]),
       schemaname: T.nilable(String)
     ).void
   end

@@ -9,10 +9,10 @@ class PgQuery::WindowFunc < Google::Protobuf::AbstractMessage
   sig do
     params(
       aggfilter: T.nilable(PgQuery::Node),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       inputcollid: T.nilable(Integer),
       location: T.nilable(Integer),
-      run_condition: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      run_condition: T.nilable(T::Array[PgQuery::Node]),
       winagg: T.nilable(T::Boolean),
       wincollid: T.nilable(Integer),
       winfnoid: T.nilable(Integer),

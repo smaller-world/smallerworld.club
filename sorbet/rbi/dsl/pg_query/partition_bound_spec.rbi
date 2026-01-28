@@ -9,13 +9,13 @@ class PgQuery::PartitionBoundSpec < Google::Protobuf::AbstractMessage
   sig do
     params(
       is_default: T.nilable(T::Boolean),
-      listdatums: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      listdatums: T.nilable(T::Array[PgQuery::Node]),
       location: T.nilable(Integer),
-      lowerdatums: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      lowerdatums: T.nilable(T::Array[PgQuery::Node]),
       modulus: T.nilable(Integer),
       remainder: T.nilable(Integer),
       strategy: T.nilable(String),
-      upperdatums: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      upperdatums: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(is_default: nil, listdatums: T.unsafe(nil), location: nil, lowerdatums: T.unsafe(nil), modulus: nil, remainder: nil, strategy: nil, upperdatums: T.unsafe(nil)); end

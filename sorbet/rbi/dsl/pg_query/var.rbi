@@ -13,7 +13,7 @@ class PgQuery::Var < Google::Protobuf::AbstractMessage
       varcollid: T.nilable(Integer),
       varlevelsup: T.nilable(Integer),
       varno: T.nilable(Integer),
-      varnullingrels: T.nilable(T.any(Google::Protobuf::RepeatedField[Integer], T::Array[Integer])),
+      varnullingrels: T.nilable(T::Array[Integer]),
       vartype: T.nilable(Integer),
       vartypmod: T.nilable(Integer),
       xpr: T.nilable(PgQuery::Node)

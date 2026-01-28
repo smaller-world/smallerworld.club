@@ -8,22 +8,22 @@
 class PgQuery::Aggref < Google::Protobuf::AbstractMessage
   sig do
     params(
-      aggargtypes: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      aggargtypes: T.nilable(T::Array[PgQuery::Node]),
       aggcollid: T.nilable(Integer),
-      aggdirectargs: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      aggdistinct: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      aggdirectargs: T.nilable(T::Array[PgQuery::Node]),
+      aggdistinct: T.nilable(T::Array[PgQuery::Node]),
       aggfilter: T.nilable(PgQuery::Node),
       aggfnoid: T.nilable(Integer),
       aggkind: T.nilable(String),
       agglevelsup: T.nilable(Integer),
       aggno: T.nilable(Integer),
-      aggorder: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      aggorder: T.nilable(T::Array[PgQuery::Node]),
       aggsplit: T.nilable(T.any(Symbol, Integer)),
       aggstar: T.nilable(T::Boolean),
       aggtransno: T.nilable(Integer),
       aggtype: T.nilable(Integer),
       aggvariadic: T.nilable(T::Boolean),
-      args: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      args: T.nilable(T::Array[PgQuery::Node]),
       inputcollid: T.nilable(Integer),
       location: T.nilable(Integer),
       xpr: T.nilable(PgQuery::Node)

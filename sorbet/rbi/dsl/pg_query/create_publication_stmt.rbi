@@ -9,9 +9,9 @@ class PgQuery::CreatePublicationStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       for_all_tables: T.nilable(T::Boolean),
-      options: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      options: T.nilable(T::Array[PgQuery::Node]),
       pubname: T.nilable(String),
-      pubobjects: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node]))
+      pubobjects: T.nilable(T::Array[PgQuery::Node])
     ).void
   end
   def initialize(for_all_tables: nil, options: T.unsafe(nil), pubname: nil, pubobjects: T.unsafe(nil)); end

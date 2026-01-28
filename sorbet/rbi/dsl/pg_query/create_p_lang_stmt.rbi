@@ -8,11 +8,11 @@
 class PgQuery::CreatePLangStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
-      plhandler: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      plinline: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      plhandler: T.nilable(T::Array[PgQuery::Node]),
+      plinline: T.nilable(T::Array[PgQuery::Node]),
       plname: T.nilable(String),
       pltrusted: T.nilable(T::Boolean),
-      plvalidator: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      plvalidator: T.nilable(T::Array[PgQuery::Node]),
       replace: T.nilable(T::Boolean)
     ).void
   end

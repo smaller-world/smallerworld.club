@@ -9,8 +9,8 @@ class PgQuery::FieldStore < Google::Protobuf::AbstractMessage
   sig do
     params(
       arg: T.nilable(PgQuery::Node),
-      fieldnums: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
-      newvals: T.nilable(T.any(Google::Protobuf::RepeatedField[PgQuery::Node], T::Array[PgQuery::Node])),
+      fieldnums: T.nilable(T::Array[PgQuery::Node]),
+      newvals: T.nilable(T::Array[PgQuery::Node]),
       resulttype: T.nilable(Integer),
       xpr: T.nilable(PgQuery::Node)
     ).void
