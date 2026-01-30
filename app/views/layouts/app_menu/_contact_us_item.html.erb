@@ -1,6 +1,6 @@
 <li role="presentation">
   <%= button_to(
-    sms_contact_us_path,
+    [:contact_us, action: :sms],
     role: "menuitem",
     data: {
       action: "dropdown#toggle",

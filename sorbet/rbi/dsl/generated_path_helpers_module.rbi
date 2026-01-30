@@ -88,9 +88,6 @@ module GeneratedPathHelpersModule
   def friend_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def friends_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def good_job_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -101,6 +98,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def invitation_user_world_friend_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def invite_user_world_friends_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def invite_world_friends_path(*args); end

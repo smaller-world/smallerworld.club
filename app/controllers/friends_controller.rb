@@ -4,23 +4,10 @@
 class FriendsController < ApplicationController
   # == Filters ==
 
-  before_action :authenticate_user!, only: %i[create invite destroy]
+  before_action :authenticate_user!, only: %i[create destroy]
   before_action :authenticate_friend!, only: :notification_settings
 
   # == Actions ==
-
-  # GET /@:world_id/friends/invite
-  def invite
-    respond_to do |format|
-      format.html do
-        @world = find_world
-        @qr_code = RQRCode::QRCode.new(
-          shortlinked.join_world_url(token: @world.generate_join_token),
-        )
-      end
-    end
-  end
-
 
   # GET /friends/:id/notification_settings[?friend_token=...]
   def notification_settings
@@ -31,42 +18,6 @@ class FriendsController < ApplicationController
           "notificationSettings" =>
             FriendNotificationSettingsSerializer.one(current_friend),
         })
-      end
-    end
-  end
-
-
-  # POST /friends
-  def create
-    respond_to do |format|
-      format.html do
-        current_user = authenticate_user!
-        friend_params = params.expect(friend: %i[
-          join_token
-          name
-          emoji
-          time_zone
-        ])
-        join_token = friend_params.delete(:join_token)
-        @world = World.find_by_join_token(join_token) or
-          raise "Invalid join token"
-        @friend = @world.friends.build(
-          phone_number: current_user.phone_number,
-          **friend_params,
-        )
-        if @friend.save
-          redirect_to(
-            world_path(
-              @world,
-              friend_token: @friend.access_token,
-              emulate_native_app: 1,
-            ),
-            notice: "you're in!",
-            status: :see_other,
-          )
-        else
-          render "worlds/join", status: :unprocessable_content
-        end
       end
     end
   end
@@ -88,17 +39,6 @@ class FriendsController < ApplicationController
             status: :unprocessable_content,
           )
         end
-      end
-    end
-  end
-
-  # DELETE /friends/:id
-  def destroy
-    respond_to do |format|
-      format.turbo_stream do
-        @friend = find_friend
-        authorize!(@friend)
-        @friend.destroy
       end
     end
   end

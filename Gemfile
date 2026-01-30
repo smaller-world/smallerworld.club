@@ -244,6 +244,7 @@ group :development do
 
   # Display better error pages during development
   gem "better_errors"
+  gem "binding_of_caller"
 
   # Annotate models and routes
   gem "annotaterb", require: false

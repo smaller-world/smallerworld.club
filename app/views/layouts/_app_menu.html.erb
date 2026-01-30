@@ -35,7 +35,7 @@
         </li>
         <li role="presentation">
           <%= button_to(
-            destroy_session_path,
+            [:session, action: :destroy],
             role: "menuitem",
             form_class: "flex flex-col",
             class: "text-destructive-600 dark:text-destructive-400",
@@ -50,7 +50,7 @@
       <% else %>
         <li role="presentation">
           <%= link_to(
-            new_session_path,
+            [:session, action: :new],
             role: "menuitem",
             data: {
               action: "dropdown#toggle",

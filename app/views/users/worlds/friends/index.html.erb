@@ -6,7 +6,7 @@
   ) %>
 
   <%= link_to(
-    [@world, :friends, action: :invite],
+    [:user, :world, :friends, action: :invite],
     class: "btn btn-outline self-center",
   ) do %>
     <%= icon "user-plus", class: "size-5" %>

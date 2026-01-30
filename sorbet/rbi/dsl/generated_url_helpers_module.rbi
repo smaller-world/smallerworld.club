@@ -88,9 +88,6 @@ module GeneratedUrlHelpersModule
   def friend_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def friends_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def good_job_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -101,6 +98,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def invitation_user_world_friend_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def invite_user_world_friends_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def invite_world_friends_url(*args); end

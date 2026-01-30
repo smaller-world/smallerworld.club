@@ -26,13 +26,16 @@ module ApplicationHelper
     end
   end
 
-  sig { params(label: String, url: String, options: T.untyped).returns(String) }
-  def back_link_to(label, url, **options)
-    class_name = options.delete(:class)
+  sig do
+    params(label: String, options: T.untyped, html_options: T.untyped)
+      .returns(String)
+  end
+  def back_link_to(label, options, **html_options)
+    link_class = html_options.delete(:class)
     link_to(
-      url,
-      class: class_names("btn native:hidden", class_name),
-      **options,
+      options,
+      class: class_names("btn native:hidden", link_class),
+      **html_options,
     ) do
       icon("arrow-uturn-left", variant: :micro, class: "size-5") +
         tag.span("back to #{label}", class: "overflow-ellipsis")

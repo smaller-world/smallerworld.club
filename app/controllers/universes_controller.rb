@@ -5,6 +5,7 @@ class UniversesController < ApplicationController
   # == Constants ==
 
   WORLDS_PER_PAGE = 24
+  # WORLDS_PER_PAGE = 1
 
   # == Filters ==
 

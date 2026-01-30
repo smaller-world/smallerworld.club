@@ -5,6 +5,7 @@
   form: {
     id: "pagination",
     class: "self-center overflow-anchor-none",
+    data: { turbo_stream: true },
   },
   params: {
     emulate_native_app: 1,
@@ -13,7 +14,6 @@
   data: {
     controller: "click-on-appear",
     action: "click-on-appear:appear->click-on-appear#click",
-    turbo_stream: true,
   },
 ) do %>
   <span class="text-xs">see more posts...</span>

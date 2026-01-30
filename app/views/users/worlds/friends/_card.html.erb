@@ -47,7 +47,7 @@
           <% if false # TODO: Implement edit friend %>
             <li role="presentation">
               <%= link_to(
-              edit_post_path(post, emulate_native_app: 1),
+              [friend, action: :edit, emulate_native_app: 1],
               role: "menuitem",
               data: {
                 action: "dropdown#toggle",

@@ -7,7 +7,7 @@
 
       <% if (native_device = current_native_device) %>
         <%= button_to(
-          test_native_device_path(native_device),
+          [native_device, action: :test],
           id: dom_id(native_device, :test),
           class: "btn btn-action",
           form: {

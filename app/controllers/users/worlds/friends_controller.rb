@@ -18,7 +18,6 @@ module Users::Worlds
             @friends = @world.friends
               .with_push_registrations
               .reverse_chronological
-            render "friends/index"
           else
             pending_invitations = @world.invitations.pending.count
             render(
@@ -40,6 +39,18 @@ module Users::Worlds
           render(json: {
             friends: UserWorldFriendProfileSerializer.many(friends),
           })
+        end
+      end
+    end
+
+    # GET /world/friends/invite
+    def invite
+      respond_to do |format|
+        format.html do
+          @world = current_world!
+          @qr_code = RQRCode::QRCode.new(
+            shortlinked.join_world_url(token: @world.generate_join_token),
+          )
         end
       end
     end
@@ -109,14 +120,52 @@ module Users::Worlds
       end
     end
 
+    # POST /world/friends
+    def create
+      respond_to do |format|
+        format.html do
+          current_user = authenticate_user!
+          friend_params = params.expect(friend: %i[
+            join_token
+            name
+            emoji
+            time_zone
+          ])
+          join_token = friend_params.delete(:join_token)
+          @world = World.find_by_join_token(join_token) or
+            raise "Invalid join token"
+          @friend = @world.friends.build(
+            phone_number: current_user.phone_number,
+            **friend_params,
+          )
+          if @friend.save
+            redirect_to(
+              world_path(
+                @world,
+                friend_token: @friend.access_token,
+                emulate_native_app: 1,
+              ),
+              notice: "you're in!",
+              status: :see_other,
+            )
+          else
+            render "worlds/join", status: :unprocessable_content
+          end
+        end
+      end
+    end
+
     # DELETE /world/friends/:id
     def destroy
+      @friend = find_friend
+      authorize!(@friend)
       respond_to do |format|
         format.json do
-          friend = find_friend
-          authorize!(friend)
-          friend.destroy!
+          @friend.destroy!
           render(json: {})
+        end
+        format.turbo_stream do
+          @friend.destroy
         end
       end
     end

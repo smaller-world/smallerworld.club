@@ -1,16 +1,16 @@
 <%= button_to(
-  [:universe, :worlds],
+  [:universe, action: :worlds],
   method: :get,
   class: "btn",
   form: {
     id: "pagination",
     class: "self-center overflow-anchor-none",
+    data: { turbo_stream: true },
   },
   params: { page: },
   data: {
     controller: "click-on-appear",
-    action: "click-on-appear:appear->click-on-appear#click",
-    turbo_stream: true,
+    # action: "click-on-appear:appear->click-on-appear#click",
   },
 ) do %>
   <span class="text-xs">see more worlds...</span>
