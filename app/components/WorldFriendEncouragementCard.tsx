@@ -203,6 +203,7 @@ const EncouragementForm: FC<EncouragementFormProps> = ({
   const { getInputProps, submit, submitting, values } = useForm({
     action: routes.friendEncouragements.create,
     params: {
+      id: currentFriend.id,
       query: {
         friend_token: currentFriend.access_token,
       },
