@@ -5,7 +5,7 @@ module Friends
   class EncouragementsController < ApplicationController
     # == Actions ==
 
-    # POST /friends/encouragements?friend_token=...
+    # POST /friends/:id/encouragements?friend_token=...
     def create
       respond_to do |format|
         format.json do
