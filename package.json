@@ -57,7 +57,7 @@
     "@types/hotwired__turbo": "^8.0.4",
     "@wordpress/wordcount": "^4.34.0",
     "autosize-input": "^1.0.2",
-    "axios": "^1.7.9",
+    "axios": "^1.13.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "embla-carousel": "^8.6.0",
