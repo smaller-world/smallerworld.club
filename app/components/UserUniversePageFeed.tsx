@@ -86,7 +86,7 @@ const UserUniversePageFeed: FC<UserUniversePageFeedProps> = ({
                   {...{ post }}
                   focus={queryParams.post_id === post.id}
                   actions={
-                    userWorld && post.world_id === userWorld.id ? (
+                    post.world_id === userWorld?.id ? (
                       <WorldPostCardAuthorActions
                         world={userWorld}
                         {...{ post }}

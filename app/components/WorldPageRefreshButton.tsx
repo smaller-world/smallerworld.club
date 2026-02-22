@@ -69,11 +69,7 @@ const WorldPageRefreshButton: FC<WorldPageRefreshButtonProps> = ({
         void mutatePosts().then((pages) => {
           const latestFirstPage = first(pages);
           const latestFirstPost = first(latestFirstPage?.posts);
-          if (
-            firstPost &&
-            latestFirstPost &&
-            firstPost.id === latestFirstPost.id
-          ) {
+          if (firstPost && firstPost.id === latestFirstPost?.id) {
             toast.success("no new posts", {
               description: "you're all caught up :)",
             });
