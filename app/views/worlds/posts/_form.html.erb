@@ -36,11 +36,11 @@
         <% if title_placeholder %>
           <div class="post_form_emoji_hint mb-1 ml-3 flex items-center gap-1.5">
             <%= icon(
-            "arrow-bend-left-down",
-            library: :phosphor,
-            fill: "currentColor",
-            class: "size-5 mt-3",
-          ) %>
+              "arrow-bend-left-down",
+              library: :phosphor,
+              fill: "currentColor",
+              class: "size-5 mt-3",
+            ) %>
 
             <span class="font-cursive">tag your post with an emoji</span>
           </div>
@@ -83,7 +83,7 @@
       </div>
 
       <%= render(
-      "forms/rich_text_area",
+        "forms/rich_text_area",
         form:,
         field: :body,
         label: nil,
@@ -100,6 +100,15 @@
         },
       ) %>
     </div>
+
+    <%#
+      = render(
+        "forms/image_field",
+        form:,
+        field: :images,
+        max_files: 4,
+      )
+    %>
 
     <%= render(
       "forms/field_wrapper",

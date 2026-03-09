@@ -1,0 +1,102 @@
+<%- class_name = local_assigns.delete(:class) -%>
+<%- attached = form.object.send(field) -%>
+<%- has_error = form.object.errors.key?(field) -%>
+<%- center = local_assigns.delete(:center) -%>
+<%- accept = local_assigns.delete(:accept) -%>
+<%- multiple = attached.respond_to?(:attachments) -%>
+<%- attachments = multiple ? attached.attachments : [attached.attachment].compact -%>
+
+<%- if local_assigns.key?(:max_files) -%>
+  <%- max_files = local_assigns.delete(:max_files) - attachments.length %>
+<%- end -%>
+
+<%= render(
+  "forms/field_wrapper",
+  class: class_names("image_field", class_name),
+  error_class: class_names("text-center": center),
+  **local_assigns,
+) do %>
+  <%= form.hidden_field field, value: "", multiple: %>
+
+  <% attachments.each do |attachment| %>
+    <%= tag.div(
+      class: class_names(
+        "image_field_input_container",
+        "mx-auto" => center,
+      ),
+      data: {
+        controller: "filepond haptic-bridge",
+        action: class_names(
+          "filepond:uploaded->haptic-bridge#vibrate",
+        ),
+        filepond_direct_upload_url_value: rails_direct_uploads_path,
+        filepond_file_url_template_value: filepond_file_path(":signed_id"),
+        busy_reporter_target: "busyable",
+        turbo_permanent: true,
+      },
+    ) do %>
+      <%= form.hidden_field(
+        field,
+        value: attachment.signed_id,
+        data: {
+          max_files:,
+          filepond_target: "input",
+          error: has_error,
+        }.compact_blank,
+        aria: {
+          describedby: (form.field_id(name, "error") if has_error),
+        },
+        accept:,
+        multiple:,
+      ) %>
+
+      <template data-filepond-target="idleLabelTemplate">
+        <div class="flex flex-col items-center gap-1.5">
+          <%= icon "arrow-up-tray", variant: :micro, class: "size-5 text-shade-600" %>
+          drag & drop your image here
+        </div>
+      </template>
+    <% end %>
+  <% end %>
+
+  <% if max_files.is_a?(Integer) && attachments.length < max_files %>
+    <%= tag.div(
+      class: class_names(
+        "image_field_input_container",
+        "mx-auto" => center,
+      ),
+      data: {
+        controller: "filepond haptic-bridge",
+        action: class_names(
+          "filepond:uploaded->haptic-bridge#vibrate",
+        ),
+        filepond_direct_upload_url_value: rails_direct_uploads_path,
+        filepond_file_url_template_value: filepond_file_path(":signed_id"),
+        busy_reporter_target: "busyable",
+        turbo_permanent: true,
+      },
+    ) do %>
+      <%= form.hidden_field(
+        field,
+        value: nil,
+        data: {
+          max_files:,
+          filepond_target: "input",
+          error: has_error,
+        }.compact_blank,
+        aria: {
+          describedby: (form.field_id(name, "error") if has_error),
+        },
+        accept:,
+        multiple:,
+      ) %>
+
+      <template data-filepond-target="idleLabelTemplate">
+        <div class="flex flex-col items-center gap-1.5">
+          <%= icon "arrow-up-tray", variant: :micro, class: "size-5 text-shade-600" %>
+          drag & drop your image here
+        </div>
+      </template>
+    <% end %>
+  <% end %>
+<% end %>

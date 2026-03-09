@@ -39,9 +39,9 @@
 ## Structure & References
 
 - Frontend, TypeScript, and Rails model conventions: `app/AGENTS.md`.
-- Supabase business-intelligence workflows: `docs/Business Intelligence.md`.
+- Supabase business-intelligence workflows: `docs/business_intelligence.md`.
 - Core data model (User/Friend/World relationships):
-  `docs/Users vs Friends vs Worlds.md`.
+  `docs/users_vs_friends_vs_worlds.md`.
 - Add nested `AGENTS.md` files in subdirectories that need overrides—the nearest
   file to the change takes precedence.
 
@@ -50,10 +50,10 @@
 When working on unfamiliar areas, **consult `docs/` before implementing**:
 
 - **Business intelligence / Supabase queries**: Read
-  `docs/Business Intelligence.md` for privacy guardrails, timezone handling,
+  `docs/business_intelligence.md` for privacy guardrails, timezone handling,
   query patterns, and exclusion rules.
 - **User relationships / notifications / permissions**: Read
-  `docs/Users vs Friends vs Worlds.md` to understand the federated World model
+  `docs/users_vs_friends_vs_worlds.md` to understand the federated World model
   and avoid common pitfalls (e.g., linking Users ↔ Friends via `phone_number`,
   not by comparing World ownership).
 - **Feature plans**: Check `docs/` for existing implementation plans that

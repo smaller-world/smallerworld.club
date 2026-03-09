@@ -1,5 +1,5 @@
 <%- class_name = local_assigns.delete(:class) -%>
-<%- attachment = form.object.send(field) -%>
+<%- attached = form.object.send(field) -%>
 <%- has_error = form.object.errors.key?(field) -%>
 <%- center = local_assigns.delete(:center) -%>
 <%- accept = local_assigns.delete(:accept) -%>
@@ -7,9 +7,11 @@
 <%= render(
   "forms/field_wrapper",
   class: class_names("icon_field", class_name),
-  error_class: "text-center",
+  error_class: class_names("text-center": center),
   **local_assigns,
 ) do %>
+  <%= form.hidden_field field, value: "" %>
+
   <%= tag.div(
     class: class_names(
       "icon_field_input_container",
@@ -31,11 +33,9 @@
       turbo_permanent: true,
     },
   ) do %>
-    <%= form.hidden_field field, value: "" %>
-
     <%= form.hidden_field(
       field,
-      value: (attachment.signed_id if attachment.attached?),
+      value: (attached.signed_id if attached.attached?),
       data: {
         filepond_target: "input",
         error: has_error,

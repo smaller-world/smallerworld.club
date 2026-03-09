@@ -44,9 +44,7 @@ class FilepondController extends Controller<HTMLElement> {
   static values = {
     directUploadUrl: String,
     fileUrlTemplate: String,
-    aspectRatio: {
-      type: String,
-    },
+    aspectRatio: String,
   };
   declare readonly directUploadUrlValue: string;
   declare readonly aspectRatioValue: string;
@@ -155,10 +153,6 @@ class FilepondController extends Controller<HTMLElement> {
     const pond = create(this.inputTarget, {
       files,
       labelIdle: this.idleLabelTemplateTarget.innerHTML,
-      imageCropAspectRatio: this.aspectRatioValue || undefined,
-      imageEditEditor: this.#editor,
-      imageEditAllowEdit: true,
-      imageEditInstantEdit: true,
       imageTransformOutputMimeType: "image/png",
       stylePanelLayout: "compact circle",
       styleLoadIndicatorPosition: "center bottom",
@@ -166,13 +160,18 @@ class FilepondController extends Controller<HTMLElement> {
       styleButtonRemoveItemPosition: "left bottom",
       styleButtonProcessItemPosition: "right bottom",
       credits: false,
-      beforeAddFile: (file) => {
-        pond.setOptions({
-          imageEditAllowEdit:
-            !!this.aspectRatioValue && file.source instanceof File,
-        });
-        return true;
-      },
+      ...(!!this.aspectRatioValue && {
+        imageCropAspectRatio: this.aspectRatioValue,
+        imageEditEditor: this.#editor,
+        imageEditInstantEdit: true,
+        beforeAddFile: (file) => {
+          pond.setOptions({
+            imageEditAllowEdit:
+              !!this.aspectRatioValue && file.source instanceof File,
+          });
+          return true;
+        },
+      }),
       server: {
         process: (fieldName, file, metadata, load, error, progress) => {
           const uploader = new DirectUpload(

@@ -17,6 +17,10 @@
     }
   }
 
+  .filepond--image-preview {
+    @apply bg-shade-200 dark:bg-shade-900;
+  }
+
   .filepond--drop-label {
     @apply cursor-pointer;
 

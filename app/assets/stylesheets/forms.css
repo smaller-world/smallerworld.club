@@ -169,3 +169,22 @@
     @apply w-11 p-2 text-center;
   }
 }
+
+@layer components {
+  .image_field_input_container {
+    @apply mt-1 size-36;
+    @apply rounded-app-icon border-2 border-dashed border-input-border;
+
+    &:not(:has(> .filepond--root)) {
+      @apply animate-pulse bg-skeleton;
+    }
+
+    .filepond--root[data-style-panel-layout~="circle"] {
+      @apply rounded-app-icon!;
+
+      .filepond--image-preview-wrapper {
+        @apply rounded-app-icon!;
+      }
+    }
+  }
+}
