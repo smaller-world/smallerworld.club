@@ -15,11 +15,13 @@ import {
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { clsx } from "clsx";
-import { type FC, useMemo, useState } from "react";
+import { type FC, useEffect, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
+import TurnstileWidget, { type BoundTurnstileObject } from "react-turnstile";
 import { toast } from "sonner";
 
 import { PhoneIcon, SignInIcon } from "~/helpers/icons";
+import { getMeta } from "~/helpers/meta";
 import { mustParsePhoneFromParts, parsePhoneFromParts } from "~/helpers/phone";
 import routes from "~/helpers/routes";
 import { fetchRoute } from "~/helpers/routes/fetch";
@@ -37,6 +39,17 @@ const LoginForm: FC<LoginFormProps> = ({
   ...otherProps
 }) => {
   const [loginCodeRequested, setLoginCodeRequested] = useState(false);
+
+  // == Turnstile
+  const turnstileRef = useRef<BoundTurnstileObject | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState<
+    string | null | undefined
+  >();
+  useEffect(() => {
+    const key = getMeta("turnstile-site-key");
+    setTurnstileSiteKey(key ?? null);
+  });
 
   const initialValues = {
     country_code: "+1",
@@ -69,8 +82,8 @@ const LoginForm: FC<LoginFormProps> = ({
     if (loginCodeRequested) {
       return !!phoneNumber && !!login_code;
     }
-    return !!phoneNumber;
-  }, [loginCodeRequested, values]);
+    return !!phoneNumber && (turnstileSiteKey === null || !!turnstileToken);
+  }, [loginCodeRequested, turnstileSiteKey, turnstileToken, values]);
 
   return (
     <Box
@@ -104,6 +117,7 @@ const LoginForm: FC<LoginFormProps> = ({
                 login_request: {
                   phone_number: phoneNumber,
                 },
+                "cf-turnstile-response": turnstileToken,
               },
             },
           ).then(({ loginRequest }) => {
@@ -130,9 +144,18 @@ const LoginForm: FC<LoginFormProps> = ({
             }
           });
         }
-        void submission.finally(() => {
-          setSubmitting(false);
-        });
+        void submission
+          .catch(() => {
+            // Reset widget after a failed send-code attempt so the token
+            // isn't reused (Cloudflare tokens are single-use).
+            if (!loginCodeRequested) {
+              setTurnstileToken(null);
+              turnstileRef.current?.reset();
+            }
+          })
+          .finally(() => {
+            setSubmitting(false);
+          });
       })}
       className={clsx("LoginForm", className)}
       {...otherProps}
@@ -178,6 +201,8 @@ const LoginForm: FC<LoginFormProps> = ({
                   <ActionIcon
                     onClick={() => {
                       setLoginCodeRequested(false);
+                      setTurnstileToken(null);
+                      turnstileRef.current?.reset();
                     }}
                     style={transitionStyle}
                   >
@@ -205,6 +230,20 @@ const LoginForm: FC<LoginFormProps> = ({
             </Input.Wrapper>
           )}
         </Transition>
+        {!loginCodeRequested && !!turnstileSiteKey && (
+          <Box
+            component={TurnstileWidget}
+            sitekey={turnstileSiteKey}
+            onSuccess={setTurnstileToken}
+            onExpire={() => {
+              setTurnstileToken(null);
+            }}
+            onError={() => {
+              setTurnstileToken(null);
+              toast.error("anti-bot check failed");
+            }}
+          />
+        )}
         <Stack gap={6}>
           <Button
             variant="filled"

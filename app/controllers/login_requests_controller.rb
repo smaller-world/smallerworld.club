@@ -5,7 +5,8 @@ class LoginRequestsController < ApplicationController
   # == Filters ==
 
   before_action :require_stored_login_request!, only: :complete
-  rate_limit to: 10,
+  before_action :verify_turnstile!, only: :create
+  rate_limit to: 3,
              within: 3.minutes,
              only: :create,
              with: :handle_rate_limit_exceeded
@@ -68,6 +69,42 @@ class LoginRequestsController < ApplicationController
     LoginRequest.find(session.fetch(:login_request_id))
   end
 
+  sig { returns(T.nilable(String)) }
+  def turnstile_token
+    params["cf-turnstile-response"]
+  end
+
+  sig { void }
+  def verify_turnstile!
+    return unless TurnstileService.enabled?
+
+    if (token = turnstile_token)
+      verified = TurnstileService.verify(
+        token:,
+        remoteip: request.remote_ip,
+        idempotency_key: request.request_id,
+      )
+      return if verified
+    end
+    render_turnstile_error
+  end
+
+  sig { void }
+  def render_turnstile_error
+    message = "please complete the anti-bot check and try again."
+    respond_to do |format|
+      format.json do
+        render(json: { error: message }, status: :unprocessable_content)
+      end
+      format.html do
+        @login_request = LoginRequest.new(
+          phone_number: params.dig(:login_request, :phone_number),
+        )
+        flash.now[:alert] = message
+        render("sessions/new", status: :unprocessable_content)
+      end
+    end
+  end
 
   # == Filter handlers ==
 

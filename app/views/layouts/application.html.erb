@@ -59,6 +59,12 @@
 
     <%= vite_client_tag %>
 
+    <%# == Turnstile == %>
+
+    <% if (turnstile = Turnstile.settings) %>
+      <meta name="turnstile-site-key" content="<%= turnstile.site_key %>">
+    <% end %>
+
     <%# == Other head content == %>
 
     <% if title = page_title %>
@@ -74,5 +80,7 @@
     <main class="app_main"><%= render "layouts/flash" %><%= yield %></main>
 
     <div id="notifications"></div>
+
+    <%= yield :scripts %>
   </body>
 <% end %>

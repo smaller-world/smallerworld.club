@@ -85,6 +85,8 @@ pre-commit:
     check-prettier:
       run: npx prettier --check --cache {staged_files}
       glob: "*.{js,jsx,ts,tsx,css,md,html,json,yaml,yml}"
+      exclude:
+        - CLAUDE.md
       tags: js
     check-eslint:
       run:

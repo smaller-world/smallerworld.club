@@ -9,7 +9,12 @@
     // == Language
     "module": "ESNext",
     "target": "ESNext",
-    "types": ["node", "vite/client", "unplugin-icons/types/react"],
+    "types": [
+      "node",
+      "vite/client",
+      "unplugin-icons/types/react",
+      "cloudflare-turnstile"
+    ],
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
 

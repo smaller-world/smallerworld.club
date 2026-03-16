@@ -34,6 +34,7 @@ import PostDraftController from "./post_draft_controller";
 import PostVisibilityFieldHiddenFromNoticeController from "./post_visibility_field_hidden_from_notice_controller";
 import ToastController from "./toast_controller";
 import TooltipController from "./tooltip_controller";
+import TurnstileController from "./turnstile_controller";
 
 // == Native bridge components ==
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -81,3 +82,4 @@ application.register(
   PostVisibilityFieldHiddenFromNoticeController,
 );
 application.register("post-draft", PostDraftController);
+application.register("turnstile", TurnstileController);

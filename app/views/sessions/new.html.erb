@@ -1,3 +1,21 @@
+<%- content_for :head do -%>
+  <link rel="preconnect" href="https://challenges.cloudflare.com">
+<%- end -%>
+
+<%- content_for :scripts do -%>
+  <script>
+    window.onTurnstileAPIReady = function() {
+      window.dispatchEvent(new Event("turnstile:api-ready"));
+    };
+  </script>
+
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileAPIReady"
+    async
+    defer
+  ></script>
+<%- end -%>
+
 <div class="page_container flex max-w-sm flex-1 flex-col justify-center gap-5">
   <%= vite_image_tag "assets/images/logo.png", class: "size-14 self-center" %>
 
@@ -11,6 +29,16 @@
     url: (session_path if @login_request.persisted?),
     method: :post,
     class: "flex flex-col gap-6",
+    data: {
+      controller: "form",
+      action: (
+        class_names(
+          "turnstile:success@window->form#enable",
+          "turnstile:expired@window->form#disable",
+          "turnstile:error@window->form#disable",
+        ) if TurnstileService.enabled?
+      ),
+    }
   ) do |form| %>
     <%= render(
       "forms/phone_number_field",
@@ -28,10 +56,22 @@
       },
     ) %>
 
-    <%= form.button class: "btn btn-action self-center" do %>
-      <%= icon "device-phone-mobile", variant: :micro, class: "size-5" %>
-      <span>send login code</span>
-    <% end %>
+    <div class="flex flex-col gap-2">
+      <% if (turnstile = Turnstile.settings) %>
+        <div
+          data-controller="turnstile"
+          data-turnstile-site-key-value="<%= turnstile.site_key %>"
+        ></div>
+      <% end %>
+
+      <%= form.button(
+        class: "btn btn-action self-center",
+        disabled: TurnstileService.enabled?,
+      ) do %>
+        <%= icon "device-phone-mobile", variant: :micro, class: "size-5" %>
+        <span>send login code</span>
+      <% end %>
+    </div>
   <% end %>
 
   <div

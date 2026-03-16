@@ -37,6 +37,7 @@ module SmallerWorld
     require "admin"
     require "fullstory"
     require "clarity"
+    require "turnstile"
     require "amplitude"
     require "contact_us"
     require "service_worker_app"

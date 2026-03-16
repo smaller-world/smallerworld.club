@@ -7,6 +7,18 @@ export default class FormController extends Controller<HTMLFormElement> {
     void this.element.requestSubmit(this.#submitButton);
   }
 
+  enable(): void {
+    if (this.#submitButton) {
+      this.#submitButton.disabled = false;
+    }
+  }
+
+  disable(): void {
+    if (this.#submitButton) {
+      this.#submitButton.disabled = true;
+    }
+  }
+
   // == Helpers ==
 
   get #submitButton(): HTMLButtonElement | null {

@@ -3,7 +3,7 @@
 
 require "sorbet-runtime"
 
-module Canny
+module Turnstile
   extend T::Sig
 
   class Settings < T::Struct
@@ -11,10 +11,8 @@ module Canny
 
     # == Properties ==
 
-    const :app_id, String
-    const :private_key, String
-    const :feature_requests_board_token, String
-    const :bugs_board_token, String
+    const :site_key, String
+    const :secret_key, String
   end
 
   # == Methods ==
@@ -25,10 +23,8 @@ module Canny
 
     @_settings = if (credentials = self.credentials)
       Settings.new(
-        app_id: credentials.app_id!,
-        private_key: credentials.private_key!,
-        feature_requests_board_token: credentials.feature_requests_board_token!,
-        bugs_board_token: credentials.bugs_board_token!,
+        site_key: credentials.site_key!,
+        secret_key: credentials.secret_key!,
       )
     end
   end
@@ -37,6 +33,6 @@ module Canny
 
   sig { returns(T.untyped) }
   def self.credentials
-    Rails.application.credentials.canny
+    Rails.application.credentials.turnstile
   end
 end
