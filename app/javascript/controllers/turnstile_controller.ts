@@ -1,7 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
-
 export default class TurnstileController extends Controller<HTMLElement> {
   // == Values ==
 
@@ -14,18 +12,20 @@ export default class TurnstileController extends Controller<HTMLElement> {
 
   #widgetId: string | null = null;
   #onApiReady: (() => void) | null = null;
+  #onBeforeCache: (() => void) | null = null;
 
   // == Lifecycle ==
 
   connect(): void {
     super.connect();
+    this.#onBeforeCache = () => this.destroy();
+    document.addEventListener("turbo:before-cache", this.#onBeforeCache);
     if (typeof turnstile !== "undefined") {
       this.#renderWidget();
     } else {
       this.#onApiReady = () => this.#renderWidget();
       window.addEventListener("turnstile:api-ready", this.#onApiReady);
     }
-    addCleanupAction(this, "destroy");
   }
 
   disconnect(): void {
@@ -36,6 +36,10 @@ export default class TurnstileController extends Controller<HTMLElement> {
   // == Actions ==
 
   destroy(): void {
+    if (this.#onBeforeCache) {
+      document.removeEventListener("turbo:before-cache", this.#onBeforeCache);
+      this.#onBeforeCache = null;
+    }
     if (this.#onApiReady) {
       window.removeEventListener("turnstile:api-ready", this.#onApiReady);
       this.#onApiReady = null;
