@@ -5,6 +5,8 @@ check:
       files: &modified-files >-
         git ls-files -mo --exclude-standard &&
           git diff --name-only --cached
+      exclude:
+        - CLAUDE.md
       run: npx prettier --check {files}
       glob: "*.{js,jsx,ts,tsx,css,md,html,json,yaml,yml}"
       tags: js
