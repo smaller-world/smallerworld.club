@@ -134,7 +134,7 @@ class NativeDevice
     def delete_all; end
 
     sig { params(args: T.untyped).returns(Integer) }
-    def delete_by(args); end
+    def delete_by(*args); end
 
     sig do
       params(
@@ -150,7 +150,7 @@ class NativeDevice
     def destroy_all; end
 
     sig { params(args: T.untyped).returns(T::Array[::NativeDevice]) }
-    def destroy_by(args); end
+    def destroy_by(*args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -192,7 +192,7 @@ class NativeDevice
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: ::NativeDevice).void
       ).void
     end
@@ -203,7 +203,7 @@ class NativeDevice
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
+        order: T.any(Symbol, T::Array[Symbol])
       ).returns(T::Enumerator[::NativeDevice])
     end
     def find_each(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
@@ -215,7 +215,7 @@ class NativeDevice
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: T::Array[::NativeDevice]).void
       ).void
     end
@@ -226,8 +226,8 @@ class NativeDevice
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
-      ).returns(T::Enumerator[T::Enumerator[::NativeDevice]])
+        order: T.any(Symbol, T::Array[Symbol])
+      ).returns(T::Enumerator[T::Array[::NativeDevice]])
     end
     def find_in_batches(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
 
@@ -312,7 +312,7 @@ class NativeDevice
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped,
         block: T.proc.params(object: PrivateRelation).void
       ).void
@@ -325,7 +325,7 @@ class NativeDevice
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped
       ).returns(::ActiveRecord::Batches::BatchEnumerator)
     end
@@ -604,6 +604,10 @@ class NativeDevice
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
+
+    sig { returns(PrivateAssociationRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
 
     sig { returns(PrivateAssociationRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
@@ -1282,6 +1286,10 @@ class NativeDevice
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end
+
+    sig { returns(PrivateRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
 
     sig { returns(PrivateRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateRelation) }

@@ -11,7 +11,7 @@ module InertiaRails
     extend T::Sig
     extend T::Helpers
 
-    requires_ancestor { ActionController::Base }
+    # requires_ancestor { ActionController::Base }
 
     # == Included
     remove_instance_variable :@_included_block

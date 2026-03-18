@@ -8,6 +8,7 @@
 #
 #  id           :uuid             not null, primary key
 #  completed_at :datetime
+#  ip_address   :inet
 #  login_code   :string           not null
 #  phone_number :string           not null
 #  created_at   :datetime         not null
@@ -15,7 +16,8 @@
 #
 # Indexes
 #
-#  index_login_requests_on_completed_at  (completed_at)
+#  index_login_requests_on_completed_at               (completed_at)
+#  index_login_requests_on_created_at_and_ip_address  (created_at,ip_address)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class LoginRequest < ApplicationRecord
@@ -24,6 +26,7 @@ class LoginRequest < ApplicationRecord
   # == Constants ==
 
   EXPIRATION_DURATION = 5.minutes
+  DAILY_RATE_LIMIT = 7
 
   # == Attributes ==
 
@@ -61,6 +64,12 @@ class LoginRequest < ApplicationRecord
   validates :phone_number,
             presence: true,
             phone: { possible: true, types: :mobile, extensions: false }
+  validates :ip_address,
+            presence: true,
+            exclusion: {
+              in: ->(request) { ip_addresses_exceeding_daily_rate_limit },
+              message: "is blacklisted",
+            }
 
   # == Callbacks ==
 
@@ -115,6 +124,15 @@ class LoginRequest < ApplicationRecord
   sig { returns(Phonelib::Phone) }
   def phone
     Phonelib.parse(phone_number)
+  end
+
+  sig { returns(T::Enumerable[IPAddr]) }
+  def self.ip_addresses_exceeding_daily_rate_limit
+    where(created_at: (1.day.ago)..)
+      .where.not(ip_address: nil)
+      .group(:ip_address)
+      .having("COUNT(*) >= ?", DAILY_RATE_LIMIT)
+      .pluck(:ip_address)
   end
 
   # == Helpers ==

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_28_013545) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_18_184304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,11 +28,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_013545) do
 
   create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "body"
-    t.timestamp "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.string "name", null: false
     t.uuid "record_id", null: false
     t.string "record_type", null: false
-    t.timestamp "updated_at", precision: 6, null: false
+    t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
@@ -252,10 +252,12 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_013545) do
   create_table "login_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "completed_at", precision: nil
     t.datetime "created_at", null: false
+    t.inet "ip_address"
     t.string "login_code", null: false
     t.string "phone_number", null: false
     t.datetime "updated_at", null: false
     t.index ["completed_at"], name: "index_login_requests_on_completed_at"
+    t.index ["created_at", "ip_address"], name: "index_login_requests_on_created_at_and_ip_address"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

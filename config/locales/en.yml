@@ -29,6 +29,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      login_request:
+        ip_address: ip address
   datetime:
     distance_in_words:
       about_x_months:

@@ -123,7 +123,7 @@ class LoginRequest
     def delete_all; end
 
     sig { params(args: T.untyped).returns(Integer) }
-    def delete_by(args); end
+    def delete_by(*args); end
 
     sig do
       params(
@@ -139,7 +139,7 @@ class LoginRequest
     def destroy_all; end
 
     sig { params(args: T.untyped).returns(T::Array[::LoginRequest]) }
-    def destroy_by(args); end
+    def destroy_by(*args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -181,7 +181,7 @@ class LoginRequest
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: ::LoginRequest).void
       ).void
     end
@@ -192,7 +192,7 @@ class LoginRequest
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
+        order: T.any(Symbol, T::Array[Symbol])
       ).returns(T::Enumerator[::LoginRequest])
     end
     def find_each(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
@@ -204,7 +204,7 @@ class LoginRequest
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: T::Array[::LoginRequest]).void
       ).void
     end
@@ -215,8 +215,8 @@ class LoginRequest
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
-      ).returns(T::Enumerator[T::Enumerator[::LoginRequest]])
+        order: T.any(Symbol, T::Array[Symbol])
+      ).returns(T::Enumerator[T::Array[::LoginRequest]])
     end
     def find_in_batches(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
 
@@ -301,7 +301,7 @@ class LoginRequest
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped,
         block: T.proc.params(object: PrivateRelation).void
       ).void
@@ -314,7 +314,7 @@ class LoginRequest
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped
       ).returns(::ActiveRecord::Batches::BatchEnumerator)
     end
@@ -554,6 +554,10 @@ class LoginRequest
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
 
+    sig { returns(PrivateAssociationRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
+
     sig { returns(PrivateAssociationRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
     def where(*args); end
@@ -749,6 +753,51 @@ class LoginRequest
     sig { void }
     def id_will_change!; end
 
+    sig { returns(T.nilable(::IPAddr)) }
+    def ip_address; end
+
+    sig { params(value: T.nilable(::IPAddr)).returns(T.nilable(::IPAddr)) }
+    def ip_address=(value); end
+
+    sig { returns(T::Boolean) }
+    def ip_address?; end
+
+    sig { returns(T.nilable(::IPAddr)) }
+    def ip_address_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def ip_address_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def ip_address_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::IPAddr), T.nilable(::IPAddr)])) }
+    def ip_address_change; end
+
+    sig { returns(T.nilable([T.nilable(::IPAddr), T.nilable(::IPAddr)])) }
+    def ip_address_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def ip_address_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::IPAddr)) }
+    def ip_address_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::IPAddr), T.nilable(::IPAddr)])) }
+    def ip_address_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def ip_address_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::IPAddr)) }
+    def ip_address_previously_was; end
+
+    sig { returns(T.nilable(::IPAddr)) }
+    def ip_address_was; end
+
+    sig { void }
+    def ip_address_will_change!; end
+
     sig { returns(::String) }
     def login_code; end
 
@@ -852,6 +901,9 @@ class LoginRequest
     def restore_id_value!; end
 
     sig { void }
+    def restore_ip_address!; end
+
+    sig { void }
     def restore_login_code!; end
 
     sig { void }
@@ -883,6 +935,12 @@ class LoginRequest
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::IPAddr), T.nilable(::IPAddr)])) }
+    def saved_change_to_ip_address; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_ip_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_login_code; end
@@ -958,6 +1016,9 @@ class LoginRequest
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_ip_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_login_code?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1108,6 +1169,10 @@ class LoginRequest
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end
+
+    sig { returns(PrivateRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
 
     sig { returns(PrivateRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateRelation) }

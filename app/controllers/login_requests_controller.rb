@@ -15,37 +15,28 @@ class LoginRequestsController < ApplicationController
 
   # POST /login_requests
   def create
-    login_request_params = params.expect(
-      login_request: [ :phone_number ],
-    )
-    @login_request = LoginRequest.create(**login_request_params)
-    tag_logger do
-      logger.info(
-        "Sending login code #{@login_request.login_code} to " \
-          "#{@login_request.phone_number}",
-      )
-    end
     respond_to do |format|
-      format.json do
-        if @login_request.persisted?
-          data = if Rails.env.production?
-            {}
-          else
-            { "loginRequest" => LoginRequestSerializer.one(@login_request) }
-          end
-          render(json: data, status: :created)
-        else
-          render(
-            json: {
-              errors: @login_request.form_errors,
-            },
-            status: :unprocessable_content,
-          )
-        end
-      end
       format.html do
-        session[:login_request_id] = @login_request.id
-        redirect_to(complete_login_request_path)
+        login_request_params = params.expect(login_request: [ :phone_number ])
+        @login_request = LoginRequest.new(
+          ip_address: request.remote_ip,
+          **login_request_params,
+        )
+        if @login_request.save
+          tag_logger do
+            logger.info(
+              "Sending login code #{@login_request.login_code} to " \
+                "#{@login_request.phone_number}",
+            )
+          end
+          session[:login_request_id] = @login_request.id
+          redirect_to(complete_login_request_path)
+        else
+          if (message = @login_request.errors.full_messages.first)
+            flash.now[:alert] = message
+          end
+          render("sessions/new", status: :unprocessable_content)
+        end
       end
     end
   end
@@ -97,8 +88,10 @@ class LoginRequestsController < ApplicationController
         render(json: { error: message }, status: :unprocessable_content)
       end
       format.html do
+        login_request_params = params.expect(login_request: [ :phone_number ])
         @login_request = LoginRequest.new(
-          phone_number: params.dig(:login_request, :phone_number),
+          ip_address: request.remote_ip,
+          **login_request_params,
         )
         flash.now[:alert] = message
         render("sessions/new", status: :unprocessable_content)
@@ -117,7 +110,7 @@ class LoginRequestsController < ApplicationController
 
   sig { void }
   def handle_rate_limit_exceeded
-    error = "You have requested a login code too many times. Please try " \
+    error = "you have requested a login code too many times. please try " \
       "again later."
     render(json: { error: }, status: :too_many_requests)
   end
