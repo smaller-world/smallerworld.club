@@ -65,7 +65,7 @@ gem "friendly_id", "~> 5.5"
 gem "concurrent-ruby", "~> 1.1"
 
 # Use Faraday to make HTTP requests
-gem "faraday", "~> 2.10"
+gem "faraday", "~> 2.14"
 
 # Show a healthcheck route
 gem "rails-healthcheck"
@@ -146,7 +146,7 @@ gem "unicode-emoji", "~> 3.7", require: "unicode/emoji"
 gem "jwt", "~> 2.9"
 
 # Parse HTML with Nokogiri
-gem "nokogiri", "~> 1.15"
+gem "nokogiri", "~> 1.19"
 
 # Convert HTML to plain text
 gem "html2text", "~> 0.4.0"
