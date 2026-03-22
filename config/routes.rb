@@ -375,8 +375,17 @@ Rails.application.routes.draw do
   end
 
   # == Filepond ==
+
   namespace :filepond do
     resources :files, param: :signed_id, only: %i[show destroy]
+  end
+
+  # == Secrets ==
+
+  resources :secrets, only: :index do
+    collection do
+      post :find
+    end
   end
 
   # == Pages ==

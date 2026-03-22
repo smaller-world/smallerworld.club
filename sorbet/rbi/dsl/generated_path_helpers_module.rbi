@@ -82,6 +82,9 @@ module GeneratedPathHelpersModule
   def filepond_file_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def find_secrets_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def friend_encouragements_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -302,6 +305,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def root_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def secrets_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def sentry_path(*args); end

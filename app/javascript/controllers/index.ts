@@ -26,6 +26,7 @@ import FormController from "./form_controller";
 import HelloController from "./hello_controller";
 import IMaskController from "./imask_controller";
 import InputFromEventController from "./input_from_event_controller";
+import LocateController from "./locate_controller";
 import ModalController from "./modal_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import OTPInputController from "./otp_input_controller";
@@ -83,3 +84,4 @@ application.register(
 );
 application.register("post-draft", PostDraftController);
 application.register("turnstile", TurnstileController);
+application.register("locate", LocateController);

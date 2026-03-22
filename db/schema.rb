@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_18_184304) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_22_192453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "postgis"
 
   create_table "action_push_native_devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -344,6 +345,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_184304) do
     t.datetime "pinned_until", precision: nil
     t.string "prompt_id"
     t.uuid "quoted_post_id"
+    t.geography "secret_location", limit: {srid: 4326, type: "st_point", geographic: true}
     t.uuid "space_id"
     t.string "spotify_track_id"
     t.string "title"

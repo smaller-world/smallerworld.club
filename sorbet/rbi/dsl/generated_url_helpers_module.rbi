@@ -82,6 +82,9 @@ module GeneratedUrlHelpersModule
   def filepond_file_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def find_secrets_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def friend_encouragements_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -302,6 +305,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def secrets_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def sentry_url(*args); end

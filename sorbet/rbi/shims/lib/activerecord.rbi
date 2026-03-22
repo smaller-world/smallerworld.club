@@ -11,6 +11,11 @@ module ActiveRecord
     def ids; end
   end
 
+  class Migration
+    sig { params(name: T.any(String, Symbol)).void }
+    def enable_extension(name); end
+  end
+
   # class Migration::Current
   #   # == Columns
   #   sig do

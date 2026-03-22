@@ -22,6 +22,10 @@ gem "active_record_extended",
     github: "GeorgeKaraszi/ActiveRecordExtended",
     ref: "fe0e094"
 
+# Use PostGIS for spatial data
+gem "activerecord-postgis-adapter"
+gem "rgeo"
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 7.1"
 
