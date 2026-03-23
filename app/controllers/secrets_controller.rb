@@ -8,7 +8,7 @@ class SecretsController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        @page_title = "secrets"
+        @page_title = "nearby secrets"
         device = DeviceDetector.new(request.user_agent)
         @os_name = params[:emulate_os] || device.os_name
         if (near = params[:near])
