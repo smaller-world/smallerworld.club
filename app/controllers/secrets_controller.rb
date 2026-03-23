@@ -4,29 +4,30 @@
 class SecretsController < ApplicationController
   # == Actions ==
 
-  # GET /secrets
+  # GET /secrets[?near=]
   def index
     respond_to do |format|
       format.html do
         @page_title = "secrets"
+        if (near = params[:near])
+          @post_shares = nearby_posts_shares(near)
+        end
       end
     end
   end
 
-  # POST /secrets/find
-  def find
-    respond_to do |format|
-      format.html do
-        secret_location = params.expect(:secret_location)
-        nearby_posts = Post.where(
-          "ST_DWithin(secret_location, ST_GeomFromText(?), 1000)",
-          secret_location,
-        )
-        @post_shares = nearby_posts.map do |post|
-          PostShare.find_or_create_by!(post:, sharer: post.author!)
-        end
-        render :index, status: :unprocessable_content
-      end
+  private
+
+  # == Helpers ==
+
+  sig { params(location: String).returns(T::Enumerable[PostShare]) }
+  def nearby_posts_shares(location)
+    posts = Post.where(
+      "ST_DWithin(secret_location, ST_GeomFromText(?), 1000)",
+      location,
+    )
+    posts.map do |post|
+      PostShare.find_or_create_by!(post:, sharer: post.author!)
     end
   end
 end

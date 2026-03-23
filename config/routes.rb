@@ -384,7 +384,10 @@ Rails.application.routes.draw do
 
   resources :secrets, only: :index do
     collection do
-      post :find
+      get "/card" => redirect(
+        "https://app.addtowallet.co/card/69c03ab17c18b27ab894919b",
+        status: 302,
+      )
     end
   end
 
