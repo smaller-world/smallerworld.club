@@ -96,6 +96,7 @@ COPY . ./
 # Copy built assets
 COPY --from=builder /app/dist/ssr ./dist/ssr
 COPY --from=builder /app/public/dist ./public/dist
+COPY --from=builder /app/public/assets ./public/assets
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
