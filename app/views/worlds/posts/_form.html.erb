@@ -124,7 +124,7 @@
     ) do %>
       <%= form.select(
         :visibility,
-        options_for_select(post_visibility_options, "friends"),
+        post_visibility_options,
         {},
         class: "form_select",
         data: {

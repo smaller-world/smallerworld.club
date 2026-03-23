@@ -105,7 +105,7 @@ module PostsHelper
   sig { returns(T::Array[[ String, String ]]) }
   def post_visibility_options
     values = Post.visibility.values.excluding("chosen_family")
-    values.map { |value| [ value.text, value ] }
+    values.map { |value| [ value.text, value.to_s ] }
   end
 
   sig do

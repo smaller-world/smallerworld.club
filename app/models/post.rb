@@ -71,7 +71,9 @@ class Post < ApplicationRecord
   enumerize :type,
             in: %i[journal_entry poem invitation question follow_up response],
             predicates: true
-  enumerize :visibility, in: %i[public friends chosen_family secret]
+  enumerize :visibility,
+            in: %i[public friends chosen_family secret],
+            default: "friends"
 
   has_rich_text :body
 
