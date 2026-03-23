@@ -1,6 +1,6 @@
 @layer base {
   body {
-    @apply flex min-h-lvh flex-col;
+    @apply flex min-h-dvh flex-col;
   }
 }
 
