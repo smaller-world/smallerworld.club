@@ -1,0 +1,28 @@
+# typed: true
+# frozen_string_literal: true
+
+module NormalizesPhoneNumber
+  extend T::Sig
+  extend T::Helpers
+  extend ActiveSupport::Concern
+
+  abstract!
+  requires_ancestor { ActiveRecord::Base }
+
+  class_methods do
+    extend T::Sig
+    extend T::Helpers
+
+    requires_ancestor { T.class_of(ActiveRecord::Base) }
+
+    # == Methods ==
+
+    sig { params(names: Symbol).void }
+    def normalizes_phone_number(*names)
+      normalizes(*T.unsafe(names), with: ->(number) {
+        phone = Phonelib.parse(number)
+        phone.to_s
+      })
+    end
+  end
+end

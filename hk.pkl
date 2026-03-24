@@ -1,0 +1,53 @@
+amends "package://github.com/jdx/hk/releases/download/v1.35.0/hk@1.35.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v1.35.0/hk@1.35.0#/Builtins.pkl"
+
+exclude = List(".kamal/hooks/*.sample", "vendor/**/*", "node_modules/**/*", "tmp/**/*")
+
+local linters = new Mapping<String, Step> {
+  // Add linters here. Examples:
+  ["prettier"] = (Builtins.prettier) {
+    check = "bin/prettier --check {{ files }}"
+    check_list_files = "bin/prettier --list-different {{ files }}"
+    fix = "bin/prettier --write {{ files }}"
+  }
+  ["eslint"] = (Builtins.eslint) {
+    check = "bin/eslint {{ files }}"
+    fix = "bin/eslint --fix {{ files }}"
+  }
+  ["tsc"] = (Builtins.tsc) {
+    check = "bin/tsc --noEmit -p {{ workspace_indicator }}"
+  }
+  ["rubocop"] = (Builtins.rubocop) {
+    exclude = List("bin/*")
+    check = "bin/rubocop --force-exclusion {{ files }}"
+    check_list_files = "bin/rubocop --force-exclusion --list-target-files {{ files }}"
+    fix = "bin/rubocop --force-exclusion --autocorrect {{ files }}"
+  }
+  ["sorbet"] = (Builtins.sorbet) {
+    exclude = List("sorbet/tapioca/compilers/**/*.rb", "bin/*")
+    check = "bin/srb tc --no-error-count {{ files }}"
+    fix = "bin/srb tc --no-error-count --autocorrect {{ files }}"
+  }
+
+  // Or define custom steps:
+  // ["custom"] {
+  //     glob = "**/*.py"
+  //     check = "mypy {{ files }}"
+  // }
+}
+
+hooks {
+  ["pre-commit"] {
+    stash = "git"
+    steps = linters
+  }
+
+  ["fix"] {
+    fix = true
+    steps = linters
+  }
+
+  ["check"] {
+    steps = linters
+  }
+}

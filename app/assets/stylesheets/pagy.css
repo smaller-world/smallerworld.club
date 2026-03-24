@@ -1,0 +1,14 @@
+@layer components {
+  nav.pagy.series-nav {
+    @apply flex items-center gap-x-2;
+
+    > a {
+      @apply flex size-8 items-center justify-center rounded border;
+      @apply hover:border-accent;
+    }
+  }
+
+  .pagy.info {
+    @apply lowercase;
+  }
+}

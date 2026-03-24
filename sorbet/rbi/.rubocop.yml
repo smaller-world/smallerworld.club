@@ -1,0 +1,13 @@
+inherit_from: ../../.rubocop.yml
+
+plugins:
+  - rubocop-sorbet
+
+AllCops:
+  Exclude:
+    - annotations/**/*
+    - dsl/**/*
+    - gems/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

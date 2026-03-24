@@ -1,0 +1,24 @@
+@source not "../../../sorbet/";
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/* @import "@fontsource-variable/figtree"; */
+
+@import "./tippy.css";
+@import "./pagy.css";
+
+@import "./theme.css";
+@import "./loading.css";
+@import "./badges.css";
+@import "./buttons.css";
+@import "./cards.css";
+@import "./labels.css";
+@import "./separators.css";
+@import "./inputs.css";
+@import "./fields.css";
+@import "./forms.css";
+@import "./layouts.css";
+
+@import "./landing.css";
+@import "./chats.css";

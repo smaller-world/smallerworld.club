@@ -1,0 +1,7 @@
+inherit_from: ../../.rubocop.yml
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: false

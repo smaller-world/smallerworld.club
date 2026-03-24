@@ -1,0 +1,48 @@
+# fly.toml app configuration file generated for happytown on 2026-02-06T16:38:32-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "happytown"
+primary_region = "iad"
+console_command = "./bin/rails console"
+swap_size_mb = 1024
+
+[deploy]
+strategy = "bluegreen"
+release_command = "./bin/prepare-deployment"
+
+[env]
+CANONICAL_HOST = "happytown.life"
+HTTP_PORT = "8080"
+HTTPS_PORT = "8443"
+
+[processes]
+app = "./bin/thrust ./bin/rails server"
+jobs = "./bin/jobs"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = "stop"
+auto_start_machines = false
+min_machines_running = 1
+processes = ["app"]
+
+[[http_service.checks]]
+interval = "10s"
+timeout = "2s"
+grace_period = "20s"
+method = "GET"
+path = "/up"
+protocol = "http"
+
+[[vm]]
+processes = ["app"]
+cpus = 1
+memory_mb = 512
+
+[[vm]]
+name = ["jobs"]
+cpu = 1
+memory_mb = 512

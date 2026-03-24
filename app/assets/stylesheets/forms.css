@@ -1,0 +1,6 @@
+@layer components {
+  /* Rails automatically creates this div when using form builder. */
+  .field_with_errors {
+    @apply contents;
+  }
+}

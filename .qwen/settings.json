@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "happytown_sentry": {
+      "httpUrl": "https://mcp.sentry.dev/mcp"
+    },
+    "happytown_supabase": {
+      "httpUrl": "https://mcp.supabase.com/mcp?project_ref=ysiwerjzufsrkyqjftal&read_only=true&features=docs%2Cdatabase",
+      "excludeTools": ["list_migrations", "apply_migration"]
+    }
+  },
+  "$version": 3
+}

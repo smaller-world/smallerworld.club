@@ -1,0 +1,28 @@
+# == Rails
+.ruby-lsp/
+.bundle/
+bin/
+config/*.yml
+dist/
+db/
+log/
+node_modules/
+public/dist*/
+sorbet/
+storage/
+test/fixtures/*.yml
+tmp/
+vendor/
+package-lock.json
+**/*generated*
+Gemfile
+Gemfile.lock
+
+# == Agents
+.agents/skills/
+.codex/skills/
+.cursor/
+.gemini/
+.opencode/
+opencode.json
+.mcp.json

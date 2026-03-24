@@ -1,0 +1,25 @@
+gem:
+  # Add your `gem` command parameters here:
+  #
+  doc: true
+  exclude:
+    - bundler-audit
+    - brakeman
+    - annotaterb
+    - rubocop-capybara
+    - rubocop-performance
+    - rubocop-rails
+    - rubocop-sorbet
+    - rubocop-shopify
+    - rubocop-minitest
+    - ruby-lsp
+    - listen
+    - phlex-icons
+  # workers: 5
+
+dsl:
+  # Add your `dsl` command parameters here:
+  #
+  # exclude:
+  # - SomeGeneratorName
+  # workers: 5

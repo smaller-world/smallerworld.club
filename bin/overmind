@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Operate from root directory
+cd "${BASH_SOURCE%/*}/.."
+
+# Configure socket
+export OVERMIND_SOCKET="./tmp/sockets/overmind.${RAILS_ENV:-development}.sock"
+
+# Run overmind
+export OVERMIND_SKIP_ENV=1
+export OVERMIND_NO_PORT=1
+export OVERMIND_SHELL=bash
+mise x -- overmind $@

@@ -1,0 +1,106 @@
+# rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
+# == Schema Information
+#
+# Table name: whatsapp_messages
+#
+#  id                     :uuid             not null, primary key
+#  body                   :text             not null
+#  mentioned_jids         :string           default([]), not null, is an Array
+#  quoted_message_body    :text
+#  quoted_participant_jid :string
+#  reply_sent_at          :timestamptz
+#  timestamp              :timestamptz      not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  group_id               :uuid             not null
+#  quoted_message_id      :uuid
+#  sender_id              :uuid             not null
+#  whatsapp_id            :string           not null
+#
+# Indexes
+#
+#  index_whatsapp_messages_on_body_tsearch       (to_tsvector('simple'::regconfig, COALESCE(body, ''::text))) USING gin
+#  index_whatsapp_messages_on_group_id           (group_id)
+#  index_whatsapp_messages_on_quoted_message_id  (quoted_message_id)
+#  index_whatsapp_messages_on_reply_sent_at      (reply_sent_at)
+#  index_whatsapp_messages_on_sender_id          (sender_id)
+#  index_whatsapp_messages_on_timestamp          (timestamp)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => whatsapp_groups.id)
+#  fk_rails_...  (quoted_message_id => whatsapp_messages.id)
+#  fk_rails_...  (sender_id => whatsapp_users.id)
+#
+# rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
+hello_message:
+  whatsapp_id: "123"
+  body: hey! say hi back so i know you're working.
+  group: hangout
+  sender: alice
+  timestamp: <%= (1.hour + 20.seconds).ago %>
+
+message_history_request_message:
+  whatsapp_id: "234"
+  body: send the message history link.
+  group: hangout
+  sender: alice
+  timestamp: <%= (1.hour + 10.seconds).ago %>
+
+french_fries_message:
+  whatsapp_id: "345"
+  body: "i just had the most incredible french fries at that new place downtown"
+  group: hangout
+  sender: bob
+  timestamp: <%= 1.hour.ago %>
+
+filler_message_1:
+  whatsapp_id: "f1"
+  body: "hey everyone, what's up?"
+  group: hangout
+  sender: alice
+  timestamp: <%= 50.minutes.ago %>
+
+filler_message_2:
+  whatsapp_id: "f2"
+  body: "not much, just working on some stuff"
+  group: hangout
+  sender: bob
+  timestamp: <%= 45.minutes.ago %>
+
+filler_message_3:
+  whatsapp_id: "f3"
+  body: "anyone want to hang out later today?"
+  group: hangout
+  sender: alice
+  timestamp: <%= 40.minutes.ago %>
+
+filler_message_4:
+  whatsapp_id: "f4"
+  body: "sure thing, where should we go?"
+  group: hangout
+  sender: bob
+  timestamp: <%= 35.minutes.ago %>
+
+filler_message_5:
+  whatsapp_id: "f5"
+  body: "maybe the park, the weather looks nice"
+  group: hangout
+  sender: alice
+  timestamp: <%= 30.minutes.ago %>
+
+filler_message_6:
+  whatsapp_id: "f6"
+  body: "sounds good, see you there"
+  group: hangout
+  sender: bob
+  timestamp: <%= 25.minutes.ago %>
+
+who_talked_about_fries_message:
+  whatsapp_id: "456"
+  body: >-
+    who recently talked about french fries? respond with JUST the name of the
+    user in ALL CAPS.
+  group: hangout
+  sender: alice
+  timestamp: <%= 5.seconds.ago %>

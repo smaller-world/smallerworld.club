@@ -1,0 +1,22 @@
+@layer components {
+  .flash[data-slot="card"] {
+    @apply w-full max-w-md;
+    @apply bg-accent/5 ring-accent dark:bg-accent/10 dark:ring-accent/30;
+
+    &.flash-alert {
+      @apply bg-destructive/5 ring-destructive dark:bg-destructive/10 dark:ring-destructive/60;
+    }
+  }
+
+  .page_container {
+    @apply w-full max-w-2xl self-center p-4;
+  }
+
+  .header_navigation {
+    @apply flex items-center gap-x-2.5;
+
+    a {
+      @apply hover:opacity-80;
+    }
+  }
+}

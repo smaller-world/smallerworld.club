@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+CONTAINER=$1
+
+if [ -f ./tmp/pids/$CONTAINER.cid ]; then
+  if docker inspect -f '{{.State.Running}}' $(cat ./tmp/pids/$CONTAINER.cid) | grep -q true; then
+    exit 0
+  fi
+
+  rm ./tmp/pids/$CONTAINER.cid
+fi
+
+exit 1

@@ -1,0 +1,33 @@
+# rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
+# == Schema Information
+#
+# Table name: whatsapp_groups
+#
+#  id                          :uuid             not null, primary key
+#  description                 :text
+#  intro_sent_at               :timestamptz
+#  jid                         :string           not null
+#  memberships_imported_at     :timestamptz
+#  message_history_enabled_at  :timestamptz      not null
+#  message_history_window_days :integer
+#  metadata_imported_at        :timestamptz
+#  profile_picture_url         :string
+#  subject                     :string
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#
+# Indexes
+#
+#  index_whatsapp_groups_on_intro_sent_at                (intro_sent_at)
+#  index_whatsapp_groups_on_jid                          (jid) UNIQUE
+#  index_whatsapp_groups_on_memberships_imported_at      (memberships_imported_at)
+#  index_whatsapp_groups_on_metadata_imported_at         (metadata_imported_at)
+#  index_whatsapp_groups_on_subject_description_tsearch  (((setweight(to_tsvector('simple'::regconfig, (COALESCE(subject, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('simple'::regconfig, COALESCE(description, ''::text)), 'B'::"char")))) USING gin
+#
+# rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
+hangout:
+  jid: hangout@g.us
+  subject: the hangout
+  description: a place to hang out
+  message_history_enabled_at: <%= 1.day.ago %>
+  message_history_window_days: null

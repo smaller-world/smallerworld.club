@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "shopify.ruby-lsp",
+    "sorbet.sorbet-vscode-extension",
+    "rubocop.vscode-rubocop",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "pkl.pkl-vscode",
+    "bungcip.better-toml",
+    "tamasfe.even-better-toml"
+  ]
+}

@@ -1,0 +1,141 @@
+@layer components {
+  .landing_main {
+    @apply mx-auto max-w-4xl space-y-24 px-6 py-12;
+    @apply text-gray-800 antialiased;
+    @apply selection:bg-landing-primary/20 selection:text-landing-primary;
+  }
+
+  .landing_features_grid {
+    @apply grid gap-8 md:grid-cols-2 md:gap-12;
+  }
+
+  .landing_featured_in_container {
+    @apply mx-auto max-w-92;
+    @apply flex flex-wrap items-center justify-center gap-x-5 gap-y-4;
+    @apply sm:max-w-none sm:flex-nowrap sm:gap-8;
+  }
+
+  .landing_logo_container {
+    @apply flex flex-col items-center gap-y-4;
+  }
+
+  .landing_logo_socials {
+    @apply flex justify-center gap-x-4;
+    @apply font-bold text-landing-secondary;
+
+    > a {
+      @apply hover:underline;
+    }
+  }
+
+  .landing_btn {
+    @apply rounded-full px-7.5 py-2.5 text-lg font-bold;
+    @apply flex items-center gap-x-2;
+    @apply transition-all;
+
+    &[data-variant="primary"] {
+      @apply bg-primary px-8 py-3 text-white;
+      @apply transform shadow-sm hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    &[data-variant="secondary"] {
+      @apply border-2 border-primary text-primary hover:bg-primary/5;
+    }
+  }
+
+  .landing_gathering_card {
+    @apply rounded-3xl border border-gray-100 bg-white p-8;
+    @apply flex flex-col items-start;
+    @apply shadow-sm transition-shadow hover:shadow-md;
+  }
+
+  .landing_gathering_btn {
+    @apply font-bold decoration-2 underline-offset-4 hover:underline;
+    @apply flex items-center gap-x-2;
+  }
+
+  .landing_cta_btn {
+    @apply rounded-full px-6 py-2.5;
+    @apply font-bold text-white;
+    @apply inline-flex items-center gap-x-2;
+
+    &[data-variant="primary"] {
+      @apply bg-landing-primary hover:bg-landing-primary/90;
+    }
+
+    &[data-variant="secondary"] {
+      @apply bg-landing-secondary hover:bg-landing-secondary/90;
+    }
+  }
+
+  .landing_feature_card {
+    @apply space-y-6 rounded-3xl border-2 bg-white p-8 shadow-sm;
+
+    &[data-variant="primary"] {
+      @apply border-landing-primary/10;
+    }
+
+    &[data-variant="secondary"] {
+      @apply border-landing-secondary/10;
+    }
+
+    h2 {
+      @apply text-2xl font-bold text-landing-secondary;
+    }
+  }
+
+  .landing_feature_list {
+    @apply space-y-2 text-gray-600;
+
+    > li {
+      @apply border-l-2 pl-4;
+    }
+
+    &[data-variant="primary"] > li {
+      @apply border-landing-primary/20;
+    }
+
+    &[data-variant="secondary"] > li {
+      @apply border-landing-secondary/20;
+    }
+  }
+
+  .landing_gathering_badge {
+    @apply rounded-full px-3 py-1 text-sm font-bold;
+
+    &[data-variant="primary"] {
+      @apply bg-landing-primary/10 text-landing-primary;
+    }
+
+    &[data-variant="secondary"] {
+      @apply bg-landing-secondary/10 text-landing-secondary;
+    }
+  }
+
+  .landing_closing {
+    @apply space-y-8 rounded-3xl py-16;
+    @apply bg-linear-to-b from-transparent to-landing-primary/5;
+    @apply text-center;
+  }
+
+  .landing_how_it_works_list {
+    @apply grid gap-x-6 gap-y-3 md:grid-cols-2;
+
+    > li {
+      @apply flex gap-3;
+
+      > [data-slot="marker"] {
+        @apply text-xl text-landing-secondary;
+      }
+    }
+  }
+
+  .landing_cta {
+    @apply mx-auto mb-8 max-w-3xl space-y-8 text-center;
+
+    h2 {
+      @apply mx-auto max-w-2xl text-4xl leading-[1.1] font-bold;
+      @apply sm:max-w-xl sm:text-5xl;
+    }
+  }
+}

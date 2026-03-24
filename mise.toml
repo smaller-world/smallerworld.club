@@ -1,0 +1,63 @@
+[settings]
+experimental = true
+
+[tools]
+ruby = { version = "4.0.1", postinstall = "bundle install" }
+bun = { version = "1.3.7", postinstall = "bun install" }
+pkl = "0.30.2"
+hk = { version = "1.35.0", postinstall = "hk install" }
+overmind = "latest"
+
+[tasks]
+# Development flow
+setup = { run = "bin/setup" }
+dev = { run = "bin/dev" }
+restart = { run = "bin/overmind restart" }
+# Development tasks
+annotate = { run = "bin/annotaterb models" }
+
+# Connect to production server
+"fly:ssh" = { run = "fly ssh console" }
+"fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
+"fly:eval" = { run = "bin/fly-eval" }
+
+[tasks.test]
+description = "Run tests"
+usage = '''
+arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
+flag "-i --include <pattern>" help="Include tests matching /regexp/ or string"
+flag "-v --verbose" help="Print each test name as it runs"
+'''
+run = "bin/rails test $@"
+
+[tasks."test:system"]
+description = "Run system tests"
+usage = '''
+arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
+flag "-i --include <pattern>" help="Include tests matching /regexp/ or string"
+flag "-v --verbose" help="Print each test name as it runs"
+'''
+run = "bin/rails test:system $@"
+
+[tasks.fix]
+description = "Fix code with hk"
+usage = '''
+flag "-a --all" help="Run on all files instead of just staged files"
+arg "[files]..." var=#true help="Run on specific files"
+'''
+run = "hk fix $@"
+
+[tasks.check]
+description = "Check code with hk"
+usage = '''
+flag "-a --all" help="Run on all files instead of just staged files"
+arg "[files]..." var=#true help="Run on specific files"
+'''
+run = "hk check $@"
+
+[tasks.attach]
+description = "Attach to a running Overmind process"
+usage = '''
+arg "<target>" help="Process to attach to" default="web"
+'''
+run = "bin/overmind connect ${usage_target?}"

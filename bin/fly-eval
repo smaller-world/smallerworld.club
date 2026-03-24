@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+ARGS="$*"
+ESCAPED_ARGS=${ARGS//\"/\\\"}
+
+fly ssh console -C "bin/rails runner \"pp ${ESCAPED_ARGS}\""

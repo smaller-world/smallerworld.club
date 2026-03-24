@@ -1,0 +1,40 @@
+@import "tippy.js/dist/tippy.css" layer(components);
+@import "tippy.js/dist/svg-arrow.css" layer(components);
+@import "tippy.js/animations/scale.css" layer(components);
+
+@layer components {
+  .tippy-box {
+    @apply rounded-xl bg-foreground;
+  }
+
+  .tippy-arrow {
+    @apply text-foreground;
+  }
+
+  .tippy-svg-arrow {
+    @apply fill-foreground;
+  }
+
+  .tippy-arrow,
+  .tippy-svg-arrow {
+    @apply absolute;
+
+    .tippy-box[data-placement="bottom-start"] &,
+    .tippy-box[data-placement="top-start"] & {
+      @apply left-4!;
+
+      transform: translateX(0%) !important;
+    }
+
+    .tippy-box[data-placement="bottom-end"] &,
+    .tippy-box[data-placement="top-end"] & {
+      @apply right-4 left-auto!;
+
+      transform: translateX(0%) !important;
+    }
+  }
+
+  .tippy-content {
+    @apply text-sm text-background;
+  }
+}

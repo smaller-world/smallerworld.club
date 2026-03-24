@@ -1,0 +1,38 @@
+pre-commit:
+  parallel: true
+  commands:
+    prettier:
+      run: bunx prettier --write {staged_files}
+      glob: "*.{ts,tsx,js,jsx,css,yml,yaml,json,md,html}"
+      stage_fixed: true
+
+    eslint:
+      run: >-
+        bunx eslint --report-unused-disable-directives --no-warn-ignored --fix
+        --cache "{staged_files}"
+      glob: "*.{ts,tsx,js,jsx}"
+      stage_fixed: true
+
+    tsc:
+      run: bunx tsc --noEmit
+      glob: "*.{ts,tsx}"
+
+    srb:
+      run: bundle exec srb tc
+      glob: "*.{rb,rbi}"
+
+    rubocop:
+      run:
+        bin/rubocop --force-exclusion --cache=true --autocorrect {staged_files}
+      glob: "*.{rb,rbi}"
+      stage_fixed: true
+
+    herb-lint:
+      run: bunx herb-lint --fix {staged_files}
+      glob: "*.{html.erb}"
+      stage_fixed: true
+
+    herb-format:
+      run: bunx herb-format {staged_files}
+      glob: "*.{html.erb}"
+      stage_fixed: true
