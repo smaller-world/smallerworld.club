@@ -40,6 +40,11 @@ class PostPolicy < ApplicationPolicy
     post.author! == user!
   end
 
+  def reply?
+    post = T.cast(record, Post)
+    friend!.world_owner! == post.author!
+  end
+
   def mark_seen?
     post = T.cast(record, Post)
     if (friend = self.friend)

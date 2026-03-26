@@ -1,6 +1,6 @@
 <%= turbo_stream.append :posts do %>
   <% @posts.each do |post| %>
-    <li><%= render "posts/card", post: %></li>
+    <li><%= render "posts/card", post:, **( current_friend ? { reply_to_number: @world.reply_to_number } : {} ) %></li>
   <% end %>
 <% end %>
 

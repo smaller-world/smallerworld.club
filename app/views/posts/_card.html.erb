@@ -68,6 +68,54 @@
   <div class="post_card_footer">
     <%= render "posts/reactions", post: %>
 
+    <% if allowed_to?(:reply?, post) %>
+      <div
+        class="relative -mr-1 -mb-1"
+        data-controller="dropdown mark-replied"
+        data-mark-replied-url-value="<%= mark_replied_post_path(post, friend_token: current_friend&.access_token) %>"
+      >
+        <button
+          type="button"
+          class="btn menu_btn text-sm"
+          data-dropdown-target="trigger"
+          data-action="dropdown#toggle"
+          aria-haspopup="menu"
+        >
+          <%= icon "chat-bubble-oval-left", class: "size-4" %>
+          <span>reply by dm</span>
+        </button>
+
+        <div
+          class="
+            card dropdown_menu menu_card dropdown_menu-bottom_right hidden
+            min-w-36
+          "
+          data-dropdown-target="menu"
+        >
+          <ul role="menu">
+            <% MessagingHelper::MESSAGING_PLATFORMS.each do |platform| %>
+              <li role="presentation">
+                <%= link_to(
+                  message_uri(reply_to_number, post.reply_snippet, platform),
+                  role: "menuitem",
+                  data: {
+                    action: "dropdown#toggle mark-replied#mark",
+                    turbo: false,
+                  },
+                ) do %>
+                  <%= messaging_platform_icon(platform, class: "size-4") %>
+
+                  <span class="font-headings text-sm">
+                    <%= messaging_platform_label(platform) %>
+                  </span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
     <% if allowed_to?(:manage?, post) %>
       <div class="relative -mr-1 -mb-1" data-controller="dropdown">
         <button

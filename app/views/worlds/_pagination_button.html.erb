@@ -10,7 +10,8 @@
   params: {
     emulate_native_app: 1,
     page:,
-  },
+    friend_token: current_friend&.access_token,
+  }.compact,
   data: {
     controller: "click-on-appear",
     action: "click-on-appear:appear->click-on-appear#click",
