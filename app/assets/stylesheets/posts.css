@@ -30,7 +30,7 @@
   }
 
   .post_card_footer {
-    @apply flex justify-between;
+    @apply flex items-end justify-between;
   }
 
   .post_card_reaction_button {
