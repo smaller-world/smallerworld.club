@@ -17,6 +17,13 @@ class LoginRequestsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
+        if Rails.env.production?
+          redirect_to(
+            new_session_path,
+            alert:
+              "login disabled due to recent attacks on our login systems 😔",
+          ) and return
+        end
         login_request_params = params.expect(login_request: [ :phone_number ])
         @login_request = LoginRequest.new(
           ip_address: request.remote_ip,
