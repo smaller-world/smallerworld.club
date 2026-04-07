@@ -1,4 +1,4 @@
-# happytown.life
+# smallerworld.club
 
 _a home for third-space hosts and guests._
 
@@ -12,10 +12,10 @@ _a home for third-space hosts and guests._
 # Install dev tools and dependencies:
 mise install
 
-# Set up local dev environment and run dev server:
+# Set up local dev environment:
 mise setup
 
-# OR: Only run the development server:
+# Run the development server:
 mise dev
 ```
 

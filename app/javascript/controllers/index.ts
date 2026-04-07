@@ -5,6 +5,7 @@
 import { application } from "./application";
 import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
+import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DisabledController from "./disabled_controller";
 import HelloController from "./hello_controller";
 import IntersectionController from "./intersection_controller";
@@ -21,3 +22,4 @@ application.register("maintain-scroll", MaintainScrollController);
 application.register("click", ClickController);
 application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);
+application.register("current-time-zone-input", CurrentTimeZoneInputController);

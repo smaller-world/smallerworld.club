@@ -13,8 +13,11 @@ overmind = "latest"
 setup = { run = "bin/setup" }
 dev = { run = "bin/dev" }
 restart = { run = "bin/overmind restart" }
+
 # Development tasks
 annotate = { run = "bin/annotaterb models" }
+"tapioca:dsl" = { run = "bin/tapioca dsl" }
+"tapioca:gems" = { run = "bin/tapioca gems" }
 
 # Connect to production server
 "fly:ssh" = { run = "fly ssh console" }

@@ -10,34 +10,4 @@ class ActiveSupport::TestCase
   sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(User) }
   sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[User]) }
   def users(fixture_name = nil, *other_fixtures); end
-
-  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[WhatsappGroup]) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(WhatsappGroup) }
-  sig do
-    params(
-      fixture_name: T.any(String, Symbol),
-      other_fixtures: T.any(String, Symbol)
-    ).returns(T::Array[WhatsappGroup])
-  end
-  def whatsapp_groups(fixture_name = nil, *other_fixtures); end
-
-  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[WhatsappMessage]) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(WhatsappMessage) }
-  sig do
-    params(
-      fixture_name: T.any(String, Symbol),
-      other_fixtures: T.any(String, Symbol)
-    ).returns(T::Array[WhatsappMessage])
-  end
-  def whatsapp_messages(fixture_name = nil, *other_fixtures); end
-
-  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[WhatsappUser]) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(WhatsappUser) }
-  sig do
-    params(
-      fixture_name: T.any(String, Symbol),
-      other_fixtures: T.any(String, Symbol)
-    ).returns(T::Array[WhatsappUser])
-  end
-  def whatsapp_users(fixture_name = nil, *other_fixtures); end
 end

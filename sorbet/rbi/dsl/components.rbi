@@ -36,17 +36,6 @@ module Components
 
   sig do
     params(
-      group: ::WhatsappGroup,
-      messages: T::Array[::WhatsappMessage],
-      pagy: T.nilable(::Pagy),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Chat).void)
-    ).void
-  end
-  def Chat(group:, messages: T.unsafe(nil), pagy: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
       form: T.nilable(::Phlex::Rails::Builder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
@@ -130,6 +119,15 @@ module Components
   end
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **options, &block); end
 
+  sig do
+    params(
+      form: T::Hash[::Symbol, T.untyped],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::SignInWithAppleButton).void)
+    ).void
+  end
+  def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
+
   class << self
     sig do
       params(
@@ -158,17 +156,6 @@ module Components
       ).void
     end
     def Card(size: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        group: ::WhatsappGroup,
-        messages: T::Array[::WhatsappMessage],
-        pagy: T.nilable(::Pagy),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Chat).void)
-      ).void
-    end
-    def Chat(group:, messages: T.unsafe(nil), pagy: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -254,5 +241,14 @@ module Components
       ).void
     end
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
+        form: T::Hash[::Symbol, T.untyped],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::SignInWithAppleButton).void)
+      ).void
+    end
+    def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
   end
 end

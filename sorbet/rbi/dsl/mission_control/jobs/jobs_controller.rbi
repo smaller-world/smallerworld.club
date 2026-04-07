@@ -23,9 +23,6 @@ class MissionControl::Jobs::JobsController
     include ::Importmap::ImportmapTagsHelper
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
-    include ::WhatsappMessaging::Helpers
-    include ::WhatsappMessaging
-    include ::WhatsappGroupAgentHelper
     include ::LocalTimeHelper
     include ::ApplicationController::HelperMethods
     include ::MissionControl::Jobs::InterfaceHelper

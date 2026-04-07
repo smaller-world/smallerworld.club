@@ -2,8 +2,8 @@
   // == Language Associations
   "files.associations": {
     "Procfile.dev": "procfile",
-    "config/database.yml": "yaml",
-    "test/fixtures/**/*.yml": "erb"
+    "**/test/fixtures/*.yml": "erb",
+    "**/app/components/shadcn/*.tsx": "plaintext"
   },
 
   // == Rubocop

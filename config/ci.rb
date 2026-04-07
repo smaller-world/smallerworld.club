@@ -4,7 +4,7 @@
 # Run using bin/ci
 
 ActiveSupport::ContinuousIntegration.run do
-  step "Setup", "bin/setup --skip-server"
+  step "Setup", "bin/setup"
 
   step "Style: Ruby", "bin/rubocop"
 

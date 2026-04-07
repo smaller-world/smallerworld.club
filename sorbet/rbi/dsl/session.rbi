@@ -778,7 +778,7 @@ class Session
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_user_agent?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_user_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -874,16 +874,16 @@ class Session
     sig { void }
     def user_agent_will_change!; end
 
-    sig { returns(::Integer) }
+    sig { returns(::String) }
     def user_id; end
 
-    sig { params(value: ::Integer).returns(::Integer) }
+    sig { params(value: ::String).returns(::String) }
     def user_id=(value); end
 
     sig { returns(T::Boolean) }
     def user_id?; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def user_id_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -892,28 +892,28 @@ class Session
     sig { returns(T::Boolean) }
     def user_id_came_from_user?; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def user_id_change; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def user_id_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def user_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def user_id_in_database; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def user_id_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def user_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def user_id_previously_was; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def user_id_was; end
 
     sig { void }

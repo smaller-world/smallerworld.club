@@ -13,13 +13,10 @@ module GeneratedPathHelpersModule
   def admin_dashboard_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def admin_webhook_messages_path(*args); end
+  def apple_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_password_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def edit_session_path(*args); end
+  def callback_apple_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def errors_path(*args); end
@@ -28,22 +25,16 @@ module GeneratedPathHelpersModule
   def fly_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def home_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def logs_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def luma_redirect_events_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def message_history_whatsapp_group_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def metrics_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def mission_control_jobs_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_password_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_rails_conductor_inbound_email_path(*args); end
@@ -55,13 +46,7 @@ module GeneratedPathHelpersModule
   def new_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def password_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def passwords_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def rails_agents_path(*args); end
+  def pwa_manifest_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_path(*args); end
@@ -161,10 +146,4 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def webhook_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def whatsapp_group_whatsapp_messages_path(*args); end
 end

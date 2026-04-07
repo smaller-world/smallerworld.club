@@ -291,7 +291,7 @@ class SolidQueue::Job
     sig { returns(::SolidQueue::Job) }
     def fourth!; end
 
-    sig { returns(T::Array[::String]) }
+    sig { returns(T::Array[::Integer]) }
     def ids; end
 
     sig do
@@ -975,16 +975,16 @@ class SolidQueue::Job
     sig { void }
     def finished_at_will_change!; end
 
-    sig { returns(::String) }
+    sig { returns(::Integer) }
     def id; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: ::Integer).returns(::Integer) }
     def id=(value); end
 
     sig { returns(T::Boolean) }
     def id?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -993,37 +993,37 @@ class SolidQueue::Job
     sig { returns(T::Boolean) }
     def id_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_previously_was; end
 
-    sig { returns(::String) }
+    sig { returns(::Integer) }
     def id_value; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: ::Integer).returns(::Integer) }
     def id_value=(value); end
 
     sig { returns(T::Boolean) }
     def id_value?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_value_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -1032,34 +1032,34 @@ class SolidQueue::Job
     sig { returns(T::Boolean) }
     def id_value_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_value_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_value_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_value_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_value_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def id_value_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_value_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_value_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_value_was; end
 
     sig { void }
     def id_value_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.nilable(::Integer)) }
     def id_was; end
 
     sig { void }
@@ -1227,13 +1227,13 @@ class SolidQueue::Job
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_finished_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def saved_change_to_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([::Integer, ::Integer])) }
     def saved_change_to_id_value; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }

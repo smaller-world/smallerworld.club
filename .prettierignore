@@ -1,6 +1,7 @@
 # == Rails
 .ruby-lsp/
 .bundle/
+app/components/shadcn/
 bin/
 config/*.yml
 dist/

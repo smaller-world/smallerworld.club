@@ -1,0 +1,22 @@
+@layer components {
+  .sign_in_with_apple_button {
+    @apply inline-flex items-center justify-center gap-1 rounded-sm px-6;
+    @apply bg-black hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200;
+    @apply border border-black dark:border-white;
+    @apply text-base font-medium tracking-wide text-white dark:text-black;
+    @apply cursor-pointer transition-colors;
+
+    min-width: 130px;
+    min-height: 44px;
+    font-family:
+      system-ui,
+      -apple-system,
+      "SF Pro Text",
+      "Helvetica Neue",
+      sans-serif;
+
+    svg {
+      @apply h-7 w-auto;
+    }
+  }
+}

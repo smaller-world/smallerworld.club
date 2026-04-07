@@ -14,21 +14,6 @@ shared: &shared
     command:
       "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
-  import_luma_events:
-    class: ImportLumaEventsJob
-    schedule: every day at 2:07am America/Toronto
-  truncate_webhook_messages:
-    class: TruncateWebhookMessagesJob
-    schedule: every day at 4:04am America/Toronto
-  reconcile_whatsapp_group_metadata:
-    class: ReconcileWhatsappGroupMetadataJob
-    schedule: every day at 4:34am America/Toronto
-  reconcile_whatsapp_group_memberships:
-    class: ReconcileWhatsappGroupMembershipsJob
-    schedule: every day at 3:48am America/Toronto
-  reconcile_whatsapp_user_metadata:
-    class: ReconcileWhatsappUserMetadataJob
-    schedule: every day at 4:18am America/Toronto
 
 development:
   <<: *shared

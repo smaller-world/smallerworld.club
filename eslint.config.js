@@ -123,10 +123,13 @@ export default defineConfig([
             // Relative imports: Anything that starts with a dot.
             ["^\\."],
 
-            // == Absolute side effect imports
+            // Fontsource fonts
+            ["^\\u0000@fontsource-variable/"],
+
+            // Absolute side effect imports
             ["^\\u0000"],
 
-            // == Relative side effect imports
+            // Relative side effect imports
             ["^\\u0000\\."],
           ],
         },

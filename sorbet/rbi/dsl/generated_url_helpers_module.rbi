@@ -13,13 +13,10 @@ module GeneratedUrlHelpersModule
   def admin_dashboard_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def admin_webhook_messages_url(*args); end
+  def apple_oauth_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_password_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def edit_session_url(*args); end
+  def callback_apple_oauth_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def errors_url(*args); end
@@ -28,22 +25,16 @@ module GeneratedUrlHelpersModule
   def fly_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def home_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def logs_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def luma_redirect_events_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def message_history_whatsapp_group_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def metrics_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def mission_control_jobs_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_password_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_rails_conductor_inbound_email_source_url(*args); end
@@ -55,13 +46,7 @@ module GeneratedUrlHelpersModule
   def new_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def password_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def passwords_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def rails_agents_url(*args); end
+  def pwa_manifest_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_representation_proxy_url(*args); end
@@ -161,10 +146,4 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def webhook_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def whatsapp_group_whatsapp_messages_url(*args); end
 end

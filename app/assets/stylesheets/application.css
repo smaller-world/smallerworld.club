@@ -3,7 +3,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-/* @import "@fontsource-variable/figtree"; */
 
 @import "./tippy.css";
 @import "./pagy.css";
@@ -19,6 +18,4 @@
 @import "./fields.css";
 @import "./forms.css";
 @import "./layouts.css";
-
-@import "./landing.css";
-@import "./chats.css";
+@import "./sign_in_with_apple.css";

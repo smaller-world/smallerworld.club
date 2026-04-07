@@ -11,42 +11,6 @@ class User
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
-  sig { params(unencrypted_password: T.untyped).returns(T.any(User, FalseClass)) }
-  def authenticate(unencrypted_password); end
-
-  sig { params(unencrypted_password: T.untyped).returns(T.any(User, FalseClass)) }
-  def authenticate_password(unencrypted_password); end
-
-  sig { returns(T.untyped) }
-  def password; end
-
-  sig { params(unencrypted_password: T.untyped).returns(T.untyped) }
-  def password=(unencrypted_password); end
-
-  sig { returns(T.untyped) }
-  def password_challenge; end
-
-  sig { params(_arg0: T.untyped).returns(T.untyped) }
-  def password_challenge=(_arg0); end
-
-  sig { returns(T.untyped) }
-  def password_confirmation; end
-
-  sig { returns(T.untyped) }
-  def password_confirmation; end
-
-  sig { params(_arg0: T.untyped).returns(T.untyped) }
-  def password_confirmation=(_arg0); end
-
-  sig { params(password_confirmation: T.untyped).returns(T.untyped) }
-  def password_confirmation=(password_confirmation); end
-
-  sig { returns(T.untyped) }
-  def password_reset_token; end
-
-  sig { returns(T.untyped) }
-  def password_salt; end
-
   private
 
   sig { returns(NilClass) }
@@ -277,7 +241,7 @@ class User
     sig { returns(::User) }
     def fourth!; end
 
-    sig { returns(T::Array[::Integer]) }
+    sig { returns(T::Array[::String]) }
     def ids; end
 
     sig do
@@ -564,6 +528,141 @@ class User
   end
 
   module GeneratedAttributeMethods
+    sig { returns(::String) }
+    def apple_first_name; end
+
+    sig { params(value: ::String).returns(::String) }
+    def apple_first_name=(value); end
+
+    sig { returns(T::Boolean) }
+    def apple_first_name?; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_first_name_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def apple_first_name_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def apple_first_name_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_first_name_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_first_name_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_first_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_first_name_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_first_name_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_first_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_first_name_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_first_name_was; end
+
+    sig { void }
+    def apple_first_name_will_change!; end
+
+    sig { returns(::String) }
+    def apple_last_name; end
+
+    sig { params(value: ::String).returns(::String) }
+    def apple_last_name=(value); end
+
+    sig { returns(T::Boolean) }
+    def apple_last_name?; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_last_name_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def apple_last_name_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def apple_last_name_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_last_name_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_last_name_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_last_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_last_name_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_last_name_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_last_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_last_name_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_last_name_was; end
+
+    sig { void }
+    def apple_last_name_will_change!; end
+
+    sig { returns(::String) }
+    def apple_uid; end
+
+    sig { params(value: ::String).returns(::String) }
+    def apple_uid=(value); end
+
+    sig { returns(T::Boolean) }
+    def apple_uid?; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_uid_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def apple_uid_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def apple_uid_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_uid_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_uid_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_uid_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_uid_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def apple_uid_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def apple_uid_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_uid_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def apple_uid_was; end
+
+    sig { void }
+    def apple_uid_will_change!; end
+
     sig { returns(::ActiveSupport::TimeWithZone) }
     def created_at; end
 
@@ -654,16 +753,16 @@ class User
     sig { void }
     def email_address_will_change!; end
 
-    sig { returns(::Integer) }
+    sig { returns(::String) }
     def id; end
 
-    sig { params(value: ::Integer).returns(::Integer) }
+    sig { params(value: ::String).returns(::String) }
     def id=(value); end
 
     sig { returns(T::Boolean) }
     def id?; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -672,37 +771,37 @@ class User
     sig { returns(T::Boolean) }
     def id_came_from_user?; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_change; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_in_database; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_previously_was; end
 
-    sig { returns(::Integer) }
+    sig { returns(::String) }
     def id_value; end
 
-    sig { params(value: ::Integer).returns(::Integer) }
+    sig { params(value: ::String).returns(::String) }
     def id_value=(value); end
 
     sig { returns(T::Boolean) }
     def id_value?; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_value_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -711,83 +810,137 @@ class User
     sig { returns(T::Boolean) }
     def id_value_came_from_user?; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_value_change; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_value_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_value_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_value_in_database; end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def id_value_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def id_value_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_value_previously_was; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_value_was; end
 
     sig { void }
     def id_value_will_change!; end
 
-    sig { returns(T.nilable(::Integer)) }
+    sig { returns(T.nilable(::String)) }
     def id_was; end
 
     sig { void }
     def id_will_change!; end
 
     sig { returns(::String) }
-    def password_digest; end
+    def name; end
 
     sig { params(value: ::String).returns(::String) }
-    def password_digest=(value); end
+    def name=(value); end
 
     sig { returns(T::Boolean) }
-    def password_digest?; end
+    def name?; end
 
     sig { returns(T.nilable(::String)) }
-    def password_digest_before_last_save; end
+    def name_before_last_save; end
 
     sig { returns(T.untyped) }
-    def password_digest_before_type_cast; end
+    def name_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def password_digest_came_from_user?; end
+    def name_came_from_user?; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def password_digest_change; end
+    def name_change; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def password_digest_change_to_be_saved; end
+    def name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def password_digest_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def password_digest_in_database; end
+    def name_in_database; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def password_digest_previous_change; end
+    def name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def password_digest_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def password_digest_previously_was; end
+    def name_previously_was; end
 
     sig { returns(T.nilable(::String)) }
-    def password_digest_was; end
+    def name_was; end
 
     sig { void }
-    def password_digest_will_change!; end
+    def name_will_change!; end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def phone_number=(value); end
+
+    sig { returns(T::Boolean) }
+    def phone_number?; end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def phone_number_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def phone_number_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def phone_number_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def phone_number_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def phone_number_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def phone_number_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def phone_number_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number_was; end
+
+    sig { void }
+    def phone_number_will_change!; end
+
+    sig { void }
+    def restore_apple_first_name!; end
+
+    sig { void }
+    def restore_apple_last_name!; end
+
+    sig { void }
+    def restore_apple_uid!; end
 
     sig { void }
     def restore_created_at!; end
@@ -802,10 +955,34 @@ class User
     def restore_id_value!; end
 
     sig { void }
-    def restore_password_digest!; end
+    def restore_name!; end
+
+    sig { void }
+    def restore_phone_number!; end
+
+    sig { void }
+    def restore_time_zone_name!; end
 
     sig { void }
     def restore_updated_at!; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_apple_first_name; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_apple_first_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_apple_last_name; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_apple_last_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_apple_uid; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_apple_uid?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_created_at; end
@@ -819,29 +996,86 @@ class User
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::Integer, ::Integer])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id_value; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_password_digest; end
+    def saved_change_to_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_password_digest?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_phone_number; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_phone_number?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_time_zone_name; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_time_zone_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(::String) }
+    def time_zone_name; end
+
+    sig { params(value: ::String).returns(::String) }
+    def time_zone_name=(value); end
+
+    sig { returns(T::Boolean) }
+    def time_zone_name?; end
+
+    sig { returns(T.nilable(::String)) }
+    def time_zone_name_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def time_zone_name_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def time_zone_name_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def time_zone_name_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def time_zone_name_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def time_zone_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def time_zone_name_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def time_zone_name_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def time_zone_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def time_zone_name_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def time_zone_name_was; end
+
+    sig { void }
+    def time_zone_name_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -889,6 +1123,15 @@ class User
     def updated_at_will_change!; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_apple_first_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_apple_last_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_apple_uid?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -901,7 +1144,13 @@ class User
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_password_digest?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_phone_number?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_time_zone_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end

@@ -3,7 +3,7 @@ import path from "path";
 
 const config = {
   sourcemap: "external",
-  entrypoints: ["app/javascript/application.js"],
+  entrypoints: ["app/javascript/application.ts"],
   outdir: path.join(process.cwd(), "app/assets/builds"),
 };
 

@@ -1,7 +1,14 @@
 amends "package://github.com/jdx/hk/releases/download/v1.35.0/hk@1.35.0#/Config.pkl"
 import "package://github.com/jdx/hk/releases/download/v1.35.0/hk@1.35.0#/Builtins.pkl"
 
-exclude = List(".kamal/hooks/*.sample", "vendor/**/*", "node_modules/**/*", "tmp/**/*")
+exclude =
+  List(
+    ".kamal/hooks/*.sample",
+    "vendor/**/*",
+    "node_modules/**/*",
+    "tmp/**/*",
+    "app/components/shadcn/**/*",
+  )
 
 local linters = new Mapping<String, Step> {
   // Add linters here. Examples:

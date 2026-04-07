@@ -1,12 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "happytown_supabase": {
+    "smallerworld_supabase": {
       "type": "remote",
-      "url": "https://mcp.supabase.com/mcp?project_ref=ysiwerjzufsrkyqjftal&read_only=true&features=docs%2Cdatabase",
+      "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=database,docs",
       "oauth": {}
     },
-    "happytown_sentry": {
+    "smallerworld_sentry": {
       "type": "remote",
       "url": "https://mcp.sentry.dev/mcp",
       "oauth": {}

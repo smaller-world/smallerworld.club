@@ -26,9 +26,6 @@ class Rails::Conductor::BaseController
     include ::Importmap::ImportmapTagsHelper
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
-    include ::WhatsappMessaging::Helpers
-    include ::WhatsappMessaging
-    include ::WhatsappGroupAgentHelper
     include ::LocalTimeHelper
   end
 

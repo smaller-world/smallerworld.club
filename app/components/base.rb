@@ -19,6 +19,7 @@ class Components::Base < Phlex::HTML
   include PhlexIcons
 
   register_output_helper :local_time
+  register_output_helper :inline_svg_tag
   register_value_helper :auto_link
 
   # == Configuration ==

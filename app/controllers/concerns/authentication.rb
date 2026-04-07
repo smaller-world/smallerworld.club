@@ -49,7 +49,9 @@ module Authentication
 
   sig { returns(T.nilable(Session)) }
   def find_session_by_cookie
-    Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
+    if (session_id = cookies.signed[:session_id])
+      Session.find_by(id: session_id)
+    end
   end
 
   sig { void }
@@ -65,7 +67,7 @@ module Authentication
 
   sig { returns(String) }
   def after_authentication_url
-    session.delete(:return_to_after_authenticating) || root_url
+    session.delete(:return_to_after_authenticating) || home_url
   end
 
   sig { params(user: User).returns(Session) }

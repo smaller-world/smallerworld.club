@@ -54,8 +54,8 @@ class Components::Layout < Components::Base
         meta(charset: "UTF-8")
         meta(name: "viewport", content: "width=device-width,initial-scale=1")
         meta(name: "apple-mobile-web-app-capable", content: "yes")
-        if (name = Rails.configuration.x.site_name)
-          meta(name: "application-name", content: name)
+        if (site_name = Rails.configuration.x.site.name)
+          meta(name: "application-name", content: site_name)
         end
         meta(name: "mobile-web-app-capable", content: "yes")
 
@@ -70,13 +70,14 @@ class Components::Layout < Components::Base
         link(rel: "icon", href: "/favicon-96x96.png", type: "image/png", sizes: "96x96")
         link(rel: "icon", href: "/favicon.svg", type: "image/svg+xml")
         link(rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png")
-        link(rel: "manifest", href: "/site.webmanifest")
 
         # == Fonts
         link(rel: "preconnect", href: "https://fonts.googleapis.com")
         link(rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true)
-        link(href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap", rel: "stylesheet")
-        # link(rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap")
+        link(
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Manrope:wght@200..800&family=Single+Day&display=swap",
+        )
 
         # == Assets
         stylesheet_link_tag("application", "data-turbo-track": "reload")
@@ -120,7 +121,7 @@ class Components::Layout < Components::Base
   sig { returns(T.nilable(String)) }
   def title_text
     @site_title ||
-      [ @page_title, Rails.configuration.x.site_name ]
+      [ @page_title, Rails.configuration.x.site.name ]
         .compact.join(" | ").presence
   end
 

@@ -78,10 +78,6 @@ gem "mission_control-jobs"
 # Paginate with Pagy
 gem "pagy", "~> 43.2"
 
-# Extend MVC to AI interactions
-gem "activeagent", "~> 1.0"
-gem "openai", "~> 0.49.0"
-
 # Interact with LLMs using RubyLLM
 gem "ruby_llm", "~> 1.13"
 
@@ -107,6 +103,15 @@ gem "rails_autolink", "~> 1.1"
 # Add PostGIS support
 gem "activerecord-postgis-adapter"
 gem "rgeo"
+
+# Validate email addresses
+gem "email_validator", "~> 2.2"
+
+# Sign in with Apple
+gem "apple_id", "~> 1.6"
+
+# Render inline SVGs in views
+gem "inline_svg", "~> 1.10"
 
 group :development, :test do
   # Run tests with Minitest

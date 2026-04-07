@@ -1,7 +1,9 @@
 # typed: true
 # frozen_string_literal: true
 
-class Views::Home::Show < Views::Base
+class Views::Pages::Home < Views::Base
+  # == View ==
+
   sig { override.void }
   def view_template
     Components::Layout() do |layout|

@@ -21,7 +21,7 @@ default: &default
 
 development: &development
   <<: *default
-  database: happytown_development
+  database: smallerworld_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -55,7 +55,7 @@ development: &development
 # Do not set this db to the same as development or production.
 test:
   <<: *development
-  database: happytown_test
+  database: smallerworld_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -86,28 +86,27 @@ test:
 # production:
 #   primary: &primary_production
 #     <<: *default
-#     database: happytown_production
-#     username: happytown
+#     database: smallerworld_production
+#     username: smallerworld
 #     url: <%= ENV["DATABASE_URL"] %>
 #   cache:
 #     <<: *primary_production
-#     database: happytown_production_cache
+#     database: smallerworld_production_cache
 #     migrations_paths: db/cache_migrate
 #     url: <%#= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_cache" } if ENV["DATABASE_URL"] %>
 #   queue:
 #     <<: *primary_production
-#     database: happytown_production_queue
+#     database: smallerworld_production_queue
 #     migrations_paths: db/queue_migrate
 #     url: <%#= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_queue" } if ENV["DATABASE_URL"] %>
 #   cable:
 #     <<: *primary_production
-#     database: happytown_production_cable
+#     database: smallerworld_production_cable
 #     migrations_paths: db/cable_migrate
 #     url: <%#= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_cable" } if ENV["DATABASE_URL"] %>
 #
 
 production:
   <<: *default
-  database: happytown_production
-  username: happytown
+  database: smallerworld_production
   url: <%= ENV["DATABASE_URL"] %>

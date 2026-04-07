@@ -6,6 +6,6 @@ class ApplicationMailer < ActionMailer::Base
 
   # == Configuration ==
 
-  default from: "robot@happytown.life"
+  default from: "robot@smallerworld.club"
   layout "mailer"
 end
