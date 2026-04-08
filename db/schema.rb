@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_07_043516) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_08_034323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_record_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
+    t.timestamptz "created_at", precision: 6, null: false
+    t.timestamptz "updated_at", precision: 6, null: false
+    t.string "value"
+  end
+
+  create_table "active_record_schema_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
 
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -166,17 +175,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_043516) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "apple_first_name", null: false
-    t.string "apple_last_name", null: false
-    t.string "apple_uid", null: false
     t.datetime "created_at", null: false
     t.string "email_address", null: false
     t.string "name", null: false
+    t.string "oauth_first_name", null: false
+    t.string "oauth_last_name", null: false
+    t.string "oauth_provider", null: false
+    t.string "oauth_uid", null: false
     t.string "phone_number"
     t.string "time_zone_name", null: false
     t.datetime "updated_at", null: false
-    t.index ["apple_uid"], name: "index_users_on_apple_uid", unique: true
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["oauth_provider", "oauth_uid"], name: "index_users_on_oauth_provider_and_oauth_uid", unique: true
     t.index ["phone_number"], name: "index_users_on_phone_number"
   end
 
