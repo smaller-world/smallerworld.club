@@ -13,13 +13,4 @@ class PagesController < PublicController
       end
     end
   end
-
-  # GET /home
-  def home
-    respond_to do |format|
-      format.html do
-        render Views::Pages::Home
-      end
-    end
-  end
 end

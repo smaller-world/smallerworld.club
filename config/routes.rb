@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   scope controller: :pages do
     root action: :landing
-    get :home
   end
 
   # == Authentication ==
@@ -30,6 +29,10 @@ Rails.application.routes.draw do
     get :callback
   end
   # resources :passwords, param: :token
+
+  # == Home ==
+
+  get :home, to: "home#show"
 
   # == Devtools ==
 

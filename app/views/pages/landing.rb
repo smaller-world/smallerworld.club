@@ -31,7 +31,7 @@ class Views::Pages::Landing < Views::Base
           end
           Components::Button(
             element: :a,
-            href: new_session_path,
+            href: home_path,
             size: :lg,
           ) do
             Icon(
