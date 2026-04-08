@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        render Views::Pages::Home
+        render Views::Home::Show
       end
     end
   end

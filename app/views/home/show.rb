@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Views::Pages::Home < Views::Base
+class Views::Home::Show < Views::Base
   include Phlex::Rails::Helpers::ButtonTo
 
   # == View ==
@@ -29,11 +29,7 @@ class Views::Pages::Home < Views::Base
         button_to(
           session_path,
           method: :delete,
-          data: {
-            slot: "button",
-            size: "default",
-            variant: "destructive",
-          },
+          **Components::Button.attributes(variant: :destructive),
         ) do
           "sign out"
         end

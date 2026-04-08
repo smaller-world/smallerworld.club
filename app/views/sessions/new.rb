@@ -44,7 +44,7 @@ class Views::Sessions::New < Views::Base
           end
         end
       end
-      card.content(class: "flex flex-col items-stretch gap-3") do
+      card.content(class: "flex flex-col items-stretch gap-y-3") do
         Components::SignInWithAppleButton()
         Components::SignInWithGoogleButton()
       end
