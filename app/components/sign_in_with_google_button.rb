@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::SignInWithAppleButton < Components::Base
+class Components::SignInWithGoogleButton < Components::Base
   include Phlex::Rails::Helpers::ButtonTo
 
   # == Configuration ==
@@ -16,7 +16,7 @@ class Components::SignInWithAppleButton < Components::Base
 
   def view_template
     form_with(
-      url: apple_oauth_session_path,
+      url: google_oauth_session_path,
       method: :post,
       **mix(
         {
@@ -34,13 +34,13 @@ class Components::SignInWithAppleButton < Components::Base
           controller: "current-time-zone-input",
         },
       )
-      f.button(**mix({ class: "sign_in_with_apple_button" }, **@attributes)) do
+      f.button(**mix({ class: "sign_in_with_google_button" }, **@attributes)) do
         inline_svg_tag(
-          "sign_in_with_apple/button_logo.svg",
+          "sign_in_with_google/button_logo.svg",
           aria_hidden: true,
         )
         span do
-          "Sign in with Apple"
+          "Sign in with Google"
         end
       end
     end

@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
     post :callback
   end
+  resource :google_oauth_session, path: "/session/google_oauth", only: :create do
+    get :callback
+  end
   # resources :passwords, param: :token
 
   # == Devtools ==

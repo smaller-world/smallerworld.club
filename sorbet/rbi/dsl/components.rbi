@@ -128,6 +128,15 @@ module Components
   end
   def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
 
+  sig do
+    params(
+      form: T::Hash[::Symbol, T.untyped],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::SignInWithGoogleButton).void)
+    ).void
+  end
+  def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
+
   class << self
     sig do
       params(
@@ -250,5 +259,14 @@ module Components
       ).void
     end
     def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        form: T::Hash[::Symbol, T.untyped],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::SignInWithGoogleButton).void)
+      ).void
+    end
+    def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
   end
 end

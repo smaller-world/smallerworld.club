@@ -19,10 +19,16 @@ module GeneratedPathHelpersModule
   def callback_apple_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def callback_google_oauth_session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def errors_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def fly_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def google_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def home_path(*args); end

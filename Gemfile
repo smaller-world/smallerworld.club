@@ -113,6 +113,9 @@ gem "apple_id", "~> 1.6"
 # Render inline SVGs in views
 gem "inline_svg", "~> 1.10"
 
+# Download remote files
+gem "down", "~> 5.5"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

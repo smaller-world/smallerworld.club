@@ -7,7 +7,7 @@
 #  email_address    :string           not null
 #  name             :string           not null
 #  oauth_first_name :string           not null
-#  oauth_last_name  :string           not null
+#  oauth_last_name  :string
 #  oauth_provider   :string           not null
 #  oauth_uid        :string           not null
 #  phone_number     :string

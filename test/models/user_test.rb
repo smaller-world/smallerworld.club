@@ -9,11 +9,12 @@ require "test_helper"
 # Table name: users
 #
 #  id               :uuid             not null, primary key
-#  apple_first_name :string           not null
-#  apple_last_name  :string           not null
-#  apple_uid        :string           not null
 #  email_address    :string           not null
 #  name             :string           not null
+#  oauth_first_name :string           not null
+#  oauth_last_name  :string
+#  oauth_provider   :string           not null
+#  oauth_uid        :string           not null
 #  phone_number     :string
 #  time_zone_name   :string           not null
 #  created_at       :datetime         not null
@@ -21,9 +22,9 @@ require "test_helper"
 #
 # Indexes
 #
-#  index_users_on_apple_uid      (apple_uid) UNIQUE
-#  index_users_on_email_address  (email_address) UNIQUE
-#  index_users_on_phone_number   (phone_number)
+#  index_users_on_email_address                 (email_address) UNIQUE
+#  index_users_on_oauth_provider_and_oauth_uid  (oauth_provider,oauth_uid) UNIQUE
+#  index_users_on_phone_number                  (phone_number)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class UserTest < ActiveSupport::TestCase

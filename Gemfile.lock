@@ -155,6 +155,9 @@ GEM
     dockerfile-rails (1.7.10)
       rails (>= 3.0.0)
     dotenv (3.2.0)
+    down (5.5.0)
+      addressable (~> 2.8)
+      base64 (~> 0.3)
     drb (2.2.3)
     ed25519 (1.4.0)
     email_validator (2.2.4)
@@ -637,6 +640,7 @@ DEPENDENCIES
   debug
   dig_bang
   dockerfile-rails
+  down (~> 5.5)
   email_validator (~> 2.2)
   enumerize (~> 2.8)
   friendly_id (~> 5.6)
@@ -741,6 +745,7 @@ CHECKSUMS
   dig_bang (0.2.1) sha256=94912d64bd481505f5eb642fa6d9bc38042019d3c11c75ae8e2881fce0f8b8a5
   dockerfile-rails (1.7.10) sha256=04163273792ec6c6560244d32c0b44bbed705384a47b8063adcbf0d7bc8abd26
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
+  down (5.5.0) sha256=787e14fcfe7824b8cac676c608359e4083b2e4d6e1d3b1745b79f27bcf931585
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   ed25519 (1.4.0) sha256=16e97f5198689a154247169f3453ef4cfd3f7a47481fde0ae33206cdfdcac506
   email_validator (2.2.4) sha256=5ab238095bec7aef9389f230e9e0c64c5081cdf91f19d6c5cecee0a93af20604

@@ -19,10 +19,16 @@ module GeneratedUrlHelpersModule
   def callback_apple_oauth_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def callback_google_oauth_session_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def errors_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def fly_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def google_oauth_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def home_url(*args); end
