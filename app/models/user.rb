@@ -78,6 +78,14 @@ class User < ApplicationRecord
     picture_url: nil,
     **attributes
   )
+    email_address = attributes[:email_address]&.strip&.downcase
+    if email_address.present? &&
+        (existing = find_by(email_address: email_address)) &&
+        existing.oauth_provider != provider.to_s
+      raise "An account with this email already exists. Please sign in with " \
+        "#{existing.oauth_provider.titleize}."
+    end
+
     user = find_or_initialize_by(oauth_provider: provider, oauth_uid: uid) do |user|
       raise "Missing first name" unless first_name
 

@@ -75,10 +75,6 @@ class GoogleOauthSessionsController < ApplicationController
     family_name = raw_claims["family_name"]
     picture_url = raw_claims["picture"]
 
-    if (existing = User.find_by(email_address: email)) && existing.oauth_provider != "google"
-      raise "An account with this email already exists. Please sign in with #{existing.oauth_provider.capitalize}."
-    end
-
     user = User.from_oauth_provider!(
       :google,
       uid: id_token.sub,

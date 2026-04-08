@@ -37,4 +37,21 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal("downcased@example.com", user.email_address)
   end
+
+  test "from_oauth_provider! rejects email claimed by another provider" do
+    error = assert_raises(RuntimeError) do
+      User.from_oauth_provider!(
+        :google,
+        uid: "google_uid_one",
+        first_name: "Test",
+        email_address: users(:one).email_address,
+        time_zone_name: "America/New_York",
+      )
+    end
+
+    assert_equal(
+      "An account with this email already exists. Please sign in with Apple.",
+      error.message,
+    )
+  end
 end
