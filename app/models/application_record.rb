@@ -7,6 +7,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   abstract!
 
+  extend Enumerize
   include TaggedLogging
 
   # == Configuration ==
