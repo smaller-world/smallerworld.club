@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 class Components::Separator < Components::Base
-  sig { params(orientation: Symbol, decorative: T::Boolean, options: T.untyped).void }
-  def initialize(orientation: :horizontal, decorative: true, **options)
-    super(**options)
+  sig { params(orientation: Symbol, decorative: T::Boolean, attributes: T.untyped).void }
+  def initialize(orientation: :horizontal, decorative: true, **attributes)
+    super(**attributes)
     @orientation = orientation
     @decorative = decorative
   end

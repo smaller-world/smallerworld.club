@@ -4,9 +4,9 @@
 class Components::Badge < Components::Base
   # == Configuration ==
 
-  sig { params(variant: Symbol, options: T.untyped).void }
-  def initialize(variant: :default, **options)
-    super(**options)
+  sig { params(variant: Symbol, attributes: T.untyped).void }
+  def initialize(variant: :default, **attributes)
+    super(**attributes)
     @variant = variant
   end
 

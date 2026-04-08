@@ -6,11 +6,11 @@ class Components::Input < Components::Base
     params(
       form: T.nilable(Phlex::Rails::Builder),
       field: T.nilable(Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
-  def initialize(form:, field: nil, **options)
-    super(**options)
+  def initialize(form:, field: nil, **attributes)
+    super(**attributes)
     @form = form
     @field = field
   end
