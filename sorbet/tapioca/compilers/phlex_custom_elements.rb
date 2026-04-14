@@ -35,7 +35,7 @@ module Tapioca
                   create_kw_rest_param("attributes", type: "T.untyped"),
                   create_block_param(
                     "block",
-                    type: "T.nilable(T.proc.params(instance: #{constant.name}).void)",
+                    type: "T.nilable(T.proc.void)",
                   ),
                 ],
                 return_type: "void",
