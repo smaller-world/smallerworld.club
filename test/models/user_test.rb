@@ -39,7 +39,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "from_oauth_provider! rejects email claimed by another provider" do
-    error = assert_raises(RuntimeError) do
+    error = assert_raises(User::ExistingOAuthProviderError) do
       User.from_oauth_provider!(
         :google,
         uid: "google_uid_one",
