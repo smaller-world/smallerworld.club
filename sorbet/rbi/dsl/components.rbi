@@ -18,7 +18,7 @@ module Components
   sig do
     params(
       variant: ::Symbol,
-      size: ::Symbol,
+      size: T.any(::String, ::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Button).void)
     ).void
@@ -150,7 +150,7 @@ module Components
     sig do
       params(
         variant: ::Symbol,
-        size: ::Symbol,
+        size: T.any(::String, ::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Button).void)
       ).void

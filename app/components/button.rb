@@ -4,7 +4,13 @@
 class Components::Button < Components::Base
   # == Configuration ==
 
-  sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
+  sig do
+    params(
+      variant: Symbol,
+      size: T.any(Symbol, String),
+      attributes: T.untyped,
+    ).void
+  end
   def initialize(variant: :default, size: :default, **attributes)
     super(**attributes)
     @variant = variant

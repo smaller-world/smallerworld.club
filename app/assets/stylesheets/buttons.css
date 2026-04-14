@@ -47,7 +47,7 @@
     }
 
     &[data-size="lg"] {
-      @apply h-10 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3;
+      @apply h-10 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2;
     }
 
     &[data-size="icon"] {
