@@ -65,12 +65,16 @@ class AppleOauthSessionsController < ApplicationController
 
     session_time_zone = cookies.delete(:session_time_zone) or
       raise "Missing session time zone"
-    user_data_json = params[:user] || {}
+    user_data = if (raw_json = params[:user])
+      JSON.parse(raw_json)
+    else
+      {}
+    end
     user = User.from_oauth_provider!(
       :apple,
       uid: id_token.sub,
-      first_name: user_data_json.dig("name", "firstName"),
-      last_name: user_data_json.dig("name", "lastName"),
+      first_name: user_data.dig("name", "firstName"),
+      last_name: user_data.dig("name", "lastName"),
       email_address: id_token.email,
       time_zone_name: session_time_zone,
     )
