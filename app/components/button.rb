@@ -15,31 +15,19 @@ class Components::Button < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    root_element(
-      :button,
+    root_element(:button, **root_attributes, &content)
+  end
+
+  # == Helpers ==
+
+  sig { returns(T::Hash[Symbol, T.untyped]) }
+  def root_attributes
+    {
       class: "group/button",
       data: {
         slot: "button",
         variant: @variant,
         size: @size,
-      },
-      &content
-    )
-  end
-
-  # == Helpers ==
-
-  sig do
-    params(variant: Symbol, size: Symbol)
-      .returns(T::Hash[Symbol, T.untyped])
-  end
-  def self.attributes(variant: :default, size: :default)
-    {
-      class: "group/button",
-      data: {
-        slot: "button",
-        variant:,
-        size:,
       },
     }
   end

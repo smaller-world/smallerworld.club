@@ -1679,6 +1679,291 @@ Rails::BacktraceCleaner::APP_DIRS_PATTERN = T.let(T.unsafe(nil), Regexp)
 # source://railties//lib/rails/backtrace_cleaner.rb#9
 Rails::BacktraceCleaner::RENDER_TEMPLATE_PATTERN = T.let(T.unsafe(nil), Regexp)
 
+# source://railties//lib/rails/command.rb#11
+module Rails::Command
+  include ::Rails::Command::Behavior
+  extend ::ActiveSupport::Autoload
+  extend ::Rails::Command::Behavior::ClassMethods
+
+  class << self
+    # source://railties//lib/rails/command.rb#110
+    def application_root; end
+
+    # source://railties//lib/rails/command.rb#51
+    def environment; end
+
+    # Rails finds namespaces similar to Thor, it only adds one rule:
+    #
+    # Command names must end with "_command.rb". This is required because Rails
+    # looks in load paths and loads the command just before it's going to be used.
+    #
+    #   find_by_namespace :webrat, :integration
+    #
+    # Will search for the following commands:
+    #
+    #   "webrat", "webrat:integration", "rails:webrat", "rails:webrat:integration"
+    #
+    # source://railties//lib/rails/command.rb#90
+    def find_by_namespace(namespace, command_name = T.unsafe(nil)); end
+
+    # source://railties//lib/rails/command.rb#47
+    def hidden_commands; end
+
+    # Receives a namespace, arguments, and the behavior to invoke the command.
+    #
+    # source://railties//lib/rails/command.rb#56
+    def invoke(full_namespace, args = T.unsafe(nil), **config); end
+
+    # source://railties//lib/rails/command.rb#114
+    def printing_commands; end
+
+    # Returns the root of the \Rails engine or app running the command.
+    #
+    # source://railties//lib/rails/command.rb#102
+    def root; end
+
+    private
+
+    # source://railties//lib/rails/command.rb#153
+    def command_type; end
+
+    # source://railties//lib/rails/command.rb#161
+    def file_lookup_paths; end
+
+    # source://railties//lib/rails/command.rb#148
+    def invoke_rake(task, args, config); end
+
+    # source://railties//lib/rails/command.rb#157
+    def lookup_paths; end
+
+    # @return [Boolean]
+    #
+    # source://railties//lib/rails/command.rb#121
+    def rails_new_with_no_path?(args); end
+
+    # source://railties//lib/rails/command.rb#125
+    def split_namespace(namespace); end
+
+    # source://railties//lib/rails/command.rb#140
+    def with_argv(argv); end
+  end
+end
+
+# source://railties//lib/rails/command/actions.rb#5
+module Rails::Command::Actions
+  # source://railties//lib/rails/command/actions.rb#18
+  def boot_application!; end
+
+  # source://railties//lib/rails/command/actions.rb#23
+  def load_environment_config!; end
+
+  # source://railties//lib/rails/command/actions.rb#46
+  def load_generators; end
+
+  # source://railties//lib/rails/command/actions.rb#42
+  def load_tasks; end
+
+  # source://railties//lib/rails/command/actions.rb#13
+  def require_application!; end
+
+  # Change to the application's path if there is no <tt>config.ru</tt> file in current directory.
+  # This allows us to run <tt>rails server</tt> from other directories, but still get
+  # the main <tt>config.ru</tt> and properly set the <tt>tmp</tt> directory.
+  #
+  # source://railties//lib/rails/command/actions.rb#9
+  def set_application_directory!; end
+end
+
+# source://railties//lib/rails/command/base.rb#12
+class Rails::Command::Base < ::Thor
+  include ::Rails::Command::Actions
+
+  # source://railties//lib/rails/command/base.rb#171
+  def current_subcommand; end
+
+  # source://railties//lib/rails/command/base.rb#170
+  def executable(*_arg0, **_arg1, &_arg2); end
+
+  # source://railties//lib/rails/command/base.rb#173
+  def invoke_command(command, *_arg1); end
+
+  class << self
+    # source://railties//lib/rails/command/base.rb#84
+    def banner(command = T.unsafe(nil), *_arg1); end
+
+    # Sets the base_name taking into account the current class namespace.
+    #
+    #   Rails::Command::TestCommand.base_name # => 'rails'
+    #
+    # source://railties//lib/rails/command/base.rb#104
+    def base_name; end
+
+    # source://railties//lib/rails/command/base.rb#18
+    def bin; end
+
+    # source://railties//lib/rails/command/base.rb#18
+    def bin=(value); end
+
+    # source://railties//lib/rails/command/base.rb#18
+    def bin?; end
+
+    # source://railties//lib/rails/command/base.rb#120
+    def class_usage; end
+
+    # Return command name without namespaces.
+    #
+    #   Rails::Command::TestCommand.command_name # => 'test'
+    #
+    # source://railties//lib/rails/command/base.rb#113
+    def command_name; end
+
+    # Default file root to place extra files a command might need, placed
+    # one folder above the command file.
+    #
+    # For a Rails::Command::TestCommand placed in <tt>rails/command/test_command.rb</tt>
+    # would return <tt>rails/test</tt>.
+    #
+    # source://railties//lib/rails/command/base.rb#137
+    def default_command_root; end
+
+    # Tries to get the description from a USAGE file one folder above the command
+    # root.
+    #
+    # source://railties//lib/rails/command/base.rb#32
+    def desc(usage = T.unsafe(nil), description = T.unsafe(nil), options = T.unsafe(nil)); end
+
+    # Returns true when the app is a \Rails engine.
+    #
+    # @return [Boolean]
+    #
+    # source://railties//lib/rails/command/base.rb#26
+    def engine?; end
+
+    # source://railties//lib/rails/command/base.rb#80
+    def executable(command_name = T.unsafe(nil)); end
+
+    # @return [Boolean]
+    #
+    # source://railties//lib/rails/command/base.rb#21
+    def exit_on_failure?; end
+
+    # Override Thor's class-level help to also show the USAGE.
+    #
+    # source://railties//lib/rails/command/base.rb#96
+    def help(shell, *_arg1); end
+
+    # Convenience method to hide this command from the available ones when
+    # running rails command.
+    #
+    # source://railties//lib/rails/command/base.rb#53
+    def hide_command!; end
+
+    # source://railties//lib/rails/command/base.rb#57
+    def inherited(base); end
+
+    # Convenience method to get the namespace from the class name. It's the
+    # same as Thor default except that the Command at the end of the class
+    # is removed.
+    #
+    # source://railties//lib/rails/command/base.rb#43
+    def namespace(name = T.unsafe(nil)); end
+
+    # source://railties//lib/rails/command/base.rb#65
+    def perform(command, args, config); end
+
+    # source://railties//lib/rails/command/base.rb#74
+    def printing_commands; end
+
+    # Path to lookup a USAGE description in a file.
+    #
+    # source://railties//lib/rails/command/base.rb#127
+    def usage_path; end
+
+    private
+
+    # source://railties//lib/rails/command/base.rb#18
+    def __class_attr_bin; end
+
+    # source://railties//lib/rails/command/base.rb#18
+    def __class_attr_bin=(new_value); end
+
+    # Allow the command method to be called perform.
+    #
+    # source://railties//lib/rails/command/base.rb#144
+    def create_command(meth); end
+
+    # source://railties//lib/rails/command/base.rb#157
+    def namespaced_name(name); end
+
+    # source://railties//lib/rails/command/base.rb#162
+    def resolve_path(path); end
+  end
+end
+
+# source://railties//lib/rails/command/base.rb#13
+class Rails::Command::Base::Error < ::Thor::Error; end
+
+# source://railties//lib/rails/command/behavior.rb#7
+module Rails::Command::Behavior
+  extend ::ActiveSupport::Concern
+
+  mixes_in_class_methods ::Rails::Command::Behavior::ClassMethods
+end
+
+module Rails::Command::Behavior::ClassMethods
+  # source://railties//lib/rails/command/behavior.rb#12
+  def no_color!; end
+
+  # source://railties//lib/rails/command/behavior.rb#17
+  def subclasses; end
+
+  private
+
+  # source://railties//lib/rails/command/behavior.rb#36
+  def lookup(namespaces); end
+
+  # source://railties//lib/rails/command/behavior.rb#56
+  def lookup!; end
+
+  # source://railties//lib/rails/command/behavior.rb#70
+  def namespaces_to_paths(namespaces); end
+
+  # source://railties//lib/rails/command/behavior.rb#23
+  def print_list(base, namespaces); end
+end
+
+# source://railties//lib/rails/command.rb#17
+class Rails::Command::CorrectableNameError < ::StandardError
+  include ::DidYouMean::Correctable
+
+  # @return [CorrectableNameError] a new instance of CorrectableNameError
+  #
+  # source://railties//lib/rails/command.rb#20
+  def initialize(message, name, alternatives); end
+
+  # source://railties//lib/rails/command.rb#29
+  def corrections; end
+
+  # Returns the value of attribute name.
+  #
+  # source://railties//lib/rails/command.rb#18
+  def name; end
+end
+
+# source://railties//lib/rails/command.rb#43
+Rails::Command::HELP_MAPPINGS = T.let(T.unsafe(nil), Set)
+
+# source://railties//lib/rails/command.rb#35
+class Rails::Command::UnrecognizedCommandError < ::Rails::Command::CorrectableNameError
+  # @return [UnrecognizedCommandError] a new instance of UnrecognizedCommandError
+  #
+  # source://railties//lib/rails/command.rb#36
+  def initialize(name); end
+end
+
+# source://railties//lib/rails/command.rb#44
+Rails::Command::VERSION_MAPPINGS = T.let(T.unsafe(nil), Set)
+
 # source://railties//lib/rails/configuration.rb#9
 module Rails::Configuration; end
 
@@ -3113,6 +3398,7 @@ module Rails::MailersController::HelperMethods
   include ::ActionView::Helpers::OutputSafetyHelper
   include ::ActionView::Helpers::TagHelper
   include ::Turbo::Streams::ActionHelper
+  include ::Importmap::ImportmapTagsHelper
   include ::ActionController::Base::HelperMethods
 
   # source://railties//lib/rails/mailers_controller.rb#13
@@ -4101,7 +4387,7 @@ Rails::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 Rails::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://railties//lib/rails/gem_version.rb#13
-Rails::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+Rails::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # source://railties//lib/rails/gem_version.rb#15
 Rails::VERSION::STRING = T.let(T.unsafe(nil), String)

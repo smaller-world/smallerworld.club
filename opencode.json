@@ -6,7 +6,7 @@
       "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=database,docs",
       "oauth": {}
     },
-    "smallerworld_sentry": {
+    "sentry": {
       "type": "remote",
       "url": "https://mcp.sentry.dev/mcp",
       "oauth": {}

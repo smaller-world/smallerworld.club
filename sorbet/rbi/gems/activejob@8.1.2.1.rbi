@@ -11,6 +11,7 @@
 # source://activejob//lib/active_job/gem_version.rb#3
 module ActiveJob
   extend ::ActiveSupport::Autoload
+  extend ::ActiveJob::Querying::Root
 
   class << self
     # source://activejob//lib/active_job/queue_adapter.rb#7
@@ -186,6 +187,9 @@ class ActiveJob::Base
   include ::ActiveJob::Logging
   include ::ActiveJob::ExecutionState
   include ::ActiveJob::ConcurrencyControls
+  include ::ActiveJob::Querying
+  include ::ActiveJob::Executing
+  include ::ActiveJob::Failed
   include ::ActiveJob::TestHelper::TestQueueAdapter
   extend ::ActiveJob::Core::ClassMethods
   extend ::ActiveJob::QueueAdapter::ClassMethods
@@ -199,6 +203,8 @@ class ActiveJob::Base
   extend ::ActiveJob::Callbacks::ClassMethods
   extend ::ActiveJob::Exceptions::ClassMethods
   extend ::ActiveJob::ConcurrencyControls::ClassMethods
+  extend ::ActiveJob::Querying::ClassMethods
+  extend ::ActiveJob::Executing::ClassMethods
   extend ::ActiveJob::TestHelper::TestQueueAdapter::ClassMethods
 
   # source://activejob//lib/active_job/base.rb#70
@@ -232,6 +238,18 @@ class ActiveJob::Base
   def after_discard_procs?; end
 
   # source://activejob//lib/active_job/base.rb#76
+  def blocked_by; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def blocked_by=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def blocked_until; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def blocked_until=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
   def concurrency_duration; end
 
   # source://activejob//lib/active_job/base.rb#76
@@ -258,11 +276,50 @@ class ActiveJob::Base
   # source://activejob//lib/active_job/base.rb#76
   def concurrency_on_conflict?; end
 
+  # source://activejob//lib/active_job/base.rb#76
+  def current_queue_adapter; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def current_queue_adapter=(obj); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def default_page_size; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def default_page_size=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def default_page_size?; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def failed_at; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def failed_at=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def finished_at; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def finished_at=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def last_execution_error; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def last_execution_error=(_arg0); end
+
   # source://activejob//lib/active_job/base.rb#73
   def logger; end
 
   # source://activejob//lib/active_job/base.rb#73
   def logger=(val); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def position; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def position=(_arg0); end
 
   # source://activejob//lib/active_job/base.rb#65
   def queue_adapter(&_arg0); end
@@ -276,6 +333,12 @@ class ActiveJob::Base
   # source://activejob//lib/active_job/base.rb#66
   def queue_name_prefix?; end
 
+  # source://activejob//lib/active_job/base.rb#76
+  def raw_data; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def raw_data=(_arg0); end
+
   # source://activejob//lib/active_job/base.rb#69
   def rescue_handlers; end
 
@@ -284,6 +347,27 @@ class ActiveJob::Base
 
   # source://activejob//lib/active_job/base.rb#69
   def rescue_handlers?; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def serialized_arguments; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def started_at; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def started_at=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def status; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def status=(_arg0); end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def worker_id; end
+
+  # source://activejob//lib/active_job/base.rb#76
+  def worker_id=(_arg0); end
 
   class << self
     # source://activejob//lib/active_job/base.rb#70
@@ -375,6 +459,21 @@ class ActiveJob::Base
 
     # source://activejob//lib/active_job/base.rb#76
     def concurrency_on_conflict?; end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def current_queue_adapter; end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def current_queue_adapter=(obj); end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def default_page_size; end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def default_page_size=(value); end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def default_page_size?; end
 
     # source://activejob//lib/active_job/base.rb#68
     def enqueue_after_transaction_commit; end
@@ -509,6 +608,12 @@ class ActiveJob::Base
 
     # source://activejob//lib/active_job/base.rb#76
     def __class_attr_concurrency_on_conflict=(new_value); end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def __class_attr_default_page_size; end
+
+    # source://activejob//lib/active_job/base.rb#76
+    def __class_attr_default_page_size=(new_value); end
 
     # source://activejob//lib/active_job/base.rb#68
     def __class_attr_enqueue_after_transaction_commit; end
@@ -3585,7 +3690,7 @@ ActiveJob::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveJob::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://activejob//lib/active_job/gem_version.rb#13
-ActiveJob::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveJob::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # source://activejob//lib/active_job/gem_version.rb#15
 ActiveJob::VERSION::STRING = T.let(T.unsafe(nil), String)

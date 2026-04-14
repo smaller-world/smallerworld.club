@@ -29,9 +29,35 @@ class User < ApplicationRecord
   include NormalizesPhoneNumber
   include HasTimeZone
 
-  # == Enumerations ==
+  # == Errors ==
+
+  class ExistingOAuthProviderError < StandardError
+    extend T::Sig
+
+    sig { params(oauth_provider: Enumerize::Value).void }
+    def initialize(oauth_provider)
+      @oauth_provider = oauth_provider
+      super(
+        "An account with this email already exists. Please sign in with " \
+          "#{oauth_provider.titleize}."
+      )
+    end
+
+    sig { returns(Enumerize::Value) }
+    attr_reader :oauth_provider
+  end
+
+  # == Attributes ==
 
   enumerize :oauth_provider, in: [ :apple, :google ]
+
+  # == Associations ==
+
+  has_many :sessions, dependent: :destroy
+  has_many :worlds,
+    dependent: :destroy,
+    inverse_of: :owner,
+    foreign_key: :owner_id
 
   # == Attachments ==
 
@@ -50,13 +76,9 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30 }
   validates :email_address, presence: true, email: true
   validates :phone_number,
-            phone: { possible: true, types: :mobile, extensions: false },
-            allow_nil: true
+    phone: { possible: true, types: :mobile, extensions: false },
+    allow_nil: true
   validates_time_zone_name
-
-  # == Associations ==
-
-  has_many :sessions, dependent: :destroy
 
   # == Class methods ==
 
@@ -80,10 +102,9 @@ class User < ApplicationRecord
   )
     email_address = attributes[:email_address]&.strip&.downcase
     if email_address.present? &&
-        (existing = find_by(email_address: email_address)) &&
-        existing.oauth_provider != provider.to_s
-      raise "An account with this email already exists. Please sign in with " \
-        "#{existing.oauth_provider.titleize}."
+        (existing_provider = existing_oauth_provider_for_email(email_address)) &&
+        existing_provider != provider
+      raise ExistingOAuthProviderError, existing_provider
     end
 
     user = find_or_initialize_by(oauth_provider: provider, oauth_uid: uid) do |user|
@@ -103,5 +124,10 @@ class User < ApplicationRecord
     end
     user.update!(**attributes)
     user
+  end
+
+  sig { params(email_address: String).returns(T.nilable(Enumerize::Value)) }
+  private_class_method def self.existing_oauth_provider_for_email(email_address)
+    where(email_address: email_address).pick(:oauth_provider)
   end
 end

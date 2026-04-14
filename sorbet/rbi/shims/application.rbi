@@ -9,14 +9,6 @@ class ApplicationCable::Connection
   def current_user; end
 end
 
-class User
-  sig { params(token: String).returns(T.nilable(User)) }
-  def self.find_by_password_reset_token(token: String); end
-
-  sig { params(token: String).returns(User) }
-  def self.find_by_password_reset_token!(token: String); end
-end
-
 class Components::Base
   include LocalTimeHelper
   include InlineSvg::ActionView::Helpers

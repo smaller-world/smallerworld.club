@@ -9,21 +9,21 @@ module Components
   sig do
     params(
       variant: ::Symbol,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
     ).void
   end
-  def Badge(variant: T.unsafe(nil), **options, &block); end
+  def Badge(variant: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
       variant: ::Symbol,
       size: ::Symbol,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Button).void)
     ).void
   end
-  def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+  def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -77,11 +77,11 @@ module Components
     params(
       form: T.nilable(::Phlex::Rails::Builder),
       field: T.nilable(::Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Input).void)
     ).void
   end
-  def Input(form:, field: T.unsafe(nil), **options, &block); end
+  def Input(form:, field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -113,11 +113,11 @@ module Components
     params(
       orientation: ::Symbol,
       decorative: T::Boolean,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Separator).void)
     ).void
   end
-  def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **options, &block); end
+  def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -141,21 +141,21 @@ module Components
     sig do
       params(
         variant: ::Symbol,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Badge).void)
       ).void
     end
-    def Badge(variant: T.unsafe(nil), **options, &block); end
+    def Badge(variant: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
         variant: ::Symbol,
         size: ::Symbol,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Button).void)
       ).void
     end
-    def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+    def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -209,11 +209,11 @@ module Components
       params(
         form: T.nilable(::Phlex::Rails::Builder),
         field: T.nilable(::Symbol),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Input).void)
       ).void
     end
-    def Input(form:, field: T.unsafe(nil), **options, &block); end
+    def Input(form:, field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -245,11 +245,11 @@ module Components
       params(
         orientation: ::Symbol,
         decorative: T::Boolean,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Separator).void)
       ).void
     end
-    def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **options, &block); end
+    def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

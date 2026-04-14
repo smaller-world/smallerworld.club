@@ -2110,6 +2110,7 @@ class ActionController::Base < ::ActionController::Metal
   extend ::ActionController::Rescue::ClassMethods
   extend ::ActionController::Instrumentation::ClassMethods
   extend ::ActionController::ParamsWrapper::ClassMethods
+  extend ::Importmap::Freshness
   extend ::ActionController::Renderers::DeprecatedEscapeJsonResponses
 
   # source://actionpack//lib/action_controller/base.rb#292
@@ -2833,6 +2834,7 @@ module ActionController::Base::HelperMethods
   include ::ActionView::Helpers::OutputSafetyHelper
   include ::ActionView::Helpers::TagHelper
   include ::Turbo::Streams::ActionHelper
+  include ::Importmap::ImportmapTagsHelper
 
   # source://actionpack//lib/action_controller/base.rb#290
   def alert(*_arg0, **_arg1, &_arg2); end
@@ -22077,7 +22079,7 @@ ActionPack::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionPack::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://actionpack//lib/action_pack/gem_version.rb#15
-ActionPack::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActionPack::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # source://actionpack//lib/action_pack/gem_version.rb#17
 ActionPack::VERSION::STRING = T.let(T.unsafe(nil), String)

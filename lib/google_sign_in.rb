@@ -1,8 +1,6 @@
 # typed: true
 # frozen_string_literal: true
 
-require "openid_connect"
-
 module GoogleSignIn
   class Client < OpenIDConnect::Client
     extend T::Sig

@@ -9591,7 +9591,7 @@ module ActionView::Helpers::TagHelper
   #   cdata_section("hello]]>world")
   #   # => <![CDATA[hello]]]]><![CDATA[>world]]>
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#555
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#558
   def cdata_section(content); end
 
   # Returns a string of tokens built from +args+.
@@ -9606,7 +9606,7 @@ module ActionView::Helpers::TagHelper
   #   token_list(nil, false, 123, "", "foo", { bar: true })
   #    # => "123 foo bar"
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#540
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#543
   def class_names(*args); end
 
   # Returns an HTML block tag of type +name+ surrounding the +content+. Add
@@ -9638,7 +9638,7 @@ module ActionView::Helpers::TagHelper
   #   <% end -%>
   #    # => <div class="strong">Hello world!</div>
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#513
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#516
   def content_tag(name, content_or_options_with_block = T.unsafe(nil), options = T.unsafe(nil), escape = T.unsafe(nil), &block); end
 
   # Returns an escaped version of +html+ without affecting existing escaped entities.
@@ -9649,7 +9649,7 @@ module ActionView::Helpers::TagHelper
   #   escape_once("&lt;&lt; Accept & Checkout")
   #   # => "&lt;&lt; Accept &amp; Checkout"
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#567
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#570
   def escape_once(html); end
 
   # Returns an HTML tag.
@@ -9799,7 +9799,7 @@ module ActionView::Helpers::TagHelper
   #   tag("div", class: { highlight: current_user.admin? })
   #   # => <div class="highlight" />
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#476
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#479
   def tag(name = T.unsafe(nil), options = T.unsafe(nil), open = T.unsafe(nil), escape = T.unsafe(nil)); end
 
   # Returns a string of tokens built from +args+.
@@ -9814,29 +9814,29 @@ module ActionView::Helpers::TagHelper
   #   token_list(nil, false, 123, "", "foo", { bar: true })
   #    # => "123 foo bar"
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#535
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#538
   def token_list(*args); end
 
   private
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#577
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#580
   def build_tag_values(*args); end
 
   # @raise [ArgumentError]
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#572
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#575
   def ensure_valid_html5_tag_name(name); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#597
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#600
   def tag_builder; end
 
   class << self
-    # source://actionview//lib/action_view/helpers/tag_helper.rb#595
+    # source://actionview//lib/action_view/helpers/tag_helper.rb#598
     def build_tag_values(*args); end
 
     # @raise [ArgumentError]
     #
-    # source://actionview//lib/action_view/helpers/tag_helper.rb#575
+    # source://actionview//lib/action_view/helpers/tag_helper.rb#578
     def ensure_valid_html5_tag_name(name); end
   end
 end
@@ -10264,27 +10264,27 @@ class ActionView::Helpers::TagHelper::TagBuilder
 
   private
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#288
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#291
   def boolean_tag_option(key); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#321
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#324
   def method_missing(called, *args, escape: T.unsafe(nil), **options, &block); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#309
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#312
   def prefix_tag_option(prefix, key, value, escape); end
 
   # @return [Boolean]
   #
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#317
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#320
   def respond_to_missing?(*args); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#284
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#287
   def self_closing_tag_string(name, options, escape = T.unsafe(nil), tag_suffix = T.unsafe(nil)); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#292
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#295
   def tag_option(key, value, escape); end
 
-  # source://actionview//lib/action_view/helpers/tag_helper.rb#278
+  # source://actionview//lib/action_view/helpers/tag_helper.rb#281
   def tag_string(name, content = T.unsafe(nil), options, escape: T.unsafe(nil), &block); end
 
   class << self
@@ -15894,7 +15894,7 @@ ActionView::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionView::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://actionview//lib/action_view/gem_version.rb#13
-ActionView::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActionView::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # source://actionview//lib/action_view/gem_version.rb#15
 ActionView::VERSION::STRING = T.let(T.unsafe(nil), String)

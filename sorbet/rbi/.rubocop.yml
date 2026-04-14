@@ -9,5 +9,8 @@ AllCops:
     - dsl/**/*
     - gems/**/*
 
+Naming/FileName:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false

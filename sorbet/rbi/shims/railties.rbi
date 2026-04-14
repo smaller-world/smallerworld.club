@@ -1,3 +1,10 @@
 # typed: true
 
-class Rails::Command::Base; end
+module Rails
+  class << self
+    sig { returns(T.all(ActiveSupport::Logger, ActiveSupport::TaggedLogging)) }
+    def logger; end
+  end
+
+  class Command::Base; end
+end

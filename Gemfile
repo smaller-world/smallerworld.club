@@ -66,8 +66,8 @@ gem "enumerize", "~> 2.8"
 # Create human-friendly identifiers for models
 gem "friendly_id", "~> 5.6"
 
-# Makes http fun again!
-gem "httparty", "~> 0.24.2"
+# Fast HTTP client
+gem "http", "~> 6.0"
 
 # Enforce a canonical host
 gem "rack-canonical-host", "~> 1.3"
@@ -115,6 +115,10 @@ gem "inline_svg", "~> 1.10"
 
 # Download remote files
 gem "down", "~> 5.5"
+
+# Validate Active Storage attachments
+gem "active_storage_validations", "~> 3.0"
+gem "ruby-vips", "~> 2.3"
 
 group :development, :test do
   # Run tests with Minitest

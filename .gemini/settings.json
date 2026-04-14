@@ -1,10 +1,10 @@
 {
   "mcpServers": {
-    "smallerworld_sentry": {
+    "sentry": {
       "httpUrl": "https://mcp.sentry.dev/mcp"
     },
     "smallerworld_supabase": {
-      "command": "npx",
+      "command": "bunx",
       "args": [
         "-y",
         "mcp-remote@latest",

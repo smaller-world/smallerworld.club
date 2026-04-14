@@ -11,13 +11,15 @@ Bundler.require(*Rails.groups)
 
 # Configure RubyLLM before Rails::Application is inherited
 #
+# See: https://rubyllm.com/configuration/#initializer-load-timing-issue-with-use_new_acts_as
+#
 # TODO: Remove after upgrading to RubyLLM 2.0 (currently unreleased as of
 # 2026-03-06)
 RubyLLM.configure do |config|
   config.use_new_acts_as = true
 end
 
-module SmallerWorld
+module Smallerworld
   extend T::Sig
 
   class Application < Rails::Application
@@ -51,30 +53,10 @@ module SmallerWorld
 
     # Disable HTTP basic auth for the jobs dashboard
     config.mission_control.jobs.http_basic_auth_enabled = false
-
-    # == Singletons ==
-
-    sig { returns(WaSenderApi) }
-    def wa_sender_api
-      return @wa_sender_api if defined?(@wa_sender_api)
-
-      api_key = credentials.dig(:wa_sender_api, :api_key) or
-        raise "Missing WA Sender API key"
-      @wa_sender_api = WaSenderApi.new(api_key:)
-    end
-
-    # sig { returns(OpenRouter) }
-    # def open_router
-    #   return @open_router if defined?(@open_router)
-
-    #   api_key = credentials.dig(:open_router, :api_key) or
-    #     raise "Missing OpenRouter API key"
-    #   @open_router = OpenRouter.new(api_key:)
-    # end
   end
 
-  sig { returns(SmallerWorld::Application) }
+  sig { returns(Smallerworld::Application) }
   def self.application
-    T.cast(Rails.application, SmallerWorld::Application)
+    T.cast(Rails.application, Smallerworld::Application)
   end
 end

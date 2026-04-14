@@ -1,9 +1,6 @@
 # typed: true
 # frozen_string_literal: true
 
-require "sorbet-runtime"
-require "rails"
-
 module TaggedLogging
   extend T::Sig
   extend T::Helpers
@@ -20,7 +17,9 @@ module TaggedLogging
 
     # == Methods ==
 
-    sig { returns(T.any(ActiveSupport::Logger, ActiveSupport::BroadcastLogger)) }
+    sig do
+      returns(T.any(ActiveSupport::Logger, ActiveSupport::BroadcastLogger))
+    end
     def logger = Rails.logger
 
     sig do
@@ -29,11 +28,7 @@ module TaggedLogging
         .returns(T.type_parameter(:U))
     end
     def tag_logger(*tags, &block)
-      if logger.respond_to?(:tagged)
-        T.unsafe(logger).tagged(*log_tags, *tags, &block)
-      else
-        yield
-      end
+      T.unsafe(logger).tagged(*log_tags, *tags, &block)
     end
 
     sig { overridable.returns(T::Array[String]) }
@@ -44,15 +39,29 @@ module TaggedLogging
       end
       tags
     end
-  end
 
-  included do
-    delegate :logger, to: :class
+    sig { params(tags: T::Array[String]).returns(T.any(ActiveSupport::Logger, ActiveSupport::BroadcastLogger)) }
+    def tagged_logger(*tags)
+      if logger.respond_to?(:tagged)
+        T.unsafe(logger).tagged(*log_tags, *tags)
+      else
+        logger
+      end
+    end
   end
 
   private
 
   # == Helpers ==
+
+  def logger
+    self.class.logger
+  end
+
+  sig { overridable.returns(T::Array[String]) }
+  def log_tags
+    self.class.log_tags
+  end
 
   sig do
     overridable.type_parameters(:U)
@@ -61,15 +70,18 @@ module TaggedLogging
   end
   def tag_logger(*tags, &block)
     if logger.respond_to?(:tagged)
-      args = [ :tagged, *log_tags, *tags ]
-      logger.public_send(*T.unsafe(args), &block)
+      T.unsafe(logger).tagged(*log_tags, *tags, &block)
     else
       yield
     end
   end
 
-  sig { overridable.returns(T::Array[String]) }
-  def log_tags
-    self.class.log_tags
+  sig { params(tags: T::Array[String]).returns(T.any(ActiveSupport::Logger, ActiveSupport::BroadcastLogger)) }
+  def tagged_logger(*tags)
+    if logger.respond_to?(:tagged)
+      T.unsafe(logger).tagged(*log_tags, *tags)
+    else
+      logger
+    end
   end
 end
