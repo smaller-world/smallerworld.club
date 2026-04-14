@@ -36,6 +36,16 @@ module Components
 
   sig do
     params(
+      id: ::String,
+      show_close_button: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+    ).void
+  end
+  def Dialog(id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::Phlex::Rails::Builder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
@@ -165,6 +175,16 @@ module Components
       ).void
     end
     def Card(size: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        id: ::String,
+        show_close_button: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+      ).void
+    end
+    def Dialog(id:, show_close_button: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

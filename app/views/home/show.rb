@@ -14,8 +14,8 @@ class Views::Home::Show < Views::Base
         Components::Card() do |card|
           card.content(class: "flex items-center gap-x-4") do
             div(class: "flex-1 flex items-center gap-x-4") do
-              if (picture = user.oauth_picture)
-                image_tag(picture, class: "size-16 rounded-full")
+              if (blob = user.oauth_picture_blob)
+                image_tag(blob, class: "size-16 rounded-full")
               end
               div(class: "flex flex-col gap-y-1") do
                 span(class: "font-semibold text-lg") do
@@ -37,6 +37,37 @@ class Views::Home::Show < Views::Base
                 data: { icon: "inline-start" },
               )
               span { "sign out" }
+            end
+          end
+        end
+
+        Components::Button(command: "show-modal", commandfor: "test-dialog") do
+          "Open dialog"
+        end
+
+        Components::Dialog(id: "test-dialog") do |d|
+          d.header do
+            d.title { "Hello from Dialog" }
+            d.description do
+              "This is a test dialog using Tailwind Elements + shadcn styling."
+            end
+          end
+          d.body do
+            p do
+              "It works! Close me with the X button, the Cancel button, or " \
+                "press Escape."
+            end
+          end
+          d.footer do
+            Components::Button(
+              variant: :outline,
+              command: "close",
+              commandfor: "test-dialog",
+            ) do
+              "Cancel"
+            end
+            Components::Button(command: "close", commandfor: "test-dialog") do
+              "Confirm"
             end
           end
         end

@@ -14,6 +14,7 @@
     "@hotwired/turbo-rails": "^8.0.23",
     "@sentry/browser": "^10.38.0",
     "@tailwindcss/cli": "^4.1.18",
+    "@tailwindplus/elements": "^1.0.22",
     "local-time": "^3.0.3",
     "requestidlecallback-polyfill": "^1.0.2",
     "shadcn": "^4.1.0",
