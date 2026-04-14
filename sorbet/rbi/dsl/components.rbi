@@ -46,6 +46,15 @@ module Components
 
   sig do
     params(
+      anchor: ::String,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
+    ).void
+  end
+  def DropdownMenu(anchor: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::Phlex::Rails::Builder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
@@ -185,6 +194,15 @@ module Components
       ).void
     end
     def Dialog(id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        anchor: ::String,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
+      ).void
+    end
+    def DropdownMenu(anchor: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

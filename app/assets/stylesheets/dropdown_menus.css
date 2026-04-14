@@ -1,0 +1,41 @@
+@layer components {
+  /* Menu popup */
+  [data-slot="dropdown-menu-content"] {
+    --anchor-gap: var(--spacing);
+
+    @apply z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none;
+    @apply transition transition-discrete data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in data-closed:scale-95 data-closed:opacity-0;
+  }
+
+  /* Menu item */
+  [data-slot="dropdown-menu-item"] {
+    @apply relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-8 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+
+    &button {
+      @apply w-full;
+    }
+
+    &[data-variant="destructive"] {
+      @apply text-destructive focus:bg-destructive/10 focus:text-destructive dark:focus:bg-destructive/20;
+    }
+
+    &:not([data-variant="destructive"]) {
+      @apply focus:**:text-accent-foreground;
+    }
+  }
+
+  /* Group label */
+  [data-slot="dropdown-menu-label"] {
+    @apply px-2 py-1.5 text-xs font-medium text-muted-foreground data-inset:pl-8;
+  }
+
+  /* Separator */
+  [data-slot="dropdown-menu-separator"] {
+    @apply -mx-1 my-1 h-px bg-border;
+  }
+
+  /* Keyboard shortcut */
+  [data-slot="dropdown-menu-shortcut"] {
+    @apply ml-auto text-xs tracking-widest text-muted-foreground;
+  }
+}

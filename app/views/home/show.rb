@@ -41,6 +41,19 @@ class Views::Home::Show < Views::Base
           end
         end
 
+        Components::DropdownMenu() do |menu|
+          Components::Button(variant: :outline) { "Options" }
+          menu.content do
+            menu.group do
+              menu.label { "Actions" }
+              menu.link_item(href: "#") { "Edit" }
+              menu.button_item { "Duplicate" }
+            end
+            menu.separator
+            menu.button_item(variant: :destructive) { "Delete" }
+          end
+        end
+
         Components::Button(command: "show-modal", commandfor: "test-dialog") do
           "Open dialog"
         end
