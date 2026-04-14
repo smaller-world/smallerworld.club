@@ -35,7 +35,7 @@ class Components::Dialog < Components::Base
         },
       ) do
         el_dialog_backdrop(data: { slot: "dialog-overlay" })
-        div(data: { slot: "dialog-centering" }) do
+        div(data: { slot: "dialog-inner" }) do
           el_dialog_panel(data: { slot: "dialog-panel" }) do
             yield
             close_button if @show_close_button
