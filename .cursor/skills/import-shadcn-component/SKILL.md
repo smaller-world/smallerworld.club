@@ -9,7 +9,7 @@ Convert a shadcn/ui TSX component from the Vite preset source into the Rails Phl
 
 ## Source and Target Locations
 
-- **TSX source**: `vendor/javascript/shadcn-vite-preset/src/components/ui/<name>.tsx`
+- **TSX source**: Check `vendor/javascript/shadcn-vite-preset/src/components/ui/<name>.tsx` first. If not present, run `bunx shadcn@latest add <name> --path app/components/shadcn --overwrite` to import it into `app/components/shadcn/<name>.tsx`.
 - **Ruby target**: `app/components/<name>.rb`
 - **CSS target**: `app/assets/stylesheets/<name_plural>.css`
 
@@ -60,28 +60,37 @@ All styles use flat `[data-slot="..."]` selectors. Variants use data-attribute s
 
 ### Ruby Pattern
 
-The `root_component` helper (from `Components::Base`) handles merging `class:` and `data:` from both the component definition and caller overrides. There is no `root_class` helper — pass `class:` directly to `root_component`.
+The `root_element` helper (from `Components::Base`) renders the root tag, merging caller-provided attributes via `mix`. It takes a default element tag and `**attributes`. There is no `root_class` or `root_component` helper — use `root_element`.
 
 ```ruby
 # typed: true
 # frozen_string_literal: true
 
 class Components::<Name> < Components::Base
-  sig { params(variant: Symbol, size: Symbol, options: T.untyped).void }
-  def initialize(variant: :default, size: :default, **options)
-    super(**options)
+  sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
+  def initialize(variant: :default, size: :default, **attributes)
+    super(**attributes)
     @variant = variant
     @size = size
   end
 
-  sig { override.params(block: T.proc.bind(T.self_type).void).void }
-  def view_template(&block)
-    root_component(
-      :<tag>,
+  sig { override.params(content: T.proc.void).void }
+  def view_template(&content)
+    root_element(:div, **root_attributes, &content)
+  end
+
+  private
+
+  sig { returns(T::Hash[Symbol, T.untyped]) }
+  def root_attributes
+    {
       class: "group/<name>",
-      data: { slot: "<name>", variant: @variant, size: @size },
-      &block
-    )
+      data: {
+        slot: "<name>",
+        variant: @variant,
+        size: @size,
+      },
+    }
   end
 end
 ```
@@ -95,24 +104,68 @@ end
 - TSX `defaultVariants` → Ruby `initialize` default param values
 - TSX `data-slot` attributes are preserved exactly
 - TSX `asChild`/`Slot.Root` patterns are dropped (not needed in Phlex)
-- TSX `cn(base, className)` → Ruby passes `class:` to `root_component`, which merges with caller's `class:` via `class_names`
+- TSX `cn(base, className)` → Ruby passes attributes through `root_element`, which merges with caller overrides via `mix`
 - CSS file name is pluralized (`button.rb` → `buttons.css`, `card.rb` → `cards.css`)
 
 ## Non-div Sub-components
 
-Not all sub-components render `<div>`. Match the HTML element from the TSX:
+Not all sub-components render `<div>`. Match the HTML element from the TSX. Use the native Phlex element method with `mix` to merge slot data:
 
-| TSX Element | Ruby Helper |
+| TSX Element | Ruby Pattern |
 |---|---|
-| `<div>` | `div_with_slot` (private helper) |
-| `<p>` | Create a `p_with_slot` helper or use `p(data: { slot: ... })` directly |
-| `<fieldset>` | `send(tag, data: { slot: ... })` with configurable tag |
-| `<legend>` | Same pattern — use the native Phlex element method |
-| Another component (e.g. `<Label>`) | `render Components::Label.new(data: { slot: ... })` |
+| `<div>` | `div(**mix({ data: { slot: "..." } }, attributes), &block)` |
+| `<p>` | `p(**mix({ data: { slot: "..." } }, attributes), &block)` |
+| `<h3>` | `h3(**mix({ data: { slot: "..." } }, attributes), &block)` |
+| `<fieldset>` | `send(tag, **mix({ data: { slot: "..." } }, attributes), &block)` with configurable tag |
+| Another component (e.g. `<Label>`) | `Components::Label(data: { slot: "..." })` |
 
 ## Composing with Other Components
 
-When a TSX sub-component wraps another component (e.g. `FieldLabel` renders `<Label>`), use `render Components::X.new(...)` in the Ruby method. Pass the `data: { slot: ... }` and any class overrides through to the inner component.
+When a TSX sub-component wraps another component (e.g. `FieldLabel` renders `<Label>`), use Phlex kit syntax: `Components::X(...)`. Pass the `data: { slot: ... }` and any class overrides through to the inner component.
+
+**Gotcha — `data-slot` merging**: When you pass `data: { slot: "foo" }` to a component that already sets its own `data-slot`, the `mix` helper concatenates both into `data-slot="bar foo"`. This breaks CSS `[data-slot="foo"]` exact-match selectors. To avoid this, wrap the component in a container element with the outer slot instead:
+
+```ruby
+# WRONG — produces data-slot="button dialog-close"
+Components::Button(data: { slot: "dialog-close" }) { "Close" }
+
+# RIGHT — separate elements, separate slots
+div(data: { slot: "dialog-close" }) do
+  Components::Button() { "Close" }
+end
+```
+
+## Custom HTML Elements
+
+Components that use web components (e.g. `<el-dialog>`, `<trix-editor>`) must register them with Phlex. Use `register_element` — underscores are converted to dashes automatically:
+
+```ruby
+class Components::Dialog < Components::Base
+  register_element :el_dialog          # renders <el-dialog>
+  register_element :el_dialog_backdrop # renders <el-dialog-backdrop>
+  register_element :el_dialog_panel    # renders <el-dialog-panel>
+end
+```
+
+Phlex's `tag()` method requires a Symbol — calling `tag("el-dialog")` with a String will raise `Phlex::ArgumentError`.
+
+Note: Sorbet won't recognize methods defined by `register_element` — this is expected; ignore typing errors on those.
+
+## Native Element CSS Conflicts
+
+When styling native semantic elements like `<dialog>`, `<details>`, or `<summary>`, `@layer components` has **lower specificity** than browser UA stylesheets. This means your `@apply` rules may be silently overridden.
+
+For example, a `<dialog>` element is hidden by default via `display: none` in the UA stylesheet. If your CSS sets `@apply flex`, the `@layer components` rule loses to the UA rule. Fix with state-scoped selectors:
+
+```css
+[data-slot="dialog-content"] {
+  @apply items-center justify-center; /* layout props ready */
+
+  &[open] {
+    @apply flex; /* only override display when dialog is actually open */
+  }
+}
+```
 
 ## Translating React Logic
 
@@ -121,4 +174,4 @@ TSX components may contain React-specific patterns (`useMemo`, conditional `null
 - Conditional rendering → guard clauses (`return if ...`)
 - `useMemo` with derived values → compute inline in the method
 - Array of error objects → accept simpler Ruby types (e.g. splat strings)
-- `children` prop fallback → block parameter with `yield_content(&block)`
+- `children` prop fallback → block parameter with `yield` (not `yield_content` — that method doesn't exist in this Phlex version)

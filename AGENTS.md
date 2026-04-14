@@ -31,6 +31,22 @@ mise run annotate       # bin/annotaterb models – updates schema annotations
 mise run tapioca:dsl    # bin/tapioca dsl – regenerates Sorbet RBI files
 ```
 
+### Tapioca DSL compilers
+
+Custom compilers live in `sorbet/tapioca/compilers/`. When running
+`mise run tapioca:dsl`, pass the **target constant name** (the class being
+compiled), not the compiler class name:
+
+```bash
+# Correct — pass the constant whose RBI you want to regenerate:
+mise run tapioca:dsl -- Components::Dialog
+
+# Wrong — the compiler class is not a valid argument:
+mise run tapioca:dsl -- Tapioca::Dsl::Compilers::PhlexCustomElements
+```
+
+Running without arguments regenerates all DSL RBIs.
+
 ### Branding assets
 
 Never hand-craft brand SVGs. Always download from the official source:
