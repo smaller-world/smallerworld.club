@@ -46,12 +46,14 @@ module Components
 
   sig do
     params(
-      anchor: ::String,
+      anchor: T.any(::Symbol, T::Array[::Symbol]),
+      anchor_strategy: T.nilable(::Symbol),
+      popover: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
     ).void
   end
-  def DropdownMenu(anchor: T.unsafe(nil), **attributes, &block); end
+  def DropdownMenu(anchor: T.unsafe(nil), anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -197,12 +199,14 @@ module Components
 
     sig do
       params(
-        anchor: ::String,
+        anchor: T.any(::Symbol, T::Array[::Symbol]),
+        anchor_strategy: T.nilable(::Symbol),
+        popover: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
       ).void
     end
-    def DropdownMenu(anchor: T.unsafe(nil), **attributes, &block); end
+    def DropdownMenu(anchor: T.unsafe(nil), anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

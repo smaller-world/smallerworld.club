@@ -42,7 +42,9 @@ class Views::Home::Show < Views::Base
         end
 
         Components::DropdownMenu() do |menu|
-          Components::Button(variant: :outline) { "Options" }
+          menu.trigger do
+            Components::Button(variant: :secondary) { "Options" }
+          end
           menu.content do
             menu.group do
               menu.label { "Actions" }

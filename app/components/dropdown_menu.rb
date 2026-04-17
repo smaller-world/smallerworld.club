@@ -25,36 +25,51 @@ class Components::DropdownMenu < Components::Base
     @anchor = anchor
     @anchor_strategy = anchor_strategy
     @popover = popover
+    @trigger_block = T.let(nil, T.nilable(T.proc.void))
+    @content_block = T.let(nil, T.nilable(T.proc.void))
+    @content_attributes = T.let({}, T::Hash[Symbol, T.untyped])
   end
 
   # == Component ==
 
   sig { override.params(block: T.proc.bind(T.self_type).void).void }
   def view_template(&block)
+    vanish(&block)
+    trigger_block = @trigger_block or raise "Missing trigger"
     root_element(
       :el_dropdown,
       class: "group/dropdown-menu",
       data: { slot: "dropdown-menu" },
-      &block
-    )
+    ) do
+      trigger_block.call
+      if (content_block = @content_block)
+        el_menu(
+          **mix(
+            { data: { slot: "dropdown-menu-content" } },
+            {
+              anchor: anchor_property,
+              anchor_strategy: @anchor_strategy,
+              popover: @popover,
+            }.compact_blank,
+            @content_attributes,
+          ),
+          &content_block
+        )
+      end
+    end
   end
 
   # == Slots ==
 
+  sig { params(block: T.proc.void).void }
+  def trigger(&block)
+    @trigger_block = block
+  end
+
   sig { params(attributes: T.untyped, block: T.proc.void).void }
   def content(**attributes, &block)
-    el_menu(
-      **mix(
-        { data: { slot: "dropdown-menu-content" } },
-        {
-          anchor: anchor_property,
-          anchor_strategy: @anchor_strategy,
-          popover: @popover,
-        }.compact_blank,
-        attributes,
-      ),
-      &block
-    )
+    @content_attributes = attributes
+    @content_block = block
   end
 
   sig do
