@@ -15,4 +15,7 @@ class Components::Base
 
   sig { params(text: String, options: T.untyped).returns(String) }
   def auto_link(text, **options); end
+
+  sig { returns(T::Boolean) }
+  def authenticated?; end
 end
