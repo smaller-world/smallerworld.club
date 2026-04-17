@@ -2,7 +2,6 @@
 .ruby-lsp/
 .bundle/
 .claude/handoffs/*.md
-.qwen/settings.json
 app/components/shadcn/
 bin/
 config/*.yml

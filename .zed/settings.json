@@ -1,0 +1,22 @@
+{
+  "context_servers": {
+    "smallerworld_supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=docs%2Cdatabase"
+    }
+  },
+  "languages": {
+    "Ruby": {
+      "language_servers": ["ruby-lsp", "rubocop", "sorbet", "!solargraph"],
+      "tab_size": 2
+    },
+    "JSON": {
+      "formatter": "prettier"
+    },
+    "JavaScript": {
+      "formatter": "prettier"
+    },
+    "TypeScript": {
+      "formatter": "prettier"
+    }
+  }
+}
