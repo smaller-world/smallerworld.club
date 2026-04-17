@@ -5,11 +5,6 @@
       "type": "remote",
       "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=database,docs",
       "oauth": {}
-    },
-    "sentry": {
-      "type": "remote",
-      "url": "https://mcp.sentry.dev/mcp",
-      "oauth": {}
     }
   }
 }

@@ -1,10 +1,7 @@
 {
   "mcpServers": {
-    "happytown_sentry": {
-      "url": "https://mcp.sentry.dev/mcp"
-    },
-    "happytown_supabase": {
-      "url": "https://mcp.supabase.com/mcp?project_ref=ysiwerjzufsrkyqjftal&read_only=true&features=docs%2Cdatabase"
+    "smallerworld_supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=docs%2Cdatabase"
     }
   }
 }

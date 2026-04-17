@@ -1,8 +1,5 @@
 {
   "mcpServers": {
-    "sentry": {
-      "httpUrl": "https://mcp.sentry.dev/mcp"
-    },
     "smallerworld_supabase": {
       "command": "bunx",
       "args": [

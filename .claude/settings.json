@@ -3,6 +3,7 @@
     "rails-simplifier@rails": true
   },
   "permissions": {
+    "allow": ["WebSearch", "Bash(defuddle parse:*)"],
     "deny": [
       "mcp__happytown_supabase__apply_migration",
       "mcp__happytown_supabase__list_migrations"
