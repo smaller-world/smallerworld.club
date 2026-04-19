@@ -16,9 +16,6 @@ export default class ClearableFileInputController extends Controller<HTMLElement
     if (!this.hasInputTemplateTarget) {
       throw new Error("Missing inputTemplateTarget");
     }
-    if (!this.hasSpinnerTarget) {
-      throw new Error("Missing spinnerTarget");
-    }
   }
 
   connect(): void {

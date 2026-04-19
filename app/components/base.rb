@@ -64,4 +64,16 @@ class Components::Base < Phlex::HTML
       &content
     )
   end
+
+  sig do
+    params(hash: T::Hash[Symbol, T.untyped], keys: Symbol)
+      .returns(T::Hash[Symbol, T.untyped])
+  end
+  def delete_from(hash, *keys)
+    removed_values = {}
+    keys.each do |key|
+      removed_values[key] = hash.delete(key) if hash.key?(key)
+    end
+    removed_values
+  end
 end

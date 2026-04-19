@@ -22,12 +22,12 @@ class Components::WorldForm < Components::Base
     ) do |form|
       form.field(:name) do |f|
         f.label { "name" }
-        f.text_input
+        f.text_input(required: true)
         f.error
       end
       form.field(:icon) do |f|
         f.label { "icon" }
-        f.clearable_file_input(direct_upload: true)
+        f.clearable_file_input(direct_upload: true, required: true)
         f.error
       end
       form.button do |button|

@@ -12,10 +12,13 @@ class Components::ClearableFileInput < Components::Base
     ).void
   end
   def initialize(form: nil, value: nil, field: nil, direct_upload: true, **attributes)
-    super(**attributes)
     @form = form
     @field = field
     @direct_upload = direct_upload
+    @input_options = T.let(
+      delete_from(attributes, :required),
+      T.nilable(T::Hash[Symbol, T.untyped]),
+    )
     @blob = T.let(
       case value
       when ActiveStorage::Blob
@@ -27,6 +30,7 @@ class Components::ClearableFileInput < Components::Base
       end,
       T.nilable(ActiveStorage::Blob),
     )
+    super(**attributes)
   end
 
   # == Component ==
@@ -98,7 +102,7 @@ class Components::ClearableFileInput < Components::Base
       html = @form.hidden_field(@field, value: nil)
       raw(html) # rubocop:disable Rails/OutputSafety
     end
-    group.file_input(direct_upload: @direct_upload)
+    group.file_input(direct_upload: @direct_upload, **@input_options)
     group.addon(
       align: "inline-end",
       data: { clearable_file_input_target: "spinner" },
