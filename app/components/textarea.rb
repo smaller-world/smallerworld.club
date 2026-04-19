@@ -1,26 +1,30 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::Input < Components::Base
+class Components::Textarea < Components::Base
   sig do
     params(
       form: T.nilable(ComponentFormBuilder),
       field: T.nilable(Symbol),
+      value: T.nilable(String),
       attributes: T.untyped,
     ).void
   end
-  def initialize(form: nil, field: nil, **attributes)
-    @value = T.let(
-      if attributes.include?(:value)
-        attributes.delete(:value).try(:to_s)
-      elsif form && field
-        form.object.try(field)&.to_s
-      end,
-      T.nilable(T.any(String, Numeric)),
-    )
+  def initialize(form: nil, field: nil, value: nil, **attributes)
+    super(**attributes)
     @form = form
     @field = field
-    super(**attributes)
+    @value = T.let(
+      case value
+      when String
+        value
+      when nil
+        if @form && @field
+          @form.object.try(@field)
+        end
+      end,
+      T.nilable(String),
+    )
   end
 
   # == Component ==
@@ -28,9 +32,9 @@ class Components::Input < Components::Base
   sig { override(allow_incompatible: true).void }
   def view_template
     root_element(
-      :input,
-      data: { slot: "input" },
-      **input_attributes,
+      :textarea,
+      data: { slot: "textarea" },
+      **textarea_attributes,
       **({ value: @value } if @value),
     )
   end
@@ -40,7 +44,7 @@ class Components::Input < Components::Base
   # == Helpers ==
 
   sig { returns(T::Hash[Symbol, String]) }
-  def input_attributes
+  def textarea_attributes
     if @form && @field
       id = @form.field_id(@field)
       name = @form.field_name(@field)

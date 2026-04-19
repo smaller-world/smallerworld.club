@@ -36,6 +36,15 @@ Use **data-attribute selectors** that match the TSX `data-*` attributes. Do NOT 
 - Each TSX sub-function with `data-slot="X"` becomes a flat `[data-slot="X"] { @apply ...; }` selector
 - These are siblings of the root selector, NOT nested inside it
 
+### Fidelity to TSX source
+
+The TSX file is the authoritative source for all Tailwind utility classes. When generating CSS:
+
+- **Copy every class** from `cva()` base strings, variant entries, and `cn()` calls into the corresponding `@apply` rules
+- **Do NOT omit classes that seem redundant** with another component's styles (e.g. if `InputGroupButton` sets `items-center` and `Button` also has `items-center`, include both — the descendant override must be self-contained)
+- **Do NOT omit classes that seem like defaults** (e.g. `text-sm` on a component that would inherit it anyway)
+- The only classes that belong in Ruby instead of CSS are `group/<name>` classes used for Tailwind group selectors
+
 ### Style adjustments
 
 The TSX classes are ported as-is into `@apply`. Minor adjustments may be needed:

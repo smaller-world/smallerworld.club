@@ -16,8 +16,19 @@ class Views::Worlds::Show < Views::Base
   def view_template
     Components::Layout() do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
-        if current_user == @world.owner
-          Components::BackToHomeButton()
+        div(class: "flex justify-between") do
+          if current_user == @world.owner
+            button_back_to_home
+          else
+            div
+          end
+
+          button_to(
+            "edit",
+            edit_world_path(@world),
+            icon: "huge/pencil-edit-01",
+            variant: :secondary,
+          )
         end
 
         Components::Card() do |card|
@@ -28,7 +39,7 @@ class Views::Worlds::Show < Views::Base
             end
           end
           card.content do
-            "ffft"
+            "welcome to my lovely world..."
             # Components::WorldForm(world: @world)
           end
         end

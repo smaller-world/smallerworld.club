@@ -24,6 +24,21 @@ class Components::Button < Components::Base
     root_element(:button, **root_attributes, &content)
   end
 
+  # == Interface ==
+
+  sig { params(name: String, align: T.nilable(String), attributes: T.untyped).void }
+  def icon(name, align: nil, **attributes)
+    Icon(
+      name,
+      **mix(
+        {
+          data: { icon: align }.compact,
+        },
+        attributes,
+      ),
+    )
+  end
+
   # == Helpers ==
 
   sig { returns(T::Hash[Symbol, T.untyped]) }

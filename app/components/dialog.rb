@@ -86,7 +86,6 @@ class Components::Dialog < Components::Base
   def close_button
     div(data: { slot: "dialog-close" }) do
       Components::Button(
-        element: :button,
         variant: :ghost,
         size: "icon-sm",
         command: "close",

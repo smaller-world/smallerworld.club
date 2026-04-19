@@ -3,12 +3,14 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application";
+import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DialogController from "./dialog_controller";
 import DisabledController from "./disabled_controller";
 import HelloController from "./hello_controller";
+import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import MaintainScrollController from "./maintain_scroll_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
@@ -25,3 +27,5 @@ application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);
 application.register("dialog", DialogController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
+application.register("clearable-file-input", ClearableFileInputController);
+application.register("input-group-addon", InputGroupAddonController);

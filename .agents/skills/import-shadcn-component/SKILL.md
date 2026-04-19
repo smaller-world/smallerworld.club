@@ -23,6 +23,7 @@ Convert a shadcn/ui TSX component from the Vite preset source into the Rails Phl
 6. Generate the Ruby file — create the Phlex component class
 7. Add `@import "./<name_plural>.css";` to `app/assets/stylesheets/application.css`
 8. Verify consistency between CSS selectors and Ruby data attributes
+9. **CSS fidelity check** — Re-read the TSX source and the generated CSS side-by-side. For each TSX function and `cva()` definition, verify that every Tailwind utility class appears in the CSS. See the detailed checklist below
 
 For detailed conversion rules and examples, see [references/conversion-rules.md](references/conversion-rules.md).
 
@@ -97,6 +98,7 @@ end
 
 ## Key Rules
 
+- **The TSX file is the source of truth for Tailwind classes** — Every utility class in the TSX (`cn()`, `cva()` base, variant entries) must appear in the generated CSS. Do not assume classes are "redundant" with a parent or sibling component's styles. Even if `items-center` already exists on Button's CSS, include it in the descendant override CSS if the TSX specifies it. The only exception is `group/<name>` classes, which go in Ruby.
 - **All Tailwind utilities go in CSS**, never in Ruby (except `group/<name>` classes needed for Tailwind group selectors)
 - **Variants use data-attribute selectors** — if TSX sets `data-variant={variant}`, CSS uses `&[data-variant="value"]`. If TSX sets `data-orientation`, CSS uses `&[data-orientation="value"]`. Match whatever data attributes the TSX uses.
 - TSX `cva()` base classes → CSS `@apply` on the `[data-slot]` root selector
@@ -106,6 +108,29 @@ end
 - TSX `asChild`/`Slot.Root` patterns are dropped (not needed in Phlex)
 - TSX `cn(base, className)` → Ruby passes attributes through `root_element`, which merges with caller overrides via `mix`
 - CSS file name is pluralized (`button.rb` → `buttons.css`, `card.rb` → `cards.css`)
+
+## Descendant Override Pattern
+
+When a component wraps an existing component (e.g. InputGroup containing Input, or InputGroupButton containing Button), the wrapper's CSS needs to override the child's standalone styles. Use **descendant selectors in the wrapper's CSS file**:
+
+```css
+/* In input_groups.css — overrides Input's standalone styles when inside InputGroup */
+[data-slot="input-group"] > [data-slot="input"] {
+  @apply flex-1 rounded-none border-0 bg-transparent shadow-none ...;
+}
+
+/* Overrides Button's styles when inside an addon */
+[data-slot="input-group-addon"] > [data-slot="button"] {
+  @apply flex items-center gap-2 text-sm shadow-none;
+}
+```
+
+This is the correct pattern when:
+- The TSX wraps an existing component (e.g. `<Input>`, `<Button>`) and passes override `className`
+- The child component keeps its own `data-slot` (no collision)
+- The override classes come from the TSX source — include all of them, even if they duplicate the child's own styles
+
+The "flat selectors" guideline applies to sub-components within the same component (e.g. `[data-slot="card-header"]`), not to overriding external components' styles in context.
 
 ## Non-div Sub-components
 
@@ -175,3 +200,20 @@ TSX components may contain React-specific patterns (`useMemo`, conditional `null
 - `useMemo` with derived values → compute inline in the method
 - Array of error objects → accept simpler Ruby types (e.g. splat strings)
 - `children` prop fallback → block parameter with `yield` (not `yield_content` — that method doesn't exist in this Phlex version)
+
+## CSS Fidelity Check
+
+After generating both files, re-read the TSX source and the CSS file side-by-side and verify completeness:
+
+1. **For each TSX function**: extract the full class string from `cn(...)` or `className={...}`. Every utility must appear in the corresponding `[data-slot]` selector's `@apply`.
+
+2. **For each `cva()` definition**:
+   - **Base string** → must appear in the selector's root `@apply`
+   - **Each variant entry** → must appear in the corresponding `&[data-<prop>="<value>"]` selector's `@apply`
+   - **Empty variant entries** (e.g. `sm: ""`) → no CSS rule needed, but verify the base covers it
+
+3. **For override classes** (classes passed to child components via `className` in the TSX): must appear in the descendant override selector. Include all classes even if they seem redundant with the child component's own styles.
+
+4. **Allowed omissions**: Only `group/<name>` classes (which go in Ruby's `class:` attribute) may be absent from CSS.
+
+If any classes are missing, add them before finishing.

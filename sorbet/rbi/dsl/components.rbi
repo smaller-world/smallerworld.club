@@ -8,15 +8,6 @@
 module Components
   sig do
     params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::BackToHomeButton).void)
-    ).void
-  end
-  def BackToHomeButton(element: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
       variant: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
@@ -45,6 +36,18 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::ComponentFormBuilder),
+      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+      field: T.nilable(::Symbol),
+      direct_upload: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
+    ).void
+  end
+  def ClearableFileInput(form: T.unsafe(nil), value: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       id: ::String,
       show_close_button: T::Boolean,
       attributes: T.untyped,
@@ -66,7 +69,7 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::Phlex::Rails::Builder),
+      form: T.nilable(::ComponentFormBuilder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
       invalid: T.nilable(::TrueClass),
@@ -96,6 +99,25 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::ComponentFormBuilder),
+      field: T.nilable(::Symbol),
+      direct_upload: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::FileInput).void)
+    ).void
+  end
+  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      attachment: ::ActiveStorage::Attachment,
+      block: T.nilable(T.proc.params(instance: Components::FileItem).void)
+    ).void
+  end
+  def FileItem(attachment:, &block); end
+
+  sig do
+    params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Header).void)
@@ -105,13 +127,51 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::Phlex::Rails::Builder),
+      form: T.nilable(::ComponentFormBuilder),
       field: T.nilable(::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Input).void)
     ).void
   end
-  def Input(form:, field: T.unsafe(nil), **attributes, &block); end
+  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      form: T.nilable(::ComponentFormBuilder),
+      field: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
+    ).void
+  end
+  def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      align: ::String,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
+    ).void
+  end
+  def InputGroupAddon(align: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      variant: ::Symbol,
+      size: ::Symbol,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Item).void)
+    ).void
+  end
+  def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
+    ).void
+  end
+  def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -169,6 +229,26 @@ module Components
 
   sig do
     params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Spinner).void)
+    ).void
+  end
+  def Spinner(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      form: T.nilable(::ComponentFormBuilder),
+      field: T.nilable(::Symbol),
+      value: T.nilable(::String),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Textarea).void)
+    ).void
+  end
+  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       world: ::World,
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
@@ -177,15 +257,6 @@ module Components
   def WorldForm(world:, **options, &block); end
 
   class << self
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::BackToHomeButton).void)
-      ).void
-    end
-    def BackToHomeButton(element: T.unsafe(nil), **attributes, &block); end
-
     sig do
       params(
         variant: ::Symbol,
@@ -216,6 +287,18 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::ComponentFormBuilder),
+        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+        field: T.nilable(::Symbol),
+        direct_upload: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
+      ).void
+    end
+    def ClearableFileInput(form: T.unsafe(nil), value: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
         id: ::String,
         show_close_button: T::Boolean,
         attributes: T.untyped,
@@ -237,7 +320,7 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::Phlex::Rails::Builder),
+        form: T.nilable(::ComponentFormBuilder),
         field: T.nilable(::Symbol),
         orientation: ::Symbol,
         invalid: T.nilable(::TrueClass),
@@ -267,6 +350,25 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::ComponentFormBuilder),
+        field: T.nilable(::Symbol),
+        direct_upload: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::FileInput).void)
+      ).void
+    end
+    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        attachment: ::ActiveStorage::Attachment,
+        block: T.nilable(T.proc.params(instance: Components::FileItem).void)
+      ).void
+    end
+    def FileItem(attachment:, &block); end
+
+    sig do
+      params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Header).void)
@@ -276,13 +378,51 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::Phlex::Rails::Builder),
+        form: T.nilable(::ComponentFormBuilder),
         field: T.nilable(::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Input).void)
       ).void
     end
-    def Input(form:, field: T.unsafe(nil), **attributes, &block); end
+    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        form: T.nilable(::ComponentFormBuilder),
+        field: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
+      ).void
+    end
+    def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        align: ::String,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
+      ).void
+    end
+    def InputGroupAddon(align: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        variant: ::Symbol,
+        size: ::Symbol,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Item).void)
+      ).void
+    end
+    def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
+      ).void
+    end
+    def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -337,6 +477,26 @@ module Components
       ).void
     end
     def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Spinner).void)
+      ).void
+    end
+    def Spinner(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        form: T.nilable(::ComponentFormBuilder),
+        field: T.nilable(::Symbol),
+        value: T.nilable(::String),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Textarea).void)
+      ).void
+    end
+    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

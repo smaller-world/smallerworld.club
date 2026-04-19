@@ -2,9 +2,11 @@
 # frozen_string_literal: true
 
 class Components::Field < Components::Base
+  # == Configuration ==
+
   sig do
     params(
-      form: T.nilable(Phlex::Rails::Builder),
+      form: T.nilable(ComponentFormBuilder),
       field: T.nilable(Symbol),
       orientation: Symbol,
       invalid: T.nilable(TrueClass),
@@ -45,7 +47,7 @@ class Components::Field < Components::Base
   def content(**attributes, &content)
     div_with_slot(
       "field-content",
-      **mix({ class: "group/field-content" }, **attributes),
+      **mix({ class: "group/field-content" }, attributes),
       &content
     )
   end
@@ -59,16 +61,18 @@ class Components::Field < Components::Base
       },
       **attributes,
     )
-    if (form = @form) && (field = @field)
-      form.label(field, **attributes) do
+    if @form && @field
+      html = @form.label(@field, **attributes) do
         if block_given?
           yield
-        elsif (record = form.object) && record.class.respond_to?(:human_attribute_name)
-          record.class.human_attribute_name(field)
+        elsif (object_class = @form.object&.class) &&
+            object_class.is_a?(ActiveModel::Translation)
+          object_class.human_attribute_name(@field)
         else
-          field.to_s.humanize
+          @field.to_s.humanize
         end
       end
+      raw(html) # rubocop:disable Rails/OutputSafety
     else
       super(**attributes, &content)
     end
@@ -126,51 +130,72 @@ class Components::Field < Components::Base
 
   sig { returns(T.nilable(String)) }
   def id
-    if (form = @form) && (field = @field)
-      form.field_id(field)
+    if @form && @field
+      @form.field_id(@field)
     end
   end
 
   sig do
     params(
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(component: Components::Input).void),
+      block: T.nilable(T.proc.params(component: Components::InputGroup).void),
     ).void
   end
-  def input(**attributes, &block)
-    render Components::Input.new(
+  def input_group(**attributes, &block)
+    Components::InputGroup(form: @form, field: @field, **attributes, &block)
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def input(**attributes)
+    Components::Input(form: @form, field: @field, **attributes)
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def text_input(**attributes)
+    input(type: :text, **attributes)
+  end
+
+  sig do
+    params(
+      value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
+      direct_upload: T::Boolean,
+      attributes: T.untyped,
+    ).void
+  end
+  def file_input(
+    value: nil,
+    direct_upload: true,
+    **attributes
+  )
+    Components::FileInput(
       form: @form,
       field: @field,
+      value:,
+      direct_upload:,
       **attributes,
-      &block
     )
   end
 
   sig do
     params(
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(component: Components::Input).void),
-    ).void
-  end
-  def text_input(**attributes, &block)
-    input(type: :text, **attributes, &block)
-  end
-
-  sig do
-    params(
+      value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       direct_upload: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(component: Components::Input).void),
     ).void
   end
-  def file_input(direct_upload: false, **attributes, &block)
-    if direct_upload
-      attributes = mix(
-        { data: { direct_upload_url: rails_direct_uploads_path } },
-        attributes,
-      )
-    end
-    input(type: :file, **attributes, &block)
+  def clearable_file_input(value: nil, direct_upload: true, **attributes)
+    Components::ClearableFileInput(
+      form: @form,
+      field: @field,
+      value:,
+      direct_upload:,
+      **attributes,
+    )
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def textarea(**attributes)
+    Components::Textarea(form: @form, field: @field, **attributes)
   end
 
   private
@@ -190,8 +215,10 @@ class Components::Field < Components::Base
 
   sig { returns(T.nilable(T::Array[String])) }
   def error_messages
-    if (record = @form&.send(:object)) && (field = @field)
-      record.errors.messages_for(field)
+    if (object = @form&.object) &&
+        object.is_a?(ActiveModel::Validations) &&
+        (field = @field)
+      object.errors.messages_for(field)
     end
   end
 
@@ -199,4 +226,22 @@ class Components::Field < Components::Base
   def invalid?
     @invalid || error_messages.present?
   end
+
+  # sig { returns(T.nilable(Symbol)) }
+  # def type
+  #   if (object_class = @form&.object&.class) &&
+  #       object_class.is_a?(ActiveModel::AttributeRegistration::ClassMethods) &&
+  #       (field = @field)
+  #     case object_class.type_for_attribute(field)
+  #     when :string
+  #       :text
+  #     when :text
+  #       :textarea
+  #     when :integer, :float, :decimal
+  #       :number
+  #     when :boolean
+  #       :checkbox
+  #     end
+  #   end
+  # end
 end

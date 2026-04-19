@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Views::Worlds::New < Views::Base
+class Views::Worlds::Edit < Views::Base
   # == Configuration ==
 
   sig { params(world: World).void }
@@ -16,17 +16,9 @@ class Views::Worlds::New < Views::Base
   def view_template
     Components::Layout() do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to_home
+        button_back_to("world", world_path(@world))
 
         Components::Card() do |card|
-          card.header(class: "text-center") do
-            card.title(element: :h1, class: "text-xl") do
-              "create your world"
-            end
-            card.description do
-              "> hint: your world is the place where your posts live!"
-            end
-          end
           card.content do
             Components::WorldForm(world: @world)
           end

@@ -33,12 +33,8 @@ class Views::Pages::Landing < Views::Base
             element: :a,
             href: home_path,
             size: :lg,
-          ) do
-            Icon(
-              "huge/door-01",
-              class: "size-6",
-              data: { icon: "inline-start" },
-            )
+          ) do |button|
+            button.icon("huge/door-01", align: "inline-start")
             span do
               "enter if u dare"
             end

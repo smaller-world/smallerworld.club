@@ -9,14 +9,16 @@ class Components::Base < Phlex::HTML
 
   # == View Helpers ==
 
-  include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::ClassNames
-  include Phlex::Rails::Helpers::LinkTo
   include Phlex::Rails::Helpers::ImageTag
-  include Phlex::Rails::Helpers::FormWith
+  include Phlex::Rails::Helpers::LinkTo
+  include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
   include PhlexIcons
+  include FormWith
+  include ButtonTo
+  include ButtonBackTo
 
   register_output_helper :local_time
   register_output_helper :inline_svg_tag
@@ -56,6 +58,10 @@ class Components::Base < Phlex::HTML
     ).void
   end
   def root_element(default_element, **attributes, &content)
-    send(@element || default_element, **mix(attributes, @attributes), &content)
+    public_send(
+      @element || default_element,
+      **mix(attributes, @attributes),
+      &content
+    )
   end
 end

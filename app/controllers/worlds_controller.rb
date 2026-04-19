@@ -24,6 +24,8 @@ class WorldsController < ApplicationController
 
   # GET /worlds/:id/edit
   def edit
+    world = find_world
+    render Views::Worlds::Edit.new(world:)
   end
 
   # POST /worlds
@@ -32,7 +34,7 @@ class WorldsController < ApplicationController
     world_params = params.expect(world: [ :name, :icon ])
     world = current_user.worlds.build(**world_params)
     if world.save
-      redirect_to(world)
+      redirect_to(world, status: :created)
     else
       render Views::Worlds::New.new(world:), status: :unprocessable_content
     end
@@ -40,6 +42,13 @@ class WorldsController < ApplicationController
 
   # PUT /worlds/:id
   def update
+    world = find_world
+    world_params = params.expect(world: [ :name, :icon ])
+    if world.update(**world_params)
+      redirect_to(world)
+    else
+      render Views::Worlds::Edit.new(world:), status: :unprocessable_content
+    end
   end
 
   # DELETE /worlds/:id

@@ -1,5 +1,3 @@
-"use client"
-
 import { Separator as SeparatorPrimitive } from "app/components/shadcn/separator"
 
 import { cn } from "@/lib/utils"
