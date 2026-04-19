@@ -4,9 +4,19 @@
       "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=docs%2Cdatabase"
     }
   },
+  "file_types": {
+    "Ruby": ["rbi"]
+  },
   "languages": {
     "Ruby": {
-      "language_servers": ["ruby-lsp", "rubocop", "sorbet", "!solargraph"],
+      "language_servers": [
+        "ruby-lsp",
+        "rubocop",
+        "sorbet",
+        "tailwindcss-language-server",
+        "!solargraph"
+      ],
+      "formatter": "language_server",
       "tab_size": 2
     },
     "JSON": {
@@ -17,6 +27,15 @@
     },
     "TypeScript": {
       "formatter": "prettier"
+    }
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "experimental": {
+          "classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"]
+        }
+      }
     }
   }
 }

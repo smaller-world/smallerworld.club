@@ -8,6 +8,15 @@
 module Components
   sig do
     params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::BackToHomeButton).void)
+    ).void
+  end
+  def BackToHomeButton(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       variant: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
@@ -60,7 +69,7 @@ module Components
       form: T.nilable(::Phlex::Rails::Builder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
-      invalid: T::Boolean,
+      invalid: T.nilable(::TrueClass),
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Field).void)
     ).void
@@ -158,7 +167,25 @@ module Components
   end
   def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
 
+  sig do
+    params(
+      world: ::World,
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
+    ).void
+  end
+  def WorldForm(world:, **options, &block); end
+
   class << self
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::BackToHomeButton).void)
+      ).void
+    end
+    def BackToHomeButton(element: T.unsafe(nil), **attributes, &block); end
+
     sig do
       params(
         variant: ::Symbol,
@@ -213,7 +240,7 @@ module Components
         form: T.nilable(::Phlex::Rails::Builder),
         field: T.nilable(::Symbol),
         orientation: ::Symbol,
-        invalid: T::Boolean,
+        invalid: T.nilable(::TrueClass),
         options: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Field).void)
       ).void
@@ -310,5 +337,14 @@ module Components
       ).void
     end
     def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        world: ::World,
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
+      ).void
+    end
+    def WorldForm(world:, **options, &block); end
   end
 end

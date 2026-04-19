@@ -19,8 +19,7 @@ Rails.application.routes.draw do
     root action: :landing
   end
 
-  # == Authentication ==
-
+  # == Authentication
   resource :session, only: [ :new, :destroy ]
   resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
     post :callback
@@ -30,12 +29,13 @@ Rails.application.routes.draw do
   end
   # resources :passwords, param: :token
 
-  # == Home ==
-
+  # == Home
   get :home, to: "home#show"
 
-  # == Devtools ==
+  # == Worlds
+  resources :worlds
 
+  # == Devtools
   get "/fly" => redirect(
     "https://fly.io/apps/smallerworld",
     redirect: 307,
@@ -53,8 +53,7 @@ Rails.application.routes.draw do
     status: 307,
   )
 
-  # == Admin ==
-
+  # == Admin
   namespace :admin do
     scope controller: :dashboard, as: :dashboard do
       get "/", action: :show

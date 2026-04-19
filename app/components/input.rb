@@ -20,14 +20,14 @@ class Components::Input < Components::Base
   sig { override.params(content: T.nilable(T.proc.void)).void }
   def view_template(&content)
     if (form = @form) && (field = @field)
-      id = form.send(:field_id, field)
-      name = form.send(:field_name, field)
+      id = form.field_id(field)
+      name = form.field_name(field)
+      value = form.object.try(field)
     end
     root_element(
       :input,
-      id:,
-      name:,
       data: { slot: "input" },
+      **{ id:, name:, value: }.compact,
       &content
     )
   end

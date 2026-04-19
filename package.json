@@ -12,6 +12,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
+    "@rails/activestorage": "^8.1.300",
     "@sentry/browser": "^10.38.0",
     "@tailwindcss/cli": "^4.1.18",
     "@tailwindplus/elements": "^1.0.22",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@sentry/cli": "^2",
+    "@types/rails__activestorage": "^8.0.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",

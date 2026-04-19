@@ -7,7 +7,7 @@ class Components::Field < Components::Base
       form: T.nilable(Phlex::Rails::Builder),
       field: T.nilable(Symbol),
       orientation: Symbol,
-      invalid: T::Boolean,
+      invalid: T.nilable(TrueClass),
       options: T.untyped,
     ).void
   end
@@ -15,7 +15,7 @@ class Components::Field < Components::Base
     form: nil,
     field: nil,
     orientation: :vertical,
-    invalid: false,
+    invalid: nil,
     **options
   )
     super(**options)
@@ -60,9 +60,17 @@ class Components::Field < Components::Base
       **attributes,
     )
     if (form = @form) && (field = @field)
-      form.send(:label, field, **attributes, &content)
+      form.label(field, **attributes) do
+        if block_given?
+          yield
+        elsif (record = form.object) && record.class.respond_to?(:human_attribute_name)
+          record.class.human_attribute_name(field)
+        else
+          field.to_s.humanize
+        end
+      end
     else
-      label(**attributes, &content)
+      super(**attributes, &content)
     end
   end
 
@@ -119,8 +127,50 @@ class Components::Field < Components::Base
   sig { returns(T.nilable(String)) }
   def id
     if (form = @form) && (field = @field)
-      form.send(:field_id, field)
+      form.field_id(field)
     end
+  end
+
+  sig do
+    params(
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(component: Components::Input).void),
+    ).void
+  end
+  def input(**attributes, &block)
+    render Components::Input.new(
+      form: @form,
+      field: @field,
+      **attributes,
+      &block
+    )
+  end
+
+  sig do
+    params(
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(component: Components::Input).void),
+    ).void
+  end
+  def text_input(**attributes, &block)
+    input(type: :text, **attributes, &block)
+  end
+
+  sig do
+    params(
+      direct_upload: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(component: Components::Input).void),
+    ).void
+  end
+  def file_input(direct_upload: false, **attributes, &block)
+    if direct_upload
+      attributes = mix(
+        { data: { direct_upload_url: rails_direct_uploads_path } },
+        attributes,
+      )
+    end
+    input(type: :file, **attributes, &block)
   end
 
   private

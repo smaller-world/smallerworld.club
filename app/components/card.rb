@@ -65,6 +65,6 @@ class Components::Card < Components::Base
     ).void
   end
   def slot(slot, element: :div, **attributes, &content)
-    div(**mix({ data: { slot: } }, **attributes), &content)
+    public_send(element, **mix({ data: { slot: } }, **attributes), &content)
   end
 end
