@@ -48,7 +48,7 @@ usage = '''
 flag "-a --all" help="Run on all files instead of just staged files"
 arg "[files]..." var=#true help="Run on specific files"
 '''
-run = "hk fix $@"
+run = "hk fix ${usage_all:+--all} $@"
 
 [tasks.check]
 description = "Check code with hk"
@@ -56,7 +56,7 @@ usage = '''
 flag "-a --all" help="Run on all files instead of just staged files"
 arg "[files]..." var=#true help="Run on specific files"
 '''
-run = "hk check $@"
+run = "hk check ${usage_all:+--all} $@"
 
 [tasks.attach]
 description = "Attach to a running Overmind process"
