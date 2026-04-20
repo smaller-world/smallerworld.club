@@ -20,3 +20,8 @@
     }
   }
 }
+
+.turbo-progress-bar {
+  @apply h-0.5;
+  @apply bg-transparent bg-linear-to-r from-transparent to-primary;
+}
