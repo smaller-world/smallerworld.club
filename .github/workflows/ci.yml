@@ -26,7 +26,7 @@ jobs:
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
 
-  # TODO: Re-enable when we've fixed the security issue introduced by 'shadcn'
+  # TODO: Re-enable when shadcn's transitive hono dep is patched (GHSA-458j-xx4x-4375)
   # scan_js:
   #   name: Scan for JavaScript security issues
   #   runs-on: ubuntu-latest
