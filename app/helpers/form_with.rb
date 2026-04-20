@@ -12,27 +12,27 @@ module FormWith
 
   sig do
     params(
-      model: T.nilable(Object),
+      model: T.any(Object, FalseClass),
       url: T.nilable(String),
       method: T.nilable(Symbol),
       options: T.untyped,
       block: T.proc.params(form: ActionView::Helpers::FormBuilder).void,
     ).void
   end
-  def rails_form_with(model: nil, url: nil, method: nil, **options, &block)
+  def rails_form_with(model: false, url: nil, method: nil, **options, &block)
     form_with(model:, url:, method:, **options, &block)
   end
 
   sig do
     params(
-      model: T.nilable(Object),
+      model: T.any(Object, FalseClass),
       url: T.nilable(String),
       method: T.nilable(Symbol),
       options: T.untyped,
       block: T.proc.params(form: ComponentFormBuilder).void,
     ).void
   end
-  def component_form_with(model: nil, url: nil, method: nil, **options, &block)
+  def component_form_with(model: false, url: nil, method: nil, **options, &block)
     form_with(
       builder: ComponentFormBuilder,
       model:,
