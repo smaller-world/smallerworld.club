@@ -1,11 +1,14 @@
 import { Link } from "@inertiajs/react";
 import {
+  ActionIcon,
   Alert,
   Badge,
   Box,
   Button,
   Card,
   Center,
+  Container,
+  Divider,
   Group,
   HoverCard,
   Image,
@@ -26,6 +29,7 @@ import routes from "~/helpers/routes";
 import { withTrailingSlash } from "~/helpers/utils";
 import { type SharedPageProps } from "~/types";
 
+import InstagramIcon from "~icons/basil/instagram-solid";
 import PlayIcon from "~icons/heroicons/play-20-solid";
 
 import inviteCloseFriendsSrc from "~/assets/images/invite-close-friends.png";
@@ -340,9 +344,45 @@ const LandingPage: PageComponent<LandingPageProps> = () => {
 };
 
 LandingPage.layout = (page) => (
-  <AppLayout<LandingPageProps> withContainer containerSize="sm">
-    {page}
-  </AppLayout>
+  <>
+    <AppLayout<LandingPageProps> withContainer containerSize="sm">
+      {page}
+    </AppLayout>
+    <div className={classes.footer}>
+      <Container className={classes.footerInner}>
+        <Link href={routes.start.web.path()} style={{ textDecoration: "none" }}>
+          <Group gap={4}>
+            <Image src={logoSrc} h={24} w="unset" />
+            <Text size="md" c="black" ff="heading" fw={900}>
+              smaller world
+            </Text>
+          </Group>
+        </Link>
+        <Group
+          gap={4}
+          className={classes.footerLinks}
+          justify="flex-end"
+          wrap="nowrap"
+        >
+          <ActionIcon
+            component="a"
+            href="https://www.instagram.com/smallerworld"
+            target="_blank"
+            size="lg"
+            color="gray"
+            variant="subtle"
+            aria-label="Instagram"
+          >
+            <InstagramIcon />
+          </ActionIcon>
+          <Divider orientation="vertical" h={20} my="auto" mr={8} />
+          <Text size="xs" c="dimmed">
+            &copy; 2026 smaller world, a trade name of 1001446365 Ontario Inc.
+          </Text>
+        </Group>
+      </Container>
+    </div>
+  </>
 );
 
 export default LandingPage;
