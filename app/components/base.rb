@@ -17,7 +17,7 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::TurboStreamFrom
   include PhlexIcons
   include FormWith
-  include ButtonTo
+  include ButtonLinkTo
   include ButtonBackTo
 
   register_output_helper :local_time

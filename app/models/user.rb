@@ -51,6 +51,11 @@ class User < ApplicationRecord
 
   enumerize :oauth_provider, in: [ :apple, :google ]
 
+  sig { returns(String) }
+  def email_address_with_name
+    ActionMailer::Base.email_address_with_name(email_address, name)
+  end
+
   # == Associations ==
 
   has_many :sessions, dependent: :destroy

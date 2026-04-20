@@ -27,12 +27,12 @@ class Components::Input < Components::Base
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    root_element(
-      :input,
-      data: { slot: "input" },
-      **input_attributes,
-      **({ value: @value } if @value),
-    )
+    attributes = mix({ data: { slot: "input" }, value: @value }, @attributes)
+    if @form && @field
+      attributes[:id] = @form.field_id(@field) if attributes.exclude?(:id)
+      attributes[:name] = @form.field_name(@field) if attributes.exclude?(:name)
+    end
+    input(**attributes)
   end
 
   private

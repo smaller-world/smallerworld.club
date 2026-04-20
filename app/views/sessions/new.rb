@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Views::Sessions::New < Views::Base
+  include Phlex::Rails::Helpers::ButtonTo
+
   # == View ==
 
   sig { override.void }
@@ -47,6 +49,28 @@ class Views::Sessions::New < Views::Base
       card.content(class: "flex flex-col items-stretch gap-y-3") do
         Components::SignInWithAppleButton()
         Components::SignInWithGoogleButton()
+        if Rails.env.development? && (users = User.all.presence)
+          Components::DropdownMenu(anchor: :bottom, class: "mx-auto") do |menu|
+            menu.trigger do
+              Components::Button(
+                variant: :link,
+                class: "text-muted-foreground",
+              ) do
+                "[development] sign in as..."
+              end
+            end
+            menu.content do
+              users.find_each do |user|
+                button_to(
+                  user.email_address_with_name,
+                  session_path,
+                  params: { user_id: user.id },
+                  **menu.item_attributes,
+                )
+              end
+            end
+          end
+        end
       end
     end
   end

@@ -117,6 +117,8 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --radius-world-icon: calc(1 / 4.5 * 100%);
 }
 
 @layer base {

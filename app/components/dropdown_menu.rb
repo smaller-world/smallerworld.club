@@ -136,6 +136,18 @@ class Components::DropdownMenu < Components::Base
     )
   end
 
+  sig { params(variant: Symbol, inset: T::Boolean).returns(T::Hash[Symbol, T.untyped]) }
+  def item_attributes(variant: :default, inset: false)
+    {
+      class: "group/dropdown-menu-item",
+      data: {
+        slot: "dropdown-menu-item",
+        variant: variant == :default ? nil : variant,
+        inset: inset ? "" : nil,
+      }.compact,
+    }
+  end
+
   private
 
   # == Helpers ==
@@ -145,17 +157,5 @@ class Components::DropdownMenu < Components::Base
     if (values = Array.wrap(@anchor).presence)
       values.map(&:to_s).join(" ")
     end
-  end
-
-  sig { params(variant: Symbol, inset: T::Boolean).returns(T::Hash[Symbol, T.untyped]) }
-  def item_attributes(variant:, inset:)
-    {
-      class: "group/dropdown-menu-item",
-      data: {
-        slot: "dropdown-menu-item",
-        variant: variant == :default ? nil : variant,
-        inset: inset || nil,
-      },
-    }
   end
 end

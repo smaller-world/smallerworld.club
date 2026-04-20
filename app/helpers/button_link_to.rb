@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-module ButtonTo
+module ButtonLinkTo
   extend T::Sig
   extend T::Helpers
 
@@ -19,7 +19,7 @@ module ButtonTo
       attributes: T.untyped,
     ).void
   end
-  def button_to(label, href, icon: nil, **attributes)
+  def button_link_to(label, href, icon: nil, **attributes)
     Components::Button(
       element: :a,
       href:,
@@ -27,7 +27,7 @@ module ButtonTo
       **attributes,
     ) do |button|
       if icon.present?
-        button.icon(icon)
+        button.icon(icon, align: "inline-start")
         span { label }
       else
         label

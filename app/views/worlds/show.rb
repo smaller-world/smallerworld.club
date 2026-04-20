@@ -23,7 +23,7 @@ class Views::Worlds::Show < Views::Base
             div
           end
 
-          button_to(
+          button_link_to(
             "edit",
             edit_world_path(@world),
             icon: "huge/pencil-edit-01",
@@ -33,7 +33,7 @@ class Views::Worlds::Show < Views::Base
 
         Components::Card() do |card|
           card.header(class: "flex flex-col items-center gap-y-2") do
-            image_tag(@world.page_icon_variant, class: "size-24 rounded-full")
+            image_tag(@world.page_icon_variant, class: "size-24 rounded-world-icon")
             card.title(element: :h1, class: "text-xl text-center") do
               @world.name
             end

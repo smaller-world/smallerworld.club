@@ -50,19 +50,15 @@ class Components::ClearableFileInput < Components::Base
       end
       if @blob
         if @form && @field
-          id = @form.field_id(@field)
           html = @form.hidden_field(@field, id: nil, value: @blob.signed_id)
           raw(html) # rubocop:disable Rails/OutputSafety
         end
-        Components::Input(
-          id:,
-          value: @blob.filename,
-          readonly: true,
-        )
+        group.input(value: @blob.filename, name: nil, readonly: true)
         group.addon(align: "inline-end") do |addon|
           addon.button(
             type: :button,
             variant: :destructive,
+            class: "rounded-md",
             data: {
               action: "clearable-file-input#clearAttachedFile",
             },

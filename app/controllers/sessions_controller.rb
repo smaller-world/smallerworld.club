@@ -4,7 +4,7 @@
 class SessionsController < ApplicationController
   # == Filters ==
 
-  allow_unauthenticated_access only: [ :new ]
+  allow_unauthenticated_access only: [ :new, :create ]
 
   # rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
   #   T.bind(self, SessionsController)
@@ -29,13 +29,16 @@ class SessionsController < ApplicationController
     end
   end
 
-  # POST /sessions/apple_oauth
-  def apple_oauth
-    appleid_signin_state = SecureRandom.hex(16)
-    appleid_signin_nonce = SecureRandom.hex(16)
-    session[:appleid_signin_state] = appleid_signin_state
-    session[:appleid_signin_nonce] = appleid_signin_nonce
-    # authorization_url =
+  # POST /sessions
+  def create
+    unless Rails.env.development?
+      raise ApplicationError, "Action allowed only in development"
+    end
+
+    user_id = params.expect(:user_id)
+    user = User.find(user_id)
+    start_new_session_for(user)
+    redirect_to(after_authentication_url)
   end
 
   # DELETE /sessions

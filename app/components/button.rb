@@ -21,13 +21,19 @@ class Components::Button < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    root_element(:button, **root_attributes, &content)
+    root_element(
+      :button,
+      **self.class.root_attributes(variant: @variant, size: @size),
+      &content
+    )
   end
 
   # == Interface ==
 
-  sig { params(name: String, align: T.nilable(String), attributes: T.untyped).void }
-  def icon(name, align: nil, **attributes)
+  sig do
+    params(name: String, align: T.nilable(String), attributes: T.untyped).void
+  end
+  def icon(name, align:, **attributes)
     Icon(
       name,
       **mix(
@@ -41,14 +47,17 @@ class Components::Button < Components::Base
 
   # == Helpers ==
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def root_attributes
+  sig do
+    params(variant: Symbol, size: T.any(Symbol, String))
+      .returns(T::Hash[Symbol, T.untyped])
+  end
+  def self.root_attributes(variant: :default, size: :default)
     {
       class: "group/button",
       data: {
         slot: "button",
-        variant: @variant,
-        size: @size,
+        variant:,
+        size:,
       },
     }
   end

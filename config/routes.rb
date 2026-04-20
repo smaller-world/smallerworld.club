@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   # == Authentication
-  resource :session, only: [ :new, :destroy ]
+  resource :session, only: [ :new, :create, :destroy ]
   resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
     post :callback
   end

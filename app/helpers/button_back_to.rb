@@ -3,7 +3,7 @@
 
 module ButtonBackTo
   extend T::Sig
-  include ButtonTo
+  include ButtonLinkTo
 
   # == Methods ==
 
@@ -15,7 +15,7 @@ module ButtonBackTo
     ).void
   end
   def button_back_to(label, href, **attributes)
-    button_to(
+    button_link_to(
       "back to #{label}",
       href,
       icon: "huge/link-backward",

@@ -37,7 +37,7 @@ class Views::Home::Show < Views::Base
             button_to(
               session_path,
               method: :delete,
-              **Components::Button.new(variant: :destructive).root_attributes,
+              **Components::Button.root_attributes(variant: :destructive),
             ) do
               Icon(
                 "huge/logout-01",
