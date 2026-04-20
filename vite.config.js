@@ -1,5 +1,5 @@
 import { createReadStream, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 import reactPlugin from "@vitejs/plugin-react";
 import Mime from "mime";
@@ -96,6 +96,11 @@ export default defineConfig(async ({ command, mode, isPreview }) => {
         {
           find: "lodash",
           replacement: "lodash-es",
+        },
+        {
+          // jimp browser bundle lacks static named exports; ESM index works for our browser-safe ops
+          find: /^jimp$/,
+          replacement: resolve("node_modules/jimp/dist/esm/index.js"),
         },
       ],
     },
