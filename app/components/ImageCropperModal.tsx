@@ -1,7 +1,7 @@
 import { Button, Group, Image, Stack } from "@mantine/core";
 import { randomId } from "@mantine/hooks";
 import { closeModal, openModal } from "@mantine/modals";
-import { Jimp } from "jimp";
+import Jimp from "jimp";
 import { type ModalSettings } from "node_modules/@mantine/modals/lib/context";
 import { type FC, useEffect, useState } from "react";
 import {
