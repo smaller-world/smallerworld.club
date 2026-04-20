@@ -11,7 +11,6 @@ class Components::Textarea < Components::Base
     ).void
   end
   def initialize(form: nil, field: nil, value: nil, **attributes)
-    super(**attributes)
     @form = form
     @field = field
     @value = T.let(
@@ -25,6 +24,7 @@ class Components::Textarea < Components::Base
       end,
       T.nilable(String),
     )
+    super(**attributes)
   end
 
   # == Component ==

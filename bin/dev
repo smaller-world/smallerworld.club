@@ -8,7 +8,7 @@ cd "${BASH_SOURCE%/*}/.."
 # Select socket
 OVERMIND_SOCKET="tmp/sockets/overmind.${RAILS_ENV:-development}.sock"
 if [ -e "$OVERMIND_SOCKET" ]; then
-  if ./bin/overmind status > /dev/null; then
+  if ./bin/overmind status 2> /dev/null; then
     ./bin/overmind echo
     exit 0
   fi

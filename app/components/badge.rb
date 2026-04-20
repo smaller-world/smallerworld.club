@@ -6,8 +6,8 @@ class Components::Badge < Components::Base
 
   sig { params(variant: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, **attributes)
-    super(**attributes)
     @variant = variant
+    super(**attributes)
   end
 
   # == Component ==

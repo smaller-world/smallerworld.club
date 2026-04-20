@@ -16,9 +16,9 @@ class Components::Dialog < Components::Base
     ).void
   end
   def initialize(id:, show_close_button: true, **attributes)
-    super(**attributes)
     @id = id
     @show_close_button = show_close_button
+    super(**attributes)
   end
 
   # == Component ==

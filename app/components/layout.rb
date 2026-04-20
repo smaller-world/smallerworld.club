@@ -24,7 +24,6 @@ class Components::Layout < Components::Base
     body_class: nil,
     **attributes
   )
-    super(**attributes)
     @site_title = site_title
     @page_title = T.let(
       if page_title.is_a?(Array)
@@ -35,6 +34,7 @@ class Components::Layout < Components::Base
       T.nilable(String),
     )
     @body_class = body_class
+    super(**attributes)
   end
 
   # == Component ==

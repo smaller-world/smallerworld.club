@@ -11,10 +11,10 @@ class Components::FileInput < Components::Base
     ).void
   end
   def initialize(form: nil, field: nil, direct_upload: true, **attributes)
-    super(**attributes)
     @form = form
     @field = field
     @direct_upload = direct_upload
+    super(**attributes)
   end
 
   # == Component ==

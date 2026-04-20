@@ -12,9 +12,9 @@ class Components::Button < Components::Base
     ).void
   end
   def initialize(variant: :default, size: :default, **attributes)
-    super(**attributes)
     @variant = variant
     @size = size
+    super(**attributes)
   end
 
   # == Component ==

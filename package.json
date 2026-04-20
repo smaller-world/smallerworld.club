@@ -7,14 +7,13 @@
   },
   "scripts": {
     "build": "bun bun.config.js",
-    "build:css": "bunx @tailwindcss/cli -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
+    "build:css": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
     "@rails/activestorage": "^8.1.300",
     "@sentry/browser": "^10.48.0",
-    "@tailwindcss/cli": "^4.2.2",
     "@tailwindplus/elements": "^1.0.22",
     "local-time": "^3.0.3",
     "requestidlecallback-polyfill": "^1.0.2",
@@ -28,6 +27,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@sentry/cli": "^2.58.5",
+    "@tailwindcss/cli": "^4.2.2",
     "@types/rails__activestorage": "^8.0.1",
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",

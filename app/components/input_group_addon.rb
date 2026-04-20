@@ -6,8 +6,8 @@ class Components::InputGroupAddon < Components::Base
 
   sig { params(align: String, attributes: T.untyped).void }
   def initialize(align:, **attributes)
-    super(**attributes)
     @align = T.let(align, T.nilable(String))
+    super(**attributes)
   end
 
   # == Component ==

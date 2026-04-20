@@ -10,7 +10,7 @@ class Components::Field < Components::Base
       field: T.nilable(Symbol),
       orientation: Symbol,
       invalid: T.nilable(TrueClass),
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
   def initialize(
@@ -18,13 +18,13 @@ class Components::Field < Components::Base
     field: nil,
     orientation: :vertical,
     invalid: nil,
-    **options
+    **attributes
   )
-    super(**options)
     @form = form
     @field = field
     @orientation = orientation
     @invalid = invalid
+    super(**attributes)
   end
 
   # == Component ==

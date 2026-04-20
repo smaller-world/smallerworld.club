@@ -4,8 +4,8 @@
 class Components::Card < Components::Base
   sig { params(size: Symbol, attributes: T.untyped).void }
   def initialize(size: :default, **attributes)
-    super(**attributes)
     @size = size
+    super(**attributes)
   end
 
   # == Component ==

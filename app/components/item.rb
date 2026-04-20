@@ -4,9 +4,9 @@
 class Components::Item < Components::Base
   sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, size: :default, **attributes)
-    super(**attributes)
     @variant = variant
     @size = size
+    super(**attributes)
   end
 
   # == Component ==

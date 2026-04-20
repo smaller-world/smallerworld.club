@@ -21,13 +21,13 @@ class Components::DropdownMenu < Components::Base
     popover: true,
     **attributes
   )
-    super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy
     @popover = popover
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
     @content_attributes = T.let({}, T::Hash[Symbol, T.untyped])
+    super(**attributes)
   end
 
   # == Component ==

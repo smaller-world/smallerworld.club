@@ -6,8 +6,8 @@ class Components::SignInWithAppleButton < Components::Base
 
   sig { params(form: T::Hash[Symbol, T.untyped], attributes: T.untyped).void }
   def initialize(form: {}, **attributes)
-    super(**attributes)
     @form_options = form
+    super(**attributes)
   end
 
   # == Component ==
