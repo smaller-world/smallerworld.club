@@ -26,21 +26,23 @@ jobs:
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
 
-  # TODO: Re-enable when we've fixed the security issue introduced by 'shadcn'
-  # scan_js:
-  #   name: Scan for JavaScript security issues
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
-  #     - name: Set up Bun
-  #       uses: jdx/mise-action@v3
-  #       with:
-  #         install_args: bun
-  #     - name: Install Bun packages
-  #       run: mise x -- bun install
-  #     - name: Scan for known security vulnerabilities in packages used
-  #       run: bun audit
+  scan_js:
+    name: Scan for JavaScript security issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Bun
+        uses: jdx/mise-action@v3
+        with:
+          install_args: bun
+      - name: Install Bun packages
+        run: mise x -- bun install
+      - name: Scan for known security vulnerabilities in packages used
+        # GHSA-458j-xx4x-4375: hono JSX SSR HTML injection (moderate) - affects only
+        # the shadcn devDependency CLI; ignored until hono >=4.12.14 clears the
+        # minimum-release-age policy and can be installed.
+        run: bun audit --ignore=GHSA-458j-xx4x-4375
 
   check:
     name: Check code issues
