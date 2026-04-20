@@ -47,6 +47,12 @@ class Views::Home::Show < Views::Base
               span { "sign out" }
             end
           end
+          card.footer do
+            span do
+              plain("your time zone is: ")
+              code(class: "text-sm") { user.time_zone.name }
+            end
+          end
         end
 
         # Components::DropdownMenu() do |menu|

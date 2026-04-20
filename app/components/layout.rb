@@ -68,7 +68,6 @@ class Components::Layout < Components::Base
         # == Favicons
         link(rel: "shortcut icon", href: "/favicon.ico")
         link(rel: "icon", href: "/favicon-96x96.png", type: "image/png", sizes: "96x96")
-        link(rel: "icon", href: "/favicon.svg", type: "image/svg+xml")
         link(rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png")
 
         # == Fonts
