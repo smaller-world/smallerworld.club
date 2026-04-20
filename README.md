@@ -1,6 +1,6 @@
 # smallerworld.club
 
-_a home for third-space hosts and guests._
+_share your inner world with close friends_
 
 ## setup
 
@@ -18,14 +18,3 @@ mise setup
 # Run the development server:
 mise dev
 ```
-
-## TODOs
-
-### whatsapp group agent
-
-- [ ] **dynamic chat context:** initial chat context is 6 most recent messages.
-      what if we dynamically loaded it according to if the bot recently replied,
-      etc. i.e. if there's a current active "conversational" set of
-      back-and-forths, extend chat context up to 20 messages.
-- [ ] **opaque tool calls:** hide invocations of `send_message_history_link`
-      from the bot when loading messages.
