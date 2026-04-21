@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   # == Worlds
   resources :worlds do
-    resources :posts, except: :index, shallow: true
+    resources :posts, shallow: true
   end
 
   # == Devtools

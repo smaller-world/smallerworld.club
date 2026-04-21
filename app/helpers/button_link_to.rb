@@ -8,6 +8,7 @@ module ButtonLinkTo
   requires_ancestor { Phlex::HTML }
 
   include Phlex::Rails::Helpers::Routes
+  include Phlex::Rails::Helpers::URLFor
 
   # == Helper ==
 
@@ -29,7 +30,7 @@ module ButtonLinkTo
 
     Components::Button(
       element: :a,
-      href: polymorphic_path(target),
+      href: url_for(target),
       variant: :link,
       **attributes,
     ) do |button|

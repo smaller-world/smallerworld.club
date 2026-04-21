@@ -16,17 +16,16 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
-    component_form_with(
-      model: @post,
-      url: world_posts_path(@world),
+    form_with(
+      model: [ @world, @post ],
       class: "flex flex-col gap-y-4",
       **@options,
     ) do |form|
-      form.field(:title) do |f|
+      field_for(form, :title) do |f|
         f.text_input(placeholder: "a title!")
         f.error
       end
-      form.field(:plain_body) do |f|
+      field_for(form, :plain_body) do |f|
         f.textarea(
           placeholder: "something i want to share...",
           required: true,
@@ -34,7 +33,7 @@ class Components::PostForm < Components::Base
         )
         f.error
       end
-      form.button do |button|
+      submit_button_for(form) do |button|
         if @post.new_record?
           button.inline_start_icon("huge/mail-send-01")
           span { "submit" }

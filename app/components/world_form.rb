@@ -15,22 +15,24 @@ class Components::WorldForm < Components::Base
 
   sig { override.void }
   def view_template
-    component_form_with(
+    form_with(
       model: @world,
       class: "flex flex-col gap-y-4",
       **@options,
     ) do |form|
-      form.field(:name) do |f|
+      field_for(form, :name) do |f|
         f.label { "name" }
         f.text_input(required: true)
         f.error
       end
-      form.field(:icon) do |f|
+
+      field_for(form, :icon) do |f|
         f.label { "icon" }
         f.clearable_file_input(direct_upload: true, required: true)
         f.error
       end
-      form.button do |button|
+
+      submit_button_for(form) do |button|
         if @world.new_record?
           button.inline_start_icon("huge/plus-sign-square")
           span { "create world" }

@@ -4,42 +4,24 @@
 module FormWith
   extend T::Sig
   extend T::Helpers
-  include Phlex::Rails::Helpers::FormWith
 
   requires_ancestor { Phlex::HTML }
 
-  # == Methods ==
+  include Phlex::Rails::Helpers::FormWith
+
+  # == Helper ==
 
   sig do
     params(
-      model: T.any(Object, FalseClass),
-      url: T.nilable(String),
-      method: T.nilable(Symbol),
-      options: T.untyped,
-      block: T.proc.params(form: ActionView::Helpers::FormBuilder).void,
+      args: T.untyped,
+      kwargs: T.untyped,
+      block: T.proc.params(form: PhlexFormBuilder).void,
     ).void
   end
-  def rails_form_with(model: false, url: nil, method: nil, **options, &block)
-    form_with(model:, url:, method:, **options, &block)
-  end
-
-  sig do
-    params(
-      model: T.any(Object, FalseClass),
-      url: T.nilable(String),
-      method: T.nilable(Symbol),
-      options: T.untyped,
-      block: T.proc.params(form: ComponentFormBuilder).void,
-    ).void
-  end
-  def component_form_with(model: false, url: nil, method: nil, **options, &block)
-    form_with(
-      builder: ComponentFormBuilder,
-      model:,
-      url:,
-      method:,
-      **options,
-      &block
-    )
+  def form_with(*args, **kwargs, &block)
+    super(*T.unsafe(args), **kwargs) do |form|
+      builder = PhlexFormBuilder.from(form, component: self)
+      yield(builder)
+    end
   end
 end

@@ -15,35 +15,15 @@ class WorldsController < ApplicationController
   # GET /worlds/:id
   # GET /@:id
   def show
-    world = find_world
-    pagy, posts = pagy(
-      :countless,
-      world.posts.reverse_chronological,
-      limit: 5,
-    )
     respond_to do |format|
       format.html do
-        render Views::Worlds::Show.new(world:, posts:, pagy:)
-      end
-
-      format.turbo_stream do
-        append_posts = turbo_stream.append(
-          :posts,
-          renderable: Views::Worlds::Show::PostItems.new(posts:),
+        world = find_world
+        pagy, posts = pagy(
+          :countless,
+          world.posts.reverse_chronological,
+          limit: 5,
         )
-        update_next_page_control = if pagy.next
-          turbo_stream.replace(
-            :next_page_control,
-            renderable: Views::Worlds::Show::NextPageControl.new(
-              world:,
-              pagy:,
-              disable_for: 1.second,
-            ),
-          )
-        else
-          turbo_stream.remove(:next_page_control)
-        end
-        render turbo_stream: [ append_posts, update_next_page_control ]
+        render Views::Worlds::Show.new(world:, posts:, pagy:)
       end
     end
   end

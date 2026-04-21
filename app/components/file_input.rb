@@ -1,39 +1,18 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::FileInput < Components::Base
-  sig do
-    params(
-      form: T.nilable(ComponentFormBuilder),
-      field: T.nilable(Symbol),
-      direct_upload: T::Boolean,
-      attributes: T.untyped,
-    ).void
-  end
-  def initialize(form: nil, field: nil, direct_upload: true, **attributes)
-    @form = form
-    @field = field
-    @direct_upload = direct_upload
-    super(**attributes)
-  end
+class Components::FileInput < Components::Input
+  include Phlex::Rails::Helpers::FileField
 
   # == Component ==
 
-  sig { override(allow_incompatible: true).void }
+  sig { override.void }
   def view_template
-    Components::Input(
-      form: @form,
-      field: @field,
-      type: :file,
-      value: nil,
-      **mix(
-        {
-          data: ({
-            direct_upload_url: rails_direct_uploads_path,
-          } if @direct_upload),
-        },
-        @attributes,
-      ),
-    )
+    options = mix({ data: { slot: "input" } }, @options)
+    if @form && @field
+      @form.file_field(@field, **options)
+    else
+      file_field(**options)
+    end
   end
 end

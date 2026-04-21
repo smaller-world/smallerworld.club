@@ -1,21 +1,29 @@
 # typed: true
 # frozen_string_literal: true
 
-class ComponentFormBuilder < ActionView::Helpers::FormBuilder
+module FormHelpers
   extend T::Sig
-  include Phlex::Helpers
+  extend T::Helpers
 
-  # == Components ==
+  requires_ancestor { Phlex::HTML }
+
+  # == Helpers ==
 
   sig do
     params(
+      form: PhlexFormBuilder,
       variant: Symbol,
       size: Symbol,
       attributes: T.untyped,
       block: T.proc.params(field: Components::Button).void,
     ).void
   end
-  def button(variant: :default, size: :default, **attributes, &block)
+  def submit_button_for(
+    form,
+    variant: :default,
+    size: :default,
+    **attributes, &block
+  )
     Components::Button(
       variant:,
       size:,
@@ -26,17 +34,18 @@ class ComponentFormBuilder < ActionView::Helpers::FormBuilder
 
   sig do
     params(
-      name: T.nilable(Symbol),
+      form: PhlexFormBuilder,
+      method: Symbol,
       orientation: Symbol,
-      invalid: T.nilable(TrueClass),
+      invalid: T::Boolean,
       options: T.untyped,
       block: T.proc.params(field: Components::Field).void,
     ).void
   end
-  def field(name, orientation: :vertical, invalid: nil, options: {}, &block)
+  def field_for(form, method, orientation: :vertical, invalid: false, **options, &block)
     Components::Field(
-      form: self,
-      field: name,
+      form:,
+      field: method,
       orientation:,
       invalid:,
       options:,

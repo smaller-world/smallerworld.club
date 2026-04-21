@@ -4,7 +4,7 @@
 class Components::ClearableFileInput < Components::Base
   sig do
     params(
-      form: T.nilable(ComponentFormBuilder),
+      form: T.nilable(PhlexFormBuilder),
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       field: T.nilable(Symbol),
       direct_upload: T::Boolean,

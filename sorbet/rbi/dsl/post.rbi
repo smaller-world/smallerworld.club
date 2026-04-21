@@ -11,6 +11,18 @@ class Post
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
+  sig { returns(ActionText::RichText) }
+  def rich_text_body; end
+
+  sig { returns(ActionText::RichText) }
+  def body; end
+
+  sig { params(value: T.untyped).returns(T.untyped) }
+  def body=(value); end
+
+  sig { params(value: ActionText::RichText).returns(ActionText::RichText) }
+  def rich_text_body=(value); end
+
   private
 
   sig { returns(NilClass) }
@@ -370,6 +382,9 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_author(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def build_rich_text_body(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
@@ -378,6 +393,12 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_author!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def create_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    def create_rich_text_body!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world(*args, &blk); end
@@ -388,6 +409,9 @@ class Post
     sig { returns(T.nilable(::User)) }
     def reload_author; end
 
+    sig { returns(T.nilable(::ActionText::RichText)) }
+    def reload_rich_text_body; end
+
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
@@ -395,7 +419,16 @@ class Post
     def reset_author; end
 
     sig { void }
+    def reset_rich_text_body; end
+
+    sig { void }
     def reset_world; end
+
+    sig { returns(T.nilable(::ActionText::RichText)) }
+    def rich_text_body; end
+
+    sig { params(value: T.nilable(::ActionText::RichText)).void }
+    def rich_text_body=(value); end
 
     sig { returns(T.nilable(::World)) }
     def world; end
@@ -556,6 +589,12 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_rich_text_body_and_embeds(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def without(*args, &blk); end
@@ -1108,6 +1147,12 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_rich_text_body_and_embeds(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def without(*args, &blk); end

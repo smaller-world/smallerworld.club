@@ -36,7 +36,7 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
       field: T.nilable(::Symbol),
       direct_upload: T::Boolean,
@@ -69,10 +69,10 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
-      invalid: T.nilable(::TrueClass),
+      invalid: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Field).void)
     ).void
@@ -99,14 +99,13 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      direct_upload: T::Boolean,
-      attributes: T.untyped,
+      options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::FileInput).void)
     ).void
   end
-  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
@@ -127,17 +126,17 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      attributes: T.untyped,
+      options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Input).void)
     ).void
   end
-  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
@@ -218,6 +217,16 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::RichTextarea).void)
+    ).void
+  end
+  def RichTextarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+  sig do
+    params(
       orientation: ::Symbol,
       decorative: T::Boolean,
       attributes: T.untyped,
@@ -255,14 +264,13 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::ComponentFormBuilder),
+      form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      value: T.nilable(::String),
-      attributes: T.untyped,
+      options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Textarea).void)
     ).void
   end
-  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
@@ -272,6 +280,24 @@ module Components
     ).void
   end
   def WorldForm(world:, **options, &block); end
+
+  sig do
+    params(
+      world: ::World,
+      pagy: T.nilable(::Pagy),
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
+    ).void
+  end
+  def WorldNextPageControl(world:, pagy:, **options, &block); end
+
+  sig do
+    params(
+      posts: T::Enumerable[::Post],
+      block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
+    ).void
+  end
+  def WorldPostItems(posts:, &block); end
 
   class << self
     sig do
@@ -304,7 +330,7 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
         field: T.nilable(::Symbol),
         direct_upload: T::Boolean,
@@ -337,10 +363,10 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
         orientation: ::Symbol,
-        invalid: T.nilable(::TrueClass),
+        invalid: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Field).void)
       ).void
@@ -367,14 +393,13 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        direct_upload: T::Boolean,
-        attributes: T.untyped,
+        options: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::FileInput).void)
       ).void
     end
-    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
     sig do
       params(
@@ -395,17 +420,17 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        attributes: T.untyped,
+        options: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Input).void)
       ).void
     end
-    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
@@ -486,6 +511,16 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::RichTextarea).void)
+      ).void
+    end
+    def RichTextarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
         orientation: ::Symbol,
         decorative: T::Boolean,
         attributes: T.untyped,
@@ -523,14 +558,13 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::ComponentFormBuilder),
+        form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        value: T.nilable(::String),
-        attributes: T.untyped,
+        options: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Textarea).void)
       ).void
     end
-    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
     sig do
       params(
@@ -540,5 +574,23 @@ module Components
       ).void
     end
     def WorldForm(world:, **options, &block); end
+
+    sig do
+      params(
+        world: ::World,
+        pagy: T.nilable(::Pagy),
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
+      ).void
+    end
+    def WorldNextPageControl(world:, pagy:, **options, &block); end
+
+    sig do
+      params(
+        posts: T::Enumerable[::Post],
+        block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
+      ).void
+    end
+    def WorldPostItems(posts:, &block); end
   end
 end

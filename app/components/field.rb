@@ -2,14 +2,18 @@
 # frozen_string_literal: true
 
 class Components::Field < Components::Base
+  # == Configuration ==
+
+  ORIENTATIONS = [ :vertical, :horizontal, :responsive ]
+
   # == Initialization ==
 
   sig do
     params(
-      form: T.nilable(ComponentFormBuilder),
+      form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
       orientation: Symbol,
-      invalid: T.nilable(TrueClass),
+      invalid: T::Boolean,
       attributes: T.untyped,
     ).void
   end
@@ -17,13 +21,17 @@ class Components::Field < Components::Base
     form: nil,
     field: nil,
     orientation: :vertical,
-    invalid: nil,
+    invalid: false,
     **attributes
   )
+    unless orientation.in?(ORIENTATIONS)
+      raise InvalidParameter.new(parameter: :orientation, value: orientation)
+    end
+
     @form = form
     @field = field
     @orientation = orientation
-    @invalid = invalid
+    @force_invalid = invalid
     super(**attributes)
   end
 
@@ -38,7 +46,11 @@ class Components::Field < Components::Base
     if invalid?
       data[:invalid] = true
     end
-    root_element(:div, role: "group", class: "group/field", data:, &content)
+    root_element(
+      :div,
+      **mix({ class: "group/field", role: "group", data: }),
+      &content
+    )
   end
 
   # == Interface ==
@@ -198,6 +210,11 @@ class Components::Field < Components::Base
     Components::Textarea(form: @form, field: @field, **attributes)
   end
 
+  sig { params(options: T.untyped).void }
+  def rich_textarea(**options)
+    Components::RichTextarea(form: @form, field: @field, **options)
+  end
+
   private
 
   # == Helpers ==
@@ -224,7 +241,7 @@ class Components::Field < Components::Base
 
   sig { returns(T::Boolean) }
   def invalid?
-    @invalid || error_messages.present?
+    @force_invalid || error_messages.present?
   end
 
   # sig { returns(T.nilable(Symbol)) }

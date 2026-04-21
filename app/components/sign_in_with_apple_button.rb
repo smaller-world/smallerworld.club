@@ -13,7 +13,7 @@ class Components::SignInWithAppleButton < Components::Base
   # == Component ==
 
   def view_template
-    rails_form_with(
+    form_with(
       url: apple_oauth_session_path,
       method: :post,
       **mix(

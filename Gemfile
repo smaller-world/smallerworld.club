@@ -120,6 +120,9 @@ gem "down", "~> 5.5"
 gem "active_storage_validations", "~> 3.0"
 gem "ruby-vips", "~> 2.3"
 
+# Rich text editing with Lexxy
+gem "lexxy", "~> 0.9.9.beta"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

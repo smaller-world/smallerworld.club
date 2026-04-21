@@ -7,6 +7,20 @@ class Components::Base < Phlex::HTML
 
   abstract!
 
+  include Phlex::Rails::Helpers::ClassNames
+  include Phlex::Rails::Helpers::ImageTag
+  include Phlex::Rails::Helpers::LinkTo
+  include Phlex::Rails::Helpers::Routes
+  include Phlex::Rails::Helpers::TurboFrameTag
+  include Phlex::Rails::Helpers::TurboStreamFrom
+  include PhlexIcons
+
+  include ButtonBackTo
+  include ButtonLinkTo
+  include CompactMix
+  include FormHelpers
+  include FormWith
+
   # == Errors ==
 
   class InvalidParameter < ArgumentError
@@ -26,19 +40,7 @@ class Components::Base < Phlex::HTML
     attr_reader :value
   end
 
-  # == View Helpers ==
-
-  include Phlex::Rails::Helpers::ClassNames
-  include Phlex::Rails::Helpers::ImageTag
-  include Phlex::Rails::Helpers::LinkTo
-  include Phlex::Rails::Helpers::Routes
-  include Phlex::Rails::Helpers::TurboFrameTag
-  include Phlex::Rails::Helpers::TurboStreamFrom
-  include PhlexIcons
-  include CompactMix
-  include FormWith
-  include ButtonLinkTo
-  include ButtonBackTo
+  # == Configuration ==
 
   register_output_helper :local_time
   register_output_helper :inline_svg_tag

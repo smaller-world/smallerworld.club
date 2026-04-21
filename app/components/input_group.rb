@@ -6,7 +6,7 @@ class Components::InputGroup < Components::Base
 
   sig do
     params(
-      form: T.nilable(ComponentFormBuilder),
+      form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
       attributes: T.untyped,
     ).void

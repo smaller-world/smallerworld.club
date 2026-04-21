@@ -113,10 +113,12 @@ class Views::Home::Show < Views::Base
             end
           end
 
-          Components::Button(element: :a, href: new_world_path) do |button|
-            button.inline_start_icon("huge/earth")
-            span { "create your world" }
-          end
+          button_link_to(
+            "create your world",
+            new_world_path,
+            variant: :default,
+            icon: "huge/earth",
+          )
         end
       end
     end

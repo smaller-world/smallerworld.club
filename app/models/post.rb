@@ -38,6 +38,10 @@ class Post < ApplicationRecord
     author or raise ActiveRecord::RecordNotFound, "Missing author"
   end
 
+  # == Attachments
+
+  has_rich_text :body
+
   # == Validations ==
 
   validates :plain_body, presence: true

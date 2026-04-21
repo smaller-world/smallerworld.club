@@ -1,8 +1,8 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::Input < Components::Base
-  include Phlex::Rails::Helpers::TextField
+class Components::RichTextarea < Components::Base
+  include Phlex::Rails::Helpers::RichTextArea
 
   # == Initialization ==
 
@@ -22,13 +22,20 @@ class Components::Input < Components::Base
 
   # == Component ==
 
-  sig { override.void }
+  sig { override(allow_incompatible: true).void }
   def view_template
-    options = mix({ data: { slot: "input" } }, @options)
+    options = mix(
+      {
+        # data: { slot: "textarea" },
+        attachments: false,
+        markdown: false,
+      },
+      @options,
+    )
     if @form && @field
-      @form.text_field(@field, **options)
+      @form.rich_textarea(@field, **options)
     else
-      text_field(**options)
+      rich_textarea(**options)
     end
   end
 end
