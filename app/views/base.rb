@@ -12,7 +12,7 @@ class Views::Base < Components::Base
 
   abstract!
 
-  # == Configuration ==
+  # == Initialization ==
 
   sig { void }
   def initialize

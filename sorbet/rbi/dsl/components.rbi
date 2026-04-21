@@ -18,7 +18,7 @@ module Components
   sig do
     params(
       variant: ::Symbol,
-      size: T.any(::String, ::Symbol),
+      size: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Button).void)
     ).void
@@ -73,11 +73,11 @@ module Components
       field: T.nilable(::Symbol),
       orientation: ::Symbol,
       invalid: T.nilable(::TrueClass),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Field).void)
     ).void
   end
-  def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **options, &block); end
+  def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -147,12 +147,12 @@ module Components
 
   sig do
     params(
-      align: ::String,
+      align: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
     ).void
   end
-  def InputGroupAddon(align: T.unsafe(nil), **attributes, &block); end
+  def InputGroupAddon(align:, **attributes, &block); end
 
   sig do
     params(
@@ -186,18 +186,35 @@ module Components
 
   sig do
     params(
-      to: T.untyped,
+      target: ::Object,
       pagy: T.nilable(::Pagy),
+      autoclick: T::Boolean,
+      disable_for: T.nilable(::ActiveSupport::Duration),
       variant: ::Symbol,
       size: ::Symbol,
-      form_class: T.nilable(::String),
-      form: T::Hash[::Symbol, T.untyped],
-      disable_for: T.nilable(::ActiveSupport::Duration),
       options: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PaginationButton).void)
+      block: T.nilable(T.proc.params(instance: Components::NextPageButton).void)
     ).void
   end
-  def PaginationButton(to:, pagy: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), form_class: T.unsafe(nil), form: T.unsafe(nil), disable_for: T.unsafe(nil), **options, &block); end
+  def NextPageButton(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+
+  sig do
+    params(
+      post: ::Post,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PostCard).void)
+    ).void
+  end
+  def PostCard(post:, **attributes, &block); end
+
+  sig do
+    params(
+      post: ::Post,
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PostForm).void)
+    ).void
+  end
+  def PostForm(post:, **options, &block); end
 
   sig do
     params(
@@ -269,7 +286,7 @@ module Components
     sig do
       params(
         variant: ::Symbol,
-        size: T.any(::String, ::Symbol),
+        size: ::Symbol,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Button).void)
       ).void
@@ -324,11 +341,11 @@ module Components
         field: T.nilable(::Symbol),
         orientation: ::Symbol,
         invalid: T.nilable(::TrueClass),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Field).void)
       ).void
     end
-    def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **options, &block); end
+    def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -398,12 +415,12 @@ module Components
 
     sig do
       params(
-        align: ::String,
+        align: ::Symbol,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
       ).void
     end
-    def InputGroupAddon(align: T.unsafe(nil), **attributes, &block); end
+    def InputGroupAddon(align:, **attributes, &block); end
 
     sig do
       params(
@@ -437,18 +454,35 @@ module Components
 
     sig do
       params(
-        to: T.untyped,
+        target: ::Object,
         pagy: T.nilable(::Pagy),
+        autoclick: T::Boolean,
+        disable_for: T.nilable(::ActiveSupport::Duration),
         variant: ::Symbol,
         size: ::Symbol,
-        form_class: T.nilable(::String),
-        form: T::Hash[::Symbol, T.untyped],
-        disable_for: T.nilable(::ActiveSupport::Duration),
         options: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PaginationButton).void)
+        block: T.nilable(T.proc.params(instance: Components::NextPageButton).void)
       ).void
     end
-    def PaginationButton(to:, pagy: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), form_class: T.unsafe(nil), form: T.unsafe(nil), disable_for: T.unsafe(nil), **options, &block); end
+    def NextPageButton(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
+        post: ::Post,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PostCard).void)
+      ).void
+    end
+    def PostCard(post:, **attributes, &block); end
+
+    sig do
+      params(
+        post: ::Post,
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PostForm).void)
+      ).void
+    end
+    def PostForm(post:, **options, &block); end
 
     sig do
       params(

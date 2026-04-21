@@ -22,6 +22,9 @@ module GeneratedUrlHelpersModule
   def callback_google_oauth_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -55,7 +58,13 @@ module GeneratedUrlHelpersModule
   def new_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def pwa_manifest_url(*args); end
@@ -158,6 +167,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_posts_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_url(*args); end

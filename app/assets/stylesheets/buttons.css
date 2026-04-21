@@ -62,7 +62,7 @@
       @apply h-10 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2;
 
       [data-icon] {
-        @apply size-5;
+        @apply size-4.5;
       }
     }
 

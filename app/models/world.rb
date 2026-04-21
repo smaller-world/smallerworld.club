@@ -14,7 +14,8 @@
 #
 # Indexes
 #
-#  index_worlds_on_owner_id  (owner_id)
+#  index_worlds_on_name_and_owner_id  (name,owner_id) UNIQUE
+#  index_worlds_on_owner_id           (owner_id)
 #
 # Foreign Keys
 #
@@ -56,6 +57,7 @@ class World < ApplicationRecord
   # == Associations ==
 
   belongs_to :owner, class_name: "User"
+  has_many :posts, dependent: :destroy
 
   sig { returns(User) }
   def owner!

@@ -63,6 +63,7 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :owner,
     foreign_key: :owner_id
+  has_many :posts, through: :worlds
 
   # == Attachments ==
 

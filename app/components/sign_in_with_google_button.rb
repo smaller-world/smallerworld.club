@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Components::SignInWithGoogleButton < Components::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(form: T::Hash[Symbol, T.untyped], attributes: T.untyped).void }
   def initialize(form: {}, **attributes)

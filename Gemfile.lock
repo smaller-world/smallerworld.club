@@ -250,6 +250,8 @@ GEM
       thor (~> 1.3)
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.5)
+    lexxy (0.9.9.beta)
+      rails (>= 8.0.2)
     lint_roller (1.1.0)
     listen (3.10.0)
       logger
@@ -657,6 +659,7 @@ DEPENDENCIES
   inline_svg (~> 1.10)
   jsbundling-rails
   kamal
+  lexxy
   listen
   local_time
   minitest (~> 6.0.1)
@@ -790,6 +793,7 @@ CHECKSUMS
   json-jwt (1.17.0) sha256=6ff99026b4c54281a9431179f76ceb81faa14772d710ef6169785199caadc4cc
   kamal (2.10.1) sha256=53b7ecb4c33dd83b1aedfc7aacd1c059f835993258a552d70d584c6ce32b6340
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
+  lexxy (0.9.9.beta) sha256=f032fa1d1e7066de0ee0e2835e454b79ad2343bcf56f0c56e60cc39594af49be
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   listen (3.10.0) sha256=c6e182db62143aeccc2e1960033bebe7445309c7272061979bb098d03760c9d2
   llhttp (0.6.1) sha256=9da187ecf6407265465919cc0d691210ef79e38fa6e86e5e45593bdf25b50146

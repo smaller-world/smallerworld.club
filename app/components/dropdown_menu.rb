@@ -4,8 +4,12 @@
 class Components::DropdownMenu < Components::Base
   # == Configuration ==
 
+  ITEM_VARIANTS = [ :default, :destructive ]
+
   register_element :el_dropdown
   register_element :el_menu
+
+  # == Initialization ==
 
   sig do
     params(
@@ -138,11 +142,15 @@ class Components::DropdownMenu < Components::Base
 
   sig { params(variant: Symbol, inset: T::Boolean).returns(T::Hash[Symbol, T.untyped]) }
   def item_attributes(variant: :default, inset: false)
+    unless variant.in?(ITEM_VARIANTS)
+      raise InvalidParameter.new(parameter: :variant, value: variant)
+    end
+
     {
       class: "group/dropdown-menu-item",
       data: {
         slot: "dropdown-menu-item",
-        variant: variant == :default ? nil : variant,
+        variant: variant,
         inset: inset ? "" : nil,
       }.compact,
     }

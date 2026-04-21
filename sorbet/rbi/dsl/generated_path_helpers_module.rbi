@@ -22,6 +22,9 @@ module GeneratedPathHelpersModule
   def callback_google_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -56,6 +59,12 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_world_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def pwa_manifest_path(*args); end
@@ -161,6 +170,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_posts_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_path(*args); end

@@ -4,9 +4,17 @@
 class Components::InputGroupAddon < Components::Base
   # == Configuration ==
 
-  sig { params(align: String, attributes: T.untyped).void }
+  ALIGNMENTS = [ :inline_start, :inline_end, :block_start, :block_end ]
+
+  # == Initialization ==
+
+  sig { params(align: Symbol, attributes: T.untyped).void }
   def initialize(align:, **attributes)
-    @align = T.let(align, String)
+    unless align.in?(ALIGNMENTS)
+      raise InvalidParameter.new(parameter: :align, value: align)
+    end
+
+    @align = T.let(align, Symbol)
     super(**attributes)
   end
 
@@ -18,7 +26,7 @@ class Components::InputGroupAddon < Components::Base
       :div,
       data: {
         slot: "input-group-addon",
-        align: @align,
+        align: @align.to_s.tr("_", "-"),
         controller: "input-group-addon",
         action: "click->input-group-addon#focus",
       },
@@ -32,7 +40,7 @@ class Components::InputGroupAddon < Components::Base
   sig do
     params(
       variant: Symbol,
-      size: T.any(Symbol, String),
+      size: Symbol,
       attributes: T.untyped,
       content: T.nilable(T.proc.params(component: Components::Button).void),
     ).void

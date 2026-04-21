@@ -4,7 +4,7 @@
 class Views::Home::Show < Views::Base
   include Phlex::Rails::Helpers::ButtonTo
 
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(current_user: User).void }
   def initialize(current_user:)
@@ -107,20 +107,14 @@ class Views::Home::Show < Views::Base
             ul(class: "list-inside list-disc") do
               @current_user.worlds.each do |world|
                 li do
-                  Components::Button(
-                    element: :a,
-                    href: world_path(world),
-                    variant: :link,
-                  ) do
-                    world.name
-                  end
+                  button_link_to(world.name, world, class: "h-6")
                 end
               end
             end
           end
 
-          Components::Button(element: :a, href: new_world_path) do
-            Icon("huge/earth", class: "size-4", data: { icon: "inline-start" })
+          Components::Button(element: :a, href: new_world_path) do |button|
+            button.inline_start_icon("huge/earth")
             span { "create your world" }
           end
         end

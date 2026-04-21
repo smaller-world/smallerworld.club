@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Components::Field < Components::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig do
     params(

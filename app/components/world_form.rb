@@ -2,12 +2,12 @@
 # frozen_string_literal: true
 
 class Components::WorldForm < Components::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(world: World, options: T.untyped).void }
   def initialize(world:, **options)
     @world = world
-    @options = options
+    @options = T.let(options, T::Hash[Symbol, T.untyped])
     super()
   end
 
@@ -32,10 +32,10 @@ class Components::WorldForm < Components::Base
       end
       form.button do |button|
         if @world.new_record?
-          button.icon("huge/plus-sign-square", align: "inline-start")
+          button.inline_start_icon("huge/plus-sign-square")
           span { "create world" }
         else
-          button.icon("huge/floppy-disk", align: "inline-start")
+          button.inline_start_icon("huge/floppy-disk")
           span { "save changes" }
         end
       end

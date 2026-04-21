@@ -33,7 +33,9 @@ Rails.application.routes.draw do
   get :home, to: "home#show"
 
   # == Worlds
-  resources :worlds
+  resources :worlds do
+    resources :posts, except: :index, shallow: true
+  end
 
   # == Devtools
   get "/fly" => redirect(

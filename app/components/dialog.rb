@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Components::Dialog < Components::Base
-  # == Configuration ==
+  # == Initialization ==
 
   register_element :el_dialog
   register_element :el_dialog_backdrop
@@ -87,7 +87,7 @@ class Components::Dialog < Components::Base
     div(data: { slot: "dialog-close" }) do
       Components::Button(
         variant: :ghost,
-        size: "icon-sm",
+        size: :icon_sm,
         command: "close",
         commandfor: @id,
       ) do

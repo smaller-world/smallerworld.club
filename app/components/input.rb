@@ -27,24 +27,19 @@ class Components::Input < Components::Base
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    attributes = mix({ data: { slot: "input" }, value: @value }, @attributes)
+    attributes = mix(
+      { data: { slot: "input" }, value: @value },
+      @attributes,
+    )
     if @form && @field
-      attributes[:id] = @form.field_id(@field) if attributes.exclude?(:id)
-      attributes[:name] = @form.field_name(@field) if attributes.exclude?(:name)
+      if attributes.exclude?(:id)
+        attributes[:id] = @form.field_id(@field)
+      end
+      if attributes.exclude?(:name)
+        attributes[:name] = @form.field_name(@field)
+      end
     end
+
     input(**attributes)
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(T::Hash[Symbol, String]) }
-  def input_attributes
-    if @form && @field
-      id = @form.field_id(@field)
-      name = @form.field_name(@field)
-    end
-    { id:, name: }.compact
   end
 end

@@ -31,24 +31,19 @@ class Components::Textarea < Components::Base
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    root_element(
-      :textarea,
-      data: { slot: "textarea" },
-      **textarea_attributes,
-      **({ value: @value } if @value),
+    attributes = mix(
+      { data: { slot: "textarea" }, value: @value },
+      @attributes,
     )
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(T::Hash[Symbol, String]) }
-  def textarea_attributes
     if @form && @field
-      id = @form.field_id(@field)
-      name = @form.field_name(@field)
+      if @attributes.exclude?(:id)
+        attributes[:id] = @form.field_id(@field)
+      end
+      if @attributes.exclude?(:name)
+        attributes[:name] = @form.field_name(@field)
+      end
     end
-    { id:, name: }.compact
+
+    textarea(**attributes)
   end
 end

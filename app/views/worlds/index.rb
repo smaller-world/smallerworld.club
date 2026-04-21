@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Views::Worlds::Index < Views::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(current_user: User).void }
   def initialize(current_user:)

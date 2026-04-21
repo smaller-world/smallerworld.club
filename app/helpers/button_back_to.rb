@@ -5,25 +5,24 @@ module ButtonBackTo
   extend T::Sig
   include ButtonLinkTo
 
-  # == Methods ==
+  # == Helper ==
 
-  sig do
-    params(
-      label: String,
-      href: String,
-      attributes: T.untyped,
-    ).void
-  end
-  def button_back_to(label, href, **attributes)
+  sig { params(args: T.untyped, attributes: T.untyped).void }
+  def button_back_to(*args, **attributes)
+    case args.length
+    when 2
+      label, target = args
+    when 1
+      target, = args
+      label = target.to_s.humanize(capitalize: false)
+    end
+
     button_link_to(
       "back to #{label}",
-      href,
+      target,
       icon: "huge/link-backward",
-     **attributes,
+      variant: :secondary,
+      **attributes,
     )
-  end
-
-  def button_back_to_home(**attributes)
-    button_back_to("home", home_path, **attributes)
   end
 end

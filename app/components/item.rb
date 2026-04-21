@@ -2,8 +2,22 @@
 # frozen_string_literal: true
 
 class Components::Item < Components::Base
+  # == Configuration ==
+
+  VARIANTS = [ :default, :outline, :muted ]
+  SIZES = [ :default, :xs, :sm ]
+
+  # == Initialization ==
+
   sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, size: :default, **attributes)
+    unless variant.in?(VARIANTS)
+      raise InvalidParameter.new(parameter: :variant, value: variant)
+    end
+    unless size.in?(SIZES)
+      raise InvalidParameter.new(parameter: :size, value: size)
+    end
+
     @variant = variant
     @size = size
     super(**attributes)

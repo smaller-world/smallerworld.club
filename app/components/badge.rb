@@ -2,10 +2,18 @@
 # frozen_string_literal: true
 
 class Components::Badge < Components::Base
-  # == Configuration ==
+  # == Configuration
+
+  VARIANTS = [ :default, :secondary, :destructive, :outline, :ghost, :link ]
+
+  # == Initialization ==
 
   sig { params(variant: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, **attributes)
+    unless variant.in?(VARIANTS)
+      raise InvalidParameter.new(parameter: :variant, value: variant)
+    end
+
     @variant = variant
     super(**attributes)
   end

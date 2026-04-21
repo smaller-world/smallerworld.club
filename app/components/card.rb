@@ -2,8 +2,18 @@
 # frozen_string_literal: true
 
 class Components::Card < Components::Base
+  # == Configuration ==
+
+  SIZES = [ :default, :sm ]
+
+  # == Initialization ==
+
   sig { params(size: Symbol, attributes: T.untyped).void }
   def initialize(size: :default, **attributes)
+    unless size.in?(SIZES)
+      raise InvalidParameter.new(parameter: :size, value: size)
+    end
+
     @size = size
     super(**attributes)
   end

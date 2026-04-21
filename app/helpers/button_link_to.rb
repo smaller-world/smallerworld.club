@@ -9,28 +9,41 @@ module ButtonLinkTo
 
   include Phlex::Rails::Helpers::Routes
 
-  # == Methods ==
+  # == Helper ==
 
   sig do
     params(
-      label: String,
-      href: String,
+      args: T.untyped,
       icon: T.nilable(String),
       attributes: T.untyped,
+      block: T.nilable(T.proc.void),
     ).void
   end
-  def button_link_to(label, href, icon: nil, **attributes)
+  def button_link_to(*args, icon: nil, **attributes, &block)
+    if block_given?
+      label = capture(&block)
+      target = args.first
+    else
+      label, target = args
+    end
+
     Components::Button(
       element: :a,
-      href:,
-      variant: :secondary,
+      href: polymorphic_path(target),
+      variant: :link,
       **attributes,
     ) do |button|
       if icon.present?
-        button.icon(icon, align: "inline-start")
-        span { label }
+        button.inline_start_icon(icon)
+        if block_given?
+          raw(label) # rubocop:disable Rails/OutputSafety
+        else
+          span { label }
+        end
+      elsif block_given?
+        raw(label) # rubocop:disable Rails/OutputSafety
       else
-        label
+        plain(label)
       end
     end
   end

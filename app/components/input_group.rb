@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Components::InputGroup < Components::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig do
     params(
@@ -64,12 +64,12 @@ class Components::InputGroup < Components::Base
 
   sig do
     params(
-      align: String,
+      align: Symbol,
       attributes: T.untyped,
       content: T.proc.params(component: Components::InputGroupAddon).void,
     ).void
   end
   def addon(align:, **attributes, &content)
-    Components::InputGroupAddon(align:, **attributes, &content)
+    render Components::InputGroupAddon.new(align:, **attributes, &content)
   end
 end

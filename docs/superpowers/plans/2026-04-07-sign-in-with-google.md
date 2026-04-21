@@ -696,7 +696,7 @@ Create `app/components/sign_in_with_google_button.rb`:
 class Components::SignInWithGoogleButton < Components::Base
   include Phlex::Rails::Helpers::ButtonTo
 
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(form: T::Hash[Symbol, T.untyped], attributes: T.untyped).void }
   def initialize(form: {}, **attributes)

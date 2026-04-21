@@ -7,6 +7,25 @@ class Components::Base < Phlex::HTML
 
   abstract!
 
+  # == Errors ==
+
+  class InvalidParameter < ArgumentError
+    extend T::Sig
+
+    sig { params(parameter: Symbol, value: T.untyped).void }
+    def initialize(parameter:, value:)
+      @parameter = parameter
+      @value = value
+      super("Invalid #{parameter}: #{value.inspect}")
+    end
+
+    sig { returns(Symbol) }
+    attr_reader :parameter
+
+    sig { returns(Symbol) }
+    attr_reader :value
+  end
+
   # == View Helpers ==
 
   include Phlex::Rails::Helpers::ClassNames
@@ -16,6 +35,7 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
   include PhlexIcons
+  include CompactMix
   include FormWith
   include ButtonLinkTo
   include ButtonBackTo
@@ -25,7 +45,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :auto_link
   register_value_helper :authenticated?
 
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(element: T.nilable(Symbol), attributes: T.untyped).void }
   def initialize(element: nil, **attributes)

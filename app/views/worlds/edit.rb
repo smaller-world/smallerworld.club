@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Views::Worlds::Edit < Views::Base
-  # == Configuration ==
+  # == Initialization ==
 
   sig { params(world: World).void }
   def initialize(world:)
@@ -16,7 +16,7 @@ class Views::Worlds::Edit < Views::Base
   def view_template
     Components::Layout() do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to("world", world_path(@world))
+        button_back_to("world", @world)
 
         Components::Card() do |card|
           card.content do

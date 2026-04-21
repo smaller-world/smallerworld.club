@@ -54,7 +54,7 @@ class Components::ClearableFileInput < Components::Base
           raw(html) # rubocop:disable Rails/OutputSafety
         end
         group.input(value: @blob.filename, name: nil, readonly: true)
-        group.addon(align: "inline-end") do |addon|
+        group.addon(align: :inline_end) do |addon|
           addon.button(
             type: :button,
             variant: :destructive,
@@ -63,10 +63,7 @@ class Components::ClearableFileInput < Components::Base
               action: "clearable-file-input#clearAttachedFile",
             },
           ) do |button|
-            button.icon(
-              "huge/minus-sign-circle",
-              align: "inline-start",
-            )
+            button.inline_start_icon("huge/minus-sign-circle")
             span { "remove" }
           end
         end
@@ -100,7 +97,7 @@ class Components::ClearableFileInput < Components::Base
     end
     group.file_input(direct_upload: @direct_upload, **@input_options)
     group.addon(
-      align: "inline-end",
+      align: :inline_end,
       data: { clearable_file_input_target: "spinner" },
       class: "hidden",
       &:spinner
