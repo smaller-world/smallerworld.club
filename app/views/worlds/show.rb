@@ -2,6 +2,48 @@
 # frozen_string_literal: true
 
 class Views::Worlds::Show < Views::Base
+  # == Fragments ==
+
+  class PostItems < Components::Base
+    sig { params(posts: T::Enumerable[Post]).void }
+    def initialize(posts:)
+      @posts = posts
+      super()
+    end
+
+    sig { override.void }
+    def view_template
+      @posts.each do |post|
+        li do
+          Components::PostCard(post:)
+        end
+      end
+    end
+  end
+
+  class NextPageControl < Components::Base
+    sig { params(world: World, pagy: T.nilable(Pagy), options: T.untyped).void }
+    def initialize(world:, pagy:, **options)
+      @world = world
+      @pagy = pagy
+      @options = options
+      super()
+    end
+
+    sig { override.void }
+    def view_template
+      render Components::NextPageControl.new(
+        target: @world,
+        pagy: @pagy,
+        autoclick: true,
+        **@options,
+      ) do
+        Icon("huge/loading-03", data: { icon: "inline-start" })
+        span { "load more" }
+      end
+    end
+  end
+
   # == Initialization ==
 
   sig do
@@ -64,21 +106,14 @@ class Views::Worlds::Show < Views::Base
           end
         end
 
-        turbo_frame_tag(:posts, class: "space-y-4") do
-          ul(class: "space-y-4") do
-            @posts.each do |post|
-              li do
-                Components::PostCard(post:)
-              end
-            end
+        section(class: "space-y-4") do
+          ul(id: "posts", class: "space-y-4") do
+            render PostItems.new(posts: @posts)
           end
 
           if @pagy.nil? || @pagy.next
             div(class: "flex flex-col items-center") do
-              Components::NextPageButton(target: @world, pagy: @pagy) do
-                Icon("huge/loading-03", data: { icon: "inline-start" })
-                span { "load more" }
-              end
+              render NextPageControl.new(world: @world, pagy: @pagy)
             end
           end
         end

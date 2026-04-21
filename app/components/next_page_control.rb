@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::NextPageButton < Components::Base
+class Components::NextPageControl < Components::Base
   include Phlex::Rails::Helpers::ButtonTo
 
   # == Initialization ==
@@ -46,15 +46,14 @@ class Components::NextPageButton < Components::Base
         Components::Button.root_attributes(variant: @variant, size: @size),
         {
           form: {
-            id: "pagination",
-            class: "pagination_button",
+            id: "next_page_control",
             data: {
               turbo_stream: true,
             },
           },
           method: :get,
         },
-        next_page_attributes,
+        page_attributes,
         autoclick_attributes,
         disable_for_attributes,
         @options,
@@ -68,7 +67,7 @@ class Components::NextPageButton < Components::Base
   # == Helpers ==
 
   sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def next_page_attributes
+  def page_attributes
     if (page = @pagy&.next)
       { params: { page: } }
     end

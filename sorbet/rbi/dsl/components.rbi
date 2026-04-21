@@ -193,10 +193,10 @@ module Components
       variant: ::Symbol,
       size: ::Symbol,
       options: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::NextPageButton).void)
+      block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
     ).void
   end
-  def NextPageButton(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
@@ -461,10 +461,10 @@ module Components
         variant: ::Symbol,
         size: ::Symbol,
         options: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::NextPageButton).void)
+        block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
       ).void
     end
-    def NextPageButton(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
 
     sig do
       params(
