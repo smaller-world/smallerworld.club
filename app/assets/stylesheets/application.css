@@ -1,14 +1,12 @@
 @source not "../../../sorbet/";
 
-/* NOTE: Needs to be first in import order :/ */
-@import "./lexxy.css";
-
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @import "./tippy.css";
 @import "./pagy.css";
+@import "./lexxy.css";
 
 @import "./theme.css";
 @import "./loading.css";

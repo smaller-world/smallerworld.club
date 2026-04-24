@@ -10,7 +10,7 @@ class Components::FileInput < Components::Input
   def view_template
     options = mix({ data: { slot: "input" } }, @options)
     if @form && @field
-      @form.file_field(@field, **options)
+      @form.file_field(@field, **with_invalid_aria(options))
     else
       file_field(**options)
     end

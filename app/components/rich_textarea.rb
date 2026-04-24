@@ -1,24 +1,8 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::RichTextarea < Components::Base
+class Components::RichTextarea < Components::Input
   include Phlex::Rails::Helpers::RichTextArea
-
-  # == Initialization ==
-
-  sig do
-    params(
-      form: T.nilable(PhlexFormBuilder),
-      field: T.nilable(Symbol),
-      options: T.untyped,
-    ).void
-  end
-  def initialize(form: nil, field: nil, **options)
-    @form = form
-    @field = field
-    @options = options
-    super()
-  end
 
   # == Component ==
 
@@ -26,14 +10,14 @@ class Components::RichTextarea < Components::Base
   def view_template
     options = mix(
       {
-        # data: { slot: "textarea" },
+        class: "lexxy-content",
         attachments: false,
         markdown: false,
       },
       @options,
     )
     if @form && @field
-      @form.rich_textarea(@field, **options)
+      @form.rich_textarea(@field, **with_invalid_aria(options))
     else
       rich_textarea(**options)
     end

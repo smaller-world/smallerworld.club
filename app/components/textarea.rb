@@ -10,7 +10,7 @@ class Components::Textarea < Components::Input
   def view_template
     options = mix({ data: { slot: "textarea" } }, @options)
     if @form && @field
-      @form.textarea(@field, **options)
+      @form.textarea(@field, **with_invalid_aria(options))
     else
       textarea(**options)
     end

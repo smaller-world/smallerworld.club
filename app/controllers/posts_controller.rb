@@ -52,7 +52,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
-        post_params = params.expect(post: [ :title, :plain_body ])
+        post_params = params.expect(post: [ :title, :body, :plain_body ])
         post = world.posts.build(**post_params)
         if post.save
           redirect_to(world)

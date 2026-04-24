@@ -25,8 +25,8 @@ class Components::PostForm < Components::Base
         f.text_input(placeholder: "a title!")
         f.error
       end
-      field_for(form, :plain_body) do |f|
-        f.textarea(
+      field_for(form, :body) do |f|
+        f.rich_textarea(
           placeholder: "something i want to share...",
           required: true,
           class: "min-h-36",

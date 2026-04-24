@@ -40,6 +40,10 @@
   --sidebar-border: oklch(0.93 0.007 106.5);
   --sidebar-ring: oklch(0.737 0.021 106.9);
 
+  /* Lexxy */
+  --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
+  --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
+
   @media (prefers-color-scheme: dark) {
     --background: oklch(0.153 0.006 107.1);
     --foreground: oklch(0.988 0.003 106.5);

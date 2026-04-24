@@ -16,20 +16,21 @@ class Components::PostCard < Components::Base
 
   sig { override.void }
   def view_template
-    Components::Card(**@attributes) do |card|
+    attributes = mix({ class: "gap-2" }, @attributes)
+    Components::Card(**attributes) do |card|
       card.header do
-        card.description do
+        card.description(class: "text-xs") do
           local_time(@post.created_at, class: "lowercase")
         end
         if (title = @post.title)
-          card.title(class: "text-lg font-semibold font-heading") do
+          card.title(class: "text-xl font-semibold font-heading") do
             title
           end
         end
       end
       card.content do
         p(class: "whitespace-pre-line") do
-          @post.plain_body
+          @post.body.to_s
         end
       end
     end

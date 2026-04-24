@@ -44,5 +44,16 @@ class Post < ApplicationRecord
 
   # == Validations ==
 
-  validates :plain_body, presence: true
+  validates :body, presence: true
+
+  # == Callbacks ==
+
+  before_save :set_plain_body
+
+  private
+
+  sig { void }
+  def set_plain_body
+    self.plain_body = rich_text_body.to_plain_text
+  end
 end

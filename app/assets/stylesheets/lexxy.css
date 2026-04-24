@@ -1,1 +1,25 @@
-@import "../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css";
+@import "../../../vendor/stylesheets/lexxy/lexxy.css" layer(base);
+
+@layer components {
+  .lexxy-content {
+    @apply text-base md:text-sm;
+  }
+
+  lexxy-editor {
+    @apply w-full rounded-md border border-input bg-transparent shadow-xs transition-[color,box-shadow] outline-none;
+    @apply focus:border-ring focus:ring-3 focus:ring-ring/50;
+    @apply disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+
+    :where(lexxy-toolbar) {
+      .lexxy-editor__toolbar-button {
+        @apply md:block-(--lexxy-toolbar-button-desktop-size);
+      }
+    }
+
+    .lexxy-editor__content {
+      &::before {
+        @apply text-muted-foreground;
+      }
+    }
+  }
+}
