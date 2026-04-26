@@ -44,7 +44,12 @@ class PostsController < ApplicationController
 
   # GET /posts/:id/edit
   def edit
-    raise NotImplementedError
+    respond_to do |format|
+      format.html do
+        post = find_post
+        render Views::Posts::Edit.new(post:)
+      end
+    end
   end
 
   # POST /world/:world_id/posts
@@ -65,25 +70,41 @@ class PostsController < ApplicationController
 
   # PUT/PATCH /posts/:id
   def update
-    raise NotImplementedError
+    respond_to do |format|
+      format.html do
+        post = find_post
+        post_params = params.expect(post: [ :title, :body ])
+        if post.update(post_params)
+          redirect_to(post.world!)
+        else
+          render Views::Posts::Edit.new(post:), status: :unprocessable_content
+        end
+      end
+    end
   end
 
   # DELETE /posts/:id
   def destroy
-    raise NotImplementedError
+    respond_to do |format|
+      format.html do
+        post = find_post
+        post.destroy!
+        redirect_to(post.world!)
+      end
+    end
   end
 
   private
 
   # == Helpers ==
 
+  sig { returns(Post) }
+  def find_post
+    Post.find(params.fetch(:id))
+  end
+
   sig { returns(World) }
   def find_world
     World.friendly.find(params.fetch(:world_id))
-  end
-
-  sig { returns(Post) }
-  def find_post
-    Post.find(params.fetch(:post_id))
   end
 end

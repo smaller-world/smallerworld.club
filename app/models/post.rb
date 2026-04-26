@@ -23,6 +23,8 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
+  include NormalizesText
+
   # == Associations ==
 
   belongs_to :world
@@ -42,6 +44,10 @@ class Post < ApplicationRecord
 
   has_rich_text :body
 
+  # == Normalizations
+
+  nilify_blanks :title
+
   # == Validations ==
 
   validates :body, presence: true
@@ -49,11 +55,16 @@ class Post < ApplicationRecord
   # == Callbacks ==
 
   before_save :set_plain_body
+  before_destroy :test_throw
 
   private
 
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text
+  end
+
+  def test_throw
+    throw(:abort)
   end
 end

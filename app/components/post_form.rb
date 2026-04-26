@@ -16,11 +16,7 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(
-      model: [ @world, @post ],
-      class: "flex flex-col gap-y-4",
-      **@options,
-    ) do |form|
+    form_with(model:, class: "flex flex-col gap-y-4", **@options) do |form|
       field_for(form, :title) do |f|
         f.text_input(placeholder: "a title!")
         f.error
@@ -42,6 +38,19 @@ class Components::PostForm < Components::Base
           span { "save changes" }
         end
       end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(Object) }
+  def model
+    if @post.new_record?
+      [ @world, @post ]
+    else
+      @post
     end
   end
 end

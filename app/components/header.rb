@@ -40,9 +40,11 @@ class Components::Header < Components::Base
               menu.button_item { "[some item]" }
             end
             menu.separator
-            menu.button_item(variant: :destructive) do
-              Icon("huge/logout-01", class: "size-4")
-              span { "sign out" }
+            form_with(url: session_path, method: :delete) do
+              menu.button_item(type: :submit, variant: :destructive) do
+                Icon("huge/logout-01", class: "size-4")
+                span { "sign out" }
+              end
             end
           end
         end
