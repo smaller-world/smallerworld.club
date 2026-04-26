@@ -16,6 +16,7 @@ export default class DisabledController extends Controller<
   declare readonly enableAfterValue: number | null;
 
   // == State ==
+
   #timeout?: number | null;
 
   // == Actions ==

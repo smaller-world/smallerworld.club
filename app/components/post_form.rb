@@ -26,7 +26,7 @@ class Components::PostForm < Components::Base
         f.error
       end
       field_for(form, :body) do |f|
-        f.rich_textarea(
+        f.lexxy_editor(
           placeholder: "something i want to share...",
           required: true,
           class: "min-h-36",

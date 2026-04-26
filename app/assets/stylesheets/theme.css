@@ -41,8 +41,11 @@
   --sidebar-ring: oklch(0.737 0.021 106.9);
 
   /* Lexxy */
+  --lexxy-color-selected: var(--color-olive-300);
+  --lexxy-color-selected-hover: var(--color-olive-100);
   --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
   --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
+  --lexxy-focus-ring-size: 0px;
 
   @media (prefers-color-scheme: dark) {
     --background: oklch(0.153 0.006 107.1);

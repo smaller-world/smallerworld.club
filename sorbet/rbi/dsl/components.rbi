@@ -185,6 +185,16 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
+    ).void
+  end
+  def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+  sig do
+    params(
       target: ::Object,
       pagy: T.nilable(::Pagy),
       autoclick: T::Boolean,
@@ -214,16 +224,6 @@ module Components
     ).void
   end
   def PostForm(post:, **options, &block); end
-
-  sig do
-    params(
-      form: T.nilable(::PhlexFormBuilder),
-      field: T.nilable(::Symbol),
-      options: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::RichTextarea).void)
-    ).void
-  end
-  def RichTextarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
@@ -479,6 +479,16 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
+      ).void
+    end
+    def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
         target: ::Object,
         pagy: T.nilable(::Pagy),
         autoclick: T::Boolean,
@@ -508,16 +518,6 @@ module Components
       ).void
     end
     def PostForm(post:, **options, &block); end
-
-    sig do
-      params(
-        form: T.nilable(::PhlexFormBuilder),
-        field: T.nilable(::Symbol),
-        options: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::RichTextarea).void)
-      ).void
-    end
-    def RichTextarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
 
     sig do
       params(

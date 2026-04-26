@@ -23,10 +23,16 @@
       "formatter": "prettier"
     },
     "JavaScript": {
-      "formatter": "prettier"
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "TypeScript": {
-      "formatter": "prettier"
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     }
   },
   "lsp": {

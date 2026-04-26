@@ -7,12 +7,48 @@
 
   lexxy-editor {
     @apply w-full rounded-md border border-input bg-transparent shadow-xs transition-[color,box-shadow] outline-none;
-    @apply focus:border-ring focus:ring-3 focus:ring-ring/50;
     @apply disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+
+    --lexxy-toolbar-gap: var(--spacing);
+
+    &[data-focused]:not(
+        :has(
+          input:focus-visible,
+          button:focus-visible,
+          summary:focus-visible,
+          details[open]
+        )
+      ) {
+      @apply border-ring ring-3 ring-ring/50;
+    }
+
+    /*&:has(.lexxy-editor__content:focus-visible) {
+      @apply bg-red;
+    }*/
+
+    input,
+    button,
+    summary {
+      @apply transition-shadow;
+      @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    }
 
     :where(lexxy-toolbar) {
       .lexxy-editor__toolbar-button {
         @apply md:block-(--lexxy-toolbar-button-desktop-size);
+      }
+
+      .lexxy-editor__toolbar-dropdown summary ~ * {
+        @apply border border-ring ring-3 ring-ring/50;
+        @apply rounded-tr-md;
+
+        /*inset-block-start: calc(100% + var(--spacing));*/
+      }
+
+      button[name="table"],
+      button[name="code"],
+      summary[name="highlight"] {
+        @apply hidden;
       }
     }
 

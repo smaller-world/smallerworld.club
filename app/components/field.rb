@@ -150,7 +150,7 @@ class Components::Field < Components::Base
   sig do
     params(
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(component: Components::InputGroup).void),
+      block: T.nilable(T.proc.params(group: Components::InputGroup).void),
     ).void
   end
   def input_group(**attributes, &block)
@@ -210,9 +210,14 @@ class Components::Field < Components::Base
     Components::Textarea(form: @form, field: @field, **attributes)
   end
 
-  sig { params(options: T.untyped).void }
-  def rich_textarea(**options)
-    Components::RichTextarea(form: @form, field: @field, **options)
+  sig do
+    params(
+      options: T.untyped,
+      block: T.nilable(T.proc.params(editor: Components::LexxyEditor).void),
+    ).void
+  end
+  def lexxy_editor(**options, &block)
+    Components::LexxyEditor(form: @form, field: @field, **options, &block)
   end
 
   private

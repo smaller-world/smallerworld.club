@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::RichTextarea < Components::Input
+class Components::LexxyEditor < Components::Input
   include Phlex::Rails::Helpers::RichTextArea
 
   # == Component ==
@@ -13,6 +13,9 @@ class Components::RichTextarea < Components::Input
         class: "lexxy-content",
         attachments: false,
         markdown: false,
+        data: {
+          controller: "lexxy-editor",
+        },
       },
       @options,
     )
