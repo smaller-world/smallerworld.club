@@ -23,7 +23,8 @@ class SessionsController < ApplicationController
             notice: "you are already signed in!",
           )
         else
-          render Views::Sessions::New.new
+          verification_request = PhoneNumberVerificationRequest.new
+          render Views::Sessions::New.new(verification_request:)
         end
       end
     end
@@ -31,14 +32,11 @@ class SessionsController < ApplicationController
 
   # POST /sessions
   def create
-    unless Rails.env.development?
-      raise ApplicationError, "Action allowed only in development"
-    end
-
-    user_id = params.expect(:user_id)
-    user = User.find(user_id)
-    start_new_session_for(user)
-    redirect_to(after_authentication_url)
+    raise NotImplementedError
+    # user_id = params.expect(:user_id)
+    # user = User.find(user_id)
+    # start_new_session_for(user)
+    # redirect_to(after_authentication_url)
   end
 
   # DELETE /sessions

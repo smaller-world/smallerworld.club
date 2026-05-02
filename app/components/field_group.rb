@@ -8,8 +8,10 @@ class Components::FieldGroup < Components::Base
   def view_template(&content)
     root_element(
       :div,
-      class: "group/field-group",
-      data: { slot: "field-group" },
+      class: "field-group group/field-group",
+      data: {
+        slot: "field-group",
+      },
       &content
     )
   end

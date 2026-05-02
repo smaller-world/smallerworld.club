@@ -7,7 +7,7 @@ class Components::WorldForm < Components::Base
   sig { params(world: World, options: T.untyped).void }
   def initialize(world:, **options)
     @world = world
-    @options = T.let(options, T::Hash[Symbol, T.untyped])
+    @options = options
     super()
   end
 

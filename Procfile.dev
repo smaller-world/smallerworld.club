@@ -2,4 +2,3 @@ db: bin/postgres
 web: bin/postgres-await && env RUBY_DEBUG_OPEN=true bin/rails server -p 3000
 js: bun run build --watch
 css: bun run build:css --watch
-tunnel: cloudflared tunnel run kaibook

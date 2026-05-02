@@ -8,7 +8,4 @@
 class Components::DropdownMenu
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.void)).void }
   def el_dropdown(**attributes, &block); end
-
-  sig { params(attributes: T.untyped, block: T.nilable(T.proc.void)).void }
-  def el_menu(**attributes, &block); end
 end

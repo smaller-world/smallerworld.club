@@ -24,13 +24,14 @@ class Components::InputGroupAddon < Components::Base
   def view_template(&content)
     root_element(
       :div,
+      role: "group",
+      class: "input-group-addon",
       data: {
         slot: "input-group-addon",
         align: @align.to_s.tr("_", "-"),
         controller: "input-group-addon",
         action: "click->input-group-addon#focus",
       },
-      role: "group",
       &content
     )
   end
@@ -46,12 +47,17 @@ class Components::InputGroupAddon < Components::Base
     ).void
   end
   def button(variant: :ghost, size: :xs, **attributes, &content)
-    Components::Button(variant:, size:, **attributes, &content)
+    Components::Button(
+      variant:,
+      size:,
+      **mix({ class: "input-group-button" }, attributes),
+      &content
+    )
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def text(**attributes, &content)
-    span(**mix({ data: { slot: "input-group-text" } }, attributes), &content)
+    span(**mix({ class: "input-group-text" }, attributes), &content)
   end
 
   sig { params(attributes: T.untyped).void }

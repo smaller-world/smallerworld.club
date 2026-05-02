@@ -70,11 +70,20 @@ module Authentication
     session.delete(:return_to_after_authenticating) || home_url
   end
 
-  sig { params(user: User).returns(Session) }
-  def start_new_session_for(user)
-    user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
+  sig do
+    params(
+      user: User,
+      phone_number_verification_request: PhoneNumberVerificationRequest,
+    ).returns(Session)
+  end
+  def start_new_session_for(user, phone_number_verification_request:)
+    user.sessions.create!(phone_number_verification_request:).tap do |session|
       Current.session = session
-      cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+      cookies.signed.permanent[:session_id] = {
+        value: session.id,
+        httponly: true,
+        same_site: :lax,
+      }
     end
   end
 

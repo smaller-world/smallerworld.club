@@ -16,6 +16,7 @@ class Components::Separator < Components::Base
     root_element(
       :div,
       role: (@decorative ? "none" : "separator"),
+      class: "separator",
       data: {
         slot: "separator",
         orientation: @orientation,

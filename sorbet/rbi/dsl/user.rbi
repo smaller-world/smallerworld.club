@@ -11,15 +11,6 @@ class User
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
-  sig { returns(ActiveStorage::Attached::One) }
-  def oauth_picture; end
-
-  sig { params(attachable: T.untyped).returns(T.untyped) }
-  def oauth_picture=(attachable); end
-
-  sig { returns(Enumerize::Value) }
-  def oauth_provider; end
-
   private
 
   sig { returns(NilClass) }
@@ -28,9 +19,6 @@ class User
   class << self
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
     def new(attributes = nil, &block); end
-
-    sig { returns(Enumerize::Attribute) }
-    def oauth_provider; end
   end
 
   module CommonRelationMethods
@@ -373,36 +361,6 @@ class User
   end
 
   module GeneratedAssociationMethods
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Attachment) }
-    def build_oauth_picture_attachment(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Blob) }
-    def build_oauth_picture_blob(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Attachment) }
-    def create_oauth_picture_attachment(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Attachment) }
-    def create_oauth_picture_attachment!(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Blob) }
-    def create_oauth_picture_blob(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Blob) }
-    def create_oauth_picture_blob!(*args, &blk); end
-
-    sig { returns(T.nilable(::ActiveStorage::Attachment)) }
-    def oauth_picture_attachment; end
-
-    sig { params(value: T.nilable(::ActiveStorage::Attachment)).void }
-    def oauth_picture_attachment=(value); end
-
-    sig { returns(T.nilable(::ActiveStorage::Blob)) }
-    def oauth_picture_blob; end
-
-    sig { params(value: T.nilable(::ActiveStorage::Blob)).void }
-    def oauth_picture_blob=(value); end
-
     sig { returns(T::Array[T.untyped]) }
     def post_ids; end
 
@@ -416,18 +374,6 @@ class User
 
     sig { params(value: T::Enumerable[::Post]).void }
     def posts=(value); end
-
-    sig { returns(T.nilable(::ActiveStorage::Attachment)) }
-    def reload_oauth_picture_attachment; end
-
-    sig { returns(T.nilable(::ActiveStorage::Blob)) }
-    def reload_oauth_picture_blob; end
-
-    sig { void }
-    def reset_oauth_picture_attachment; end
-
-    sig { void }
-    def reset_oauth_picture_blob; end
 
     sig { returns(T::Array[T.untyped]) }
     def session_ids; end
@@ -603,9 +549,6 @@ class User
     def with(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def with_attached_oauth_picture(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -657,51 +600,6 @@ class User
 
     sig { void }
     def created_at_will_change!; end
-
-    sig { returns(::String) }
-    def email_address; end
-
-    sig { params(value: ::String).returns(::String) }
-    def email_address=(value); end
-
-    sig { returns(T::Boolean) }
-    def email_address?; end
-
-    sig { returns(T.nilable(::String)) }
-    def email_address_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def email_address_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def email_address_came_from_user?; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def email_address_change; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def email_address_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def email_address_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def email_address_in_database; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def email_address_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def email_address_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def email_address_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def email_address_was; end
-
-    sig { void }
-    def email_address_will_change!; end
 
     sig { returns(::String) }
     def id; end
@@ -839,189 +737,9 @@ class User
     def name_will_change!; end
 
     sig { returns(::String) }
-    def oauth_first_name; end
-
-    sig { params(value: ::String).returns(::String) }
-    def oauth_first_name=(value); end
-
-    sig { returns(T::Boolean) }
-    def oauth_first_name?; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_first_name_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def oauth_first_name_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def oauth_first_name_came_from_user?; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_first_name_change; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_first_name_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_first_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_first_name_in_database; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_first_name_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_first_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_first_name_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_first_name_was; end
-
-    sig { void }
-    def oauth_first_name_will_change!; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_last_name; end
-
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-    def oauth_last_name=(value); end
-
-    sig { returns(T::Boolean) }
-    def oauth_last_name?; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_last_name_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def oauth_last_name_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def oauth_last_name_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def oauth_last_name_change; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def oauth_last_name_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_last_name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_last_name_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def oauth_last_name_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_last_name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_last_name_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_last_name_was; end
-
-    sig { void }
-    def oauth_last_name_will_change!; end
-
-    sig { returns(T.untyped) }
-    def oauth_provider; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def oauth_provider=(value); end
-
-    sig { returns(T::Boolean) }
-    def oauth_provider?; end
-
-    sig { returns(T.untyped) }
-    def oauth_provider_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def oauth_provider_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def oauth_provider_came_from_user?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def oauth_provider_change; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def oauth_provider_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_provider_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def oauth_provider_in_database; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def oauth_provider_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_provider_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def oauth_provider_previously_was; end
-
-    sig { returns(T.untyped) }
-    def oauth_provider_was; end
-
-    sig { void }
-    def oauth_provider_will_change!; end
-
-    sig { returns(::String) }
-    def oauth_uid; end
-
-    sig { params(value: ::String).returns(::String) }
-    def oauth_uid=(value); end
-
-    sig { returns(T::Boolean) }
-    def oauth_uid?; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_uid_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def oauth_uid_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def oauth_uid_came_from_user?; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_uid_change; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_uid_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_uid_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_uid_in_database; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def oauth_uid_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def oauth_uid_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_uid_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def oauth_uid_was; end
-
-    sig { void }
-    def oauth_uid_will_change!; end
-
-    sig { returns(T.nilable(::String)) }
     def phone_number; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    sig { params(value: ::String).returns(::String) }
     def phone_number=(value); end
 
     sig { returns(T::Boolean) }
@@ -1036,10 +754,10 @@ class User
     sig { returns(T::Boolean) }
     def phone_number_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1048,7 +766,7 @@ class User
     sig { returns(T.nilable(::String)) }
     def phone_number_in_database; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    sig { returns(T.nilable([::String, ::String])) }
     def phone_number_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1067,9 +785,6 @@ class User
     def restore_created_at!; end
 
     sig { void }
-    def restore_email_address!; end
-
-    sig { void }
     def restore_id!; end
 
     sig { void }
@@ -1077,18 +792,6 @@ class User
 
     sig { void }
     def restore_name!; end
-
-    sig { void }
-    def restore_oauth_first_name!; end
-
-    sig { void }
-    def restore_oauth_last_name!; end
-
-    sig { void }
-    def restore_oauth_provider!; end
-
-    sig { void }
-    def restore_oauth_uid!; end
 
     sig { void }
     def restore_phone_number!; end
@@ -1104,12 +807,6 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_email_address; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -1130,30 +827,6 @@ class User
     def saved_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_oauth_first_name; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_oauth_first_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def saved_change_to_oauth_last_name; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_oauth_last_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def saved_change_to_oauth_provider; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_oauth_provider?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_oauth_uid; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_oauth_uid?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_phone_number; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1265,9 +938,6 @@ class User
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1275,18 +945,6 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_oauth_first_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_oauth_last_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_oauth_provider?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_oauth_uid?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_phone_number?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1441,9 +1099,6 @@ class User
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def with_attached_oauth_picture(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end

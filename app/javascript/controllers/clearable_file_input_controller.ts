@@ -11,17 +11,13 @@ export default class ClearableFileInputController extends Controller<HTMLElement
 
   // == Lifecycle ==
 
-  initialize(): void {
-    super.initialize();
-    if (!this.hasInputTemplateTarget) {
-      throw new Error("Missing inputTemplateTarget");
-    }
-  }
-
   connect(): void {
-    super.connect();
+    if (!this.hasInputTemplateTarget) {
+      throw new Error("Missing target: inputTemplate");
+    }
     addAction(this, "direct-upload:start", "showSpinner");
     addAction(this, "direct-upload:end", "hideSpinner");
+    super.connect();
   }
 
   // == Actions ==

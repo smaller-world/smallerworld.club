@@ -22,15 +22,15 @@ class Views::Home::Show < Views::Base
         Components::Card() do |card|
           card.content(class: "flex items-center gap-x-4") do
             div(class: "flex-1 flex items-center gap-x-4") do
-              if (blob = user.oauth_picture_blob)
-                image_tag(blob, class: "size-16 rounded-full")
-              end
+              # if (blob = user.oauth_picture_blob)
+              #   image_tag(blob, class: "size-16 rounded-full")
+              # end
               div(class: "flex flex-col gap-y-1") do
                 span(class: "font-semibold text-lg") do
                   "hi, #{user.name}"
                 end
                 code(class: "text-xs text-muted-foreground") do
-                  user.email_address
+                  user.parsed_phone_number.to_s
                 end
               end
             end
@@ -74,32 +74,29 @@ class Views::Home::Show < Views::Base
         #   "Open dialog"
         # end
 
-        # Components::Dialog(id: "test-dialog") do |d|
-        #   d.header do
-        #     d.title { "Hello from Dialog" }
-        #     d.description do
-        #       "This is a test dialog using Tailwind Elements + shadcn styling."
-        #     end
-        #   end
-        #   d.body do
-        #     p do
-        #       "It works! Close me with the X button, the Cancel button, or " \
-        #         "press Escape."
-        #     end
-        #   end
-        #   d.footer do
-        #     Components::Button(
-        #       variant: :outline,
-        #       command: "close",
-        #       commandfor: "test-dialog",
-        #     ) do
-        #       "Cancel"
-        #     end
-        #     Components::Button(command: "close", commandfor: "test-dialog") do
-        #       "Confirm"
-        #     end
-        #   end
-        # end
+        Components::Dialog(id: "test-dialog") do |dialog|
+          dialog.with_content do |content|
+            content.header do |header|
+              header.title { "Hello from Dialog" }
+              header.description do
+                "This is a test dialog using Tailwind Elements + shadcn styling."
+              end
+            end
+
+            p do
+              "It works! Close me with the X button, the Cancel button, or " \
+                "press Escape."
+            end
+
+            content.footer(show_close_button: true) do
+              "i'm a foot. (what are you?)"
+            end
+          end
+
+          dialog.with_trigger_button do
+            "open dialog"
+          end
+        end
 
         div(class: "flex flex-col gap-y-4") do
           div do

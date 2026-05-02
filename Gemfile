@@ -123,6 +123,9 @@ gem "ruby-vips", "~> 2.3"
 # Rich text editing with Lexxy
 gem "lexxy", "~> 0.9.9.beta"
 
+# ISO 3166 country data
+gem "countries", "~> 8.1"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

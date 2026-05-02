@@ -86,8 +86,8 @@ class Components::Layout < Components::Base
         if (description = Rails.configuration.x.site_description)
           meta(name: "description", content: description)
         end
-        render_og_tags
-        render_twitter_tags
+        og_tags
+        twitter_tags
 
         # == Head
         @head&.call
@@ -95,7 +95,7 @@ class Components::Layout < Components::Base
 
       body(class: [ "flex min-h-dvh flex-col", @body_class ]) do
         Components::Header()
-        render_flash(class: "m-4 self-center")
+        flash_card(class: "m-4 self-center")
         raw(body) # rubocop:disable Rails/OutputSafety
       end
     end
@@ -130,7 +130,7 @@ class Components::Layout < Components::Base
   end
 
   sig { void }
-  def render_og_tags
+  def og_tags
     meta(property: "og:type", content: "website")
     meta(property: "og:url", content: root_url)
     meta(property: "og:title", content: title_text)
@@ -141,7 +141,7 @@ class Components::Layout < Components::Base
   end
 
   sig { void }
-  def render_twitter_tags
+  def twitter_tags
     meta(name: "twitter:card", content: "summary_large_image")
     if (domain = root_domain)
       meta(property: "twitter:domain", content: domain)
@@ -155,7 +155,7 @@ class Components::Layout < Components::Base
   end
 
   sig { params(attributes: T.untyped).void }
-  def render_flash(**attributes)
+  def flash_card(**attributes)
     message = flash[:notice] || flash[:alert] or return
     Components::Card(
       size: :sm,

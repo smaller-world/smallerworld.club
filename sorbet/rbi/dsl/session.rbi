@@ -361,8 +361,17 @@ class Session
   end
 
   module GeneratedAssociationMethods
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PhoneNumberVerificationRequest) }
+    def build_phone_number_verification_request(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_user(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PhoneNumberVerificationRequest) }
+    def create_phone_number_verification_request(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PhoneNumberVerificationRequest) }
+    def create_phone_number_verification_request!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_user(*args, &blk); end
@@ -370,8 +379,26 @@ class Session
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_user!(*args, &blk); end
 
+    sig { returns(T.nilable(::PhoneNumberVerificationRequest)) }
+    def phone_number_verification_request; end
+
+    sig { params(value: T.nilable(::PhoneNumberVerificationRequest)).void }
+    def phone_number_verification_request=(value); end
+
+    sig { returns(T::Boolean) }
+    def phone_number_verification_request_changed?; end
+
+    sig { returns(T::Boolean) }
+    def phone_number_verification_request_previously_changed?; end
+
+    sig { returns(T.nilable(::PhoneNumberVerificationRequest)) }
+    def reload_phone_number_verification_request; end
+
     sig { returns(T.nilable(::User)) }
     def reload_user; end
+
+    sig { void }
+    def reset_phone_number_verification_request; end
 
     sig { void }
     def reset_user; end
@@ -676,50 +703,50 @@ class Session
     sig { void }
     def id_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
-    def ip_address; end
+    sig { returns(::String) }
+    def phone_number_verification_request_id; end
 
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-    def ip_address=(value); end
+    sig { params(value: ::String).returns(::String) }
+    def phone_number_verification_request_id=(value); end
 
     sig { returns(T::Boolean) }
-    def ip_address?; end
+    def phone_number_verification_request_id?; end
 
     sig { returns(T.nilable(::String)) }
-    def ip_address_before_last_save; end
+    def phone_number_verification_request_id_before_last_save; end
 
     sig { returns(T.untyped) }
-    def ip_address_before_type_cast; end
+    def phone_number_verification_request_id_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def ip_address_came_from_user?; end
+    def phone_number_verification_request_id_came_from_user?; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def ip_address_change; end
+    sig { returns(T.nilable([::String, ::String])) }
+    def phone_number_verification_request_id_change; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def ip_address_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def ip_address_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def ip_address_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def ip_address_previous_change; end
+    sig { returns(T.nilable([::String, ::String])) }
+    def phone_number_verification_request_id_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def ip_address_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def phone_number_verification_request_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def ip_address_previously_was; end
+    def phone_number_verification_request_id_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def phone_number_verification_request_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def phone_number_verification_request_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def ip_address_was; end
+    def phone_number_verification_request_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def phone_number_verification_request_id_was; end
 
     sig { void }
-    def ip_address_will_change!; end
+    def phone_number_verification_request_id_will_change!; end
 
     sig { void }
     def restore_created_at!; end
@@ -731,13 +758,10 @@ class Session
     def restore_id_value!; end
 
     sig { void }
-    def restore_ip_address!; end
+    def restore_phone_number_verification_request_id!; end
 
     sig { void }
     def restore_updated_at!; end
-
-    sig { void }
-    def restore_user_agent!; end
 
     sig { void }
     def restore_user_id!; end
@@ -760,23 +784,17 @@ class Session
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def saved_change_to_ip_address; end
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_phone_number_verification_request_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_ip_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_phone_number_verification_request_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def saved_change_to_user_agent; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_user_agent?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_user_id; end
@@ -828,51 +846,6 @@ class Session
 
     sig { void }
     def updated_at_will_change!; end
-
-    sig { returns(T.nilable(::String)) }
-    def user_agent; end
-
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-    def user_agent=(value); end
-
-    sig { returns(T::Boolean) }
-    def user_agent?; end
-
-    sig { returns(T.nilable(::String)) }
-    def user_agent_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def user_agent_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def user_agent_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def user_agent_change; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def user_agent_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def user_agent_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def user_agent_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def user_agent_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def user_agent_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def user_agent_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def user_agent_was; end
-
-    sig { void }
-    def user_agent_will_change!; end
 
     sig { returns(::String) }
     def user_id; end
@@ -929,13 +902,10 @@ class Session
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_ip_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_phone_number_verification_request_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_user_agent?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_user_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

@@ -5,6 +5,7 @@ class Components::Item < Components::Base
   # == Configuration ==
 
   VARIANTS = [ :default, :outline, :muted ]
+  MEDIA_VARIANTS = [ :default, :icon, :image ]
   SIZES = [ :default, :xs, :sm ]
 
   # == Initialization ==
@@ -29,7 +30,7 @@ class Components::Item < Components::Base
   def view_template(&content)
     root_element(
       :div,
-      class: "group/item",
+      class: "item group/item",
       data: {
         slot: "item",
         variant: @variant,
@@ -47,43 +48,53 @@ class Components::Item < Components::Base
     ).void
   end
   def media(variant: :default, **attributes, &content)
-    div(**mix({ data: { slot: "item-media", variant: } }, attributes), &content)
+    unless variant.in?(MEDIA_VARIANTS)
+      raise InvalidParameter.new(parameter: :variant, value: variant)
+    end
+
+    slot("item-media", **mix({ data: { variant: } }, attributes, &content))
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig do
+    params(
+      attributes: T.untyped,
+      content: T.proc.params(content: Components::ItemContent).void,
+    ).void
+  end
   def content(**attributes, &content)
-    div(**mix({ data: { slot: "item-content" } }, attributes), &content)
-  end
-
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def title(**attributes, &content)
-    div(**mix({ data: { slot: "item-title" } }, attributes), &content)
-  end
-
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def description(**attributes, &content)
-    p(**mix({ data: { slot: "item-description" } }, attributes), &content)
+    Components::ItemContent(**attributes, &content)
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def actions(**attributes, &content)
-    div(**mix({ data: { slot: "item-actions" } }, attributes), &content)
+    slot("item-actions", **attributes, &content)
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def header(**attributes, &content)
-    div(**mix({ data: { slot: "item-header" } }, attributes), &content)
+    slot("item-header", **attributes, &content)
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def footer(**attributes, &content)
-    div(**mix({ data: { slot: "item-footer" } }, attributes), &content)
+    slot("item-footer", **attributes, &content)
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def separator(**attributes, &content)
-    div(data: { slot: "item-separator" }, **attributes) do
-      render Components::Separator(orientation: :horizontal)
-    end
+    Components::Separator(
+      orientation: :horizontal,
+      class: "item-separator",
+      data: { slot!: "item-separator" },
+    )
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(name: String, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def slot(name, **attributes, &content)
+    div(class: name, data: { slot: name }, **attributes, &content)
   end
 end

@@ -24,7 +24,7 @@ class Components::Card < Components::Base
   def view_template(&content)
     root_element(
       :div,
-      class: "group/card",
+      class: "card group/card",
       data: {
         slot: "card",
         size: @size,
@@ -68,13 +68,25 @@ class Components::Card < Components::Base
   # == Helpers ==
   sig do
     params(
-      slot: String,
+      name: String,
       element: Symbol,
       attributes: T.untyped,
       content: T.nilable(T.proc.void),
     ).void
   end
-  def slot(slot, element: :div, **attributes, &content)
-    public_send(element, **mix({ data: { slot: } }, attributes), &content)
+  def slot(name, element: :div, **attributes, &content)
+    public_send(
+      element,
+      **mix(
+        {
+          class: name,
+          data: {
+            slot: name,
+          },
+        },
+        attributes,
+      ),
+      &content
+    )
   end
 end

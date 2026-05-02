@@ -46,7 +46,7 @@ class Components::ClearableFileInput < Components::Base
       ),
     ) do |group|
       template(data: { clearable_file_input_target: "inputTemplate" }) do
-        render_empty_inputs_in(group)
+        empty_inputs(group:)
       end
       if @blob
         if @form && @field
@@ -68,7 +68,7 @@ class Components::ClearableFileInput < Components::Base
           end
         end
       else
-        render_empty_inputs_in(group)
+        empty_inputs(group:)
       end
     end
   end
@@ -90,7 +90,7 @@ class Components::ClearableFileInput < Components::Base
   end
 
   sig { params(group: Components::InputGroup).void }
-  def render_empty_inputs_in(group)
+  def empty_inputs(group:)
     if @form && @field
       html = @form.hidden_field(@field, value: nil)
       raw(html) # rubocop:disable Rails/OutputSafety

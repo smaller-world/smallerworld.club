@@ -9,8 +9,10 @@ class Components::ItemGroup < Components::Base
     root_element(
       :div,
       role: "list",
-      class: "group/item-group",
-      data: { slot: "item-group" },
+      class: "item-group group/item-group",
+      data: {
+        slot: "item-group",
+      },
       &content
     )
   end

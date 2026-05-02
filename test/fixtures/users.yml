@@ -3,23 +3,16 @@
 #
 # Table name: users
 #
-#  id               :uuid             not null, primary key
-#  email_address    :string           not null
-#  name             :string           not null
-#  oauth_first_name :string           not null
-#  oauth_last_name  :string
-#  oauth_provider   :string           not null
-#  oauth_uid        :string           not null
-#  phone_number     :string
-#  time_zone_name   :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id             :uuid             not null, primary key
+#  name           :string           not null
+#  phone_number   :string           not null
+#  time_zone_name :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_email_address                 (email_address) UNIQUE
-#  index_users_on_oauth_provider_and_oauth_uid  (oauth_provider,oauth_uid) UNIQUE
-#  index_users_on_phone_number                  (phone_number)
+#  index_users_on_phone_number  (phone_number) UNIQUE
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 one:

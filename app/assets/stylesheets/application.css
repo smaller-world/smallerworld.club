@@ -9,6 +9,7 @@
 @import "./lexxy.css";
 
 @import "./theme.css";
+
 @import "./loading.css";
 @import "./badges.css";
 @import "./buttons.css";
@@ -23,6 +24,9 @@
 @import "./textareas.css";
 @import "./fields.css";
 @import "./forms.css";
+@import "./comboboxes.css";
+@import "./phone_number_inputs.css";
+
 @import "./layouts.css";
 @import "./sign_in_with_apple.css";
 @import "./sign_in_with_google.css";

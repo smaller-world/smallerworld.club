@@ -48,13 +48,17 @@ module Components
 
   sig do
     params(
-      id: ::String,
-      show_close_button: T::Boolean,
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      clear_on_expand: T.nilable(T::Boolean),
+      disabled: T::Boolean,
+      default_value: T.nilable(::String),
+      input: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+      block: T.nilable(T.proc.params(instance: Components::Combobox).void)
     ).void
   end
-  def Dialog(id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+  def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -62,10 +66,62 @@ module Components
       anchor_strategy: T.nilable(::Symbol),
       popover: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
+      block: T.nilable(T.proc.params(instance: Components::ComboboxContent).void)
     ).void
   end
-  def DropdownMenu(anchor: T.unsafe(nil), anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
+  def ComboboxContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ComboboxList).void)
+    ).void
+  end
+  def ComboboxList(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      id: ::String,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+    ).void
+  end
+  def Dialog(id: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      dialog_id: ::String,
+      show_close_button: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DialogContent).void)
+    ).void
+  end
+  def DialogContent(dialog_id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DialogHeader).void)
+    ).void
+  end
+  def DialogHeader(element: T.unsafe(nil), **attributes, &block); end
+
+  sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
+  def DropdownMenu(**attributes, &block); end
+
+  sig do
+    params(
+      anchor: T.any(::Symbol, T::Array[::Symbol]),
+      anchor_strategy: T.nilable(::Symbol),
+      popover: T::Boolean,
+      open: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DropdownMenuContent).void)
+    ).void
+  end
+  def DropdownMenuContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -167,6 +223,15 @@ module Components
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ItemContent).void)
+    ).void
+  end
+  def ItemContent(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
     ).void
   end
@@ -209,6 +274,25 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
+    ).void
+  end
+  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+  sig do
+    params(
+      verification_request: ::PhoneNumberVerificationRequest,
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
+    ).void
+  end
+  def PhoneNumberVerificationRequestForm(verification_request:, **options, &block); end
+
+  sig do
+    params(
       post: ::Post,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostCard).void)
@@ -234,24 +318,6 @@ module Components
     ).void
   end
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      form: T::Hash[::Symbol, T.untyped],
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::SignInWithAppleButton).void)
-    ).void
-  end
-  def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      form: T::Hash[::Symbol, T.untyped],
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::SignInWithGoogleButton).void)
-    ).void
-  end
-  def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -342,13 +408,17 @@ module Components
 
     sig do
       params(
-        id: ::String,
-        show_close_button: T::Boolean,
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        clear_on_expand: T.nilable(T::Boolean),
+        disabled: T::Boolean,
+        default_value: T.nilable(::String),
+        input: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+        block: T.nilable(T.proc.params(instance: Components::Combobox).void)
       ).void
     end
-    def Dialog(id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+    def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -356,10 +426,67 @@ module Components
         anchor_strategy: T.nilable(::Symbol),
         popover: T::Boolean,
         attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ComboboxContent).void)
+      ).void
+    end
+    def ComboboxContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ComboboxList).void)
+      ).void
+    end
+    def ComboboxList(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        id: ::String,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+      ).void
+    end
+    def Dialog(id: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        dialog_id: ::String,
+        show_close_button: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DialogContent).void)
+      ).void
+    end
+    def DialogContent(dialog_id:, show_close_button: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DialogHeader).void)
+      ).void
+    end
+    def DialogHeader(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
       ).void
     end
-    def DropdownMenu(anchor: T.unsafe(nil), anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
+    def DropdownMenu(**attributes, &block); end
+
+    sig do
+      params(
+        anchor: T.any(::Symbol, T::Array[::Symbol]),
+        anchor_strategy: T.nilable(::Symbol),
+        popover: T::Boolean,
+        open: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DropdownMenuContent).void)
+      ).void
+    end
+    def DropdownMenuContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -461,6 +588,15 @@ module Components
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ItemContent).void)
+      ).void
+    end
+    def ItemContent(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
       ).void
     end
@@ -503,6 +639,25 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
+      ).void
+    end
+    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
+        verification_request: ::PhoneNumberVerificationRequest,
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
+      ).void
+    end
+    def PhoneNumberVerificationRequestForm(verification_request:, **options, &block); end
+
+    sig do
+      params(
         post: ::Post,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostCard).void)
@@ -528,24 +683,6 @@ module Components
       ).void
     end
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        form: T::Hash[::Symbol, T.untyped],
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::SignInWithAppleButton).void)
-      ).void
-    end
-    def SignInWithAppleButton(form: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        form: T::Hash[::Symbol, T.untyped],
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::SignInWithGoogleButton).void)
-      ).void
-    end
-    def SignInWithGoogleButton(form: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

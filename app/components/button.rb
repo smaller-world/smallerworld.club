@@ -24,7 +24,10 @@ class Components::Button < Components::Base
   def view_template(&content)
     root_element(
       :button,
-      **self.class.root_attributes(variant: @variant, size: @size),
+      **mix(
+        { data: { slot: "button" } },
+        self.class.root_attributes(variant: @variant, size: @size),
+      ),
       &content
     )
   end
@@ -50,9 +53,8 @@ class Components::Button < Components::Base
   def self.root_attributes(variant: :default, size: :default)
     check_parameters!(variant:, size:)
     {
-      class: "group/button",
+      class: "button group/button",
       data: {
-        slot: "button",
         variant: variant.to_s,
         size: size.to_s.tr("_", "-"),
       },

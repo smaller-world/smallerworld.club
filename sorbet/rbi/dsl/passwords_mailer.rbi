@@ -7,9 +7,6 @@
 
 class PasswordsMailer
   class << self
-    sig { params(user: T.untyped).returns(::ActionMailer::MessageDelivery) }
-    def reset(user); end
-
     sig { returns(::ActionMailer::MessageDelivery) }
     def roadie_options; end
   end

@@ -21,12 +21,18 @@ Rails.application.routes.draw do
 
   # == Authentication
   resource :session, only: [ :new, :create, :destroy ]
-  resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
-    post :callback
+  resources :phone_number_verification_requests, only: [ :create ] do
+    member do
+      get :verify
+    end
   end
-  resource :google_oauth_session, path: "/session/google_oauth", only: :create do
-    get :callback
-  end
+
+  # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
+  #   post :callback
+  # end
+  # resource :google_oauth_session, path: "/session/google_oauth", only: :create do
+  #   get :callback
+  # end
   # resources :passwords, param: :token
 
   # == Home

@@ -8,10 +8,4 @@
 class Components::Dialog
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.void)).void }
   def el_dialog(**attributes, &block); end
-
-  sig { params(attributes: T.untyped, block: T.nilable(T.proc.void)).void }
-  def el_dialog_backdrop(**attributes, &block); end
-
-  sig { params(attributes: T.untyped, block: T.nilable(T.proc.void)).void }
-  def el_dialog_panel(**attributes, &block); end
 end

@@ -13,15 +13,6 @@ module GeneratedPathHelpersModule
   def admin_dashboard_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def apple_oauth_session_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def callback_apple_oauth_session_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def callback_google_oauth_session_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -32,9 +23,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def fly_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def google_oauth_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def home_path(*args); end
@@ -62,6 +50,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def phone_number_verification_requests_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_path(*args); end
@@ -167,6 +158,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def verify_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end

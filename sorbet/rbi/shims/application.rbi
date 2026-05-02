@@ -19,3 +19,20 @@ class Components::Base
   sig { returns(T::Boolean) }
   def authenticated?; end
 end
+
+class Current
+  sig { params(args: T.untyped, kwargs: T.untyped, block: T.untyped).returns(User) }
+  def self.user(*args, **kwargs, &block); end
+end
+
+# class ActiveRecord::Migration::Current
+#   sig do
+#     params(
+#       table_name: String,
+#       options: T.untyped,
+#       block: T.proc.params(t: ActiveRecord::ConnectionAdapters::TableDefinition).void,
+#     ).void
+#   end
+#   def change_table(table_name, **options, &block)
+#   end
+# end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_21_091007) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_02_121108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,6 +61,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_091007) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "phone_number_verification_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "created_at", null: false
+    t.inet "ip_address", null: false
+    t.string "phone_number", null: false
+    t.string "user_agent", null: false
+    t.string "verification_code", null: false
+    t.timestamptz "verified_at"
+  end
+
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "plain_body", null: false
@@ -72,10 +81,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_091007) do
 
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "ip_address"
+    t.uuid "phone_number_verification_request_id", null: false
     t.datetime "updated_at", null: false
-    t.string "user_agent"
     t.uuid "user_id", null: false
+    t.index ["phone_number_verification_request_id"], name: "index_sessions_on_phone_number_verification_request_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
@@ -223,18 +232,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_091007) do
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email_address", null: false
     t.string "name", null: false
-    t.string "oauth_first_name", null: false
-    t.string "oauth_last_name"
-    t.string "oauth_provider", null: false
-    t.string "oauth_uid", null: false
-    t.string "phone_number"
+    t.string "phone_number", null: false
     t.string "time_zone_name", null: false
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
-    t.index ["oauth_provider", "oauth_uid"], name: "index_users_on_oauth_provider_and_oauth_uid", unique: true
-    t.index ["phone_number"], name: "index_users_on_phone_number"
+    t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
   create_table "worlds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -249,6 +251,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_091007) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "posts", "worlds"
+  add_foreign_key "sessions", "phone_number_verification_requests"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

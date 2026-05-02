@@ -8,11 +8,11 @@ class Components::FileInput < Components::Input
 
   sig { override.void }
   def view_template
-    options = mix({ data: { slot: "input" } }, @options)
+    options = mix({ class: "input", data: { slot: "input" } }, @options)
     if @form && @field
       @form.file_field(@field, **with_invalid_aria(options))
     else
-      file_field(**options)
+      input(type: :file, **options)
     end
   end
 end

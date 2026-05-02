@@ -35,11 +35,11 @@ class Components::PostCard < Components::Base
             title
           end
           card.action do
-            render_dropdown_menu
+            dropdown_menu
           end
         else
           card.action(class: "w-14 relative self-stretch") do
-            render_dropdown_menu(class: "absolute right-0 bottom-0")
+            dropdown_menu(class: "absolute right-0 bottom-0")
           end
         end
       end
@@ -56,29 +56,24 @@ class Components::PostCard < Components::Base
   # == Helpers ==
 
   sig { params(attributes: T.untyped).void }
-  def render_dropdown_menu(**attributes)
+  def dropdown_menu(**attributes)
     Components::DropdownMenu(anchor: [ :bottom, :end ]) do |menu|
-      menu.trigger do
-        Components::Button(
-          variant: :secondary,
-          size: :xs,
-          **attributes,
-        ) do
-          div(class: "relative h-full w-1.5") do
-            div(class: "absolute top-0 bottom-0 -left-1.5 flex items-center") do
-              Icon("huge/more-vertical", class: "size-4")
-            end
+      menu.trigger_button(variant: :secondary, size: :xs, **attributes) do
+        div(class: "relative h-full w-1.5") do
+          div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
+            Icon("huge/more-vertical", class: "size-3.5")
           end
-          span { "edit" }
         end
+        span { "edit" }
       end
-      menu.content do
-        menu.link_item(href: edit_post_path(@post)) do
+
+      menu.content(anchor: [ :top, :end ]) do |content|
+        content.link_item_to([ :edit, @post ]) do
           Icon("huge/pencil-edit-01")
           span { "edit" }
         end
-        form_with(url: post_path(@post), method: :delete) do
-          menu.button_item(variant: :destructive) do
+        form_with(url: @post, method: :delete) do
+          content.button_item(variant: :destructive) do
             Icon("huge/delete-01")
             span { "delete" }
           end

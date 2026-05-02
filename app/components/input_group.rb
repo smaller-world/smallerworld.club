@@ -24,7 +24,7 @@ class Components::InputGroup < Components::Base
     root_element(
       :div,
       role: "group",
-      class: "group/input-group",
+      class: "input-group group/input-group",
       data: { slot: "input-group" },
       &content
     )
@@ -32,34 +32,67 @@ class Components::InputGroup < Components::Base
 
   # == Interface ==
 
-  sig { params(attributes: T.untyped).void }
-  def input(**attributes)
-    Components::Input(form: @form, field: @field, **attributes)
+  sig { params(options: T.untyped).void }
+  def input(**options)
+    Components::Input(
+      form: @form,
+      field: @field,
+      **mix(
+        {
+          class: "input-group-input",
+          data: {
+            slot!: "input-group-control",
+          },
+        },
+        options,
+      ),
+    )
   end
 
-  sig { params(attributes: T.untyped).void }
-  def text_input(**attributes)
-    input(type: :text, **attributes)
+  sig { params(options: T.untyped).void }
+  def text_input(**options)
+    input(type: :text, **options)
   end
 
-  sig { params(direct_upload: T::Boolean, attributes: T.untyped).void }
-  def file_input(direct_upload: true, **attributes)
+  sig { params(direct_upload: T::Boolean, options: T.untyped).void }
+  def file_input(direct_upload: true, **options)
     Components::FileInput(
       form: @form,
       field: @field,
       direct_upload:,
-      **attributes,
+      **mix(
+        {
+          class: "input-group-input",
+          data: {
+            slot!: "input-group-control",
+          },
+        },
+        options,
+      ),
     )
   end
 
   sig do
     params(
-      attributes: T.untyped,
+      options: T.untyped,
       content: T.proc.params(component: Components::Textarea).void,
     ).void
   end
-  def textarea(**attributes, &content)
-    Components::Textarea(form: @form, field: @field, **attributes, &content)
+  def textarea(**options, &content)
+    Components::Textarea(
+      form: @form,
+      field: @field,
+      **mix(
+        {
+          class: "input-group-textarea",
+          data: {
+            slot!: "input-group-control",
+          },
+        },
+        options,
+      ),
+      &content
+    )
   end
 
   sig do

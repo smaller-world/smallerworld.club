@@ -1,46 +1,45 @@
 @layer components {
-  /* Overlay / backdrop */
-  [data-slot="dialog-overlay"] {
-    @apply fixed inset-0 isolate bg-black/10 transition-opacity data-enter:duration-100 data-enter:ease-out data-leave:duration-100 data-leave:ease-in supports-backdrop-filter:backdrop-blur-xs data-closed:opacity-0;
+  .dialog-overlay {
+    @apply fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs;
+
+    &[data-enter] {
+      @apply animate-in fade-in-0;
+    }
+
+    &[data-leave] {
+      @apply animate-out fade-out-0;
+    }
   }
 
-  /* Native <dialog> element reset */
-  [data-slot="dialog-content"] {
-    @apply fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent;
+  .dialog-content {
+    @apply fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-md;
+
+    &[data-enter] {
+      @apply animate-in fade-in-0 zoom-in-95;
+    }
+
+    &[data-leave] {
+      @apply animate-out fade-out-0 zoom-out-95;
+    }
   }
 
-  /* Centering wrapper */
-  [data-slot="dialog-inner"] {
-    @apply flex min-h-full items-center justify-center p-4;
-  }
-
-  /* Panel */
-  [data-slot="dialog-panel"] {
-    @apply relative grid w-full max-w-md gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 transition-all outline-none data-enter:duration-100 data-enter:ease-out data-leave:duration-100 data-leave:ease-in data-closed:scale-95 data-closed:opacity-0;
-  }
-
-  /* Close button */
-  [data-slot="dialog-close"] {
+  .dialog-close {
     @apply absolute top-4 right-4;
   }
 
-  /* Header */
-  [data-slot="dialog-header"] {
+  .dialog-header {
     @apply flex flex-col gap-2;
   }
 
-  /* Title */
-  [data-slot="dialog-title"] {
+  .dialog-title {
     @apply leading-none font-medium;
   }
 
-  /* Description */
-  [data-slot="dialog-description"] {
+  .dialog-description {
     @apply text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground;
   }
 
-  /* Footer */
-  [data-slot="dialog-footer"] {
+  .dialog-footer {
     @apply flex flex-col-reverse gap-2 sm:flex-row sm:justify-end;
   }
 }

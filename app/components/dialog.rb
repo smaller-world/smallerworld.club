@@ -5,95 +5,64 @@ class Components::Dialog < Components::Base
   # == Initialization ==
 
   register_element :el_dialog
-  register_element :el_dialog_backdrop
-  register_element :el_dialog_panel
 
   sig do
     params(
       id: String,
-      show_close_button: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(id:, show_close_button: true, **attributes)
+  def initialize(id: "dialog_#{SecureRandom.uuid}", **attributes)
     @id = id
-    @show_close_button = show_close_button
+    @trigger_button_block = T.let(nil, T.nilable(T.proc.void))
+    @content_block = T.let(nil, T.nilable(T.proc.void))
     super(**attributes)
   end
 
   # == Component ==
 
-  sig { override.params(block: T.proc.bind(T.self_type).void).void }
-  def view_template(&block)
-    el_dialog do
-      dialog(
-        id: @id,
-        aria_labelledby: "#{@id}-title",
-        data: {
-          slot: "dialog-content",
-          controller: "dialog",
-        },
-      ) do
-        el_dialog_backdrop(data: { slot: "dialog-overlay" })
-        div(data: { slot: "dialog-inner" }) do
-          el_dialog_panel(data: { slot: "dialog-panel" }) do
-            yield
-            close_button if @show_close_button
-          end
-        end
-      end
+  sig { override.params(content: T.proc.bind(T.self_type).void).void }
+  def view_template(&content)
+    vanish(&content)
+    trigger_button_block = @trigger_button_block or raise "Missing trigger"
+    content_block = @content_block or raise "Missing content"
+
+    el_dialog(**@attributes) do
+      trigger_button_block.call
+      content_block.call
     end
   end
 
-  # == Slots ==
+  # == Interface ==
 
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def header(**attributes, &block)
-    div(**mix({ data: { slot: "dialog-header" } }, attributes), &block)
+  sig do
+    params(
+      variant: Symbol,
+      size: Symbol,
+      attributes: T.untyped,
+      content: T.proc.params(button: Components::Button).void,
+    ).void
+  end
+  def with_trigger_button(variant: :default, size: :default, **attributes, &content)
+    @trigger_button_block = ->() {
+      render Components::Button.new(variant:, size:, **attributes, &content)
+    }
   end
 
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def title(**attributes, &block)
-    h3(
-      **mix(
-        { id: "#{@id}-title", data: { slot: "dialog-title" } },
-        attributes,
-      ),
-      &block
-    )
+  sig do
+    params(
+      show_close_button: T::Boolean,
+      attributes: T.untyped,
+      content: T.proc.params(content: Components::DialogContent).void,
+    ).void
   end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def description(**attributes, &block)
-    p(**mix({ data: { slot: "dialog-description" } }, attributes), &block)
-  end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def body(**attributes, &block)
-    div(**attributes, &block)
-  end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def footer(**attributes, &block)
-    div(**mix({ data: { slot: "dialog-footer" } }, attributes), &block)
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { void }
-  def close_button
-    div(data: { slot: "dialog-close" }) do
-      Components::Button(
-        variant: :ghost,
-        size: :icon_sm,
-        command: "close",
-        commandfor: @id,
-      ) do
-        Icon("huge/cancel-01", class: "size-4")
-        span(class: "sr-only") { "Close" }
-      end
-    end
+  def with_content(show_close_button: true, **attributes, &content)
+    @content_block = ->() {
+      render Components::DialogContent.new(
+        show_close_button:,
+        **attributes,
+        &content
+      )
+    }
   end
 end

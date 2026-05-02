@@ -1,0 +1,36 @@
+@layer components {
+  .combobox-input-group {
+    @apply w-auto;
+  }
+
+  .combobox-trigger {
+    @apply group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent;
+
+    > svg {
+      @apply pointer-events-none size-4 text-muted-foreground;
+    }
+  }
+
+  .combobox-content {
+    @apply relative w-(--input-width) min-w-[calc(var(--input-width)+--spacing(7))] overflow-hidden rounded-md bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 data-[chips=true]:min-w-(--input-width) *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none;
+    @apply transition transition-discrete duration-100 data-enter:ease-out data-enter:fade-in-0 data-enter:zoom-in-95 data-leave:ease-in data-leave:fade-out-0 data-leave:zoom-out-95 data-closed:opacity-0;
+
+    --anchor-gap: 6px;
+    /*@apply transition-discrete duration-100;
+    @apply data-enter:animate-in data-enter:fade-in-0 data-enter:zoom-in-95 data-leave:animate-out data-leave:fade-out-0 data-leave:zoom-out-95 data-[anchor~=bottom]:slide-in-from-top-2 data-[anchor~=top]:slide-in-from-bottom-2;*/
+  }
+
+  .combobox-empty {
+    @apply hidden w-full justify-center py-2 text-center text-sm text-muted-foreground group-data-empty/combobox-content:flex;
+  }
+
+  .combobox-list {
+    @apply scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0;
+    @apply max-h-72;
+  }
+
+  .combobox-item {
+    @apply relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none aria-selected:bg-accent aria-selected:text-accent-foreground not-data-[variant=destructive]:aria-selected:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+    @apply cursor-pointer;
+  }
+}

@@ -7,163 +7,79 @@ class Components::DropdownMenu < Components::Base
   ITEM_VARIANTS = [ :default, :destructive ]
 
   register_element :el_dropdown
-  register_element :el_menu
 
   # == Initialization ==
+
+  sig { params(attributes: T.untyped).void }
+  def initialize(**attributes)
+    @trigger_button_block = T.let(nil, T.nilable(T.proc.void))
+    @content_block = T.let(nil, T.nilable(T.proc.void))
+    super(**attributes)
+  end
+
+  # == Component ==
+
+  sig { override.params(content: T.proc.bind(T.self_type).void).void }
+  def view_template(&content)
+    vanish(&content)
+    trigger_button_block = @trigger_button_block or raise "Missing trigger button"
+    content_block = @content_block or raise "Missing content"
+
+    root_element(
+      :el_dropdown,
+      class: "dropdown-menu group/dropdown-menu",
+      data: {
+        slot: "dropdown-menu",
+      },
+    ) do
+      trigger_button_block.call
+      content_block.call
+    end
+  end
+
+  # == Interface ==
+  #
+  sig do
+    params(
+      variant: Symbol,
+      size: Symbol,
+      attributes: T.untyped,
+      content: T.proc.params(button: Components::Button).void,
+    ).void
+  end
+  def trigger_button(variant: :default, size: :default, **attributes, &content)
+    @trigger_button_block = ->() {
+      render Components::Button.new(variant:, size:, **attributes, &content)
+    }
+  end
 
   sig do
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
       popover: T::Boolean,
+      open: T::Boolean,
       attributes: T.untyped,
+      content: T.proc.params(content: Components::DropdownMenuContent).void,
     ).void
   end
-  def initialize(
-    anchor: [ :bottom, :start ],
+  def content(
+    anchor:,
     anchor_strategy: nil,
     popover: true,
-    **attributes
+    open: false,
+    **attributes,
+    &content
   )
-    @anchor = anchor
-    @anchor_strategy = anchor_strategy
-    @popover = popover
-    @trigger_block = T.let(nil, T.nilable(T.proc.void))
-    @content_block = T.let(nil, T.nilable(T.proc.void))
-    @content_attributes = T.let({}, T::Hash[Symbol, T.untyped])
-    super(**attributes)
-  end
-
-  # == Component ==
-
-  sig { override.params(block: T.proc.bind(T.self_type).void).void }
-  def view_template(&block)
-    vanish(&block)
-    trigger_block = @trigger_block or raise "Missing trigger"
-    root_element(
-      :el_dropdown,
-      class: "group/dropdown-menu",
-      data: { slot: "dropdown-menu" },
-    ) do
-      trigger_block.call
-      if (content_block = @content_block)
-        el_menu(
-          **mix(
-            { data: { slot: "dropdown-menu-content" } },
-            {
-              anchor: anchor_property,
-              anchor_strategy: @anchor_strategy,
-              popover: @popover,
-            }.compact_blank,
-            @content_attributes,
-          ),
-          &content_block
-        )
-      end
-    end
-  end
-
-  # == Slots ==
-
-  sig { params(block: T.proc.void).void }
-  def trigger(&block)
-    @trigger_block = block
-  end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def content(**attributes, &block)
-    @content_attributes = attributes
-    @content_block = block
-  end
-
-  sig do
-    params(
-      variant: Symbol,
-      inset: T::Boolean,
-      attributes: T.untyped,
-      block: T.proc.void,
-    ).void
-  end
-  def link_item(variant: :default, inset: false, **attributes, &block)
-    a(**mix(item_attributes(variant:, inset:), attributes), &block)
-  end
-
-  sig do
-    params(
-      variant: Symbol,
-      inset: T::Boolean,
-      attributes: T.untyped,
-      block: T.proc.void,
-    ).void
-  end
-  def button_item(variant: :default, inset: false, **attributes, &block)
-    button(**mix(item_attributes(variant:, inset:), attributes), &block)
-  end
-
-  sig do
-    params(
-      inset: T::Boolean,
-      attributes: T.untyped,
-      block: T.proc.void,
-    ).void
-  end
-  def label(inset: false, **attributes, &block)
-    div(
-      **mix(
-        {
-          data: {
-            slot: "dropdown-menu-label",
-            inset: inset || nil,
-          },
-        },
-        attributes,
-      ),
-      &block
-    )
-  end
-
-  sig { params(attributes: T.untyped).void }
-  def separator(**attributes)
-    div(**mix({ data: { slot: "dropdown-menu-separator" } }, attributes))
-  end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def group(**attributes, &block)
-    div(**mix({ data: { slot: "dropdown-menu-group" } }, attributes), &block)
-  end
-
-  sig { params(attributes: T.untyped, block: T.proc.void).void }
-  def shortcut(**attributes, &block)
-    span(
-      **mix({ data: { slot: "dropdown-menu-shortcut" } }, attributes),
-      &block
-    )
-  end
-
-  sig { params(variant: Symbol, inset: T::Boolean).returns(T::Hash[Symbol, T.untyped]) }
-  def item_attributes(variant: :default, inset: false)
-    unless variant.in?(ITEM_VARIANTS)
-      raise InvalidParameter.new(parameter: :variant, value: variant)
-    end
-
-    {
-      class: "group/dropdown-menu-item",
-      data: {
-        slot: "dropdown-menu-item",
-        variant: variant,
-        inset: inset ? "" : nil,
-      }.compact,
+    @content_block = ->() {
+      render Components::DropdownMenuContent.new(
+        anchor:,
+        anchor_strategy:,
+        popover:,
+        open:,
+        **attributes,
+        &content
+      )
     }
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(T.nilable(String)) }
-  def anchor_property
-    if (values = Array.wrap(@anchor).presence)
-      values.map(&:to_s).join(" ")
-    end
   end
 end

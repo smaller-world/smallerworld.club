@@ -24,11 +24,11 @@ class Components::Input < Components::Base
 
   sig { override.void }
   def view_template
-    options = mix({ data: { slot: "input" } }, @options)
+    options = mix({ class: "input", data: { slot: "input" }, type: nil }, @options)
     if @form && @field
       @form.text_field(@field, **with_invalid_aria(options))
     else
-      text_field(**options)
+      input(type: :text, **options)
     end
   end
 
