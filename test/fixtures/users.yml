@@ -16,19 +16,11 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 one:
-  oauth_provider: apple
-  oauth_uid: apple_uid_one
-  oauth_first_name: Test
-  oauth_last_name: One
-  name: Test
-  email_address: one@example.com
+  name: TestOne
+  phone_number: +14165558323
   time_zone_name: America/New_York
 
 two:
-  oauth_provider: apple
-  oauth_uid: apple_uid_two
-  oauth_first_name: Test
-  oauth_last_name: Two
-  name: Test
-  email_address: two@example.com
+  name: TestTwo
+  phone_number: +19054997382
   time_zone_name: America/New_York

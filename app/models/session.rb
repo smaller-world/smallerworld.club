@@ -28,4 +28,20 @@ class Session < ApplicationRecord
 
   belongs_to :user
   belongs_to :phone_number_verification_request
+
+  # == Validations ==
+
+  validate :validate_verified_phone_number_verification_request
+
+  private
+
+  # == Helpers ==
+
+  sig { void }
+  def validate_verified_phone_number_verification_request
+    verification_request = phone_number_verification_request or return
+    unless verification_request.verified?
+      errors.add(:phone_number_verification_request, "must be verified")
+    end
+  end
 end

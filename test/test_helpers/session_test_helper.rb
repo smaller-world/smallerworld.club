@@ -9,7 +9,14 @@ module SessionTestHelper
 
   sig { params(user: User).void }
   def sign_in_as(user)
-    Current.session = user.sessions.create!
+    Current.session = user.sessions.create!(
+      phone_number_verification_request: PhoneNumberVerificationRequest.new(
+        phone_number: user.phone_number,
+        verified_at: Time.current,
+        user_agent: "test",
+        ip_address: IPAddr.new("127.0.0.1"),
+      ),
+    )
 
     ActionDispatch::TestRequest.create.cookie_jar.tap do |cookie_jar|
       cookie_jar.signed[:session_id] = Current.session.id
