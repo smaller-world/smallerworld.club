@@ -45,7 +45,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     exclusion: {
       in: ->(_request) { ip_addresses_exceeding_daily_rate_limit },
       message: "is temporarily blacklisted",
-    }
+    } if Rails.env.production?
   validates :phone_number,
     presence: true,
     phone: { possible: true, types: :mobile, extensions: false, allow_blank: true }

@@ -1,6 +1,7 @@
 @layer components {
   .input-group {
     @apply relative flex h-9 w-full min-w-0 items-center rounded-md border border-input shadow-xs transition-[color,box-shadow] outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-[input:focus-visible]:border-ring has-[input:focus-visible]:ring-3 has-[input:focus-visible]:ring-ring/50 has-[textarea:focus-visible]:border-ring has-[textarea:focus-visible]:ring-3 has-[textarea:focus-visible]:ring-ring/50 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto dark:bg-input/30 dark:has-aria-invalid:ring-destructive/40;
+    @apply data-disabled:opacity-50;
 
     /* Padding adjustments on input when addons are present */
     &:has(> [data-align="inline-start"]) > [data-slot="input"] {
@@ -44,6 +45,7 @@
   /* Strip Input's standalone border/ring/shadow when inside InputGroup */
   .input-group-input {
     @apply flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent;
+    @apply disabled:opacity-100;
   }
 
   /* Strip Textarea's standalone border/ring/shadow when inside InputGroup */

@@ -20,12 +20,6 @@ class Views::Sessions::New < Views::Base
       title: "sign in to smaller world",
       body_class: "bg-muted",
     ) do |layout|
-      layout.with_head do
-        link(
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap",
-        )
-      end
       main(class: "flex-1 flex flex-col justify-center pb-20") do
         layout.page_container(
           class: "flex flex-col items-center justify-center",

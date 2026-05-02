@@ -8,7 +8,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   rate_limit to: 3,
     within: 3.minutes,
     only: :create,
-    with: :handle_rate_limit_exceeded
+    with: :handle_rate_limit_exceeded if Rails.env.production?
 
   # == Actions ==
 
@@ -39,11 +39,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                 "#{verification_request.verification_code}",
             )
           end
-          redirect_to([ :verify, verification_request ])
+          redirect_to([ :challenge, verification_request ])
+        elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
+          redirect_to(new_session_path, alert: message)
         else
-          if (message = verification_request.errors.full_messages_for(:base).first)
-            flash.now[:alert] = message
-          end
           render Views::Sessions::New.new(verification_request:),
             status: :unprocessable_content
         end
@@ -51,14 +50,51 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     end
   end
 
-  # GET /phone_number_verification_requests/:id/verify
+  # GET /phone_number_verification_requests/:id/challenge
+  def challenge
+    verification_request = find_verification_request
+    if verification_request.expired?
+      redirect_to(
+        new_session_path,
+        alert: "the verification code has expired. please try again.",
+      )
+    elsif verification_request.verified?
+      redirect_to(new_session_path, alert: "verification code has been invalidated.")
+    else
+      render Views::Sessions::New.new(verification_request:)
+    end
+  end
+
+  # POST /phone_number_verification_requests/:id/challenge
   def verify
-    raise NotImplementedError
+    verification_request = find_verification_request
+    verification_code = params
+      .require(:phone_number_verification_request)
+      .fetch(:verification_code)
+    if verification_request.verify(verification_code)
+      user = User.find_by(phone_number: verification_request.phone_number)
+      if user
+        start_new_session_for(user, verification_request:)
+        redirect_to(after_authentication_url)
+      else
+        raise NotImplementedError
+      end
+    else
+      redirect_to(
+        [ :challenge, verification_request ],
+        alert: "invalid verification code. please try again.",
+      )
+    end
   end
 
   private
 
   # == Helpers ==
+
+  sig { returns(PhoneNumberVerificationRequest) }
+  def find_verification_request
+    PhoneNumberVerificationRequest.find(params.fetch(:id))
+  end
 
   sig { void }
   def handle_rate_limit_exceeded

@@ -57,7 +57,12 @@ class Components::Combobox < Components::Base
         form: @form,
         field: @field,
         **mix(
-          { class: "combobox-input-group" },
+          {
+            class: "combobox-input-group",
+            data: {
+              disabled: ("true" if @disabled),
+            },
+          },
           @attributes,
         ),
       ) do |group|

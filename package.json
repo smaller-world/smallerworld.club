@@ -13,8 +13,6 @@
     "@37signals/lexxy": "0.9.9-beta-preview1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
-    "@maskito/core": "^5.2.2",
-    "@maskito/phone": "^5.2.2",
     "@rails/activestorage": "^8.1.300",
     "@rails/request.js": "^0.0.13",
     "@sentry/browser": "^10.48.0",

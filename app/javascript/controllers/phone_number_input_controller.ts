@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus";
-import { Maskito } from "@maskito/core";
-import { maskitoPhoneOptionsGenerator } from "@maskito/phone";
-import type { CountryCode } from "libphonenumber-js/core";
-import { parsePhoneNumber } from "libphonenumber-js/core";
+import {
+  AsYouType,
+  type CountryCode,
+  parsePhoneNumber,
+} from "libphonenumber-js/core";
 
 export default class PhoneNumberInputController extends Controller {
   static targets = [
@@ -30,10 +31,9 @@ export default class PhoneNumberInputController extends Controller {
     const { countryCode } = this.countryCodeInputTarget.dataset;
     if (typeof countryCode === "string") {
       this.#updateCountryFlagAddon(countryCode);
-      void this.#initializeNationalNumberMaskito(countryCode);
+      void this.normalizeNationalNumber();
     }
   });
-  #nationalNumberMaskito: Maskito | null = null;
 
   // == Lifecycle ==
 
@@ -54,18 +54,10 @@ export default class PhoneNumberInputController extends Controller {
     this.#inputCountryCodeObserver.observe(this.countryCodeInputTarget, {
       attributes: true,
     });
-    const initialCountryCode = this.#inputCountryCode;
-    if (initialCountryCode) {
-      void this.#initializeNationalNumberMaskito(initialCountryCode);
-    }
     super.connect();
   }
 
   disconnect(): void {
-    if (this.#nationalNumberMaskito) {
-      this.#nationalNumberMaskito.destroy();
-      this.#nationalNumberMaskito = null;
-    }
     this.#inputCountryCodeObserver.disconnect();
     super.disconnect();
   }
@@ -90,6 +82,20 @@ export default class PhoneNumberInputController extends Controller {
   normalizeCountryCode(): void {
     if (!this.countryCodeInputTarget.value.startsWith("+")) {
       this.countryCodeInputTarget.value = `+${this.countryCodeInputTarget.value}`;
+    }
+  }
+
+  async normalizeNationalNumber(): Promise<void> {
+    const { default: metadata } =
+      await import("libphonenumber-js/min/metadata");
+    if (this.#inputCountryCode) {
+      const asYouType = new AsYouType(
+        this.#inputCountryCode as CountryCode,
+        metadata,
+      );
+      this.nationalNumberInputTarget.value = asYouType.input(
+        this.nationalNumberInputTarget.value,
+      );
     }
   }
 
@@ -127,29 +133,10 @@ export default class PhoneNumberInputController extends Controller {
       this.nationalNumberInputTarget.value,
     ].join(" ");
     const parsedNumber = parsePhoneNumber(phoneNumber, metadata);
-    console.log({ parsedNumber, isValid: parsedNumber.isValid() });
     this.hiddenInputTarget.value = parsedNumber.format("E.164");
   }
 
   // == Helpers ==
-
-  async #initializeNationalNumberMaskito(countryCode: string): Promise<void> {
-    if (this.#nationalNumberMaskito) {
-      this.#nationalNumberMaskito.destroy();
-    }
-    const { default: metadata } =
-      await import("libphonenumber-js/min/metadata");
-    const options = maskitoPhoneOptionsGenerator({
-      countryIsoCode: countryCode as CountryCode,
-      metadata,
-      format: "NATIONAL",
-      strict: true,
-    });
-    this.#nationalNumberMaskito = new Maskito(
-      this.nationalNumberInputTarget,
-      options,
-    );
-  }
 
   #updateCountryFlagAddon(countryCode: string): void {
     const option = this.#countryCodeOptions.get(countryCode);

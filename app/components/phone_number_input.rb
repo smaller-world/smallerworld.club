@@ -11,11 +11,22 @@ class Components::PhoneNumberInput < Components::Input
       form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
       default_country_code: String,
+      disabled: T::Boolean,
+      value: T.nilable(T.any(String, Phonelib::Phone)),
       options: T.untyped,
     ).void
   end
-  def initialize(form: nil, field: nil, default_country_code: "CA", **options)
-    @default_country = T.let(ISO3166::Country[default_country_code], ISO3166::Country)
+  def initialize(
+    form: nil,
+    field: nil,
+    default_country_code: "CA",
+    disabled: false,
+    value: nil,
+    **options
+  )
+    @default_country_code = default_country_code
+    @disabled = disabled
+    @value = value
     super(form:, field:, **options)
   end
 
@@ -28,7 +39,7 @@ class Components::PhoneNumberInput < Components::Input
         input: {
           type: "tel",
           autocomplete: "off",
-          value: country_value(@default_country),
+          value: country_value(country),
           required: true,
           class: "field-sizing-content px-2",
           data: {
@@ -37,16 +48,17 @@ class Components::PhoneNumberInput < Components::Input
               "keydown.enter->phone-number-input#normalizeCountryCode:capture",
               "change->phone-number-input#guessCountryCodeIfNeeded",
             ],
-            country_code: @default_country.alpha2,
+            country_code: country.alpha2,
           },
         },
+        disabled: @disabled,
       ) do |combobox|
         combobox.with_inline_start_addon(
           data: {
             phone_number_input_target: "countryFlagAddon",
           },
         ) do
-          country_flag(@default_country)
+          country_flag(country)
         end
         combobox.with_content(
           anchor: [ :bottom, :start ],
@@ -84,12 +96,17 @@ class Components::PhoneNumberInput < Components::Input
         field: @field,
         type: "tel",
         name: nil,
+        value: phone_number&.national_number,
         autocomplete: "tel-national",
+        disabled: @disabled,
         **mix(
           {
             data: {
               phone_number_input_target: "nationalNumberInput",
-              action: "change->phone-number-input#updateHiddenInput",
+              action: token_list(
+                "phone-number-input#normalizeNationalNumber",
+                "change->phone-number-input#updateHiddenInput",
+              ),
             },
           },
           @options,
@@ -125,5 +142,34 @@ class Components::PhoneNumberInput < Components::Input
         phone_number_input_target: "hiddenInput",
       },
     }
+  end
+
+  sig { returns(T.nilable(Phonelib::Phone)) }
+  def phone_number
+    return @phone_number if defined?(@phone_number)
+
+    @phone_number = if @value
+      normalize_phone_number(@value)
+    elsif @form && @field && (value = @form.object.public_send(@field))
+      normalize_phone_number(value)
+    end
+  end
+
+  sig { params(value: T.any(String, Phonelib::Phone)).returns(Phonelib::Phone) }
+  def normalize_phone_number(value)
+    case value
+    when String
+      Phonelib.parse(value)
+    when Phonelib::Phone
+      value
+    end
+  end
+
+  sig { returns(ISO3166::Country) }
+  def country
+    @country ||= begin
+      country_code = phone_number&.country || @default_country_code
+      ISO3166::Country[country_code]
+    end
   end
 end

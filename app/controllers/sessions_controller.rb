@@ -4,7 +4,7 @@
 class SessionsController < ApplicationController
   # == Filters ==
 
-  allow_unauthenticated_access only: [ :new, :create ]
+  allow_unauthenticated_access only: [ :new ]
 
   # rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
   #   T.bind(self, SessionsController)
@@ -32,7 +32,10 @@ class SessionsController < ApplicationController
 
   # POST /sessions
   def create
-    raise NotImplementedError
+    # verification_request_params = params.expect(phone_number_verification_request: [
+    #   :phone_number,
+    #   :code,
+    # ])
     # user_id = params.expect(:user_id)
     # user = User.find(user_id)
     # start_new_session_for(user)

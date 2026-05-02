@@ -8,6 +8,7 @@ class Components::Base < Phlex::HTML
   abstract!
 
   include Phlex::Rails::Helpers::ClassNames
+  include Phlex::Rails::Helpers::TokenList
   include Phlex::Rails::Helpers::ImageTag
   include Phlex::Rails::Helpers::LinkTo
   include Phlex::Rails::Helpers::Routes

@@ -20,10 +20,11 @@ Rails.application.routes.draw do
   end
 
   # == Authentication
-  resource :session, only: [ :new, :create, :destroy ]
+  resource :session, only: [ :new, :destroy ]
   resources :phone_number_verification_requests, only: [ :create ] do
     member do
-      get :verify
+      get :challenge
+      post :verify
     end
   end
 

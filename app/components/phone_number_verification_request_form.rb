@@ -21,13 +21,33 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
   sig { override.void }
   def view_template
     form_with(
-      model: @verification_request,
+      model: if @verification_request.persisted?
+               [ :verify, @verification_request ]
+             else
+               @verification_request
+             end,
+      method: :post,
       class: "flex flex-col gap-2",
       **@options,
     ) do |form|
       field_for(form, :phone_number) do |f|
-        f.phone_number_input(placeholder: "your phone #, please!")
+        f.phone_number_input(
+          placeholder: "your phone #",
+          disabled: @verification_request.persisted?,
+        )
         f.error
+      end
+
+      if @verification_request.persisted?
+        field_for(form, :verification_code) do |f|
+          f.text_input(
+            placeholder: "verification code",
+            inputmode: "numeric",
+            autocomplete: "one-time-code",
+            value: Rails.env.development? ? @verification_request.verification_code : nil,
+          )
+          f.error
+        end
       end
 
       submit_button_for(form) do |button|
@@ -36,7 +56,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
           span { "send verification code" }
         else
           span { "complete login" }
-          button.inline_end_icon("huge/arrow-right-big")
+          button.inline_end_icon("huge/arrow-right-02")
         end
       end
     end
