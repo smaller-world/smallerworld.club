@@ -38,17 +38,17 @@ module FormHelpers
       method: Symbol,
       orientation: Symbol,
       invalid: T::Boolean,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.proc.params(field: Components::Field).void,
     ).void
   end
-  def field_for(form, method, orientation: :vertical, invalid: false, **options, &block)
+  def field_for(form, method, orientation: :vertical, invalid: false, **attributes, &block)
     Components::Field(
       form:,
       field: method,
       orientation:,
       invalid:,
-      options:,
+      **attributes,
       &block
     )
   end

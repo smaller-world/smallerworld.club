@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # == Account
+  resource :account, only: [ :new, :create ]
+
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
   #   post :callback
   # end
@@ -40,7 +43,7 @@ Rails.application.routes.draw do
   get :home, to: "home#show"
 
   # == Worlds
-  resources :worlds do
+  resources :worlds, except: :index do
     resources :posts, shallow: true
   end
 

@@ -43,8 +43,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
         elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
           redirect_to(new_session_path, alert: message)
         else
-          render Views::Sessions::New.new(verification_request:),
-            status: :unprocessable_content
+          render(
+            Views::Sessions::New.new(verification_request:),
+            status: :unprocessable_content,
+          )
         end
       end
     end
@@ -74,10 +76,17 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     if verification_request.verify(verification_code)
       user = User.find_by(phone_number: verification_request.phone_number)
       if user
-        start_new_session_for(user, verification_request:)
+        time_zone_name = params.require(:user).fetch(:time_zone_name)
+        user.update!(time_zone_name:)
+        start_new_session_for(
+          user,
+          phone_number_verification_request: verification_request,
+        )
         redirect_to(after_authentication_url)
       else
-        raise NotImplementedError
+        session[:phone_number_verification_token] =
+          verification_request.generate_registration_token
+        redirect_to(new_account_path)
       end
     else
       redirect_to(

@@ -45,7 +45,11 @@ class Components::Dialog < Components::Base
   end
   def with_trigger_button(variant: :default, size: :default, **attributes, &content)
     @trigger_button_block = ->() {
-      render Components::Button.new(variant:, size:, **attributes, &content)
+      render Components::Button.new(
+        variant:, size:,
+        **mix({ command: "show-modal", commandfor: @id }, attributes),
+        &content
+      )
     }
   end
 
@@ -59,6 +63,7 @@ class Components::Dialog < Components::Base
   def with_content(show_close_button: true, **attributes, &content)
     @content_block = ->() {
       render Components::DialogContent.new(
+        dialog_id: @id,
         show_close_button:,
         **attributes,
         &content

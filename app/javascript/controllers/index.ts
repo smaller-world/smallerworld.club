@@ -1,3 +1,4 @@
+import AccountFormController from "./account_form_controller";
 import { application } from "./application";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
@@ -29,3 +30,4 @@ application.register("clearable-file-input", ClearableFileInputController);
 application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
 application.register("phone-number-input", PhoneNumberInputController);
+application.register("account-form", AccountFormController);

@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::PhoneNumberVerificationRequestForm < Components::Base
+  include Phlex::Rails::Helpers::HiddenField
+
   # == Initialization ==
 
   sig do
@@ -20,16 +22,23 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
 
   sig { override.void }
   def view_template
+    model = if @verification_request.persisted?
+      [ :verify, @verification_request ]
+    else
+      @verification_request
+    end
+
     form_with(
-      model: if @verification_request.persisted?
-               [ :verify, @verification_request ]
-             else
-               @verification_request
-             end,
+      model:,
       method: :post,
-      class: "flex flex-col gap-2",
+      class: "flex flex-col gap-2 [&_[data-slot=field]]:gap-1",
+      data: {
+        turbo_action: "replace",
+      },
       **@options,
     ) do |form|
+      hidden_field(:user, :time_zone_name, data: { controller: "current-time-zone-input" })
+
       field_for(form, :phone_number) do |f|
         f.phone_number_input(
           placeholder: "your phone #",
@@ -46,6 +55,11 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
             autocomplete: "one-time-code",
             value: Rails.env.development? ? @verification_request.verification_code : nil,
           )
+          if Rails.env.development?
+            f.description(class: "text-xs text-center") do
+              "code auto-filled for development"
+            end
+          end
           f.error
         end
       end

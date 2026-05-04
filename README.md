@@ -18,3 +18,7 @@ mise setup
 # Run the development server:
 mise dev
 ```
+
+## TODOs
+
+- [ ] auto-detect timezone changes on any user-authenticated page

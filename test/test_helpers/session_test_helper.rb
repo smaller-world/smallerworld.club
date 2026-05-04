@@ -7,6 +7,8 @@ module SessionTestHelper
 
   requires_ancestor { ActionDispatch::IntegrationTest }
 
+  # == Methods ==
+
   sig { params(user: User).void }
   def sign_in_as(user)
     Current.session = user.sessions.create!(

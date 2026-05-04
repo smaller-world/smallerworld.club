@@ -361,19 +361,20 @@ class User
   end
 
   module GeneratedAssociationMethods
-    sig { returns(T::Array[T.untyped]) }
-    def post_ids; end
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def build_world(*args, &blk); end
 
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def post_ids=(ids); end
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def create_world(*args, &blk); end
 
-    # This method is created by ActiveRecord on the `User` class because it declared `has_many :posts, through: :worlds`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::Post::PrivateCollectionProxy) }
-    def posts; end
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def create_world!(*args, &blk); end
 
-    sig { params(value: T::Enumerable[::Post]).void }
-    def posts=(value); end
+    sig { returns(T.nilable(::World)) }
+    def reload_world; end
+
+    sig { void }
+    def reset_world; end
 
     sig { returns(T::Array[T.untyped]) }
     def session_ids; end
@@ -389,19 +390,11 @@ class User
     sig { params(value: T::Enumerable[::Session]).void }
     def sessions=(value); end
 
-    sig { returns(T::Array[T.untyped]) }
-    def world_ids; end
+    sig { returns(T.nilable(::World)) }
+    def world; end
 
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `User` class because it declared `has_many :worlds`.
-    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::World::PrivateCollectionProxy) }
-    def worlds; end
-
-    sig { params(value: T::Enumerable[::World]).void }
-    def worlds=(value); end
+    sig { params(value: T.nilable(::World)).void }
+    def world=(value); end
   end
 
   module GeneratedAssociationRelationMethods

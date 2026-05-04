@@ -32,11 +32,16 @@ class User < ApplicationRecord
   # == Associations ==
 
   has_many :sessions, dependent: :destroy
-  has_many :worlds,
+  has_one :world,
     dependent: :destroy,
     inverse_of: :owner,
     foreign_key: :owner_id
   has_many :posts, through: :worlds
+
+  sig { returns(World) }
+  def world!
+    world or raise ActiveRecord::RecordNotFound, "Missing world"
+  end
 
   # == Normalizations ==
 
@@ -46,8 +51,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 30 }
   validates :phone_number,
+    presence: true,
     uniqueness: { message: "already registered" },
-    phone: { possible: true, types: :mobile, extensions: false },
-    allow_nil: true
+    phone: { possible: true, types: :mobile, extensions: false }
   validates_time_zone_name
 end

@@ -4,12 +4,12 @@
 class WorldsController < ApplicationController
   # GET /worlds
   def index
-    respond_to do |format|
-      format.html do
-        current_user = current_user!
-        render Views::Worlds::Index.new(current_user:)
-      end
-    end
+    # respond_to do |format|
+    #   format.html do
+    #     current_user = current_user!
+    #     render Views::Worlds::Index.new(current_user:)
+    #   end
+    # end
   end
 
   # GET /worlds/:id
@@ -33,7 +33,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
-        world = current_user.worlds.build
+        world = current_user.build_world
         render Views::Worlds::New.new(world:)
       end
     end
@@ -55,7 +55,7 @@ class WorldsController < ApplicationController
       format.html do
         current_user = current_user!
         world_params = params.expect(world: [ :name, :icon ])
-        world = current_user.worlds.build(**world_params)
+        world = current_user.build_world(**world_params)
         if world.save
           redirect_to(world)
         else

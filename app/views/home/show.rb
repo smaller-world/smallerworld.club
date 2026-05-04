@@ -74,7 +74,7 @@ class Views::Home::Show < Views::Base
         #   "Open dialog"
         # end
 
-        Components::Dialog(id: "test-dialog") do |dialog|
+        Components::Dialog() do |dialog|
           dialog.with_content do |content|
             content.header do |header|
               header.title { "Hello from Dialog" }
@@ -93,23 +93,31 @@ class Views::Home::Show < Views::Base
             end
           end
 
-          dialog.with_trigger_button do
+          dialog.with_trigger_button(class: "block") do
             "open dialog"
           end
         end
 
-        div(class: "flex flex-col gap-y-4") do
-          div do
-            h2(class: "text-2xl") { "your worlds" }
-            ul(class: "list-inside list-disc") do
-              @current_user.worlds.each do |world|
-                li do
-                  button_link_to(world.name, world, class: "h-6")
-                end
-              end
-            end
-          end
+        # div(class: "flex flex-col gap-y-4") do
+        #   div do
+        #     h2(class: "text-2xl") { "your worlds" }
+        #     ul(class: "list-inside list-disc") do
+        #       @current_user.worlds.each do |world|
+        #         li do
+        #           button_link_to(world.name, world, class: "h-6")
+        #         end
+        #       end
+        #     end
+        #   end
 
+        if (world = @current_user.world)
+          button_link_to(
+            "go to your world",
+            world_path(world),
+            variant: :default,
+            icon: "huge/earth",
+          )
+        else
           button_link_to(
             "create your world",
             new_world_path,
@@ -117,6 +125,7 @@ class Views::Home::Show < Views::Base
             icon: "huge/earth",
           )
         end
+        # end
       end
     end
   end

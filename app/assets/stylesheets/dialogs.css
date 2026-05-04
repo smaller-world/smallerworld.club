@@ -1,26 +1,12 @@
 @layer components {
   .dialog-overlay {
     @apply fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs;
-
-    &[data-enter] {
-      @apply animate-in fade-in-0;
-    }
-
-    &[data-leave] {
-      @apply animate-out fade-out-0;
-    }
+    @apply transition data-closed:opacity-0;
   }
 
   .dialog-content {
     @apply fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-md;
-
-    &[data-enter] {
-      @apply animate-in fade-in-0 zoom-in-95;
-    }
-
-    &[data-leave] {
-      @apply animate-out fade-out-0 zoom-out-95;
-    }
+    @apply transition data-closed:scale-95 data-closed:opacity-0;
   }
 
   .dialog-close {

@@ -73,11 +73,11 @@ module Authentication
   sig do
     params(
       user: User,
-      verification_request: PhoneNumberVerificationRequest,
+      phone_number_verification_request: PhoneNumberVerificationRequest,
     ).returns(Session)
   end
-  def start_new_session_for(user, verification_request:)
-    user.sessions.create!(verification_request:).tap do |session|
+  def start_new_session_for(user, phone_number_verification_request:)
+    user.sessions.create!(phone_number_verification_request:).tap do |session|
       Current.session = session
       cookies.signed.permanent[:session_id] = {
         value: session.id,

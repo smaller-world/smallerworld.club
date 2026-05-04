@@ -16,6 +16,8 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class PhoneNumberVerificationRequest < ApplicationRecord
+  include NormalizesPhoneNumber
+
   # == Configuration ==
 
   EXPIRATION_DURATION = 5.minutes
@@ -37,6 +39,10 @@ class PhoneNumberVerificationRequest < ApplicationRecord
   def verified_phone_number
     phone_number if verified?
   end
+
+  # == Normalizations ==
+
+  normalizes_phone_number :phone_number
 
   # == Validations ==
 
@@ -73,6 +79,8 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { returns(String) }
   def generate_registration_token
+    raise "Phone number not verified" unless verified?
+
     generate_token_for(:registration)
   end
 
@@ -115,12 +123,12 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { params(code: String).returns(T::Boolean) }
   def verify(code)
-    if verified? || expired?
+    if expired?
       errors.add(:verification_code, :invalid, message: "has expired")
       return false
     end
 
-    if code != verification_code
+    if verified? || code != verification_code
       errors.add(:verification_code, :invalid)
       return false
     end

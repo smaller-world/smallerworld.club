@@ -8,6 +8,15 @@
 module Components
   sig do
     params(
+      user: ::User,
+      options: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
+    ).void
+  end
+  def AccountForm(user:, **options, &block); end
+
+  sig do
+    params(
       variant: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
@@ -276,11 +285,14 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
+      default_country_code: ::String,
+      disabled: T::Boolean,
+      value: T.nilable(T.any(::Phonelib::Phone, ::String)),
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
     ).void
   end
-  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **options, &block); end
 
   sig do
     params(
@@ -366,6 +378,15 @@ module Components
   def WorldPostItems(posts:, &block); end
 
   class << self
+    sig do
+      params(
+        user: ::User,
+        options: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
+      ).void
+    end
+    def AccountForm(user:, **options, &block); end
+
     sig do
       params(
         variant: ::Symbol,
@@ -641,11 +662,14 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
+        default_country_code: ::String,
+        disabled: T::Boolean,
+        value: T.nilable(T.any(::Phonelib::Phone, ::String)),
         options: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
       ).void
     end
-    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **options, &block); end
 
     sig do
       params(
