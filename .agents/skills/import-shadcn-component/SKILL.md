@@ -1,73 +1,102 @@
 ---
 name: import-shadcn-component
-description: Convert a shadcn/ui React TSX component into a Rails Phlex `.rb` component + Tailwind `.css` file. Use when the user asks to import, convert, port, or add a shadcn component, or when referencing a TSX source from the Vite preset project. Triggers on requests like "import the badge component", "convert separator.tsx", "add the input component", etc.
+description: Import, convert, or update shadcn/ui components into Rails Phlex + Tailwind CSS. Use when asked to import, add, convert, port, sync, or update a shadcn component. Also use when updating components to prevent style drift after shadcn TSX changes.
 ---
 
 # Import Shadcn Component
 
-Convert a shadcn/ui TSX component from the Vite preset source into the Rails Phlex + Tailwind CSS architecture used in this project.
+Convert shadcn/ui TSX components into Rails Phlex `.rb` components + Tailwind `.css` files.
 
-## Source and Target Locations
+## Workflow
 
-- **TSX source**: Check `vendor/javascript/shadcn-vite-preset/src/components/ui/<name>.tsx` first. If not present, run `bunx shadcn@latest add <name> --path app/components/shadcn --overwrite` to import it into `app/components/shadcn/<name>.tsx`.
-- **Ruby target**: `app/components/<name>.rb`
-- **CSS target**: `app/assets/stylesheets/<name_plural>.css`
+1. **Pull from registry**: `mise x -- bunx shadcn@latest add <name>` → lands in `app/components/shadcn/<name>.tsx`
+2. **Read the TSX** and identify component type (simple, input-like, or JS-heavy)
+3. **Read `app/components/base.rb`** for current base class API
+4. **Read an existing component pair** (e.g. `button.rb` + `buttons.css`) to confirm patterns
+5. **Generate CSS** at `app/assets/stylesheets/<name_plural>.css`
+6. **Generate Ruby** at `app/components/<name>.rb`
+7. **Add CSS import** to `app/assets/stylesheets/application.css`
+8. **Verify** CSS selectors match Ruby classes and data attributes
 
-## Conversion Workflow
+## Update Workflow
 
-1. Read the TSX source file
-2. Read `app/components/base.rb` for the current base class API
-3. Read an existing component pair (e.g. `button.rb` + `buttons.css` or `card.rb` + `cards.css`) to confirm the current patterns in use
-4. Identify the component type (simple vs compound) and its variants
-5. Generate the CSS file — extract all Tailwind classes from TSX into `@layer components` rules
-6. Generate the Ruby file — create the Phlex component class
-7. Add `@import "./<name_plural>.css";` to `app/assets/stylesheets/application.css`
-8. Verify consistency between CSS selectors and Ruby data attributes
-9. **CSS fidelity check** — Re-read the TSX source and the generated CSS side-by-side. For each TSX function and `cva()` definition, verify that every Tailwind utility class appears in the CSS. See the detailed checklist below
+When syncing after shadcn TSX changes:
 
-For detailed conversion rules and examples, see [references/conversion-rules.md](references/conversion-rules.md).
+1. **Diff the TSX** against existing CSS
+2. **Update CSS** — sync added/removed/changed Tailwind classes
+3. **Update Ruby** if needed — new variants, sub-components, data attributes
+4. **Verify** selectors still match
 
 ## Component Types
 
-**Simple** (like Button): Single element, variants via data-attribute CSS selectors, only `view_template` needed.
+### Simple Components
 
-**Compound** (like Card, Field): Root element + sub-components. Root uses `view_template`; sub-components become instance methods.
+Examples: Button, Badge, Label, Separator, Card
 
-## Quick Reference
+Straightforward conversion — CSS closely mimics shadcn, Ruby is minimal.
 
-### CSS Pattern
+### Input-like Components
 
-All styles use flat `[data-slot="..."]` selectors. Variants use data-attribute selectors (`&[data-variant="..."]`), not BEM modifier classes.
+Examples: Textarea, FileInput, PhoneNumberInput
+
+Inherit from `Components::Input` to get `form:` and `field:` param handling for Rails form builder integration. See `textarea.rb` for the pattern.
+
+### JS-heavy Components
+
+Examples: Dialog, Combobox, DropdownMenu, Select
+
+These require careful research and may diverge from shadcn markup:
+
+1. **Read shadcn TSX** — understand visual intent and CSS classes
+2. **Look up shadcn docs** (web search) — understand intended behavior
+3. **Inspect BaseUI source** (`node_modules/@base-ui/react/...`) — understand what React primitives shadcn uses and what data attributes they expose (e.g., `data-open`, `data-closed`)
+4. **Read Tailwind Plus Elements docs** ([references/tailwind-plus-elements.md](references/tailwind-plus-elements.md)) — find equivalent element, understand its markup and data attributes
+5. **Reconcile differences** — Tailwind Plus Elements may use different data attributes than BaseUI; adapt CSS transitions accordingly
+6. **Brainstorm with user** — propose approach before implementing
+
+For JS-heavy components, the goal is to visually match shadcn while using Tailwind Plus Elements for interactivity. Markup may need to differ. Use Stimulus controllers to bridge feature gaps between Tailwind Plus Elements and BaseUI.
+
+## CSS Pattern
+
+Use **class selectors** (not `[data-slot]`) as primary selectors. Variants use data-attribute selectors.
 
 ```css
 @layer components {
-  /* Root element */
-  [data-slot="<name>"] {
-    @apply <root tailwind classes>;
+  .button {
+    @apply inline-flex items-center ...;
 
-    /* Variants via data attributes */
-    &[data-variant="default"] { @apply <classes>; }
-    &[data-variant="outline"] { @apply <classes>; }
-
-    /* Sizes via data attributes */
-    &[data-size="sm"] { @apply <classes>; }
-    &[data-size="default"] { @apply <classes>; }
+    &[data-variant="default"] { @apply bg-primary ...; }
+    &[data-variant="outline"] { @apply border-border ...; }
+    &[data-size="default"] { @apply h-9 ...; }
+    &[data-size="sm"] { @apply h-8 ...; }
   }
 
-  /* Sub-component slots (compound components) — flat, not nested */
-  [data-slot="<name>-<part>"] { @apply <classes>; }
+  /* Sub-component slots — flat, not nested */
+  .card-header { @apply grid auto-rows-min ...; }
+  .card-content { @apply px-6 ...; }
 }
 ```
 
-### Ruby Pattern
+### Key CSS Rules
 
-The `root_element` helper (from `Components::Base`) renders the root tag, merging caller-provided attributes via `mix`. It takes a default element tag and `**attributes`. There is no `root_class` or `root_component` helper — use `root_element`.
+- **Class selectors** (`.button`, `.input`) as primary selectors
+- **Data attributes for variants** (`&[data-variant="..."]`, `&[data-size="..."]`)
+- **`data-slot` is kept** for `has-[data-slot=...]:` selectors but not as primary selector
+- **Mimic shadcn CSS** as closely as possible for visual fidelity
+- **Adapt transitions** for Tailwind Plus Elements data attributes (`data-closed`, `data-enter`, `data-leave`) instead of BaseUI attributes when needed
+- CSS file name is **pluralized** (`button.rb` → `buttons.css`)
+
+## Ruby Pattern
+
+`Components::Base` provides:
+- `root_element(tag, **attributes, &content)` — renders root, merges caller overrides via `mix`
+- `mix(defaults, overrides)` — deep-merges attribute hashes
 
 ```ruby
 # typed: true
 # frozen_string_literal: true
 
-class Components::<Name> < Components::Base
+class Components::Button < Components::Base
   sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, size: :default, **attributes)
     super(**attributes)
@@ -77,143 +106,64 @@ class Components::<Name> < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    root_element(:div, **root_attributes, &content)
-  end
-
-  private
-
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def root_attributes
-    {
-      class: "group/<name>",
-      data: {
-        slot: "<name>",
-        variant: @variant,
-        size: @size,
-      },
-    }
+    root_element(
+      :button,
+      type: "button",
+      class: "button group/button",
+      data: { slot: "button", variant: @variant, size: @size },
+      &content
+    )
   end
 end
 ```
 
-## Key Rules
+### Compound Sub-components
 
-- **The TSX file is the source of truth for Tailwind classes** — Every utility class in the TSX (`cn()`, `cva()` base, variant entries) must appear in the generated CSS. Do not assume classes are "redundant" with a parent or sibling component's styles. Even if `items-center` already exists on Button's CSS, include it in the descendant override CSS if the TSX specifies it. The only exception is `group/<name>` classes, which go in Ruby.
-- **All Tailwind utilities go in CSS**, never in Ruby (except `group/<name>` classes needed for Tailwind group selectors)
-- **Variants use data-attribute selectors** — if TSX sets `data-variant={variant}`, CSS uses `&[data-variant="value"]`. If TSX sets `data-orientation`, CSS uses `&[data-orientation="value"]`. Match whatever data attributes the TSX uses.
-- TSX `cva()` base classes → CSS `@apply` on the `[data-slot]` root selector
-- TSX `cva()` variant entries → CSS `&[data-<prop>="<value>"]` selectors (not BEM classes)
+Use a private `slot` helper. TSX sub-functions become public methods with prefix stripped (`CardHeader` → `header`).
+
+```ruby
+def header(**attributes, &content)
+  slot("card-header", **attributes, &content)
+end
+
+private
+
+def slot(name, element: :div, **attributes, &content)
+  send(element, **mix({ class: name, data: { slot: name } }, attributes), &content)
+end
+```
+
+### Custom HTML Elements
+
+For Tailwind Plus Elements, register them with Phlex:
+
+```ruby
+register_element :el_dialog           # renders <el-dialog>
+register_element :el_dialog_backdrop  # renders <el-dialog-backdrop>
+register_element :el_autocomplete     # renders <el-autocomplete>
+```
+
+### Key Ruby Rules
+
+- **`class:` contains the CSS class** (`.button`) plus `group/<name>` for Tailwind group selectors
+- **`data: { slot: }` is kept** for consistency with shadcn and `has-[data-slot=...]:` selectors
 - TSX `defaultVariants` → Ruby `initialize` default param values
-- TSX `data-slot` attributes are preserved exactly
-- TSX `asChild`/`Slot.Root` patterns are dropped (not needed in Phlex)
-- TSX `cn(base, className)` → Ruby passes attributes through `root_element`, which merges with caller overrides via `mix`
-- CSS file name is pluralized (`button.rb` → `buttons.css`, `card.rb` → `cards.css`)
+- TSX `asChild`/`Slot.Root` → dropped (not needed in Phlex)
+- Use Sorbet `sig` annotations
 
-## Descendant Override Pattern
+## Translation Reference
 
-When a component wraps an existing component (e.g. InputGroup containing Input, or InputGroupButton containing Button), the wrapper's CSS needs to override the child's standalone styles. Use **descendant selectors in the wrapper's CSS file**:
+| TSX Concept | CSS | Ruby |
+|---|---|---|
+| `cva()` base | `.class-name { @apply ...; }` | `class: "class-name"` |
+| `cva()` variant | `&[data-variant="value"]` | `data: { variant: @variant }` |
+| `defaultVariants` | — | `initialize` defaults |
+| `data-slot="X"` | `.X` (primary), `[data-slot="X"]` (for `has-`) | `class: "X", data: { slot: "X" }` |
+| Sub-function `CardHeader` | `.card-header` | `def header(...)` |
+| `asChild` / `Slot.Root` | — | dropped |
 
-```css
-/* In input_groups.css — overrides Input's standalone styles when inside InputGroup */
-[data-slot="input-group"] > [data-slot="input"] {
-  @apply flex-1 rounded-none border-0 bg-transparent shadow-none ...;
-}
+## Resources
 
-/* Overrides Button's styles when inside an addon */
-[data-slot="input-group-addon"] > [data-slot="button"] {
-  @apply flex items-center gap-2 text-sm shadow-none;
-}
-```
-
-This is the correct pattern when:
-- The TSX wraps an existing component (e.g. `<Input>`, `<Button>`) and passes override `className`
-- The child component keeps its own `data-slot` (no collision)
-- The override classes come from the TSX source — include all of them, even if they duplicate the child's own styles
-
-The "flat selectors" guideline applies to sub-components within the same component (e.g. `[data-slot="card-header"]`), not to overriding external components' styles in context.
-
-## Non-div Sub-components
-
-Not all sub-components render `<div>`. Match the HTML element from the TSX. Use the native Phlex element method with `mix` to merge slot data:
-
-| TSX Element | Ruby Pattern |
-|---|---|
-| `<div>` | `div(**mix({ data: { slot: "..." } }, attributes), &block)` |
-| `<p>` | `p(**mix({ data: { slot: "..." } }, attributes), &block)` |
-| `<h3>` | `h3(**mix({ data: { slot: "..." } }, attributes), &block)` |
-| `<fieldset>` | `send(tag, **mix({ data: { slot: "..." } }, attributes), &block)` with configurable tag |
-| Another component (e.g. `<Label>`) | `Components::Label(data: { slot: "..." })` |
-
-## Composing with Other Components
-
-When a TSX sub-component wraps another component (e.g. `FieldLabel` renders `<Label>`), use Phlex kit syntax: `Components::X(...)`. Pass the `data: { slot: ... }` and any class overrides through to the inner component.
-
-**Gotcha — `data-slot` merging**: When you pass `data: { slot: "foo" }` to a component that already sets its own `data-slot`, the `mix` helper concatenates both into `data-slot="bar foo"`. This breaks CSS `[data-slot="foo"]` exact-match selectors. To avoid this, wrap the component in a container element with the outer slot instead:
-
-```ruby
-# WRONG — produces data-slot="button dialog-close"
-Components::Button(data: { slot: "dialog-close" }) { "Close" }
-
-# RIGHT — separate elements, separate slots
-div(data: { slot: "dialog-close" }) do
-  Components::Button() { "Close" }
-end
-```
-
-## Custom HTML Elements
-
-Components that use web components (e.g. `<el-dialog>`, `<trix-editor>`) must register them with Phlex. Use `register_element` — underscores are converted to dashes automatically:
-
-```ruby
-class Components::Dialog < Components::Base
-  register_element :el_dialog          # renders <el-dialog>
-  register_element :el_dialog_backdrop # renders <el-dialog-backdrop>
-  register_element :el_dialog_panel    # renders <el-dialog-panel>
-end
-```
-
-Phlex's `tag()` method requires a Symbol — calling `tag("el-dialog")` with a String will raise `Phlex::ArgumentError`.
-
-Note: Sorbet won't recognize methods defined by `register_element` — this is expected; ignore typing errors on those.
-
-## Native Element CSS Conflicts
-
-When styling native semantic elements like `<dialog>`, `<details>`, or `<summary>`, `@layer components` has **lower specificity** than browser UA stylesheets. This means your `@apply` rules may be silently overridden.
-
-For example, a `<dialog>` element is hidden by default via `display: none` in the UA stylesheet. If your CSS sets `@apply flex`, the `@layer components` rule loses to the UA rule. Fix with state-scoped selectors:
-
-```css
-[data-slot="dialog-content"] {
-  @apply items-center justify-center; /* layout props ready */
-
-  &[open] {
-    @apply flex; /* only override display when dialog is actually open */
-  }
-}
-```
-
-## Translating React Logic
-
-TSX components may contain React-specific patterns (`useMemo`, conditional `null` returns, state hooks, error deduplication). Simplify these to Ruby idioms:
-
-- Conditional rendering → guard clauses (`return if ...`)
-- `useMemo` with derived values → compute inline in the method
-- Array of error objects → accept simpler Ruby types (e.g. splat strings)
-- `children` prop fallback → block parameter with `yield` (not `yield_content` — that method doesn't exist in this Phlex version)
-
-## CSS Fidelity Check
-
-After generating both files, re-read the TSX source and the CSS file side-by-side and verify completeness:
-
-1. **For each TSX function**: extract the full class string from `cn(...)` or `className={...}`. Every utility must appear in the corresponding `[data-slot]` selector's `@apply`.
-
-2. **For each `cva()` definition**:
-   - **Base string** → must appear in the selector's root `@apply`
-   - **Each variant entry** → must appear in the corresponding `&[data-<prop>="<value>"]` selector's `@apply`
-   - **Empty variant entries** (e.g. `sm: ""`) → no CSS rule needed, but verify the base covers it
-
-3. **For override classes** (classes passed to child components via `className` in the TSX): must appear in the descendant override selector. Include all classes even if they seem redundant with the child component's own styles.
-
-4. **Allowed omissions**: Only `group/<name>` classes (which go in Ruby's `class:` attribute) may be absent from CSS.
-
-If any classes are missing, add them before finishing.
+- **Tailwind Plus Elements**: [references/tailwind-plus-elements.md](references/tailwind-plus-elements.md)
+- **BaseUI source**: `node_modules/@base-ui/react/`
+- **Existing components**: `app/components/*.rb` + `app/assets/stylesheets/*.css`
