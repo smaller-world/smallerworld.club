@@ -63,19 +63,19 @@ class Components::Field < Components::Base
     )
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def label(**attributes, &content)
-    attributes = mix(
+  sig { params(options: T.untyped, content: T.nilable(T.proc.void)).void }
+  def label(**options, &content)
+    options = mix(
       {
         class: "field-label group/field-label peer/field-label",
         data: {
           slot: "field-label",
         },
       },
-      **attributes,
+      **options,
     )
     if @form && @field
-      html = @form.label(@field, **attributes) do
+      html = @form.label(@field, **options) do
         if block_given?
           yield
         elsif (object_class = @form.object&.class) &&
@@ -87,7 +87,7 @@ class Components::Field < Components::Base
       end
       raw(html) # rubocop:disable Rails/OutputSafety
     else
-      super(**attributes, &content)
+      super(**options, &content)
     end
   end
 
@@ -251,6 +251,11 @@ class Components::Field < Components::Base
   def phone_number_input(**options)
     Components::PhoneNumberInput(form: @form, field: @field, **options)
   end
+
+  # sig { params(attributes: T.untyped).void }
+  # def otp_input(**attributes)
+  #   Components::OtpInput(form: @form, field: @field, **attributes)
+  # end
 
   private
 

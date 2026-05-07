@@ -56,6 +56,55 @@ These require careful research and may diverge from shadcn markup:
 
 For JS-heavy components, the goal is to visually match shadcn while using Tailwind Plus Elements for interactivity. Markup may need to differ. Use Stimulus controllers to bridge feature gaps between Tailwind Plus Elements and BaseUI.
 
+## Stimulus Controllers
+
+When a component needs custom JavaScript (no Tailwind Plus Elements equivalent), create a Stimulus controller at `app/javascript/controllers/<name>_controller.ts`.
+
+**Before writing controller code**: Use context7 or web search to look up current Stimulus documentation for the patterns you need (dispatching events, targets, values, etc.). Stimulus APIs evolve and best practices change.
+
+Key patterns:
+
+```typescript
+import { Controller } from "@hotwired/stimulus";
+
+export default class OtpInputController extends Controller {
+  static targets = ["input", "slot"];
+  static values = {
+    maxLength: { type: Number, default: 6 },
+  };
+
+  declare readonly inputTarget: HTMLInputElement;
+  declare maxLengthValue: number;
+
+  // Use this.dispatch() for custom events — auto-prefixes with controller name
+  handleComplete(): void {
+    this.dispatch("complete", {
+      detail: { value: this.inputTarget.value },
+    });
+    // Dispatches: "otp-input:complete"
+  }
+}
+```
+
+### Stimulus Rules
+
+- **Use `this.dispatch()`** for custom events (not `new CustomEvent()`) — auto-prefixes event name
+- **Use `??` not `||`** for nullish coalescing (ESLint rule)
+- **Declare targets and values** with TypeScript types
+- **Controller file name** determines Stimulus identifier: `otp_input_controller.ts` → `otp-input`
+
+## Icons
+
+Use the `Icon` helper from `PhlexIcons`. Format: `"<library>/<icon-name>"`.
+
+```ruby
+Icon("huge/minus-sign", stroke_width: 2)
+Icon("huge/chevron-down")
+Icon("lucide/check")
+```
+
+Common libraries: `huge` (Hugeicons), `lucide`.
+
 ## CSS Pattern
 
 Use **class selectors** (not `[data-slot]`) as primary selectors. Variants use data-attribute selectors.

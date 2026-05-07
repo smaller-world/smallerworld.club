@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Components::Input < Components::Base
-  include Phlex::Rails::Helpers::TextField
+  include Phlex::Rails::Helpers::TextFieldTag
 
   # == Initialization ==
 
@@ -10,39 +10,60 @@ class Components::Input < Components::Base
     params(
       form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
-  def initialize(form: nil, field: nil, **options)
+  def initialize(form: nil, field: nil, **attributes)
     @form = form
     @field = field
-    @options = options
-    super()
+    super(**attributes)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    options = mix({ class: "input", data: { slot: "input" }, type: nil }, @options)
+    attributes = mix({ class: "input", data: { slot: "input" } }, @attributes)
     if @form && @field
-      @form.text_field(@field, **with_invalid_aria(options))
+      @form.text_field(@field, **normalize_attributes(
+        mix(
+          { type: nil },
+          with_invalid_aria(attributes),
+        ),
+      ))
     else
-      input(type: :text, **options)
+      input(**attributes)
     end
   end
 
   # == Helpers ==
 
   sig do
-    params(options: T::Hash[Symbol, T.untyped])
+    params(attributes: T::Hash[Symbol, T.untyped])
       .returns(T::Hash[Symbol, T.untyped])
   end
-  def with_invalid_aria(options)
+  def with_invalid_aria(attributes)
     if field_has_errors?
-      mix(options, aria: { invalid: true })
+      mix({ aria: { invalid: true } }, attributes)
     else
-      options
+      attributes
+    end
+  end
+
+  sig do
+    params(attributes: T::Hash[Symbol, T.untyped])
+      .returns(T::Hash[Symbol, T.untyped])
+  end
+  def normalize_attributes(attributes)
+    attributes.transform_values do |value|
+      case value
+      when Hash
+        normalize_attributes(value)
+      when Array
+        token_list(value)
+      else
+        value
+      end
     end
   end
 

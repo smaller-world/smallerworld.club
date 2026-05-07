@@ -283,6 +283,19 @@ module Components
 
   sig do
     params(
+      max_length: ::Integer,
+      pattern: T.any(::String, ::Symbol),
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      input: T::Hash[::Symbol, T.untyped],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::OtpInput).void)
+    ).void
+  end
+  def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       default_country_code: ::String,
@@ -657,6 +670,19 @@ module Components
       ).void
     end
     def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+
+    sig do
+      params(
+        max_length: ::Integer,
+        pattern: T.any(::String, ::Symbol),
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        input: T::Hash[::Symbol, T.untyped],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::OtpInput).void)
+      ).void
+    end
+    def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

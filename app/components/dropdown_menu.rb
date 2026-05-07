@@ -2,11 +2,11 @@
 # frozen_string_literal: true
 
 class Components::DropdownMenu < Components::Base
+  register_element :el_dropdown
+
   # == Configuration ==
 
-  ITEM_VARIANTS = [ :default, :destructive ]
-
-  register_element :el_dropdown
+  ITEM_VARIANTS = [ :default, :destructive ].freeze
 
   # == Initialization ==
 

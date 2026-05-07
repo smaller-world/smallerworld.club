@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class Components::PhoneNumberInput < Components::Input
-  include Phlex::Rails::Helpers::HiddenFieldTag
-
   # == Initialization ==
 
   sig do
@@ -13,7 +11,7 @@ class Components::PhoneNumberInput < Components::Input
       default_country_code: String,
       disabled: T::Boolean,
       value: T.nilable(T.any(String, Phonelib::Phone)),
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
   def initialize(
@@ -22,12 +20,12 @@ class Components::PhoneNumberInput < Components::Input
     default_country_code: "CA",
     disabled: false,
     value: nil,
-    **options
+    **attributes
   )
     @default_country_code = default_country_code
     @disabled = disabled
     @value = value
-    super(form:, field:, **options)
+    super(form:, field:, **attributes)
   end
 
   # == Component ==
@@ -38,7 +36,6 @@ class Components::PhoneNumberInput < Components::Input
       Components::Combobox(
         input: {
           type: "tel",
-          autocomplete: "off",
           value: country_value(country),
           required: true,
           class: "field-sizing-content px-2",
@@ -103,20 +100,20 @@ class Components::PhoneNumberInput < Components::Input
           {
             data: {
               phone_number_input_target: "nationalNumberInput",
-              action: token_list(
+              action: [
                 "phone-number-input#normalizeNationalNumber",
                 "change->phone-number-input#updateHiddenInput",
-              ),
+              ],
             },
           },
-          @options,
+          @attributes,
         ),
       )
 
       if @form && @field
         @form.hidden_field(@field, **hidden_field_options)
       else
-        hidden_field_tag(**hidden_field_options)
+        input(type: :hidden, **hidden_field_options)
       end
     end
   end

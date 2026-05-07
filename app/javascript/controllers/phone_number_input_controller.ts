@@ -141,8 +141,8 @@ export default class PhoneNumberInputController extends Controller {
   #updateCountryFlagAddon(countryCode: string): void {
     const option = this.#countryCodeOptions.get(countryCode);
     if (option) {
-      const flagElement = option.flagTemplate.content.cloneNode(true);
-      this.countryFlagAddonTarget.replaceChildren(flagElement);
+      const flag = option.flagTemplate.content.cloneNode(true);
+      this.countryFlagAddonTarget.replaceChildren(flag);
     }
   }
 

@@ -23,8 +23,8 @@ export default class ClearableFileInputController extends Controller<HTMLElement
   // == Actions ==
 
   clearAttachedFile(): void {
-    const templateInput = this.inputTemplateTarget.content.cloneNode(true);
-    this.element.replaceChildren(templateInput);
+    const input = this.inputTemplateTarget.content.cloneNode(true);
+    this.element.replaceChildren(input);
   }
 
   // == Helpers ==

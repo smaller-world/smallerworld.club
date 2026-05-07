@@ -2,25 +2,23 @@
 # frozen_string_literal: true
 
 class Components::Textarea < Components::Input
-  include Phlex::Rails::Helpers::TextArea
-
   # == Component ==
 
   sig { override.void }
   def view_template
-    options = mix(
+    attributes = mix(
       {
         class: "textarea",
         data: {
           slot: "textarea",
         },
       },
-      @options,
+      @attributes,
     )
     if @form && @field
-      @form.textarea(@field, **with_invalid_aria(options))
+      @form.textarea(@field, **with_invalid_aria(attributes))
     else
-      textarea(**options)
+      textarea(**attributes)
     end
   end
 end

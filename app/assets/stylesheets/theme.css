@@ -135,6 +135,20 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --radius-world-icon: calc(1 / 4.5 * 100%);
+
+  --animate-caret-blink: caret-blink 1s ease-out infinite;
+
+  @keyframes caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {

@@ -26,6 +26,7 @@
 @import "./forms.css";
 @import "./comboboxes.css";
 @import "./phone_number_inputs.css";
+@import "./otp_inputs.css";
 
 @import "./layouts.css";
 @import "./sign_in_with_apple.css";

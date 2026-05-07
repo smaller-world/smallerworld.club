@@ -31,7 +31,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
     form_with(
       model:,
       method: :post,
-      class: "flex flex-col gap-2 [&_[data-slot=field]]:gap-1",
+      class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
       data: {
         turbo_action: "replace",
       },
@@ -53,6 +53,8 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
             placeholder: "verification code",
             inputmode: "numeric",
             autocomplete: "one-time-code",
+            maxlength: 6,
+            pattern: "[0-9]{6}",
             value: Rails.env.development? ? @verification_request.verification_code : nil,
           )
           if Rails.env.development?
