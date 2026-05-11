@@ -3,6 +3,14 @@
 @layer components {
   .lexxy-content {
     @apply text-base md:text-sm;
+
+    p:has(br) {
+      @apply leading-2;
+    }
+
+    hr {
+      @apply w-full text-ring;
+    }
   }
 
   lexxy-editor {
@@ -16,10 +24,17 @@
           input:focus-visible,
           button:focus-visible,
           summary:focus-visible,
-          details[open]
+          details[open],
+          .node--selected
         )
       ) {
       @apply border-ring ring-3 ring-ring/50;
+    }
+
+    .lexxy-editor__content {
+      &::before {
+        @apply text-muted-foreground;
+      }
     }
 
     /*&:has(.lexxy-editor__content:focus-visible) {
@@ -33,6 +48,10 @@
       @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
     }
 
+    .node--selected {
+      @apply rounded-sm border-ring ring-3 ring-ring/50 transition-shadow;
+    }
+
     :where(lexxy-toolbar) {
       .lexxy-editor__toolbar-button {
         @apply md:block-(--lexxy-toolbar-button-desktop-size);
@@ -40,7 +59,7 @@
 
       .lexxy-editor__toolbar-dropdown summary ~ * {
         @apply border border-ring ring-3 ring-ring/50;
-        @apply rounded-tr-md;
+        @apply rounded-md;
 
         /*inset-block-start: calc(100% + var(--spacing));*/
       }
@@ -52,9 +71,9 @@
       }
     }
 
-    .lexxy-editor__content {
-      &::before {
-        @apply text-muted-foreground;
+    :where(.lexxy-floating-controls) {
+      .lexxy-floating-controls__group {
+        @apply bg-popover p-1 shadow-md ring-1 ring-foreground/10 duration-100 hover:bg-destructive/20;
       }
     }
   }

@@ -37,8 +37,21 @@ class Components::DropdownMenuContent < Components::Base
 
   sig { override.params(content: T.proc.bind(T.self_type).void).void }
   def view_template(&content)
-    el_menu do
-    end
+    el_menu(
+      **mix(
+        {
+          class: "dropdown-menu-content",
+          anchor: anchor_property,
+          anchor_strategy: @anchor_strategy,
+          popover: @popover,
+          data: {
+            slot: "dropdown-menu-content",
+          },
+        },
+        @attributes,
+      ),
+      &content
+    )
   end
 
   # == Interface ==

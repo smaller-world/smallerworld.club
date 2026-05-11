@@ -8,16 +8,12 @@ class Components::Header < Components::Base
   def view_template(&content)
     root_element(:header, class: "flex justify-center py-2") do
       if authenticated?
-        button_link_to(root_path, **logo_button_options) do
-          logo_button_content
-        end
-      else
-        Components::DropdownMenu(anchor: :bottom) do |menu|
-          menu.trigger_button(**logo_button_options) do
+        Components::DropdownMenu() do |menu|
+          menu.with_trigger_button(**logo_button_options) do
             logo_button_content
           end
 
-          menu.content(anchor: :top) do |content|
+          menu.with_content(anchor: :bottom, class: "w-56") do |content|
             content.group do
               content.label { "[some group]" }
               content.link_item_to(:home) do
@@ -34,6 +30,10 @@ class Components::Header < Components::Base
               end
             end
           end
+        end
+      else
+        button_link_to(root_path, **logo_button_options) do
+          logo_button_content
         end
       end
     end

@@ -38,7 +38,7 @@ class Components::DropdownMenu < Components::Base
   end
 
   # == Interface ==
-  #
+
   sig do
     params(
       variant: Symbol,
@@ -47,7 +47,7 @@ class Components::DropdownMenu < Components::Base
       content: T.proc.params(button: Components::Button).void,
     ).void
   end
-  def trigger_button(variant: :default, size: :default, **attributes, &content)
+  def with_trigger_button(variant: :default, size: :default, **attributes, &content)
     @trigger_button_block = ->() {
       render Components::Button.new(variant:, size:, **attributes, &content)
     }
@@ -63,7 +63,7 @@ class Components::DropdownMenu < Components::Base
       content: T.proc.params(content: Components::DropdownMenuContent).void,
     ).void
   end
-  def content(
+  def with_content(
     anchor:,
     anchor_strategy: nil,
     popover: true,

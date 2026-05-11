@@ -18,20 +18,15 @@ class Components::PostCard < Components::Base
 
   sig { override.void }
   def view_template
-    attributes = mix(
-      {
-        id: dom_id(@post),
-        class: "gap-2",
-      },
-      @attributes,
-    )
-    Components::Card(**attributes) do |card|
+    Components::Card(
+      **mix({ id: dom_id(@post), class: "gap-0" }, @attributes),
+    ) do |card|
       card.header do
         card.description(class: "text-xs") do
           local_time(@post.created_at, class: "lowercase")
         end
         if (title = @post.title)
-          card.title(class: "text-xl font-semibold font-heading") do
+          card.title(class: "text-lg font-semibold font-heading") do
             title
           end
           card.action do
@@ -43,10 +38,8 @@ class Components::PostCard < Components::Base
           end
         end
       end
-      card.content do
-        p(class: "whitespace-pre-line") do
-          @post.body.to_s
-        end
+      card.content(class: "text-sm") do
+        @post.body.to_s
       end
     end
   end
@@ -58,7 +51,7 @@ class Components::PostCard < Components::Base
   sig { params(attributes: T.untyped).void }
   def dropdown_menu(**attributes)
     Components::DropdownMenu(anchor: [ :bottom, :end ]) do |menu|
-      menu.trigger_button(variant: :secondary, size: :xs, **attributes) do
+      menu.with_trigger_button(variant: :secondary, size: :xs, **attributes) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")
@@ -67,7 +60,7 @@ class Components::PostCard < Components::Base
         span { "edit" }
       end
 
-      menu.content(anchor: [ :top, :end ]) do |content|
+      menu.with_content(anchor: [ :bottom, :end ]) do |content|
         content.link_item_to([ :edit, @post ]) do
           Icon("huge/pencil-edit-01")
           span { "edit" }

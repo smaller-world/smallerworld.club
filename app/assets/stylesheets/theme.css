@@ -47,6 +47,9 @@
   --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
   --lexxy-focus-ring-size: 0px;
   --lexxy-color-ink: var(--color-olive-950);
+  --lexxy-color-red: var(--destructive);
+  --lexxy-radius: var(--radius-md);
+  --lexxy-content-margin: var(--spacing);
   /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
 
   @media (prefers-color-scheme: dark) {
