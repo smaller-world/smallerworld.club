@@ -73,7 +73,11 @@
 
     :where(.lexxy-floating-controls) {
       .lexxy-floating-controls__group {
-        @apply bg-popover p-1 shadow-md ring-1 ring-foreground/10 duration-100 hover:bg-destructive/20;
+        @apply bg-popover p-1 shadow-md ring-1 ring-foreground/10 duration-100 outline-none;
+      }
+
+      .lexxy-node-delete {
+        @apply bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40;
       }
     }
   }
