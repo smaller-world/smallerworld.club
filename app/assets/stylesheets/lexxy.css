@@ -55,13 +55,27 @@
     :where(lexxy-toolbar) {
       .lexxy-editor__toolbar-button {
         @apply md:block-(--lexxy-toolbar-button-desktop-size);
+
+        &::after {
+          @apply bg-border;
+        }
       }
 
-      .lexxy-editor__toolbar-dropdown summary ~ * {
+      .lexxy-editor__toolbar-dropdown > button > svg path {
+        @apply dark:fill-foreground;
+      }
+
+      .lexxy-editor__toolbar-dropdown-list {
         @apply border border-ring ring-3 ring-ring/50;
         @apply rounded-md;
 
-        /*inset-block-start: calc(100% + var(--spacing));*/
+        span {
+          @apply lowercase;
+        }
+      }
+
+      .lexxy-editor__toolbar-separator {
+        @apply bg-border;
       }
 
       button[name="table"],

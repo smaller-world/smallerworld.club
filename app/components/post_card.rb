@@ -19,7 +19,10 @@ class Components::PostCard < Components::Base
   sig { override.void }
   def view_template
     Components::Card(
-      **mix({ id: dom_id(@post), class: "gap-0" }, @attributes),
+      **mix(
+        { id: dom_id(@post), class: "gap-0 shadow-sm" },
+        @attributes,
+      ),
     ) do |card|
       card.header do
         card.description(class: "text-xs") do

@@ -34,7 +34,7 @@ module Smallerworld
     config.x.site.tagline = "share your inner world with close friends"
     config.x.site.description = "share your inner world with close friends"
     # config.x.instagram_url = "https://instagram.com/smallerworld"
-    config.x.appleid.signin_scope = "email name"
+    # config.x.appleid.signin_scope = "email name"
 
     # == Rails Configuration ==
 

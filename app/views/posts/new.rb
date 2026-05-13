@@ -19,7 +19,7 @@ class Views::Posts::New < Views::Base
       layout.page_container(class: "max-w-lg space-y-4") do
         button_back_to(@world.name, @world)
 
-        Components::Card() do |card|
+        Components::Card(class: "overflow-visible") do |card|
           card.header(class: "text-center") do
             card.title(element: :h1, class: "text-xl") do
               "new post"
