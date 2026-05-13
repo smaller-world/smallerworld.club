@@ -53,6 +53,9 @@ module Smallerworld
 
     # Disable HTTP basic auth for the jobs dashboard
     config.mission_control.jobs.http_basic_auth_enabled = false
+
+    # Set a PID file
+    config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")
   end
 
   sig { returns(Smallerworld::Application) }
