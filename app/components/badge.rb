@@ -22,11 +22,12 @@ class Components::Badge < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    span(
+    root_element(
+      :span,
       class: "badge group/badge",
       data: {
         slot: "badge",
-        variant: @variant,
+        variant: @variant.to_s,
       },
       &content
     )

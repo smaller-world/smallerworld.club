@@ -25,9 +25,6 @@ module GeneratedPathHelpersModule
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_world_key_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -59,9 +56,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_session_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_path(*args); end

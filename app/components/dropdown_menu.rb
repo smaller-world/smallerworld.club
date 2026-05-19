@@ -12,7 +12,7 @@ class Components::DropdownMenu < Components::Base
 
   sig { params(attributes: T.untyped).void }
   def initialize(**attributes)
-    @trigger_button_block = T.let(nil, T.nilable(T.proc.void))
+    @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
     super(**attributes)
   end
@@ -22,7 +22,7 @@ class Components::DropdownMenu < Components::Base
   sig { override.params(content: T.proc.bind(T.self_type).void).void }
   def view_template(&content)
     vanish(&content)
-    trigger_button_block = @trigger_button_block or raise "Missing trigger button"
+    trigger_block = @trigger_block or raise "Missing trigger"
     content_block = @content_block or raise "Missing content"
 
     root_element(
@@ -32,7 +32,7 @@ class Components::DropdownMenu < Components::Base
         slot: "dropdown-menu",
       },
     ) do
-      trigger_button_block.call
+      trigger_block.call
       content_block.call
     end
   end
@@ -48,8 +48,21 @@ class Components::DropdownMenu < Components::Base
     ).void
   end
   def with_trigger_button(variant: :default, size: :default, **attributes, &content)
-    @trigger_button_block = ->() {
+    @trigger_block = ->() {
       render Components::Button.new(variant:, size:, **attributes, &content)
+    }
+  end
+
+  sig do
+    params(
+      variant: Symbol,
+      attributes: T.untyped,
+      content: T.proc.params(button: Components::Button).void,
+    ).void
+  end
+  def with_trigger_badge(variant: :default, **attributes, &content)
+    @trigger_block = ->() {
+      render Components::Badge.new(element: :button, variant:, **attributes, &content)
     }
   end
 

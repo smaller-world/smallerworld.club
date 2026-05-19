@@ -4,10 +4,10 @@
 class Views::WorldKeys::Receive < Views::Base
   # == Initialization ==
 
-  sig { params(world_key: WorldKey).void }
-  def initialize(world_key:)
-    @world_key = world_key
-    @world = T.let(world_key.world!, World)
+  sig { params(key: WorldKey).void }
+  def initialize(key:)
+    @key = key
+    @world = T.let(key.world!, World)
     super()
   end
 
@@ -27,7 +27,7 @@ class Views::WorldKeys::Receive < Views::Base
             end
           end
           card.content do
-            Components::AcceptWorldKeyForm(world_key: @world_key)
+            Components::AcceptWorldKeyForm(key: @key)
           end
         end
       end

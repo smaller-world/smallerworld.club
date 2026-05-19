@@ -76,21 +76,23 @@ class Views::Home::Show < Views::Base
             h2 { "worlds you can visit:" }
             Components::ItemGroup() do
               worlds.find_each do |world|
-                link_to(world) do
-                  Components::Item(variant: :muted, class: "hover:border-border") do |item|
-                    item.media do
-                      image_tag(
-                        world.page_icon_variant,
-                        class: "size-16 rounded-world-icon",
-                      )
+                Components::Item(
+                  element: :a,
+                  href: url_for(world),
+                  variant: :muted,
+                ) do |item|
+                  item.media do
+                    image_tag(
+                      world.page_icon_variant,
+                      class: "size-16 rounded-world-icon",
+                    )
+                  end
+                  item.content(class: "gap-0") do
+                    item.title do
+                      world.name
                     end
-                    item.content(class: "gap-0") do
-                      item.title do
-                        world.name
-                      end
-                      item.description do
-                        world.friendly_id
-                      end
+                    item.description do
+                      world.friendly_id
                     end
                   end
                 end

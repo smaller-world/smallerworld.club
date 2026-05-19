@@ -8,12 +8,12 @@
 module Components
   sig do
     params(
-      world_key: ::WorldKey,
+      key: ::WorldKey,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
     ).void
   end
-  def AcceptWorldKeyForm(world_key:, **attributes, &block); end
+  def AcceptWorldKeyForm(key:, **attributes, &block); end
 
   sig do
     params(
@@ -89,6 +89,15 @@ module Components
 
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
   def DropdownMenu(**attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Empty).void)
+    ).void
+  end
+  def Empty(element: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -365,12 +374,12 @@ module Components
   class << self
     sig do
       params(
-        world_key: ::WorldKey,
+        key: ::WorldKey,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
       ).void
     end
-    def AcceptWorldKeyForm(world_key:, **attributes, &block); end
+    def AcceptWorldKeyForm(key:, **attributes, &block); end
 
     sig do
       params(
@@ -451,6 +460,15 @@ module Components
       ).void
     end
     def DropdownMenu(**attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Empty).void)
+      ).void
+    end
+    def Empty(element: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

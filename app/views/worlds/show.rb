@@ -26,18 +26,28 @@ class Views::Worlds::Show < Views::Base
       layout.page_container(class: "max-w-lg space-y-8") do
         section(class: "space-y-4") do
           div(class: "flex justify-between") do
-            if current_user == @world.owner
-              button_back_to(:home)
-            else
-              div
-            end
+            button_back_to(:home)
 
-            button_link_to(
-              "edit",
-              [ :edit, @world ],
-              icon: "huge/pencil-edit-01",
-              variant: :secondary,
-            )
+            if allowed_to?(:manage?, @world)
+              button_link_to(
+                "edit",
+                [ :edit, @world ],
+                icon: "huge/pencil-edit-01",
+                variant: :secondary,
+              )
+            elsif (user = current_user) &&
+                (keys = @world.keys.where(recipient: user).presence)
+              div(class: "flex gap-1 justify-center self-center") do
+                keys.each do |key|
+                  Components::Badge(variant: :ghost, class: "h-6 [&>svg]:size-4") do
+                    Icon(
+                      "huge/key-02",
+                      style: "color: var(--world-key-color-#{key.color})",
+                    )
+                  end
+                end
+              end
+            end
           end
 
           Components::Card() do |card|
@@ -51,24 +61,34 @@ class Views::Worlds::Show < Views::Base
               "welcome to my lovely world..."
               # Components::WorldForm(world: @world)
             end
-            card.footer(class: "flex flex-col items-center") do
-              button_link_to(
-                "invite a friend to your world",
-                [ :share, @world, :key ],
-                variant: :secondary,
-                icon: "huge/user-add-01",
-              )
+            if allowed_to?(:manage?, @world)
+              card.footer(class: "flex gap-2 justify-center") do
+                button_link_to(
+                  "your friends",
+                  [ @world, :keys ],
+                  variant: :secondary,
+                  icon: "huge/user-group",
+                )
+                button_link_to(
+                  "invite a friend to your world",
+                  [ :share, @world, :key ],
+                  variant: :secondary,
+                  icon: "huge/user-add-01",
+                )
+              end
             end
           end
 
-          button_link_to(
-            "new post",
-            [ :new, @world, :post ],
-            variant: :default,
-            size: :lg,
-            icon: "huge/quill-write-02",
-            class: "w-full text-base font-bold",
-          )
+          if allowed_to?(:manage?, @world)
+            button_link_to(
+              "new post",
+              [ :new, @world, :post ],
+              variant: :default,
+              size: :lg,
+              icon: "huge/quill-write-02",
+              class: "w-full text-base font-bold",
+            )
+          end
         end
 
         section(class: "space-y-4") do

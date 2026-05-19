@@ -50,6 +50,7 @@ class Components::Base < Phlex::HTML
   register_output_helper :inline_svg_tag
   register_value_helper :auto_link
   register_value_helper :authenticated?
+  register_value_helper :allowed_to?
 
   # == Initialization ==
 

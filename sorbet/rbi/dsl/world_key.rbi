@@ -374,6 +374,9 @@ class WorldKey
     def build_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def build_world_owner(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_recipient(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
@@ -384,6 +387,12 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_world_owner(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_world_owner!(*args, &blk); end
 
     sig { returns(T.nilable(::User)) }
     def recipient; end
@@ -403,11 +412,17 @@ class WorldKey
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
+    sig { returns(T.nilable(::User)) }
+    def reload_world_owner; end
+
     sig { void }
     def reset_recipient; end
 
     sig { void }
     def reset_world; end
+
+    sig { void }
+    def reset_world_owner; end
 
     sig { returns(T.nilable(::World)) }
     def world; end
@@ -417,6 +432,12 @@ class WorldKey
 
     sig { returns(T::Boolean) }
     def world_changed?; end
+
+    sig { returns(T.nilable(::User)) }
+    def world_owner; end
+
+    sig { params(value: T.nilable(::User)).void }
+    def world_owner=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end

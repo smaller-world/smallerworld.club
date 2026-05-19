@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     as: :share_world_key
 
   # == World keys
-  resources :world_keys do
+  resources :world_keys, only: :destroy do
     collection do
       get "receive/:grant", action: :receive, as: :receive
       post :accept

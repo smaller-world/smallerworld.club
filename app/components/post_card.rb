@@ -32,10 +32,12 @@ class Components::PostCard < Components::Base
           card.title(class: "text-lg font-semibold font-heading") do
             title
           end
-          card.action do
-            dropdown_menu
+          if allowed_to?(:manage?, @post)
+            card.action do
+              dropdown_menu
+            end
           end
-        else
+        elsif allowed_to?(:manage?, @post)
           card.action(class: "w-14 relative self-stretch") do
             dropdown_menu(class: "absolute right-0 bottom-0")
           end
@@ -53,7 +55,7 @@ class Components::PostCard < Components::Base
 
   sig { params(attributes: T.untyped).void }
   def dropdown_menu(**attributes)
-    Components::DropdownMenu(anchor: [ :bottom, :end ]) do |menu|
+    Components::DropdownMenu() do |menu|
       menu.with_trigger_button(variant: :outline, size: :xs, **attributes) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do

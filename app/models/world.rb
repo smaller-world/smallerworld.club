@@ -59,6 +59,7 @@ class World < ApplicationRecord
   belongs_to :owner, class_name: "User"
   has_many :posts, dependent: :destroy
   has_many :keys, class_name: "WorldKey", dependent: :destroy
+  has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
 
   sig { returns(User) }
   def owner!

@@ -1,0 +1,33 @@
+@layer components {
+  .empty {
+    @apply flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-lg border-dashed p-6 text-center text-balance;
+  }
+
+  .empty-header {
+    @apply flex max-w-sm flex-col items-center gap-2;
+  }
+
+  .empty-media {
+    @apply mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0;
+
+    &[data-variant="default"] {
+      @apply bg-transparent;
+    }
+
+    &[data-variant="icon"] {
+      @apply flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-4;
+    }
+  }
+
+  .empty-title {
+    @apply font-heading text-sm font-medium tracking-tight;
+  }
+
+  .empty-description {
+    @apply text-sm/relaxed text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
+  }
+
+  .empty-content {
+    @apply flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-sm text-balance;
+  }
+}

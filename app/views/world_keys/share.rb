@@ -24,7 +24,7 @@ class Views::WorldKeys::Share < Views::Base
             card.title(element: :h1, class: "text-xl") do
               "share a key to your world"
             end
-            card.description do
+            card.description(class: "text-balance") do
               "> hint: when you write posts, you can select which colors can see your post"
             end
           end

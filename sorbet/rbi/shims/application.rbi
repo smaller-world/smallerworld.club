@@ -17,6 +17,7 @@ end
 class Components::Base
   include LocalTimeHelper
   include InlineSvg::ActionView::Helpers
+  include ActionPolicy::Behaviour
 
   sig { params(text: String, options: T.untyped).returns(String) }
   def auto_link(text, **options); end

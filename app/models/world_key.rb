@@ -33,11 +33,17 @@ class WorldKey < ApplicationRecord
   # == Associations ==
 
   belongs_to :world, inverse_of: :keys
+  has_one :world_owner, through: :world, source: :owner
   belongs_to :recipient, class_name: "User"
 
   sig { returns(World) }
   def world!
     world or raise ActiveRecord::RecordNotFound, "Missing associated world"
+  end
+
+  sig { returns(User) }
+  def world_owner!
+    world_owner or raise ActiveRecord::RecordNotFound, "Missing associated world owner"
   end
 
   # == Validations ==
