@@ -2,6 +2,8 @@ import { Controller } from "@hotwired/stimulus";
 import invariant from "tiny-invariant";
 
 export default class ClipboardController extends Controller {
+  // == Values ==
+
   static values = {
     copy: String,
   };

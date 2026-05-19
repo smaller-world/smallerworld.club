@@ -9,6 +9,11 @@ class ApplicationCable::Connection
   def current_user; end
 end
 
+class ApplicationPolicy
+  sig { returns(T.nilable(User)) }
+  def user; end
+end
+
 class Components::Base
   include LocalTimeHelper
   include InlineSvg::ActionView::Helpers

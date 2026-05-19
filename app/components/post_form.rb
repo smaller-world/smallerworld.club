@@ -8,7 +8,7 @@ class Components::PostForm < Components::Base
   def initialize(post:, **options)
     @post = post
     @world = T.let(post.world!, World)
-    @options = T.let(options, T::Hash[Symbol, T.untyped])
+    @options = options
     super()
   end
 
@@ -16,7 +16,18 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model:, class: "flex flex-col gap-y-4", **@options) do |form|
+    form_with(
+      model:,
+      **mix(
+        {
+          class: "flex flex-col gap-y-4",
+          data: {
+            controller: "form",
+          },
+        },
+        @options,
+      ),
+    ) do |form|
       field_for(form, :title) do |f|
         f.text_input(placeholder: "a title!")
         f.error
@@ -26,6 +37,9 @@ class Components::PostForm < Components::Base
           placeholder: "something i want to share...",
           required: true,
           class: "min-h-36",
+          data: {
+            action: "keydown.meta+enter->form#submit",
+          },
         )
         f.error
       end

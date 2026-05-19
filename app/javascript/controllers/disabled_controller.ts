@@ -7,6 +7,8 @@ export default class DisabledController extends Controller<
   // declare readonly clickableTarget: HTMLElement;
   // declare readonly hasClickableTarget: boolean;
 
+  // == Values ==
+
   static values = {
     enableAfter: {
       type: Number,
@@ -15,7 +17,7 @@ export default class DisabledController extends Controller<
   };
   declare readonly enableAfterValue: number | null;
 
-  // == State ==
+  // == Properties ==
 
   #timeout?: number | null;
 

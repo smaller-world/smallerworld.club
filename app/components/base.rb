@@ -14,6 +14,9 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
+  include Phlex::Rails::Helpers::FieldID
+  # include Phlex::Rails::Helpers::DOMID
+
   include PhlexIcons
 
   include ButtonBackTo

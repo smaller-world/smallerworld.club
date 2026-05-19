@@ -3,6 +3,8 @@ import { Controller } from "@hotwired/stimulus";
 import { addAction } from "#helpers/stimulus_helpers";
 
 export default class ClearableFileInputController extends Controller<HTMLElement> {
+  // == Targets ==
+
   static targets = ["inputTemplate", "spinner"];
   declare readonly inputTemplateTarget: HTMLTemplateElement;
   declare readonly spinnerTarget: HTMLElement;

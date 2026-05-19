@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::Textarea < Components::Input
+  include Phlex::Rails::Helpers::TextAreaTag
+
   # == Component ==
 
   sig { override.void }
@@ -15,10 +17,11 @@ class Components::Textarea < Components::Input
       },
       @attributes,
     )
-    if @form && @field
-      @form.textarea(@field, **with_invalid_aria(attributes))
+    if @form
+      @form.textarea(@field, **normalize_attributes(with_invalid_aria(attributes)))
     else
-      textarea(**attributes)
+      value = attributes.delete(:value)
+      textarea_tag(@field, value, **normalize_attributes(attributes))
     end
   end
 end

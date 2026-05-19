@@ -52,6 +52,13 @@
   --lexxy-content-margin: var(--spacing);
   /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
 
+  /* World keys */
+  --world-key-color-green: #70b200;
+  --world-key-color-orange: #d55b31;
+  --world-key-color-red: #92224c;
+  --world-key-color-blue: #404299;
+  --world-key-color-pink: #cc5555;
+
   @media (prefers-color-scheme: dark) {
     --background: oklch(0.153 0.006 107.1);
     --foreground: oklch(0.988 0.003 106.5);
@@ -91,6 +98,13 @@
     --lexxy-color-ink-lightest: var(--color-olive-700);
     --lexxy-color-selected: var(--color-olive-600);
     --lexxy-color-selected-hover: var(--color-olive-700);
+
+    /* World keys */
+    --world-key-color-green: #c6f871;
+    --world-key-color-pink: #f48c8c;
+    --world-key-color-red: #ac3d66;
+    --world-key-color-blue: #5d5fae;
+    --world-key-color-orange: #ec7d56;
   }
 }
 
@@ -129,6 +143,7 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);

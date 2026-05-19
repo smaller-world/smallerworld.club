@@ -60,7 +60,7 @@ class Components::DropdownMenu < Components::Base
       popover: T::Boolean,
       open: T::Boolean,
       attributes: T.untyped,
-      content: T.proc.params(content: Components::DropdownMenuContent).void,
+      content: T.proc.params(content: Components::DropdownMenu::Content).void,
     ).void
   end
   def with_content(
@@ -72,7 +72,7 @@ class Components::DropdownMenu < Components::Base
     &content
   )
     @content_block = ->() {
-      render Components::DropdownMenuContent.new(
+      render Components::DropdownMenu::Content.new(
         anchor:,
         anchor_strategy:,
         popover:,

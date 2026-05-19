@@ -10,6 +10,9 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_keys_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -20,6 +23,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def edit_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
@@ -53,6 +59,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_path(*args); end
@@ -151,10 +160,16 @@ module GeneratedPathHelpersModule
   def rails_storage_redirect_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def receive_world_keys_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def root_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def share_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_path(*args); end
@@ -170,6 +185,12 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def verify_phone_number_verification_request_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_key_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_keys_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end

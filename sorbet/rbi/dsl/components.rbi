@@ -8,6 +8,15 @@
 module Components
   sig do
     params(
+      world_key: ::WorldKey,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+    ).void
+  end
+  def AcceptWorldKeyForm(world_key:, **attributes, &block); end
+
+  sig do
+    params(
       user: ::User,
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
@@ -71,26 +80,6 @@ module Components
 
   sig do
     params(
-      anchor: T.any(::Symbol, T::Array[::Symbol]),
-      anchor_strategy: T.nilable(::Symbol),
-      popover: T::Boolean,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ComboboxContent).void)
-    ).void
-  end
-  def ComboboxContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ComboboxList).void)
-    ).void
-  end
-  def ComboboxList(element: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
       id: ::String,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Dialog).void)
@@ -98,51 +87,21 @@ module Components
   end
   def Dialog(id: T.unsafe(nil), **attributes, &block); end
 
-  sig do
-    params(
-      dialog_id: ::String,
-      show_close_button: T::Boolean,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DialogContent).void)
-    ).void
-  end
-  def DialogContent(dialog_id:, show_close_button: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DialogHeader).void)
-    ).void
-  end
-  def DialogHeader(element: T.unsafe(nil), **attributes, &block); end
-
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
   def DropdownMenu(**attributes, &block); end
 
   sig do
     params(
-      anchor: T.any(::Symbol, T::Array[::Symbol]),
-      anchor_strategy: T.nilable(::Symbol),
-      popover: T::Boolean,
-      open: T::Boolean,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DropdownMenuContent).void)
-    ).void
-  end
-  def DropdownMenuContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
+      id: T.nilable(::String),
       orientation: ::Symbol,
       invalid: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Field).void)
     ).void
   end
-  def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
+  def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -152,6 +111,17 @@ module Components
     ).void
   end
   def FieldGroup(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      id: T.nilable(::String),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::FieldLabel).void)
+    ).void
+  end
+  def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -166,11 +136,11 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::FileInput).void)
     ).void
   end
-  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -193,11 +163,11 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Input).void)
     ).void
   end
-  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -211,15 +181,6 @@ module Components
 
   sig do
     params(
-      align: ::Symbol,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
-    ).void
-  end
-  def InputGroupAddon(align:, **attributes, &block); end
-
-  sig do
-    params(
       variant: ::Symbol,
       size: ::Symbol,
       attributes: T.untyped,
@@ -227,15 +188,6 @@ module Components
     ).void
   end
   def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ItemContent).void)
-    ).void
-  end
-  def ItemContent(element: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -261,11 +213,11 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
     ).void
   end
-  def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+  def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -301,11 +253,11 @@ module Components
       default_country_code: ::String,
       disabled: T::Boolean,
       value: T.nilable(T.any(::Phonelib::Phone, ::String)),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
     ).void
   end
-  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **options, &block); end
+  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -336,6 +288,16 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::RadioGroup).void)
+    ).void
+  end
+  def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       orientation: ::Symbol,
       decorative: T::Boolean,
       attributes: T.untyped,
@@ -343,6 +305,16 @@ module Components
     ).void
   end
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      world: ::World,
+      key_color: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ShareWorldKeyForm).void)
+    ).void
+  end
+  def ShareWorldKeyForm(world:, key_color:, **attributes, &block); end
 
   sig do
     params(
@@ -357,11 +329,11 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Textarea).void)
     ).void
   end
-  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -391,6 +363,15 @@ module Components
   def WorldPostItems(posts:, &block); end
 
   class << self
+    sig do
+      params(
+        world_key: ::WorldKey,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+      ).void
+    end
+    def AcceptWorldKeyForm(world_key:, **attributes, &block); end
+
     sig do
       params(
         user: ::User,
@@ -456,51 +437,12 @@ module Components
 
     sig do
       params(
-        anchor: T.any(::Symbol, T::Array[::Symbol]),
-        anchor_strategy: T.nilable(::Symbol),
-        popover: T::Boolean,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ComboboxContent).void)
-      ).void
-    end
-    def ComboboxContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ComboboxList).void)
-      ).void
-    end
-    def ComboboxList(element: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
         id: ::String,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Dialog).void)
       ).void
     end
     def Dialog(id: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        dialog_id: ::String,
-        show_close_button: T::Boolean,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DialogContent).void)
-      ).void
-    end
-    def DialogContent(dialog_id:, show_close_button: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DialogHeader).void)
-      ).void
-    end
-    def DialogHeader(element: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -512,27 +454,16 @@ module Components
 
     sig do
       params(
-        anchor: T.any(::Symbol, T::Array[::Symbol]),
-        anchor_strategy: T.nilable(::Symbol),
-        popover: T::Boolean,
-        open: T::Boolean,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DropdownMenuContent).void)
-      ).void
-    end
-    def DropdownMenuContent(anchor:, anchor_strategy: T.unsafe(nil), popover: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
+        id: T.nilable(::String),
         orientation: ::Symbol,
         invalid: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Field).void)
       ).void
     end
-    def Field(form: T.unsafe(nil), field: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
+    def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -542,6 +473,17 @@ module Components
       ).void
     end
     def FieldGroup(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        id: T.nilable(::String),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::FieldLabel).void)
+      ).void
+    end
+    def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -556,11 +498,11 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::FileInput).void)
       ).void
     end
-    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -583,11 +525,11 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Input).void)
       ).void
     end
-    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -601,15 +543,6 @@ module Components
 
     sig do
       params(
-        align: ::Symbol,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::InputGroupAddon).void)
-      ).void
-    end
-    def InputGroupAddon(align:, **attributes, &block); end
-
-    sig do
-      params(
         variant: ::Symbol,
         size: ::Symbol,
         attributes: T.untyped,
@@ -617,15 +550,6 @@ module Components
       ).void
     end
     def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ItemContent).void)
-      ).void
-    end
-    def ItemContent(element: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -651,11 +575,11 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
       ).void
     end
-    def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+    def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -691,11 +615,11 @@ module Components
         default_country_code: ::String,
         disabled: T::Boolean,
         value: T.nilable(T.any(::Phonelib::Phone, ::String)),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
       ).void
     end
-    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **options, &block); end
+    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -726,6 +650,16 @@ module Components
 
     sig do
       params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::RadioGroup).void)
+      ).void
+    end
+    def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
         orientation: ::Symbol,
         decorative: T::Boolean,
         attributes: T.untyped,
@@ -733,6 +667,16 @@ module Components
       ).void
     end
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        world: ::World,
+        key_color: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ShareWorldKeyForm).void)
+      ).void
+    end
+    def ShareWorldKeyForm(world:, key_color:, **attributes, &block); end
 
     sig do
       params(
@@ -747,11 +691,11 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Textarea).void)
       ).void
     end
-    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **options, &block); end
+    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

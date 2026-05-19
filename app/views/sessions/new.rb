@@ -18,7 +18,7 @@ class Views::Sessions::New < Views::Base
   def view_template
     Components::Layout(
       title: "sign in to smaller world",
-      body_class: "bg-muted",
+      body_class: "bg-muted [&_.flash]:bg-background",
     ) do |layout|
       main(class: "flex-1 flex flex-col justify-center pb-20") do
         layout.page_container(

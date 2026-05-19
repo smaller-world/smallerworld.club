@@ -1,17 +1,17 @@
 @layer components {
-  .field-set {
+  :where(.field-set) {
     @apply flex flex-col gap-6 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3;
   }
 
-  .field-legend {
+  :where(.field-legend) {
     @apply mb-3 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base;
   }
 
-  .field-group {
+  :where(.field-group) {
     @apply @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4;
   }
 
-  .field {
+  :where(.field) {
     @apply flex w-full gap-2 data-[invalid=true]:text-destructive;
 
     &[data-orientation="vertical"] {
@@ -27,35 +27,35 @@
     }
   }
 
-  .field-content {
+  :where(.field-content) {
     @apply flex flex-1 flex-col gap-1 leading-snug;
   }
 
-  .field-label {
+  :where(.field-label) {
     @apply flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border *:data-[slot=field]:p-3 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10;
     @apply has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col;
     @apply font-medium;
   }
 
-  .field-title {
+  :where(.field-title) {
     @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50;
   }
 
-  .field-description {
+  :where(.field-description) {
     @apply text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5;
     @apply last:mt-0 nth-last-2:-mt-1;
     @apply [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
   }
 
-  .field-separator {
+  :where(.field-separator) {
     @apply relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2;
   }
 
-  .field-separator-content {
+  :where(.field-separator-content) {
     @apply relative mx-auto block w-fit bg-background px-2 text-muted-foreground;
   }
 
-  .field-error {
+  :where(.field-error) {
     @apply text-sm font-normal text-destructive;
 
     ul {

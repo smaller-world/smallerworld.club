@@ -19,7 +19,7 @@ class Components::InputGroup < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     root_element(
       :div,
@@ -32,9 +32,9 @@ class Components::InputGroup < Components::Base
 
   # == Interface ==
 
-  sig { params(options: T.untyped).void }
-  def input(**options)
-    Components::Input(
+  sig { params(attributes: T.untyped).void }
+  def input(**attributes)
+    render Components::Input.new(
       form: @form,
       field: @field,
       **mix(
@@ -44,19 +44,19 @@ class Components::InputGroup < Components::Base
             slot!: "input-group-control",
           },
         },
-        options,
+        attributes,
       ),
     )
   end
 
-  sig { params(options: T.untyped).void }
-  def text_input(**options)
-    input(type: :text, **options)
+  sig { params(attributes: T.untyped).void }
+  def text_input(**attributes)
+    input(type: :text, **attributes)
   end
 
-  sig { params(direct_upload: T::Boolean, options: T.untyped).void }
-  def file_input(direct_upload: true, **options)
-    Components::FileInput(
+  sig { params(direct_upload: T::Boolean, attributes: T.untyped).void }
+  def file_input(direct_upload: true, **attributes)
+    render Components::FileInput.new(
       form: @form,
       field: @field,
       direct_upload:,
@@ -67,19 +67,14 @@ class Components::InputGroup < Components::Base
             slot!: "input-group-control",
           },
         },
-        options,
+        attributes,
       ),
     )
   end
 
-  sig do
-    params(
-      options: T.untyped,
-      content: T.proc.params(component: Components::Textarea).void,
-    ).void
-  end
-  def textarea(**options, &content)
-    Components::Textarea(
+  sig { params(attributes: T.untyped).void }
+  def textarea(**attributes)
+    render Components::Textarea.new(
       form: @form,
       field: @field,
       **mix(
@@ -89,9 +84,8 @@ class Components::InputGroup < Components::Base
             slot!: "input-group-control",
           },
         },
-        options,
+        attributes,
       ),
-      &content
     )
   end
 
@@ -99,10 +93,10 @@ class Components::InputGroup < Components::Base
     params(
       align: Symbol,
       attributes: T.untyped,
-      content: T.proc.params(component: Components::InputGroupAddon).void,
+      content: T.proc.params(component: Components::InputGroup::Addon).void,
     ).void
   end
   def addon(align:, **attributes, &content)
-    render Components::InputGroupAddon.new(align:, **attributes, &content)
+    render Components::InputGroup::Addon.new(align:, **attributes, &content)
   end
 end

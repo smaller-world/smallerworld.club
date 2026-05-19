@@ -57,12 +57,12 @@ class Components::Dialog < Components::Base
     params(
       show_close_button: T::Boolean,
       attributes: T.untyped,
-      content: T.proc.params(content: Components::DialogContent).void,
+      content: T.proc.params(content: Components::Dialog::Content).void,
     ).void
   end
   def with_content(show_close_button: true, **attributes, &content)
     @content_block = ->() {
-      render Components::DialogContent.new(
+      render Components::Dialog::Content.new(
         dialog_id: @id,
         show_close_button:,
         **attributes,

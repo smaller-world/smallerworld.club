@@ -54,7 +54,7 @@ class Components::PostCard < Components::Base
   sig { params(attributes: T.untyped).void }
   def dropdown_menu(**attributes)
     Components::DropdownMenu(anchor: [ :bottom, :end ]) do |menu|
-      menu.with_trigger_button(variant: :secondary, size: :xs, **attributes) do
+      menu.with_trigger_button(variant: :outline, size: :xs, **attributes) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")
@@ -69,7 +69,7 @@ class Components::PostCard < Components::Base
           span { "edit" }
         end
         form_with(url: @post, method: :delete) do
-          content.button_item(variant: :destructive) do
+          content.button_item(type: :submit, variant: :destructive) do
             Icon("huge/delete-01")
             span { "delete" }
           end

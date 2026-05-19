@@ -16,7 +16,6 @@
 @import "./cards.css";
 @import "./dialogs.css";
 @import "./dropdown_menus.css";
-@import "./labels.css";
 @import "./separators.css";
 @import "./items.css";
 @import "./inputs.css";
@@ -27,6 +26,7 @@
 @import "./comboboxes.css";
 @import "./phone_number_inputs.css";
 @import "./otp_inputs.css";
+@import "./radio_groups.css";
 
 @import "./layouts.css";
 @import "./sign_in_with_apple.css";

@@ -12,7 +12,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
 
   # == Actions ==
 
-  # POST /phone_number_verification_requests
+  # POST /verifications
   def create
     respond_to do |format|
       format.html do
@@ -52,7 +52,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     end
   end
 
-  # GET /phone_number_verification_requests/:id/challenge
+  # GET /verifications/:id/challenge
   def challenge
     verification_request = find_verification_request
     if verification_request.expired?
@@ -67,7 +67,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     end
   end
 
-  # POST /phone_number_verification_requests/:id/challenge
+  # POST /verifications/:id/challenge
   def verify
     verification_request = find_verification_request
     verification_code = params

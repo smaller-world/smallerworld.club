@@ -14,6 +14,7 @@ module Authentication
 
     T.bind(self, T.class_of(ApplicationController))
 
+    before_action :resume_session
     before_action :require_authentication
     helper_method :authenticated?
   end
@@ -39,7 +40,7 @@ module Authentication
 
   sig { void }
   def require_authentication
-    resume_session || request_authentication
+    request_authentication unless Current.session
   end
 
   sig { returns(T.nilable(Session)) }
@@ -56,13 +57,17 @@ module Authentication
 
   sig { void }
   def request_authentication
-    session[:return_to_after_authenticating] = request.url
+    if request.get?
+      session[:return_to_after_authenticating] = request.url
+    elsif (referer = request.referer)
+      session[:return_to_after_authenticating] = referer
+    end
     redirect_path = if respond_to?(:main_app)
       public_send(:main_app).new_session_path
     else
       new_session_path
     end
-    redirect_to(redirect_path)
+    redirect_to(redirect_path, notice: "please sign in to continue")
   end
 
   sig { returns(String) }

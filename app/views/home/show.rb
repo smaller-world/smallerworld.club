@@ -55,62 +55,7 @@ class Views::Home::Show < Views::Base
           end
         end
 
-        # Components::DropdownMenu() do |menu|
-        #   menu.trigger do
-        #     Components::Button(variant: :secondary) { "Options" }
-        #   end
-        #   menu.content do
-        #     menu.group do
-        #       menu.label { "Actions" }
-        #       menu.link_item(href: "#") { "Edit" }
-        #       menu.button_item { "Duplicate" }
-        #     end
-        #     menu.separator
-        #     menu.button_item(variant: :destructive) { "Delete" }
-        #   end
-        # end
-
-        # Components::Button(command: "show-modal", commandfor: "test-dialog") do
-        #   "Open dialog"
-        # end
-
-        Components::Dialog() do |dialog|
-          dialog.with_content do |content|
-            content.header do |header|
-              header.title { "Hello from Dialog" }
-              header.description do
-                "This is a test dialog using Tailwind Elements + shadcn styling."
-              end
-            end
-
-            p do
-              "It works! Close me with the X button, the Cancel button, or " \
-                "press Escape."
-            end
-
-            content.footer(show_close_button: true) do
-              "i'm a foot. (what are you?)"
-            end
-          end
-
-          dialog.with_trigger_button(class: "block") do
-            "open dialog"
-          end
-        end
-
-        # div(class: "flex flex-col gap-y-4") do
-        #   div do
-        #     h2(class: "text-2xl") { "your worlds" }
-        #     ul(class: "list-inside list-disc") do
-        #       @current_user.worlds.each do |world|
-        #         li do
-        #           button_link_to(world.name, world, class: "h-6")
-        #         end
-        #       end
-        #     end
-        #   end
-
-        if (world = @current_user.world)
+        if (world = @current_user.own_world)
           button_link_to(
             "go to your world",
             world_path(world),
@@ -125,6 +70,71 @@ class Views::Home::Show < Views::Base
             icon: "huge/earth",
           )
         end
+
+        if (worlds = @current_user.accessible_worlds.presence)
+          div(class: "flex flex-col gap-2") do
+            h2 { "worlds you can visit:" }
+            Components::ItemGroup() do
+              worlds.find_each do |world|
+                link_to(world) do
+                  Components::Item(variant: :muted, class: "hover:border-border") do |item|
+                    item.media do
+                      image_tag(
+                        world.page_icon_variant,
+                        class: "size-16 rounded-world-icon",
+                      )
+                    end
+                    item.content(class: "gap-0") do
+                      item.title do
+                        world.name
+                      end
+                      item.description do
+                        world.friendly_id
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        # Components::Dialog() do |dialog|
+        #   dialog.with_content do |content|
+        #     content.header do |header|
+        #       header.title { "Hello from Dialog" }
+        #       header.description do
+        #         "This is a test dialog using Tailwind Elements + shadcn styling."
+        #       end
+        #     end
+
+        #     p do
+        #       "It works! Close me with the X button, the Cancel button, or " \
+        #         "press Escape."
+        #     end
+
+        #     content.footer(show_close_button: true) do
+        #       "i'm a foot. (what are you?)"
+        #     end
+        #   end
+
+        #   dialog.with_trigger_button(class: "block") do
+        #     "open dialog"
+        #   end
+        # end
+
+        # div(class: "flex flex-col gap-y-4") do
+        #   div do
+        #     h2(class: "text-2xl") { "your worlds" }
+        #     ul(class: "list-inside list-disc") do
+        #       @current_user.worlds.each do |world|
+        #         li do
+        #           button_link_to(world.name, world, class: "h-6")
+        #         end
+        #       end
+        #     end
+        #   end
+
         # end
       end
     end

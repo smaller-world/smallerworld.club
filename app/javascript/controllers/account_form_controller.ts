@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class AccountFormController extends Controller {
+  // == Targets ==
+
   static targets = ["nameInput", "submitButtonLabel"];
   declare readonly nameInputTarget: HTMLInputElement;
   declare readonly submitButtonLabelTarget: HTMLSpanElement;

@@ -12,6 +12,7 @@ class Components::Field < Components::Base
     params(
       form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
+      id: T.nilable(String),
       orientation: Symbol,
       invalid: T::Boolean,
       attributes: T.untyped,
@@ -20,6 +21,7 @@ class Components::Field < Components::Base
   def initialize(
     form: nil,
     field: nil,
+    id: nil,
     orientation: :vertical,
     invalid: false,
     **attributes
@@ -30,6 +32,7 @@ class Components::Field < Components::Base
 
     @form = form
     @field = field
+    @id = id
     @orientation = orientation
     @force_invalid = invalid
     super(**attributes)
@@ -37,10 +40,13 @@ class Components::Field < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
+    captured_content = capture(&content)
+
     root_element(
       :div,
+      id: @id,
       role: "group",
       class: "field group/field",
       data: {
@@ -48,52 +54,63 @@ class Components::Field < Components::Base
         orientation: @orientation,
         invalid: (true if invalid?),
       },
-      &content
-    )
+    ) do
+      raw(captured_content) # rubocop:disable Rails/OutputSafety
+    end
   end
 
   # == Interface ==
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def content(**attributes, &content)
-    slot(
-      "field-content",
-      **mix({ class: "group/field-content" }, attributes),
+    div(
+      **mix(
+        {
+          class: "field-content group/field-content",
+          data: {
+            slot: "field-content",
+          },
+        },
+        attributes,
+      ),
       &content
     )
   end
 
-  sig { params(options: T.untyped, content: T.nilable(T.proc.void)).void }
-  def label(**options, &content)
-    options = mix(
-      {
-        class: "field-label group/field-label peer/field-label",
-        data: {
-          slot: "field-label",
-        },
-      },
-      **options,
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def label(**attributes, &content)
+    render Components::FieldLabel.new(
+      form: @form,
+      field: @field,
+      **attributes,
+      &content
     )
-    if @form && @field
-      html = @form.label(@field, **options) do
-        if block_given?
-          yield
-        elsif (object_class = @form.object&.class) &&
+  end
+
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def title(**attributes, &content)
+    div(
+      **mix(
+        {
+          class: "field-title",
+          data: {
+            slot: "field-title",
+          },
+        },
+        attributes,
+      ),
+    ) do
+      if content
+        yield
+      elsif @form && @field
+        if (object_class = @form.object&.class) &&
             object_class.is_a?(ActiveModel::Translation)
           object_class.human_attribute_name(@field)
         else
           @field.to_s.humanize
         end
       end
-      raw(html) # rubocop:disable Rails/OutputSafety
-    else
-      super(**options, &content)
     end
-  end
-
-  sig { params(options: T.untyped, content: T.nilable(T.proc.void)).void }
-  def title(**options, &content)
-    slot("field-title", **options, &content)
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
@@ -114,9 +131,17 @@ class Components::Field < Components::Base
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def separator(**attributes, &content)
-    slot(
-      "field-separator",
-      **mix({ data: { content: block_given? } }, attributes),
+    div(
+      **mix(
+        {
+          class: "field-separator",
+          data: {
+            slot: "field-separator",
+            content: block_given?,
+          },
+        },
+        attributes,
+      ),
     ) do
       Components::Separator(class: "absolute inset-0 top-1/2")
       if block_given?
@@ -133,14 +158,23 @@ class Components::Field < Components::Base
   sig do
     params(
       errors: T.nilable(T::Array[String]),
-      options: T.untyped,
+      attributes: T.untyped,
       content: T.nilable(T.proc.void),
     ).void
   end
-  def error(errors: error_messages, **options, &content)
+  def error(errors: error_messages, **attributes, &content)
     return if content.nil? && errors.blank?
 
-    slot("field-error", role: "alert", **options) do
+    div(**mix(
+      {
+        class: "field-error",
+        role: "alert",
+        data: {
+          slot: "field-error",
+        },
+      },
+      attributes,
+    )) do
       if block_given?
         yield
       elsif (errors = errors.presence)
@@ -157,10 +191,14 @@ class Components::Field < Components::Base
     end
   end
 
-  sig { returns(T.nilable(String)) }
+  sig { returns(String) }
   def id
-    if @form && @field
+    @id ||= if @form && @field
       @form.field_id(@field)
+    elsif @field
+      @field.to_s
+    else
+      SecureRandom.uuid
     end
   end
 
@@ -260,26 +298,6 @@ class Components::Field < Components::Base
   private
 
   # == Helpers ==
-
-  sig do
-    params(
-      name: String,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.void),
-    ).void
-  end
-  def slot(name, **attributes, &content)
-    div(
-      **mix(
-        {
-          class: name,
-          data: { name: },
-        },
-        attributes,
-      ),
-      &content
-    )
-  end
 
   sig { returns(T.nilable(T::Array[String])) }
   def error_messages

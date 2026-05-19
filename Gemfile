@@ -126,6 +126,12 @@ gem "lexxy", "~> 0.9.9.beta"
 # ISO 3166 country data
 gem "countries", "~> 8.1"
 
+# Implement permissions with Action Policy
+gem "action_policy", "~> 0.7.6"
+
+# Render QR codes
+gem "rqrcode", "~> 3.2"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

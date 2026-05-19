@@ -18,12 +18,16 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
-        pagy, posts = pagy(
-          :countless,
-          world.posts.reverse_chronological,
-          limit: 5,
-        )
-        render Views::Worlds::Show.new(world:, posts:, pagy:)
+        if allowed_to?(:show?, world)
+          pagy, posts = pagy(
+            :countless,
+            world.posts.reverse_chronological,
+            limit: 5,
+          )
+          render Views::Worlds::Show.new(world:, posts:, pagy:)
+        else
+          redirect_to(root_path, alert: "You don't have access to this world")
+        end
       end
     end
   end
@@ -33,7 +37,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
-        world = current_user.build_world
+        world = current_user.build_own_world
         render Views::Worlds::New.new(world:)
       end
     end
@@ -55,7 +59,7 @@ class WorldsController < ApplicationController
       format.html do
         current_user = current_user!
         world_params = params.expect(world: [ :name, :icon ])
-        world = current_user.build_world(**world_params)
+        world = current_user.build_own_world(**world_params)
         if world.save
           redirect_to(world)
         else

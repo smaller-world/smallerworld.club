@@ -55,16 +55,11 @@ class Post < ApplicationRecord
   # == Callbacks ==
 
   before_save :set_plain_body
-  before_destroy :test_throw
 
   private
 
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text
-  end
-
-  def test_throw
-    throw(:abort)
   end
 end

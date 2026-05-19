@@ -105,7 +105,7 @@ class Components::Layout < Components::Base
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def page_container(**attributes, &content)
-    div(**mix({ class: "page_container" }, **attributes), &content)
+    div(**mix({ class: "page-container" }, **attributes), &content)
   end
 
   sig { params(content: T.proc.void).void }
@@ -161,10 +161,10 @@ class Components::Layout < Components::Base
       size: :sm,
       **mix(
         {
-          class: class_names(
-            "flash card",
-            { "flash-alert": flash.key?(:alert) },
-          ),
+          class: "flash",
+          data: {
+            variant: ("alert" if flash.key?(:alert)),
+          }.compact,
         },
         **attributes,
       ),

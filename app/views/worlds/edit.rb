@@ -14,7 +14,7 @@ class Views::Worlds::Edit < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout() do |layout|
+    Components::Layout(page_title: "edit world") do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
         button_back_to("world", @world)
 

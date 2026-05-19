@@ -68,7 +68,7 @@ class Components::Combobox < Components::Base
       ) do |group|
         @inline_start_addon_block&.call(group)
         group.input(
-          disabled: (true if @disabled),
+          disabled: @disabled,
           **mix(
             {
               data: {
@@ -87,7 +87,7 @@ class Components::Combobox < Components::Base
             type: :button,
             size: :icon_xs,
             variant: :ghost,
-            disabled: (true if @disabled),
+            disabled: @disabled,
             class: "comobox-trigger",
             data: {
               slot: "combobox-trigger",
@@ -110,12 +110,12 @@ class Components::Combobox < Components::Base
       anchor_strategy: T.nilable(Symbol),
       popover: T::Boolean,
       attributes: T.untyped,
-      content: T.proc.params(content: Components::ComboboxContent).void,
+      content: T.proc.params(content: Components::Combobox::Content).void,
     ).void
   end
   def with_content(anchor:, anchor_strategy: nil, popover: true, **attributes, &content)
     @content_block = ->() {
-      render Components::ComboboxContent.new(
+      render Components::Combobox::Content.new(
         anchor:,
         anchor_strategy:,
         popover:,
@@ -128,7 +128,7 @@ class Components::Combobox < Components::Base
   sig do
     params(
       attributes: T.untyped,
-      content: T.proc.params(addon: Components::InputGroupAddon).void,
+      content: T.proc.params(addon: Components::InputGroup::Addon).void,
     ).void
   end
   def with_inline_start_addon(**attributes, &content)

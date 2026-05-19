@@ -26,7 +26,7 @@ class Components::Item < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     root_element(
       :div,
@@ -44,7 +44,7 @@ class Components::Item < Components::Base
     params(
       variant: Symbol,
       attributes: T.untyped,
-      content: T.nilable(T.proc.void),
+      content: T.proc.void,
     ).void
   end
   def media(variant: :default, **attributes, &content)
@@ -52,36 +52,31 @@ class Components::Item < Components::Base
       raise InvalidParameter.new(parameter: :variant, value: variant)
     end
 
-    slot("item-media", **mix({ data: { variant: } }, attributes, &content))
+    slot("item-media", **mix({ data: { variant: } }, attributes), &content)
   end
 
-  sig do
-    params(
-      attributes: T.untyped,
-      content: T.proc.params(content: Components::ItemContent).void,
-    ).void
-  end
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def content(**attributes, &content)
-    Components::ItemContent(**attributes, &content)
+    slot("item-content", **attributes, &content)
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def actions(**attributes, &content)
     slot("item-actions", **attributes, &content)
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def header(**attributes, &content)
     slot("item-header", **attributes, &content)
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def footer(**attributes, &content)
     slot("item-footer", **attributes, &content)
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def separator(**attributes, &content)
+  sig { params(attributes: T.untyped).void }
+  def separator(**attributes)
     Components::Separator(
       orientation: :horizontal,
       class: "item-separator",
@@ -89,12 +84,41 @@ class Components::Item < Components::Base
     )
   end
 
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def title(**attributes, &content)
+    slot("item-title", **attributes, &content)
+  end
+
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def description(**attributes, &content)
+    slot("item-description", element: :p, **attributes, &content)
+  end
+
   private
 
   # == Helpers ==
 
-  sig { params(name: String, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def slot(name, **attributes, &content)
-    div(class: name, data: { slot: name }, **attributes, &content)
+  sig do
+    params(
+      name: String,
+      element: Symbol,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.void),
+    ).void
+  end
+  def slot(name, element: :div, **attributes, &content)
+    public_send(
+      element,
+      **mix(
+        {
+          class: name,
+          data: {
+            slot: name,
+          },
+        },
+        attributes,
+      ),
+      &content
+    )
   end
 end

@@ -2,7 +2,9 @@
 # frozen_string_literal: true
 
 class Components::LexxyEditor < Components::Input
-  include Phlex::Rails::Helpers::RichTextArea
+  extend Phlex::Rails::HelperMacros
+
+  register_output_helper def rich_textarea_tag(...) = nil
 
   # == Component ==
 
@@ -25,7 +27,7 @@ class Components::LexxyEditor < Components::Input
         with_invalid_aria(attributes),
       ))
     else
-      rich_textarea(**normalize_attributes(attributes))
+      rich_textarea_tag(@field, **normalize_attributes(attributes))
     end
   end
 end

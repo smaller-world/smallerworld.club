@@ -94,7 +94,7 @@ class User
     def delete_all; end
 
     sig { params(args: T.untyped).returns(Integer) }
-    def delete_by(args); end
+    def delete_by(*args); end
 
     sig do
       params(
@@ -110,7 +110,7 @@ class User
     def destroy_all; end
 
     sig { params(args: T.untyped).returns(T::Array[::User]) }
-    def destroy_by(args); end
+    def destroy_by(*args); end
 
     sig { params(conditions: T.untyped).returns(T::Boolean) }
     def exists?(conditions = :none); end
@@ -147,7 +147,7 @@ class User
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: ::User).void
       ).void
     end
@@ -158,7 +158,7 @@ class User
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
+        order: T.any(Symbol, T::Array[Symbol])
       ).returns(T::Enumerator[::User])
     end
     def find_each(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
@@ -170,7 +170,7 @@ class User
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         block: T.proc.params(object: T::Array[::User]).void
       ).void
     end
@@ -181,8 +181,8 @@ class User
         batch_size: Integer,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol
-      ).returns(T::Enumerator[T::Enumerator[::User]])
+        order: T.any(Symbol, T::Array[Symbol])
+      ).returns(T::Enumerator[T::Array[::User]])
     end
     def find_in_batches(start: nil, finish: nil, batch_size: 1000, error_on_ignore: nil, cursor: primary_key, order: :asc, &block); end
 
@@ -252,7 +252,7 @@ class User
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped,
         block: T.proc.params(object: PrivateRelation).void
       ).void
@@ -265,7 +265,7 @@ class User
         load: T.untyped,
         error_on_ignore: T.untyped,
         cursor: T.untyped,
-        order: Symbol,
+        order: T.any(Symbol, T::Array[Symbol]),
         use_ranges: T.untyped
       ).returns(::ActiveRecord::Batches::BatchEnumerator)
     end
@@ -361,20 +361,40 @@ class User
   end
 
   module GeneratedAssociationMethods
-    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def build_world(*args, &blk); end
+    sig { returns(T::Array[T.untyped]) }
+    def accessible_world_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def accessible_world_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :accessible_worlds, through: :world_keys`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::World::PrivateCollectionProxy) }
+    def accessible_worlds; end
+
+    sig { params(value: T::Enumerable[::World]).void }
+    def accessible_worlds=(value); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def create_world(*args, &blk); end
+    def build_own_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def create_world!(*args, &blk); end
+    def create_own_world(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def create_own_world!(*args, &blk); end
 
     sig { returns(T.nilable(::World)) }
-    def reload_world; end
+    def own_world; end
+
+    sig { params(value: T.nilable(::World)).void }
+    def own_world=(value); end
+
+    sig { returns(T.nilable(::World)) }
+    def reload_own_world; end
 
     sig { void }
-    def reset_world; end
+    def reset_own_world; end
 
     sig { returns(T::Array[T.untyped]) }
     def session_ids; end
@@ -390,11 +410,19 @@ class User
     sig { params(value: T::Enumerable[::Session]).void }
     def sessions=(value); end
 
-    sig { returns(T.nilable(::World)) }
-    def world; end
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_ids; end
 
-    sig { params(value: T.nilable(::World)).void }
-    def world=(value); end
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :world_keys`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldKey::PrivateCollectionProxy) }
+    def world_keys; end
+
+    sig { params(value: T::Enumerable[::WorldKey]).void }
+    def world_keys=(value); end
   end
 
   module GeneratedAssociationRelationMethods
@@ -533,6 +561,10 @@ class User
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
+
+    sig { returns(PrivateAssociationRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
 
     sig { returns(PrivateAssociationRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
@@ -1085,6 +1117,10 @@ class User
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end
+
+    sig { returns(PrivateRelation) }
+    sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
+    def unscoped(&block); end
 
     sig { returns(PrivateRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateRelation) }

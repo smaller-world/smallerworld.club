@@ -22,7 +22,7 @@ class Views::Worlds::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout() do |layout|
+    Components::Layout(page_title: @world.name) do |layout|
       layout.page_container(class: "max-w-lg space-y-8") do
         section(class: "space-y-4") do
           div(class: "flex justify-between") do
@@ -47,21 +47,28 @@ class Views::Worlds::Show < Views::Base
                 @world.name
               end
             end
-            card.content do
+            card.content(class: "text-center") do
               "welcome to my lovely world..."
               # Components::WorldForm(world: @world)
+            end
+            card.footer(class: "flex flex-col items-center") do
+              button_link_to(
+                "invite a friend to your world",
+                [ :share, @world, :key ],
+                variant: :secondary,
+                icon: "huge/user-add-01",
+              )
             end
           end
 
           button_link_to(
+            "new post",
             [ :new, @world, :post ],
             variant: :default,
             size: :lg,
             icon: "huge/quill-write-02",
-            class: "w-full",
-          ) do
-            span(class: "text-base font-bold") { "new post" }
-          end
+            class: "w-full text-base font-bold",
+          )
         end
 
         section(class: "space-y-4") do

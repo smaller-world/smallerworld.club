@@ -15,7 +15,7 @@ class Views::Posts::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout() do |layout|
+    Components::Layout(page_title: "new post") do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
         button_back_to(@world.name, @world)
 

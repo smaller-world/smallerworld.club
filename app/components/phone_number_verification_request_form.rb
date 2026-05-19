@@ -39,17 +39,17 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
     ) do |form|
       hidden_field(:user, :time_zone_name, data: { controller: "current-time-zone-input" })
 
-      field_for(form, :phone_number) do |f|
-        f.phone_number_input(
+      field_for(form, :phone_number) do |field|
+        field.phone_number_input(
           placeholder: "your phone #",
           disabled: @verification_request.persisted?,
         )
-        f.error
+        field.error
       end
 
       if @verification_request.persisted?
-        field_for(form, :verification_code) do |f|
-          f.text_input(
+        field_for(form, :verification_code) do |field|
+          field.text_input(
             placeholder: "verification code",
             inputmode: "numeric",
             autocomplete: "one-time-code",
@@ -58,21 +58,31 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
             value: Rails.env.development? ? @verification_request.verification_code : nil,
           )
           if Rails.env.development?
-            f.description(class: "text-xs text-center") do
+            field.description(class: "text-xs text-center") do
               "code auto-filled for development"
             end
           end
-          f.error
+          field.error
         end
       end
 
-      submit_button_for(form) do |button|
-        if @verification_request.new_record?
-          button.inline_start_icon("huge/sms-code")
-          span { "send verification code" }
-        else
-          span { "complete login" }
-          button.inline_end_icon("huge/arrow-right-02")
+      div(class: "flex flex-col") do
+        submit_button_for(form) do |button|
+          if @verification_request.new_record?
+            button.inline_start_icon("huge/sms-code")
+            span { "send verification code" }
+          else
+            span { "complete login" }
+            button.inline_end_icon("huge/arrow-right-02")
+          end
+        end
+        if @verification_request.persisted?
+          button_link_to(
+            "wrong phone number?",
+            new_session_path,
+            size: :xs,
+            class: "text-muted-foreground",
+          )
         end
       end
     end

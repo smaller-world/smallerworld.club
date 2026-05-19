@@ -19,7 +19,9 @@ class ApplicationController < ActionController::Base
   # == Authentication ==
 
   sig { returns(T.nilable(User)) }
-  def current_user = Current.user
+  def current_user
+    Current.user
+  end
 
   sig { returns(User) }
   def current_user!

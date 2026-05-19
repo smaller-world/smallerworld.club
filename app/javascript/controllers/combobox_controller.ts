@@ -2,10 +2,14 @@ import { Controller } from "@hotwired/stimulus";
 import {} from "@tailwindplus/elements";
 
 export default class ComboboxController extends Controller<HTMLElement> {
+  // == Targets ==
+
   static targets = ["input", "inlineStartAddon"];
   declare readonly inputTarget: HTMLInputElement;
   declare readonly hasInputTarget: boolean;
   declare readonly inlineStartAddon: HTMLElement;
+
+  // == Values ==
 
   static values = {
     clearOnExpand: {
@@ -14,6 +18,8 @@ export default class ComboboxController extends Controller<HTMLElement> {
     },
   };
   declare readonly clearOnExpandValue: boolean;
+
+  // == Properties ==
 
   #validValues = new Set<string>();
   #lastSelectedValue = "";

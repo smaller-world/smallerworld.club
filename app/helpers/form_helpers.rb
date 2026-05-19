@@ -52,4 +52,16 @@ module FormHelpers
       &block
     )
   end
+
+  sig do
+    params(
+      form: PhlexFormBuilder,
+      method: Symbol,
+      attributes: T.untyped,
+      block: T.proc.params(field: Components::RadioGroup).void,
+    ).void
+  end
+  def radio_group_for(form, method, **attributes, &block)
+    Components::RadioGroup(form:, field: method, **attributes, &block)
+  end
 end

@@ -7,7 +7,7 @@ class ApplicationJob < ActiveJob::Base
 
   abstract!
 
-  include UrlHelpers
+  # include UrlHelpers
 
   # == Configuration ==
 

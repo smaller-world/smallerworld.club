@@ -5,6 +5,7 @@ import { addCleanupAction } from "#helpers/stimulus_helpers";
 
 export default class TooltipController extends Controller<HTMLElement> {
   // == Values ==
+
   static values = {
     content: String,
     trigger: String,

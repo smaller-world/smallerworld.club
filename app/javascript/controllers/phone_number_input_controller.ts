@@ -6,6 +6,8 @@ import {
 } from "libphonenumber-js/core";
 
 export default class PhoneNumberInputController extends Controller {
+  // == Targets ==
+
   static targets = [
     "countryCodeInput",
     "countryCodeOption",
@@ -22,6 +24,8 @@ export default class PhoneNumberInputController extends Controller {
   declare readonly hasNationalNumberInputTarget: boolean;
   declare readonly hasCountryFlagAddonTarget: boolean;
   declare readonly hasHiddenInputTarget: boolean;
+
+  // == Properties ==
 
   #countryCodeOptions = new Map<
     string,

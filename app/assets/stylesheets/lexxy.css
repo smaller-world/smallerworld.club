@@ -4,12 +4,12 @@
   .lexxy-content {
     @apply text-base md:text-sm;
 
-    p:has(br) {
+    p:not(:last-of-type):has(br) {
       @apply leading-2;
     }
 
     hr {
-      @apply w-full text-ring;
+      @apply w-full text-ring/50;
     }
   }
 

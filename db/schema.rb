@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_02_121108) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_13_204402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -239,6 +239,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_121108) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
+  create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.uuid "recipient_id", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "world_id", null: false
+    t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
+    t.index ["world_id", "recipient_id", "color"], name: "index_world_keys_uniqueness", unique: true
+    t.index ["world_id"], name: "index_world_keys_on_world_id"
+  end
+
   create_table "worlds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -259,5 +270,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_121108) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "world_keys", "users", column: "recipient_id"
+  add_foreign_key "world_keys", "worlds"
   add_foreign_key "worlds", "users", column: "owner_id"
 end

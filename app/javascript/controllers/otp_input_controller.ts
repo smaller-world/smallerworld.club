@@ -1,12 +1,16 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class OtpInputController extends Controller {
+  // == Targets ==
+
   static targets = ["input", "slot", "caretTemplate"];
   declare readonly inputTarget: HTMLInputElement;
   declare readonly slotTargets: HTMLElement[];
   declare readonly caretTemplateTarget: HTMLTemplateElement;
   declare readonly hasInputTarget: boolean;
   declare readonly hasCaretTemplateTarget: boolean;
+
+  // == Values ==
 
   static values = {
     maxLength: { type: Number },

@@ -6,15 +6,19 @@ import ClipboardController from "./clipboard_controller";
 import ComboboxController from "./combobox_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DisabledController from "./disabled_controller";
+import FlashController from "./flash_controller";
+import FormController from "./form_controller";
 import HelloController from "./hello_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import MaintainScrollController from "./maintain_scroll_controller";
-import OtpInputController from "./otp_input_controller";
+// import OtpInputController from "./otp_input_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
+import RadioGroupController from "./radio_group_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
 import TooltipController from "./tooltip_controller";
+
 // import LoremPicsumController from "./lorem_picsum_controller";
 
 application.register("hello", HelloController);
@@ -23,6 +27,7 @@ application.register("scroll-to-bottom", ScrollToBottomController);
 application.register("intersection", IntersectionController);
 application.register("maintain-scroll", MaintainScrollController);
 application.register("click", ClickController);
+application.register("flash", FlashController);
 application.register("combobox", ComboboxController);
 application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);
@@ -32,4 +37,7 @@ application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
 application.register("phone-number-input", PhoneNumberInputController);
 application.register("account-form", AccountFormController);
-application.register("otp-input", OtpInputController);
+application.register("radio-group", RadioGroupController);
+application.register("form", FormController);
+
+// application.register("otp-input", OtpInputController);

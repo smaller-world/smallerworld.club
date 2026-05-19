@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::PhoneNumberInput < Components::Input
+  include Phlex::Rails::Helpers::HiddenFieldTag
+
   # == Initialization ==
 
   sig do
@@ -110,10 +112,10 @@ class Components::PhoneNumberInput < Components::Input
         ),
       )
 
-      if @form && @field
+      if @form
         @form.hidden_field(@field, **hidden_field_options)
       else
-        input(type: :hidden, **hidden_field_options)
+        hidden_field_tag(@field, **hidden_field_options)
       end
     end
   end
@@ -147,7 +149,7 @@ class Components::PhoneNumberInput < Components::Input
 
     @phone_number = if @value
       normalize_phone_number(@value)
-    elsif @form && @field && (value = @form.object.public_send(@field))
+    elsif (object = @form&.object) && @field && (value = object.public_send(@field))
       normalize_phone_number(value)
     end
   end

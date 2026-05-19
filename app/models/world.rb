@@ -58,6 +58,7 @@ class World < ApplicationRecord
 
   belongs_to :owner, class_name: "User"
   has_many :posts, dependent: :destroy
+  has_many :keys, class_name: "WorldKey", dependent: :destroy
 
   sig { returns(User) }
   def owner!
@@ -104,6 +105,14 @@ class World < ApplicationRecord
   # == Initialization ==
 
   after_initialize :set_default_name, if: :new_record?
+
+  # == Keys ==
+
+  sig { params(color: T.any(Symbol, String, Enumerize::Value)).returns(String) }
+  def key_grant(color:)
+    id = self[:id] or raise "Missing world ID"
+    WorldKey.grant_verifier.generate({ world_id: id, color: color.to_s })
+  end
 
   private
 

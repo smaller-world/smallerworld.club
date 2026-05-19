@@ -32,15 +32,25 @@ class User < ApplicationRecord
   # == Associations ==
 
   has_many :sessions, dependent: :destroy
-  has_one :world,
+  has_one :own_world,
+    class_name: "World",
     dependent: :destroy,
     inverse_of: :owner,
     foreign_key: :owner_id
   has_many :posts, through: :worlds
+  has_many :world_keys,
+    dependent: :destroy,
+    inverse_of: :recipient,
+    foreign_key: :recipient_id
+  has_many :accessible_worlds,
+    -> { distinct },
+    class_name: "World",
+    through: :world_keys,
+    source: :world
 
   sig { returns(World) }
-  def world!
-    world or raise ActiveRecord::RecordNotFound, "Missing world"
+  def own_world!
+    own_world or raise ActiveRecord::RecordNotFound, "Missing world"
   end
 
   # == Normalizations ==

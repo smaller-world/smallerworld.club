@@ -56,6 +56,20 @@ module Smallerworld
 
     # Set a PID file
     config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")
+
+    # == Shortlinking ==
+
+    T::Sig::WithoutRuntime.sig do
+      params(fallback_url_options: T::Hash[Symbol, T.untyped])
+        .returns(T.all(GeneratedUrlHelpersModule, GeneratedPathHelpersModule))
+    end
+    def shortlinked_url_helpers(fallback_url_options = {})
+      @shortlinked_url_helpers ||= if Rails.env.production?
+        ShortlinkedUrlHelpers.new(protocol: "https", host: "smlr.world")
+      else
+        ShortlinkedUrlHelpers.new(**fallback_url_options)
+      end
+    end
   end
 
   sig { returns(Smallerworld::Application) }

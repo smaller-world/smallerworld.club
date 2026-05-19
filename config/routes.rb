@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   # == Authentication
   resource :session, only: [ :new, :destroy ]
-  resources :phone_number_verification_requests, path: "verification", only: [ :create ] do
+  resources :phone_number_verification_requests, path: "verifications", only: [ :create ] do
     member do
       get :challenge
       post :verify
@@ -44,8 +44,26 @@ Rails.application.routes.draw do
 
   # == Worlds
   resources :worlds, except: :index do
-    resources :posts, shallow: true
+    resources :posts, only: [ :index, :new, :create ]
+    resources :world_keys,
+      path: "/keys",
+      only: [ :index ],
+      as: :keys
   end
+  get "worlds/:world_id/keys/share",
+    to: "world_keys#share",
+    as: :share_world_key
+
+  # == World keys
+  resources :world_keys do
+    collection do
+      get "receive/:grant", action: :receive, as: :receive
+      post :accept
+    end
+  end
+
+  # == Posts
+  resources :posts, only: [ :show, :edit, :update, :destroy ]
 
   # == Devtools
   get "/fly" => redirect(
