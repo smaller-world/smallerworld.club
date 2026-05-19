@@ -10,7 +10,7 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
-  def accept_world_keys_url(*args); end
+  def account_time_zone_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def account_url(*args); end
@@ -58,10 +58,16 @@ module GeneratedUrlHelpersModule
   def new_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_key_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_world_world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_url(*args); end
@@ -154,16 +160,10 @@ module GeneratedUrlHelpersModule
   def rails_storage_redirect_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def receive_world_keys_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def session_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def share_world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_url(*args); end
@@ -191,6 +191,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_world_keys_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_url(*args); end

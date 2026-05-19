@@ -30,31 +30,10 @@ class Views::WorldKeys::Index < Views::Base
           end
           card.content do
             if (keys_by_recipient = @keys_by_recipient.presence)
-              div(class: "flex flex-col gap-4") do
-                Components::ItemGroup() do
-                  keys_by_recipient.each_pair do |recipient, keys|
-                    Components::Item(variant: :outline) do |item|
-                      item.content do
-                        item.title do
-                          recipient.name
-                        end
-                      end
-                      item.actions do
-                        keys.each do |key|
-                          world_key_dropdown(key)
-                        end
-                      end
-                    end
-                  end
+              Components::ItemGroup() do
+                keys_by_recipient.each_pair do |recipient, keys|
+                  item(recipient:, keys:)
                 end
-                button_link_to(
-                  "share a key with a friend",
-                  [ :share, @world, :key ],
-                  variant: :secondary,
-                  size: :sm,
-                  icon: "huge/user-add-01",
-                  class: "self-center text-xs",
-                )
               end
             else
               Components::Empty(class: "gap-2") do |empty|
@@ -68,13 +47,26 @@ class Views::WorldKeys::Index < Views::Base
                 end
                 empty.content do
                   button_link_to(
-                    "share a key with a friend",
-                    [ :share, @world, :key ],
+                    "invite a friend to your world",
+                    [ :new, @world, :key_grant ],
                     variant: :secondary,
                     icon: "huge/user-add-01",
                   )
                 end
               end
+            end
+          end
+
+          if @keys_by_recipient.present?
+            card.footer(class: "flex flex-col items-center") do
+              button_link_to(
+                "invite another friend",
+                [ :new, @world, :key_grant ],
+                variant: :secondary,
+                size: :sm,
+                icon: "huge/user-add-01",
+                class: "self-center text-xs",
+              )
             end
           end
         end
@@ -86,23 +78,28 @@ class Views::WorldKeys::Index < Views::Base
 
   # == Helpers ==
 
-  sig { params(key: WorldKey).void }
-  def world_key_dropdown(key)
-    Components::DropdownMenu() do |menu|
-      menu.with_trigger_badge(
-        variant: :ghost,
-        class: "h-6 [&>svg]:size-4",
-      ) do
-        Icon(
-          "huge/key-02",
-          style: "color: var(--world-key-color-#{key.color})",
-        )
+  sig { params(recipient: User, keys: T::Array[WorldKey]).void }
+  def item(recipient:, keys:)
+    Components::Item(variant: :outline) do |item|
+      item.content do
+        item.title do
+          recipient.name
+        end
       end
-      menu.with_content(anchor: [ :bottom, :end ]) do |content|
-        form_with(url: key, method: :delete) do
-          content.button_item(type: :submit, variant: :destructive) do
-            Icon("huge/delete-01")
-            span { "revoke key" }
+      item.actions do
+        keys.each do |key|
+          Components::DropdownMenu() do |menu|
+            menu.with_trigger_badge(variant: :secondary, class: "h-6 [&>svg]:size-4") do
+              Icon("huge/key-02", style: "color: var(--world-key-color-#{key.color})")
+            end
+            menu.with_content(anchor: [ :bottom, :end ]) do |content|
+              form_with(url: key, method: :delete) do
+                content.button_item(type: :submit, variant: :destructive) do
+                  Icon("huge/delete-01")
+                  span { "revoke key" }
+                end
+              end
+            end
           end
         end
       end

@@ -37,9 +37,9 @@ class Views::Worlds::Show < Views::Base
               )
             elsif (user = current_user) &&
                 (keys = @world.keys.where(recipient: user).presence)
-              div(class: "flex gap-1 justify-center self-center") do
+              div(class: "flex gap-0.5 justify-center self-center") do
                 keys.each do |key|
-                  Components::Badge(variant: :ghost, class: "h-6 [&>svg]:size-4") do
+                  Components::Badge(variant: :ghost, class: "h-6 px-1.5 [&>svg]:size-4") do
                     Icon(
                       "huge/key-02",
                       style: "color: var(--world-key-color-#{key.color})",
@@ -65,13 +65,13 @@ class Views::Worlds::Show < Views::Base
               card.footer(class: "flex gap-2 justify-center") do
                 button_link_to(
                   "your friends",
-                  [ @world, :keys ],
+                  [ @world, WorldKey ],
                   variant: :secondary,
                   icon: "huge/user-group",
                 )
                 button_link_to(
                   "invite a friend to your world",
-                  [ :share, @world, :key ],
+                  [ :new, @world, :key_grant ],
                   variant: :secondary,
                   icon: "huge/user-add-01",
                 )

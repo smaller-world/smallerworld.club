@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Views::WorldKeys::Share < Views::Base
+class Views::WorldKeyGrants::New < Views::Base
   # == Initialization ==
 
   sig { params(world: World, key_color: T.nilable(Symbol)).void }
@@ -30,7 +30,7 @@ class Views::WorldKeys::Share < Views::Base
           end
           card.content do
             turbo_frame_tag(:form) do
-              Components::ShareWorldKeyForm(world: @world, key_color: @key_color)
+              Components::WorldKeyGrantForm(world: @world, key_color: @key_color)
             end
           end
         end

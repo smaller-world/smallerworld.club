@@ -4,7 +4,7 @@
 class WorldKeysController < ApplicationController
   # == Filters ==
 
-  allow_unauthenticated_access only: :receive
+  allow_unauthenticated_access only: :new
 
   # == Actions ==
 
@@ -15,15 +15,8 @@ class WorldKeysController < ApplicationController
     render Views::WorldKeys::Index.new(world:, keys_by_recipient:)
   end
 
-  # GET /worlds/:world_id/keys/share
-  def share
-    world = find_world
-    key_color = params[:key_color]&.to_sym
-    render Views::WorldKeys::Share.new(world:, key_color:)
-  end
-
-  # GET /world_keys/receive/:grant
-  def receive
+  # GET /world_keys/new?grant=...
+  def new
     grant = params.fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
     world = World.find(world_id)
@@ -31,22 +24,23 @@ class WorldKeysController < ApplicationController
       redirect_to(world)
     else
       key = WorldKey.new(world:, color:, recipient: current_user)
-      render Views::WorldKeys::Receive.new(key:)
+      render Views::WorldKeys::New.new(key:)
     end
   end
 
-  # POST /world_keys/accept
-  def accept
+  # POST /worlds/:world_id/keys
+  def create
     current_user = current_user!
     grant = params.require(:world_key).fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
+    world = World.find(world_id)
     key = current_user.world_keys.build(world_id:, color:)
     if key.save
-      redirect_to(key.world!)
+      redirect_to(world, notice: "welcome to #{world.name}!")
     else
       flash.now.alert = key.errors.full_messages.first
       render(
-        Views::WorldKeys::Receive.new(key:),
+        Views::WorldKeys::New.new(key:),
         status: :unprocessable_content,
       )
     end
@@ -57,7 +51,7 @@ class WorldKeysController < ApplicationController
     key = find_key
     authorize!(key)
     key.destroy!
-    redirect_to([ key.world!, :keys ])
+    redirect_to([ key.world!, WorldKey ])
   end
 
   private

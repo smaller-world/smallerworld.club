@@ -97,6 +97,7 @@ class Components::Layout < Components::Base
         Components::Header()
         flash_card(class: "m-4 self-center")
         raw(body) # rubocop:disable Rails/OutputSafety
+        update_account_time_zone_form
       end
     end
   end
@@ -171,6 +172,22 @@ class Components::Layout < Components::Base
     ) do |card|
       card.content(class: "font-medium") do
         message
+      end
+    end
+  end
+
+  sig { void }
+  def update_account_time_zone_form
+    if (user = Current.user)
+      form_with(
+        model: user,
+        url: account_time_zone_path,
+        class: "hidden",
+      ) do |form|
+        form.hidden_field(
+          :time_zone_name,
+          data: { controller: "current-time-zone-input" },
+        )
       end
     end
   end

@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::ShareWorldKeyForm < Components::Base
+class Components::WorldKeyGrantForm < Components::Base
   include Shortlinking
 
   # == Initialization ==
@@ -18,7 +18,7 @@ class Components::ShareWorldKeyForm < Components::Base
   sig { override.void }
   def view_template
     form_with(
-      url: [ :share, @world, :key ],
+      url: [ :new, @world, :key_grant ],
       method: :get,
       class: "flex flex-col gap-6",
       data: {
@@ -62,34 +62,36 @@ class Components::ShareWorldKeyForm < Components::Base
         end
       end
 
-      div(class: "text-xs text-center text-muted-foreground italic") do
-        if @key_color
-          "get your friend to scan this qr code:"
-        else
-          "pick a color!"
-        end
-      end
-
-      if @key_color
-        div(class: "flex flex-col gap-y-1") do
-          qr_code(@key_color)
-          if Rails.env.development?
-            Components::Button(
-              variant: :link,
-              size: :sm,
-              class: "self-center text-muted-foreground text-xs",
-              data: {
-                controller: "clipboard flash",
-                clipboard_copy_value: receive_world_keys_url(@key_color),
-                flash_text_value: "copied!",
-                action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
-              },
-            ) do
-              "copy url (for development)"
-            end
+      div(class: "flex flex-col gap-3") do
+        span(class: "text-xs text-center text-muted-foreground italic") do
+          if @key_color
+            "get your friend to scan this qr code:"
+          else
+            "pick a color!"
           end
         end
 
+        if @key_color
+          div(class: "flex flex-col gap-y-1") do
+            qr_code(@key_color)
+            if Rails.env.development?
+              Components::Button(
+                variant: :link,
+                size: :sm,
+                class: "self-center text-muted-foreground text-xs",
+                data: {
+                  controller: "clipboard flash",
+                  clipboard_copy_value: new_world_key_url(@key_color),
+                  flash_text_value: "copied!",
+                  action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
+                },
+              ) do
+                "copy url (for development)"
+              end
+            end
+          end
+
+        end
       end
     end
   end
@@ -100,14 +102,14 @@ class Components::ShareWorldKeyForm < Components::Base
 
   sig { params(key_color: Symbol).void }
   def qr_code(key_color)
-    qr_code = RQRCode::QRCode.new(receive_world_keys_url(key_color))
+    qr_code = RQRCode::QRCode.new(new_world_key_url(key_color))
     svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
     raw(safe(svg)) # rubocop:disable Rails/OutputSafety
   end
 
   sig { params(key_color: Symbol).returns(String) }
-  def receive_world_keys_url(key_color)
+  def new_world_key_url(key_color)
     grant = @world.key_grant(color: key_color)
-    shortlinked.receive_world_keys_url(grant:)
+    shortlinked.new_world_key_url(grant:)
   end
 end

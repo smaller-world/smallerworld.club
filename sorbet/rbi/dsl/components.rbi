@@ -8,15 +8,6 @@
 module Components
   sig do
     params(
-      key: ::WorldKey,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
-    ).void
-  end
-  def AcceptWorldKeyForm(key:, **attributes, &block); end
-
-  sig do
-    params(
       user: ::User,
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
@@ -317,16 +308,6 @@ module Components
 
   sig do
     params(
-      world: ::World,
-      key_color: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ShareWorldKeyForm).void)
-    ).void
-  end
-  def ShareWorldKeyForm(world:, key_color:, **attributes, &block); end
-
-  sig do
-    params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Spinner).void)
@@ -355,6 +336,25 @@ module Components
 
   sig do
     params(
+      key: ::WorldKey,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
+    ).void
+  end
+  def WorldKeyForm(key:, **attributes, &block); end
+
+  sig do
+    params(
+      world: ::World,
+      key_color: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
+    ).void
+  end
+  def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
+
+  sig do
+    params(
       world: ::World,
       pagy: T.nilable(::Pagy),
       options: T.untyped,
@@ -372,15 +372,6 @@ module Components
   def WorldPostItems(posts:, &block); end
 
   class << self
-    sig do
-      params(
-        key: ::WorldKey,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
-      ).void
-    end
-    def AcceptWorldKeyForm(key:, **attributes, &block); end
-
     sig do
       params(
         user: ::User,
@@ -688,16 +679,6 @@ module Components
 
     sig do
       params(
-        world: ::World,
-        key_color: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ShareWorldKeyForm).void)
-      ).void
-    end
-    def ShareWorldKeyForm(world:, key_color:, **attributes, &block); end
-
-    sig do
-      params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Spinner).void)
@@ -723,6 +704,25 @@ module Components
       ).void
     end
     def WorldForm(world:, **options, &block); end
+
+    sig do
+      params(
+        key: ::WorldKey,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
+      ).void
+    end
+    def WorldKeyForm(key:, **attributes, &block); end
+
+    sig do
+      params(
+        world: ::World,
+        key_color: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
+      ).void
+    end
+    def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
 
     sig do
       params(

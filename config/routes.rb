@@ -29,7 +29,9 @@ Rails.application.routes.draw do
   end
 
   # == Account
-  resource :account, only: [ :new, :create ]
+  resource :account, only: [ :new, :create ] do
+    resource :time_zone, only: [ :update ]
+  end
 
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
   #   post :callback
@@ -47,20 +49,15 @@ Rails.application.routes.draw do
     resources :posts, only: [ :index, :new, :create ]
     resources :world_keys,
       path: "/keys",
-      only: [ :index ],
-      as: :keys
+      only: [ :index ]
+    resources :world_key_grants,
+      path: "/key_grants",
+      only: :new,
+      as: :key_grants
   end
-  get "worlds/:world_id/keys/share",
-    to: "world_keys#share",
-    as: :share_world_key
 
   # == World keys
-  resources :world_keys, only: :destroy do
-    collection do
-      get "receive/:grant", action: :receive, as: :receive
-      post :accept
-    end
-  end
+  resources :world_keys, only: [ :new, :create, :destroy ]
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ]
