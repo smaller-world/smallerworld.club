@@ -1,22 +1,28 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::ClearableFileInput < Components::Base
+class Components::ClearableFileInput < Components::Input
   sig do
     params(
       form: T.nilable(PhlexFormBuilder),
-      value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       field: T.nilable(Symbol),
+      value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       direct_upload: T::Boolean,
+      required: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(form: nil, value: nil, field: nil, direct_upload: true, **attributes)
-    @form = form
-    @field = field
+  def initialize(
+    form: nil,
+    field: nil,
+    value: nil,
+    direct_upload: true,
+    required: false,
+    attributes: T.untyped
+  )
     @direct_upload = direct_upload
     @input_options = T.let(
-      delete_from(attributes, :required),
+      { required: },
       T.nilable(T::Hash[Symbol, T.untyped]),
     )
     @blob = T.let(
@@ -26,11 +32,18 @@ class Components::ClearableFileInput < Components::Base
       when ActiveStorage::Attachment
         value.blob
       when nil
-        attached_blob
+        if form && field
+          case value = form.object.try(field)
+          when ActiveStorage::Attached::One, ActiveStorage::Attachment
+            value.blob
+          when ActiveStorage::Blob
+            value
+          end
+        end
       end,
       T.nilable(ActiveStorage::Blob),
     )
-    super(**attributes)
+    super(form:, field:, **attributes)
   end
 
   # == Component ==
@@ -76,18 +89,6 @@ class Components::ClearableFileInput < Components::Base
   private
 
   # == Helpers ==
-
-  sig { returns(T.nilable(ActiveStorage::Blob)) }
-  def attached_blob
-    if @form && @field
-      case value = @form.object.try(@field)
-      when ActiveStorage::Attached::One, ActiveStorage::Attachment
-        value.blob
-      when ActiveStorage::Blob
-        value
-      end
-    end
-  end
 
   sig { params(group: Components::InputGroup).void }
   def empty_inputs(group:)

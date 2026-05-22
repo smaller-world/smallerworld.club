@@ -1,0 +1,64 @@
+@import "@uppy/core/css/style.min.css" layer(base);
+@import "@uppy/drag-drop/css/style.min.css" layer(base);
+
+@layer components {
+  .uppy-dnd-dropzone {
+    @apply flex flex-col rounded-md;
+
+    &:not(:has(.uppy-Root)) {
+      @apply animate-pulse bg-muted;
+    }
+
+    .uppy-Root {
+      border-radius: inherit;
+
+      @apply flex-1;
+    }
+
+    .uppy-DragDrop-container {
+      border-radius: inherit;
+
+      @apply relative border-muted-foreground/75;
+
+      &::before {
+        @apply absolute inset-px;
+
+        content: "";
+        background-image: var(--preview-image);
+        background-size: contain;
+        border-radius: inherit;
+      }
+    }
+
+    .uppy-DragDrop-inner {
+      border-radius: inherit;
+
+      @apply z-10 flex h-full flex-col items-center justify-center p-4;
+
+      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value] & {
+        @apply bg-background/70 opacity-0 backdrop-blur-sm transition-opacity hover:opacity-100;
+      }
+    }
+
+    .uppy-DragDrop-arrow {
+      @apply mb-2 size-10 fill-accent-foreground/20;
+
+      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value] & {
+        @apply fill-accent-foreground/50;
+      }
+    }
+
+    .uppy-DragDrop-label {
+      @apply font-heading text-base leading-tight lowercase;
+    }
+  }
+
+  .uppy-dnd-clear {
+    @apply self-center;
+
+    [data-controller~="uppy-dnd"]:not([data-uppy-dnd-preview-signed-id-value])
+      & {
+      @apply hidden;
+    }
+  }
+}

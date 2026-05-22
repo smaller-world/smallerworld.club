@@ -26,10 +26,14 @@ class Components::WorldForm < Components::Base
         f.error
       end
 
-      field_for(form, :icon) do |f|
+      field_for(form, :icon, data: { controller: "field" }) do |f|
         f.label { "icon" }
-        f.clearable_file_input(direct_upload: true, required: true)
-        f.error
+        div(class: "flex flex-col items-center") do
+          f.uppy_dnd(dropzone_class: "size-40 rounded-world-icon", data: {
+            action: "uppy:error->field#showError",
+          })
+        end
+        f.error(data: { field_target: "error" })
       end
 
       submit_button_for(form) do |button|

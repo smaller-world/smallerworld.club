@@ -40,6 +40,9 @@ module GeneratedUrlHelpersModule
   def logs_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def media_preview_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def metrics_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -58,6 +61,9 @@ module GeneratedUrlHelpersModule
   def new_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_key_grant_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -65,9 +71,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_world_world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_url(*args); end

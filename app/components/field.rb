@@ -163,8 +163,6 @@ class Components::Field < Components::Base
     ).void
   end
   def error(errors: error_messages, **attributes, &content)
-    return if content.nil? && errors.blank?
-
     div(**mix(
       {
         class: "field-error",
@@ -209,37 +207,37 @@ class Components::Field < Components::Base
     ).void
   end
   def input_group(**attributes, &block)
-    Components::InputGroup(form: @form, field: @field, **attributes, &block)
+    render Components::InputGroup.new(form: @form, field: @field, **attributes, &block)
   end
 
-  sig { params(options: T.untyped).void }
-  def input(**options)
-    Components::Input(form: @form, field: @field, **options)
+  sig { params(attributes: T.untyped).void }
+  def input(**attributes)
+    render Components::Input.new(form: @form, field: @field, **attributes)
   end
 
-  sig { params(options: T.untyped).void }
-  def text_input(**options)
-    input(type: :text, **options)
+  sig { params(attributes: T.untyped).void }
+  def text_input(**attributes)
+    input(type: :text, **attributes)
   end
 
   sig do
     params(
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       direct_upload: T::Boolean,
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
   def file_input(
     value: nil,
     direct_upload: true,
-    **options
+    **attributes
   )
-    Components::FileInput(
+    render Components::FileInput.new(
       form: @form,
       field: @field,
       value:,
       direct_upload:,
-      **options,
+      **attributes,
     )
   end
 
@@ -251,7 +249,7 @@ class Components::Field < Components::Base
     ).void
   end
   def clearable_file_input(value: nil, direct_upload: true, **attributes)
-    Components::ClearableFileInput(
+    render Components::ClearableFileInput.new(
       form: @form,
       field: @field,
       value:,
@@ -260,34 +258,44 @@ class Components::Field < Components::Base
     )
   end
 
-  sig { params(options: T.untyped).void }
-  def textarea(**options)
-    Components::Textarea(form: @form, field: @field, **options)
+  sig { params(attributes: T.untyped).void }
+  def textarea(**attributes)
+    render Components::Textarea.new(form: @form, field: @field, **attributes)
   end
 
   sig do
     params(
-      options: T.untyped,
+      attributes: T.untyped,
       content: T.nilable(T.proc.params(editor: Components::LexxyEditor).void),
     ).void
   end
-  def lexxy_editor(**options, &content)
-    Components::LexxyEditor(form: @form, field: @field, **options, &content)
+  def lexxy_editor(**attributes, &content)
+    render Components::LexxyEditor.new(form: @form, field: @field, **attributes, &content)
   end
 
   sig do
     params(
-      options: T.untyped,
+      attributes: T.untyped,
       content: T.proc.params(comobox: Components::Combobox).void,
     ).void
   end
-  def combobox(**options, &content)
-    Components::Combobox(form: @form, field: @field, **options, &content)
+  def combobox(**attributes, &content)
+    render Components::Combobox.new(form: @form, field: @field, **attributes, &content)
   end
 
-  sig { params(options: T.untyped).void }
-  def phone_number_input(**options)
-    Components::PhoneNumberInput(form: @form, field: @field, **options)
+  sig { params(attributes: T.untyped).void }
+  def phone_number_input(**attributes)
+    render Components::PhoneNumberInput.new(form: @form, field: @field, **attributes)
+  end
+
+  sig do
+    params(
+      value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
+      attributes: T.untyped,
+    ).void
+  end
+  def uppy_dnd(value: nil, **attributes)
+    render Components::UppyDnd.new(form: @form, field: @field, value:, **attributes)
   end
 
   # sig { params(attributes: T.untyped).void }

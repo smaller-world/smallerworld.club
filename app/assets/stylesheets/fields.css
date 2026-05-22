@@ -57,6 +57,7 @@
 
   :where(.field-error) {
     @apply text-sm font-normal text-destructive;
+    @apply empty:hidden;
 
     ul {
       @apply ml-4 flex list-disc flex-col gap-1;

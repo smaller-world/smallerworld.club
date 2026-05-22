@@ -13,10 +13,10 @@ export default class AccountFormController extends Controller {
 
   connect(): void {
     if (!this.hasNameInputTarget) {
-      throw new Error("Missing target: nameInput");
+      throw new Error("Missing nameInput target");
     }
     if (!this.hasSubmitButtonLabelTarget) {
-      throw new Error("Missing target: submitButtonLabel");
+      throw new Error("Missing submitButtonLabel target");
     }
     super.connect();
   }

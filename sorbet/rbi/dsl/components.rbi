@@ -46,14 +46,15 @@ module Components
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
-      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
       field: T.nilable(::Symbol),
+      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
       direct_upload: T::Boolean,
+      required: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
     ).void
   end
-  def ClearableFileInput(form: T.unsafe(nil), value: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+  def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
 
   sig do
     params(
@@ -327,6 +328,17 @@ module Components
 
   sig do
     params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
+    ).void
+  end
+  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       world: ::World,
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
@@ -412,14 +424,15 @@ module Components
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
-        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
         field: T.nilable(::Symbol),
+        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
         direct_upload: T::Boolean,
+        required: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
       ).void
     end
-    def ClearableFileInput(form: T.unsafe(nil), value: T.unsafe(nil), field: T.unsafe(nil), direct_upload: T.unsafe(nil), **attributes, &block); end
+    def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
 
     sig do
       params(
@@ -695,6 +708,17 @@ module Components
       ).void
     end
     def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
+      ).void
+    end
+    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

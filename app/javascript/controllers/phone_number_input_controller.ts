@@ -43,16 +43,16 @@ export default class PhoneNumberInputController extends Controller {
 
   connect(): void {
     if (!this.hasCountryCodeInputTarget) {
-      throw new Error("Missing target: countryCodeInput");
+      throw new Error("Missing countryCodeInput target");
     }
     if (!this.hasNationalNumberInputTarget) {
-      throw new Error("Missing target: nationalNumberInput");
+      throw new Error("Missing nationalNumberInput target");
     }
     if (!this.hasCountryFlagAddonTarget) {
-      throw new Error("Missing target: countryFlagAddon");
+      throw new Error("Missing countryFlagAddon target");
     }
     if (!this.hasHiddenInputTarget) {
-      throw new Error("Missing target: hiddenInput");
+      throw new Error("Missing hiddenInput target");
     }
 
     this.#inputCountryCodeObserver.observe(this.countryCodeInputTarget, {

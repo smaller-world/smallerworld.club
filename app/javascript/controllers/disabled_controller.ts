@@ -25,7 +25,6 @@ export default class DisabledController extends Controller<
 
   connect(): void {
     super.connect();
-    console.log({ enableAfterValue: this.enableAfterValue });
     if (typeof this.enableAfterValue === "number") {
       this.#timeout = setTimeout(() => {
         this.element.disabled = false;

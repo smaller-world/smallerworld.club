@@ -17,7 +17,7 @@ class Views::Home::Show < Views::Base
   sig { override.void }
   def view_template
     user = Current.user
-    Components::Layout() do |layout|
+    Components::Layout(page_title: "home") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         Components::Card() do |card|
           card.content(class: "flex items-center gap-x-4") do

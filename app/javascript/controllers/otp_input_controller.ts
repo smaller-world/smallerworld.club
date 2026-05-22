@@ -23,7 +23,7 @@ export default class OtpInputController extends Controller {
 
   connect(): void {
     if (!this.hasInputTarget) {
-      throw new Error("Missing target: input");
+      throw new Error("Missing input target");
     }
     this.updateSlots();
   }

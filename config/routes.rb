@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     resource :time_zone, only: [ :update ]
   end
 
+  # == Media previews
+  resources :media_previews, only: [ :show ], param: :signed_id
+
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
   #   post :callback
   # end

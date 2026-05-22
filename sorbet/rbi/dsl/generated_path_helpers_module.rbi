@@ -40,6 +40,9 @@ module GeneratedPathHelpersModule
   def logs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def media_preview_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def metrics_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -58,6 +61,9 @@ module GeneratedPathHelpersModule
   def new_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_key_grant_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -65,9 +71,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_post_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_world_world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_path(*args); end
