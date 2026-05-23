@@ -6,7 +6,11 @@ class MediaPreviewsController < ApplicationController
   def show
     signed_id = params.fetch(:signed_id)
     blob = ActiveStorage::Blob.find_signed!(signed_id)
-    variant = blob.variant(resize_to_limit: [ 800, 800 ], convert: "png")
-    redirect_to(rails_representation_path(variant))
+    representation = if blob.content_type == "image/gif"
+      blob
+    else
+      blob.variant(resize_to_limit: [ 800, 800 ], convert: "png")
+    end
+    redirect_to(rails_representation_path(representation))
   end
 end

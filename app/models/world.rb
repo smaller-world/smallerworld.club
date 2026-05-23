@@ -78,9 +78,15 @@ class World < ApplicationRecord
     icon_attachment&.variant(:favicon)
   end
 
-  sig { returns(T.nilable(ActiveStorage::VariantWithRecord)) }
+  sig { returns(T.nilable(T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob))) }
   def page_icon_variant
-    icon_attachment&.variant(:page_icon)
+    attachment = icon_attachment or return
+    blob = attachment.blob or return
+    if blob.content_type == "image/gif"
+      blob
+    else
+      attachment.variant(:page_icon)
+    end
   end
 
   # == Validations ==

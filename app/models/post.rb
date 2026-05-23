@@ -47,9 +47,16 @@ class Post < ApplicationRecord
     attachable.variant(:thumbnail, resize_to_limit: [ 800, 800 ])
   end
 
-  sig { returns(T::Array[ActiveStorage::VariantWithRecord]) }
-  def image_thumbnails
-    images_attachments.map { |attachment| attachment.variant(:thumbnail) }
+  sig { returns(T::Array[T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)]) }
+  def images_thumbnails
+    images_attachments.map do |attachment|
+      blob = attachment.blob or next
+      if blob.content_type == "image/gif"
+        blob
+      else
+        attachment.variant(:thumbnail)
+      end
+    end
   end
 
   # == Normalizations

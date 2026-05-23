@@ -106,7 +106,11 @@ export default class UppyDndController extends Controller<HTMLElement> {
           return;
         }
         const imageEditor = uppy.getPlugin("ImageEditor");
-        if (!this.multipleValue && imageEditor?.canEditFile(file)) {
+        if (
+          !this.multipleValue &&
+          imageEditor?.canEditFile(file) &&
+          file.type !== "image/gif"
+        ) {
           this.dispatch("open-image-editor", {
             target: this.imageEditorDialogTarget,
           });

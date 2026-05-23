@@ -37,7 +37,7 @@ class Components::WorldForm < Components::Base
               "image/gif",
               "image/heic",
               "image/webp",
-              "image/svg+xml",
+              # "image/svg+xml",
               "image/avif",
             ],
             crop_to_aspect_ratio: 1,
