@@ -22,11 +22,10 @@
       color: unset;
 
       &::before {
-        @apply absolute inset-px;
+        @apply absolute inset-px bg-cover;
 
         content: "";
         background-image: var(--preview-image);
-        background-size: contain;
         border-radius: inherit;
       }
     }
@@ -47,7 +46,7 @@
         @apply relative;
 
         &::before {
-          @apply absolute bg-background/70 backdrop-blur-sm;
+          @apply absolute inset-0 bg-background/70 backdrop-blur-sm;
 
           content: "";
           border-radius: inherit;

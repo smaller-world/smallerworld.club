@@ -14,11 +14,17 @@ export default class UppyDndController extends Controller<HTMLElement> {
     previewUrlTemplate: String,
     previewSignedId: String,
     inputId: String,
+    multiple: Boolean,
+    required: Boolean,
+    allowedFileTypes: String,
   };
   declare readonly directUploadUrlValue: string;
   declare readonly previewUrlTemplateValue: string;
   declare previewSignedIdValue: string | undefined;
   declare readonly inputIdValue: string;
+  declare readonly multipleValue: boolean;
+  declare readonly requiredValue: boolean;
+  declare readonly allowedFileTypesValue: string;
 
   // == Targets ==
   static targets = ["dropzone", "hiddenInput"];
@@ -44,10 +50,18 @@ export default class UppyDndController extends Controller<HTMLElement> {
     this.#uppy?.destroy();
     const uppy = new Uppy<Meta, { signed_id: string }>({
       debug: isDevelopment(),
+      restrictions: {
+        minNumberOfFiles: this.requiredValue ? 1 : null,
+        maxNumberOfFiles: this.multipleValue ? null : 1,
+        allowedFileTypes: this.allowedFileTypesValue
+          .split(",")
+          .map((type) => type.trim()),
+      },
     })
       .use(DragDrop, {
         target: this.dropzoneTarget,
         inputName: "",
+        allowMultipleFiles: this.multipleValue,
       })
       .use(ActiveStorageUpload, {
         directUploadUrl: this.directUploadUrlValue,

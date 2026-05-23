@@ -29,9 +29,22 @@ class Components::WorldForm < Components::Base
       field_for(form, :icon, data: { controller: "field" }) do |f|
         f.label { "icon" }
         div(class: "flex flex-col items-center") do
-          f.uppy_dnd(dropzone_class: "size-40 rounded-world-icon", data: {
-            action: "uppy:error->field#showError",
-          })
+          f.uppy_dnd(
+            required: true,
+            allowed_file_types: [
+              "image/png",
+              "image/jpeg",
+              "image/gif",
+              "image/heic",
+              "image/webp",
+              "image/svg+xml",
+              "image/avif",
+            ],
+            dropzone_class: "size-40 rounded-world-icon",
+            data: {
+              action: "uppy:error->field#showError",
+            },
+          )
         end
         f.error(data: { field_target: "error" })
       end

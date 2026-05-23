@@ -11,12 +11,27 @@ class Components::UppyDnd < Components::Input
       form: T.nilable(PhlexFormBuilder),
       field: T.nilable(Symbol),
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
+      required: T::Boolean,
+      multiple: T::Boolean,
+      allowed_file_types: T.nilable(T::Array[String]),
       dropzone_class: T.nilable(String),
       attributes: T.untyped,
     )
       .void
   end
-  def initialize(form: nil, field: nil, value: nil, dropzone_class: nil, **attributes)
+  def initialize(
+    form: nil,
+    field: nil,
+    value: nil,
+    required: false,
+    multiple: false,
+    allowed_file_types: nil,
+    dropzone_class: nil,
+    **attributes
+  )
+    @required = required
+    @multiple = multiple
+    @allowed_file_types = allowed_file_types
     @dropzone_class = dropzone_class
     @blob = T.let(
       case value
@@ -58,6 +73,9 @@ class Components::UppyDnd < Components::Input
         uppy_dnd_preview_url_template_value: media_preview_path(":signed_id"),
         uppy_dnd_preview_signed_id_value: @blob&.signed_id,
         uppy_dnd_input_id_value: @form&.field_id(@field),
+        uppy_dnd_required_value: @required,
+        uppy_dnd_multiple_value: @multiple,
+        uppy_dnd_allowed_file_types_value: @allowed_file_types&.join(","),
       },
     ) do
       div(
