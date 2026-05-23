@@ -10,15 +10,16 @@
     }
 
     .uppy-Root {
-      border-radius: inherit;
+      @apply flex-1 text-foreground/60;
 
-      @apply flex-1;
+      border-radius: inherit;
     }
 
     .uppy-DragDrop-container {
-      border-radius: inherit;
+      @apply relative border-muted-foreground/75 bg-background;
 
-      @apply relative border-muted-foreground/75;
+      border-radius: inherit;
+      color: unset;
 
       &::before {
         @apply absolute inset-px;
@@ -31,30 +32,50 @@
     }
 
     .uppy-DragDrop-inner {
+      @apply z-10 flex h-full flex-col items-center justify-center p-4 transition-opacity;
+
       border-radius: inherit;
 
-      @apply z-10 flex h-full flex-col items-center justify-center p-4;
+      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value]:not(
+          [aria-busy]
+        )
+        & {
+        @apply bg-background/70 opacity-0 backdrop-blur-sm hover:opacity-100;
+      }
 
-      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value] & {
-        @apply bg-background/70 opacity-0 backdrop-blur-sm transition-opacity hover:opacity-100;
+      [data-controller~="uppy-dnd"][aria-busy="true"] & {
+        @apply relative;
+
+        &::before {
+          @apply absolute bg-background/70 backdrop-blur-sm;
+
+          content: "";
+          border-radius: inherit;
+        }
+
+        &::after {
+          @apply absolute spinner;
+
+          content: "";
+        }
       }
     }
 
     .uppy-DragDrop-arrow {
-      @apply mb-2 size-10 fill-accent-foreground/20;
-
-      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value] & {
-        @apply fill-accent-foreground/50;
-      }
+      @apply mb-2 size-10 fill-accent-foreground/50;
     }
 
     .uppy-DragDrop-label {
       @apply font-heading text-base leading-tight lowercase;
     }
+
+    .uppy-DragDrop-browse {
+      @apply text-accent-foreground;
+    }
   }
 
-  .uppy-dnd-clear {
-    @apply self-center;
+  .button[data-variant="link"].uppy-dnd-clear {
+    @apply self-center text-muted-foreground;
 
     [data-controller~="uppy-dnd"]:not([data-uppy-dnd-preview-signed-id-value])
       & {

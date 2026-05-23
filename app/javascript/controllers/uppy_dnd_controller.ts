@@ -55,7 +55,19 @@ export default class UppyDndController extends Controller<HTMLElement> {
       .on("file-added", () => {
         void uppy.upload();
       })
+      .on("upload", () => {
+        this.element.ariaBusy = "true";
+      })
+      .on("upload-error", (file, { message }) => {
+        console.error(`Failed to upload file: ${message}`);
+        this.dispatch("error", {
+          detail: {
+            message: `failed to upload file: ${message}`,
+          },
+        });
+      })
       .on("complete", ({ successful, failed }) => {
+        this.element.ariaBusy = null;
         const fileIDs: string[] = [];
         if (successful) {
           for (const file of successful) {
@@ -67,14 +79,6 @@ export default class UppyDndController extends Controller<HTMLElement> {
           fileIDs.concat(map(failed, "id"));
         }
         uppy.removeFiles(fileIDs);
-      })
-      .on("upload-error", (file, { message }) => {
-        console.error(`Failed to upload file: ${message}`);
-        this.dispatch("error", {
-          detail: {
-            message: `failed to upload file: ${message}`,
-          },
-        });
       });
     this.#uppy = uppy;
     this.#customizeUI();
