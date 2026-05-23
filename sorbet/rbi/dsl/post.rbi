@@ -17,6 +17,12 @@ class Post
   sig { params(value: T.untyped).returns(T.untyped) }
   def body=(value); end
 
+  sig { returns(ActiveStorage::Attached::Many) }
+  def images; end
+
+  sig { params(attachable: T.untyped).returns(T.untyped) }
+  def images=(attachable); end
+
   sig { returns(ActionText::RichText) }
   def rich_text_body; end
 
@@ -406,6 +412,34 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def images_attachment_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def images_attachment_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :images_attachments`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::ActiveStorage::Attachment::PrivateCollectionProxy) }
+    def images_attachments; end
+
+    sig { params(value: T::Enumerable[::ActiveStorage::Attachment]).void }
+    def images_attachments=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def images_blob_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def images_blob_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :images_blobs, through: :images_attachments`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::ActiveStorage::Blob::PrivateCollectionProxy) }
+    def images_blobs; end
+
+    sig { params(value: T::Enumerable[::ActiveStorage::Blob]).void }
+    def images_blobs=(value); end
+
     sig { returns(T.nilable(::User)) }
     def reload_author; end
 
@@ -590,6 +624,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_attached_images(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
@@ -1152,6 +1189,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_attached_images(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end

@@ -19,6 +19,7 @@ import RadioGroupController from "./radio_group_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
 import TooltipController from "./tooltip_controller";
 import UppyDndController from "./uppy_dnd_controller";
+import UppyGroupController from "./uppy_group_controller";
 
 // import LoremPicsumController from "./lorem_picsum_controller";
 
@@ -41,5 +42,6 @@ application.register("account-form", AccountFormController);
 application.register("radio-group", RadioGroupController);
 application.register("form", FormController);
 application.register("uppy-dnd", UppyDndController);
+application.register("uppy-group", UppyGroupController);
 
 // application.register("otp-input", OtpInputController);

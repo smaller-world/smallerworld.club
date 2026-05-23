@@ -3,7 +3,7 @@
 
 @layer components {
   .uppy-dnd-dropzone {
-    @apply flex flex-col rounded-md;
+    @apply flex flex-col rounded-xl;
 
     &:not(:has(.uppy-Root)) {
       @apply animate-pulse bg-muted;
@@ -16,7 +16,7 @@
     }
 
     .uppy-DragDrop-container {
-      @apply relative border-muted-foreground/75 bg-background;
+      @apply relative flex flex-col items-stretch border-muted-foreground/75 bg-background;
 
       border-radius: inherit;
       color: unset;
@@ -31,7 +31,7 @@
     }
 
     .uppy-DragDrop-inner {
-      @apply z-10 flex h-full flex-col items-center justify-center p-4 transition-opacity;
+      @apply z-10 flex h-full flex-1 flex-col items-center justify-center p-4 transition-opacity;
 
       border-radius: inherit;
 
@@ -80,5 +80,9 @@
       & {
       @apply hidden;
     }
+  }
+
+  .uppy-group {
+    @apply flex flex-wrap gap-x-4 gap-y-2;
   }
 }

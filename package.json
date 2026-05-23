@@ -20,6 +20,7 @@
     "@tailwindplus/elements": "^1.0.22",
     "@uppy/core": "^5.2.0",
     "@uppy/drag-drop": "^5.1.0",
+    "@uppy/image-editor": "^4.2.0",
     "input-otp": "^1.4.2",
     "libphonenumber-js": "^1.12.42",
     "local-time": "^3.0.3",

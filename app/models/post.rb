@@ -43,6 +43,14 @@ class Post < ApplicationRecord
   # == Attachments
 
   has_rich_text :body
+  has_many_attached :images do |attachable|
+    attachable.variant(:thumbnail, resize_to_limit: [ 800, 800 ])
+  end
+
+  sig { returns(T::Array[ActiveStorage::VariantWithRecord]) }
+  def image_thumbnails
+    images_attachments.map { |attachment| attachment.variant(:thumbnail) }
+  end
 
   # == Normalizations
 
@@ -51,6 +59,14 @@ class Post < ApplicationRecord
   # == Validations ==
 
   validates :body, presence: true
+  validates :images,
+    processable_file: true,
+    limit: { max: 4 },
+    content_type: {
+      with: %r{\A(image|video)/[a-z]+\z},
+      spoofing_protection: true,
+    },
+    size: { less_than: 64.megabytes }
 
   # == Callbacks ==
 

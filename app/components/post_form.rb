@@ -43,6 +43,24 @@ class Components::PostForm < Components::Base
         )
         f.error
       end
+      field_for(form, :images) do |f|
+        f.label { "add up to 4 pics" }
+        f.uppy_group(
+          max_files: 4,
+          allowed_file_types: [
+            "image/png",
+            "image/jpeg",
+            "image/gif",
+            "image/heic",
+            "image/webp",
+            "image/svg+xml",
+            "image/avif",
+          ],
+          class: "grid grid-cols-2 mt-1",
+          dropzone_class: "aspect-square",
+        )
+        f.error
+      end
       submit_button_for(form) do |button|
         if @post.new_record?
           button.inline_start_icon("huge/mail-send-01")

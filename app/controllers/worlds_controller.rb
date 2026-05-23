@@ -21,7 +21,10 @@ class WorldsController < ApplicationController
         if allowed_to?(:show?, world)
           pagy, posts = pagy(
             :countless,
-            world.posts.reverse_chronological,
+            world.posts
+              .reverse_chronological
+              .with_rich_text_body_and_embeds
+              .with_attached_images,
             limit: 5,
           )
           render Views::Worlds::Show.new(world:, posts:, pagy:)

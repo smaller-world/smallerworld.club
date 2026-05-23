@@ -15,6 +15,7 @@ class Components::UppyDnd < Components::Input
       multiple: T::Boolean,
       allowed_file_types: T.nilable(T::Array[String]),
       dropzone_class: T.nilable(String),
+      clear_action: T.nilable(String),
       attributes: T.untyped,
     )
       .void
@@ -27,12 +28,14 @@ class Components::UppyDnd < Components::Input
     multiple: false,
     allowed_file_types: nil,
     dropzone_class: nil,
+    clear_action: nil,
     **attributes
   )
     @required = required
     @multiple = multiple
     @allowed_file_types = allowed_file_types
     @dropzone_class = dropzone_class
+    @clear_action = clear_action
     @blob = T.let(
       case value
       when ActiveStorage::Blob
@@ -59,6 +62,7 @@ class Components::UppyDnd < Components::Input
   sig { override.void }
   def view_template
     input_options = {
+      multiple: @multiple,
       data: {
         uppy_dnd_target: "hiddenInput",
       },
@@ -94,7 +98,7 @@ class Components::UppyDnd < Components::Input
         size: :sm,
         class: "uppy-dnd-clear",
         data: {
-          action: "uppy-dnd#clear",
+          action: [ "uppy-dnd#clear", @clear_action ],
         },
       ) do
         "clear"

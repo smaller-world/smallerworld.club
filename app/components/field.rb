@@ -298,6 +298,16 @@ class Components::Field < Components::Base
     render Components::UppyDnd.new(form: @form, field: @field, value:, **attributes)
   end
 
+  sig do
+    params(
+      value: T.nilable(T::Array[ActiveStorage::Blob]),
+      attributes: T.untyped,
+    ).void
+  end
+  def uppy_group(value: nil, **attributes)
+    render Components::UppyGroup.new(form: @form, field: @field, value:, **attributes)
+  end
+
   # sig { params(attributes: T.untyped).void }
   # def otp_input(**attributes)
   #   Components::OtpInput(form: @form, field: @field, **attributes)

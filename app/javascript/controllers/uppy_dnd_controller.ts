@@ -1,11 +1,13 @@
 // @ts-expect-error Untyped package
 import ActiveStorageUpload from "@gothassos/uppy-activestorage-upload";
 import { Controller } from "@hotwired/stimulus";
-import Uppy, { type Meta, type UppyFile } from "@uppy/core";
+import Uppy, {
+  type Meta,
+  type MinimalRequiredUppyFile,
+  type UppyFile,
+} from "@uppy/core";
 import DragDrop from "@uppy/drag-drop";
-import { map } from "lodash-es";
-
-import { isDevelopment } from "#helpers/env_helpers";
+import { isEmpty, map } from "lodash-es";
 
 export default class UppyDndController extends Controller<HTMLElement> {
   // == Values ==
@@ -49,13 +51,19 @@ export default class UppyDndController extends Controller<HTMLElement> {
 
     this.#uppy?.destroy();
     const uppy = new Uppy<Meta, { signed_id: string }>({
-      debug: isDevelopment(),
+      // debug: isDevelopment(),
       restrictions: {
         minNumberOfFiles: this.requiredValue ? 1 : null,
         maxNumberOfFiles: this.multipleValue ? null : 1,
         allowedFileTypes: this.allowedFileTypesValue
           .split(",")
           .map((type) => type.trim()),
+      },
+      onBeforeFileAdded: (file, files) => {
+        if (!isEmpty(files)) {
+          uppy.removeFiles(Object.keys(files));
+        }
+        return file;
       },
     })
       .use(DragDrop, {
@@ -66,7 +74,16 @@ export default class UppyDndController extends Controller<HTMLElement> {
       .use(ActiveStorageUpload, {
         directUploadUrl: this.directUploadUrlValue,
       })
-      .on("file-added", () => {
+      .on("files-added", (files) => {
+        const [_, ...otherFiles] = files;
+        if (!isEmpty(otherFiles)) {
+          uppy.removeFiles(map(otherFiles, "id"));
+          this.dispatch("multiple-upload", {
+            detail: {
+              files: otherFiles,
+            },
+          });
+        }
         void uppy.upload();
       })
       .on("upload", () => {
@@ -93,9 +110,14 @@ export default class UppyDndController extends Controller<HTMLElement> {
           fileIDs.concat(map(failed, "id"));
         }
         uppy.removeFiles(fileIDs);
+        this.dispatch("uploaded");
       });
     this.#uppy = uppy;
     this.#customizeUI();
+    setTimeout(() => {
+      this.dispatch("ready");
+    });
+    super.connect();
   }
 
   disconnect(): void {
@@ -103,6 +125,7 @@ export default class UppyDndController extends Controller<HTMLElement> {
       this.#uppy.destroy();
       this.#uppy = null;
     }
+    super.disconnect();
   }
 
   previewSignedIdValueChanged(signedId: string) {
@@ -120,7 +143,35 @@ export default class UppyDndController extends Controller<HTMLElement> {
     }
   }
 
+  multipleValueChanged(value: boolean): void {
+    if (this.#uppy) {
+      this.#uppy.setOptions({
+        restrictions: {
+          minNumberOfFiles: this.requiredValue ? 1 : null,
+          maxNumberOfFiles: value ? null : 1,
+          allowedFileTypes: this.allowedFileTypesValue
+            .split(",")
+            .map((type) => type.trim()),
+        },
+      });
+      this.#uppy
+        .getPlugin("DragDrop")
+        ?.setOptions({ allowMultipleFiles: value });
+    }
+  }
+
   // == Actions ==
+
+  upload({
+    detail,
+  }: CustomEvent<{
+    file: MinimalRequiredUppyFile<Meta, { signed_id: string }>;
+  }>): void {
+    if (!this.#uppy) {
+      throw new Error("Uppy is not initialized");
+    }
+    this.#uppy.addFile(detail.file);
+  }
 
   clear(): void {
     this.previewSignedIdValue = undefined;
@@ -144,25 +195,4 @@ export default class UppyDndController extends Controller<HTMLElement> {
     this.hiddenInputTarget.value = signedId;
     this.previewSignedIdValue = signedId;
   }
-
-  // #upload(file: File) {
-  //   console.log("SHOULD UPLOAD", file);
-  //   const directUpload = new DirectUpload(file, this.directUploadUrlValue);
-  //   directUpload.create((error, blob) => {
-  //     if (error) {
-  //       console.error(`Failed to upload file: ${error}`);
-  //       this.dispatch("error", {
-  //         detail: {
-  //           error,
-  //           message: `failed to upload file: ${error}`,
-  //         },
-  //       });
-  //     } else if (blob) {
-  //       const input = document.createElement("input");
-  //       input.type = "hidden";
-  //       input.name = this.inputNameValue;
-  //       this.element.appendChild(input);
-  //     }
-  //   });
-  // }
 }

@@ -11,7 +11,10 @@ class PostsController < ApplicationController
         world = find_world
         pagy, posts = pagy(
           :countless,
-          world.posts.reverse_chronological,
+          world.posts
+            .reverse_chronological
+            .with_rich_text_body_and_embeds
+            .with_attached_images,
           limit: 5,
         )
         append_posts = turbo_stream.append(
@@ -57,7 +60,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
-        post_params = params.expect(post: [ :title, :body ])
+        post_params = params.expect(post: [ :title, :body, images: [] ])
         post = world.posts.build(**post_params)
         if post.save
           redirect_to(world)
@@ -73,7 +76,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         post = find_post
-        post_params = params.expect(post: [ :title, :body ])
+        post_params = params.expect(post: [ :title, :body, images: [] ])
         if post.update(post_params)
           redirect_to(post.world!)
         else
