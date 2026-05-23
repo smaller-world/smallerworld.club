@@ -5,14 +5,14 @@
 # Please instead update this file by running `bin/tapioca gem active_storage_validations`.
 
 
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#3
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:3
 module ActiveStorageValidations; end
 
 # ActiveStorageValidations::ASVActiveStorageable
 #
 # Validator helper methods to make our code more explicit.
 #
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_active_storageable.rb#7
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_active_storageable.rb:7
 module ActiveStorageValidations::ASVActiveStorageable
   extend ::ActiveSupport::Concern
 
@@ -21,22 +21,16 @@ module ActiveStorageValidations::ASVActiveStorageable
   # Retrieve either an `ActiveStorage::Attached::One` or an
   # `ActiveStorage::Attached::Many` instance depending on attribute definition
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_active_storageable.rb#14
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_active_storageable.rb:14
   def attached_files(record, attribute); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_active_storageable.rb#18
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_active_storageable.rb:18
   def attachments_present?(record, attribute); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_active_storageable.rb#22
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_active_storageable.rb:22
   def no_attachments?(record, attribute); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_active_storageable.rb#26
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_active_storageable.rb:26
   def will_have_attachments_after_save?(record, attribute); end
 end
 
@@ -45,36 +39,34 @@ end
 # Validator methods for choosing the right analyzer depending on the file
 # media type and available third-party analyzers.
 #
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#8
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:8
 module ActiveStorageValidations::ASVAnalyzable
   extend ::ActiveSupport::Concern
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#77
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:77
   def audio_analyzer_for(attachable); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#29
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:29
   def blob_has_asv_metadata?(blob, metadata_keys); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#85
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:85
   def content_type_analyzer_for(attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#81
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:81
   def fallback_analyzer_for(attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#35
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:35
   def generate_metadata_for(attachable, metadata_keys); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#58
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:58
   def image_analyzer_for(attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#67
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:67
   def image_processor; end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#43
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:43
   def metadata_analyzer_for(attachable); end
 
   # Retrieve the ASV metadata from the blob.
@@ -82,17 +74,17 @@ module ActiveStorageValidations::ASVAnalyzable
   # attachable with the corresponding analyzer and set the metadata in the
   # blob.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#19
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:19
   def metadata_for(blob, attachable, metadata_keys); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#54
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:54
   def pdf_analyzer_for(attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#73
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:73
   def video_analyzer_for(attachable); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_analyzable.rb#11
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_analyzable.rb:11
 ActiveStorageValidations::ASVAnalyzable::DEFAULT_IMAGE_PROCESSOR = T.let(T.unsafe(nil), Symbol)
 
 # ActiveStorageValidations::ASVAttachable
@@ -103,7 +95,7 @@ ActiveStorageValidations::ASVAnalyzable::DEFAULT_IMAGE_PROCESSOR = T.let(T.unsaf
 # ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile, Hash, String,
 # File or Pathname
 #
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#11
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:11
 module ActiveStorageValidations::ASVAttachable
   extend ::ActiveSupport::Concern
 
@@ -112,41 +104,41 @@ module ActiveStorageValidations::ASVAttachable
   # Add an attachment missing error when an ActiveStorage::FileNotFoundError
   # is raised.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#231
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:231
   def add_attachment_missing_error(record, attribute, attachable); end
 
   # Add a media metadata missing error when metadata is missing.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#224
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:224
   def add_media_metadata_missing_error(record, attribute, attachable, already_set_errors_options = T.unsafe(nil)); end
 
   # Retrieve the declared content_type from attachable without potential mime
   # type parameters (e.g. 'application/x-rar-compressed;version=5')
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#90
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:90
   def attachable_content_type(attachable); end
 
   # Retrieve the content_type from attachable using the same logic as Rails
   # ActiveStorage::Blob::Identifiable#identify_content_type
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#102
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:102
   def attachable_content_type_rails_like(attachable); end
 
   # Retrieve the declared filename from attachable.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#171
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:171
   def attachable_filename(attachable); end
 
   # Retrieve the io from attachable.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#120
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:120
   def attachable_io(attachable, max_byte_size: T.unsafe(nil)); end
 
   # Retrieve the media type of the attachable, which is the first part of the
   # content type (or mime type).
   # Possible values are: application/audio/example/font/image/model/text/video
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#113
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:113
   def attachable_media_type(attachable); end
 
   # Retrieve an array-like of attachables and blobs. Unlike its name suggests,
@@ -159,93 +151,81 @@ module ActiveStorageValidations::ASVAttachable
   # Some file could be passed several times, we just need to perform the
   # analysis once on the file, therefore the use of #uniq.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#41
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:41
   def attachables_and_blobs(record, attribute); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#55
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:55
   def changes_for(record, attribute); end
 
   # Remove the potential mime type parameters from the content_type (e.g.
   # 'application/x-rar-compressed;version=5')
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#96
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:96
   def content_type_without_parameters(content_type); end
 
   # Retrieve the full declared content_type from attachable.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#65
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:65
   def full_attachable_content_type(attachable); end
 
   # Retrieve the content_type from the file name only
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#219
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:219
   def marcel_content_type_from_filename(attachable); end
 
   # Raise the same Rails error for not-implemented file representations.
   #
-  # @raise [ArgumentError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#195
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:195
   def raise_rails_like_error(attachable); end
 
   # Rewind the io attachable.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#150
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:150
   def rewind_attachable_io(attachable); end
 
   # Check if the current Rails version supports ActiveStorage::Blob#download_chunk
   #
   # https://github.com/rails/rails/blob/7-0-stable/activestorage/CHANGELOG.md#rails-700alpha1-september-15-2021
   #
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#214
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:214
   def supports_blob_download_chunk?; end
 
   # Check if the current Rails version supports File or Pathname attachment
   #
   # https://github.com/rails/rails/blob/7-1-stable/activestorage/CHANGELOG.md#rails-710rc1-september-27-2023
   #
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#206
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:206
   def supports_file_attachment?; end
 
-  # Check if the current Rails version supports File or Pathname attachment
-  #
-  # https://github.com/rails/rails/blob/7-1-stable/activestorage/CHANGELOG.md#rails-710rc1-september-27-2023
-  #
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#209
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:209
   def supports_pathname_attachment?; end
 
   # Loop through the newly submitted attachables to validate them. Using
   # attachables is the only way to get the attached file io that is necessary
   # to perform file analyses.
   #
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_attachable.rb#19
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_attachable.rb:19
   def validate_changed_files_from_metadata(record, attribute, metadata_keys); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/extensors/asv_blob_metadatable.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/extensors/asv_blob_metadatable.rb:4
 module ActiveStorageValidations::ASVBlobMetadatable
   extend ::ActiveSupport::Concern
 end
 
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_errorable.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_errorable.rb:4
 module ActiveStorageValidations::ASVErrorable
   extend ::ActiveSupport::Concern
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_errorable.rb#20
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_errorable.rb:20
   def add_error(record, attribute, error_type, **errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_errorable.rb#7
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_errorable.rb:7
   def initialize_error_options(options, file = T.unsafe(nil)); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_errorable.rb#30
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_errorable.rb:30
   def get_filename(file); end
 end
 
@@ -253,36 +233,36 @@ end
 #
 # Validator helper methods for analyzers using FFprobe.
 #
-# source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#7
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:7
 module ActiveStorageValidations::ASVFFProbable
   extend ::ActiveSupport::Concern
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#53
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:53
   def audio_stream; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#45
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:45
   def ffprobe_path; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#30
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:30
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#12
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:12
   def read_media; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#57
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:57
   def streams; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb#49
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/shared/asv_ff_probable.rb:49
   def video_stream; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_loggable.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_loggable.rb:4
 module ActiveStorageValidations::ASVLoggable
   extend ::ActiveSupport::Concern
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_loggable.rb#7
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_loggable.rb:7
   def logger; end
 end
 
@@ -290,28 +270,29 @@ end
 #
 # Helper method to flatten the validator options.
 #
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_optionable.rb#7
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_optionable.rb:7
 module ActiveStorageValidations::ASVOptionable
   extend ::ActiveSupport::Concern
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_optionable.rb#16
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_optionable.rb:16
   def flatten_options(record, options, available_checks = T.unsafe(nil)); end
 
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_optionable.rb#12
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_optionable.rb:12
   def set_flat_options(record); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/shared/asv_symbolizable.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_symbolizable.rb:4
 module ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveSupport::Concern
 
   mixes_in_class_methods ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 end
 
+# pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_symbolizable.rb:7
 module ActiveStorageValidations::ASVSymbolizable::ClassMethods
-  # source://active_storage_validations//lib/active_storage_validations/shared/asv_symbolizable.rb#8
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/shared/asv_symbolizable.rb:8
   def to_sym; end
 end
 
@@ -322,253 +303,334 @@ end
 #
 # Heavily (not to say 100%) inspired by Rails own ActiveStorage::Analyzer
 #
-# source://active_storage_validations//lib/active_storage_validations/analyzer.rb#13
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:13
 class ActiveStorageValidations::Analyzer
   include ::ActiveStorageValidations::ASVAttachable
   include ::ActiveStorageValidations::ASVLoggable
 
-  # @return [Analyzer] a new instance of Analyzer
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#19
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:19
   def initialize(attachable); end
 
-  # Returns the value of attribute attachable.
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#17
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:17
   def attachable; end
 
   # Override this method in a concrete subclass. Have it return a String content type.
   #
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#24
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:24
   def content_type; end
 
   # Override this method in a concrete subclass. Have it return a Hash of metadata.
   #
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#29
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:29
   def metadata; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#84
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:84
   def instrument(analyzer, &block); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#41
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:41
   def media(tempfile); end
 
   # Override this method in a concrete subclass. Have it return a media object.
   #
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#80
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:80
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#66
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:66
   def media_from_tempfile_path(tempfile, file_representation); end
 
   # Override this method in a concrete subclass. Have it yield a media object.
   #
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/analyzer.rb#36
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer.rb:36
   def read_media; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#22
+# = ActiveStorageValidations Audio \Analyzer
+#
+# Extracts the following from an audio attachable:
+#
+# * Duration (seconds)
+# * Bit rate (bits/s)
+# * Sample rate (hertz)
+# * Tags (internal metadata)
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::AudioAnalyzer.new(attachable).metadata
+#   # => { duration: 5.0, bit_rate: 320340, sample_rate: 44100, tags: { encoder: "Lavc57.64", ... } }
+#
+# This analyzer requires the {FFmpeg}[https://www.ffmpeg.org] system library, which is not provided by \Rails.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:22
 class ActiveStorageValidations::Analyzer::AudioAnalyzer < ::ActiveStorageValidations::Analyzer
   include ::ActiveStorageValidations::ASVFFProbable
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#25
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:25
   def metadata; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#43
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:43
   def bit_rate; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#38
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:38
   def duration; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#48
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:48
   def sample_rate; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/audio_analyzer.rb#53
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/audio_analyzer.rb:53
   def tags; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/content_type_analyzer.rb#17
+# = ActiveStorageValidations ContentType \Analyzer
+#
+# Extracts the content type from an attachable. This is used to prevent content
+# type spoofing.
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::ContentTypeAnalyzer.new(attachable).content_type
+#   # => { content_type: "image/png" }
+#
+# This analyzer requires the {UNIX file}[https://en.wikipedia.org/wiki/File_(command)] command, which is not provided by \Rails. While it is available on most UNIX distributions, it may need to be installed explicitly on minimal or custom setups.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/content_type_analyzer.rb:17
 class ActiveStorageValidations::Analyzer::ContentTypeAnalyzer < ::ActiveStorageValidations::Analyzer
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/content_type_analyzer.rb#20
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/content_type_analyzer.rb:20
   def content_type; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/content_type_analyzer.rb#47
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/content_type_analyzer.rb:47
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/content_type_analyzer.rb#30
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/content_type_analyzer.rb:30
   def read_media; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/content_type_analyzer.rb#18
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/content_type_analyzer.rb:18
 class ActiveStorageValidations::Analyzer::ContentTypeAnalyzer::FileCommandLineToolNotInstalledError < ::StandardError; end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer.rb#14
+# = ActiveStorageValidations Image \Analyzer
+#
+# This is an abstract base class for image analyzers, which extract width and height from an image attachable.
+#
+# If the image contains EXIF data indicating its angle is 90 or 270 degrees, its width and height are swapped for convenience.
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::ImageAnalyzer::ImageMagick.new(attachable).metadata
+#   # => { width: 4104, height: 2736 }
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer.rb:14
 class ActiveStorageValidations::Analyzer::ImageAnalyzer < ::ActiveStorageValidations::Analyzer
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer.rb#17
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer.rb:17
   def metadata; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer.rb#31
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer.rb:31
   def analyzer_supported?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer.rb#40
+  # Override this method in a concrete subclass. Have it return true if the image is rotated.
+  #
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer.rb:40
   def rotated_image?(media); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer.rb#45
+  # Override this method in a concrete subclass. Have it return true if the analyzer is supported.
+  #
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer.rb:45
   def supported?; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb#7
+# This analyzer relies on the third-party {MiniMagick}[https://github.com/minimagick/minimagick] gem.
+# MiniMagick requires the {ImageMagick}[http://www.imagemagick.org] system library.
+# This is the default Rails image analyzer.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb:7
 class ActiveStorageValidations::Analyzer::ImageAnalyzer::ImageMagick < ::ActiveStorageValidations::Analyzer::ImageAnalyzer
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb#28
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb:28
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb#10
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb:10
   def read_media; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb#34
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb:34
   def rotated_image?(image); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb#38
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/image_magick.rb:38
   def supported?; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#6
+# This analyzer relies on the third-party {ruby-vips}[https://github.com/libvips/ruby-vips] gem.
+# Ruby-vips requires the {libvips}[https://libvips.github.io/libvips/] system library.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:6
 class ActiveStorageValidations::Analyzer::ImageAnalyzer::Vips < ::ActiveStorageValidations::Analyzer::ImageAnalyzer
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#27
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:27
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#9
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:9
   def read_media; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#42
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:42
   def rotated_image?(image); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#48
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:48
   def supported?; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/image_analyzer/vips.rb#41
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/image_analyzer/vips.rb:41
 ActiveStorageValidations::Analyzer::ImageAnalyzer::Vips::ROTATIONS = T.let(T.unsafe(nil), Regexp)
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/null_analyzer.rb#13
+# = ActiveStorageValidations Null Analyzer
+#
+# This is a fallback analyzer when the attachable media type is not supported
+# by our gem.
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::NullAnalyzer.new(attachable).metadata
+#   # => {}
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/null_analyzer.rb:13
 class ActiveStorageValidations::Analyzer::NullAnalyzer < ::ActiveStorageValidations::Analyzer
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/null_analyzer.rb#14
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/null_analyzer.rb:14
   def metadata; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#20
+# = ActiveStorageValidations PDF \Analyzer
+#
+# Extracts the following from a pdf attachable:
+#
+# * Width (pts) => for the first page only
+# * Height (pts) => for the first page only
+# * Pages (integer) => number of pages in the pdf
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::PdfAnalyzer.new(attachable).metadata
+#   # => { width: 150, height: 150, pages: 1 }
+#
+# This analyzer requires the {poppler}[https://pdf2image.readthedocs.io/en/latest/installation.html] system library, which is not provided by \Rails.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:20
 class ActiveStorageValidations::Analyzer::PdfAnalyzer < ::ActiveStorageValidations::Analyzer
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#21
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:21
   def metadata; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#81
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:81
   def height; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#51
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:51
   def media_from_path(path); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#69
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:69
   def normalize_stdout_key(key); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#85
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:85
   def pages; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#73
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:73
   def pdfinfo_path; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#33
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:33
   def read_media; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#62
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:62
   def stdout_to_hash(stdout); end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/pdf_analyzer.rb#77
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/pdf_analyzer.rb:77
   def width; end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#26
+# = ActiveStorageValidations Video \Analyzer
+#
+# Extracts the following from a video attachable:
+#
+# * Width (pixels)
+# * Height (pixels)
+# * Duration (seconds)
+# * Angle (degrees)
+# * Audio (true if file has an audio channel, false if not)
+# * Video (true if file has an video channel, false if not)
+#
+# Example:
+#
+#   ActiveStorageValidations::Analyzer::VideoAnalyzer.new(attachable).metadata
+#   # => { width: 640, height: 480, duration: 5.0, angle: 0, audio: true, video: true }
+#
+# When a video's angle is 90, -90, 270 or -270 degrees, its width and height are automatically swapped for convenience.
+#
+# This analyzer requires the {FFmpeg}[https://www.ffmpeg.org] system library, which is not provided by \Rails.
+#
+# pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:26
 class ActiveStorageValidations::Analyzer::VideoAnalyzer < ::ActiveStorageValidations::Analyzer
   include ::ActiveStorageValidations::ASVFFProbable
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#29
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:29
   def metadata; end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#65
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:65
   def angle; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#92
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:92
   def audio?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#100
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:100
   def computed_height; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#126
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:126
   def container; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#77
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:77
   def display_aspect_ratio; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#114
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:114
   def display_height_scale; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#73
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:73
   def display_matrix; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#60
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:60
   def duration; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#110
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:110
   def encoded_height; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#106
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:106
   def encoded_width; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#52
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:52
   def height; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#88
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:88
   def rotated?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#122
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:122
   def side_data; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#118
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:118
   def tags; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#96
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:96
   def video?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/analyzer/video_analyzer.rb#44
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/analyzer/video_analyzer.rb:44
   def width; end
 end
 
-# :nodoc
-#
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#11
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:11
 class ActiveStorageValidations::AspectRatioValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVAnalyzable
@@ -578,109 +640,93 @@ class ActiveStorageValidations::AspectRatioValidator < ::ActiveModel::EachValida
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#33
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:33
   def check_validity!; end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#38
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:38
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#75
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:75
   def aspect_ratio_error_mapping; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#55
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:55
   def authorized_aspect_ratio?(record, attribute, attachable, metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#139
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:139
   def authorized_aspect_ratios_from_options(flat_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#121
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:121
   def ensure_aspect_ratio_validity; end
 
-  # @raise [ArgumentError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#115
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:115
   def ensure_at_least_one_validator_option; end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#89
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:89
   def initialize_and_populate_error_options(options, attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#131
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:131
   def invalid_aspect_ratio_message; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#50
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:50
   def is_valid?(record, attribute, attachable, metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#82
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:82
   def media_metadata_present?(record, attribute, attachable, metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#143
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:143
   def string_aspect_ratios; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#103
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:103
   def valid_landscape_aspect_ratio?(metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#99
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:99
   def valid_portrait_aspect_ratio?(metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#107
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:107
   def valid_regex_aspect_ratio?(aspect_ratio, metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#95
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:95
   def valid_square_aspect_ratio?(metadata); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#21
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:21
 ActiveStorageValidations::AspectRatioValidator::ASPECT_RATIO_REGEX = T.let(T.unsafe(nil), Regexp)
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#19
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:19
 ActiveStorageValidations::AspectRatioValidator::AVAILABLE_CHECKS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#22
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:22
 ActiveStorageValidations::AspectRatioValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#31
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:31
 ActiveStorageValidations::AspectRatioValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#20
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:20
 ActiveStorageValidations::AspectRatioValidator::NAMED_ASPECT_RATIOS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/aspect_ratio_validator.rb#30
+# pkg:gem/active_storage_validations#lib/active_storage_validations/aspect_ratio_validator.rb:30
 ActiveStorageValidations::AspectRatioValidator::PRECISION = T.let(T.unsafe(nil), Integer)
 
-# source://active_storage_validations//lib/active_storage_validations/attached_validator.rb#8
+# pkg:gem/active_storage_validations#lib/active_storage_validations/attached_validator.rb:8
 class ActiveStorageValidations::AttachedValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVErrorable
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/attached_validator.rb#15
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/attached_validator.rb:15
   def check_validity!; end
 
-  # source://active_storage_validations//lib/active_storage_validations/attached_validator.rb#23
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/attached_validator.rb:23
   def validate_each(record, attribute, _value); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/attached_validator.rb#13
+# pkg:gem/active_storage_validations#lib/active_storage_validations/attached_validator.rb:13
 ActiveStorageValidations::AttachedValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#9
+# pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:9
 class ActiveStorageValidations::BaseComparisonValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVErrorable
@@ -688,48 +734,40 @@ class ActiveStorageValidations::BaseComparisonValidator < ::ActiveModel::EachVal
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # @return [BaseComparisonValidator] a new instance of BaseComparisonValidator
-  #
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#24
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:24
   def initialize(*args); end
 
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#31
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:31
   def check_validity!; end
 
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#37
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:37
   def validate_each(record, attribute, value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#75
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:75
   def exact(flat_options); end
 
-  # @raise [NotImplementedError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#67
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:67
   def format_bound_value; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#43
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:43
   def is_valid?(value, flat_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#79
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:79
   def max(flat_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#71
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:71
   def min(flat_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#61
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:61
   def populate_error_options(errors_options, flat_options); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/base_comparison_validator.rb#15
+# pkg:gem/active_storage_validations#lib/active_storage_validations/base_comparison_validator.rb:15
 ActiveStorageValidations::BaseComparisonValidator::AVAILABLE_CHECKS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#12
+# pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:12
 class ActiveStorageValidations::ContentTypeValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVAnalyzable
@@ -739,124 +777,102 @@ class ActiveStorageValidations::ContentTypeValidator < ::ActiveModel::EachValida
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#27
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:27
   def check_validity!; end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#32
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:32
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#151
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:151
   def add_content_type_invalid_error(record, attribute, attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#157
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:157
   def add_content_type_spoofed_error(record, attribute, attachable, detected_content_type); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#234
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:234
   def all_available_marcel_content_types; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#136
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:136
   def attachable_content_type_intersects_detected_content_type?; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#131
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:131
   def attachable_content_type_vs_detected_content_type_mismatch?; end
 
-  # errors_options = initialize_and_populate_error_options(options, attachable)
+  #   errors_options = initialize_and_populate_error_options(options, attachable)
   #   add_error(record, attribute, ERROR_TYPES.first, **errors_options)
   #   false
   # end
   #
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#89
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:89
   def authorized_content_type?(record, attribute, attachable); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#46
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:46
   def authorized_content_types_from_options(record); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#174
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:174
   def content_type_to_human_format(content_type); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#123
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:123
   def disable_spoofing_protection?; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#127
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:127
   def enable_spoofing_protection?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#143
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:143
   def enlarged_content_type(content_type); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#195
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:195
   def ensure_content_types_validity; end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#189
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:189
   def ensure_exactly_one_validator_option; end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#165
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:165
   def initialize_and_populate_error_options(options, attachable); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#226
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:226
   def invalid_content_type?(content_type); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#203
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:203
   def invalid_content_type_option_message(content_type); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#241
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:241
   def invalid_extension?(content_type); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#217
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:217
   def invalid_option?(content_type); end
 
   # Check if the provided content_type is authorized and not spoofed against
   # the file io.
   #
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#64
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:64
   def is_valid?(record, attribute, attachable, blob); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#102
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:102
   def marcel_attachable_content_type(attachable); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#106
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:106
   def not_spoofing_content_type?(record, attribute, attachable, blob); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#147
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:147
   def parent_content_types(content_type); end
 
-  # source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#57
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:57
   def set_attachable_cached_values(blob); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#20
+# pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:20
 ActiveStorageValidations::ContentTypeValidator::AVAILABLE_CHECKS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#21
+# pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:21
 ActiveStorageValidations::ContentTypeValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/content_type_validator.rb#25
+# pkg:gem/active_storage_validations#lib/active_storage_validations/content_type_validator.rb:25
 ActiveStorageValidations::ContentTypeValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# :nodoc
-#
-# source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#11
+# pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:11
 class ActiveStorageValidations::DimensionValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVAnalyzable
@@ -866,151 +882,141 @@ class ActiveStorageValidations::DimensionValidator < ::ActiveModel::EachValidato
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#35
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:35
   def check_validity!; end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#41
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:41
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#148
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:148
   def add_dimension_max_error(record, attribute, dimension, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#148
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:148
   def add_dimension_min_error(record, attribute, dimension, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#142
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:142
   def add_max_error(record, attribute, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#142
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:142
   def add_min_error(record, attribute, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#183
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:183
   def add_range_error(record, attribute, dimension, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#49
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:49
   def ensure_at_least_one_validator_option; end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#55
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:55
   def ensure_dimension_in_option_validity; end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#63
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:63
   def ensure_min_max_option_validity; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#175
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:175
   def in_option_used?(flat_options, dimension); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#138
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:138
   def invalid_dimension_max?(flat_options, dimension, metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#138
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:138
   def invalid_dimension_min?(flat_options, dimension, metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#131
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:131
   def invalid_max?(flat_options, metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#131
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:131
   def invalid_min?(flat_options, metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#71
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:71
   def is_valid?(record, attribute, file, metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#88
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:88
   def min_max_validation?(flat_options); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#179
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:179
   def outside_range?(value, options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#205
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:205
   def process_options(record); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#84
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:84
   def valid_metadata?(metadata); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#122
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:122
   def validate_dimension_max(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#122
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:122
   def validate_dimension_min(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#189
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:189
   def validate_dimension_min_max(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#195
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:195
   def validate_exact(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#166
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:166
   def validate_in(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#113
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:113
   def validate_max(record, attribute, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#113
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:113
   def validate_min(record, attribute, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#92
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:92
   def validate_min_max(record, attribute, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#156
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:156
   def validate_range(record, attribute, dimension, metadata, flat_options, errors_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#99
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:99
   def validate_width_height(record, attribute, metadata, flat_options, errors_options); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#19
+# pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:19
 ActiveStorageValidations::DimensionValidator::AVAILABLE_CHECKS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#20
+# pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:20
 ActiveStorageValidations::DimensionValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/dimension_validator.rb#33
+# pkg:gem/active_storage_validations#lib/active_storage_validations/dimension_validator.rb:33
 ActiveStorageValidations::DimensionValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#6
+# pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:6
 class ActiveStorageValidations::DurationValidator < ::ActiveStorageValidations::BaseComparisonValidator
   include ::ActiveStorageValidations::ASVAnalyzable
   include ::ActiveStorageValidations::ASVAttachable
 
-  # source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#20
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:20
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#53
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:53
   def format_bound_value(value); end
 
-  # source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#60
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:60
   def populate_error_options(errors_options, flat_options, duration); end
 
-  # source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#44
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:44
   def populate_error_options_and_add_error(record, attribute, attachable, flat_options, duration); end
 
-  # source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#65
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:65
   def set_error_type(flat_options); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#10
+# pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:10
 ActiveStorageValidations::DurationValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/duration_validator.rb#18
+# pkg:gem/active_storage_validations#lib/active_storage_validations/duration_validator.rb:18
 ActiveStorageValidations::DurationValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/engine.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/engine.rb:4
 class ActiveStorageValidations::Engine < ::Rails::Engine; end
 
-# source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#9
+# pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:9
 class ActiveStorageValidations::LimitValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVErrorable
@@ -1018,96 +1024,78 @@ class ActiveStorageValidations::LimitValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#22
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:22
   def check_validity!; end
 
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#27
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:27
   def validate_each(record, attribute, _value); end
 
   private
 
-  # @raise [ArgumentError]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#57
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:57
   def ensure_arguments_validity; end
 
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#51
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:51
   def ensure_at_least_one_validator_option; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#41
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:41
   def files_count_valid?(count, flat_options); end
 
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#82
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:82
   def initialize_and_populate_error_options(options, flat_options, count); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#78
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:78
   def min_higher_than_max?; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#64
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:64
   def min_max_are_proc?; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#73
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:73
   def min_or_max_defined_and_not_integer?; end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#68
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:68
   def min_or_max_is_proc_and_other_not_present?; end
 
-  # source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#90
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:90
   def set_error_type(flat_options, count); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#15
+# pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:15
 ActiveStorageValidations::LimitValidator::AVAILABLE_CHECKS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/limit_validator.rb#16
+# pkg:gem/active_storage_validations#lib/active_storage_validations/limit_validator.rb:16
 ActiveStorageValidations::LimitValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#8
+# pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:8
 class ActiveStorageValidations::PagesValidator < ::ActiveStorageValidations::BaseComparisonValidator
   include ::ActiveStorageValidations::ASVAnalyzable
   include ::ActiveStorageValidations::ASVAttachable
 
-  # source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#22
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:22
   def number_to_delimited(*_arg0, **_arg1, &_arg2); end
 
-  # source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#24
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:24
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#57
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:57
   def format_bound_value(value); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#32
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:32
   def is_valid?(record, attribute, file, metadata); end
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#53
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:53
   def valid_metadata?(metadata); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#12
+# pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:12
 ActiveStorageValidations::PagesValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/pages_validator.rb#20
+# pkg:gem/active_storage_validations#lib/active_storage_validations/pages_validator.rb:20
 ActiveStorageValidations::PagesValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# :nodoc
-#
-# source://active_storage_validations//lib/active_storage_validations/processable_file_validator.rb#10
+# pkg:gem/active_storage_validations#lib/active_storage_validations/processable_file_validator.rb:10
 class ActiveStorageValidations::ProcessableFileValidator < ::ActiveModel::EachValidator
   include ::ActiveStorageValidations::ASVActiveStorageable
   include ::ActiveStorageValidations::ASVAnalyzable
@@ -1116,59 +1104,57 @@ class ActiveStorageValidations::ProcessableFileValidator < ::ActiveModel::EachVa
   include ::ActiveStorageValidations::ASVSymbolizable
   extend ::ActiveStorageValidations::ASVSymbolizable::ClassMethods
 
-  # source://active_storage_validations//lib/active_storage_validations/processable_file_validator.rb#22
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/processable_file_validator.rb:22
   def validate_each(record, attribute, _value); end
 
   private
 
-  # @return [Boolean]
-  #
-  # source://active_storage_validations//lib/active_storage_validations/processable_file_validator.rb#30
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/processable_file_validator.rb:30
   def is_valid?(record, attribute, attachable, metadata); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/processable_file_validator.rb#17
+# pkg:gem/active_storage_validations#lib/active_storage_validations/processable_file_validator.rb:17
 ActiveStorageValidations::ProcessableFileValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/processable_file_validator.rb#20
+# pkg:gem/active_storage_validations#lib/active_storage_validations/processable_file_validator.rb:20
 ActiveStorageValidations::ProcessableFileValidator::METADATA_KEYS = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/railtie.rb#4
+# pkg:gem/active_storage_validations#lib/active_storage_validations/railtie.rb:4
 class ActiveStorageValidations::Railtie < ::Rails::Railtie; end
 
-# source://active_storage_validations//lib/active_storage_validations/size_validator.rb#6
+# pkg:gem/active_storage_validations#lib/active_storage_validations/size_validator.rb:6
 class ActiveStorageValidations::SizeValidator < ::ActiveStorageValidations::BaseComparisonValidator
-  # source://active_storage_validations//lib/active_storage_validations/size_validator.rb#16
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/size_validator.rb:16
   def number_to_human_size(*_arg0, **_arg1, &_arg2); end
 
-  # source://active_storage_validations//lib/active_storage_validations/size_validator.rb#18
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/size_validator.rb:18
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/size_validator.rb#39
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/size_validator.rb:39
   def format_bound_value(value); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/size_validator.rb#7
+# pkg:gem/active_storage_validations#lib/active_storage_validations/size_validator.rb:7
 ActiveStorageValidations::SizeValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)
 
-# source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#6
+# pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:6
 class ActiveStorageValidations::TotalSizeValidator < ::ActiveStorageValidations::BaseComparisonValidator
-  # source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#16
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:16
   def number_to_human_size(*_arg0, **_arg1, &_arg2); end
 
-  # source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#18
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:18
   def validate_each(record, attribute, _value); end
 
   private
 
-  # source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#40
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:40
   def custom_check_validity!(record, attribute); end
 
-  # source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#48
+  # pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:48
   def format_bound_value(value); end
 end
 
-# source://active_storage_validations//lib/active_storage_validations/total_size_validator.rb#7
+# pkg:gem/active_storage_validations#lib/active_storage_validations/total_size_validator.rb:7
 ActiveStorageValidations::TotalSizeValidator::ERROR_TYPES = T.let(T.unsafe(nil), Array)

@@ -61,9 +61,6 @@ class Module
   # pkg:gem/tapioca#lib/tapioca/runtime/trackers/mixin.rb:105
   def extend_object(obj); end
 
-  # pkg:gem/tapioca#lib/tapioca/runtime/trackers/method_definition.rb:59
-  def method_added(method_name); end
-
   # pkg:gem/tapioca#lib/tapioca/runtime/trackers/mixin.rb:85
   def prepend_features(constant); end
 end

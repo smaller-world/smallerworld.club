@@ -9,7 +9,7 @@ gem "propshaft"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.5"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 7.1"
+gem "puma", "~> 8.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -42,7 +42,8 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.0", require: false
+gem "ruby-vips", "~> 2.3"
 
 # Use Active Storage with S3-compatible services (Cloudflare R2)
 gem "aws-sdk-s3", require: false
@@ -113,15 +114,11 @@ gem "apple_id", "~> 1.6"
 # Render inline SVGs in views
 gem "inline_svg", "~> 1.10"
 
-# Download remote files
-gem "down", "~> 5.5"
-
 # Validate Active Storage attachments
 gem "active_storage_validations", "~> 3.0"
-gem "ruby-vips", "~> 2.3"
 
 # Rich text editing with Lexxy
-gem "lexxy", "~> 0.9.9.beta"
+gem "lexxy", "~> 0.9.12.beta"
 
 # ISO 3166 country data
 gem "countries", "~> 8.1"

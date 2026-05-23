@@ -5,136 +5,121 @@
 # Please instead update this file by running `bin/tapioca gem solid_cable`.
 
 
-# source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#8
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:8
 module ActionCable; end
 
-# source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#9
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:9
 module ActionCable::SubscriptionAdapter; end
 
-# source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#10
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:10
 class ActionCable::SubscriptionAdapter::SolidCable < ::ActionCable::SubscriptionAdapter::Base
   include ::ActionCable::SubscriptionAdapter::ChannelPrefix
 
-  # @return [SolidCable] a new instance of SolidCable
-  #
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#13
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:13
   def initialize(*_arg0); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#18
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:18
   def broadcast(channel, payload); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#32
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:32
   def shutdown(*_arg0, **_arg1, &_arg2); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#24
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:24
   def subscribe(channel, callback, success_callback = T.unsafe(nil)); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#28
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:28
   def unsubscribe(channel, callback); end
 
   private
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#35
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:35
   def listener; end
 end
 
-# source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#41
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:41
 class ActionCable::SubscriptionAdapter::SolidCable::Listener < ::ActionCable::SubscriptionAdapter::SubscriberMap
-  # @return [Listener] a new instance of Listener
-  #
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#44
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:44
   def initialize(event_loop); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#94
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:94
   def add_channel(channel, on_success); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#78
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:78
   def interruptible; end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#103
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:103
   def invoke_callback(*_arg0); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#62
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:62
   def listen; end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#99
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:99
   def remove_channel(channel); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#85
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:85
   def shutdown; end
 
   private
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#123
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:123
   def broadcast_messages; end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#119
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:119
   def channels; end
 
-  # Returns the value of attribute event_loop.
-  #
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#108
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:108
   def event_loop; end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#111
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:111
   def last_id; end
 
-  # Sets the attribute last_id
-  #
-  # @param value the value to set the attribute last_id to.
-  #
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#109
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:109
   def last_id=(_arg0); end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#115
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:115
   def last_message_id; end
 
-  # Returns the value of attribute thread.
-  #
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#108
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:108
   def thread; end
 
-  # source://solid_cable//lib/action_cable/subscription_adapter/solid_cable.rb#142
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:142
   def with_polling_volume; end
 end
 
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:42
 class ActionCable::SubscriptionAdapter::SolidCable::Listener::Stop < ::Exception; end
 
-# source://solid_cable//lib/solid_cable/version.rb#3
+# pkg:gem/solid_cable#lib/solid_cable/version.rb:3
 module SolidCable
   class << self
-    # @return [Boolean]
-    #
-    # source://solid_cable//lib/solid_cable.rb#25
+    # pkg:gem/solid_cable#lib/solid_cable.rb:25
     def autotrim?; end
 
-    # source://solid_cable//lib/solid_cable.rb#9
+    # pkg:gem/solid_cable#lib/solid_cable.rb:9
     def connects_to; end
 
-    # source://solid_cable//lib/solid_cable.rb#21
+    # pkg:gem/solid_cable#lib/solid_cable.rb:21
     def message_retention; end
 
-    # source://solid_cable//lib/solid_cable.rb#17
+    # pkg:gem/solid_cable#lib/solid_cable.rb:17
     def polling_interval; end
 
-    # source://solid_cable//lib/solid_cable/engine.rb#5
+    # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def railtie_helpers_paths; end
 
-    # source://solid_cable//lib/solid_cable/engine.rb#5
+    # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def railtie_namespace; end
 
-    # source://solid_cable//lib/solid_cable/engine.rb#5
+    # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def railtie_routes_url_helpers(include_path_helpers = T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
-    # source://solid_cable//lib/solid_cable.rb#13
+    # pkg:gem/solid_cable#lib/solid_cable.rb:13
     def silence_polling?; end
 
-    # source://solid_cable//lib/solid_cable/engine.rb#5
+    # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def table_name_prefix; end
 
-    # source://solid_cable//lib/solid_cable.rb#29
+    # pkg:gem/solid_cable#lib/solid_cable.rb:29
     def trim_batch_size; end
 
     # For every write that we do, we attempt to delete trim_chance times as
@@ -144,26 +129,26 @@ module SolidCable
     # more or less likely to trim. Only works like this if trim_batch_size is
     # 100
     #
-    # source://solid_cable//lib/solid_cable.rb#47
+    # pkg:gem/solid_cable#lib/solid_cable.rb:47
     def trim_chance; end
 
-    # source://solid_cable//lib/solid_cable/engine.rb#5
+    # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def use_relative_model_naming?; end
 
-    # source://solid_cable//lib/solid_cable.rb#37
+    # pkg:gem/solid_cable#lib/solid_cable.rb:37
     def use_skip_locked; end
 
     private
 
-    # source://solid_cable//lib/solid_cable.rb#52
+    # pkg:gem/solid_cable#lib/solid_cable.rb:52
     def cable_config; end
 
-    # source://solid_cable//lib/solid_cable.rb#56
+    # pkg:gem/solid_cable#lib/solid_cable.rb:56
     def parse_duration(duration, default:); end
   end
 end
 
-# source://solid_cable//lib/solid_cable/engine.rb#4
+# pkg:gem/solid_cable#lib/solid_cable/engine.rb:4
 class SolidCable::Engine < ::Rails::Engine; end
 
 class SolidCable::Message < ::SolidCable::Record
@@ -217,5 +202,5 @@ class SolidCable::TrimJob < ::ActiveJob::Base
   def trim_batch_size; end
 end
 
-# source://solid_cable//lib/solid_cable/version.rb#4
+# pkg:gem/solid_cable#lib/solid_cable/version.rb:4
 SolidCable::VERSION = T.let(T.unsafe(nil), String)

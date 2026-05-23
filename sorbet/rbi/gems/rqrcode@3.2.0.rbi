@@ -5,13 +5,17 @@
 # Please instead update this file by running `bin/tapioca gem rqrcode`.
 
 
-# source://rqrcode//lib/rqrcode.rb#3
+# This class creates PNG files.
+# This class creates a SVG files.
+# Initial code from: https://github.com/samvincent/rqrcode-rails3
+#
+# pkg:gem/rqrcode#lib/rqrcode.rb:3
 module RQRCode; end
 
-# source://rqrcode//lib/rqrcode/export/ansi.rb#4
+# pkg:gem/rqrcode#lib/rqrcode/export/ansi.rb:4
 module RQRCode::Export; end
 
-# source://rqrcode//lib/rqrcode/export/ansi.rb#5
+# pkg:gem/rqrcode#lib/rqrcode/export/ansi.rb:5
 module RQRCode::Export::ANSI
   # Returns a string of the QR code as
   # characters writen with ANSI background set.
@@ -22,35 +26,35 @@ module RQRCode::Export::ANSI
   # fill_character: The written character. ('  ')
   # quiet_zone_size: (4)
   #
-  # source://rqrcode//lib/rqrcode/export/ansi.rb#16
+  # pkg:gem/rqrcode#lib/rqrcode/export/ansi.rb:16
   def as_ansi(options = T.unsafe(nil)); end
 end
 
-# source://rqrcode//lib/rqrcode/export/html.rb#5
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:5
 module RQRCode::Export::HTML
-  # source://rqrcode//lib/rqrcode/export/html.rb#13
+  # pkg:gem/rqrcode#lib/rqrcode/export/html.rb:13
   def as_html; end
 end
 
-# source://rqrcode//lib/rqrcode/export/html.rb#7
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:7
 RQRCode::Export::HTML::TABLE_CLOSE = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/html.rb#6
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:6
 RQRCode::Export::HTML::TABLE_OPEN = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/html.rb#10
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:10
 RQRCode::Export::HTML::TD_BLACK = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/html.rb#11
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:11
 RQRCode::Export::HTML::TD_WHITE = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/html.rb#9
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:9
 RQRCode::Export::HTML::TR_CLOSE = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/html.rb#8
+# pkg:gem/rqrcode#lib/rqrcode/export/html.rb:8
 RQRCode::Export::HTML::TR_OPEN = T.let(T.unsafe(nil), String)
 
-# source://rqrcode//lib/rqrcode/export/png.rb#8
+# pkg:gem/rqrcode#lib/rqrcode/export/png.rb:8
 module RQRCode::Export::PNG
   # Render the PNG from the QR Code.
   #
@@ -91,11 +95,11 @@ module RQRCode::Export::PNG
   # It first creates an image where 1px = 1 module, then resizes.
   # Defaults to 120x120 pixels, customizable by option.
   #
-  # source://rqrcode//lib/rqrcode/export/png.rb#48
+  # pkg:gem/rqrcode#lib/rqrcode/export/png.rb:48
   def as_png(options = T.unsafe(nil)); end
 end
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#7
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:7
 module RQRCode::Export::SVG
   # Render the SVG from the Qrcode.
   #
@@ -124,67 +128,63 @@ module RQRCode::Export::SVG
   # svg_attributes  - A optional hash of custom <svg> attributes. Existing attributes will remain.
   #                   (default {})
   #
-  # source://rqrcode//lib/rqrcode/export/svg.rb#231
+  # pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:231
   def as_svg(options = T.unsafe(nil)); end
 end
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#8
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:8
 class RQRCode::Export::SVG::BaseOutputSVG
-  # @return [BaseOutputSVG] a new instance of BaseOutputSVG
-  #
-  # source://rqrcode//lib/rqrcode/export/svg.rb#11
+  # pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:11
   def initialize(qrcode); end
 
-  # Returns the value of attribute result.
-  #
-  # source://rqrcode//lib/rqrcode/export/svg.rb#9
+  # pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:9
   def result; end
 end
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#187
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:187
 RQRCode::Export::SVG::DEFAULT_SVG_ATTRIBUTES = T.let(T.unsafe(nil), Array)
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#17
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:17
 class RQRCode::Export::SVG::Path < ::RQRCode::Export::SVG::BaseOutputSVG
-  # source://rqrcode//lib/rqrcode/export/svg.rb#36
+  # pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:36
   def build(module_size, options = T.unsafe(nil)); end
 end
 
 # Pre-computed end coordinate deltas: [dx, dy] for each direction
 #
-# source://rqrcode//lib/rqrcode/export/svg.rb#26
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:26
 RQRCode::Export::SVG::Path::DIR_DELTAS = T.let(T.unsafe(nil), Array)
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#21
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:21
 RQRCode::Export::SVG::Path::DIR_DOWN = T.let(T.unsafe(nil), Integer)
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#22
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:22
 RQRCode::Export::SVG::Path::DIR_LEFT = T.let(T.unsafe(nil), Integer)
 
 # SVG path commands indexed by direction constant
 #
-# source://rqrcode//lib/rqrcode/export/svg.rb#34
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:34
 RQRCode::Export::SVG::Path::DIR_PATH_COMMANDS = T.let(T.unsafe(nil), Array)
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#23
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:23
 RQRCode::Export::SVG::Path::DIR_RIGHT = T.let(T.unsafe(nil), Integer)
 
 # Direction constants for edge representation
 # Edges stored as [start_x, start_y, direction] arrays instead of Struct
 #
-# source://rqrcode//lib/rqrcode/export/svg.rb#20
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:20
 RQRCode::Export::SVG::Path::DIR_UP = T.let(T.unsafe(nil), Integer)
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#168
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:168
 class RQRCode::Export::SVG::Rect < ::RQRCode::Export::SVG::BaseOutputSVG
-  # source://rqrcode//lib/rqrcode/export/svg.rb#169
+  # pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:169
   def build(module_size, options = T.unsafe(nil)); end
 end
 
-# source://rqrcode//lib/rqrcode/export/svg.rb#194
+# pkg:gem/rqrcode#lib/rqrcode/export/svg.rb:194
 RQRCode::Export::SVG::SVG_PATH_COMMANDS = T.let(T.unsafe(nil), Hash)
 
-# source://rqrcode//lib/rqrcode/qrcode/qrcode.rb#6
+# pkg:gem/rqrcode#lib/rqrcode/qrcode/qrcode.rb:6
 class RQRCode::QRCode
   include ::RQRCode::Export::ANSI
   include ::RQRCode::Export::HTML
@@ -192,22 +192,20 @@ class RQRCode::QRCode
   include ::RQRCode::Export::SVG
   extend ::Forwardable
 
-  # @return [QRCode] a new instance of QRCode
-  #
-  # source://rqrcode//lib/rqrcode/qrcode/qrcode.rb#14
+  # pkg:gem/rqrcode#lib/rqrcode/qrcode/qrcode.rb:14
   def initialize(string, *args); end
 
-  # source://rqrcode//lib/rqrcode/qrcode/qrcode.rb#10
+  # pkg:gem/rqrcode#lib/rqrcode/qrcode/qrcode.rb:10
   def modules(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute qrcode.
+  # deprecated
   #
-  # source://rqrcode//lib/rqrcode/qrcode/qrcode.rb#12
+  # pkg:gem/rqrcode#lib/rqrcode/qrcode/qrcode.rb:12
   def qrcode; end
 
-  # source://rqrcode//lib/rqrcode/qrcode/qrcode.rb#9
+  # pkg:gem/rqrcode#lib/rqrcode/qrcode/qrcode.rb:9
   def to_s(*_arg0, **_arg1, &_arg2); end
 end
 
-# source://rqrcode//lib/rqrcode/version.rb#4
+# pkg:gem/rqrcode#lib/rqrcode/version.rb:4
 RQRCode::VERSION = T.let(T.unsafe(nil), String)

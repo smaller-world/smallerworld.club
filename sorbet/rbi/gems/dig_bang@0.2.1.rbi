@@ -5,26 +5,26 @@
 # Please instead update this file by running `bin/tapioca gem dig_bang`.
 
 
-# source://dig_bang//lib/dig_bang.rb#14
+# pkg:gem/dig_bang#lib/dig_bang.rb:14
 class Array
   include ::Enumerable
 
-  # source://dig_bang//lib/dig_bang.rb#15
+  # pkg:gem/dig_bang#lib/dig_bang.rb:15
   def dig!(*keys); end
 end
 
-# source://dig_bang//lib/dig_bang.rb#2
+# pkg:gem/dig_bang#lib/dig_bang.rb:2
 module DigBang
   class << self
-    # source://dig_bang//lib/dig_bang.rb#3
+    # pkg:gem/dig_bang#lib/dig_bang.rb:3
     def fetch_all(fetchable, keys); end
   end
 end
 
-# source://dig_bang//lib/dig_bang.rb#8
+# pkg:gem/dig_bang#lib/dig_bang.rb:8
 class Hash
   include ::Enumerable
 
-  # source://dig_bang//lib/dig_bang.rb#9
+  # pkg:gem/dig_bang#lib/dig_bang.rb:9
   def dig!(*keys); end
 end

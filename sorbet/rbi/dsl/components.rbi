@@ -334,27 +334,31 @@ module Components
       required: T::Boolean,
       multiple: T::Boolean,
       allowed_file_types: T.nilable(T::Array[::String]),
+      crop_to_aspect_ratio: T.nilable(::Numeric),
+      clear_action: T.nilable(::String),
+      preview_fit: T.nilable(::Symbol),
       dropzone_class: T.nilable(::String),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
     ).void
   end
-  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
-      value: T.nilable(T::Array[::ActiveStorage::Blob]),
+      value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
       required: T::Boolean,
-      allowed_file_types: T.nilable(T::Array[::String]),
       max_files: T.nilable(::Integer),
+      allowed_file_types: T.nilable(T::Array[::String]),
+      preview_fit: T.nilable(::Symbol),
       dropzone_class: T.nilable(::String),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
     ).void
   end
-  def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), max_files: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -736,27 +740,31 @@ module Components
         required: T::Boolean,
         multiple: T::Boolean,
         allowed_file_types: T.nilable(T::Array[::String]),
+        crop_to_aspect_ratio: T.nilable(::Numeric),
+        clear_action: T.nilable(::String),
+        preview_fit: T.nilable(::Symbol),
         dropzone_class: T.nilable(::String),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
       ).void
     end
-    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
-        value: T.nilable(T::Array[::ActiveStorage::Blob]),
+        value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
         required: T::Boolean,
-        allowed_file_types: T.nilable(T::Array[::String]),
         max_files: T.nilable(::Integer),
+        allowed_file_types: T.nilable(T::Array[::String]),
+        preview_fit: T.nilable(::Symbol),
         dropzone_class: T.nilable(::String),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
       ).void
     end
-    def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), max_files: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

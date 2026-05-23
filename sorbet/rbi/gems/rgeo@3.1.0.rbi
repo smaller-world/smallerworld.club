@@ -7,34 +7,288 @@
 
 # -----------------------------------------------------------------------------
 #
+# Cartesian geometric analysis utilities
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Cartesian bounding box
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Core calculations in the plane
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Geographic data factory implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Cartesian common methods
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Cartesian toplevel interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Simple Sweepline Intersector Class
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# OGC CS objects for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# OGC CS factory for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# OGC CS wkt parser for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Error classes for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Curve feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Feature factory interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Feature factory interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Geometry feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# GeometryCollection feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Line feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# LineString feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# LinearRing feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# MultiCurve feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# MultiLineString feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# MultiPoint feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# MultiPolygon feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# MultiSurface feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Point feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Polygon feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Surface feature interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Feature type management and casting
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Geographic data factory implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Access to geographic data factories
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Projtected geographic feature classes
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Projected geographic common method definitions
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# A projected window in a geography implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Proj4 projection
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Simple mercator projection
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Spherical geographic feature classes
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Spherical geographic common methods
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Core calculations on the sphere
+#
+# -----------------------------------------------------------------------------
+# :stopdoc:
+# -----------------------------------------------------------------------------
+#
+# GEOS factory implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# FFI-GEOS factory implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# GEOS toplevel interface
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Various Geos-related internal utilities
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# GEOS zm factory implementation
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# GEOS implementation additions written in Ruby
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# GEOS implementation additions written in Ruby
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Common methods for GeometryCollection features
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Basic methods used by geometry objects
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Common methods for LineString features
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Common methods for Point features
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Common methods for Polygon features
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Math constants and tools
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Utility module
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Well-known binary generator for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# Well-known binary parser for RGeo
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
 # Well-known text generator for RGeo
 #
 # -----------------------------------------------------------------------------
 #
-# source://rgeo//lib/rgeo/version.rb#3
+# pkg:gem/rgeo#lib/rgeo/version.rb:3
 module RGeo; end
 
-# source://rgeo//lib/rgeo/cartesian/calculations.rb#10
+# pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:10
 module RGeo::Cartesian
   class << self
-    # Creates and returns a cartesian factory of the preferred
-    # Cartesian implementation.
-    #
-    # The actual implementation returned depends on which ruby
-    # interpreter is running and what libraries are available.
-    # RGeo will try to provide a fully-functional and performant
-    # implementation if possible. If not, the simple Cartesian
-    # implementation will be returned.
-    # In practice, this means it returns a Geos implementation if
-    # available; otherwise it falls back to the simple implementation.
-    #
-    # The given options are passed to the factory's constructor.
-    # What options are available depends on the particular
-    # implementation. See RGeo::Geos.factory and
-    # RGeo::Cartesian.simple_factory for details. Unsupported options
-    # are ignored.
-    #
-    # source://rgeo//lib/rgeo/cartesian/interface.rb#36
+    # pkg:gem/rgeo#lib/rgeo/cartesian/interface.rb:36
     def factory(opts = T.unsafe(nil)); end
 
     # Creates and returns a cartesian factory of the preferred
@@ -54,7 +308,7 @@ module RGeo::Cartesian
     # RGeo::Cartesian.simple_factory for details. Unsupported options
     # are ignored.
     #
-    # source://rgeo//lib/rgeo/cartesian/interface.rb#29
+    # pkg:gem/rgeo#lib/rgeo/cartesian/interface.rb:29
     def preferred_factory(opts = T.unsafe(nil)); end
 
     # Returns a factory for the simple Cartesian implementation. This
@@ -116,7 +370,7 @@ module RGeo::Cartesian
     #   Default is the empty hash, indicating the default configuration
     #   for WKRep::WKBGenerator.
     #
-    # source://rgeo//lib/rgeo/cartesian/interface.rb#97
+    # pkg:gem/rgeo#lib/rgeo/cartesian/interface.rb:97
     def simple_factory(opts = T.unsafe(nil)); end
   end
 end
@@ -124,7 +378,7 @@ end
 # This provides includes some spatial analysis algorithms supporting
 # Cartesian data.
 #
-# source://rgeo//lib/rgeo/cartesian/analysis.rb#13
+# pkg:gem/rgeo#lib/rgeo/cartesian/analysis.rb:13
 module RGeo::Cartesian::Analysis
   class << self
     # Check orientation of a ring, returns `true` if it is counter-clockwise
@@ -141,28 +395,10 @@ module RGeo::Cartesian::Analysis
     # `linear_ring?`.
     # This will be subject to changes in v3.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/cartesian/analysis.rb#28
+    # pkg:gem/rgeo#lib/rgeo/cartesian/analysis.rb:28
     def ccw?(ring); end
 
-    # Check orientation of a ring, returns `true` if it is counter-clockwise
-    # and false otherwise.
-    #
-    # If the factory used is GEOS based, use the GEOS implementation to
-    # check that. Otherwise, this methods falls back to `ring_direction`.
-    #
-    # == Note
-    #
-    # This method does not ensure a correct result for an invalid geometry.
-    # You should make sure your ring is valid beforehand using `ring?`
-    # if you are using a LineString, or directly `valid?` for a
-    # `linear_ring?`.
-    # This will be subject to changes in v3.
-    #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/cartesian/analysis.rb#35
+    # pkg:gem/rgeo#lib/rgeo/cartesian/analysis.rb:35
     def counter_clockwise?(ring); end
 
     # Given a LineString, which must be a ring, determine whether the
@@ -173,7 +409,7 @@ module RGeo::Cartesian::Analysis
     # The return value is undefined if the object is not a ring, or
     # is not in a Cartesian coordinate system.
     #
-    # source://rgeo//lib/rgeo/cartesian/analysis.rb#45
+    # pkg:gem/rgeo#lib/rgeo/cartesian/analysis.rb:45
     def ring_direction(ring); end
   end
 end
@@ -190,7 +426,7 @@ end
 # or use it to determine whether it encloses other geometries or
 # bounding boxes.
 #
-# source://rgeo//lib/rgeo/cartesian/bounding_box.rb#22
+# pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:22
 class RGeo::Cartesian::BoundingBox
   # Create a new empty bounding box with the given factory.
   #
@@ -209,44 +445,40 @@ class RGeo::Cartesian::BoundingBox
   #   If true, ignore m coordinates even if the factory supports them.
   #   Default is false.
   #
-  # @return [BoundingBox] a new instance of BoundingBox
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#93
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:93
   def initialize(factory, opts = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#111
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:111
   def ==(other); end
 
   # Adjusts the extents of this bounding box to encompass the given
   # object, which may be a geometry or another bounding box.
   # Returns self.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#222
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:222
   def add(geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#348
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:348
   def add_geometry(geometry); end
 
   # Returns the midpoint M, or nil if this bounding box is empty or has no M.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#178
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:178
   def center_m; end
 
   # Returns the midpoint X, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#138
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:138
   def center_x; end
 
   # Returns the midpoint Y, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#150
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:150
   def center_y; end
 
   # Returns the midpoint Z, or nil if this bounding box is empty or has no Z.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#162
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:162
   def center_z; end
 
   # Returns true if this bounding box contains the given object,
@@ -261,45 +493,37 @@ class RGeo::Cartesian::BoundingBox
   #   Ignore the M coordinate when testing, even if both objects
   #   have M. Default is false.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#280
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:280
   def contains?(rhs, opts = T.unsafe(nil)); end
 
   # Returns true if this bounding box is degenerate. That is,
   # it is nonempty but has zero area because either or both
   # of the X or Y spans are 0.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#132
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:132
   def degenerate?; end
 
   # Returns true if this bounding box is still empty.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#115
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:115
   def empty?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:104
   def eql?(other); end
 
   # Returns the bounding box's factory.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#24
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:24
   def factory; end
 
   # Returns true if this bounding box tracks M coordinates.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#30
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:30
   def has_m; end
 
   # Returns true if this bounding box tracks Z coordinates.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#27
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:27
   def has_z; end
 
   # Returns true if this bounding box is degenerate. That is,
@@ -307,66 +531,64 @@ class RGeo::Cartesian::BoundingBox
   # the X and Y spans are 0. Infinitesimal boxes are also
   # always degenerate.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#124
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:124
   def infinitesimal?; end
 
   # Returns the M span, 0 if this bounding box is empty, or nil if it has no M.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#184
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:184
   def m_span; end
 
   # Returns the maximum M, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#54
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:54
   def max_m; end
 
   # Returns a point representing the maximum extent in all dimensions,
   # or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#208
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:208
   def max_point; end
 
   # Returns the maximum X, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#36
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:36
   def max_x; end
 
   # Returns the maximum Y, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#42
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:42
   def max_y; end
 
   # Returns the maximum Z, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#48
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:48
   def max_z; end
 
   # Returns the minimum M, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#51
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:51
   def min_m; end
 
   # Returns a point representing the minimum extent in all dimensions,
   # or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#195
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:195
   def min_point; end
 
   # Returns the minimum X, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#33
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:33
   def min_x; end
 
   # Returns the minimum Y, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#39
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:39
   def min_y; end
 
   # Returns the minimum Z, or nil if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#45
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:45
   def min_z; end
 
   # Returns this bounding box subdivided, as an array of bounding boxes.
@@ -383,7 +605,7 @@ class RGeo::Cartesian::BoundingBox
   #   greater than this factor, the bounding box is divided only in
   #   half instead of fourths.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#309
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:309
   def subdivide(opts = T.unsafe(nil)); end
 
   # Converts this bounding box to an envelope, which will be the
@@ -391,27 +613,27 @@ class RGeo::Cartesian::BoundingBox
   # bounding box is not empty but both spans are 0), a line (if only
   # one of the two spans is 0) or a polygon (if neither span is 0).
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#242
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:242
   def to_geometry; end
 
   # Returns the X span, or 0 if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#144
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:144
   def x_span; end
 
   # Returns the Y span, or 0 if this bounding box is empty.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#156
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:156
   def y_span; end
 
   # Returns the Z span, 0 if this bounding box is empty, or nil if it has no Z.
   #
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#168
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:168
   def z_span; end
 
   private
 
-  # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#370
+  # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:370
   def add_point(point); end
 
   class << self
@@ -420,7 +642,7 @@ class RGeo::Cartesian::BoundingBox
     # You may also provide the same options available to
     # BoundingBox.new.
     #
-    # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#71
+    # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:71
     def create_from_geometry(geom, opts = T.unsafe(nil)); end
 
     # Create a bounding box given two corner points.
@@ -428,7 +650,7 @@ class RGeo::Cartesian::BoundingBox
     # You may also provide the same options available to
     # BoundingBox.new.
     #
-    # source://rgeo//lib/rgeo/cartesian/bounding_box.rb#61
+    # pkg:gem/rgeo#lib/rgeo/cartesian/bounding_box.rb:61
     def create_from_points(point1, point2, opts = T.unsafe(nil)); end
   end
 end
@@ -436,7 +658,7 @@ end
 # This class implements the factory for the simple cartesian
 # implementation.
 #
-# source://rgeo//lib/rgeo/cartesian/factory.rb#13
+# pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:13
 class RGeo::Cartesian::Factory
   include ::RGeo::Feature::Factory::Instance
   include ::RGeo::ImplHelper::Utils
@@ -445,146 +667,134 @@ class RGeo::Cartesian::Factory
   #
   # See RGeo::Cartesian.simple_factory for a list of supported options.
   #
-  # @return [Factory] a new instance of Factory
-  #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#29
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:29
   def initialize(opts = T.unsafe(nil)); end
 
-  # Equivalence test.
-  #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#86
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:86
   def ==(other); end
 
   # See RGeo::Feature::Factory#collection
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#218
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:218
   def collection(elems); end
 
   # See RGeo::Feature::Factory#coord_sys
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#23
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:23
   def coord_sys; end
 
-  # Returns the value of attribute coordinate_dimension.
-  #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#17
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:17
   def coordinate_dimension; end
 
   # Psych support
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#130
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:130
   def encode_with(coder); end
 
   # Equivalence test.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#80
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:80
   def eql?(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#244
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:244
   def generate_wkb(obj); end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#240
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:240
   def generate_wkt(obj); end
 
   # Standard hash code
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#90
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:90
   def hash; end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#142
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:142
   def init_with(coder); end
 
   # See RGeo::Feature::Factory#line
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#200
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:200
   def line(start, stop); end
 
   # See RGeo::Feature::Factory#line_string
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#194
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:194
   def line_string(points); end
 
   # See RGeo::Feature::Factory#linear_ring
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#206
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:206
   def linear_ring(points); end
 
   # Marshal support
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#96
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:96
   def marshal_dump; end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#111
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:111
   def marshal_load(data); end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#248
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:248
   def marshal_wkb_generator; end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#252
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:252
   def marshal_wkb_parser; end
 
   # See RGeo::Feature::Factory#multi_line_string
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#230
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:230
   def multi_line_string(elems); end
 
   # See RGeo::Feature::Factory#multi_point
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#224
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:224
   def multi_point(elems); end
 
   # See RGeo::Feature::Factory#multi_polygon
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#236
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:236
   def multi_polygon(elems); end
 
   # See RGeo::Feature::Factory#parse_wkb
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#182
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:182
   def parse_wkb(str); end
 
   # See RGeo::Feature::Factory#parse_wkt
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#176
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:176
   def parse_wkt(str); end
 
   # See RGeo::Feature::Factory#point
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#188
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:188
   def point(x, y, *extra); end
 
   # See RGeo::Feature::Factory#polygon
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#212
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:212
   def polygon(outer_ring, inner_rings = T.unsafe(nil)); end
 
   # See RGeo::Feature::Factory#property
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#161
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:161
   def property(name); end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#256
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:256
   def psych_wkt_generator; end
 
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#260
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:260
   def psych_wkt_parser; end
 
-  # Returns the value of attribute spatial_dimension.
-  #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#17
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:17
   def spatial_dimension; end
 
   # Returns the SRID.
   #
-  # source://rgeo//lib/rgeo/cartesian/factory.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/factory.rb:20
   def srid; end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#64
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:64
 class RGeo::Cartesian::GeometryCollectionImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -596,154 +806,154 @@ class RGeo::Cartesian::GeometryCollectionImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Cartesian::GeometryMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
@@ -754,21 +964,15 @@ end
 # For example, a polygon will have a reference to a HalfEdge for its
 # exterior shell and one for every hole.
 #
-# source://rgeo//lib/rgeo/cartesian/planar_graph.rb#257
+# pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:257
 class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
-  # @return [GeometryGraph] a new instance of GeometryGraph
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#261
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:261
   def initialize(geom); end
 
-  # Returns the value of attribute geom_edges.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#267
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:267
   def geom_edges; end
 
-  # Returns the value of attribute parent_geometry.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#267
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:267
   def parent_geometry; end
 
   private
@@ -777,7 +981,7 @@ class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
   #
   # @param col [RGeo::Feature::GeometryCollection]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#331
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:331
   def add_collection(col); end
 
   # Adds a geometry to the graph and finds its
@@ -785,7 +989,7 @@ class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
   #
   # @param geom [RGeo::Feature::Instance]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#275
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:275
   def add_geometry(geom); end
 
   # Adds a LineString or LinearRing
@@ -793,7 +997,7 @@ class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
   #
   # @param geom [RGeo::Feature::LineString]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#295
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:295
   def add_line_string(geom); end
 
   # Adds a Polygon to the graph.
@@ -807,7 +1011,7 @@ class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
   #
   # @param geom [RGeo::Feature::Polygon]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#313
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:313
   def add_polygon(geom); end
 
   # Finds a Half-Edge that is part of a CCW or CW rotation
@@ -816,97 +1020,75 @@ class RGeo::Cartesian::GeometryGraph < ::RGeo::Cartesian::PlanarGraph
   # Will only consider half-edges that are colinear with
   # the first or last segments of the ring.
   #
-  # @param ccw [Boolean] true for CCW, false for CW
   # @param ring [RGeo::Feature::LinearRing]
+  # @param ccw [Boolean] true for CCW, false for CW
   # @return [HalfEdge, nil]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#346
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:346
   def find_hedge(ring, ccw: T.unsafe(nil)); end
 end
 
 # GeomEdge will be used to store the references to the HalfEdges
 #
-# source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+# pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
 class RGeo::Cartesian::GeometryGraph::GeomEdge < ::Struct
-  # Returns the value of attribute exterior_edge
-  #
-  # @return [Object] the current value of exterior_edge
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
   def exterior_edge; end
 
-  # Sets the attribute exterior_edge
-  #
-  # @param value [Object] the value to set the attribute exterior_edge to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
   def exterior_edge=(_); end
 
-  # Returns the value of attribute interior_edges
-  #
-  # @return [Object] the current value of interior_edges
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
   def interior_edges; end
 
-  # Sets the attribute interior_edges
-  #
-  # @param value [Object] the value to set the attribute interior_edges to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
   def interior_edges=(_); end
 
   class << self
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
     def [](*_arg0); end
 
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
     def inspect; end
 
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
     def keyword_init?; end
 
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
     def members; end
 
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#259
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:259
     def new(*_arg0); end
   end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:11
 module RGeo::Cartesian::GeometryMethods
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:20
   def coordinate_dimension; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#16
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:16
   def envelope; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#28
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:28
   def is_3d?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#32
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:32
   def measured?; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#24
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:24
   def spatial_dimension; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:12
   def srid; end
 
   private
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#38
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:38
   def graph; end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#33
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:33
 class RGeo::Cartesian::LineImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -921,152 +1103,152 @@ class RGeo::Cartesian::LineImpl
   include ::RGeo::Cartesian::GeometryMethods
   include ::RGeo::Cartesian::LineStringMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#23
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:23
 class RGeo::Cartesian::LineStringImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -1079,167 +1261,163 @@ class RGeo::Cartesian::LineStringImpl
   include ::RGeo::Cartesian::GeometryMethods
   include ::RGeo::Cartesian::LineStringMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_methods.rb#67
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:67
 module RGeo::Cartesian::LineStringMethods
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#89
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:89
   def crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#85
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:85
   def length; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#68
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:68
   def segments; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#74
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:74
   def simple?; end
 
   private
@@ -1252,13 +1430,14 @@ module RGeo::Cartesian::LineStringMethods
   # to see that it is not a boundary point of either segment.
   #
   # @param rhs [Feature::LineString]
+  #
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#110
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:110
   def crosses_line_string?(rhs); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#44
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:44
 class RGeo::Cartesian::LinearRingImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -1273,158 +1452,158 @@ class RGeo::Cartesian::LinearRingImpl
   include ::RGeo::Cartesian::GeometryMethods
   include ::RGeo::Cartesian::LineStringMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def ccw?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_ccw?; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#83
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:83
 class RGeo::Cartesian::MultiLineStringImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -1440,170 +1619,170 @@ class RGeo::Cartesian::MultiLineStringImpl
   include ::RGeo::Cartesian::GeometryMethods
   include ::RGeo::Cartesian::MultiLineStringMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_methods.rb#127
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:127
 module RGeo::Cartesian::MultiLineStringMethods
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#128
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:128
   def length; end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#73
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:73
 class RGeo::Cartesian::MultiPointImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -1617,158 +1796,158 @@ class RGeo::Cartesian::MultiPointImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Cartesian::GeometryMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#94
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:94
 class RGeo::Cartesian::MultiPolygonImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -1783,166 +1962,166 @@ class RGeo::Cartesian::MultiPolygonImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Cartesian::GeometryMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
@@ -1956,14 +2135,13 @@ end
 # the SweeplineIntersector, populate the incident_edges map, and
 # link all cyclic edges.
 #
-# source://rgeo//lib/rgeo/cartesian/planar_graph.rb#14
+# pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:14
 class RGeo::Cartesian::PlanarGraph
   # Create a new PlanarGraph
   #
   # @param edges [Array<RGeo::Cartesian::Segment>] of Segments
-  # @return [PlanarGraph] a new instance of PlanarGraph
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#110
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:110
   def initialize(edges = T.unsafe(nil)); end
 
   # Insert an edge into the graph. This will automatically
@@ -1971,7 +2149,7 @@ class RGeo::Cartesian::PlanarGraph
   #
   # @param edge [RGeo::Cartesian::Segment]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#122
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:122
   def add_edge(edge); end
 
   # Insert multiple edges into the graph. Like +add_edge+, this automatically
@@ -1979,17 +2157,13 @@ class RGeo::Cartesian::PlanarGraph
   #
   # @param new_edges [Array<RGeo::Cartesian::Segment>]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#138
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:138
   def add_edges(new_edges); end
 
-  # Returns the value of attribute edges.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#116
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:116
   def edges; end
 
-  # Returns the value of attribute incident_edges.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#116
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:116
   def incident_edges; end
 
   private
@@ -1999,16 +2173,16 @@ class RGeo::Cartesian::PlanarGraph
   # the existing half-edges when possible since geometries may reference
   # them.
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#221
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:221
   def compute_split_edges(seg, ints); end
 
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#189
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:189
   def create_half_edge(edge); end
 
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#183
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:183
   def create_half_edges; end
 
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#195
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:195
   def insert_half_edge(half_edge); end
 
   # Creates a map of +proper_intersections+ for each segment
@@ -2017,7 +2191,7 @@ class RGeo::Cartesian::PlanarGraph
   # Can be used to determine which edges need to be split
   # after adding edges.
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#158
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:158
   def intersection_map; end
 
   # Links all half-edges where possible.
@@ -2028,7 +2202,7 @@ class RGeo::Cartesian::PlanarGraph
   # half-edges (e1, e2) can be linked by saying e1.prev = e2.twin
   # and e2.twin.next = e1.
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#207
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:207
   def link_half_edges; end
 end
 
@@ -2040,20 +2214,18 @@ end
 # where next's origin is this half-edges destination. Prev's destination
 # is this half-edge's origin.
 #
-# source://rgeo//lib/rgeo/cartesian/planar_graph.rb#22
+# pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:22
 class RGeo::Cartesian::PlanarGraph::HalfEdge
   include ::Comparable
 
-  # @return [HalfEdge] a new instance of HalfEdge
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#42
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:42
   def initialize(origin); end
 
   # HalfEdges will be sorted around their shared vertex
   # in a CW fashion. This means that face interiors will be
   # a CCW.
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#54
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:54
   def <=>(other); end
 
   # Will find attempt to find a cycle starting at this
@@ -2063,10 +2235,8 @@ class RGeo::Cartesian::PlanarGraph::HalfEdge
   # If a block is given, each HalfEdge seen will be yielded to the block.
   #
   # @return [Enumerator]
-  # @yield [_self]
-  # @yieldparam _self [RGeo::Cartesian::PlanarGraph::HalfEdge] the object that the method was called on
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#65
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:65
   def and_connected; end
 
   # Compute the angle from the positive x-axis.
@@ -2074,61 +2244,41 @@ class RGeo::Cartesian::PlanarGraph::HalfEdge
   #
   # @return [Float]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#91
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:91
   def angle; end
 
   # Return the destination of the half edge
   #
   # @return [RGeo::Feature::Point]
   #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#83
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:83
   def destination; end
 
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#95
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:95
   def inspect; end
 
-  # Returns the value of attribute next.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def next; end
 
-  # Sets the attribute next
-  #
-  # @param value the value to set the attribute next to.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def next=(_arg0); end
 
-  # Returns the value of attribute origin.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#48
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:48
   def origin; end
 
-  # Returns the value of attribute prev.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def prev; end
 
-  # Sets the attribute prev
-  #
-  # @param value the value to set the attribute prev to.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def prev=(_arg0); end
 
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#99
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:99
   def to_s; end
 
-  # Returns the value of attribute twin.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def twin; end
 
-  # Sets the attribute twin
-  #
-  # @param value the value to set the attribute twin to.
-  #
-  # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#49
+  # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:49
   def twin=(_arg0); end
 
   class << self
@@ -2138,14 +2288,15 @@ class RGeo::Cartesian::PlanarGraph::HalfEdge
     # of the edge (start, end).
     #
     # @param edge [RGeo::Cartesian::Segment]
+    #
     # @return [Array]
     #
-    # source://rgeo//lib/rgeo/cartesian/planar_graph.rb#33
+    # pkg:gem/rgeo#lib/rgeo/cartesian/planar_graph.rb:33
     def from_edge(edge); end
   end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#13
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:13
 class RGeo::Cartesian::PointImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Point
@@ -2157,149 +2308,149 @@ class RGeo::Cartesian::PointImpl
   include ::RGeo::Cartesian::GeometryMethods
   include ::RGeo::Cartesian::PointMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_methods.rb#43
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:43
 module RGeo::Cartesian::PointMethods
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#56
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:56
   def buffer(distance); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_methods.rb#44
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_methods.rb:44
   def distance(rhs); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/feature_classes.rb#55
+# pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:55
 class RGeo::Cartesian::PolygonImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Surface
@@ -2312,218 +2463,198 @@ class RGeo::Cartesian::PolygonImpl
   include ::RGeo::Cartesian::ValidOp
   include ::RGeo::Cartesian::GeometryMethods
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def interior_ring_n(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_interior_ring_n(idx); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/cartesian/feature_classes.rb#104
+  # pkg:gem/rgeo#lib/rgeo/cartesian/feature_classes.rb:104
   def within?(*args); end
 end
 
 # Represents a line segment in the plane.
 #
-# source://rgeo//lib/rgeo/cartesian/calculations.rb#13
+# pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:13
 class RGeo::Cartesian::Segment
-  # @return [Segment] a new instance of Segment
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#14
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:14
   def initialize(start, stop); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#35
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:35
   def ==(other); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#59
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:59
   def contains_point?(point); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#37
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:37
   def degenerate?; end
 
-  # Returns the value of attribute dx.
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:26
   def dx; end
 
-  # Returns the value of attribute dy.
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:26
   def dy; end
 
-  # Returns the value of attribute e.
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:26
   def e; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#32
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:32
   def eql?(other); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#68
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:68
   def intersects_segment?(seg); end
 
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#141
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:141
   def length; end
 
-  # Returns the value of attribute s.
-  #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:26
   def s; end
 
   # If this and the other segment intersect, this method will return the coordinate
@@ -2532,22 +2663,23 @@ class RGeo::Cartesian::Segment
   # a single point on the overlapping portion.
   #
   # @param seg [Segment]
+  #
   # @return [RGeo::Feature::Point, nil]
   #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#80
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:80
   def segment_intersection(seg); end
 
   # Returns a negative value if the point is to the left,
   # a positive value if the point is to the right, or
   # 0 if the point is collinear to the segment.
   #
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#45
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:45
   def side(point); end
 
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#28
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:28
   def to_s; end
 
-  # source://rgeo//lib/rgeo/cartesian/calculations.rb#51
+  # pkg:gem/rgeo#lib/rgeo/cartesian/calculations.rb:51
   def tproj(point); end
 end
 
@@ -2560,11 +2692,9 @@ end
 # observed segments instead of a sorted BST, so performance may be significantly
 # worse in the case of lots of segments overlapping in y-ranges.
 #
-# source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#19
+# pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:19
 class RGeo::Cartesian::SweeplineIntersector
-  # @return [SweeplineIntersector] a new instance of SweeplineIntersector
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#23
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:23
   def initialize(segments); end
 
   # Returns an ordered array of events from the input segments. Events
@@ -2575,7 +2705,7 @@ class RGeo::Cartesian::SweeplineIntersector
   #
   # @return [Array]
   #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#96
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:96
   def events; end
 
   # Computes the intersections of the input segments.
@@ -2590,7 +2720,7 @@ class RGeo::Cartesian::SweeplineIntersector
   #
   # @return [Array<RGeo::Cartesian::SweeplineIntersector::Intersection>]
   #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#65
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:65
   def intersections; end
 
   # Returns the "proper" intersections from the list of segments.
@@ -2606,12 +2736,10 @@ class RGeo::Cartesian::SweeplineIntersector
   #
   # @return [Array<RGeo::Cartesian::SweeplineIntersector::Intersection>]
   #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#40
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:40
   def proper_intersections; end
 
-  # Returns the value of attribute segments.
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:26
   def segments; end
 
   private
@@ -2619,151 +2747,98 @@ class RGeo::Cartesian::SweeplineIntersector
   # Creates a pair of events from a segment
   #
   # @param segment [Segment]
+  #
   # @return [Array]
   #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#128
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:128
   def create_event_pair(segment); end
 end
 
-# source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+# pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
 class RGeo::Cartesian::SweeplineIntersector::Event < ::Struct
-  # Returns the value of attribute is_start
-  #
-  # @return [Object] the current value of is_start
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def is_start; end
 
-  # Sets the attribute is_start
-  #
-  # @param value [Object] the value to set the attribute is_start to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def is_start=(_); end
 
-  # Returns the value of attribute point
-  #
-  # @return [Object] the current value of point
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def point; end
 
-  # Sets the attribute point
-  #
-  # @param value [Object] the value to set the attribute point to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def point=(_); end
 
-  # Returns the value of attribute segment
-  #
-  # @return [Object] the current value of segment
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def segment; end
 
-  # Sets the attribute segment
-  #
-  # @param value [Object] the value to set the attribute segment to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
   def segment=(_); end
 
   class << self
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
     def [](*_arg0); end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
     def inspect; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
     def keyword_init?; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
     def members; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#20
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:20
     def new(*_arg0); end
   end
 end
 
-# source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+# pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
 class RGeo::Cartesian::SweeplineIntersector::Intersection < ::Struct
-  # Returns the value of attribute point
-  #
-  # @return [Object] the current value of point
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def point; end
 
-  # Sets the attribute point
-  #
-  # @param value [Object] the value to set the attribute point to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def point=(_); end
 
-  # Returns the value of attribute s1
-  #
-  # @return [Object] the current value of s1
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def s1; end
 
-  # Sets the attribute s1
-  #
-  # @param value [Object] the value to set the attribute s1 to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def s1=(_); end
 
-  # Returns the value of attribute s2
-  #
-  # @return [Object] the current value of s2
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def s2; end
 
-  # Sets the attribute s2
-  #
-  # @param value [Object] the value to set the attribute s2 to.
-  # @return [Object] the newly set value
-  #
-  # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+  # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
   def s2=(_); end
 
   class << self
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
     def [](*_arg0); end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
     def inspect; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
     def keyword_init?; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
     def members; end
 
-    # source://rgeo//lib/rgeo/cartesian/sweepline_intersector.rb#21
+    # pkg:gem/rgeo#lib/rgeo/cartesian/sweepline_intersector.rb:21
     def new(*_arg0); end
   end
 end
 
-# source://rgeo//lib/rgeo/cartesian/valid_op.rb#5
+# pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:5
 module RGeo::Cartesian::ValidOp
   include ::RGeo::ImplHelper::ValidOp
 
-  # source://rgeo//lib/rgeo/cartesian/valid_op.rb#8
+  # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:8
   def validity_helper; end
 end
 
-# source://rgeo//lib/rgeo/cartesian/valid_op.rb#13
+# pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:13
 module RGeo::Cartesian::ValidOpHelpers
   include ::RGeo::ImplHelper::ValidOpHelpers
 
@@ -2777,19 +2852,21 @@ module RGeo::Cartesian::ValidOpHelpers
   # coordinates in the exterior_ring, the interior is connected, otherwise
   # it is split somewhere.
   #
-  # @param poly [RGeo::Feature::Polygon]
+  # @param [RGeo::Feature::Polygon] poly
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/cartesian/valid_op.rb#55
+  # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:55
   def check_connected_interiors(poly); end
 
   # Checks that there are no invalid intersections between the components
   # of a polygon.
   #
-  # @param poly [RGeo::Feature::Polygon]
+  # @param [RGeo::Feature::Polygon] poly
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/cartesian/valid_op.rb#26
+  # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:26
   def check_consistent_area(poly); end
 
   class << self
@@ -2801,40 +2878,42 @@ module RGeo::Cartesian::ValidOpHelpers
     # coordinates in the exterior_ring, the interior is connected, otherwise
     # it is split somewhere.
     #
-    # @param poly [RGeo::Feature::Polygon]
+    # @param [RGeo::Feature::Polygon] poly
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_connected_interiors(poly); end
 
     # Checks that there are no invalid intersections between the components
     # of a polygon.
     #
-    # @param poly [RGeo::Feature::Polygon]
+    # @param [RGeo::Feature::Polygon] poly
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_consistent_area(poly); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_consistent_area_mp(mpoly); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_holes_in_shell(poly); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_holes_not_nested(poly); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_invalid_coordinate(point); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_no_self_intersecting_rings(poly); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_no_self_intersections(ring); end
 
-    # source://rgeo//lib/rgeo/cartesian/valid_op.rb#16
+    # pkg:gem/rgeo#lib/rgeo/cartesian/valid_op.rb:16
     def check_shells_not_nested(mpoly); end
   end
 end
@@ -2852,10 +2931,10 @@ end
 # systems, and other related concepts, as well as a parser for the WKT
 # format for specifying coordinate systems.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#10
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:10
 module RGeo::CoordSys; end
 
-# source://rgeo//lib/rgeo/coord_sys.rb#27
+# pkg:gem/rgeo#lib/rgeo/coord_sys.rb:27
 RGeo::CoordSys::CONFIG = T.let(T.unsafe(nil), T.untyped)
 
 # This module contains an implementation of the CS (coordinate
@@ -2879,13 +2958,13 @@ RGeo::CoordSys::CONFIG = T.let(T.unsafe(nil), T.untyped)
 # * The defaultEnvelope attribute of CS_CoordinateSystem is not
 #   implemented.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#31
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:31
 module RGeo::CoordSys::CS
   class << self
     # Parsees OGC WKT format and returns the object created. Raises
     # Error::ParseError if a syntax error is encounterred.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#142
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:142
     def create_from_wkt(str); end
   end
 end
@@ -2894,59 +2973,59 @@ end
 # Increasing ordinates values go down. This is used for vertical
 # coordinate systems.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#43
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:43
 RGeo::CoordSys::CS::AO_DOWN = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Increasing ordinates values go East. This is rarely used.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#28
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:28
 RGeo::CoordSys::CS::AO_EAST = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Increasing ordinates values go North. This is usually used for
 # Grid Y coordinates and Latitude.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#20
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:20
 RGeo::CoordSys::CS::AO_NORTH = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Unknown or unspecified axis orientation. This can be used for
 # local or fitted coordinate systems.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#15
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:15
 RGeo::CoordSys::CS::AO_OTHER = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Increasing ordinates values go South. This is rarely used.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#24
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:24
 RGeo::CoordSys::CS::AO_SOUTH = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Increasing ordinates values go up. This is used for vertical
 # coordinate systems.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#38
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:38
 RGeo::CoordSys::CS::AO_UP = T.let(T.unsafe(nil), Integer)
 
 # An axis orientation constant for AxisInfo.
 # Increasing ordinates values go West. This is usually used for
 # Grid X coordinates and Longitude.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#33
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:33
 RGeo::CoordSys::CS::AO_WEST = T.let(T.unsafe(nil), Integer)
 
 # == OGC spec description
 #
 # Definition of angular units.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#550
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:550
 class RGeo::CoordSys::CS::AngularUnit < ::RGeo::CoordSys::CS::Unit
   # Returns the number of radians per AngularUnit.
   # Also available as Unit#conversion_factor.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#554
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:554
   def radians_per_unit; end
 
   class << self
@@ -2954,7 +3033,7 @@ class RGeo::CoordSys::CS::AngularUnit < ::RGeo::CoordSys::CS::Unit
     # factor in radians per unit. You may also provide the optional
     # parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#563
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:563
     def create(name, radians_per_unit, *optional); end
   end
 end
@@ -2964,32 +3043,30 @@ end
 # Details of axis. This is used to label axes, and indicate the
 # orientation.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#248
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:248
 class RGeo::CoordSys::CS::AxisInfo < ::RGeo::CoordSys::CS::Base
   # :startdoc:
   #
-  # @return [AxisInfo] a new instance of AxisInfo
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#253
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:253
   def initialize(name, orientation); end
 
   # Human readable name for axis. Possible values are "X", "Y",
   # "Long", "Lat" or any other short string.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#267
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:267
   def name; end
 
   # Gets enumerated value for orientation.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#270
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:270
   def orientation; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#272
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:272
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#292
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:292
   def wkt_content(_); end
 
   class << self
@@ -3001,14 +3078,14 @@ class RGeo::CoordSys::CS::AxisInfo < ::RGeo::CoordSys::CS::Base
     # "<tt>UP</tt>", and "<tt>DOWN</tt>", or the corresponding
     # integer values 0-5.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#285
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:285
     def create(name, orientation); end
   end
 end
 
 # :stopdoc:
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#250
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:250
 RGeo::CoordSys::CS::AxisInfo::NAMES_BY_VALUE = T.let(T.unsafe(nil), Array)
 
 # This is a base class for all OGC coordinate system objects.
@@ -3017,57 +3094,46 @@ RGeo::CoordSys::CS::AxisInfo::NAMES_BY_VALUE = T.let(T.unsafe(nil), Array)
 #
 # This is a non-instantiable abstract class.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#150
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:150
 class RGeo::CoordSys::CS::Base
-  # Tests for equality. Two objects are defined as equal if they
-  # have the same type (class) and the same WKT representation.
-  #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#163
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:163
   def ==(other); end
 
   # Psych support
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#219
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:219
   def encode_with(coder); end
 
   # Tests for equality. Two objects are defined as equal if they
   # have the same type (class) and the same WKT representation.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#160
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:160
   def eql?(other); end
 
   # Standard hash code
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#167
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:167
   def hash; end
 
-  # @raise [TypeError]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#223
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:223
   def init_with(coder); end
 
   # Standard object inspection output
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#153
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:153
   def inspect; end
 
   # Marshal support
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#202
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:202
   def marshal_dump; end
 
-  # @raise [TypeError]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#206
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:206
   def marshal_load(data); end
 
   # Returns the default WKT representation.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#173
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:173
   def to_s; end
 
   # Return the WKT representation.
@@ -3076,23 +3142,23 @@ class RGeo::CoordSys::CS::Base
   #   If true, outputs parentheses rather than square
   #   brackets. Default is false.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#182
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:182
   def to_wkt(standard_brackets: T.unsafe(nil)); end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#239
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:239
   def brackets(standard); end
 
   class << self
     private
 
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#234
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:234
     def new(*_arg0); end
   end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#143
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:143
 RGeo::CoordSys::CS::CT_DF_DISCONTINUOUS = T.let(T.unsafe(nil), Integer)
 
 # Flags indicating parts of domain covered by a convex hull. These flags can be combined. For
@@ -3100,10 +3166,10 @@ RGeo::CoordSys::CS::CT_DF_DISCONTINUOUS = T.let(T.unsafe(nil), Integer)
 # means that some parts of the convex hull are inside the domain, and some parts of the convex
 # hull are outside the domain
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#141
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:141
 RGeo::CoordSys::CS::CT_DF_INSIDE = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#142
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:142
 RGeo::CoordSys::CS::CT_DF_OUTSIDE = T.let(T.unsafe(nil), Integer)
 
 # == OGC spec description
@@ -3114,39 +3180,37 @@ RGeo::CoordSys::CS::CT_DF_OUTSIDE = T.let(T.unsafe(nil), Integer)
 # datum. The other is a vertical CRS which is a one-dimensional
 # coordinate system with a vertical datum.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#987
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:987
 class RGeo::CoordSys::CS::CompoundCoordinateSystem < ::RGeo::CoordSys::CS::CoordinateSystem
-  # @return [CompoundCoordinateSystem] a new instance of CompoundCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#988
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:988
   def initialize(name, head, tail, *optional); end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1002
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1002
   def get_axis(index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1009
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1009
   def get_units(index); end
 
   # Gets first sub-coordinate system.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#995
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:995
   def head; end
 
   # Gets second sub-coordinate system.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#998
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:998
   def tail; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1014
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1014
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1030
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1030
   def wkt_content(standard_brackets); end
 
   class << self
@@ -3154,7 +3218,7 @@ class RGeo::CoordSys::CS::CompoundCoordinateSystem < ::RGeo::CoordSys::CS::Coord
     # systems. You may also provide the optional parameters
     # specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1023
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1023
     def create(name, head, tail, *optional); end
   end
 end
@@ -3188,59 +3252,53 @@ end
 # VerticalCoordinateSystem, LocalCoordinateSystem, or
 # CompoundCoordinateSystem.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#911
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:911
 class RGeo::CoordSys::CS::CoordinateSystem < ::RGeo::CoordSys::CS::Info
-  # @return [CoordinateSystem] a new instance of CoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#912
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:912
   def initialize(name, dimension, *optional); end
 
   # Dimension of the coordinate system
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#918
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:918
   def dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#934
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:934
   def geographic?; end
 
   # Gets axis details for dimension within coordinate system. Each
   # dimension in the coordinate system has a corresponding axis.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#923
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:923
   def get_axis(_dimension); end
 
   # Gets units for dimension within coordinate system. Each
   # dimension in the coordinate system has corresponding units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#930
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:930
   def get_units(_dimension); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#938
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:938
   def projected?; end
 
   # Not an OGC method, but useful for being able to
   # transform directly from a CoordinateSystem object.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#948
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:948
   def transform_coords(target_cs, x, y, z = T.unsafe(nil)); end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#942
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:942
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#975
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:975
   def wkt_content(_); end
 
   class << self
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#954
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:954
     def create(defn, dimension = T.unsafe(nil), *optional); end
 
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#968
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:968
     def create_from_wkt(str); end
   end
 end
@@ -3253,32 +3311,32 @@ end
 # facilities for setting the authority. If you need to set authority
 # values, use the create methods for the object classes themselves.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#39
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:39
 class RGeo::CoordSys::CS::CoordinateSystemFactory
   # Create a CompoundCoordinateSystem from a name, and two
   # constituent coordinate systems.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#43
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:43
   def create_compound_coordinate_system(name, head, tail); end
 
   # Create an Ellipsoid from a name, semi-major axis, and semi-minor
   # axis. You can also provide a LinearUnit, but this is optional
   # and may be set to nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#51
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:51
   def create_ellipsoid(name, semi_major_axis, semi_minor_axis, linear_unit); end
 
   # Create an Ellipsoid from a name, semi-major axis, and an inverse
   # flattening factor. You can also provide a LinearUnit, but this
   # is optional and may be set to nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#59
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:59
   def create_flattened_sphere(name, semi_major_axis, inverse_flattening, linear_unit); end
 
   # Create any object given the OGC WKT format. Raises
   # Error::ParseError if a syntax error is encounterred.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#66
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:66
   def create_from_wkt(str); end
 
   # Create a GeographicCoordinateSystem, given a name, an
@@ -3286,31 +3344,31 @@ class RGeo::CoordSys::CS::CoordinateSystemFactory
   # AxisInfo objects. The AxisInfo objects are optional and may be
   # set to nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#75
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:75
   def create_geographic_coordinate_system(name, angular_unit, horizontal_datum, prime_meridian, axis0, axis1); end
 
   # Create a HorizontalDatum given a name, a horizontal datum type
   # code, an Ellipsoid, and a WGS84ConversionInfo. The
   # WGS84ConversionInfo is optional and may be set to nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#83
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:83
   def create_horizontal_datum(name, horizontal_datum_type, ellipsoid, to_wgs84); end
 
   # Create a LocalCoordinateSystem given a name, a LocalDatum, a
   # Unit, and an array of at least one AxisInfo.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#90
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:90
   def create_local_coordinate_system(name, datum, unit, axes); end
 
   # Create a LocalDatum given a name and a local datum type code.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#96
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:96
   def create_local_datum(_name, local_datum_type); end
 
   # Create a PrimeMeridian given a name, an AngularUnit, and a
   # longitude offset.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#103
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:103
   def create_prime_meridian(_name, angular_unit, longitude); end
 
   # Create a ProjectedCoordinateSystem given a name, a
@@ -3318,25 +3376,25 @@ class RGeo::CoordSys::CS::CoordinateSystemFactory
   # two AxisInfo objects. The AxisInfo objects are optional and may
   # be set to nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#112
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:112
   def create_projected_coordinate_system(name, gcs, projection, linear_unit, axis0, axis1); end
 
   # Create a Projection given a name, a projection class, and an
   # array of ProjectionParameter.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#119
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:119
   def create_projection(name, wkt_projection_class, parameters); end
 
   # Create a VerticalCoordinateSystem given a name, a VerticalDatum,
   # a VerticalUnit, and an AxisInfo. The AxisInfo is optional and
   # may be nil.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#127
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:127
   def create_vertical_coordinate_system(name, vertical_datum, vertical_unit, axis); end
 
   # Create a VerticalDatum given a name ane a datum type code.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/factories.rb#133
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/factories.rb:133
   def create_vertical_datum(name, vertical_datum_type); end
 end
 
@@ -3347,7 +3405,7 @@ end
 #
 # @see https://portal.ogc.org/files/?artifact_id=999 page 79
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1417
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1417
 class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   # Initialize a new CoordinateTransform
   #
@@ -3355,20 +3413,19 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   # implement any transformation logic. It merely defines
   # what methods actual implementations must use.
   #
-  # @param optional [Array] any params for Info or Base
-  # @param source_cs [CoordinateSystem]
-  # @param target_cs [CoordinateSystem]
+  # @param [CoordinateSystem] source_cs
+  # @param [CoordinateSystem] target_cs
+  # @param [Array] optional any params for Info or Base
   # @return [CoordinateTransform]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1428
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1428
   def initialize(source_cs, target_cs, *optional); end
 
   # Human readable description of domain in source coordinate system.
   #
-  # @raise [NotImplementedError]
   # @return [String]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1450
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1450
   def area_of_use; end
 
   # Gets transformed convex hull. The supplied ordinates are interpreted as a sequence of points,
@@ -3379,25 +3436,24 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   # input points may go outside the valid domain. The returned convex hull should contain the
   # transformed image of the intersection of the source convex hull and the source domain.
   #
-  # @param Array<<Array<Integer>>] [Array<<Array<Integer>>] points in tuples of (x,y,z) with z being optional] points in tuples of (x,y,z) with z being optional
-  # @raise [NotImplementedError]
-  # @return [Array<<Array<Integer>>]] Array<<Array<Integer>>]
+  # @param [Array<<Array<Integer>>] points in tuples of (x,y,z) with z being optional
+  # @return [Array<<Array<Integer>>]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1504
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1504
   def codomain_convex_hull(points); end
 
   # Dimension of the source_cs
   #
   # @return [Integer]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1464
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1464
   def dim_source; end
 
   # Dimension of the target_cs
   #
   # @return [Integer]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1471
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1471
   def dim_target; end
 
   # Gets flags classifying domain points within a convex hull. The supplied ordinates are interpreted
@@ -3406,22 +3462,20 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   # The flags of all these tests are then combined. In practice, implementations of different
   # transforms will use different short-cuts to avoid doing an infinite number of tests.
   #
-  # @param Array<<Array<Integer>>] [Array<<Array<Integer>>] points in tuples of (x,y,z) with z being optional] points in tuples of (x,y,z) with z being optional
-  # @raise [NotImplementedError]
+  # @param [Array<<Array<Integer>>] points in tuples of (x,y,z) with z being optional
   # @return [Array<Integer>] the domain_flags of the input points
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1490
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1490
   def domain_flags(points); end
 
   # Tests whether this transform does not move any points
   #
-  # @raise [NotImplementedError]
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1478
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1478
   def identity?; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1443
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1443
   def inspect; end
 
   # Creates the inverse transform of this object. This method may fail if the transform is not one to
@@ -3429,58 +3483,44 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   #
   # @return [CoordinateTransform]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1530
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1530
   def inverse; end
 
-  # Returns the value of attribute source_cs.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1433
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1433
   def source_cs; end
 
-  # Sets the attribute source_cs
-  #
-  # @param value the value to set the attribute source_cs to.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1433
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1433
   def source_cs=(_arg0); end
 
-  # Returns the value of attribute target_cs.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1433
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1433
   def target_cs; end
 
-  # Sets the attribute target_cs
-  #
-  # @param value the value to set the attribute target_cs to.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1433
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1433
   def target_cs=(_arg0); end
 
   # Transforms a coordinate point. The passed parameter point should not be modified.
   #
-  # @param x [Integer]
-  # @param y [Integer]
-  # @param z [Integer] optional
-  # @raise [NotImplementedError]
+  # @param [Integer] x
+  # @param [Integer] y
+  # @param [Integer] z optional
   # @return [Array<Integer>] transformed point coordinates in (x,y,z) order
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1514
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1514
   def transform_coords(x, y, z = T.unsafe(nil)); end
 
   # Transforms a coordinate point. The passed parameter point should not be modified.
   #
-  # @param points [Array<Array<Integer>>] in (x,y,z) tuples where z is optional
+  # @param [Array<Array<Integer>>] points in (x,y,z) tuples where z is optional
   # @return [Array<Array<Integer>>] list of transformed point coordinates in (x,y,z) order
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1522
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1522
   def transform_list(points); end
 
   # Semantic type of transform. For example, a datum transformation or a coordinate conversion.
   #
-  # @raise [NotImplementedError]
   # @return [String]
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1457
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1457
   def transform_type; end
 
   # TODO: This changes depending on what type of conversion is done
@@ -3488,12 +3528,12 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
   # We should delegate all of the wkt generation to the library
   # if possible.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1439
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1439
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1552
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1552
   def wkt_content(standard_brackets); end
 
   class << self
@@ -3503,12 +3543,12 @@ class RGeo::CoordSys::CS::CoordinateTransform < ::RGeo::CoordSys::CS::Info
     # implement any transformation logic. It merely defines
     # what methods actual implementations must use.
     #
-    # @param optional [Array] any params for Info or Base
-    # @param source_cs [CoordinateSystem]
-    # @param target_cs [CoordinateSystem]
+    # @param [CoordinateSystem] source_cs
+    # @param [CoordinateSystem] target_cs
+    # @param [Array] optional any params for Info or Base
     # @return [CoordinateTransform]
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1545
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1545
     def create(source_cs, target_cs, *optional); end
   end
 end
@@ -3533,21 +3573,19 @@ end
 # one of the subclasses HorizontalDatum, VerticalDatum, or
 # LocalDatum.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#718
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:718
 class RGeo::CoordSys::CS::Datum < ::RGeo::CoordSys::CS::Info
-  # @return [Datum] a new instance of Datum
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#719
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:719
   def initialize(name, datum_type, *optional); end
 
   # Gets the type of the datum as an enumerated code.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#725
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:725
   def datum_type; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#729
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:729
   def wkt_content(_); end
 end
 
@@ -3555,17 +3593,15 @@ end
 #
 # An approximation of the Earth's surface as a squashed sphere.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#611
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:611
 class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
-  # @return [Ellipsoid] a new instance of Ellipsoid
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#612
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:612
   def initialize(name, semi_major_axis, semi_minor_axis, inverse_flattening, ivf_definitive, linear_unit, *optional); end
 
   # Returns the LinearUnit. The units of the semi-major and
   # semi-minor axis values.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#645
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:645
   def axisunit; end
 
   # Returns the value of the inverse of the flattening constant. The
@@ -3573,7 +3609,7 @@ class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
   # the formula ivf=re/(re-rp). For perfect spheres, this formula
   # breaks down, and a special IVF value of zero is used.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#634
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:634
   def inverse_flattening; end
 
   # Is the Inverse Flattening definitive for this ellipsoid? Some
@@ -3582,27 +3618,27 @@ class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
   # radius to calculate the IVF whenever asked. This distinction can
   # be important to avoid floating-point rounding errors.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#641
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:641
   def ivf_definitive; end
 
   # Gets the equatorial radius. The returned length is expressed in
   # this object's axis units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#624
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:624
   def semi_major_axis; end
 
   # Gets the polar radius. The returned length is expressed in this
   # object's axis units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#628
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:628
   def semi_minor_axis; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#647
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:647
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#694
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:694
   def wkt_content(_); end
 
   class << self
@@ -3613,7 +3649,7 @@ class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
     # may be set to nil. You may also provide the optional parameters
     # specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#659
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:659
     def create(name, semi_major_axis, semi_minor_axis, inverse_flattening, ivf_definitive, linear_unit, *optional); end
 
     # Create an Ellipsoid given a name, semi-major and semi-minor
@@ -3622,7 +3658,7 @@ class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
     # The LinearUnit is optional and may be set to nil. You may also
     # provide the optional parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#669
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:669
     def create_ellipsoid(name, semi_major_axis, semi_minor_axis, linear_unit, *optional); end
 
     # Create an Ellipsoid given a name, semi-major axis, inverse
@@ -3631,7 +3667,7 @@ class RGeo::CoordSys::CS::Ellipsoid < ::RGeo::CoordSys::CS::Info
     # The LinearUnit is optional and may be set to nil. You may also
     # provide the optional parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#683
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:683
     def create_flattened_sphere(name, semi_major_axis, inverse_flattening, linear_unit, *optional); end
   end
 end
@@ -3645,26 +3681,22 @@ end
 # a right handed system), but you should check the axes for
 # non-default values.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1109
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1109
 class RGeo::CoordSys::CS::GeocentricCoordinateSystem < ::RGeo::CoordSys::CS::CoordinateSystem
-  # @return [GeocentricCoordinateSystem] a new instance of GeocentricCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1110
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1110
   def initialize(name, horizontal_datum, prime_meridian, linear_unit, axis0, axis1, axis2, *optional); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1144
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1144
   def geographic?; end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1140
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1140
   def get_axis(index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1134
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1134
   def get_units(_index); end
 
   # Returns the HorizontalDatum. The horizontal datum is used to
@@ -3672,25 +3704,25 @@ class RGeo::CoordSys::CS::GeocentricCoordinateSystem < ::RGeo::CoordSys::CS::Coo
   # All coordinate points will be measured from the centre of the
   # Earth, and not the surface.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1124
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1124
   def horizontal_datum; end
 
   # Gets the units used along all the axes.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1130
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1130
   def linear_unit; end
 
   # Returns the PrimeMeridian.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1127
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1127
   def prime_meridian; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1148
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1148
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1166
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1166
   def wkt_content(standard_brackets); end
 
   class << self
@@ -3700,7 +3732,7 @@ class RGeo::CoordSys::CS::GeocentricCoordinateSystem < ::RGeo::CoordSys::CS::Coo
     # You may also provide the optional parameters specified by the
     # Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1159
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1159
     def create(name, horizontal_datum, prime_meridian, linear_unit, axis0, axis1, axis2, *optional); end
   end
 end
@@ -3713,32 +3745,28 @@ end
 # also check the angular units, since not all geographic coordinate
 # systems use degrees.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1263
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1263
 class RGeo::CoordSys::CS::GeographicCoordinateSystem < ::RGeo::CoordSys::CS::HorizontalCoordinateSystem
-  # @return [GeographicCoordinateSystem] a new instance of GeographicCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1264
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1264
   def initialize(name, angular_unit, horizontal_datum, prime_meridian, axis0, axis1, *optional); end
 
   # Returns the AngularUnit. The angular unit must be the same as
   # the CS_CoordinateSystem units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1277
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1277
   def angular_unit; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1307
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1307
   def geographic?; end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1287
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1287
   def get_axis(index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1281
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1281
   def get_units(_index); end
 
   # Gets details on a conversion to WGS84. Some geographic
@@ -3747,25 +3775,25 @@ class RGeo::CoordSys::CS::GeographicCoordinateSystem < ::RGeo::CoordSys::CS::Hor
   # of interest. The first conversion (with index=0) should provide
   # acceptable accuracy over the largest possible area of interest.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1303
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1303
   def get_wgs84_conversion_info(_index); end
 
   # Gets the number of available conversions to WGS84 coordinates.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1293
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1293
   def num_conversion_to_wgs84; end
 
   # Returns the PrimeMeridian.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1273
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1273
   def prime_meridian; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1311
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1311
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1329
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1329
   def wkt_content(standard_brackets); end
 
   class << self
@@ -3775,7 +3803,7 @@ class RGeo::CoordSys::CS::GeographicCoordinateSystem < ::RGeo::CoordSys::CS::Hor
     # be set to nil. You may also provide the optional parameters
     # specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1322
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1322
     def create(name, angular_unit, horizontal_datum, prime_meridian, axis0, axis1, *optional); end
   end
 end
@@ -3787,7 +3815,7 @@ end
 # support a horizontal component of a position in a domain of
 # limited extent, such as a country, a region or a continent.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#61
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:61
 RGeo::CoordSys::CS::HD_CLASSIC = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for HorizontalDatum.
@@ -3798,19 +3826,19 @@ RGeo::CoordSys::CS::HD_CLASSIC = T.let(T.unsafe(nil), Integer)
 # position (through ellipsoidal heights). The regional realizations
 # of ITRF, such as ETRF, are also included in this category.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#70
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:70
 RGeo::CoordSys::CS::HD_GEOCENTRIC = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for HorizontalDatum.
 # Highest possible value for horizontal datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#74
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:74
 RGeo::CoordSys::CS::HD_MAX = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for HorizontalDatum.
 # Lowest possible value for horizontal datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#47
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:47
 RGeo::CoordSys::CS::HD_MIN = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for HorizontalDatum.
@@ -3818,7 +3846,7 @@ RGeo::CoordSys::CS::HD_MIN = T.let(T.unsafe(nil), Integer)
 # type should never supply a conversion to WGS84 using Bursa Wolf
 # parameters.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#53
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:53
 RGeo::CoordSys::CS::HD_OTHER = T.let(T.unsafe(nil), Integer)
 
 # == OGC spec description
@@ -3831,16 +3859,14 @@ RGeo::CoordSys::CS::HD_OTHER = T.let(T.unsafe(nil), Integer)
 # one of the subclasses GeographicCoordinateSystem or
 # ProjectedCoordinateSystem.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1246
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1246
 class RGeo::CoordSys::CS::HorizontalCoordinateSystem < ::RGeo::CoordSys::CS::CoordinateSystem
-  # @return [HorizontalCoordinateSystem] a new instance of HorizontalCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1247
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1247
   def initialize(name, horizontal_datum, *optional); end
 
   # Returns the HorizontalDatum.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1253
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1253
   def horizontal_datum; end
 end
 
@@ -3848,31 +3874,29 @@ end
 #
 # Procedure used to measure positions on the surface of the Earth.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#791
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:791
 class RGeo::CoordSys::CS::HorizontalDatum < ::RGeo::CoordSys::CS::Datum
-  # @return [HorizontalDatum] a new instance of HorizontalDatum
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#792
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:792
   def initialize(name, datum_type, ellipsoid, wgs84_parameters, *optional); end
 
   # Returns the Ellipsoid.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#799
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:799
   def ellipsoid; end
 
   # Gets preferred parameters for a Bursa Wolf transformation into
   # WGS84. The 7 returned values correspond to (dx,dy,dz) in meters,
   # (ex,ey,ez) in arc-seconds, and scaling in parts-per-million.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#804
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:804
   def wgs84_parameters; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#806
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:806
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#823
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:823
   def wkt_content(standard_brackets); end
 
   class << self
@@ -3881,7 +3905,7 @@ class RGeo::CoordSys::CS::HorizontalDatum < ::RGeo::CoordSys::CS::Datum
     # is optional and may be set to nil. You may also provide the
     # optional parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#816
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:816
     def create(name, datum_type, ellipsoid, wgs84_parameters, *optional); end
   end
 end
@@ -3925,21 +3949,19 @@ end
 # * <b>remarks</b>: provider-supplied remarks.
 # * <b>extensions</b>: a hash of extension keys and values
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#430
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:430
 class RGeo::CoordSys::CS::Info < ::RGeo::CoordSys::CS::Base
-  # @return [Info] a new instance of Info
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#431
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:431
   def initialize(name, authority = T.unsafe(nil), authority_code = T.unsafe(nil), abbreviation = T.unsafe(nil), init_alias = T.unsafe(nil), remarks = T.unsafe(nil), extensions = T.unsafe(nil)); end
 
   # Gets the abbreviation.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#445
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:445
   def abbreviation; end
 
   # Gets the alias.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#448
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:448
   def alias; end
 
   # Gets the authority name.
@@ -3950,7 +3972,7 @@ class RGeo::CoordSys::CS::Info < ::RGeo::CoordSys::CS::Base
   # ID. For example, the EPSG code for a WGS84 Lat/Lon coordinate
   # system is "4326".
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#457
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:457
   def authority; end
 
   # Gets the authority-specific identification code.
@@ -3961,7 +3983,7 @@ class RGeo::CoordSys::CS::Info < ::RGeo::CoordSys::CS::Base
   # consist of a few digits. The EPSG code for WGS84 Lat/Lon is
   # "4326".
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#466
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:466
   def authority_code; end
 
   # Gets the value of a keyed extension.
@@ -3969,42 +3991,42 @@ class RGeo::CoordSys::CS::Info < ::RGeo::CoordSys::CS::Base
   # some coordinate system databases (such as the spatial_ref_sys
   # table for PostGIS 2.0) include it.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#478
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:478
   def extension(key); end
 
   # Gets the name.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#469
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:469
   def name; end
 
   # Gets the provider-supplied remarks.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#472
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:472
   def remarks; end
 end
 
 # A datum type constant for LocalDatum.
 # Highest possible value for local datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#135
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:135
 RGeo::CoordSys::CS::LD_MAX = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for LocalDatum.
 # Lowest possible value for local datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#131
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:131
 RGeo::CoordSys::CS::LD_MIN = T.let(T.unsafe(nil), Integer)
 
 # == OGC spec description
 #
 # Definition of linear units.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#528
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:528
 class RGeo::CoordSys::CS::LinearUnit < ::RGeo::CoordSys::CS::Unit
   # Returns the number of meters per LinearUnit.
   # Also available as Unit#conversion_factor.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#532
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:532
   def meters_per_unit; end
 
   class << self
@@ -4012,7 +4034,7 @@ class RGeo::CoordSys::CS::LinearUnit < ::RGeo::CoordSys::CS::Unit
     # in meters per unit. You may also provide the optional
     # parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#541
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:541
     def create(name, meters_per_unit, *optional); end
   end
 end
@@ -4036,34 +4058,32 @@ end
 # RGeo's implementation does not provide the Coordinate
 # Transformation (CT) package.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1053
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1053
 class RGeo::CoordSys::CS::LocalCoordinateSystem < ::RGeo::CoordSys::CS::CoordinateSystem
-  # @return [LocalCoordinateSystem] a new instance of LocalCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1054
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1054
   def initialize(name, local_datum, unit, axes, *optional); end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1066
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1066
   def get_axis(index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1072
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1072
   def get_units(_index); end
 
   # Gets the local datum.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1062
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1062
   def local_datum; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1076
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1076
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1093
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1093
   def wkt_content(standard_brackets); end
 
   class << self
@@ -4072,7 +4092,7 @@ class RGeo::CoordSys::CS::LocalCoordinateSystem < ::RGeo::CoordSys::CS::Coordina
     # provide the optional parameters specified by the Info
     # interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1086
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1086
     def create(name, local_datum, unit, axes, *optional); end
   end
 end
@@ -4085,14 +4105,14 @@ end
 # coordinate systems, as long as they are based on the same local
 # datum.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#766
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:766
 class RGeo::CoordSys::CS::LocalDatum < ::RGeo::CoordSys::CS::Datum
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#767
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:767
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#783
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:783
   def wkt_content(_); end
 
   class << self
@@ -4100,7 +4120,7 @@ class RGeo::CoordSys::CS::LocalDatum < ::RGeo::CoordSys::CS::Datum
     # may also provide the optional parameters specified by the
     # Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#776
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:776
     def create(name, datum_type, *optional); end
   end
 end
@@ -4109,30 +4129,28 @@ end
 #
 # A meridian used to take longitude measurements from.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#572
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:572
 class RGeo::CoordSys::CS::PrimeMeridian < ::RGeo::CoordSys::CS::Info
-  # @return [PrimeMeridian] a new instance of PrimeMeridian
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#573
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:573
   def initialize(name, angular_unit, longitude, *optional); end
 
   # Returns the AngularUnits.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#580
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:580
   def angular_unit; end
 
   # Returns the longitude value relative to the Greenwich Meridian.
   # The longitude is expressed in this objects angular units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#584
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:584
   def longitude; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#586
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:586
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#603
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:603
   def wkt_content(_); end
 
   class << self
@@ -4141,7 +4159,7 @@ class RGeo::CoordSys::CS::PrimeMeridian < ::RGeo::CoordSys::CS::Info
     # the AngularUnits. You may also provide the optional parameters
     # specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#596
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:596
     def create(name, angular_unit, longitude, *optional); end
   end
 end
@@ -4150,50 +4168,46 @@ end
 #
 # A 2D cartographic coordinate system.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1344
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1344
 class RGeo::CoordSys::CS::ProjectedCoordinateSystem < ::RGeo::CoordSys::CS::HorizontalCoordinateSystem
-  # @return [ProjectedCoordinateSystem] a new instance of ProjectedCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1345
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1345
   def initialize(name, geographic_coordinate_system, projection, linear_unit, axis0, axis1, *optional); end
 
   # Returns the GeographicCoordinateSystem.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1355
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1355
   def geographic_coordinate_system; end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1372
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1372
   def get_axis(index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1366
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1366
   def get_units(_index); end
 
   # Returns the LinearUnits. The linear unit must be the same as
   # the CS_CoordinateSystem units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1362
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1362
   def linear_unit; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1376
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1376
   def projected?; end
 
   # Gets the projection.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1358
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1358
   def projection; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1380
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1380
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1398
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1398
   def wkt_content(standard_brackets); end
 
   class << self
@@ -4203,7 +4217,7 @@ class RGeo::CoordSys::CS::ProjectedCoordinateSystem < ::RGeo::CoordSys::CS::Hori
     # may be set to nil. You may also provide the optional
     # parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1391
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1391
     def create(name, geographic_coordinate_system, projection, linear_unit, axis0, axis1, *optional); end
   end
 end
@@ -4212,40 +4226,38 @@ end
 #
 # A projection from geographic coordinates to projected coordinates.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#833
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:833
 class RGeo::CoordSys::CS::Projection < ::RGeo::CoordSys::CS::Info
-  # @return [Projection] a new instance of Projection
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#834
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:834
   def initialize(name, class_name, parameters, *optional); end
 
   # Gets the projection classification name
   # (e.g. "Transverse_Mercator").
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#842
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:842
   def class_name; end
 
   # Iterates over the parameters of the projection.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#858
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:858
   def each_parameter(&_arg0); end
 
   # Gets an inexed parameter of the projection.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#852
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:852
   def get_parameter(index); end
 
   # Gets number of parameters of the projection.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#846
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:846
   def num_parameters; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#862
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:862
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#878
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:878
   def wkt_content(_); end
 
   class << self
@@ -4253,7 +4265,7 @@ class RGeo::CoordSys::CS::Projection < ::RGeo::CoordSys::CS::Info
     # array of ProjectionParameter. You may also provide the
     # optional parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#871
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:871
     def create(name, class_name, parameters, *optional); end
   end
 end
@@ -4266,35 +4278,33 @@ end
 # values match the angular units of the geographic coordinate
 # system that the projected coordinate system is based on.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#304
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:304
 class RGeo::CoordSys::CS::ProjectionParameter < ::RGeo::CoordSys::CS::Base
-  # @return [ProjectionParameter] a new instance of ProjectionParameter
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#305
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:305
   def initialize(name, value); end
 
   # The parameter name.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#312
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:312
   def name; end
 
   # The parameter value.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#315
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:315
   def value; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#317
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:317
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#331
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:331
   def wkt_content(_); end
 
   class << self
     # Create a parameter given the name and value.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#324
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:324
     def create(name, value); end
   end
 end
@@ -4309,26 +4319,24 @@ end
 # AngularUnit. However, it is possible to instantiate Unit if it is
 # not clear whether the data refers to a LinearUnit or AngularUnit.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#492
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:492
 class RGeo::CoordSys::CS::Unit < ::RGeo::CoordSys::CS::Info
-  # @return [Unit] a new instance of Unit
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#493
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:493
   def initialize(name, conversion_factor, *optional); end
 
   # This field is not part of the OGC CT spec, but is part of the
   # SFS. It is an alias of the appropriate field in the subclass,
   # i.e. LinearUnit#meters_per_unit or AngularUnit#radians_per_unit.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#501
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:501
   def conversion_factor; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#503
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:503
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#520
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:520
   def wkt_content(_); end
 
   class << self
@@ -4337,7 +4345,7 @@ class RGeo::CoordSys::CS::Unit < ::RGeo::CoordSys::CS::Info
     # conversion factor. You may also provide the optional
     # parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#513
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:513
     def create(name, conversion_factor, *optional); end
   end
 end
@@ -4350,7 +4358,7 @@ end
 # millibars (used to measure pressure levels), or theta value (units
 # used to measure geopotential height).
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#102
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:102
 RGeo::CoordSys::CS::VD_ALTITUDE_BAROMETRIC = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
@@ -4361,7 +4369,7 @@ RGeo::CoordSys::CS::VD_ALTITUDE_BAROMETRIC = T.let(T.unsafe(nil), Integer)
 # (approximately) to the actual equipotential surfaces of the
 # earth's gravity field, using such procedures as echo-sounding.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#123
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:123
 RGeo::CoordSys::CS::VD_DEPTH = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
@@ -4369,7 +4377,7 @@ RGeo::CoordSys::CS::VD_DEPTH = T.let(T.unsafe(nil), Integer)
 # the normal to the ellipsoid used in the definition of horizontal
 # datum.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#93
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:93
 RGeo::CoordSys::CS::VD_ELLIPSOIDAL = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
@@ -4379,38 +4387,38 @@ RGeo::CoordSys::CS::VD_ELLIPSOIDAL = T.let(T.unsafe(nil), Integer)
 # (h) by the use of the given geoid undulation model (N) through
 # the equation: H=h-N.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#114
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:114
 RGeo::CoordSys::CS::VD_GEOID_MODE_DERIVED = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
 # Highest possible value for vertical datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#127
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:127
 RGeo::CoordSys::CS::VD_MAX = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
 # Lowest possible value for vertical datum types.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#78
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:78
 RGeo::CoordSys::CS::VD_MIN = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
 # A normal height system.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#106
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:106
 RGeo::CoordSys::CS::VD_NORMAL = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
 # A vertical datum for orthometric heights that are measured along
 # the plumb line.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#87
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:87
 RGeo::CoordSys::CS::VD_ORTHOMETRIC = T.let(T.unsafe(nil), Integer)
 
 # A datum type constant for VerticalDatum.
 # Unspecified vertical datum type.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#82
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:82
 RGeo::CoordSys::CS::VD_OTHER = T.let(T.unsafe(nil), Integer)
 
 # == OGC spec description
@@ -4418,40 +4426,38 @@ RGeo::CoordSys::CS::VD_OTHER = T.let(T.unsafe(nil), Integer)
 # A one-dimensional coordinate system suitable for vertical
 # measurements.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1183
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1183
 class RGeo::CoordSys::CS::VerticalCoordinateSystem < ::RGeo::CoordSys::CS::CoordinateSystem
-  # @return [VerticalCoordinateSystem] a new instance of VerticalCoordinateSystem
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1184
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1184
   def initialize(name, vertical_datum, vertical_unit, axis, *optional); end
 
   # Implements CoordinateSystem#get_axis
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1206
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1206
   def get_axis(_index); end
 
   # Implements CoordinateSystem#get_units
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1200
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1200
   def get_units(_index); end
 
   # Gets the vertical datum, which indicates the measurement method.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1192
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1192
   def vertical_datum; end
 
   # Gets the units used along the vertical axis. The vertical units
   # must be the same as the CS_CoordinateSystem units.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1196
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1196
   def vertical_unit; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1210
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1210
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1227
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1227
   def wkt_content(standard_brackets); end
 
   class << self
@@ -4460,7 +4466,7 @@ class RGeo::CoordSys::CS::VerticalCoordinateSystem < ::RGeo::CoordSys::CS::Coord
     # optional and may be nil. You may also provide the optional
     # parameters specified by the Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#1220
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:1220
     def create(name, vertical_datum, vertical_unit, axis, *optional); end
   end
 end
@@ -4469,14 +4475,14 @@ end
 #
 # Procedure used to measure vertical distances.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#737
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:737
 class RGeo::CoordSys::CS::VerticalDatum < ::RGeo::CoordSys::CS::Datum
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#738
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:738
   def wkt_typename; end
 
   private
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#754
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:754
   def wkt_content(_); end
 
   class << self
@@ -4484,7 +4490,7 @@ class RGeo::CoordSys::CS::VerticalDatum < ::RGeo::CoordSys::CS::Datum
     # You may also provide the optional parameters specified by the
     # Info interface.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#747
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:747
     def create(name, datum_type, *optional); end
   end
 end
@@ -4496,49 +4502,47 @@ end
 # the X axis points towards the Greenwich Prime Meridian, the Y axis
 # points East, and the Z axis points North.
 #
-# source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#342
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:342
 class RGeo::CoordSys::CS::WGS84ConversionInfo < ::RGeo::CoordSys::CS::Base
-  # @return [WGS84ConversionInfo] a new instance of WGS84ConversionInfo
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#343
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:343
   def initialize(dx_meters, dy_meters, dz_meters, ex_arc_seconds, ey_arc_seconds, ez_arc_seconds, ppm); end
 
   # Bursa Wolf shift in meters.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#355
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:355
   def dx; end
 
   # Bursa Wolf shift in meters.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#358
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:358
   def dy; end
 
   # Bursa Wolf shift in meters.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#361
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:361
   def dz; end
 
   # Bursa Wolf rotation in arc seconds.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#364
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:364
   def ex; end
 
   # Bursa Wolf rotation in arc seconds.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#367
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:367
   def ey; end
 
   # Bursa Wolf rotation in arc seconds.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#370
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:370
   def ez; end
 
   # Bursa Wolf scaling in in parts per million.
   #
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#373
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:373
   def ppm; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#375
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:375
   def to_wkt(standard_brackets: T.unsafe(nil)); end
 
   class << self
@@ -4547,173 +4551,153 @@ class RGeo::CoordSys::CS::WGS84ConversionInfo < ::RGeo::CoordSys::CS::Base
     # The Bursa Wolf shift should be in meters, the rotation in arc
     # seconds, and the scaling in parts per million.
     #
-    # source://rgeo//lib/rgeo/coord_sys/cs/entities.rb#386
+    # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/entities.rb:386
     def create(dx_meters, dy_meters, dz_meters, ex_arc_seconds, ey_arc_seconds, ez_arc_seconds, ppm); end
   end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#12
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:12
 class RGeo::CoordSys::CS::WKTParser
-  # @return [WKTParser] a new instance of WKTParser
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#13
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:13
   def initialize(str); end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#189
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:189
   def consume_tokentype(type); end
 
-  # Returns the value of attribute cur_token.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#235
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:235
   def cur_token; end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#196
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:196
   def expect_tokentype(type); end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#202
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:202
   def next_token; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#18
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:18
   def parse(containing_type = T.unsafe(nil)); end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#263
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:263
 class RGeo::CoordSys::CS::WKTParser::ArgumentList
-  # @return [ArgumentList] a new instance of ArgumentList
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#264
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:264
   def initialize; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#268
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:268
   def <<(value); end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#272
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:272
   def assert_empty; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#306
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:306
   def create_optionals; end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#292
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:292
   def find_all(klass); end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#282
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:282
   def find_first(klass); end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#312
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:312
   def shift(klass = T.unsafe(nil)); end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#243
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:243
 class RGeo::CoordSys::CS::WKTParser::AuthorityClause
-  # @return [AuthorityClause] a new instance of AuthorityClause
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#244
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:244
   def initialize(name, code); end
 
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#249
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:249
   def to_a; end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#254
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:254
 class RGeo::CoordSys::CS::WKTParser::ExtensionClause
-  # @return [ExtensionClause] a new instance of ExtensionClause
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#257
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:257
   def initialize(key, value); end
 
-  # Returns the value of attribute key.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#255
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:255
   def key; end
 
-  # Returns the value of attribute value.
-  #
-  # source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#255
+  # pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:255
   def value; end
 end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#237
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:237
 class RGeo::CoordSys::CS::WKTParser::QuotedString < ::String; end
 
-# source://rgeo//lib/rgeo/coord_sys/cs/wkt_parser.rb#240
+# pkg:gem/rgeo#lib/rgeo/coord_sys/cs/wkt_parser.rb:240
 class RGeo::CoordSys::CS::WKTParser::TypeString < ::String; end
 
 # All RGeo errors are members of this namespace.
 #
-# source://rgeo//lib/rgeo/error.rb#12
+# pkg:gem/rgeo#lib/rgeo/error.rb:12
 module RGeo::Error; end
 
-# source://rgeo//lib/rgeo/error.rb#39
+# pkg:gem/rgeo#lib/rgeo/error.rb:39
 RGeo::Error::DISCONNECTED_INTERIOR = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#43
+# pkg:gem/rgeo#lib/rgeo/error.rb:43
 RGeo::Error::DUPLICATE_RINGS = T.let(T.unsafe(nil), String)
 
 # RGeo error specific to the GEOS implementation.
 #
-# source://rgeo//lib/rgeo/error.rb#18
+# pkg:gem/rgeo#lib/rgeo/error.rb:18
 class RGeo::Error::GeosError < ::RGeo::Error::RGeoError; end
 
-# source://rgeo//lib/rgeo/error.rb#37
+# pkg:gem/rgeo#lib/rgeo/error.rb:37
 RGeo::Error::HOLE_OUTSIDE_SHELL = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#45
+# pkg:gem/rgeo#lib/rgeo/error.rb:45
 RGeo::Error::INVALID_COORDINATE = T.let(T.unsafe(nil), String)
 
 # The specified geometry is invalid
 #
-# source://rgeo//lib/rgeo/error.rb#22
+# pkg:gem/rgeo#lib/rgeo/error.rb:22
 class RGeo::Error::InvalidGeometry < ::RGeo::Error::RGeoError; end
 
-# source://rgeo//lib/rgeo/error.rb#38
+# pkg:gem/rgeo#lib/rgeo/error.rb:38
 RGeo::Error::NESTED_HOLES = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#42
+# pkg:gem/rgeo#lib/rgeo/error.rb:42
 RGeo::Error::NESTED_SHELLS = T.let(T.unsafe(nil), String)
 
 # Parsing failed
 #
-# source://rgeo//lib/rgeo/error.rb#30
+# pkg:gem/rgeo#lib/rgeo/error.rb:30
 class RGeo::Error::ParseError < ::RGeo::Error::RGeoError; end
 
-# source://rgeo//lib/rgeo/error.rb#36
+# pkg:gem/rgeo#lib/rgeo/error.rb:36
 RGeo::Error::REPEATED_POINT = T.let(T.unsafe(nil), String)
 
 # Base class for all RGeo-related exceptions
 #
-# source://rgeo//lib/rgeo/error.rb#14
+# pkg:gem/rgeo#lib/rgeo/error.rb:14
 class RGeo::Error::RGeoError < ::RuntimeError; end
 
-# source://rgeo//lib/rgeo/error.rb#41
+# pkg:gem/rgeo#lib/rgeo/error.rb:41
 RGeo::Error::RING_SELF_INTERSECTION = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#40
+# pkg:gem/rgeo#lib/rgeo/error.rb:40
 RGeo::Error::SELF_INTERSECTION = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#44
+# pkg:gem/rgeo#lib/rgeo/error.rb:44
 RGeo::Error::TOO_FEW_POINTS = T.let(T.unsafe(nil), String)
 
 # Standard error messages from
 # https://github.com/locationtech/jts/blob/0afbfb1956ec24912a8b4dc4edff0f1200442857/modules/core/src/main/java/org/locationtech/jts/operation/valid/TopologyValidationError.java#L98-L110
 #
-# source://rgeo//lib/rgeo/error.rb#35
+# pkg:gem/rgeo#lib/rgeo/error.rb:35
 RGeo::Error::TOPOLOGY_VALIDATION_ERR = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/error.rb#46
+# pkg:gem/rgeo#lib/rgeo/error.rb:46
 RGeo::Error::UNCLOSED_RING = T.let(T.unsafe(nil), String)
 
 # The specified operation is not supported or not implemented
 #
-# source://rgeo//lib/rgeo/error.rb#26
+# pkg:gem/rgeo#lib/rgeo/error.rb:26
 class RGeo::Error::UnsupportedOperation < ::RGeo::Error::RGeoError; end
 
-# source://rgeo//lib/rgeo/feature/factory.rb#10
+# pkg:gem/rgeo#lib/rgeo/feature/factory.rb:10
 module RGeo::Feature
   class << self
     # Cast the given object according to the given parameters, if
@@ -4768,7 +4752,7 @@ module RGeo::Feature
     # casting behavior by defining the override_cast method. See
     # RGeo::Feature::Factory#override_cast for more details.
     #
-    # source://rgeo//lib/rgeo/feature/types.rb#158
+    # pkg:gem/rgeo#lib/rgeo/feature/types.rb:158
     def cast(obj, *params); end
   end
 end
@@ -4806,7 +4790,7 @@ end
 #
 # Some implementations may support higher dimensional points.
 #
-# source://rgeo//lib/rgeo/feature/curve.rb#43
+# pkg:gem/rgeo#lib/rgeo/feature/curve.rb:43
 module RGeo::Feature::Curve
   include ::RGeo::Feature::Geometry
   extend ::RGeo::Feature::Type
@@ -4820,10 +4804,7 @@ module RGeo::Feature::Curve
   # Returns a boolean value. Note that this is different from the SFS
   # specification, which stipulates an integer return value.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/curve.rb#92
+  # pkg:gem/rgeo#lib/rgeo/feature/curve.rb:92
   def closed?; end
 
   # === SFS 1.1 Description
@@ -4834,9 +4815,7 @@ module RGeo::Feature::Curve
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/curve.rb#79
+  # pkg:gem/rgeo#lib/rgeo/feature/curve.rb:79
   def end_point; end
 
   # === SFS 1.1 Description
@@ -4847,9 +4826,7 @@ module RGeo::Feature::Curve
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/curve.rb#55
+  # pkg:gem/rgeo#lib/rgeo/feature/curve.rb:55
   def length; end
 
   # === SFS 1.1 Description
@@ -4863,10 +4840,7 @@ module RGeo::Feature::Curve
   # Returns a boolean value. Note that this is different from the SFS
   # specification, which stipulates an integer return value.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/curve.rb#107
+  # pkg:gem/rgeo#lib/rgeo/feature/curve.rb:107
   def ring?; end
 
   # === SFS 1.1 Description
@@ -4877,9 +4851,7 @@ module RGeo::Feature::Curve
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/curve.rb#67
+  # pkg:gem/rgeo#lib/rgeo/feature/curve.rb:67
   def start_point; end
 end
 
@@ -4906,7 +4878,7 @@ end
 # <tt>Factory::Instance</tt>, and you may use it in <tt>is_a?</tt>,
 # <tt>===</tt>, and case-when constructs.
 #
-# source://rgeo//lib/rgeo/feature/factory.rb#33
+# pkg:gem/rgeo#lib/rgeo/feature/factory.rb:33
 module RGeo::Feature::Factory
   # Create a feature of type GeometryCollection.
   # The elems should be an Enumerable of Geometry objects.
@@ -4916,9 +4888,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#170
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:170
   def collection(_elems); end
 
   # Returns the coordinate system specification for the features
@@ -4929,7 +4899,7 @@ module RGeo::Feature::Factory
   # coordinate system classes themselves are not yet available, so
   # implementations should just return nil for now.
   #
-  # source://rgeo//lib/rgeo/feature/factory.rb#229
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:229
   def coord_sys; end
 
   # Create a feature of type Line.
@@ -4941,9 +4911,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#126
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:126
   def line(_start, _stop); end
 
   # Create a feature of type LineString.
@@ -4955,9 +4923,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#113
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:113
   def line_string(_points); end
 
   # Create a feature of type LinearRing.
@@ -4972,9 +4938,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#142
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:142
   def linear_ring(_points); end
 
   # Create a feature of type MultiLineString.
@@ -4988,9 +4952,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#200
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:200
   def multi_line_string(_elems); end
 
   # Create a feature of type MultiPoint.
@@ -5004,9 +4966,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#185
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:185
   def multi_point(_elems); end
 
   # Create a feature of type MultiPolygon.
@@ -5022,9 +4982,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#217
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:217
   def multi_polygon(_elems); end
 
   # This is an optional method that may be implemented to customize
@@ -5059,23 +5017,19 @@ module RGeo::Feature::Factory
   # algorithm to cast the object. Therefore, by default, you should
   # return false.
   #
-  # source://rgeo//lib/rgeo/feature/factory.rb#265
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:265
   def override_cast(_original, _type, _flags); end
 
   # Parse the given string in well-known-binary format and return the
   # resulting feature. Returns nil if the string couldn't be parsed.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#89
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:89
   def parse_wkb(_str); end
 
   # Parse the given string in well-known-text format and return the
   # resulting feature. Returns nil if the string couldn't be parsed.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#82
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:82
   def parse_wkt(_str); end
 
   # Create a feature of type Point.
@@ -5085,9 +5039,7 @@ module RGeo::Feature::Factory
   # supported. If both Z and M coordinates are supported, Z should
   # be passed first.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#100
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:100
   def point(_x, _y, *_extra); end
 
   # Create a feature of type Polygon.
@@ -5102,9 +5054,7 @@ module RGeo::Feature::Factory
   # result of building geometries from objects of the wrong factory
   # is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#158
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:158
   def polygon(_outer_ring, _inner_rings = T.unsafe(nil)); end
 
   # Returns meta-information about this factory, by key. This
@@ -5142,9 +5092,7 @@ module RGeo::Feature::Factory
   #   information is present about whether the coordinate system is
   #   meant to be so interpreted.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/factory.rb#75
+  # pkg:gem/rgeo#lib/rgeo/feature/factory.rb:75
   def property(_name); end
 end
 
@@ -5152,7 +5100,7 @@ end
 # This serves as a marker that may be used to test an object for
 # factory-ness.
 #
-# source://rgeo//lib/rgeo/feature/factory.rb#37
+# pkg:gem/rgeo#lib/rgeo/feature/factory.rb:37
 module RGeo::Feature::Factory::Instance; end
 
 # A FactoryGenerator is a callable object (usually a Proc) that
@@ -5179,7 +5127,7 @@ module RGeo::Feature::Factory::Instance; end
 # depend on the kind_of? method to determine if an object is a
 # factory generator.
 #
-# source://rgeo//lib/rgeo/feature/factory_generator.rb#34
+# pkg:gem/rgeo#lib/rgeo/feature/factory_generator.rb:34
 module RGeo::Feature::FactoryGenerator
   # Generate a factory given a configuration as a hash.
   #
@@ -5215,7 +5163,7 @@ module RGeo::Feature::FactoryGenerator
   # [<tt>:has_m_coordinate</tt>]
   #   Support M coordinates. Default is usually false.
   #
-  # source://rgeo//lib/rgeo/feature/factory_generator.rb#69
+  # pkg:gem/rgeo#lib/rgeo/feature/factory_generator.rb:69
   def call(_config = T.unsafe(nil)); end
 
   class << self
@@ -5224,13 +5172,13 @@ module RGeo::Feature::FactoryGenerator
     # for configuration values not explicitly specified, and you can
     # force certain values to override the given configuration.
     #
-    # source://rgeo//lib/rgeo/feature/factory_generator.rb#85
+    # pkg:gem/rgeo#lib/rgeo/feature/factory_generator.rb:85
     def decorate(delegate, default_config = T.unsafe(nil), force_config = T.unsafe(nil)); end
 
     # Return a new FactoryGenerator that always returns the given
     # factory.
     #
-    # source://rgeo//lib/rgeo/feature/factory_generator.rb#76
+    # pkg:gem/rgeo#lib/rgeo/feature/factory_generator.rb:76
     def single(factory); end
   end
 end
@@ -5306,7 +5254,7 @@ end
 # their equivalence types, they must degrade to use a stronger form
 # of equivalence.
 #
-# source://rgeo//lib/rgeo/feature/geometry.rb#81
+# pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:81
 module RGeo::Feature::Geometry
   extend ::RGeo::Feature::Type
 
@@ -5315,7 +5263,7 @@ module RGeo::Feature::Geometry
   # types is not specified; an implementation may choose to provide
   # additional capabilities as appropriate.
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#710
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:710
   def *(other); end
 
   # If the given rhs is a geometry object, this operator must behave
@@ -5323,7 +5271,7 @@ module RGeo::Feature::Geometry
   # is not specified; an implementation may choose to provide
   # additional capabilities as appropriate.
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#701
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:701
   def +(other); end
 
   # If the given rhs is a geometry object, this operator must behave
@@ -5331,7 +5279,7 @@ module RGeo::Feature::Geometry
   # types is not specified; an implementation may choose to provide
   # additional capabilities as appropriate.
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#692
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:692
   def -(other); end
 
   # This operator should behave almost the same as the equals? method,
@@ -5348,7 +5296,7 @@ module RGeo::Feature::Geometry
   # test, the == operator must fall back on representational or
   # objective equivalence.
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#675
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:675
   def ==(other); end
 
   # === SFS 1.1 Description
@@ -5360,9 +5308,7 @@ module RGeo::Feature::Geometry
   #
   # Returns a binary string.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#208
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:208
   def as_binary; end
 
   # === SFS 1.1 Description
@@ -5374,9 +5320,7 @@ module RGeo::Feature::Geometry
   #
   # Returns an ASCII string.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#195
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:195
   def as_text; end
 
   # === SFS 1.1 Description
@@ -5390,9 +5334,7 @@ module RGeo::Feature::Geometry
   #
   # Returns an object that supports the Geometry interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#277
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:277
   def boundary; end
 
   # === SFS 1.1 Description
@@ -5406,9 +5348,7 @@ module RGeo::Feature::Geometry
   #
   # Returns an object that supports the Geometry interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#516
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:516
   def buffer(_distance_); end
 
   # === SFS 1.1 Description
@@ -5426,10 +5366,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#410
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:410
   def contains?(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5441,9 +5378,7 @@ module RGeo::Feature::Geometry
   #
   # Returns an object that supports the Geometry interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#529
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:529
   def convex_hull; end
 
   # === SFS 1.2 Description
@@ -5456,10 +5391,9 @@ module RGeo::Feature::Geometry
   # Difference between this and dimension is that this is the dimension of the coordinate
   # not the dimension of the geometry.
   #
-  # @raise [Error::UnsupportedOperation]
   # @return [Integer]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#121
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:121
   def coordinate_dimension; end
 
   # === SFS 1.1 Description
@@ -5477,10 +5411,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#372
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:372
   def crosses?(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5497,9 +5428,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of performing
   # operations on objects from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#583
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:583
   def difference(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5513,9 +5442,7 @@ module RGeo::Feature::Geometry
   # Returns an integer. This value is -1 for an empty geometry, 0 for
   # point geometries, 1 for curves, and 2 for surfaces.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#106
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:106
   def dimension; end
 
   # === SFS 1.1 Description
@@ -5533,10 +5460,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#315
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:315
   def disjoint?(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5554,9 +5478,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of measuring the
   # distance between objects from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#501
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:501
   def distance(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5570,10 +5492,7 @@ module RGeo::Feature::Geometry
   # Returns a boolean value. Note that this is different from the SFS
   # specification, which stipulates an integer return value.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#223
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:223
   def empty?; end
 
   # === SFS 1.1 Description
@@ -5586,9 +5505,7 @@ module RGeo::Feature::Geometry
   #
   # Returns an object that supports the Geometry interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#182
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:182
   def envelope; end
 
   # This method should behave almost the same as the rep_equals?
@@ -5606,9 +5523,7 @@ module RGeo::Feature::Geometry
   # representational equivalence test, this method must fall back on
   # objective equivalence.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#649
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:649
   def eql?(other); end
 
   # === SFS 1.1 Description
@@ -5626,10 +5541,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#296
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:296
   def equals?(_another_geometry); end
 
   # Returns a factory for creating features related to this one.
@@ -5639,9 +5551,7 @@ module RGeo::Feature::Geometry
   # system by default, and it should be possible to perform relational
   # operations on them.)
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#91
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:91
   def factory; end
 
   # === SFS 1.1 Description
@@ -5657,9 +5567,7 @@ module RGeo::Feature::Geometry
   # string name of the type is returned. To obtain the name string,
   # call the +type_name+ method of the returned module.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#153
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:153
   def geometry_type; end
 
   # === SFS 1.1 Description
@@ -5676,9 +5584,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of performing
   # operations on objects from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#547
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:547
   def intersection(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5696,10 +5602,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#334
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:334
   def intersects?(_another_geometry); end
 
   # === SFS 1.2 Description
@@ -5708,10 +5611,9 @@ module RGeo::Feature::Geometry
   #
   # === Notes
   #
-  # @raise [Error::UnsupportedOperation]
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#251
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:251
   def is_3d?; end
 
   # === SFS 1.2 Description
@@ -5722,10 +5624,9 @@ module RGeo::Feature::Geometry
   # === Notes
   #
   # @param m_value [Float] value to find matches for
-  # @raise [Error::UnsupportedOperation]
   # @return [RGeo::Feature::GeometryCollection]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#468
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:468
   def locate_along; end
 
   # === SFS 1.2 Description
@@ -5735,12 +5636,11 @@ module RGeo::Feature::Geometry
   #
   # === Notes
   #
-  # @param m_end [Float] upper bound of value range
   # @param m_start [Float] lower bound of value range
-  # @raise [Error::UnsupportedOperation]
+  # @param m_end [Float] upper bound of value range
   # @return [RGeo::Feature::GeometryCollection]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#482
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:482
   def locate_between; end
 
   # === SFS 1.2 Description
@@ -5749,10 +5649,9 @@ module RGeo::Feature::Geometry
   #
   # === Notes
   #
-  # @raise [Error::UnsupportedOperation]
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#262
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:262
   def measured?; end
 
   # === SFS 1.1 Description
@@ -5770,10 +5669,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#429
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:429
   def overlaps?(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5798,10 +5694,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#455
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:455
   def relate?(_another_geometry, _intersection_pattern_matrix_); end
 
   # Returns true if this geometric object is representationally
@@ -5812,10 +5705,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#613
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:613
   def rep_equals?(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5831,10 +5721,7 @@ module RGeo::Feature::Geometry
   # Returns a boolean value. Note that this is different from the SFS
   # specification, which stipulates an integer return value.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#240
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:240
   def simple?; end
 
   # === SFS 1.2 Description
@@ -5847,10 +5734,9 @@ module RGeo::Feature::Geometry
   #
   # Similar to coordinate_dimension except it will ignore the M component always.
   #
-  # @raise [Error::UnsupportedOperation]
   # @return [Integer]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#136
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:136
   def spatial_dimension; end
 
   # === SFS 1.1 Description
@@ -5864,9 +5750,7 @@ module RGeo::Feature::Geometry
   # This will normally be a foreign key to an index of reference systems
   # stored in either the same or some other datastore.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#168
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:168
   def srid; end
 
   # === SFS 1.1 Description
@@ -5883,9 +5767,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of performing
   # operations on objects from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#601
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:601
   def sym_difference(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5903,10 +5785,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#353
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:353
   def touches?(_another_geometry); end
 
   # Convenience method to transform/project a geometry
@@ -5915,10 +5794,10 @@ module RGeo::Feature::Geometry
   #
   # @note: Not an OGC SFS method
   #
-  # @param other_factory [RGeo::Feature::Factory]
+  # @param [RGeo::Feature::Factory] other_factory
   # @return [RGeo::Feature::Geometry]
   #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#722
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:722
   def transform(other_factory); end
 
   # Unions a collection of Geometry or a single Geometry
@@ -5934,9 +5813,7 @@ module RGeo::Feature::Geometry
   # is required. If the feature is not available, unary_union
   # returns nil.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#630
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:630
   def unary_union; end
 
   # === SFS 1.1 Description
@@ -5953,9 +5830,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of performing
   # operations on objects from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#565
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:565
   def union(_another_geometry); end
 
   # === SFS 1.1 Description
@@ -5973,10 +5848,7 @@ module RGeo::Feature::Geometry
   # this geometry, strictly speaking, the result of comparing objects
   # from different factories is undefined.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry.rb#391
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry.rb:391
   def within?(_another_geometry); end
 end
 
@@ -6001,7 +5873,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/geometry_collection.rb#31
+# pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:31
 module RGeo::Feature::GeometryCollection
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6018,9 +5890,7 @@ module RGeo::Feature::GeometryCollection
   # the same way Ruby's array indexing works. Hence, geometry_n(-1)
   # returns nil, where [-1] returns the last element of the collection.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#80
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:80
   def [](_idx); end
 
   # Iterates over the geometries of this GeometryCollection.
@@ -6030,9 +5900,7 @@ module RGeo::Feature::GeometryCollection
   # Note that all GeometryCollection implementations must also
   # include the Enumerable mixin.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#97
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:97
   def each(&_arg0); end
 
   # === SFS 1.1 Description
@@ -6046,16 +5914,12 @@ module RGeo::Feature::GeometryCollection
   # Also note that this method is different from GeometryCollection#[]
   # in that it does not support negative indexes.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#60
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:60
   def geometry_n(_idx); end
 
   # Nodes the linework in a list of Geometries
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#86
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:86
   def node; end
 
   # === SFS 1.1 Description
@@ -6066,24 +5930,20 @@ module RGeo::Feature::GeometryCollection
   #
   # Returns an integer.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#45
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:45
   def num_geometries; end
 
   # Gives a point that is guaranteed to be within the geometry.
   #
   # Extends OGC SFS 1.1 and follows PostGIS standards.
-  #
-  # @raise [Error::UnsupportedOperation]
   # @see https://postgis.net/docs/ST_PointOnSurface.html
   #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#105
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:105
   def point_on_surface; end
 
   # Alias of the num_geometries method.
   #
-  # source://rgeo//lib/rgeo/feature/geometry_collection.rb#66
+  # pkg:gem/rgeo#lib/rgeo/feature/geometry_collection.rb:66
   def size; end
 end
 
@@ -6091,7 +5951,7 @@ end
 # This serves as a marker that may be used to test an object for
 # feature-ness.
 #
-# source://rgeo//lib/rgeo/feature/types.rb#14
+# pkg:gem/rgeo#lib/rgeo/feature/types.rb:14
 module RGeo::Feature::Instance; end
 
 # == SFS 1.1 Description
@@ -6106,7 +5966,7 @@ module RGeo::Feature::Instance; end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/line.rb#23
+# pkg:gem/rgeo#lib/rgeo/feature/line.rb:23
 module RGeo::Feature::Line
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -6127,7 +5987,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/line_string.rb#23
+# pkg:gem/rgeo#lib/rgeo/feature/line_string.rb:23
 module RGeo::Feature::LineString
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -6141,9 +6001,7 @@ module RGeo::Feature::LineString
   #
   # Returns an integer.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/line_string.rb#35
+  # pkg:gem/rgeo#lib/rgeo/feature/line_string.rb:35
   def num_points; end
 
   # === SFS 1.1 Description
@@ -6156,17 +6014,13 @@ module RGeo::Feature::LineString
   # if the given N is out of range. N is zero-based.
   # Does not support negative indexes.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/line_string.rb#49
+  # pkg:gem/rgeo#lib/rgeo/feature/line_string.rb:49
   def point_n(_idx); end
 
   # Returns the constituent points as an array of objects that
   # support the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/line_string.rb#56
+  # pkg:gem/rgeo#lib/rgeo/feature/line_string.rb:56
   def points; end
 end
 
@@ -6182,7 +6036,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/linear_ring.rb#22
+# pkg:gem/rgeo#lib/rgeo/feature/linear_ring.rb:22
 module RGeo::Feature::LinearRing
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -6196,10 +6050,7 @@ module RGeo::Feature::LinearRing
   #
   # Not a standard SFS method for linear rings, but added for convenience.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/linear_ring.rb#32
+  # pkg:gem/rgeo#lib/rgeo/feature/linear_ring.rb:32
   def ccw?; end
 end
 
@@ -6233,7 +6084,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/multi_curve.rb#40
+# pkg:gem/rgeo#lib/rgeo/feature/multi_curve.rb:40
 module RGeo::Feature::MultiCurve
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6251,10 +6102,7 @@ module RGeo::Feature::MultiCurve
   # Returns a boolean value. Note that this is different from the SFS
   # specification, which stipulates an integer return value.
   #
-  # @raise [Error::UnsupportedOperation]
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/multi_curve.rb#67
+  # pkg:gem/rgeo#lib/rgeo/feature/multi_curve.rb:67
   def closed?; end
 
   # === SFS 1.1 Description
@@ -6266,9 +6114,7 @@ module RGeo::Feature::MultiCurve
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/multi_curve.rb#53
+  # pkg:gem/rgeo#lib/rgeo/feature/multi_curve.rb:53
   def length; end
 end
 
@@ -6284,7 +6130,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/multi_line_string.rb#23
+# pkg:gem/rgeo#lib/rgeo/feature/multi_line_string.rb:23
 module RGeo::Feature::MultiLineString
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6313,7 +6159,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/multi_point.rb#30
+# pkg:gem/rgeo#lib/rgeo/feature/multi_point.rb:30
 module RGeo::Feature::MultiPoint
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6365,7 +6211,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/multi_polygon.rb#54
+# pkg:gem/rgeo#lib/rgeo/feature/multi_polygon.rb:54
 module RGeo::Feature::MultiPolygon
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6396,7 +6242,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/multi_surface.rb#31
+# pkg:gem/rgeo#lib/rgeo/feature/multi_surface.rb:31
 module RGeo::Feature::MultiSurface
   include ::RGeo::Feature::Geometry
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -6413,9 +6259,7 @@ module RGeo::Feature::MultiSurface
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/multi_surface.rb#44
+  # pkg:gem/rgeo#lib/rgeo/feature/multi_surface.rb:44
   def area; end
 
   # === SFS 1.1 Description
@@ -6427,9 +6271,7 @@ module RGeo::Feature::MultiSurface
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/multi_surface.rb#57
+  # pkg:gem/rgeo#lib/rgeo/feature/multi_surface.rb:57
   def centroid; end
 
   # === SFS 1.1 Description
@@ -6440,9 +6282,7 @@ module RGeo::Feature::MultiSurface
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/multi_surface.rb#69
+  # pkg:gem/rgeo#lib/rgeo/feature/multi_surface.rb:69
   def point_on_surface; end
 end
 
@@ -6472,7 +6312,7 @@ end
 # currently, every RGeo Point object represents an actual location
 # with real coordinates.
 #
-# source://rgeo//lib/rgeo/feature/point.rb#36
+# pkg:gem/rgeo#lib/rgeo/feature/point.rb:36
 module RGeo::Feature::Point
   include ::RGeo::Feature::Geometry
   extend ::RGeo::Feature::Type
@@ -6483,9 +6323,7 @@ module RGeo::Feature::Point
   # This method may not be available if the point's factory does
   # not support M coordinates.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/point.rb#80
+  # pkg:gem/rgeo#lib/rgeo/feature/point.rb:80
   def m; end
 
   # === SFS 1.1 Description
@@ -6496,9 +6334,7 @@ module RGeo::Feature::Point
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/point.rb#48
+  # pkg:gem/rgeo#lib/rgeo/feature/point.rb:48
   def x; end
 
   # === SFS 1.1 Description
@@ -6509,9 +6345,7 @@ module RGeo::Feature::Point
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/point.rb#60
+  # pkg:gem/rgeo#lib/rgeo/feature/point.rb:60
   def y; end
 
   # Returns the z-coordinate for this Point as a floating-point
@@ -6520,9 +6354,7 @@ module RGeo::Feature::Point
   # This method may not be available if the point's factory does
   # not support Z coordinates.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/point.rb#70
+  # pkg:gem/rgeo#lib/rgeo/feature/point.rb:70
   def z; end
 end
 
@@ -6564,7 +6396,7 @@ end
 # kind_of? method to check type. Instead, use the provided check_type
 # class method (or === operator) defined in the Type module.
 #
-# source://rgeo//lib/rgeo/feature/polygon.rb#48
+# pkg:gem/rgeo#lib/rgeo/feature/polygon.rb:48
 module RGeo::Feature::Polygon
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Surface
@@ -6578,9 +6410,7 @@ module RGeo::Feature::Polygon
   #
   # Returns an object that supports the LinearRing interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/polygon.rb#60
+  # pkg:gem/rgeo#lib/rgeo/feature/polygon.rb:60
   def exterior_ring; end
 
   # === SFS 1.1 Description
@@ -6593,17 +6423,13 @@ module RGeo::Feature::Polygon
   # if the given N is out of range. N is zero-based.
   # Does not support negative indexes.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/polygon.rb#86
+  # pkg:gem/rgeo#lib/rgeo/feature/polygon.rb:86
   def interior_ring_n(_idx); end
 
   # Returns the interior rings as a (possibly empty) array of objects
   # that support the LinearRing interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/polygon.rb#93
+  # pkg:gem/rgeo#lib/rgeo/feature/polygon.rb:93
   def interior_rings; end
 
   # === SFS 1.1 Description
@@ -6614,9 +6440,7 @@ module RGeo::Feature::Polygon
   #
   # Returns an integer.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/polygon.rb#72
+  # pkg:gem/rgeo#lib/rgeo/feature/polygon.rb:72
   def num_interior_rings; end
 end
 
@@ -6647,7 +6471,7 @@ end
 #
 # Some implementations may support higher dimensional points.
 #
-# source://rgeo//lib/rgeo/feature/surface.rb#37
+# pkg:gem/rgeo#lib/rgeo/feature/surface.rb:37
 module RGeo::Feature::Surface
   include ::RGeo::Feature::Geometry
   extend ::RGeo::Feature::Type
@@ -6661,9 +6485,7 @@ module RGeo::Feature::Surface
   #
   # Returns a floating-point scalar value.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/surface.rb#50
+  # pkg:gem/rgeo#lib/rgeo/feature/surface.rb:50
   def area; end
 
   # === SFS 1.1 Description
@@ -6675,9 +6497,7 @@ module RGeo::Feature::Surface
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/surface.rb#63
+  # pkg:gem/rgeo#lib/rgeo/feature/surface.rb:63
   def centroid; end
 
   # === SFS 1.1 Description
@@ -6688,9 +6508,7 @@ module RGeo::Feature::Surface
   #
   # Returns an object that supports the Point interface.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/feature/surface.rb#75
+  # pkg:gem/rgeo#lib/rgeo/feature/surface.rb:75
   def point_on_surface; end
 end
 
@@ -6729,19 +6547,12 @@ end
 #
 #   RGeo::Feature::Type === object.geometry_type  # true
 #
-# source://rgeo//lib/rgeo/feature/types.rb#51
+# pkg:gem/rgeo#lib/rgeo/feature/types.rb:51
 module RGeo::Feature::Type
-  # Returns true if the given object is this type or a subtype
-  # thereof, or if it is a feature object whose geometry_type is
-  # this type or a subtype thereof.
-  #
-  # Note that feature objects need not actually include this module.
-  # Therefore, the is_a? method will generally not work.
-  #
-  # source://rgeo//lib/rgeo/feature/types.rb#63
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:63
   def ===(rhs); end
 
-  # source://rgeo//lib/rgeo/feature/types.rb#94
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:94
   def add_subtype(type); end
 
   # Returns true if the given object is this type or a subtype
@@ -6751,49 +6562,43 @@ module RGeo::Feature::Type
   # Note that feature objects need not actually include this module.
   # Therefore, the is_a? method will generally not work.
   #
-  # source://rgeo//lib/rgeo/feature/types.rb#59
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:59
   def check_type(rhs); end
 
   # Iterates over the known immediate subtypes of this type.
   #
-  # source://rgeo//lib/rgeo/feature/types.rb#81
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:81
   def each_immediate_subtype(&_arg0); end
 
   # Returns true if this type is the same type or a subtype of the
   # given type.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/feature/types.rb#68
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:68
   def subtype_of?(type); end
 
   # Returns the supertype of this type. The supertype of Geometry
   # is nil.
   #
-  # source://rgeo//lib/rgeo/feature/types.rb#75
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:75
   def supertype; end
 
-  # Returns the OpenGIS type name of this type. For example:
-  #
-  #   RGeo::Feature::Point.type_name  # "Point"
-  #
-  # source://rgeo//lib/rgeo/feature/types.rb#92
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:92
   def to_s; end
 
   # Returns the OpenGIS type name of this type. For example:
   #
   #   RGeo::Feature::Point.type_name  # "Point"
   #
-  # source://rgeo//lib/rgeo/feature/types.rb#89
+  # pkg:gem/rgeo#lib/rgeo/feature/types.rb:89
   def type_name; end
 
   class << self
-    # source://rgeo//lib/rgeo/feature/types.rb#98
+    # pkg:gem/rgeo#lib/rgeo/feature/types.rb:98
     def extended(type); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/factory.rb#10
+# pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:10
 module RGeo::Geographic
   class << self
     # Creates and returns a geographic factory that includes a
@@ -6892,7 +6697,7 @@ module RGeo::Geographic
     # also set the <tt>:buffer_resolution</tt> option. See RGeo::Geos.factory
     # for more details.
     #
-    # source://rgeo//lib/rgeo/geographic/interface.rb#307
+    # pkg:gem/rgeo#lib/rgeo/geographic/interface.rb:307
     def projected_factory(opts = T.unsafe(nil)); end
 
     # Creates and returns a geographic factory that is designed for
@@ -6965,7 +6770,7 @@ module RGeo::Geographic
     # projected factory, you may also set the <tt>:buffer_resolution</tt>
     # options. See RGeo::Geos.factory for more details.
     #
-    # source://rgeo//lib/rgeo/geographic/interface.rb#189
+    # pkg:gem/rgeo#lib/rgeo/geographic/interface.rb:189
     def simple_mercator_factory(opts = T.unsafe(nil)); end
 
     # Creates and returns a geographic factory that does not include a
@@ -7057,15 +6862,15 @@ module RGeo::Geographic
     #   Default is the empty hash, indicating the default configuration
     #   for WKRep::WKBGenerator.
     #
-    # source://rgeo//lib/rgeo/geographic/interface.rb#101
+    # pkg:gem/rgeo#lib/rgeo/geographic/interface.rb:101
     def spherical_factory(opts = T.unsafe(nil)); end
 
     private
 
-    # source://rgeo//lib/rgeo/geographic/interface.rb#382
+    # pkg:gem/rgeo#lib/rgeo/geographic/interface.rb:382
     def coord_sys4055; end
 
-    # source://rgeo//lib/rgeo/geographic/interface.rb#388
+    # pkg:gem/rgeo#lib/rgeo/geographic/interface.rb:388
     def coord_sys4326; end
   end
 end
@@ -7074,133 +6879,121 @@ end
 # See methods of the RGeo::Geographic module for the API for creating
 # geography factories.
 #
-# source://rgeo//lib/rgeo/geographic/factory.rb#14
+# pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:14
 class RGeo::Geographic::Factory
   include ::RGeo::Feature::Factory::Instance
   include ::RGeo::ImplHelper::Utils
 
-  # @return [Factory] a new instance of Factory
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#28
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:28
   def initialize(impl_prefix, opts = T.unsafe(nil)); end
 
-  # Equivalence test.
-  #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#98
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:98
   def ==(other); end
 
   # See RGeo::Feature::Factory#collection
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#330
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:330
   def collection(elems); end
 
   # See RGeo::Feature::Factory#coord_sys
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#26
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:26
   def coord_sys; end
 
-  # Returns the value of attribute coordinate_dimension.
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#20
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:20
   def coordinate_dimension; end
 
   # Psych support
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#160
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:160
   def encode_with(coder); end
 
   # Equivalence test.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#91
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:91
   def eql?(other); end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#356
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:356
   def generate_wkb(obj); end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#352
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:352
   def generate_wkt(obj); end
 
   # Returns true if this factory supports a projection.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#210
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:210
   def has_projection?; end
 
   # Standard hash code
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#102
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:102
   def hash; end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#178
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:178
   def init_with(coder); end
 
   # See RGeo::Feature::Factory#line
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#312
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:312
   def line(start, stop); end
 
   # See RGeo::Feature::Factory#line_string
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#306
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:306
   def line_string(points); end
 
   # See RGeo::Feature::Factory#linear_ring
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#318
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:318
   def linear_ring(points); end
 
   # Marshal support
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#108
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:108
   def marshal_dump; end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#128
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:128
   def marshal_load(data_); end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#360
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:360
   def marshal_wkb_generator; end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#364
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:364
   def marshal_wkb_parser; end
 
   # See RGeo::Feature::Factory#multi_line_string
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#342
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:342
   def multi_line_string(elems); end
 
   # See RGeo::Feature::Factory#multi_point
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#336
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:336
   def multi_point(elems); end
 
   # See RGeo::Feature::Factory#multi_polygon
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#348
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:348
   def multi_polygon(elems); end
 
   # See RGeo::Feature::Factory#parse_wkb
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#294
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:294
   def parse_wkb(str); end
 
   # See RGeo::Feature::Factory#parse_wkt
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#288
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:288
   def parse_wkt(str); end
 
   # See RGeo::Feature::Factory#point
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#300
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:300
   def point(x, y, *extra); end
 
   # See RGeo::Feature::Factory#polygon
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#324
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:324
   def polygon(outer_ring, inner_rings = T.unsafe(nil)); end
 
   # Projects the given geometry into the projected coordinate space,
@@ -7209,15 +7002,13 @@ class RGeo::Geographic::Factory
   # Raises Error::InvalidGeometry if the given geometry is not of
   # this factory.
   #
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#227
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:227
   def project(geometry); end
 
   # Returns the factory for the projected coordinate space,
   # or nil if this factory does not support a projection.
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#217
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:217
   def projection_factory; end
 
   # Returns a ProjectedWindow specifying the limits of the domain of
@@ -7225,7 +7016,7 @@ class RGeo::Geographic::Factory
   # Returns nil if this factory does not support a projection, or the
   # projection limits are not known.
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#264
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:264
   def projection_limits_window; end
 
   # Returns true if this factory supports a projection and the
@@ -7235,37 +7026,29 @@ class RGeo::Geographic::Factory
   # does not support or a projection, or if it is not known whether
   # or not it wraps.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#255
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:255
   def projection_wraps?; end
 
-  # Sets the attribute projector
-  #
-  # @param value the value to set the attribute projector to.
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#18
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:18
   def projector=(_arg0); end
 
   # See RGeo::Feature::Factory#property
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#273
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:273
   def property(name); end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#368
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:368
   def psych_wkt_generator; end
 
-  # source://rgeo//lib/rgeo/geographic/factory.rb#372
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:372
   def psych_wkt_parser; end
 
-  # Returns the value of attribute spatial_dimension.
-  #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#20
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:20
   def spatial_dimension; end
 
   # Returns the srid reported by this factory.
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#23
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:23
   def srid; end
 
   # Reverse-projects the given geometry from the projected coordinate
@@ -7273,11 +7056,11 @@ class RGeo::Geographic::Factory
   # Raises Error::InvalidGeometry if the given geometry is not of
   # the projection defined by this factory.
   #
-  # source://rgeo//lib/rgeo/geographic/factory.rb#238
+  # pkg:gem/rgeo#lib/rgeo/geographic/factory.rb:238
   def unproject(geometry); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#63
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:63
 class RGeo::Geographic::ProjectedGeometryCollectionImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -7288,289 +7071,262 @@ class RGeo::Geographic::ProjectedGeometryCollectionImpl
   include ::RGeo::ImplHelper::BasicGeometryCollectionMethods
   include ::RGeo::Geographic::ProjectedGeometryMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:11
 module RGeo::Geographic::ProjectedGeometryMethods
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#62
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:62
   def boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#107
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:107
   def buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#111
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:111
   def buffer_with_style(distance, end_cap_style, join_style, mitre_limit); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#91
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:91
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#123
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:123
   def convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#25
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:25
   def coordinate_dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#83
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:83
   def crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#135
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:135
   def difference(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#71
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:71
   def disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:103
   def distance(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#41
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:41
   def empty?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#21
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:21
   def envelope; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#67
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:67
   def equals?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#127
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:127
   def intersection(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#75
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:75
   def intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#53
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:53
   def invalid_reason; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#33
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:33
   def is_3d?; end
 
-  # Try and make the geometry valid, this may change its shape.
-  # Returns a valid copy of the geometry.
+  # (see RGeo::ImplHelper::ValidityCheck#make_valid)
   #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#58
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:58
   def make_valid; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#37
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:37
   def measured?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#95
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:95
   def overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#143
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:143
   def point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#16
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:16
   def projection; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#99
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:99
   def relate(rhs, pattern_); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#45
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:45
   def simple?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#115
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:115
   def simplify(tolerance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#119
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:119
   def simplify_preserve_topology(tolerance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#29
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:29
   def spatial_dimension; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:12
   def srid; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#139
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:139
   def sym_difference(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#79
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:79
   def touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#131
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:131
   def union(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#49
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:49
   def valid?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#87
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:87
   def within?(rhs); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#42
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:42
 class RGeo::Geographic::ProjectedLineImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -7585,152 +7341,152 @@ class RGeo::Geographic::ProjectedLineImpl
   include ::RGeo::Geographic::ProjectedNCurveMethods
   include ::RGeo::Geographic::ProjectedLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#20
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:20
 class RGeo::Geographic::ProjectedLineStringImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -7743,162 +7499,162 @@ class RGeo::Geographic::ProjectedLineStringImpl
   include ::RGeo::Geographic::ProjectedNCurveMethods
   include ::RGeo::Geographic::ProjectedLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#190
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:190
 module RGeo::Geographic::ProjectedLineStringMethods
   private
 
   # Ensure coordinates fall within a valid range.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#194
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:194
   def init_geometry; end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#30
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:30
 class RGeo::Geographic::ProjectedLinearRingImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -7914,166 +7670,164 @@ class RGeo::Geographic::ProjectedLinearRingImpl
   include ::RGeo::Geographic::ProjectedLineStringMethods
   include ::RGeo::Geographic::ProjectedLinearRingMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def ccw?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_ccw?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#200
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:200
 module RGeo::Geographic::ProjectedLinearRingMethods
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#201
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:201
   def simple?; end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#80
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:80
 class RGeo::Geographic::ProjectedMultiLineStringImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -8088,164 +7842,164 @@ class RGeo::Geographic::ProjectedMultiLineStringImpl
   include ::RGeo::Geographic::ProjectedGeometryMethods
   include ::RGeo::Geographic::ProjectedNCurveMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#71
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:71
 class RGeo::Geographic::ProjectedMultiPointImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -8258,158 +8012,158 @@ class RGeo::Geographic::ProjectedMultiPointImpl
   include ::RGeo::ImplHelper::BasicMultiPointMethods
   include ::RGeo::Geographic::ProjectedGeometryMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#90
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:90
 class RGeo::Geographic::ProjectedMultiPolygonImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -8425,197 +8179,195 @@ class RGeo::Geographic::ProjectedMultiPolygonImpl
   include ::RGeo::Geographic::ProjectedNSurfaceMethods
   include ::RGeo::Geographic::ProjectedMultiPolygonMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#226
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:226
 module RGeo::Geographic::ProjectedMultiPolygonMethods
   private
 
   # Ensure projection is available.
   #
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#230
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:230
   def init_geometry; end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#184
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:184
 module RGeo::Geographic::ProjectedNCurveMethods
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#185
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:185
   def length; end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#206
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:206
 module RGeo::Geographic::ProjectedNSurfaceMethods
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#207
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:207
   def area; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#211
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:211
   def centroid; end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:11
 class RGeo::Geographic::ProjectedPointImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Point
@@ -8626,193 +8378,191 @@ class RGeo::Geographic::ProjectedPointImpl
   include ::RGeo::Geographic::ProjectedGeometryMethods
   include ::RGeo::Geographic::ProjectedPointMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#17
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:17
   def lat(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#17
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:17
   def latitude(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#17
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:17
   def lon(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#17
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:17
   def longitude(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_lat; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_latitude; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_lon; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_longitude; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#148
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:148
 module RGeo::Geographic::ProjectedPointMethods
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#155
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:155
   def canonical_lon; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#154
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:154
   def canonical_longitude; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#157
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:157
   def canonical_point; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#149
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:149
   def canonical_x; end
 
   private
 
   # Ensure coordinates fall within a valid range.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#177
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:177
   def init_geometry; end
 
   class << self
-    # @private
-    #
-    # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#165
+    # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:165
     def included(klass); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#53
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:53
 class RGeo::Geographic::ProjectedPolygonImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Surface
@@ -8825,172 +8575,170 @@ class RGeo::Geographic::ProjectedPolygonImpl
   include ::RGeo::Geographic::ProjectedNSurfaceMethods
   include ::RGeo::Geographic::ProjectedPolygonMethods
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def interior_ring_n(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_interior_ring_n(idx); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersection(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_overlaps?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_union(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def unsafe_within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/projected_feature_classes.rb#101
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_classes.rb:101
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#216
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:216
 module RGeo::Geographic::ProjectedPolygonMethods
   private
 
   # Ensure projection is available.
   #
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_feature_methods.rb#220
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_feature_methods.rb:220
   def init_geometry; end
 end
 
@@ -9000,7 +8748,7 @@ end
 # a spatial constraint. It must be attached to a Geographic::Factory
 # that has a projection.
 #
-# source://rgeo//lib/rgeo/geographic/projected_window.rb#16
+# pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:16
 class RGeo::Geographic::ProjectedWindow
   # Create a new ProjectedWindow given the Geographic::Factory, and the
   # x and y extents of the rectangle.
@@ -9012,34 +8760,25 @@ class RGeo::Geographic::ProjectedWindow
   # Generally, you will not need to call this low-level constructor
   # directly. Instead, use one of the provided class methods.
   #
-  # @return [ProjectedWindow] a new instance of ProjectedWindow
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#27
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:27
   def initialize(factory_, x_min_, y_min_, x_max_, y_max_, opts_ = T.unsafe(nil)); end
 
-  # Returns a new window resulting from scaling this window by the
-  # given factors, which must be floating-point values.
-  # If y_factor is not explicitly given, it defaults to the same as
-  # the x_factor.
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#249
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:249
   def *(x_factor_, y_factor_ = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#71
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:71
   def ==(other); end
 
   # Returns the center of the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#178
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:178
   def center_point; end
 
   # Returns a two-element array containing the x and y coordinates
   # of the center of the rectangle.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#127
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:127
   def center_xy; end
 
   # Returns a new window resulting from clamping this window to the
@@ -9048,43 +8787,33 @@ class RGeo::Geographic::ProjectedWindow
   # same as the center of this window. Any of the arguments may be
   # given as nil, indicating no constraint.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#257
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:257
   def clamped_by(min_width_, min_height_, max_width_, max_height_); end
 
   # Returns true if the rectangle contains the given point, which
   # must be a Feature::Point in _unprojected_ (lat/lng) space.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#198
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:198
   def contains_point?(point_); end
 
   # Returns true if the given window is completely contained within
   # this window.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#220
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:220
   def contains_window?(window_); end
 
   # Returns true if the projection wraps along the x axis, and this
   # rectangle crosses that seam.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#98
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:98
   def crosses_seam?; end
 
   # Returns true if the rectangle has zero area.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#104
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:104
   def degenerate?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#66
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:66
   def eql?(other); end
 
   # Returns the Geographic::Factory associated with this window.
@@ -9092,36 +8821,34 @@ class RGeo::Geographic::ProjectedWindow
   # projected factory (which can be obtained by calling
   # Geographic::Factory#projection_factory on this factory).
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#81
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:81
   def factory; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#73
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:73
   def hash; end
 
-  # Returns the height of the rectangle.
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#122
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:122
   def height; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#62
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:62
   def inspect; end
 
   # Returns the northeast corner of the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#169
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:169
   def ne_point; end
 
   # Returns the northwest corner of the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#160
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:160
   def nw_point; end
 
   # Returns a random point inside the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#187
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:187
   def random_point; end
 
   # Returns a new window resulting from scaling this window by the
@@ -9129,27 +8856,25 @@ class RGeo::Geographic::ProjectedWindow
   # If y_factor is not explicitly given, it defaults to the same as
   # the x_factor.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#238
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:238
   def scaled_by(x_factor_, y_factor_ = T.unsafe(nil)); end
 
   # Returns the southeast corner of the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#151
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:151
   def se_point; end
 
   # Returns the southwest corner of the rectangle in _unprojected_
   # (lat/lng) space, as a Feature::Point object.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#142
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:142
   def sw_point; end
 
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#58
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:58
   def to_s; end
 
-  # Returns the width of the rectangle.
-  #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#115
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:115
   def width; end
 
   # Returns a new window resulting from adding the given margin to
@@ -9157,37 +8882,37 @@ class RGeo::Geographic::ProjectedWindow
   # value as x_margin. Note that the margins may be negative to
   # indicate shrinking of the window.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#292
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:292
   def with_margin(x_margin_, y_margin_ = T.unsafe(nil)); end
 
   # Returns the upper limit in the x (easting) direction.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#87
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:87
   def x_max; end
 
   # Returns the lower limit in the x (easting) direction.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#84
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:84
   def x_min; end
 
   # Returns the width of the rectangle.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#110
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:110
   def x_span; end
 
   # Returns the upper limit in the y (northing) direction.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#93
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:93
   def y_max; end
 
   # Returns the lower limit in the y (northing) direction.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#90
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:90
   def y_min; end
 
   # Returns the height of the rectangle.
   #
-  # source://rgeo//lib/rgeo/geographic/projected_window.rb#119
+  # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:119
   def y_span; end
 
   class << self
@@ -9195,14 +8920,14 @@ class RGeo::Geographic::ProjectedWindow
     # which must be Feature::Point objects in unprojected (lat/lng)
     # space.
     #
-    # source://rgeo//lib/rgeo/geographic/projected_window.rb#343
+    # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:343
     def bounding_points(points_); end
 
     # Creates a new window whose coordinates are the given points,
     # which must be Feature::Point objects in unprojected (lat/lng)
     # space.
     #
-    # source://rgeo//lib/rgeo/geographic/projected_window.rb#312
+    # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:312
     def for_corners(sw_, ne_); end
 
     # Creates a new window that surrounds the given point with the
@@ -9211,88 +8936,76 @@ class RGeo::Geographic::ProjectedWindow
     # projected space. The y_margin may be given as nil, in which
     # case it is set to the same as the x_margin.
     #
-    # source://rgeo//lib/rgeo/geographic/projected_window.rb#325
+    # pkg:gem/rgeo#lib/rgeo/geographic/projected_window.rb:325
     def surrounding_point(point_, x_margin_ = T.unsafe(nil), y_margin_ = T.unsafe(nil)); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/projector.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:11
 class RGeo::Geographic::Projector
-  # @return [Projector] a new instance of Projector
-  #
-  # source://rgeo//lib/rgeo/geographic/projector.rb#12
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:12
   def initialize(geography_factory, projection_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projector.rb#36
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:36
   def limits_window; end
 
-  # source://rgeo//lib/rgeo/geographic/projector.rb#22
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:22
   def project(geometry); end
 
-  # Returns the value of attribute projection_factory.
-  #
-  # source://rgeo//lib/rgeo/geographic/projector.rb#30
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:30
   def projection_factory; end
 
-  # source://rgeo//lib/rgeo/geographic/projector.rb#17
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:17
   def set_factories(geography_factory, projection_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/projector.rb#26
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:26
   def unproject(geometry); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/projector.rb#32
+  # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:32
   def wraps?; end
 
   class << self
-    # source://rgeo//lib/rgeo/geographic/projector.rb#41
+    # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:41
     def create_from_existing_factory(geography_factory, projection_factory); end
 
-    # source://rgeo//lib/rgeo/geographic/projector.rb#45
+    # pkg:gem/rgeo#lib/rgeo/geographic/projector.rb:45
     def create_from_opts(geography_factory, opts = T.unsafe(nil)); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:11
 class RGeo::Geographic::SimpleMercatorProjector
-  # @return [SimpleMercatorProjector] a new instance of SimpleMercatorProjector
-  #
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#14
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:14
   def initialize(geography_factory, opts = T.unsafe(nil)); end
 
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#94
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:94
   def limits_window; end
 
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#30
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:30
   def project(geometry); end
 
-  # Returns the value of attribute projection_factory.
-  #
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#28
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:28
   def projection_factory; end
 
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#23
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:23
   def set_factories(geography_factory, projection_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#59
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:59
   def unproject(geometry); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#90
+  # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:90
   def wraps?; end
 
   class << self
-    # source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#107
+    # pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:107
     def _coordsys3857; end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/simple_mercator_projector.rb#12
+# pkg:gem/rgeo#lib/rgeo/geographic/simple_mercator_projector.rb:12
 RGeo::Geographic::SimpleMercatorProjector::EQUATORIAL_RADIUS = T.let(T.unsafe(nil), Float)
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#63
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:63
 class RGeo::Geographic::SphericalGeometryCollectionImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -9304,180 +9017,176 @@ class RGeo::Geographic::SphericalGeometryCollectionImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Geographic::SphericalGeometryMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:11
 module RGeo::Geographic::SphericalGeometryMethods
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#16
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:16
   def coordinate_dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#24
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:24
   def is_3d?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#28
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:28
   def measured?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#20
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:20
   def spatial_dimension; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:12
   def srid; end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#31
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:31
 class RGeo::Geographic::SphericalLineImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -9492,152 +9201,152 @@ class RGeo::Geographic::SphericalLineImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#21
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:21
 class RGeo::Geographic::SphericalLineStringImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -9650,172 +9359,166 @@ class RGeo::Geographic::SphericalLineStringImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#111
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:111
 module RGeo::Geographic::SphericalLineStringMethods
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#112
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:112
   def arcs; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#154
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:154
   def crosses?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#145
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:145
   def intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#141
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:141
   def length; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#118
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:118
   def simple?; end
 
   private
@@ -9825,10 +9528,11 @@ module RGeo::Geographic::SphericalLineStringMethods
   # Uses a nested for loop to look at each arc in the LineStrings and
   # check if each arc crosses.
   #
-  # @param rhs [RGeo::Geographic::SphericalLineStringImpl]
+  # @param [RGeo::Geographic::SphericalLineStringImpl] rhs
+  #
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#191
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:191
   def crosses_line_string?(rhs); end
 
   # TODO: replace with better algorithm (https://github.com/rgeo/rgeo/issues/274)
@@ -9836,14 +9540,15 @@ module RGeo::Geographic::SphericalLineStringMethods
   # Uses a nested for loop to look at each arc in the LineStrings and
   # check if each arc intersects.
   #
-  # @param rhs [RGeo::Geographic::SphericalLineStringImpl]
+  # @param [RGeo::Geographic::SphericalLineStringImpl] rhs
+  #
   # @return [Boolean]
   #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#173
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:173
   def intersects_line_string?(rhs); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#42
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:42
 class RGeo::Geographic::SphericalLinearRingImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Curve
@@ -9858,207 +9563,195 @@ class RGeo::Geographic::SphericalLinearRingImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def ccw?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def ring?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_ccw?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_ring?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:11
 module RGeo::Geographic::SphericalMath; end
 
 # Represents a finite arc on the sphere.
 #
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#124
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:124
 class RGeo::Geographic::SphericalMath::ArcXYZ
-  # @return [ArcXYZ] a new instance of ArcXYZ
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#127
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:127
   def initialize(start, stop); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#140
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:140
   def ==(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#147
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:147
   def axis; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#152
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:152
   def contains_point?(obj); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#142
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:142
   def degenerate?; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#125
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:125
   def e; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#137
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:137
   def eql?(other); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#159
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:159
   def intersects_arc?(obj); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#173
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:173
   def length; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#125
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:125
   def s; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#133
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:133
   def to_s; end
 end
 
@@ -10073,74 +9766,68 @@ end
 # This object is also used to represent a great circle, as its axis
 # of rotation.
 #
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#25
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:25
 class RGeo::Geographic::SphericalMath::PointXYZ
-  # @return [PointXYZ] a new instance of PointXYZ
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#28
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:28
   def initialize(x, y, z); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#66
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:66
   def %(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#59
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:59
   def *(other); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#43
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:43
   def ==(other); end
 
   # Creates some point that is perpendicular to this point
   #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#95
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:95
   def create_perpendicular; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#77
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:77
   def dist_to_point(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#40
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:40
   def eql?(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#45
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:45
   def latlon; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#52
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:52
   def lonlat; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#36
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:36
   def to_s; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#26
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:26
   def x; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#26
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:26
   def y; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_math.rb#26
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:26
   def z; end
 
   class << self
-    # source://rgeo//lib/rgeo/geographic/spherical_math.rb#103
+    # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:103
     def from_latlon(lat, lon); end
 
-    # source://rgeo//lib/rgeo/geographic/spherical_math.rb#114
+    # pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:114
     def weighted_combination(pt1, wt1, pt2, wt2); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#118
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:118
 RGeo::Geographic::SphericalMath::PointXYZ::P1 = T.let(T.unsafe(nil), RGeo::Geographic::SphericalMath::PointXYZ)
 
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#119
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:119
 RGeo::Geographic::SphericalMath::PointXYZ::P2 = T.let(T.unsafe(nil), RGeo::Geographic::SphericalMath::PointXYZ)
 
-# source://rgeo//lib/rgeo/geographic/spherical_math.rb#12
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_math.rb:12
 RGeo::Geographic::SphericalMath::RADIUS = T.let(T.unsafe(nil), Float)
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#82
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:82
 class RGeo::Geographic::SphericalMultiLineStringImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -10156,170 +9843,170 @@ class RGeo::Geographic::SphericalMultiLineStringImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalMultiLineStringMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def length(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_length; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#210
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:210
 module RGeo::Geographic::SphericalMultiLineStringMethods
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#211
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:211
   def length; end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#72
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:72
 class RGeo::Geographic::SphericalMultiPointImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -10333,158 +10020,158 @@ class RGeo::Geographic::SphericalMultiPointImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Geographic::SphericalGeometryMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#93
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:93
 class RGeo::Geographic::SphericalMultiPolygonImpl
   include ::RGeo::Feature::Geometry
   include ::Enumerable
@@ -10499,170 +10186,170 @@ class RGeo::Geographic::SphericalMultiPolygonImpl
   include ::RGeo::ImplHelper::ValidOp
   include ::RGeo::Geographic::SphericalGeometryMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def node(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def size(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_node; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_size; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#11
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:11
 class RGeo::Geographic::SphericalPointImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Point
@@ -10674,195 +10361,191 @@ class RGeo::Geographic::SphericalPointImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalPointMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#18
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:18
   def lat(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#18
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:18
   def latitude(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#18
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:18
   def lon(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#18
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:18
   def longitude(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_lat; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_latitude; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_lon; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_longitude; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#33
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:33
 module RGeo::Geographic::SphericalPointMethods
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#69
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:69
   def buffer(distance); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#38
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:38
   def distance(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#48
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:48
   def equals?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#34
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:34
   def xyz; end
 
   private
 
   # Ensure coordinates fall within a valid range.
   #
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#100
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:100
   def init_geometry; end
 
   class << self
-    # @private
-    #
-    # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#88
+    # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:88
     def included(klass); end
   end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#53
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:53
 class RGeo::Geographic::SphericalPolygonImpl
   include ::RGeo::Feature::Geometry
   include ::RGeo::Feature::Surface
@@ -10875,185 +10558,181 @@ class RGeo::Geographic::SphericalPolygonImpl
   include ::RGeo::Geographic::SphericalGeometryMethods
   include ::RGeo::Geographic::SphericalPolygonMethods
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def *(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def +(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def -(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def area(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def boundary(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def buffer(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def centroid(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def contains?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def convex_hull(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def crosses?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def disjoint?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def distance(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def envelope(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def interior_ring_n(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersection(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def intersects?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def overlaps?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def point_on_surface(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def relate?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def sym_difference(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def touches?(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def transform(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unary_union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def union(*args); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_add(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_area; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_boundary; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_buffer(_distance_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_centroid; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_convex_hull; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_crosses?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_disjoint?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_distance(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_envelope; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_interior_ring_n(idx); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersection(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_intersects?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_multiply(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_overlaps?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_point_on_surface; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_relate?(_another_geometry, _intersection_pattern_matrix_); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_remove(other); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_sym_difference(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_touches?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_transform(other_factory); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_unary_union; end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_union(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def unsafe_within?(_another_geometry); end
 
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_classes.rb#103
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_classes.rb:103
   def within?(*args); end
 end
 
-# source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#216
+# pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:216
 module RGeo::Geographic::SphericalPolygonMethods
-  # source://rgeo//lib/rgeo/geographic/spherical_feature_methods.rb#217
+  # pkg:gem/rgeo#lib/rgeo/geographic/spherical_feature_methods.rb:217
   def centroid; end
 end
 
-# source://rgeo//lib/rgeo/geos.rb#23
+# pkg:gem/rgeo#lib/rgeo/geos.rb:23
 module RGeo::Geos
   class << self
     # Returns true if the given feature is a CAPI GEOS feature, or if
     # the given factory is a CAPI GEOS factory.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#34
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:34
     def capi_geos?(object); end
 
     # Returns true if the CAPI GEOS implementation is supported.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#14
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:14
     def capi_supported?; end
 
     # Returns a factory for the GEOS implementation.
@@ -11134,30 +10813,24 @@ module RGeo::Geos
     #   never automatically generates a prepared geometry (unless you
     #   generate one explicitly using the <tt>prepare!</tt> method).
     #
-    # source://rgeo//lib/rgeo/geos/interface.rb#164
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:164
     def factory(opts = T.unsafe(nil)); end
 
     # Returns true if the given feature is an FFI GEOS feature, or if
     # the given factory is an FFI GEOS factory.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#44
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:44
     def ffi_geos?(object); end
 
     # Returns true if the FFI GEOS implementation is supported.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#20
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:20
     def ffi_supported?; end
 
     # Returns true if the given feature is a GEOS feature, or if the given
     # factory is a GEOS factory. Does not distinguish between CAPI and FFI.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#54
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:54
     def geos?(object); end
 
     # The preferred native interface. This is the native interface
@@ -11170,7 +10843,7 @@ module RGeo::Geos
     # available. You can override this setting if you want to prefer
     # FFI over CAPI.
     #
-    # source://rgeo//lib/rgeo/geos/interface.rb#85
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:85
     def preferred_native_interface; end
 
     # The preferred native interface. This is the native interface
@@ -11183,254 +10856,242 @@ module RGeo::Geos
     # available. You can override this setting if you want to prefer
     # FFI over CAPI.
     #
-    # source://rgeo//lib/rgeo/geos/interface.rb#85
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:85
     def preferred_native_interface=(_arg0); end
 
     # Returns true if any GEOS implementation is supported.
     # If this returns false, GEOS features are not available at all.
     #
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/interface.rb#27
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:27
     def supported?; end
 
     # Returns the GEOS library version as a string of the format "x.y.z".
     # Returns nil if GEOS is not available.
     #
-    # source://rgeo//lib/rgeo/geos/interface.rb#63
+    # pkg:gem/rgeo#lib/rgeo/geos/interface.rb:63
     def version; end
   end
 end
 
-# source://rgeo//lib/rgeo/geos.rb#37
+# pkg:gem/rgeo#lib/rgeo/geos.rb:37
 RGeo::Geos::CAPI_SUPPORTED = T.let(T.unsafe(nil), FalseClass)
 
-# source://rgeo//lib/rgeo/geos.rb#73
+# pkg:gem/rgeo#lib/rgeo/geos.rb:73
 RGeo::Geos::CAP_FLAT = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos.rb#72
+# pkg:gem/rgeo#lib/rgeo/geos.rb:72
 RGeo::Geos::CAP_ROUND = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos.rb#74
+# pkg:gem/rgeo#lib/rgeo/geos.rb:74
 RGeo::Geos::CAP_SQUARE = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos.rb#55
+# pkg:gem/rgeo#lib/rgeo/geos.rb:55
 RGeo::Geos::FFI_SUPPORTED = T.let(T.unsafe(nil), FalseClass)
 
-# source://rgeo//lib/rgeo/geos.rb#56
+# pkg:gem/rgeo#lib/rgeo/geos.rb:56
 RGeo::Geos::FFI_SUPPORT_EXCEPTION = T.let(T.unsafe(nil), LoadError)
 
-# source://rgeo//lib/rgeo/geos.rb#78
+# pkg:gem/rgeo#lib/rgeo/geos.rb:78
 RGeo::Geos::JOIN_BEVEL = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos.rb#77
+# pkg:gem/rgeo#lib/rgeo/geos.rb:77
 RGeo::Geos::JOIN_MITRE = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos.rb#76
+# pkg:gem/rgeo#lib/rgeo/geos.rb:76
 RGeo::Geos::JOIN_ROUND = T.let(T.unsafe(nil), Integer)
 
-# source://rgeo//lib/rgeo/geos/utils.rb#11
+# pkg:gem/rgeo#lib/rgeo/geos/utils.rb:11
 module RGeo::Geos::Utils
   class << self
-    # source://rgeo//lib/rgeo/geos/utils.rb#28
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:28
     def ffi_compute_dimension(geom); end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#52
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:52
     def ffi_coord_seq_hash(coord_seq, init_hash = T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
-    # source://rgeo//lib/rgeo/geos/utils.rb#13
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:13
     def ffi_coord_seqs_equal?(cs1, cs2, check_z); end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#58
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:58
     def ffi_supports_prepared_level1; end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#62
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:62
     def ffi_supports_prepared_level2; end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#66
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:66
     def ffi_supports_set_output_dimension; end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#70
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:70
     def ffi_supports_unary_union; end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#78
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:78
     def marshal_wkb_generator; end
 
-    # source://rgeo//lib/rgeo/geos/utils.rb#74
+    # pkg:gem/rgeo#lib/rgeo/geos/utils.rb:74
     def psych_wkt_generator; end
   end
 end
 
 # A factory for Geos that handles both Z and M.
 #
-# source://rgeo//lib/rgeo/geos/zm_factory.rb#12
+# pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:12
 class RGeo::Geos::ZMFactory
   include ::RGeo::Feature::Factory::Instance
   include ::RGeo::ImplHelper::Utils
 
-  # @return [ZMFactory] a new instance of ZMFactory
-  #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#42
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:42
   def initialize(opts = T.unsafe(nil)); end
 
-  # Factory equivalence test.
-  #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#198
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:198
   def ==(other); end
 
   # Returns the resolution used by buffer calculations on geometries
   # created by this factory
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#177
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:177
   def buffer_resolution; end
 
   # See RGeo::Feature::Factory#collection
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#267
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:267
   def collection(elems); end
 
   # See RGeo::Feature::Factory#coord_sys
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#291
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:291
   def coord_sys; end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#328
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:328
   def create_feature(klass, zgeometry, mgeometry); end
 
   # Psych support
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#134
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:134
   def encode_with(coder); end
 
   # Factory equivalence test.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#195
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:195
   def eql?(other); end
 
   # Standard hash code
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#202
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:202
   def hash; end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#149
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:149
   def init_with(coder); end
 
   # See RGeo::Feature::Factory#line
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#245
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:245
   def line(start, stop); end
 
   # See RGeo::Feature::Factory#line_string
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#239
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:239
   def line_string(points); end
 
   # See RGeo::Feature::Factory#linear_ring
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#251
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:251
   def linear_ring(points); end
 
   # Returns the m-only factory corresponding to this factory.
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#189
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:189
   def m_factory; end
 
   # Marshal support
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#97
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:97
   def marshal_dump; end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#113
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:113
   def marshal_load(data); end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#333
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:333
   def marshal_wkb_generator; end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#337
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:337
   def marshal_wkb_parser; end
 
   # See RGeo::Feature::Factory#multi_line_string
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#279
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:279
   def multi_line_string(elems); end
 
   # See RGeo::Feature::Factory#multi_point
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#273
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:273
   def multi_point(elems); end
 
   # See RGeo::Feature::Factory#multi_polygon
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#285
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:285
   def multi_polygon(elems); end
 
   # See RGeo::Feature::Factory#override_cast
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#297
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:297
   def override_cast(original, ntype, flags); end
 
   # See RGeo::Feature::Factory#parse_wkb
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#223
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:223
   def parse_wkb(str); end
 
   # See RGeo::Feature::Factory#parse_wkt
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#217
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:217
   def parse_wkt(str); end
 
   # See RGeo::Feature::Factory#point
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#229
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:229
   def point(x, y, z = T.unsafe(nil), m = T.unsafe(nil)); end
 
   # See RGeo::Feature::Factory#polygon
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#257
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:257
   def polygon(outer_ring, inner_rings = T.unsafe(nil)); end
 
   # See RGeo::Feature::Factory#property
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#208
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:208
   def property(name); end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#341
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:341
   def psych_wkt_generator; end
 
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#345
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:345
   def psych_wkt_parser; end
 
   # Returns the SRID of geometries created by this factory.
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#170
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:170
   def srid; end
 
   # Returns the z-only factory corresponding to this factory.
   #
-  # source://rgeo//lib/rgeo/geos/zm_factory.rb#183
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:183
   def z_factory; end
 
   class << self
     # Create a new factory. Returns nil if the GEOS implementation is
     # not supported.
     #
-    # source://rgeo//lib/rgeo/geos/zm_factory.rb#36
+    # pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:36
     def create(opts = T.unsafe(nil)); end
   end
 end
 
 # :stopdoc:
 #
-# source://rgeo//lib/rgeo/geos/zm_factory.rb#18
+# pkg:gem/rgeo#lib/rgeo/geos/zm_factory.rb:18
 RGeo::Geos::ZMFactory::TYPE_KLASSES = T.let(T.unsafe(nil), Hash)
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#36
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:36
 class RGeo::Geos::ZMGeometryCollectionImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
@@ -11438,269 +11099,233 @@ class RGeo::Geos::ZMGeometryCollectionImpl
   include ::RGeo::Geos::ZMGeometryCollectionMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#318
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:318
 module RGeo::Geos::ZMGeometryCollectionMethods
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::Enumerable
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#327
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:327
   def [](idx); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#329
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:329
   def each; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#324
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:324
   def geometry_n(idx); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#319
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:319
   def num_geometries; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#322
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:322
   def size; end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#58
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:58
 class RGeo::Geos::ZMGeometryImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:11
 module RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Feature::Instance
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#14
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:14
   def initialize(factory, zgeometry, mgeometry); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#181
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:181
   def *(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#180
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:180
   def +(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#179
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:179
   def -(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#177
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:177
   def ==(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#72
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:72
   def as_binary; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#68
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:68
   def as_text; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#92
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:92
   def boundary; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#136
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:136
   def buffer(distance_); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#120
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:120
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#140
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:140
   def convex_hull; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#48
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:48
   def coordinate_dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#112
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:112
   def crosses?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#154
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:154
   def difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#44
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:44
   def dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#100
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:100
   def disjoint?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#132
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:132
   def distance(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#76
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:76
   def empty?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#191
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:191
   def encode_with(coder); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#64
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:64
   def envelope; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#176
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:176
   def eql?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#96
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:96
   def equals?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#32
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:32
   def factory; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#56
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:56
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#28
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:28
   def hash; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#196
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:196
   def init_with(coder); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#20
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:20
   def inspect; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#144
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:144
   def intersection(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#104
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:104
   def intersects?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#84
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:84
   def is_3d?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#40
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:40
   def m_geometry; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#183
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:183
   def marshal_dump; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#187
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:187
   def marshal_load(data); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#88
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:88
   def measured?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#124
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:124
   def overlaps?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#128
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:128
   def relate?(rhs, pattern); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#168
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:168
   def rep_equals?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#80
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:80
   def simple?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#52
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:52
   def spatial_dimension; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#60
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:60
   def srid; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#159
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:159
   def sym_difference(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#24
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:24
   def to_s; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#108
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:108
   def touches?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#149
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:149
   def union(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#116
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:116
   def within?(rhs); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#36
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:36
   def z_geometry; end
 
   private
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#202
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:202
   def copy_state_from(obj); end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#26
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:26
 class RGeo::Geos::ZMLineImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Geos::ZMLineStringMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#16
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:16
 class RGeo::Geos::ZMLineStringImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Geos::ZMLineStringMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#234
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:234
 module RGeo::Geos::ZMLineStringMethods
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#247
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:247
   def closed?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#273
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:273
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#243
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:243
   def end_point; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#235
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:235
   def length; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#255
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:255
   def num_points; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#259
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:259
   def point_n(idx); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#263
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:263
   def points; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#251
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:251
   def ring?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#239
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:239
   def start_point; end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#21
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:21
 class RGeo::Geos::ZMLinearRingImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Geos::ZMLineStringMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#46
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:46
 class RGeo::Geos::ZMMultiLineStringImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
@@ -11709,21 +11334,19 @@ class RGeo::Geos::ZMMultiLineStringImpl
   include ::RGeo::Geos::ZMMultiLineStringMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#343
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:343
 module RGeo::Geos::ZMMultiLineStringMethods
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#348
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:348
   def closed?; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#352
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:352
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#344
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:344
   def length; end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#41
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:41
 class RGeo::Geos::ZMMultiPointImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
@@ -11731,7 +11354,7 @@ class RGeo::Geos::ZMMultiPointImpl
   include ::RGeo::Geos::ZMGeometryCollectionMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#52
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:52
 class RGeo::Geos::ZMMultiPolygonImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
@@ -11740,526 +11363,460 @@ class RGeo::Geos::ZMMultiPolygonImpl
   include ::RGeo::Geos::ZMMultiPolygonMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#357
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:357
 module RGeo::Geos::ZMMultiPolygonMethods
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#358
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:358
   def area; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#362
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:362
   def centroid; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#370
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:370
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#366
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:366
   def point_on_surface; end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#11
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:11
 class RGeo::Geos::ZMPointImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Geos::ZMPointMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#209
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:209
 module RGeo::Geos::ZMPointMethods
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#226
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:226
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#222
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:222
   def m; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#210
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:210
   def x; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#214
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:214
   def y; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#218
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:218
   def z; end
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_classes.rb#31
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_classes.rb:31
 class RGeo::Geos::ZMPolygonImpl
   include ::RGeo::Feature::Instance
   include ::RGeo::Geos::ZMGeometryMethods
   include ::RGeo::Geos::ZMPolygonMethods
 end
 
-# source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#278
+# pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:278
 module RGeo::Geos::ZMPolygonMethods
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#279
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:279
   def area; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#283
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:283
   def centroid; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#313
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:313
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#291
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:291
   def exterior_ring; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#299
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:299
   def interior_ring_n(idx); end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#303
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:303
   def interior_rings; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#295
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:295
   def num_interior_rings; end
 
-  # source://rgeo//lib/rgeo/geos/zm_feature_methods.rb#287
+  # pkg:gem/rgeo#lib/rgeo/geos/zm_feature_methods.rb:287
   def point_on_surface; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/utils.rb#10
+# pkg:gem/rgeo#lib/rgeo/impl_helper/utils.rb:10
 module RGeo::ImplHelper; end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:11
 module RGeo::ImplHelper::BasicGeometryCollectionMethods
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::Enumerable
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#16
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:16
   def initialize(factory, elements); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#34
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:34
   def [](idx); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#46
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:46
   def dimension; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#38
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:38
   def each(&_arg0); end
 
-  # Returns the value of attribute elements.
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#14
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:14
   def elements; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#54
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:54
   def empty?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#42
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:42
   def geometries; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#30
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:30
   def geometry_n(idx); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#50
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:50
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#66
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:66
   def hash; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#26
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:26
   def num_geometries; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#58
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:58
   def rep_equals?(rhs); end
 
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#72
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:72
   def copy_state_from(obj); end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:11
 module RGeo::ImplHelper::BasicGeometryMethods
   include ::RGeo::Feature::Instance
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#28
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:28
   def as_binary; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#24
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:24
   def as_text; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#40
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:40
   def encode_with(coder); end
 
-  # Returns the value of attribute factory.
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#14
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:14
   def factory; end
 
-  # Sets the attribute factory
-  #
-  # @param value the value to set the attribute factory to.
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#14
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:14
   def factory=(_arg0); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#45
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:45
   def init_with(coder); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#16
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:16
   def inspect; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#32
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:32
   def marshal_dump; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#36
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:36
   def marshal_load(data); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#20
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:20
   def to_s; end
 
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#51
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:51
   def copy_state_from(obj); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_methods.rb#55
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_methods.rb:55
   def init_geometry; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#133
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:133
 module RGeo::ImplHelper::BasicLineMethods
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#134
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:134
   def initialize(factory, start, stop); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#148
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:148
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#144
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:144
   def geometry_type; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:11
 module RGeo::ImplHelper::BasicLineStringMethods
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:12
   def initialize(factory, points); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#50
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:50
   def boundary; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#64
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:64
   def closed?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#90
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:90
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#86
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:86
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#38
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:38
   def dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#46
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:46
   def empty?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#60
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:60
   def end_point; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#42
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:42
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#82
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:82
   def hash; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#26
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:26
   def num_points; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#30
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:30
   def point_n(idx); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#34
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:34
   def points; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#74
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:74
   def rep_equals?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#70
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:70
   def ring?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#56
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:56
   def start_point; end
 
   private
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#122
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:122
   def between_coordinate?(coord, start_coord, end_coord); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#101
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:101
   def contains_point?(point); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#127
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:127
   def copy_state_from(obj); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#118
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:118
   def point_collinear?(pt1, pt2, pt3); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#108
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:108
   def point_intersect_segment?(point, start_point, end_point); end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#153
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:153
 module RGeo::ImplHelper::BasicLinearRingMethods
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#154
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:154
   def initialize(factory, points); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#163
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:163
   def ccw?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#159
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:159
   def geometry_type; end
 
   private
 
   # Close ring if necessary.
   #
-  # source://rgeo//lib/rgeo/impl_helper/basic_line_string_methods.rb#170
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_line_string_methods.rb:170
   def init_geometry; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#78
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:78
 module RGeo::ImplHelper::BasicMultiLineStringMethods
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#79
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:79
   def initialize(factory, elements); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#101
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:101
   def boundary; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#93
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:93
   def closed?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#120
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:120
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#116
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:116
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#89
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:89
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#97
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:97
   def length; end
 
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#128
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:128
   def add_boundary(hash, point); end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#134
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:134
 module RGeo::ImplHelper::BasicMultiPointMethods
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#135
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:135
   def initialize(factory, elements); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#149
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:149
   def boundary; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#153
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:153
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#145
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:145
   def geometry_type; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#158
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:158
 module RGeo::ImplHelper::BasicMultiPolygonMethods
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#159
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:159
   def initialize(factory, elements); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#173
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:173
   def area; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#177
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:177
   def boundary; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#190
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:190
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#186
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:186
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_geometry_collection_methods.rb#169
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_geometry_collection_methods.rb:169
   def geometry_type; end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:11
 module RGeo::ImplHelper::BasicPointMethods
-  # @raise [ArgumentError]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:12
   def initialize(factory, x, y, *extra); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#58
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:58
   def boundary; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#62
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:62
   def convex_hull; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#88
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:88
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#38
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:38
   def dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#46
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:46
   def empty?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#54
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:54
   def envelope; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#66
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:66
   def equals?(rhs); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#42
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:42
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#84
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:84
   def hash; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#34
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:34
   def m; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#80
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:80
   def rep_equals?(rhs); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#50
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:50
   def simple?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#22
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:22
   def x; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#26
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:26
   def y; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#30
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:30
   def z; end
 
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_point_methods.rb#97
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_point_methods.rb:97
   def copy_state_from(obj); end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:11
 module RGeo::ImplHelper::BasicPolygonMethods
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#12
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:12
   def initialize(factory, exterior_ring, interior_rings); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#52
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:52
   def boundary; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#78
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:78
   def contains?(rhs); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#74
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:74
   def coordinates; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#40
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:40
   def dimension; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#48
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:48
   def empty?; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#24
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:24
   def exterior_ring; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#44
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:44
   def geometry_type; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#70
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:70
   def hash; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#32
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:32
   def interior_ring_n(idx); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#36
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:36
   def interior_rings; end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#28
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:28
   def num_interior_rings; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#59
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:59
   def rep_equals?(rhs); end
 
   private
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#91
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:91
   def contains_point?(point); end
 
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#117
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:117
   def copy_state_from(obj); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/basic_polygon_methods.rb#98
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/basic_polygon_methods.rb:98
   def ring_encloses_point?(ring, point, on_border_return: T.unsafe(nil)); end
 end
 
-# source://rgeo//lib/rgeo/impl_helper/math.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/math.rb:11
 module RGeo::ImplHelper::Math; end
 
-# source://rgeo//lib/rgeo/impl_helper/math.rb#13
+# pkg:gem/rgeo#lib/rgeo/impl_helper/math.rb:13
 RGeo::ImplHelper::Math::DEGREES_PER_RADIAN = T.let(T.unsafe(nil), Float)
 
-# source://rgeo//lib/rgeo/impl_helper/math.rb#12
+# pkg:gem/rgeo#lib/rgeo/impl_helper/math.rb:12
 RGeo::ImplHelper::Math::RADIANS_PER_DEGREE = T.let(T.unsafe(nil), Float)
 
-# source://rgeo//lib/rgeo/impl_helper/utils.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/utils.rb:11
 module RGeo::ImplHelper::Utils
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/utils.rb#35
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/utils.rb:35
   def symbolize_hash(hash); end
 
   class << self
@@ -12272,7 +11829,7 @@ module RGeo::ImplHelper::Utils
     # multiple times with different values and others pass the data
     # to a CAPI or FFI.
     #
-    # source://rgeo//lib/rgeo/impl_helper/utils.rb#20
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/utils.rb:20
     def setup_coord_sys(srid, coord_sys, coord_sys_class); end
   end
 end
@@ -12282,20 +11839,20 @@ end
 #
 # @see https://github.com/locationtech/jts/blob/master/modules/core/src/main/java/org/locationtech/jts/operation/valid/IsValidOp.java
 #
-# source://rgeo//lib/rgeo/impl_helper/valid_op.rb#11
+# pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:11
 module RGeo::ImplHelper::ValidOp
   # Reason for invalidity or nil if valid
   #
   # @return String
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#22
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:22
   def invalid_reason; end
 
   # Validity of geometry
   #
-  # @return [Boolean] Boolean
+  # @return Boolean
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#15
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:15
   def valid?; end
 
   private
@@ -12309,37 +11866,37 @@ module RGeo::ImplHelper::ValidOp
   #
   # @return String
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#41
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:41
   def check_valid; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#167
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:167
   def check_valid_geometry_collection; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#68
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:68
   def check_valid_line_string; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#81
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:81
   def check_valid_linear_ring; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#144
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:144
   def check_valid_multi_point; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#152
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:152
   def check_valid_multi_polygon; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#64
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:64
   def check_valid_point; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#98
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:98
   def check_valid_polygon; end
 
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#29
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:29
   def validity_helper; end
 end
 
 # Helper functions for specific validity checks
 #
-# source://rgeo//lib/rgeo/impl_helper/valid_op.rb#179
+# pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:179
 module RGeo::ImplHelper::ValidOpHelpers
   private
 
@@ -12350,9 +11907,10 @@ module RGeo::ImplHelper::ValidOpHelpers
   # Which is a square with a diamond inside of it.
   #
   # @param poly [RGeo::Feature::Polygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#304
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:304
   def check_connected_interiors(poly); end
 
   # Checks that the edges in the polygon form a consistent area.
@@ -12363,17 +11921,19 @@ module RGeo::ImplHelper::ValidOpHelpers
   # Also checks that there are no duplicate rings.
   #
   # @param poly [RGeo::Feature::Polygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#205
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:205
   def check_consistent_area(poly); end
 
   # Checks that polygons do not intersect in a multipolygon.
   #
   # @param mpoly [RGeo::Feature::MultiPolygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#326
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:326
   def check_consistent_area_mp(mpoly); end
 
   # Checks holes are contained inside the exterior of a polygon.
@@ -12382,50 +11942,56 @@ module RGeo::ImplHelper::ValidOpHelpers
   # in each hole to verify (since we know none of them intersect).
   #
   # @param poly [RGeo::Feature::Polygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#261
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:261
   def check_holes_in_shell(poly); end
 
   # Checks that holes are not nested within each other.
   #
   # @param poly [RGeo::Feature::Polygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#279
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:279
   def check_holes_not_nested(poly); end
 
   # Checks that the given point has valid coordinates.
   #
   # @param point [RGeo::Feature::Point]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#187
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:187
   def check_invalid_coordinate(point); end
 
   # Check that rings do not self intersect in a polygon
   #
   # @param poly [RGeo::Feature::Polygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#239
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:239
   def check_no_self_intersecting_rings(poly); end
 
   # Checks that the ring does not self-intersect. This is just a simplicity
   # check on the ring.
   #
   # @param ring [RGeo::Feature::LinearRing]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#230
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:230
   def check_no_self_intersections(ring); end
 
   # Checks that individual polygons within a multipolygon are not nested.
   #
   # @param mpoly [RGeo::Feature::MultiPolygon]
+  #
   # @return [String] invalid_reason
   #
-  # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#338
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:338
   def check_shells_not_nested(mpoly); end
 
   class << self
@@ -12436,9 +12002,10 @@ module RGeo::ImplHelper::ValidOpHelpers
     # Which is a square with a diamond inside of it.
     #
     # @param poly [RGeo::Feature::Polygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#304
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:304
     def check_connected_interiors(poly); end
 
     # Checks that the edges in the polygon form a consistent area.
@@ -12449,17 +12016,19 @@ module RGeo::ImplHelper::ValidOpHelpers
     # Also checks that there are no duplicate rings.
     #
     # @param poly [RGeo::Feature::Polygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#205
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:205
     def check_consistent_area(poly); end
 
     # Checks that polygons do not intersect in a multipolygon.
     #
     # @param mpoly [RGeo::Feature::MultiPolygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#326
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:326
     def check_consistent_area_mp(mpoly); end
 
     # Checks holes are contained inside the exterior of a polygon.
@@ -12468,50 +12037,56 @@ module RGeo::ImplHelper::ValidOpHelpers
     # in each hole to verify (since we know none of them intersect).
     #
     # @param poly [RGeo::Feature::Polygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#261
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:261
     def check_holes_in_shell(poly); end
 
     # Checks that holes are not nested within each other.
     #
     # @param poly [RGeo::Feature::Polygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#279
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:279
     def check_holes_not_nested(poly); end
 
     # Checks that the given point has valid coordinates.
     #
     # @param point [RGeo::Feature::Point]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#187
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:187
     def check_invalid_coordinate(point); end
 
     # Check that rings do not self intersect in a polygon
     #
     # @param poly [RGeo::Feature::Polygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#239
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:239
     def check_no_self_intersecting_rings(poly); end
 
     # Checks that the ring does not self-intersect. This is just a simplicity
     # check on the ring.
     #
     # @param ring [RGeo::Feature::LinearRing]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#230
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:230
     def check_no_self_intersections(ring); end
 
     # Checks that individual polygons within a multipolygon are not nested.
     #
     # @param mpoly [RGeo::Feature::MultiPolygon]
+    #
     # @return [String] invalid_reason
     #
-    # source://rgeo//lib/rgeo/impl_helper/valid_op.rb#338
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/valid_op.rb:338
     def check_shells_not_nested(mpoly); end
   end
 end
@@ -12529,56 +12104,50 @@ end
 # - finally, you can bypass any checked method by prepending `unsafe_` to
 #   it. At your own risk.
 #
-# source://rgeo//lib/rgeo/impl_helper/validity_check.rb#17
+# pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:17
 module RGeo::ImplHelper::ValidityCheck
   # Raises {invalid_reason} if the polygon is not valid, does nothing
   # otherwise.
   #
-  # @raise [Error::InvalidGeometry]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#100
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:100
   def check_validity!; end
 
   # Tell why the geometry is not valid, `nil` means it is valid.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#109
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:109
   def invalid_reason; end
 
   # Try and make the geometry valid, this may change its shape.
   # Returns a valid copy of the geometry.
   #
-  # @raise [Error::UnsupportedOperation]
-  #
-  # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#120
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:120
   def make_valid; end
 
   private
 
-  # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#131
+  # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:131
   def invalid_reason_memo; end
 
   class << self
-    # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#59
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:59
     def included(klass); end
 
     # Note for contributors: this should be called after all methods
     # are loaded for a given feature classe. No worries though, this
     # is tested.
     #
-    # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#52
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:52
     def override_classes; end
 
     private
 
-    # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#65
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:65
     def classes; end
 
-    # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#88
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:88
     def feature_methods(klass); end
 
-    # source://rgeo//lib/rgeo/impl_helper/validity_check.rb#69
+    # pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:69
     def override(klass); end
   end
 end
@@ -12587,7 +12156,7 @@ end
 # method would lead to having an `unsafe_+` method that is not simply
 # callable. Here's a simple fallback:
 #
-# source://rgeo//lib/rgeo/impl_helper/validity_check.rb#41
+# pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:41
 RGeo::ImplHelper::ValidityCheck::SYMBOL2NAME = T.let(T.unsafe(nil), Hash)
 
 # Every method that should not be overriden by the validity check.
@@ -12595,13 +12164,13 @@ RGeo::ImplHelper::ValidityCheck::SYMBOL2NAME = T.let(T.unsafe(nil), Hash)
 # to validity checks, or are used to check validity, in which case the
 # `true/false` gives a correct information, no need to raise).
 #
-# source://rgeo//lib/rgeo/impl_helper/validity_check.rb#22
+# pkg:gem/rgeo#lib/rgeo/impl_helper/validity_check.rb:22
 RGeo::ImplHelper::ValidityCheck::UNCHECKED_METHODS = T.let(T.unsafe(nil), Array)
 
-# source://rgeo//lib/rgeo/version.rb#4
+# pkg:gem/rgeo#lib/rgeo/version.rb:4
 RGeo::VERSION = T.let(T.unsafe(nil), String)
 
-# source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#12
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:12
 module RGeo::WKRep; end
 
 # This class provides the functionality of serializing a geometry as
@@ -12636,103 +12205,87 @@ module RGeo::WKRep; end
 #   If true, output little endian (NDR) byte order. If false, output
 #   big endian (XDR), or network byte order. Default is false.
 #
-# source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#42
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:42
 class RGeo::WKRep::WKBGenerator
   # Create and configure a WKB generator. See the WKBGenerator
   # documentation for the options that can be passed.
   #
-  # @return [WKBGenerator] a new instance of WKBGenerator
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#60
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:60
   def initialize(opts = T.unsafe(nil)); end
 
   # Returns whether SRID is embedded. See WKBGenerator for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#71
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:71
   def emit_ewkb_srid?; end
 
   # Generate and return the WKB format for the given geometry object,
   # according to the current settings.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#99
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:99
   def generate(obj); end
 
   # Returns whether output is converted to hex.
   # See WKBGenerator for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#77
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:77
   def hex_format?; end
 
   # Returns whether output is little-endian (NDR).
   # See WKBGenerator for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#83
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:83
   def little_endian?; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#87
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:87
   def properties; end
 
   # Returns the format for type codes. See WKBGenerator for details.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#68
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:68
   def type_format; end
 
   private
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#141
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:141
   def emit_byte(value, rval); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#149
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:149
   def emit_doubles(array, rval); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#145
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:145
   def emit_integer(value, rval); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#153
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:153
   def emit_line_string_coords(obj, rval); end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#168
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:168
   def generate_feature(obj, rval, toplevel: T.unsafe(nil)); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#160
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:160
   def point_coords(obj, rval, array = T.unsafe(nil)); end
 end
 
-# source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#115
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:115
 class RGeo::WKRep::WKBGenerator::Result
-  # @return [Result] a new instance of Result
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#116
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:116
   def initialize(has_z, has_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#122
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:122
   def <<(data); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#126
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:126
   def emit(hex_format); end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#135
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:135
   def m?; end
 
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#131
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:131
   def z?; end
 end
 
 # :stopdoc:
 #
-# source://rgeo//lib/rgeo/wkrep/wkb_generator.rb#44
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkb_generator.rb:44
 RGeo::WKRep::WKBGenerator::TYPE_CODES = T.let(T.unsafe(nil), Hash)
 
 # This class provides the functionality of parsing a geometry from
@@ -12770,33 +12323,29 @@ RGeo::WKRep::WKBGenerator::TYPE_CODES = T.let(T.unsafe(nil), Hash)
 #   A SRID to pass to the factory generator if no SRID is present in
 #   the input. Defaults to nil (i.e. don't specify a SRID).
 #
-# source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#45
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:45
 class RGeo::WKRep::WKBParser
   # Create and configure a WKB parser. See the WKBParser
   # documentation for the options that can be passed.
   #
-  # @return [WKBParser] a new instance of WKBParser
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#49
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:49
   def initialize(factory_generator = T.unsafe(nil), opts = T.unsafe(nil)); end
 
   # If this parser was given an exact factory, returns it; otherwise
   # returns nil.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#72
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:72
   def exact_factory; end
 
   # Returns the factory generator. See WKBParser for details.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#68
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:68
   def factory_generator; end
 
   # Returns true if this parser ignores extra bytes.
   # See WKBParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#88
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:88
   def ignore_extra_bytes?; end
 
   # Parse the given binary data or hexadecimal string, and return a
@@ -12805,64 +12354,48 @@ class RGeo::WKRep::WKBParser
   # The #parse_hex method is a synonym, present for historical
   # reasons but deprecated. Use #parse instead.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#107
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:107
   def parse(data); end
 
-  # Parse the given binary data or hexadecimal string, and return a
-  # geometry object.
-  #
-  # The #parse_hex method is a synonym, present for historical
-  # reasons but deprecated. Use #parse instead.
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#128
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:128
   def parse_hex(data); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#92
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:92
   def properties; end
 
   # Returns true if this parser supports EWKB.
   # See WKBParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#76
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:76
   def support_ewkb?; end
 
   # Returns true if this parser supports SFS 1.2 extensions.
   # See WKBParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#82
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:82
   def support_wkb12?; end
 
   private
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#230
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:230
   def byte; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#226
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:226
   def bytes_remaining; end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#244
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:244
   def get_doubles(little_endian, count); end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#237
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:237
   def get_integer(little_endian); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#214
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:214
   def parse_line_string(little_endian); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#132
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:132
   def parse_object(contained); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkb_parser.rb#220
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkb_parser.rb:220
   def start_scanner(data); end
 end
 
@@ -12904,82 +12437,74 @@ end
 #   the default (which is not specified exactly, but is chosen by the
 #   generator to emphasize readability.) Default is nil.
 #
-# source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#48
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:48
 class RGeo::WKRep::WKTGenerator
   # Create and configure a WKT generator. See the WKTGenerator
   # documentation for the options that can be passed.
   #
-  # @return [WKTGenerator] a new instance of WKTGenerator
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#52
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:52
   def initialize(opts = T.unsafe(nil)); end
 
   # Returns the case for output. See WKTGenerator for details.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#78
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:78
   def convert_case; end
 
   # Returns whether SRID is embedded. See WKTGenerator for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#67
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:67
   def emit_ewkt_srid?; end
 
   # Generate and return the WKT format for the given geometry object,
   # according to the current settings.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#92
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:92
   def generate(obj); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#80
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:80
   def properties; end
 
   # Returns whether square brackets rather than parens are output.
   # See WKTGenerator for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#73
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:73
   def square_brackets?; end
 
   # Returns the format for type tags. See WKTGenerator for details.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#63
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:63
   def tag_format; end
 
-  # Returns the format for type tags. See WKTGenerator for details.
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#64
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:64
   def type_format; end
 
   private
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#155
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:155
   def generate_coords(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#116
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:116
   def generate_feature(obj, support_z, support_m, toplevel: T.unsafe(nil)); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#185
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:185
   def generate_geometry_collection(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#166
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:166
   def generate_line_string(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#201
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:201
   def generate_multi_line_string(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#193
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:193
   def generate_multi_point(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#209
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:209
   def generate_multi_polygon(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#162
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:162
   def generate_point(obj, support_z, support_m); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_generator.rb#175
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_generator.rb:175
   def generate_polygon(obj, support_z, support_m); end
 end
 
@@ -13022,115 +12547,101 @@ end
 #   A SRID to pass to the factory generator if no SRID is present in
 #   the input. Defaults to nil (i.e. don't specify a SRID).
 #
-# source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#51
+# pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:51
 class RGeo::WKRep::WKTParser
   # Create and configure a WKT parser. See the WKTParser
   # documentation for the options that can be passed.
   #
-  # @return [WKTParser] a new instance of WKTParser
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#55
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:55
   def initialize(factory_generator = T.unsafe(nil), opts = T.unsafe(nil)); end
 
   # If this parser was given an exact factory, returns it; otherwise
   # returns nil.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#84
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:84
   def exact_factory; end
 
   # Returns the factory generator. See WKTParser for details.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#80
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:80
   def factory_generator; end
 
   # Returns true if this parser ignores extra tokens.
   # See WKTParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#106
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:106
   def ignore_extra_tokens?; end
 
   # Parse the given string, and return a geometry object.
   #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#122
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:122
   def parse(str); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#110
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:110
   def properties; end
 
   # Returns true if this parser strictly adheres to WKT 1.1.
   # See WKTParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#100
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:100
   def strict_wkt11?; end
 
   # Returns true if this parser supports EWKT.
   # See WKTParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#88
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:88
   def support_ewkt?; end
 
   # Returns true if this parser supports SFS 1.2 extensions.
   # See WKTParser for details.
   #
-  # @return [Boolean]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#94
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:94
   def support_wkt12?; end
 
   private
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#153
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:153
   def check_factory_support; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#399
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:399
   def clean_scanner; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#163
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:163
   def ensure_factory; end
 
-  # @raise [Error::ParseError]
-  #
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#404
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:404
   def expect_token_type(type); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#408
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:408
   def next_token; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#233
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:233
   def parse_coords; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#324
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:324
   def parse_geometry_collection; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#289
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:289
   def parse_line_string; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#362
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:362
   def parse_multi_line_string; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#340
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:340
   def parse_multi_point; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#378
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:378
   def parse_multi_polygon; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#276
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:276
   def parse_point(convert_empty: T.unsafe(nil)); end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#305
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:305
   def parse_polygon; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#177
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:177
   def parse_type_tag; end
 
-  # source://rgeo//lib/rgeo/wkrep/wkt_parser.rb#394
+  # pkg:gem/rgeo#lib/rgeo/wkrep/wkt_parser.rb:394
   def start_scanner(str); end
 end

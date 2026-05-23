@@ -5,7 +5,7 @@
 # Please instead update this file by running `bin/tapioca gem roadie`.
 
 
-# source://roadie//lib/roadie.rb#3
+# pkg:gem/roadie#lib/roadie.rb:3
 module Roadie; end
 
 # This module can be included in your own code to help you implement the
@@ -13,12 +13,14 @@ module Roadie; end
 #
 # It helps you by declaring {#find_stylesheet!} in the terms of #find_stylesheet in your own class.
 #
-# source://roadie//lib/roadie/asset_provider.rb#8
+# pkg:gem/roadie#lib/roadie/asset_provider.rb:8
 module Roadie::AssetProvider
-  # source://roadie//lib/roadie/asset_provider.rb#9
+  # pkg:gem/roadie#lib/roadie/asset_provider.rb:9
   def find_stylesheet!(name); end
 end
 
+# @api private
+#
 # The asset scanner's main usage is finding and/or extracting styles from a
 # DOM tree. Referenced styles will be found using the provided asset
 # provider.
@@ -26,27 +28,19 @@ end
 # Any style declaration tagged with +data-roadie-ignore+ will be ignored,
 # except for having the attribute itself removed.
 #
-# @api private
-#
-# source://roadie//lib/roadie/asset_scanner.rb#12
+# pkg:gem/roadie#lib/roadie/asset_scanner.rb:12
 class Roadie::AssetScanner
-  # @api private
-  # @param dom [Nokogiri::HTML::Document]
-  # @param external_asset_provider [#find_stylesheet!]
-  # @param normal_asset_provider [#find_stylesheet!]
-  # @return [AssetScanner] a new instance of AssetScanner
+  # @param [Nokogiri::HTML::Document] dom
+  # @param [#find_stylesheet!] normal_asset_provider
+  # @param [#find_stylesheet!] external_asset_provider
   #
-  # source://roadie//lib/roadie/asset_scanner.rb#18
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:18
   def initialize(dom, normal_asset_provider, external_asset_provider); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#13
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:13
   def dom; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#13
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:13
   def external_asset_provider; end
 
   # Looks for all non-ignored stylesheets, removes their references from the
@@ -56,11 +50,10 @@ class Roadie::AssetScanner
   #
   # The order of the array corresponds with the document order in the DOM.
   #
-  # @api private
-  # @return [Enumerable<Stylesheet>] every extracted stylesheet
   # @see #find_css
+  # @return [Enumerable<Stylesheet>] every extracted stylesheet
   #
-  # source://roadie//lib/roadie/asset_scanner.rb#45
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:45
   def extract_css; end
 
   # Looks for all non-ignored stylesheets and returns them.
@@ -69,60 +62,43 @@ class Roadie::AssetScanner
   #
   # The order of the array corresponds with the document order in the DOM.
   #
-  # @api private
-  # @return [Enumerable<Stylesheet>] every found stylesheet
   # @see #extract_css
+  # @return [Enumerable<Stylesheet>] every found stylesheet
   #
-  # source://roadie//lib/roadie/asset_scanner.rb#32
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:32
   def find_css; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#13
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:13
   def normal_asset_provider; end
 
   private
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#95
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:97
   def clean_css(css); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#87
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:89
   def read_link_element(element); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#83
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:85
   def read_style_element(element); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#75
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:77
   def read_stylesheet(element); end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/asset_scanner.rb#99
+  # pkg:gem/roadie#lib/roadie/asset_scanner.rb:101
   def should_find_external?; end
 end
 
 # Cleans out stupid CDATA and/or HTML comments from the style text
 # TinyMCE causes this, allegedly
 #
-# @api private
-#
-# source://roadie//lib/roadie/asset_scanner.rb#65
+# pkg:gem/roadie#lib/roadie/asset_scanner.rb:66
 Roadie::AssetScanner::CLEANING_MATCHER = T.let(T.unsafe(nil), Regexp)
 
-# @api private
-#
-# source://roadie//lib/roadie/asset_scanner.rb#55
+# pkg:gem/roadie#lib/roadie/asset_scanner.rb:55
 Roadie::AssetScanner::STYLE_ELEMENT_QUERY = T.let(T.unsafe(nil), String)
 
+# @api public
 # The {CachedProvider} wraps another provider (or {ProviderList}) and caches
 # the response from it.
 #
@@ -140,64 +116,54 @@ Roadie::AssetScanner::STYLE_ELEMENT_QUERY = T.let(T.unsafe(nil), String)
 # retrieve and set entries, respectively. The `#[name]=` method also needs to
 # return the instance again.
 #
-# @api public
-# @example Custom cache store
-#   class MyRoadieMemcacheStore
-#   def initialize(memcache)
-#   @memcache = memcache
-#   end
-#
-#   def [](path)
-#   css = memcache.read("assets/#{path}/css")
-#   if css
-#   name = memcache.read("assets/#{path}/name") || "cached #{path}"
-#   Roadie::Stylesheet.new(name, css)
-#   end
-#   end
-#
-#   def []=(path, stylesheet)
-#   memcache.write("assets/#{path}/css", stylesheet.to_s)
-#   memcache.write("assets/#{path}/name", stylesheet.name)
-#   stylesheet # You need to return the set Stylesheet
-#   end
-#   end
 # @example Global cache
 #   Application.asset_cache = Hash.new
 #   slow_provider = MyDatabaseProvider.new(Application)
 #   provider = Roadie::CachedProvider.new(slow_provider, Application.asset_cache)
 #
-# source://roadie//lib/roadie/cached_provider.rb#48
+# @example Custom cache store
+#   class MyRoadieMemcacheStore
+#     def initialize(memcache)
+#       @memcache = memcache
+#     end
+#
+#     def [](path)
+#       css = memcache.read("assets/#{path}/css")
+#       if css
+#         name = memcache.read("assets/#{path}/name") || "cached #{path}"
+#         Roadie::Stylesheet.new(name, css)
+#       end
+#     end
+#
+#     def []=(path, stylesheet)
+#       memcache.write("assets/#{path}/css", stylesheet.to_s)
+#       memcache.write("assets/#{path}/name", stylesheet.name)
+#       stylesheet # You need to return the set Stylesheet
+#     end
+#   end
+#
+# pkg:gem/roadie#lib/roadie/cached_provider.rb:48
 class Roadie::CachedProvider
-  # @api public
-  # @param cache [#[], #[]=] The cache store to use.
   # @param upstream [an asset provider] The wrapped asset provider
-  # @return [CachedProvider] a new instance of CachedProvider
+  # @param cache [#[], #[]=] The cache store to use.
   #
-  # source://roadie//lib/roadie/cached_provider.rb#54
+  # pkg:gem/roadie#lib/roadie/cached_provider.rb:54
   def initialize(upstream, cache = T.unsafe(nil)); end
 
   # The cache store used by this instance.
   #
-  # @api public
-  #
-  # source://roadie//lib/roadie/cached_provider.rb#50
+  # pkg:gem/roadie#lib/roadie/cached_provider.rb:50
   def cache; end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/cached_provider.rb#59
+  # pkg:gem/roadie#lib/roadie/cached_provider.rb:59
   def find_stylesheet(name); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/cached_provider.rb#65
+  # pkg:gem/roadie#lib/roadie/cached_provider.rb:65
   def find_stylesheet!(name); end
 
   private
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/cached_provider.rb#73
+  # pkg:gem/roadie#lib/roadie/cached_provider.rb:73
   def cache_fetch(name); end
 end
 
@@ -208,74 +174,64 @@ end
 #
 # @see AssetProvider
 #
-# source://roadie//lib/roadie/errors.rb#38
+# pkg:gem/roadie#lib/roadie/errors.rb:38
 class Roadie::CssNotFound < ::Roadie::Error
-  # @return [CssNotFound] a new instance of CssNotFound
-  #
-  # source://roadie//lib/roadie/errors.rb#48
+  # pkg:gem/roadie#lib/roadie/errors.rb:48
   def initialize(css_name:, message: T.unsafe(nil), provider: T.unsafe(nil)); end
 
   # The name of the stylesheet that cannot be found
   #
-  # source://roadie//lib/roadie/errors.rb#40
+  # pkg:gem/roadie#lib/roadie/errors.rb:40
   def css_name; end
 
   # Extra message
   #
-  # source://roadie//lib/roadie/errors.rb#46
+  # pkg:gem/roadie#lib/roadie/errors.rb:46
   def extra_message; end
 
   # Provider used when finding
   #
-  # source://roadie//lib/roadie/errors.rb#43
+  # pkg:gem/roadie#lib/roadie/errors.rb:43
   def provider; end
 
   protected
 
-  # source://roadie//lib/roadie/errors.rb#57
+  # pkg:gem/roadie#lib/roadie/errors.rb:57
   def error_row; end
 
   private
 
-  # source://roadie//lib/roadie/errors.rb#63
+  # pkg:gem/roadie#lib/roadie/errors.rb:63
   def build_message; end
 end
 
-# source://roadie//lib/roadie/deduplicator.rb#4
+# pkg:gem/roadie#lib/roadie/deduplicator.rb:4
 class Roadie::Deduplicator
-  # @return [Deduplicator] a new instance of Deduplicator
-  #
-  # source://roadie//lib/roadie/deduplicator.rb#9
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:9
   def initialize(input); end
 
-  # source://roadie//lib/roadie/deduplicator.rb#14
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:14
   def apply; end
 
   private
 
-  # source://roadie//lib/roadie/deduplicator.rb#36
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:36
   def calculate_latest_occurance; end
 
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/deduplicator.rb#32
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:32
   def has_duplicates?; end
 
-  # Returns the value of attribute input.
-  #
-  # source://roadie//lib/roadie/deduplicator.rb#30
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:30
   def input; end
 
-  # Returns the value of attribute latest_occurance.
-  #
-  # source://roadie//lib/roadie/deduplicator.rb#30
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:30
   def latest_occurance; end
 
-  # source://roadie//lib/roadie/deduplicator.rb#43
+  # pkg:gem/roadie#lib/roadie/deduplicator.rb:43
   def strip_out_duplicates; end
 
   class << self
-    # source://roadie//lib/roadie/deduplicator.rb#5
+    # pkg:gem/roadie#lib/roadie/deduplicator.rb:5
     def apply(input); end
   end
 end
@@ -296,87 +252,61 @@ end
 #
 # The execution methods are {#transform} and {#transform_partial}.
 #
-# @attr after_transformation [#call] Callback to call just before {#transform}ation is completed. Will be called with the current DOM tree and the {Document} instance.
-# @attr before_transformation [#call] Callback to call just before {#transform}ation begins. Will be called with the parsed DOM tree and the {Document} instance.
+# @attr [#call] before_transformation Callback to call just before {#transform}ation begins. Will be called with the parsed DOM tree and the {Document} instance.
+# @attr [#call] after_transformation Callback to call just before {#transform}ation is completed. Will be called with the current DOM tree and the {Document} instance.
 #
-# source://roadie//lib/roadie/document.rb#22
+# pkg:gem/roadie#lib/roadie/document.rb:22
 class Roadie::Document
-  # @param html [String] the input HTML
-  # @return [Document] a new instance of Document
+  # @param [String] html the input HTML
   #
-  # source://roadie//lib/roadie/document.rb#53
+  # pkg:gem/roadie#lib/roadie/document.rb:53
   def initialize(html); end
 
   # Append additional CSS to the document's internal stylesheet.
+  # @param [String] new_css
   #
-  # @param new_css [String]
-  #
-  # source://roadie//lib/roadie/document.rb#68
+  # pkg:gem/roadie#lib/roadie/document.rb:68
   def add_css(new_css); end
 
-  # Callback to call just before {#transform}ation is completed. Will be called with the current DOM tree and the {Document} instance.
-  #
-  # @return [#call] the current value of after_transformation
-  #
-  # source://roadie//lib/roadie/document.rb#29
+  # pkg:gem/roadie#lib/roadie/document.rb:29
   def after_transformation; end
 
-  # Callback to call just before {#transform}ation is completed. Will be called with the current DOM tree and the {Document} instance.
-  #
-  # @param value [#call] the value to set the attribute after_transformation to.
-  # @return [#call] the newly set value
-  #
-  # source://roadie//lib/roadie/document.rb#29
+  # pkg:gem/roadie#lib/roadie/document.rb:29
   def after_transformation=(_arg0); end
 
-  # Returns the value of attribute asset_providers.
-  #
-  # source://roadie//lib/roadie/document.rb#23
+  # pkg:gem/roadie#lib/roadie/document.rb:23
   def asset_providers; end
 
   # Assign new normal asset providers. The supplied list will be wrapped in a {ProviderList} using {ProviderList.wrap}.
   #
-  # source://roadie//lib/roadie/document.rb#138
+  # pkg:gem/roadie#lib/roadie/document.rb:138
   def asset_providers=(list); end
 
-  # Callback to call just before {#transform}ation begins. Will be called with the parsed DOM tree and the {Document} instance.
-  #
-  # @return [#call] the current value of before_transformation
-  #
-  # source://roadie//lib/roadie/document.rb#29
+  # pkg:gem/roadie#lib/roadie/document.rb:29
   def before_transformation; end
 
-  # Callback to call just before {#transform}ation begins. Will be called with the parsed DOM tree and the {Document} instance.
-  #
-  # @param value [#call] the value to set the attribute before_transformation to.
-  # @return [#call] the newly set value
-  #
-  # source://roadie//lib/roadie/document.rb#29
+  # pkg:gem/roadie#lib/roadie/document.rb:29
   def before_transformation=(_arg0); end
 
-  # Returns the value of attribute external_asset_providers.
-  #
-  # source://roadie//lib/roadie/document.rb#23
+  # pkg:gem/roadie#lib/roadie/document.rb:23
   def external_asset_providers; end
 
   # Assign new external asset providers. The supplied list will be wrapped in a {ProviderList} using {ProviderList.wrap}.
   #
-  # source://roadie//lib/roadie/document.rb#143
+  # pkg:gem/roadie#lib/roadie/document.rb:143
   def external_asset_providers=(list); end
 
-  # Returns the value of attribute html.
-  #
-  # source://roadie//lib/roadie/document.rb#23
+  # pkg:gem/roadie#lib/roadie/document.rb:23
   def html; end
 
   # Should CSS that cannot be inlined be kept in a new `<style>` element in `<head>`?
   #
-  # source://roadie//lib/roadie/document.rb#32
+  # pkg:gem/roadie#lib/roadie/document.rb:32
   def keep_uninlinable_css; end
 
   # Should CSS that cannot be inlined be kept in a new `<style>` element in `<head>`?
   #
-  # source://roadie//lib/roadie/document.rb#32
+  # pkg:gem/roadie#lib/roadie/document.rb:32
   def keep_uninlinable_css=(_arg0); end
 
   # Merge media queries to increase performance and reduce email size if enabled.
@@ -389,7 +319,7 @@ class Roadie::Document
   #   @media(max-width: 400px) { .col-12 { display: inline-block; } }
   # which would change the styling on the page
   #
-  # source://roadie//lib/roadie/document.rb#43
+  # pkg:gem/roadie#lib/roadie/document.rb:43
   def merge_media_queries; end
 
   # Merge media queries to increase performance and reduce email size if enabled.
@@ -402,12 +332,12 @@ class Roadie::Document
   #   @media(max-width: 400px) { .col-12 { display: inline-block; } }
   # which would change the styling on the page
   #
-  # source://roadie//lib/roadie/document.rb#43
+  # pkg:gem/roadie#lib/roadie/document.rb:43
   def merge_media_queries=(_arg0); end
 
   # The mode to generate markup in. Valid values are `:html` (default) and `:xhtml`.
   #
-  # source://roadie//lib/roadie/document.rb#50
+  # pkg:gem/roadie#lib/roadie/document.rb:50
   def mode; end
 
   # Change the mode. The mode affects how the resulting markup is generated.
@@ -417,20 +347,20 @@ class Roadie::Document
   #   `:xhtml`
   #   `:xml`
   #
-  # source://roadie//lib/roadie/document.rb#160
+  # pkg:gem/roadie#lib/roadie/document.rb:160
   def mode=(mode); end
 
   # Integer representing a bitmap set of options used by Nokogiri during serialization.
   # For the complete set of available options look into +Nokogiri::XML::Node::SaveOptions+.
   #
-  # source://roadie//lib/roadie/document.rb#47
+  # pkg:gem/roadie#lib/roadie/document.rb:47
   def serialization_options; end
 
   # Integer representing a bitmap set of options used by Nokogiri during serialization.
   # For the complete set of available options look into +Nokogiri::XML::Node::SaveOptions+.
   # (To change the mode in which the document is generated use {#mode=} however.)
   #
-  # source://roadie//lib/roadie/document.rb#150
+  # pkg:gem/roadie#lib/roadie/document.rb:150
   def serialization_options=(options); end
 
   # Transform the input HTML as a full document and returns the processed
@@ -444,13 +374,14 @@ class Roadie::Document
   # Most of the work is delegated to other classes. A list of them can be
   # seen below.
   #
-  # @return [String] the transformed HTML
-  # @see #transform_partial Transforms partial documents (fragments)
-  # @see Inliner Inliner (inlines the stylesheets)
   # @see MarkupImprover MarkupImprover (improves the markup of the DOM)
+  # @see Inliner Inliner (inlines the stylesheets)
   # @see UrlRewriter UrlRewriter (rewrites URLs and makes them absolute)
+  # @see #transform_partial Transforms partial documents (fragments)
   #
-  # source://roadie//lib/roadie/document.rb#89
+  # @return [String] the transformed HTML
+  #
+  # pkg:gem/roadie#lib/roadie/document.rb:89
   def transform; end
 
   # Transform the input HTML as a HTML fragment/partial and returns the
@@ -468,56 +399,55 @@ class Roadie::Document
   # Most of the work is delegated to other classes. A list of them can be
   # seen below.
   #
-  # @return [String] the transformed HTML
-  # @see #transform Transforms full documents
   # @see Inliner Inliner (inlines the stylesheets)
   # @see UrlRewriter UrlRewriter (rewrites URLs and makes them absolute)
+  # @see #transform Transforms full documents
   #
-  # source://roadie//lib/roadie/document.rb#124
+  # @return [String] the transformed HTML
+  #
+  # pkg:gem/roadie#lib/roadie/document.rb:124
   def transform_partial; end
 
   # URL options. If none are given no URL rewriting will take place.
-  #
   # @see UrlGenerator#initialize
   #
-  # source://roadie//lib/roadie/document.rb#27
+  # pkg:gem/roadie#lib/roadie/document.rb:27
   def url_options; end
 
   # URL options. If none are given no URL rewriting will take place.
-  #
   # @see UrlGenerator#initialize
   #
-  # source://roadie//lib/roadie/document.rb#27
+  # pkg:gem/roadie#lib/roadie/document.rb:27
   def url_options=(_arg0); end
 
   private
 
-  # source://roadie//lib/roadie/document.rb#215
+  # pkg:gem/roadie#lib/roadie/document.rb:215
   def callback(callable, dom); end
 
-  # source://roadie//lib/roadie/document.rb#177
+  # pkg:gem/roadie#lib/roadie/document.rb:177
   def improve(dom); end
 
-  # source://roadie//lib/roadie/document.rb#181
+  # pkg:gem/roadie#lib/roadie/document.rb:181
   def inline(dom, options = T.unsafe(nil)); end
 
-  # source://roadie//lib/roadie/document.rb#207
+  # pkg:gem/roadie#lib/roadie/document.rb:207
   def make_url_rewriter; end
 
-  # source://roadie//lib/roadie/document.rb#221
+  # pkg:gem/roadie#lib/roadie/document.rb:221
   def remove_ignore_markers(dom); end
 
-  # source://roadie//lib/roadie/document.rb#191
+  # pkg:gem/roadie#lib/roadie/document.rb:191
   def rewrite_urls(dom); end
 
-  # source://roadie//lib/roadie/document.rb#195
+  # pkg:gem/roadie#lib/roadie/document.rb:195
   def serialize_document(dom); end
 
-  # source://roadie//lib/roadie/document.rb#173
+  # pkg:gem/roadie#lib/roadie/document.rb:173
   def stylesheet; end
 end
 
-# source://roadie//lib/roadie/document.rb#170
+# pkg:gem/roadie#lib/roadie/document.rb:170
 Roadie::Document::VALID_MODES = T.let(T.unsafe(nil), Array)
 
 # Base class for all Roadie errors. Rescue this if you want to catch errors
@@ -526,7 +456,7 @@ Roadie::Document::VALID_MODES = T.let(T.unsafe(nil), Array)
 # If Roadie raises an error that does not inherit this class, please report
 # it as a bug.
 #
-# source://roadie//lib/roadie/errors.rb#9
+# pkg:gem/roadie#lib/roadie/errors.rb:9
 class Roadie::Error < ::RuntimeError; end
 
 # Asset provider that looks for files on your local filesystem.
@@ -534,49 +464,44 @@ class Roadie::Error < ::RuntimeError; end
 # It will be locked to a specific path and it will not access files above
 # that directory.
 #
-# source://roadie//lib/roadie/filesystem_provider.rb#8
+# pkg:gem/roadie#lib/roadie/filesystem_provider.rb:8
 class Roadie::FilesystemProvider
-  # @return [FilesystemProvider] a new instance of FilesystemProvider
-  #
-  # source://roadie//lib/roadie/filesystem_provider.rb#15
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:15
   def initialize(path = T.unsafe(nil)); end
 
   # @return [Stylesheet, nil]
   #
-  # source://roadie//lib/roadie/filesystem_provider.rb#20
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:20
   def find_stylesheet(name); end
 
   # @raise InsecurePathError
   # @return [Stylesheet]
   #
-  # source://roadie//lib/roadie/filesystem_provider.rb#29
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:29
   def find_stylesheet!(name); end
 
-  # source://roadie//lib/roadie/filesystem_provider.rb#47
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:47
   def inspect; end
 
-  # Returns the value of attribute path.
-  #
-  # source://roadie//lib/roadie/filesystem_provider.rb#13
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:13
   def path; end
 
-  # source://roadie//lib/roadie/filesystem_provider.rb#43
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:43
   def to_s; end
 
   private
 
-  # @raise [InsecurePathError]
-  #
-  # source://roadie//lib/roadie/filesystem_provider.rb#53
+  # pkg:gem/roadie#lib/roadie/filesystem_provider.rb:53
   def build_file_path(name); end
 end
 
 # Raised when FilesystemProvider is asked to access a file that lies above
 # the base path.
 #
-# source://roadie//lib/roadie/filesystem_provider.rb#11
+# pkg:gem/roadie#lib/roadie/filesystem_provider.rb:11
 class Roadie::FilesystemProvider::InsecurePathError < ::Roadie::Error; end
 
+# @api private
 # The Inliner inlines stylesheets to the elements of the DOM.
 #
 # Inlining means that {StyleBlock}s and a DOM tree are combined:
@@ -594,93 +519,65 @@ class Roadie::FilesystemProvider::InsecurePathError < ::Roadie::Error; end
 # <a href="/" style="color:red"></a>
 # ```
 #
-# @api private
-#
-# source://roadie//lib/roadie/inliner.rb#26
+# pkg:gem/roadie#lib/roadie/inliner.rb:26
 class Roadie::Inliner
-  # @api private
-  # @param dom [Nokogiri::HTML::Document]
-  # @param stylesheets [Array<Stylesheet>] the stylesheets to use in the inlining
-  # @return [Inliner] a new instance of Inliner
+  # @param [Array<Stylesheet>] stylesheets the stylesheets to use in the inlining
+  # @param [Nokogiri::HTML::Document] dom
   #
-  # source://roadie//lib/roadie/inliner.rb#29
+  # pkg:gem/roadie#lib/roadie/inliner.rb:29
   def initialize(stylesheets, dom); end
 
   # Start the inlining, mutating the DOM tree.
   #
-  # @api private
-  # @option options
-  # @option options
-  # @option options
-  # @param options [Hash] a customizable set of options
+  # @option options [true, false] :keep_uninlinable_css
+  # @option options [:root, :head] :keep_uninlinable_in
+  # @option options [true, false] :merge_media_queries
   # @return [nil]
   #
-  # source://roadie//lib/roadie/inliner.rb#40
+  # pkg:gem/roadie#lib/roadie/inliner.rb:40
   def inline(options = T.unsafe(nil)); end
 
   protected
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#58
+  # pkg:gem/roadie#lib/roadie/inliner.rb:58
   def dom; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#58
+  # pkg:gem/roadie#lib/roadie/inliner.rb:58
   def stylesheets; end
 
   private
 
   # Adds unlineable styles in the specified part of the document
   # either the head or in the document
+  # @param [Symbol] parent  Where to put the styles
+  # @param [Array<StyleBlock>] blocks  Non-inlineable style blocks
+  # @param [Boolean]  merge_media_queries  Whether to group media queries
   #
-  # @api private
-  # @param blocks [Array<StyleBlock>] Non-inlineable style blocks
-  # @param merge_media_queries [Boolean] Whether to group media queries
-  # @param parent [Symbol] Where to put the styles
-  #
-  # source://roadie//lib/roadie/inliner.rb#123
+  # pkg:gem/roadie#lib/roadie/inliner.rb:123
   def add_uninlinable_styles(parent, blocks, merge_media_queries); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#93
+  # pkg:gem/roadie#lib/roadie/inliner.rb:93
   def apply_element_style(element, builder); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#89
+  # pkg:gem/roadie#lib/roadie/inliner.rb:89
   def apply_style_map(style_map); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#62
+  # pkg:gem/roadie#lib/roadie/inliner.rb:62
   def consume_stylesheets; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#143
+  # pkg:gem/roadie#lib/roadie/inliner.rb:143
   def create_style_element(style_blocks, parent, merge_media_queries); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#77
+  # pkg:gem/roadie#lib/roadie/inliner.rb:77
   def each_style_block; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#97
+  # pkg:gem/roadie#lib/roadie/inliner.rb:97
   def elements_matching_selector(stylesheet, selector); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#139
+  # pkg:gem/roadie#lib/roadie/inliner.rb:139
   def find_head; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#85
+  # pkg:gem/roadie#lib/roadie/inliner.rb:85
   def selector_elements(stylesheet, block); end
 
   # Some users might prefer to not group rules within media queries because
@@ -708,12 +605,10 @@ class Roadie::Inliner
   # If merge_media_queries is set to false,
   # we will generate `style_blocks.size` media queries, potentially
   # causing performance issues.
+  # @param {Array<StyleBlock>} style_blocks  All style blocks
+  # @return {Array<String>}
   #
-  # @api private
-  # @param style_blocks [Array<StyleBlock>] All style blocks
-  # @return [Array<String>]
-  #
-  # source://roadie//lib/roadie/inliner.rb#207
+  # pkg:gem/roadie#lib/roadie/inliner.rb:207
   def styles_in_individual_media_queries(style_blocks); end
 
   # For performance reasons, we should group styles with the same media types within
@@ -726,35 +621,26 @@ class Roadie::Inliner
   # ["@media(max-width: 600px) { .col-12 { display: block; } }"]
   # ```
   #
-  # @api private
-  # @param style_blocks [Array<StyleBlock>] Style blocks that could not be inlined
-  # @return [Array<String>]
+  # @param {Array<StyleBlock>} style_blocks  Style blocks that could not be inlined
+  # @return {Array<String>}
   #
-  # source://roadie//lib/roadie/inliner.rb#168
+  # pkg:gem/roadie#lib/roadie/inliner.rb:168
   def styles_in_shared_media_queries(style_blocks); end
 end
 
+# @api private
 # StyleMap is a map between a DOM element and {StyleAttributeBuilder}. Basically,
 # it's an accumulator for properties, scoped on specific elements.
 #
-# @api private
-#
-# source://roadie//lib/roadie/inliner.rb#220
+# pkg:gem/roadie#lib/roadie/inliner.rb:220
 class Roadie::Inliner::StyleMap
-  # @api private
-  # @return [StyleMap] a new instance of StyleMap
-  #
-  # source://roadie//lib/roadie/inliner.rb#221
+  # pkg:gem/roadie#lib/roadie/inliner.rb:221
   def initialize; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#227
+  # pkg:gem/roadie#lib/roadie/inliner.rb:227
   def add(elements, new_properties); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/inliner.rb#235
+  # pkg:gem/roadie#lib/roadie/inliner.rb:235
   def each_element(&block); end
 end
 
@@ -763,19 +649,18 @@ end
 #
 # This could be a hint that something in your HTML or CSS is broken.
 #
-# source://roadie//lib/roadie/errors.rb#15
+# pkg:gem/roadie#lib/roadie/errors.rb:15
 class Roadie::InvalidUrlPath < ::Roadie::Error
-  # @return [InvalidUrlPath] a new instance of InvalidUrlPath
-  #
-  # source://roadie//lib/roadie/errors.rb#19
+  # pkg:gem/roadie#lib/roadie/errors.rb:19
   def initialize(given_path, cause = T.unsafe(nil)); end
 
   # The original error, raised from +URI+.
   #
-  # source://roadie//lib/roadie/errors.rb#17
+  # pkg:gem/roadie#lib/roadie/errors.rb:17
   def cause; end
 end
 
+# @api private
 # Class that improves the markup of a HTML DOM tree
 #
 # This class will improve the following aspects of the DOM:
@@ -786,157 +671,107 @@ end
 #   * `<body>`
 #   * `<meta>` declaring charset and content-type (text/html)
 #
-# @api private
-#
-# source://roadie//lib/roadie/markup_improver.rb#14
+# pkg:gem/roadie#lib/roadie/markup_improver.rb:14
 class Roadie::MarkupImprover
   # The original HTML must also be passed in in order to handle the doctypes
   # since a +Nokogiri::HTML::Document+ will always have a doctype, no matter if
   # the original source had it or not. Reading the raw HTML is the only way to
   # determine if we want to add a HTML5 doctype or not.
   #
-  # @api private
-  # @return [MarkupImprover] a new instance of MarkupImprover
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#19
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:19
   def initialize(dom, original_html); end
 
-  # @api private
   # @return [nil] passed DOM will be mutated
   #
-  # source://roadie//lib/roadie/markup_improver.rb#25
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:25
   def improve; end
 
   protected
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#34
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:34
   def dom; end
 
   private
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#76
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:76
   def content_type_meta_element_missing?; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#59
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:59
   def create_head_element(parent); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#70
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:70
   def ensure_declared_charset(parent); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#38
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:38
   def ensure_doctype_present; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#51
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:51
   def ensure_head_element_present; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#45
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:45
   def ensure_html_element_present; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/markup_improver.rb#82
+  # pkg:gem/roadie#lib/roadie/markup_improver.rb:82
   def make_content_type_element; end
 end
 
+# @api public
 # External asset provider that downloads stylesheets from some other server
 # using Ruby's built-in {Net::HTTP} library.
 #
 # You can pass a whitelist of hosts that downloads are allowed on.
 #
-# @api public
 # @example Allowing all downloads
 #   provider = Roadie::NetHttpProvider.new
+#
 # @example Only allowing your own app domains
 #   provider = Roadie::NetHttpProvider.new(
-#   whitelist: ["myapp.com", "assets.myapp.com", "www.myapp.com"]
+#     whitelist: ["myapp.com", "assets.myapp.com", "www.myapp.com"]
 #   )
 #
-# source://roadie//lib/roadie/net_http_provider.rb#21
+# pkg:gem/roadie#lib/roadie/net_http_provider.rb:21
 class Roadie::NetHttpProvider
-  # @api public
-  # @option options
-  # @param options [Hash] a customizable set of options
-  # @return [NetHttpProvider] a new instance of NetHttpProvider
+  # @option options [Array<String>] :whitelist ([]) A list of host names that downloads are allowed from. Empty set means everything is allowed.
   #
-  # source://roadie//lib/roadie/net_http_provider.rb#25
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:25
   def initialize(options = T.unsafe(nil)); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#29
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:29
   def find_stylesheet(url); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#35
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:35
   def find_stylesheet!(url); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#54
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:54
   def inspect; end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#50
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:50
   def to_s; end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#22
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:22
   def whitelist; end
 
   private
 
-  # @api public
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#94
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:94
   def access_granted_to?(host); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#70
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:70
   def download(url); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#84
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:84
   def get_response(uri); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#60
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:60
   def host_set(hosts); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#106
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:106
   def response_body(response); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#98
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:98
   def truncate(string); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/net_http_provider.rb#64
+  # pkg:gem/roadie#lib/roadie/net_http_provider.rb:64
   def validate_host(host); end
 end
 
@@ -945,52 +780,45 @@ end
 # Use it to ignore missing assets or in your tests when you need a provider
 # but you do not care what it contains or that it is even referenced at all.
 #
-# source://roadie//lib/roadie/null_provider.rb#8
+# pkg:gem/roadie#lib/roadie/null_provider.rb:8
 class Roadie::NullProvider
-  # source://roadie//lib/roadie/null_provider.rb#9
+  # pkg:gem/roadie#lib/roadie/null_provider.rb:9
   def find_stylesheet(name); end
 
-  # source://roadie//lib/roadie/null_provider.rb#13
+  # pkg:gem/roadie#lib/roadie/null_provider.rb:13
   def find_stylesheet!(name); end
 
-  # source://roadie//lib/roadie/null_provider.rb#21
+  # pkg:gem/roadie#lib/roadie/null_provider.rb:21
   def inspect; end
 
-  # source://roadie//lib/roadie/null_provider.rb#17
+  # pkg:gem/roadie#lib/roadie/null_provider.rb:17
   def to_s; end
 
   private
 
-  # source://roadie//lib/roadie/null_provider.rb#27
+  # pkg:gem/roadie#lib/roadie/null_provider.rb:27
   def empty_stylesheet; end
 end
 
+# @api private
 # Null Object for the URL rewriter role.
 #
 # Used whenever client does not pass any URL options and no URL rewriting
 # should take place.
 #
-# @api private
-#
-# source://roadie//lib/roadie/null_url_rewriter.rb#9
+# pkg:gem/roadie#lib/roadie/null_url_rewriter.rb:9
 class Roadie::NullUrlRewriter
-  # @api private
-  # @return [NullUrlRewriter] a new instance of NullUrlRewriter
-  #
-  # source://roadie//lib/roadie/null_url_rewriter.rb#10
+  # pkg:gem/roadie#lib/roadie/null_url_rewriter.rb:10
   def initialize(generator = T.unsafe(nil)); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/null_url_rewriter.rb#17
+  # pkg:gem/roadie#lib/roadie/null_url_rewriter.rb:17
   def transform_css(css); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/null_url_rewriter.rb#14
+  # pkg:gem/roadie#lib/roadie/null_url_rewriter.rb:14
   def transform_dom(dom); end
 end
 
+# @api public
 # This provider acts a bit like a pipeline in normal UNIX parlour by enabling
 # you to make changes to the requested path. Some uses of this include:
 #
@@ -1009,53 +837,43 @@ end
 # invoked and it will be treated as "not found". This makes it possible to
 # use this provider as a filter only.
 #
-# @api public
+# @example Simple regex
+#   provider = Roadie::PathRewriterProvider.new(other_provider) { |path|
+#     path.gsub(/-[a-f0-9]+\.css$/, '.css')
+#   }
+#
 # @example Filtering assets
 #   # Only assets containing "email" in the path will be considered by other_provider
 #   only_email_provider = Roadie::PathRewriterProvider.new(other_provider) { |path|
-#   path =~ /email/ ? path : nil
-#   }
-# @example Handling "external" app assets as local assets
-#   document.external_asset_providers = [
-#   # Look for assets from "myapp.com" just like if we just specified a local path
-#   Roadie::PathRewriterProvider.new(document.asset_providers) { |url|
-#   uri = URI.parse(url)
-#   uri.path if uri.host == "myapp.com"
-#   },
-#   # Any other asset should be downloaded like normal
-#   Roadie::NetHttpProvider.new
-#   ]
-# @example Simple regex
-#   provider = Roadie::PathRewriterProvider.new(other_provider) { |path|
-#   path.gsub(/-[a-f0-9]+\.css$/, '.css')
+#     path =~ /email/ ? path : nil
 #   }
 #
-# source://roadie//lib/roadie/path_rewriter_provider.rb#44
+# @example Handling "external" app assets as local assets
+#   document.external_asset_providers = [
+#     # Look for assets from "myapp.com" just like if we just specified a local path
+#     Roadie::PathRewriterProvider.new(document.asset_providers) { |url|
+#       uri = URI.parse(url)
+#       uri.path if uri.host == "myapp.com"
+#     },
+#     # Any other asset should be downloaded like normal
+#     Roadie::NetHttpProvider.new
+#   ]
+#
+# pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:44
 class Roadie::PathRewriterProvider
-  # @api public
-  # @return [PathRewriterProvider] a new instance of PathRewriterProvider
-  #
-  # source://roadie//lib/roadie/path_rewriter_provider.rb#47
+  # pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:47
   def initialize(provider, &filter); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/path_rewriter_provider.rb#45
+  # pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:45
   def filter; end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/path_rewriter_provider.rb#52
+  # pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:52
   def find_stylesheet(path); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/path_rewriter_provider.rb#57
+  # pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:57
   def find_stylesheet!(path); end
 
-  # @api public
-  #
-  # source://roadie//lib/roadie/path_rewriter_provider.rb#45
+  # pkg:gem/roadie#lib/roadie/path_rewriter_provider.rb:45
   def provider; end
 end
 
@@ -1065,122 +883,106 @@ end
 #
 # {ProviderList} behaves like an Array, *and* an asset provider, and can be coerced into an array.
 #
-# source://roadie//lib/roadie/provider_list.rb#11
+# pkg:gem/roadie#lib/roadie/provider_list.rb:11
 class Roadie::ProviderList
   include ::Enumerable
   extend ::Forwardable
 
-  # @return [ProviderList] a new instance of ProviderList
-  #
-  # source://roadie//lib/roadie/provider_list.rb#40
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:40
   def initialize(providers); end
 
-  # @see Array#<<
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def <<(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#each
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def each(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#empty?
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def empty?(*_arg0, **_arg1, &_arg2); end
 
   # @return [Stylesheet, nil]
   #
-  # source://roadie//lib/roadie/provider_list.rb#45
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:45
   def find_stylesheet(name); end
 
   # Tries to find the given stylesheet and raises an {ProvidersFailed} error
   # if no provider could find the asset.
   #
-  # @raise [ProvidersFailed]
   # @return [Stylesheet]
   #
-  # source://roadie//lib/roadie/provider_list.rb#57
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:57
   def find_stylesheet!(name); end
 
-  # @see Array#last
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def last(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#pop
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def pop(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#push
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def push(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#shift
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def shift(*_arg0, **_arg1, &_arg2); end
 
-  # @see Array#size
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def size(*_arg0, **_arg1, &_arg2); end
 
   # ProviderList can be coerced to an array. This makes Array#flatten work
   # with it, among other things.
   #
-  # source://roadie//lib/roadie/provider_list.rb#79
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:79
   def to_ary; end
 
-  # source://roadie//lib/roadie/provider_list.rb#69
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:69
   def to_s; end
 
-  # @see Array#unshift
-  #
-  # source://roadie//lib/roadie/provider_list.rb#101
+  # pkg:gem/roadie#lib/roadie/provider_list.rb:101
   def unshift(*_arg0, **_arg1, &_arg2); end
 
   class << self
     # Returns a new empty list.
     #
-    # source://roadie//lib/roadie/provider_list.rb#36
+    # pkg:gem/roadie#lib/roadie/provider_list.rb:36
     def empty; end
 
     # Wrap a single provider, or a list of providers into a {ProviderList}.
     #
-    # @overload wrap
-    # @overload wrap
-    # @overload wrap
+    # @overload wrap(provider_list)
+    #   @param [ProviderList] provider_list An actual instance of {ProviderList}.
+    #   @return The passed in provider_list
     #
-    # source://roadie//lib/roadie/provider_list.rb#27
+    # @overload wrap(provider)
+    #   @param [asset provider] provider
+    #   @return a new {ProviderList} with just the passed provider in it
+    #
+    # @overload wrap(provider1, provider2, ...)
+    #   @return a new {ProviderList} with all the passed providers in it.
+    #
+    # pkg:gem/roadie#lib/roadie/provider_list.rb:27
     def wrap(*providers); end
   end
 end
 
-# source://roadie//lib/roadie/errors.rb#71
+# pkg:gem/roadie#lib/roadie/errors.rb:71
 class Roadie::ProvidersFailed < ::Roadie::CssNotFound
-  # @return [ProvidersFailed] a new instance of ProvidersFailed
-  #
-  # source://roadie//lib/roadie/errors.rb#74
+  # pkg:gem/roadie#lib/roadie/errors.rb:74
   def initialize(css_name:, providers:, errors:); end
 
-  # Returns the value of attribute errors.
-  #
-  # source://roadie//lib/roadie/errors.rb#72
+  # pkg:gem/roadie#lib/roadie/errors.rb:72
   def errors; end
 
   private
 
-  # source://roadie//lib/roadie/errors.rb#85
+  # pkg:gem/roadie#lib/roadie/errors.rb:85
   def build_message; end
 
-  # source://roadie//lib/roadie/errors.rb#93
+  # pkg:gem/roadie#lib/roadie/errors.rb:93
   def each_error_row(errors); end
 end
 
+# @api private
+#
 # A selector is a domain object for a CSS selector, such as:
 #   body
 #   a:hover
@@ -1196,22 +998,15 @@ end
 # Selectors can be coerced into Strings, so they should be transparent to use
 # anywhere a String is expected.
 #
-# @api private
-#
-# source://roadie//lib/roadie/selector.rb#20
+# pkg:gem/roadie#lib/roadie/selector.rb:20
 class Roadie::Selector
-  # @api private
-  # @return [Selector] a new instance of Selector
-  #
-  # source://roadie//lib/roadie/selector.rb#21
+  # pkg:gem/roadie#lib/roadie/selector.rb:21
   def initialize(selector, specificity = T.unsafe(nil)); end
 
   # {Selector}s are equal to other {Selector}s if, and only if, their string
   # representations are equal.
   #
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#54
+  # pkg:gem/roadie#lib/roadie/selector.rb:54
   def ==(other); end
 
   # Returns whenever or not a selector can be inlined.
@@ -1220,237 +1015,163 @@ class Roadie::Selector
   #
   # We cannot inline styles that appear inside "@" constructs, like +@keyframes+.
   #
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/selector.rb#36
+  # pkg:gem/roadie#lib/roadie/selector.rb:36
   def inlinable?; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#48
+  # pkg:gem/roadie#lib/roadie/selector.rb:48
   def inspect; end
 
   # Returns the specificity of the selector, calculating it if needed.
   #
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#27
+  # pkg:gem/roadie#lib/roadie/selector.rb:27
   def specificity; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#40
+  # pkg:gem/roadie#lib/roadie/selector.rb:40
   def to_s; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#44
+  # pkg:gem/roadie#lib/roadie/selector.rb:44
   def to_str; end
 
   protected
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/selector.rb#64
+  # pkg:gem/roadie#lib/roadie/selector.rb:64
   def selector; end
 
   private
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/selector.rb#81
+  # pkg:gem/roadie#lib/roadie/selector.rb:82
   def at_rule?; end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/selector.rb#77
+  # pkg:gem/roadie#lib/roadie/selector.rb:78
   def pseudo_element?; end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/selector.rb#85
+  # pkg:gem/roadie#lib/roadie/selector.rb:86
   def pseudo_function?; end
 end
 
-# @api private
-#
-# source://roadie//lib/roadie/selector.rb#68
+# pkg:gem/roadie#lib/roadie/selector.rb:68
 Roadie::Selector::BAD_PSEUDO_FUNCTIONS = T.let(T.unsafe(nil), Array)
 
-# source://roadie//lib/roadie/style_attribute_builder.rb#4
+# pkg:gem/roadie#lib/roadie/style_attribute_builder.rb:4
 class Roadie::StyleAttributeBuilder
-  # @return [StyleAttributeBuilder] a new instance of StyleAttributeBuilder
-  #
-  # source://roadie//lib/roadie/style_attribute_builder.rb#5
+  # pkg:gem/roadie#lib/roadie/style_attribute_builder.rb:5
   def initialize; end
 
-  # source://roadie//lib/roadie/style_attribute_builder.rb#9
+  # pkg:gem/roadie#lib/roadie/style_attribute_builder.rb:9
   def <<(style); end
 
-  # source://roadie//lib/roadie/style_attribute_builder.rb#13
+  # pkg:gem/roadie#lib/roadie/style_attribute_builder.rb:13
   def attribute_string; end
 
   private
 
-  # source://roadie//lib/roadie/style_attribute_builder.rb#19
+  # pkg:gem/roadie#lib/roadie/style_attribute_builder.rb:19
   def stable_sort(list); end
 end
 
+# @api private
 # A style block is the combination of a {Selector} and a list of {StyleProperty}.
 #
-# @api private
-#
-# source://roadie//lib/roadie/style_block.rb#8
+# pkg:gem/roadie#lib/roadie/style_block.rb:8
 class Roadie::StyleBlock
   extend ::Forwardable
 
-  # @api private
-  # @param media [Array<String>] Array of media types, e.g.
-  #   @media screen, print and (max-width 800px) will become
-  #   ['screen', 'print and (max-width 800px)']
-  # @param properties [Array<StyleProperty>]
-  # @param selector [Selector]
-  # @return [StyleBlock] a new instance of StyleBlock
+  # @param [Selector] selector
+  # @param [Array<StyleProperty>] properties
+  # @param [Array<String>] media  Array of media types, e.g.
+  #                          @media screen, print and (max-width 800px) will become
+  #                          ['screen', 'print and (max-width 800px)']
   #
-  # source://roadie//lib/roadie/style_block.rb#17
+  # pkg:gem/roadie#lib/roadie/style_block.rb:18
   def initialize(selector, properties, media); end
 
   # Checks whether the media query can be inlined
-  #
-  # @api private
-  # @return [Boolean]
   # @see inlineable_media
+  # @return {Boolean}
   #
-  # source://roadie//lib/roadie/style_block.rb#33
+  # pkg:gem/roadie#lib/roadie/style_block.rb:34
   def inlinable?; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_block.rb#10
+  # pkg:gem/roadie#lib/roadie/style_block.rb:11
   def media; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_block.rb#10
+  # pkg:gem/roadie#lib/roadie/style_block.rb:11
   def properties; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_block.rb#10
+  # pkg:gem/roadie#lib/roadie/style_block.rb:11
   def selector; end
 
-  # @see Selector#to_s
-  #
-  # source://roadie//lib/roadie/style_block.rb#28
+  # pkg:gem/roadie#lib/roadie/style_block.rb:29
   def selector_string(*_arg0, **_arg1, &_arg2); end
 
-  # @see Selector#specificity
-  #
-  # source://roadie//lib/roadie/style_block.rb#25
+  # pkg:gem/roadie#lib/roadie/style_block.rb:26
   def specificity(*_arg0, **_arg1, &_arg2); end
 
   # String representation of the style block. This is valid CSS and can be
   # used in the DOM.
+  # @return {String}
   #
-  # @api private
-  # @return [String]
-  #
-  # source://roadie//lib/roadie/style_block.rb#40
+  # pkg:gem/roadie#lib/roadie/style_block.rb:41
   def to_s; end
 
   private
 
   # A media query cannot be inlined if it contains any advanced rules
   # e.g. @media only screen {...} is ok to inline but
+  # @media only screen and (max-width: 600px) {...} cannot be inlined
+  # @return {Boolean}
   #
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/style_block.rb#51
+  # pkg:gem/roadie#lib/roadie/style_block.rb:52
   def inlinable_media?; end
 end
 
+# @api private
 # Domain object for a CSS property such as "color: red !important".
 #
-# @api private
-# @attr_reader important [Boolean] if the property is "!important".
-# @attr_reader property [String] name of the property (such as "font-size").
-# @attr_reader specificity [Integer] specificity of parent {Selector}. Used to compare/sort.
-# @attr_reader value [String] value of the property (such as "5px solid green").
+# @attr_reader [String] property name of the property (such as "font-size").
+# @attr_reader [String] value value of the property (such as "5px solid green").
+# @attr_reader [Boolean] important if the property is "!important".
+# @attr_reader [Integer] specificity specificity of parent {Selector}. Used to compare/sort.
 #
-# source://roadie//lib/roadie/style_property.rb#11
+# pkg:gem/roadie#lib/roadie/style_property.rb:11
 class Roadie::StyleProperty
   include ::Comparable
 
-  # @api private
-  # @return [StyleProperty] a new instance of StyleProperty
-  #
-  # source://roadie//lib/roadie/style_property.rb#19
+  # pkg:gem/roadie#lib/roadie/style_property.rb:19
   def initialize(property, value, important, specificity); end
 
   # Compare another {StyleProperty}. Important styles are "greater than"
   # non-important ones; otherwise the specificity declares order.
   #
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_property.rb#32
+  # pkg:gem/roadie#lib/roadie/style_property.rb:32
   def <=>(other); end
 
-  # if the property is "!important".
-  #
-  # @api private
-  # @return [Boolean] the current value of important
-  #
-  # source://roadie//lib/roadie/style_property.rb#14
+  # pkg:gem/roadie#lib/roadie/style_property.rb:14
   def important; end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/style_property.rb#26
+  # pkg:gem/roadie#lib/roadie/style_property.rb:26
   def important?; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_property.rb#44
+  # pkg:gem/roadie#lib/roadie/style_property.rb:44
   def inspect; end
 
-  # @api private
   # @todo Rename #property to #name
   #
-  # source://roadie//lib/roadie/style_property.rb#17
+  # pkg:gem/roadie#lib/roadie/style_property.rb:17
   def property; end
 
-  # specificity of parent {Selector}. Used to compare/sort.
-  #
-  # @api private
-  # @return [Integer] the current value of specificity
-  #
-  # source://roadie//lib/roadie/style_property.rb#14
+  # pkg:gem/roadie#lib/roadie/style_property.rb:14
   def specificity; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_property.rb#40
+  # pkg:gem/roadie#lib/roadie/style_property.rb:40
   def to_s; end
 
-  # value of the property (such as "5px solid green").
-  #
-  # @api private
-  # @return [String] the current value of value
-  #
-  # source://roadie//lib/roadie/style_property.rb#14
+  # pkg:gem/roadie#lib/roadie/style_property.rb:14
   def value; end
 
   private
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/style_property.rb#50
+  # pkg:gem/roadie#lib/roadie/style_property.rb:50
   def value_with_important; end
 end
 
@@ -1458,77 +1179,67 @@ end
 #
 # It has a name and a list of {StyleBlock}s.
 #
-# @attr_reader blocks [Array<StyleBlock>]
-# @attr_reader name [String] the name of the stylesheet ("stylesheets/main.css", "Admin user styles", etc.). The name of the stylesheet will be visible if any errors occur.
+# @attr_reader [String] name the name of the stylesheet ("stylesheets/main.css", "Admin user styles", etc.). The name of the stylesheet will be visible if any errors occur.
+# @attr_reader [Array<StyleBlock>] blocks
 #
-# source://roadie//lib/roadie/stylesheet.rb#10
+# pkg:gem/roadie#lib/roadie/stylesheet.rb:10
 class Roadie::Stylesheet
   # Parses the CSS string into a {StyleBlock}s and stores it.
   #
-  # @param css [String]
-  # @param name [String]
-  # @return [Stylesheet] a new instance of Stylesheet
+  # @param [String] name
+  # @param [String] css
   #
-  # source://roadie//lib/roadie/stylesheet.rb#19
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:19
   def initialize(name, css); end
 
-  # @return [Array<StyleBlock>] the current value of blocks
-  #
-  # source://roadie//lib/roadie/stylesheet.rb#13
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:13
   def blocks; end
 
-  # the name of the stylesheet ("stylesheets/main.css", "Admin user styles", etc.). The name of the stylesheet will be visible if any errors occur.
-  #
-  # @return [String] the current value of name
-  #
-  # source://roadie//lib/roadie/stylesheet.rb#13
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:13
   def name; end
 
-  # source://roadie//lib/roadie/stylesheet.rb#24
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:24
   def to_s; end
 
   private
 
-  # source://roadie//lib/roadie/stylesheet.rb#46
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:46
   def create_style_block(selector_string, rule_set, media_types); end
 
-  # source://roadie//lib/roadie/stylesheet.rb#30
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:30
   def inlinable_blocks; end
 
-  # source://roadie//lib/roadie/stylesheet.rb#34
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:34
   def parse_blocks(css); end
 
-  # source://roadie//lib/roadie/stylesheet.rb#58
+  # pkg:gem/roadie#lib/roadie/stylesheet.rb:58
   def setup_parser(css); end
 end
 
-# source://roadie//lib/roadie/stylesheet.rb#11
+# pkg:gem/roadie#lib/roadie/stylesheet.rb:11
 Roadie::Stylesheet::BOM = T.let(T.unsafe(nil), String)
 
+# @api private
 # Class that handles URL generation
 #
 # URL generation is all about converting relative URLs into absolute URLS
 # according to the given options. It is written such as absolute URLs will
 # get passed right through, so all URLs could be passed through here.
 #
-# @api private
-#
-# source://roadie//lib/roadie/url_generator.rb#12
+# pkg:gem/roadie#lib/roadie/url_generator.rb:12
 class Roadie::UrlGenerator
   # Create a new instance with the given URL options.
   #
   # Initializing without a host setting raises an error, as do unknown keys.
   #
-  # @api private
-  # @option url_options
-  # @option url_options
-  # @option url_options
-  # @option url_options
-  # @option url_options
-  # @param url_options [Hash]
-  # @return [UrlGenerator] a new instance of UrlGenerator
+  # @param [Hash] url_options
+  # @option url_options [String] :host (required)
+  # @option url_options [String, Integer] :port
+  # @option url_options [String] :path root path
+  # @option url_options [String] :scheme URL scheme ("http" is default)
+  # @option url_options [String] :protocol alias for :scheme
   #
-  # source://roadie//lib/roadie/url_generator.rb#25
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:25
   def initialize(url_options); end
 
   # Generate an absolute URL from a relative URL.
@@ -1543,112 +1254,81 @@ class Roadie::UrlGenerator
   # common use-case is to convert a relative path found in a stylesheet which
   # resides in a subdirectory.
   #
-  # @api private
-  # @example Conversions with a base
-  #   generator = Roadie::UrlGenerator.new host: "foo.com", scheme: "https"
-  #   generator.generate_url("../images/logo.png", "/css") # => "https://foo.com/images/logo.png"
-  #   generator.generate_url("../images/logo.png", "/assets/css") # => "https://foo.com/assets/images/logo.png"
   # @example Normal conversions
   #   generator = Roadie::UrlGenerator.new host: "foo.com", scheme: "https"
   #   generator.generate_url("bar.html") # => "https://foo.com/bar.html"
   #   generator.generate_url("/bar.html") # => "https://foo.com/bar.html"
   #   generator.generate_url("") # => "https://foo.com"
-  # @param base [String] The base which the relative path comes from
+  #
+  # @example Conversions with a base
+  #   generator = Roadie::UrlGenerator.new host: "foo.com", scheme: "https"
+  #   generator.generate_url("../images/logo.png", "/css") # => "https://foo.com/images/logo.png"
+  #   generator.generate_url("../images/logo.png", "/assets/css") # => "https://foo.com/assets/images/logo.png"
+  #
+  # @param [String] base The base which the relative path comes from
   # @return [String] an absolute URL
   #
-  # source://roadie//lib/roadie/url_generator.rb#67
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:67
   def generate_url(path, base = T.unsafe(nil)); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#13
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:13
   def url_options; end
 
   protected
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#78
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:78
   def root_uri; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#78
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:78
   def scheme; end
 
   private
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#93
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:93
   def add_scheme(path); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#105
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:105
   def apply_base(base, path); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#82
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:82
   def build_root_uri; end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#97
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:97
   def combine_segments(root, base, path); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#123
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:123
   def make_absolute(path); end
 
   # Strip :// from any scheme, if present
   #
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#114
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:114
   def normalize_scheme(scheme); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#119
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:119
   def parse_port(port); end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/url_generator.rb#135
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:135
   def path_is_anchor?(path); end
 
-  # @api private
-  # @return [Boolean]
-  #
-  # source://roadie//lib/roadie/url_generator.rb#131
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:131
   def path_is_schemeless?(path); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_generator.rb#141
+  # pkg:gem/roadie#lib/roadie/url_generator.rb:142
   def validate_options(options); end
 end
 
-# @api private
-#
-# source://roadie//lib/roadie/url_generator.rb#139
+# pkg:gem/roadie#lib/roadie/url_generator.rb:139
 Roadie::UrlGenerator::VALID_OPTIONS = T.let(T.unsafe(nil), Set)
 
-# Class that rewrites URLs in the DOM.
-#
 # @api private
 #
-# source://roadie//lib/roadie/url_rewriter.rb#7
+# Class that rewrites URLs in the DOM.
+#
+# pkg:gem/roadie#lib/roadie/url_rewriter.rb:7
 class Roadie::UrlRewriter
-  # @api private
-  # @param generator [UrlGenerator]
-  # @return [UrlRewriter] a new instance of UrlRewriter
+  # @param [UrlGenerator] generator
   #
-  # source://roadie//lib/roadie/url_rewriter.rb#9
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:9
   def initialize(generator); end
 
   # Mutates passed CSS, rewriting url() directives.
@@ -1657,11 +1337,10 @@ class Roadie::UrlRewriter
   #
   # Copy of CSS that is mutated is returned, passed string is not mutated.
   #
-  # @api private
-  # @param css [String] the css to mutate
+  # @param [String] css the css to mutate
   # @return [String] copy of css that is mutated
   #
-  # source://roadie//lib/roadie/url_rewriter.rb#44
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:44
   def transform_css(css); end
 
   # Mutates the passed DOM tree, rewriting certain element's attributes.
@@ -1672,28 +1351,21 @@ class Roadie::UrlRewriter
   # [nil] is returned so no one can misunderstand that this method mutates
   # the passed instance.
   #
-  # @api private
-  # @param dom [Nokogiri::HTML::Document]
+  # @param [Nokogiri::HTML::Document] dom
   # @return [nil] DOM tree is mutated
   #
-  # source://roadie//lib/roadie/url_rewriter.rb#23
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:23
   def transform_dom(dom); end
 
   private
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_rewriter.rb#53
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:53
   def generate_url(*args); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_rewriter.rb#77
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:78
   def transform_element(element); end
 
-  # @api private
-  #
-  # source://roadie//lib/roadie/url_rewriter.rb#84
+  # pkg:gem/roadie#lib/roadie/url_rewriter.rb:85
   def transform_element_style(element); end
 end
 
@@ -1702,39 +1374,35 @@ end
 # It matches without any quotes and with both single and double quotes
 # inside the parenthesis. There's much room for improvement, of course.
 #
-# @api private
-#
-# source://roadie//lib/roadie/url_rewriter.rb#61
+# pkg:gem/roadie#lib/roadie/url_rewriter.rb:61
 Roadie::UrlRewriter::CSS_URL_REGEXP = T.let(T.unsafe(nil), Regexp)
 
-# source://roadie//lib/roadie/utils.rb#4
+# pkg:gem/roadie#lib/roadie/utils.rb:4
 module Roadie::Utils
   private
 
   # @api private
-  # @return [Boolean]
   #
-  # source://roadie//lib/roadie/utils.rb#6
+  # pkg:gem/roadie#lib/roadie/utils.rb:6
   def path_is_absolute?(path); end
 
   # @api private
   #
-  # source://roadie//lib/roadie/utils.rb#25
+  # pkg:gem/roadie#lib/roadie/utils.rb:25
   def warn(message); end
 
   class << self
     # @api private
-    # @return [Boolean]
     #
-    # source://roadie//lib/roadie/utils.rb#22
+    # pkg:gem/roadie#lib/roadie/utils.rb:22
     def path_is_absolute?(path); end
 
     # @api private
     #
-    # source://roadie//lib/roadie/utils.rb#29
+    # pkg:gem/roadie#lib/roadie/utils.rb:29
     def warn(message); end
   end
 end
 
-# source://roadie//lib/roadie/version.rb#4
+# pkg:gem/roadie#lib/roadie/version.rb:4
 Roadie::VERSION = T.let(T.unsafe(nil), String)

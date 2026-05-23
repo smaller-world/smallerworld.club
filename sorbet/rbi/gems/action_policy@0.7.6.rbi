@@ -10,82 +10,64 @@
 # It provides a way to write access policies and helpers to check these policies
 # in your application.
 #
-# source://action_policy//lib/action_policy.rb#12
+# pkg:gem/action_policy#lib/action_policy.rb:12
 module ActionPolicy
   class << self
-    # Returns the value of attribute cache_store.
-    #
-    # source://action_policy//lib/action_policy.rb#35
+    # pkg:gem/action_policy#lib/action_policy.rb:35
     def cache_store; end
 
-    # Sets the attribute cache_store
-    #
-    # @param value the value to set the attribute cache_store to.
-    #
-    # source://action_policy//lib/action_policy.rb#35
+    # pkg:gem/action_policy#lib/action_policy.rb:35
     def cache_store=(_arg0); end
 
-    # Returns the value of attribute enforce_predicate_rules_naming.
-    #
-    # source://action_policy//lib/action_policy.rb#37
+    # pkg:gem/action_policy#lib/action_policy.rb:37
     def enforce_predicate_rules_naming; end
 
-    # Sets the attribute enforce_predicate_rules_naming
-    #
-    # @param value the value to set the attribute enforce_predicate_rules_naming to.
-    #
-    # source://action_policy//lib/action_policy.rb#37
+    # pkg:gem/action_policy#lib/action_policy.rb:37
     def enforce_predicate_rules_naming=(_arg0); end
 
     # Find a policy class for a target
     #
-    # source://action_policy//lib/action_policy.rb#40
+    # pkg:gem/action_policy#lib/action_policy.rb:40
     def lookup(target, allow_nil: T.unsafe(nil), default: T.unsafe(nil), **options); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/authorization.rb#4
+# pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:4
 class ActionPolicy::AuthorizationContextMissing < ::ActionPolicy::Error
-  # @return [AuthorizationContextMissing] a new instance of AuthorizationContextMissing
-  #
-  # source://action_policy//lib/action_policy/policy/authorization.rb#9
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:9
   def initialize(id); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy/policy/authorization.rb#7
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:7
   def message; end
 end
 
-# source://action_policy//lib/action_policy/policy/authorization.rb#5
+# pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:5
 ActionPolicy::AuthorizationContextMissing::MESSAGE_TEMPLATE = T.let(T.unsafe(nil), String)
 
 # The main purpose of this module is to extact authorize actions
 # from everything else to make it easily testable.
 #
-# source://action_policy//lib/action_policy/authorizer.rb#20
+# pkg:gem/action_policy#lib/action_policy/authorizer.rb:20
 module ActionPolicy::Authorizer
   class << self
-    # source://action_policy//lib/action_policy/authorizer.rb#30
+    # pkg:gem/action_policy#lib/action_policy/authorizer.rb:30
     def authorize(policy, rule); end
 
     # Performs authorization, raises an exception when check failed.
     #
-    # @raise [::ActionPolicy::Unauthorized]
-    #
-    # source://action_policy//lib/action_policy/authorizer.rb#23
+    # pkg:gem/action_policy#lib/action_policy/authorizer.rb:23
     def call(policy, rule); end
 
     # Applies scope to the target
     #
-    # source://action_policy//lib/action_policy/authorizer.rb#35
+    # pkg:gem/action_policy#lib/action_policy/authorizer.rb:35
     def scopify(target, policy, **options); end
   end
 end
 
 # Base class for application policies.
 #
-# source://action_policy//lib/action_policy/base.rb#5
+# pkg:gem/action_policy#lib/action_policy/base.rb:5
 class ActionPolicy::Base
   include ::ActionPolicy::Behaviours::PolicyFor
   include ::ActionPolicy::Policy::Core
@@ -105,10 +87,11 @@ class ActionPolicy::Base
   extend ::ActionPolicy::Policy::Scoping::ClassMethods
   extend ::ActionPolicy::Policy::Cache::ClassMethods
 
-  # source://action_policy//lib/action_policy/policy/authorization.rb#73
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:73
   def user; end
 end
 
+# pkg:gem/action_policy#lib/action_policy/base.rb:16
 class ActionPolicy::Base::APR < ::ActionPolicy::Policy::ExecutionResult
   include ::ActionPolicy::Policy::ResultFailureReasons
 end
@@ -118,7 +101,7 @@ end
 #
 # Could be included anywhere to perform authorization.
 #
-# source://action_policy//lib/action_policy/behaviour.rb#16
+# pkg:gem/action_policy#lib/action_policy/behaviour.rb:16
 module ActionPolicy::Behaviour
   include ::ActionPolicy::Behaviours::PolicyFor
   include ::ActionPolicy::Behaviours::Scoping
@@ -127,25 +110,23 @@ module ActionPolicy::Behaviour
 
   # Returns the authorization result object after applying a specified rule to a record.
   #
-  # source://action_policy//lib/action_policy/behaviour.rb#55
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:55
   def allowance_to(rule, record = T.unsafe(nil), **options); end
 
   # Checks that an activity is allowed for the current context (e.g. user).
   #
   # Returns true of false.
   #
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/behaviour.rb#48
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:48
   def allowed_to?(rule, record = T.unsafe(nil), **options); end
 
-  # source://action_policy//lib/action_policy/behaviour.rb#61
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:61
   def authorization_context; end
 
   # Check that rule is defined for policy,
   # otherwise fallback to :manage? rule.
   #
-  # source://action_policy//lib/action_policy/behaviour.rb#74
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:74
   def authorization_rule_for(policy, rule); end
 
   # Authorize action against a policy.
@@ -153,32 +134,29 @@ module ActionPolicy::Behaviour
   # Policy is inferred from record
   # (unless explicitly specified through `with` option).
   #
+  # @return the policy record
   # Raises `ActionPolicy::Unauthorized` if check failed.
   #
-  # @return the policy record
-  #
-  # source://action_policy//lib/action_policy/behaviour.rb#38
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:38
   def authorize!(record = T.unsafe(nil), to:, **options); end
 
-  # source://action_policy//lib/action_policy/behaviour.rb#78
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:78
   def lookup_authorization_policy(record, with: T.unsafe(nil), **options); end
 
   private
 
-  # source://action_policy//lib/action_policy/behaviour.rb#65
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:65
   def build_authorization_context; end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/behaviour.rb#20
+    # pkg:gem/action_policy#lib/action_policy/behaviour.rb:20
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/behaviour.rb#93
+# pkg:gem/action_policy#lib/action_policy/behaviour.rb:93
 module ActionPolicy::Behaviour::ClassMethods
-  # source://action_policy//lib/action_policy/behaviour.rb#112
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:112
   def authorization_targets; end
 
   # Configure authorization context.
@@ -195,11 +173,11 @@ module ActionPolicy::Behaviour::ClassMethods
   #     authorize :user
   #   end
   #
-  # source://action_policy//lib/action_policy/behaviour.rb#107
+  # pkg:gem/action_policy#lib/action_policy/behaviour.rb:107
   def authorize(key, through: T.unsafe(nil)); end
 end
 
-# source://action_policy//lib/action_policy/behaviours/policy_for.rb#4
+# pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:4
 module ActionPolicy::Behaviours; end
 
 # Per-instance memoization for policies.
@@ -219,26 +197,26 @@ module ActionPolicy::Behaviours; end
 #
 #   policy.equal?(policy_for(record, with: CustomPolicy)) #=> false
 #
-# source://action_policy//lib/action_policy/behaviours/memoized.rb#21
+# pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:21
 module ActionPolicy::Behaviours::Memoized
-  # source://action_policy//lib/action_policy/behaviours/memoized.rb#47
+  # pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:47
   def __policies_cache__; end
 
-  # source://action_policy//lib/action_policy/behaviours/memoized.rb#36
+  # pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:36
   def __policy_memoize__(record, **options); end
 
   class << self
-    # source://action_policy//lib/action_policy/behaviours/memoized.rb#27
+    # pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:27
     def included(base); end
 
-    # source://action_policy//lib/action_policy/behaviours/memoized.rb#23
+    # pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:23
     def prepended(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/behaviours/memoized.rb#30
+# pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:30
 module ActionPolicy::Behaviours::Memoized::InstanceMethods
-  # source://action_policy//lib/action_policy/behaviours/memoized.rb#31
+  # pkg:gem/action_policy#lib/action_policy/behaviours/memoized.rb:31
   def policy_for(record:, **opts); end
 end
 
@@ -298,40 +276,40 @@ end
 #     super
 #   end
 #
-# source://action_policy//lib/action_policy/behaviours/namespaced.rb#60
+# pkg:gem/action_policy#lib/action_policy/behaviours/namespaced.rb:60
 module ActionPolicy::Behaviours::Namespaced
   class << self
-    # source://action_policy//lib/action_policy/behaviours/namespaced.rb#69
+    # pkg:gem/action_policy#lib/action_policy/behaviours/namespaced.rb:69
     def included(base); end
 
-    # source://action_policy//lib/action_policy/behaviours/namespaced.rb#65
+    # pkg:gem/action_policy#lib/action_policy/behaviours/namespaced.rb:65
     def prepended(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/behaviours/namespaced.rb#72
+# pkg:gem/action_policy#lib/action_policy/behaviours/namespaced.rb:72
 module ActionPolicy::Behaviours::Namespaced::InstanceMethods
-  # source://action_policy//lib/action_policy/behaviours/namespaced.rb#73
+  # pkg:gem/action_policy#lib/action_policy/behaviours/namespaced.rb:73
   def authorization_namespace; end
 end
 
 # Adds `policy_for` method
 #
-# source://action_policy//lib/action_policy/behaviours/policy_for.rb#6
+# pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:6
 module ActionPolicy::Behaviours::PolicyFor
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#21
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:21
   def authorization_context; end
 
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#27
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:27
   def authorization_namespace; end
 
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#35
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:35
   def authorization_strict_namespace; end
 
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#23
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:23
   def build_authorization_context; end
 
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#31
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:31
   def default_authorization_policy_class; end
 
   # Override this method to provide implicit authorization target
@@ -340,42 +318,36 @@ module ActionPolicy::Behaviours::PolicyFor
   #
   # It is also used to infer a policy for scoping (in `authorized_scope` method).
   #
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#44
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:44
   def implicit_authorization_target; end
 
   # Return implicit authorization target or raises an exception if it's nil
   #
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#49
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:49
   def implicit_authorization_target!; end
 
   # Returns policy instance for the record.
   #
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#11
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:11
   def policy_for(record:, with: T.unsafe(nil), namespace: T.unsafe(nil), context: T.unsafe(nil), allow_nil: T.unsafe(nil), default: T.unsafe(nil), strict_namespace: T.unsafe(nil)); end
 
-  # source://action_policy//lib/action_policy/behaviours/policy_for.rb#62
+  # pkg:gem/action_policy#lib/action_policy/behaviours/policy_for.rb:62
   def policy_for_cache_key(record:, with: T.unsafe(nil), namespace: T.unsafe(nil), context: T.unsafe(nil), **_arg4); end
 end
 
 # Adds `authorized_scop` method to behaviour
 #
-# source://action_policy//lib/action_policy/behaviours/scoping.rb#6
+# pkg:gem/action_policy#lib/action_policy/behaviours/scoping.rb:6
 module ActionPolicy::Behaviours::Scoping
   # Infer scope type for target if none provided.
   # Raises an exception if type couldn't be inferred.
   #
-  # source://action_policy//lib/action_policy/behaviours/scoping.rb#30
+  # pkg:gem/action_policy#lib/action_policy/behaviours/scoping.rb:30
   def authorization_scope_type_for(policy, target); end
 
-  # Apply scope to the target of the specified type.
-  #
-  # NOTE: policy lookup consists of the following steps:
-  #   - first, check whether `with` option is present
-  #   - secondly, try to infer policy class from `target` (non-raising lookup)
-  #   - use `implicit_authorization_target` if none of the above works.
   # For backward compatibility
   #
-  # source://action_policy//lib/action_policy/behaviours/scoping.rb#26
+  # pkg:gem/action_policy#lib/action_policy/behaviours/scoping.rb:26
   def authorized(target, type: T.unsafe(nil), as: T.unsafe(nil), scope_options: T.unsafe(nil), **options); end
 
   # Apply scope to the target of the specified type.
@@ -385,7 +357,7 @@ module ActionPolicy::Behaviours::Scoping
   #   - secondly, try to infer policy class from `target` (non-raising lookup)
   #   - use `implicit_authorization_target` if none of the above works.
   #
-  # source://action_policy//lib/action_policy/behaviours/scoping.rb#13
+  # pkg:gem/action_policy#lib/action_policy/behaviours/scoping.rb:13
   def authorized_scope(target, type: T.unsafe(nil), as: T.unsafe(nil), scope_options: T.unsafe(nil), **options); end
 end
 
@@ -395,35 +367,35 @@ end
 #
 # NOTE: don't forget to clear thread cache with ActionPolicy::PerThreadCache.clear_all
 #
-# source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#37
+# pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:37
 module ActionPolicy::Behaviours::ThreadMemoized
-  # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#52
+  # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:52
   def __policy_thread_memoize__(record, **options); end
 
   class << self
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#43
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:43
     def included(base); end
 
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#39
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:39
     def prepended(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#46
+# pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:46
 module ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
-  # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#47
+  # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:47
   def policy_for(record:, **opts); end
 end
 
 # By default cache namespace (or prefix) contains major and minor version of the gem
 #
-# source://action_policy//lib/action_policy/policy/cache.rb#9
+# pkg:gem/action_policy#lib/action_policy/policy/cache.rb:9
 ActionPolicy::CACHE_NAMESPACE = T.let(T.unsafe(nil), String)
 
 # Channel concern.
 # Add `authorize!` and `allowed_to?` methods.
 #
-# source://action_policy//lib/action_policy/rails/channel.rb#9
+# pkg:gem/action_policy#lib/action_policy/rails/channel.rb:9
 module ActionPolicy::Channel
   include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
   include ::ActionPolicy::Behaviours::PolicyFor
@@ -435,6 +407,7 @@ module ActionPolicy::Channel
   mixes_in_class_methods ::ActionPolicy::Channel::ClassMethods
 end
 
+# pkg:gem/action_policy#lib/action_policy/rails/channel.rb:12
 module ActionPolicy::Channel::ClassMethods
   include ::ActionPolicy::Behaviour::ClassMethods
 end
@@ -443,7 +416,7 @@ end
 # Add `authorize!` and `allowed_to?` methods,
 # provide `verify_authorized` and `verify_authorized_scoped` hooks.
 #
-# source://action_policy//lib/action_policy/rails/controller.rb#24
+# pkg:gem/action_policy#lib/action_policy/rails/controller.rb:24
 module ActionPolicy::Controller
   include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
   include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
@@ -468,75 +441,81 @@ module ActionPolicy::Controller
   # If record is not provided, tries to infer the resource class
   # from controller name (i.e. `controller_name.classify.safe_constantize`).
   #
+  # @return the policy record
   # Raises `ActionPolicy::Unauthorized` if check failed.
   #
-  # @return the policy record
-  #
-  # source://action_policy//lib/action_policy/rails/controller.rb#57
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:57
   def authorize!(record = T.unsafe(nil), to: T.unsafe(nil), **options); end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#92
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:92
   def authorize_count; end
 
   # Apply scope to the target.
   #
   # @return the scoped target
   #
-  # source://action_policy//lib/action_policy/rails/controller.rb#69
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:69
   def authorized_scope(target, **options); end
 
   # Tries to infer the resource class from controller name
   # (i.e. `controller_name.classify.safe_constantize`).
   #
-  # source://action_policy//lib/action_policy/rails/controller.rb#78
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:78
   def implicit_authorization_target; end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#96
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:96
   def scoped_count; end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#100
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:100
   def skip_verify_authorized!; end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#104
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:104
   def skip_verify_authorized_scoped!; end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#82
+  # Adds after_action callback to check that
+  # authorize! method has been called.
+  #
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:82
   def verify_authorized; end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#87
+  # Adds after_action callback to check that
+  # authorized_scope method has been called.
+  #
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:87
   def verify_authorized_scoped; end
 end
 
+# pkg:gem/action_policy#lib/action_policy/rails/controller.rb:27
 module ActionPolicy::Controller::ClassMethods
   include ::ActionPolicy::Behaviour::ClassMethods
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#116
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:116
   def skip_verify_authorized(**options); end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#127
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:127
   def skip_verify_authorized_scoped(**options); end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#111
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:111
   def verify_authorized(**options); end
 
-  # source://action_policy//lib/action_policy/rails/controller.rb#122
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:122
   def verify_authorized_scoped(**options); end
 end
 
-# source://action_policy//lib/action_policy.rb#13
+# pkg:gem/action_policy#lib/action_policy.rb:13
 class ActionPolicy::Error < ::StandardError; end
 
-# source://action_policy//lib/action_policy/ext/policy_cache_key.rb#4
+# pkg:gem/action_policy#lib/action_policy/ext/policy_cache_key.rb:4
 module ActionPolicy::Ext; end
 
 # Add Module#namespace method
 #
-# source://action_policy//lib/action_policy/ext/module_namespace.rb#6
+# pkg:gem/action_policy#lib/action_policy/ext/module_namespace.rb:6
 module ActionPolicy::Ext::ModuleNamespace; end
 
-# source://action_policy//lib/action_policy/ext/module_namespace.rb#12
+# pkg:gem/action_policy#lib/action_policy/ext/module_namespace.rb:12
 module ActionPolicy::Ext::ModuleNamespace::Ext
-  # source://action_policy//lib/action_policy/ext/module_namespace.rb#13
+  # pkg:gem/action_policy#lib/action_policy/ext/module_namespace.rb:13
   def namespace; end
 end
 
@@ -548,36 +527,34 @@ end
 #
 # Raises ArgumentError otherwise.
 #
-# source://action_policy//lib/action_policy/ext/policy_cache_key.rb#12
+# pkg:gem/action_policy#lib/action_policy/ext/policy_cache_key.rb:12
 module ActionPolicy::Ext::PolicyCacheKey; end
 
-# source://action_policy//lib/action_policy/ext/policy_cache_key.rb#13
+# pkg:gem/action_policy#lib/action_policy/ext/policy_cache_key.rb:13
 module ActionPolicy::Ext::PolicyCacheKey::ObjectExt
-  # @raise [ArgumentError]
-  #
-  # source://action_policy//lib/action_policy/ext/policy_cache_key.rb#14
+  # pkg:gem/action_policy#lib/action_policy/ext/policy_cache_key.rb:14
   def _policy_cache_key(use_object_id: T.unsafe(nil)); end
 end
 
 # Add `camelize` to Symbol
 #
-# source://action_policy//lib/action_policy/ext/symbol_camelize.rb#6
+# pkg:gem/action_policy#lib/action_policy/ext/symbol_camelize.rb:6
 module ActionPolicy::Ext::SymbolCamelize; end
 
-# source://action_policy//lib/action_policy/i18n.rb#4
+# pkg:gem/action_policy#lib/action_policy/i18n.rb:4
 module ActionPolicy::I18n
   class << self
-    # source://action_policy//lib/action_policy/i18n.rb#8
+    # pkg:gem/action_policy#lib/action_policy/i18n.rb:8
     def full_message(policy_class, rule, details = T.unsafe(nil)); end
 
     private
 
-    # source://action_policy//lib/action_policy/i18n.rb#23
+    # pkg:gem/action_policy#lib/action_policy/i18n.rb:23
     def candidates_for(policy_class, rule); end
   end
 end
 
-# source://action_policy//lib/action_policy/i18n.rb#5
+# pkg:gem/action_policy#lib/action_policy/i18n.rb:5
 ActionPolicy::I18n::DEFAULT_UNAUTHORIZED_MESSAGE = T.let(T.unsafe(nil), String)
 
 # LookupChain contains _resolvers_ to determine a policy
@@ -586,154 +563,123 @@ ActionPolicy::I18n::DEFAULT_UNAUTHORIZED_MESSAGE = T.let(T.unsafe(nil), String)
 # You can modify the `LookupChain.chain` (for example, to add
 # custom resolvers).
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#9
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:9
 module ActionPolicy::LookupChain
   class << self
-    # source://action_policy//lib/action_policy/lookup_chain.rb#57
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:57
     def call(record, **opts); end
 
-    # Returns the value of attribute chain.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#53
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:53
     def chain; end
 
-    # Sets the attribute chain
-    #
-    # @param value the value to set the attribute chain to.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#53
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:53
     def chain=(_arg0); end
 
-    # Returns the value of attribute namespace_cache_enabled.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#53
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:53
     def namespace_cache_enabled; end
 
-    # Sets the attribute namespace_cache_enabled
-    #
-    # @param value the value to set the attribute namespace_cache_enabled to.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#53
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:53
     def namespace_cache_enabled=(_arg0); end
 
-    # Returns the value of attribute namespace_cache_enabled.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#55
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:55
     def namespace_cache_enabled?; end
 
     private
 
-    # source://action_policy//lib/action_policy/lookup_chain.rb#67
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:67
     def lookup_within_namespace(policy_name, namespace, strict: T.unsafe(nil)); end
 
-    # source://action_policy//lib/action_policy/lookup_chain.rb#87
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:87
     def policy_class_name_for(record); end
   end
 end
 
 # (Optional) Infer using String#classify if available
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#130
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:130
 ActionPolicy::LookupChain::CLASSIFY_SYMBOL_LOOKUP = T.let(T.unsafe(nil), Proc)
 
 # By record's class `policy_class` method
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#111
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:111
 ActionPolicy::LookupChain::CLASS_POLICY_CLASS = T.let(T.unsafe(nil), Proc)
 
 # Infer from class name
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#116
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:116
 ActionPolicy::LookupChain::INFER_FROM_CLASS = T.let(T.unsafe(nil), Proc)
 
 # By self `policy_class` method
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#106
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:106
 ActionPolicy::LookupChain::INSTANCE_POLICY_CLASS = T.let(T.unsafe(nil), Proc)
 
 # Cache namespace resolving result for policies.
-#
 # @see benchmarks/namespaced_lookup_cache.rb
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#23
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:23
 class ActionPolicy::LookupChain::NamespaceCache
   class << self
-    # source://action_policy//lib/action_policy/lookup_chain.rb#43
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:43
     def clear; end
 
-    # source://action_policy//lib/action_policy/lookup_chain.rb#33
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:33
     def fetch(namespace, policy, strict:, &block); end
 
-    # source://action_policy//lib/action_policy/lookup_chain.rb#27
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:27
     def put_if_absent(scope, namespace, policy); end
 
-    # Returns the value of attribute store.
-    #
-    # source://action_policy//lib/action_policy/lookup_chain.rb#25
+    # pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:25
     def store; end
   end
 end
 
 # Infer from passed symbol
 #
-# source://action_policy//lib/action_policy/lookup_chain.rb#122
+# pkg:gem/action_policy#lib/action_policy/lookup_chain.rb:122
 ActionPolicy::LookupChain::SYMBOL_LOOKUP = T.let(T.unsafe(nil), Proc)
 
-# source://action_policy//lib/action_policy/policy/core.rb#31
+# pkg:gem/action_policy#lib/action_policy/policy/core.rb:31
 class ActionPolicy::NonPredicateRule < ::ActionPolicy::UnknownRule
-  # @return [NonPredicateRule] a new instance of NonPredicateRule
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#32
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:32
   def initialize(policy, rule); end
 end
 
 # Raised when Action Policy fails to find a policy class for a record.
 #
-# source://action_policy//lib/action_policy.rb#16
+# pkg:gem/action_policy#lib/action_policy.rb:16
 class ActionPolicy::NotFound < ::ActionPolicy::Error
-  # @return [NotFound] a new instance of NotFound
-  #
-  # source://action_policy//lib/action_policy.rb#19
+  # pkg:gem/action_policy#lib/action_policy.rb:19
   def initialize(target, message = T.unsafe(nil)); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy.rb#17
+  # pkg:gem/action_policy#lib/action_policy.rb:17
   def message; end
 
-  # Returns the value of attribute target.
-  #
-  # source://action_policy//lib/action_policy.rb#17
+  # pkg:gem/action_policy#lib/action_policy.rb:17
   def target; end
 end
 
-# source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#4
+# pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:4
 module ActionPolicy::PerThreadCache
   class << self
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#22
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:22
     def clear_all; end
 
-    # Sets the attribute enabled
-    #
-    # @param value the value to set the attribute enabled to.
-    #
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#8
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:8
     def enabled=(_arg0); end
 
-    # @return [Boolean]
-    #
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#10
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:10
     def enabled?; end
 
-    # source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#12
+    # pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:12
     def fetch(key); end
   end
 end
 
-# source://action_policy//lib/action_policy/behaviours/thread_memoized.rb#5
+# pkg:gem/action_policy#lib/action_policy/behaviours/thread_memoized.rb:5
 ActionPolicy::PerThreadCache::CACHE_KEY = T.let(T.unsafe(nil), String)
 
-# source://action_policy//lib/action_policy/policy/execution_result.rb#4
+# pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:4
 module ActionPolicy::Policy; end
 
 # Adds rules aliases support and ability to specify
@@ -754,48 +700,46 @@ module ActionPolicy::Policy; end
 #
 # Aliases useful when combined with `CachedApply` (since we can cache only the target rule).
 #
-# source://action_policy//lib/action_policy/policy/aliases.rb#22
+# pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:22
 module ActionPolicy::Policy::Aliases
   mixes_in_class_methods ::ActionPolicy::Policy::Aliases::ClassMethods
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#31
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:31
   def resolve_rule(activity); end
 
   private
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#39
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:39
   def check_rule_naming(activity); end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/aliases.rb#26
+    # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:26
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/aliases.rb#46
+# pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:46
 module ActionPolicy::Policy::Aliases::ClassMethods
-  # source://action_policy//lib/action_policy/policy/aliases.rb#51
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:51
   def alias_rule(*rules, to:); end
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#47
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:47
   def default_rule(val); end
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#57
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:57
   def lookup_alias(rule); end
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#59
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:59
   def lookup_default_rule; end
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#71
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:71
   def method_added(name); end
 
-  # source://action_policy//lib/action_policy/policy/aliases.rb#61
+  # pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:61
   def rules_aliases; end
 end
 
-# source://action_policy//lib/action_policy/policy/aliases.rb#23
+# pkg:gem/action_policy#lib/action_policy/policy/aliases.rb:23
 ActionPolicy::Policy::Aliases::DEFAULT = T.let(T.unsafe(nil), Symbol)
 
 # Authorization context could include multiple parameters.
@@ -821,37 +765,31 @@ ActionPolicy::Policy::Aliases::DEFAULT = T.let(T.unsafe(nil), Symbol)
 #
 #   ApplicantPolicy.new(user: user, account: account)
 #
-# source://action_policy//lib/action_policy/policy/authorization.rb#37
+# pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:37
 module ActionPolicy::Policy::Authorization
   mixes_in_class_methods ::ActionPolicy::Policy::Authorization::ClassMethods
 
-  # source://action_policy//lib/action_policy/policy/authorization.rb#47
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:47
   def initialize(record = T.unsafe(nil), **params); end
 
-  # Returns the value of attribute authorization_context.
-  #
-  # source://action_policy//lib/action_policy/policy/authorization.rb#44
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:44
   def authorization_context; end
 
-  # Returns the value of attribute authorization_context.
-  #
-  # source://action_policy//lib/action_policy/policy/authorization.rb#45
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:45
   def build_authorization_context; end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/authorization.rb#39
+    # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:39
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/authorization.rb#65
+# pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:65
 module ActionPolicy::Policy::Authorization::ClassMethods
-  # source://action_policy//lib/action_policy/policy/authorization.rb#76
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:76
   def authorization_targets; end
 
-  # source://action_policy//lib/action_policy/policy/authorization.rb#66
+  # pkg:gem/action_policy#lib/action_policy/policy/authorization.rb:66
   def authorize(*ids, allow_nil: T.unsafe(nil), optional: T.unsafe(nil)); end
 end
 
@@ -859,45 +797,43 @@ end
 #
 # NOTE: if cache_store is nil then we silently skip all the caching.
 #
-# source://action_policy//lib/action_policy/policy/cache.rb#19
+# pkg:gem/action_policy#lib/action_policy/policy/cache.rb:19
 module ActionPolicy::Policy::Cache
   mixes_in_class_methods ::ActionPolicy::Policy::Cache::ClassMethods
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#64
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:64
   def apply_r(rule); end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#48
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:48
   def apply_with_cache(rule); end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#71
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:71
   def cache(*parts, **options); end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#28
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:28
   def cache_key(*parts); end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#26
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:26
   def cache_namespace; end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#44
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:44
   def context_cache_key; end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#35
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:35
   def rule_cache_key(rule); end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/cache.rb#21
+    # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:21
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/cache.rb#82
+# pkg:gem/action_policy#lib/action_policy/policy/cache.rb:82
 module ActionPolicy::Policy::Cache::ClassMethods
-  # source://action_policy//lib/action_policy/policy/cache.rb#83
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:83
   def cache(*rules, **options); end
 
-  # source://action_policy//lib/action_policy/policy/cache.rb#89
+  # pkg:gem/action_policy#lib/action_policy/policy/cache.rb:89
   def cached_rules; end
 end
 
@@ -906,15 +842,15 @@ end
 # When you call `apply` twice on the same policy and for the same rule,
 # the check (and pre-checks) is only called once.
 #
-# source://action_policy//lib/action_policy/policy/cached_apply.rb#9
+# pkg:gem/action_policy#lib/action_policy/policy/cached_apply.rb:9
 module ActionPolicy::Policy::CachedApply
-  # source://action_policy//lib/action_policy/policy/cached_apply.rb#10
+  # pkg:gem/action_policy#lib/action_policy/policy/cached_apply.rb:10
   def apply_r(rule); end
 end
 
 # Core policy API
 #
-# source://action_policy//lib/action_policy/policy/core.rb#41
+# pkg:gem/action_policy#lib/action_policy/policy/core.rb:41
 module ActionPolicy::Policy::Core
   include ::ActionPolicy::Behaviours::PolicyFor
 
@@ -922,17 +858,17 @@ module ActionPolicy::Policy::Core
 
   # NEXT_RELEASE: deprecate `record` arg, migrate to `record: nil`
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#78
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:78
   def initialize(record = T.unsafe(nil), *_arg1); end
 
   # This method performs the rule call.
   # Override or extend it to provide custom functionality
   # (such as caching, pre checks, etc.)
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#118
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:118
   def __apply__(rule); end
 
-  # source://action_policy//lib/action_policy/policy/core.rb#110
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:110
   def allow!; end
 
   # Returns a result of applying the specified rule to the specified record.
@@ -941,50 +877,44 @@ module ActionPolicy::Policy::Core
   #
   # If record is `nil` then we uses the current policy.
   #
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#138
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:138
   def allowed_to?(rule, record = T.unsafe(nil), **options); end
 
   # Returns a result of applying the specified rule (true of false).
   # Unlike simply calling a predicate rule (`policy.manage?`),
   # `apply` also calls pre-checks.
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#85
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:85
   def apply(rule); end
 
   # NEXT_RELEASE: This is gonna be #apply in 1.0
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#95
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:95
   def apply_r(rule); end
 
   # An alias for readability purposes
   #
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#149
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:149
   def check?(*args, **hargs); end
 
-  # source://action_policy//lib/action_policy/policy/core.rb#105
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:105
   def deny!; end
 
   # Return annotated source code for the rule
   # NOTE: require "method_source" and "prism" gems to be installed.
   # Otherwise returns empty string.
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#172
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:172
   def inspect_rule(rule); end
 
   # Helper for printing the annotated rule source.
   # Useful for debugging: type `pp :show?` within the context of the policy
   # to preview the rule.
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#177
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:177
   def pp(rule); end
 
-  # Returns the value of attribute record.
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#75
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:75
   def record; end
 
   # Returns a rule name (policy method name) for activity.
@@ -993,44 +923,36 @@ module ActionPolicy::Policy::Core
   #
   # Raises ActionPolicy::UnknownRule when rule is not found in policy.
   #
-  # @raise [UnknownRule]
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#156
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:156
   def resolve_rule(activity); end
 
   # Returns the result object for the last rule application within the given
   # execution context (Thread or Fiber)
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#164
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:164
   def result; end
 
   # Prepare a new result object for the next rule application.
   # It's stored in the thread-local storage to be accessible from within the policy.
   #
-  # source://action_policy//lib/action_policy/policy/core.rb#122
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:122
   def with_result(rule); end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/core.rb#43
+    # pkg:gem/action_policy#lib/action_policy/policy/core.rb:43
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/core.rb#58
+# pkg:gem/action_policy#lib/action_policy/policy/core.rb:58
 module ActionPolicy::Policy::Core::ClassMethods
-  # source://action_policy//lib/action_policy/policy/core.rb#66
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:66
   def identifier; end
 
-  # Sets the attribute identifier
-  #
-  # @param value the value to set the attribute identifier to.
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#59
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:59
   def identifier=(_arg0); end
 
-  # source://action_policy//lib/action_policy/policy/core.rb#61
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:61
   def result_class; end
 end
 
@@ -1040,27 +962,19 @@ end
 # - `new?` as an alias for `create?`
 # - `manage?` as a fallback for all unspecified rules (default rule)
 #
-# source://action_policy//lib/action_policy/policy/defaults.rb#10
+# pkg:gem/action_policy#lib/action_policy/policy/defaults.rb:10
 module ActionPolicy::Policy::Defaults
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/defaults.rb#26
+  # pkg:gem/action_policy#lib/action_policy/policy/defaults.rb:26
   def create?; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/defaults.rb#24
+  # pkg:gem/action_policy#lib/action_policy/policy/defaults.rb:24
   def index?; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/defaults.rb#28
+  # pkg:gem/action_policy#lib/action_policy/policy/defaults.rb:28
   def manage?; end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/defaults.rb#11
+    # pkg:gem/action_policy#lib/action_policy/policy/defaults.rb:11
     def included(base); end
   end
 end
@@ -1070,106 +984,81 @@ end
 # This class could be extended by some modules to provide
 # additional functionality
 #
-# source://action_policy//lib/action_policy/policy/execution_result.rb#9
+# pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:9
 class ActionPolicy::Policy::ExecutionResult
-  # @return [ExecutionResult] a new instance of ExecutionResult
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#12
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:12
   def initialize(policy, rule); end
 
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#26
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:26
   def cached!; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#30
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:30
   def cached?; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#24
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:24
   def fail?; end
 
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#32
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:32
   def inspect; end
 
   # Populate the final value
   #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#18
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:18
   def load(value); end
 
-  # Returns the value of attribute policy.
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#10
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:10
   def policy; end
 
-  # Returns the value of attribute rule.
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#10
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:10
   def rule; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#22
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:22
   def success?; end
 
-  # Returns the value of attribute value.
-  #
-  # source://action_policy//lib/action_policy/policy/execution_result.rb#10
+  # pkg:gem/action_policy#lib/action_policy/policy/execution_result.rb:10
   def value; end
 end
 
 # Failures reasons store
 #
-# source://action_policy//lib/action_policy/policy/reasons.rb#8
+# pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:8
 class ActionPolicy::Policy::FailureReasons
-  # @return [FailureReasons] a new instance of FailureReasons
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#11
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:11
   def initialize; end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#15
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:15
   def add(policy_or_class, rule, details = T.unsafe(nil)); end
 
   # Return Hash of the form:
   #   { policy_identifier => [rules, ...] }
   #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#28
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:28
   def details; end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#32
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:32
   def empty?; end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#36
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:36
   def merge(other); end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#34
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:34
   def present?; end
 
-  # Returns the value of attribute reasons.
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#9
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:9
   def reasons; end
 
-  # Return Hash of the form:
-  #   { policy_identifier => [rules, ...] }
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#30
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:30
   def to_h; end
 
   private
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#63
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:63
   def add_detailed_reason(store, detailed_rule); end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#52
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:52
   def add_non_detailed_reason(store, rule); end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#68
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:68
   def with_details(rule, details); end
 end
 
@@ -1198,20 +1087,18 @@ end
 #      end
 #    end
 #
-# source://action_policy//lib/action_policy/policy/pre_check.rb#29
+# pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:29
 module ActionPolicy::Policy::PreCheck
   mixes_in_class_methods ::ActionPolicy::Policy::PreCheck::ClassMethods
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#120
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:120
   def __apply__(rule); end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#111
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:111
   def run_pre_checks(rule); end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/pre_check.rb#106
+    # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:106
     def included(base); end
   end
 end
@@ -1220,67 +1107,53 @@ end
 #
 # Implements filtering logic.
 #
-# source://action_policy//lib/action_policy/policy/pre_check.rb#33
+# pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:33
 class ActionPolicy::Policy::PreCheck::Check
-  # @return [Check] a new instance of Check
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#36
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:36
   def initialize(policy, name, except: T.unsafe(nil), only: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#50
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:50
   def applicable?(rule); end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#55
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:55
   def call(policy); end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#82
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:82
   def dup; end
 
-  # Returns the value of attribute name.
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#34
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:34
   def name; end
 
-  # Returns the value of attribute policy_class.
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#34
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:34
   def policy_class; end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#57
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:57
   def skip!(except: T.unsafe(nil), only: T.unsafe(nil)); end
 
   private
 
-  # Returns the value of attribute blacklist.
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#93
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:93
   def blacklist; end
 
-  # Returns the value of attribute filter.
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#93
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:93
   def filter; end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#95
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:95
   def rebuild_filter; end
 
-  # Returns the value of attribute whitelist.
-  #
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#93
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:93
   def whitelist; end
 end
 
-# source://action_policy//lib/action_policy/policy/pre_check.rb#124
+# pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:124
 module ActionPolicy::Policy::PreCheck::ClassMethods
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#125
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:125
   def pre_check(*names, **options); end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#148
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:148
   def pre_checks; end
 
-  # source://action_policy//lib/action_policy/policy/pre_check.rb#135
+  # pkg:gem/action_policy#lib/action_policy/policy/pre_check.rb:135
   def skip_pre_check(*names, **options); end
 end
 
@@ -1358,59 +1231,49 @@ end
 # NOTE: when using detailed reasons, the `details` array contains as the last element
 # a hash with ALL details reasons for the policy (in a form of <rule> => <details>).
 #
-# source://action_policy//lib/action_policy/policy/reasons.rb#189
+# pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:189
 module ActionPolicy::Policy::Reasons
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#201
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:201
   def allowed_to?(rule, record = T.unsafe(nil), inline_reasons: T.unsafe(nil), **options); end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#223
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:223
   def deny!(reason = T.unsafe(nil)); end
 
   # Add additional details to the failure reason
   #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#197
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:197
   def details; end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/reasons.rb#191
+    # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:191
     def included(base); end
   end
 end
 
 # Extend ExecutionResult with `reasons` method
 #
-# source://action_policy//lib/action_policy/policy/reasons.rb#76
+# pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:76
 module ActionPolicy::Policy::ResultFailureReasons
   # Returns all the details merged together
   #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#88
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:88
   def all_details; end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#83
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:83
   def clear_details; end
 
-  # Returns the value of attribute details.
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#81
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:81
   def details; end
 
-  # Sets the attribute details
-  #
-  # @param value the value to set the attribute details to.
-  #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#81
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:81
   def details=(_arg0); end
 
   # Add reasons to inspect
   #
-  # source://action_policy//lib/action_policy/policy/reasons.rb#107
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:107
   def inspect; end
 
-  # source://action_policy//lib/action_policy/policy/reasons.rb#77
+  # pkg:gem/action_policy#lib/action_policy/policy/reasons.rb:77
   def reasons; end
 end
 
@@ -1440,7 +1303,7 @@ end
 #   authorized_scope = ApplicantPolicy.new(user: user)
 #    .apply_scope(base_scope, type: :relation)
 #
-# source://action_policy//lib/action_policy/policy/scoping.rb#79
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:79
 module ActionPolicy::Policy::Scoping
   include ::ActionPolicy::Behaviours::Scoping
 
@@ -1451,30 +1314,26 @@ module ActionPolicy::Policy::Scoping
   # If `type` is not specified then we try to infer the type from the
   # target class.
   #
-  # @raise [ActionPolicy::UnknownScopeType]
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#92
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:92
   def apply_scope(target, type:, name: T.unsafe(nil), scope_options: T.unsafe(nil)); end
 
-  # source://action_policy//lib/action_policy/policy/scoping.rb#108
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:108
   def lookup_type_from_target(target); end
 
-  # source://action_policy//lib/action_policy/policy/scoping.rb#103
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:103
   def resolve_scope_type(target); end
 
   class << self
-    # @private
-    #
-    # source://action_policy//lib/action_policy/policy/scoping.rb#81
+    # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:81
     def included(base); end
   end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#114
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:114
 module ActionPolicy::Policy::Scoping::ClassMethods
   # Register a new scoping method for the `type`
   #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#116
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:116
   def scope_for(type, name = T.unsafe(nil), callable = T.unsafe(nil), &block); end
 
   # Define scope type matcher.
@@ -1485,18 +1344,18 @@ module ActionPolicy::Policy::Scoping::ClassMethods
   # from the target object by calling matchers one by one until we find a matching
   # type (i.e. there is a matcher which returns `true` when applying it to the target).
   #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#147
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:147
   def scope_matcher(type, class_or_proc); end
 
-  # source://action_policy//lib/action_policy/policy/scoping.rb#151
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:151
   def scope_matchers; end
 
-  # source://action_policy//lib/action_policy/policy/scoping.rb#127
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:127
   def scoping_handlers; end
 
   private
 
-  # source://action_policy//lib/action_policy/policy/scoping.rb#163
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:163
   def prepare_args(name, callable); end
 end
 
@@ -1520,194 +1379,172 @@ end
 #  #=> AND
 #  #=> access_feed? #=> true
 #
-# source://action_policy//lib/action_policy/utils/pretty_print.rb#39
+# pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:39
 module ActionPolicy::PrettyPrint
   class << self
-    # source://action_policy//lib/action_policy/utils/pretty_print.rb#138
+    # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:138
     def available?; end
 
-    # source://action_policy//lib/action_policy/utils/pretty_print.rb#143
+    # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:143
     def colorize(val); end
 
-    # Returns the value of attribute ignore_expressions.
-    #
-    # source://action_policy//lib/action_policy/utils/pretty_print.rb#127
+    # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:127
     def ignore_expressions; end
 
-    # Sets the attribute ignore_expressions
-    #
-    # @param value the value to set the attribute ignore_expressions to.
-    #
-    # source://action_policy//lib/action_policy/utils/pretty_print.rb#127
+    # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:127
     def ignore_expressions=(_arg0); end
 
-    # source://action_policy//lib/action_policy/utils/pretty_print.rb#140
+    # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:140
     def print_method(_, _); end
   end
 end
 
-# source://action_policy//lib/action_policy/utils/pretty_print.rb#41
+# pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:41
 ActionPolicy::PrettyPrint::FALSE = T.let(T.unsafe(nil), String)
 
-# source://action_policy//lib/action_policy/utils/pretty_print.rb#40
+# pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:40
 ActionPolicy::PrettyPrint::TRUE = T.let(T.unsafe(nil), String)
 
-# source://action_policy//lib/action_policy/utils/pretty_print.rb#43
+# pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:43
 class ActionPolicy::PrettyPrint::Visitor
-  # @return [Visitor] a new instance of Visitor
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#47
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:47
   def initialize(object); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#51
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:51
   def collect(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#75
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:75
   def eval_exp(exp); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#70
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:70
   def expression_with_result(sexp); end
 
   # Some lines should not be evaled
   #
-  # @return [Boolean]
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#121
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:121
   def ignore_exp?(exp); end
 
-  # Returns the value of attribute indent.
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#45
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:45
   def indent; end
 
-  # Sets the attribute indent
-  #
-  # @param value the value to set the attribute indent to.
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#45
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:45
   def indent=(_arg0); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#113
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:113
   def indented(str); end
 
-  # Returns the value of attribute lines.
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#44
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:44
   def lines; end
 
-  # Returns the value of attribute object.
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#44
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:44
   def object; end
 
-  # Returns the value of attribute source.
-  #
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#44
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:44
   def source; end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#82
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:82
   def visit_and_node(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#109
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:109
   def visit_missing(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#62
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:62
   def visit_node(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#88
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:88
   def visit_or_node(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#102
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:102
   def visit_parentheses_node(ast); end
 
-  # source://action_policy//lib/action_policy/utils/pretty_print.rb#94
+  # pkg:gem/action_policy#lib/action_policy/utils/pretty_print.rb:94
   def visit_statements_node(ast); end
 end
 
-# source://action_policy//lib/action_policy/railtie.rb#9
+# pkg:gem/action_policy#lib/action_policy/railtie.rb:9
 class ActionPolicy::Railtie < ::Rails::Railtie; end
 
 # Provides Rails-specific configuration,
 # accessible through `Rails.application.config.action_policy`
 #
-# source://action_policy//lib/action_policy/railtie.rb#10
+# pkg:gem/action_policy#lib/action_policy/railtie.rb:10
 module ActionPolicy::Railtie::Config
   class << self
     # Define whether we need to include ActionCable::Channel::Base
     # with the default authorization logic
     #
-    # source://action_policy//lib/action_policy/railtie.rb#22
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:22
     def auto_inject_into_channel; end
 
     # Define whether we need to include ActionCable::Channel::Base
     # with the default authorization logic
     #
-    # source://action_policy//lib/action_policy/railtie.rb#22
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:22
     def auto_inject_into_channel=(_arg0); end
 
     # Define whether we need to extend ApplicationController::Base
     # with the default authorization logic
     #
-    # source://action_policy//lib/action_policy/railtie.rb#14
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:14
     def auto_inject_into_controller; end
 
     # Define whether we need to extend ApplicationController::Base
     # with the default authorization logic
     #
-    # source://action_policy//lib/action_policy/railtie.rb#14
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:14
     def auto_inject_into_controller=(_arg0); end
 
-    # source://action_policy//lib/action_policy/railtie.rb#37
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:37
     def cache_store=(store); end
 
     # Define whether we want to specify `current_user` as
     # the default authorization context in channels
     #
-    # source://action_policy//lib/action_policy/railtie.rb#26
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:26
     def channel_authorize_current_user; end
 
     # Define whether we want to specify `current_user` as
     # the default authorization context in channels
     #
-    # source://action_policy//lib/action_policy/railtie.rb#26
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:26
     def channel_authorize_current_user=(_arg0); end
 
     # Define whether we want to specify `current_user` as
     # the default authorization context in controller
     #
-    # source://action_policy//lib/action_policy/railtie.rb#18
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:18
     def controller_authorize_current_user; end
 
     # Define whether we want to specify `current_user` as
     # the default authorization context in controller
     #
-    # source://action_policy//lib/action_policy/railtie.rb#18
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:18
     def controller_authorize_current_user=(_arg0); end
 
     # Define whether to include instrumentation functionality.
     # Enabled by default.
     #
-    # source://action_policy//lib/action_policy/railtie.rb#35
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:35
     def instrumentation_enabled; end
 
     # Define whether to include instrumentation functionality.
     # Enabled by default.
     #
-    # source://action_policy//lib/action_policy/railtie.rb#35
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:35
     def instrumentation_enabled=(_arg0); end
 
     # Define whether to cache namespaced policy resolution
     # result (e.g. in controllers).
     # Enabled only in production by default.
     #
-    # source://action_policy//lib/action_policy/railtie.rb#31
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:31
     def namespace_cache_enabled; end
 
     # Define whether to cache namespaced policy resolution
     # result (e.g. in controllers).
     # Enabled only in production by default.
     #
-    # source://action_policy//lib/action_policy/railtie.rb#31
+    # pkg:gem/action_policy#lib/action_policy/railtie.rb:31
     def namespace_cache_enabled=(_arg0); end
   end
 end
@@ -1715,138 +1552,106 @@ end
 # Adds `suggest` method which uses did_you_mean
 # to generate a suggestion message
 #
-# source://action_policy//lib/action_policy/utils/suggest_message.rb#6
+# pkg:gem/action_policy#lib/action_policy/utils/suggest_message.rb:6
 module ActionPolicy::SuggestMessage
-  # source://action_policy//lib/action_policy/utils/suggest_message.rb#8
+  # pkg:gem/action_policy#lib/action_policy/utils/suggest_message.rb:8
   def suggest(needle, heystack); end
 end
 
 # Raised when `authorize!` check fails
 #
-# source://action_policy//lib/action_policy/authorizer.rb#5
+# pkg:gem/action_policy#lib/action_policy/authorizer.rb:5
 class ActionPolicy::Unauthorized < ::ActionPolicy::Error
   # NEXT_RELEASE: remove result fallback
   #
-  # @return [Unauthorized] a new instance of Unauthorized
-  #
-  # source://action_policy//lib/action_policy/authorizer.rb#9
+  # pkg:gem/action_policy#lib/action_policy/authorizer.rb:9
   def initialize(policy, rule, result = T.unsafe(nil)); end
 
-  # Returns the value of attribute policy.
-  #
-  # source://action_policy//lib/action_policy/authorizer.rb#6
+  # pkg:gem/action_policy#lib/action_policy/authorizer.rb:6
   def policy; end
 
-  # Returns the value of attribute result.
-  #
-  # source://action_policy//lib/action_policy/authorizer.rb#6
+  # pkg:gem/action_policy#lib/action_policy/authorizer.rb:6
   def result; end
 
-  # Returns the value of attribute rule.
-  #
-  # source://action_policy//lib/action_policy/authorizer.rb#6
+  # pkg:gem/action_policy#lib/action_policy/authorizer.rb:6
   def rule; end
 end
 
 # Raised when `authorize!` hasn't been called for action
 #
-# source://action_policy//lib/action_policy/rails/controller.rb#8
+# pkg:gem/action_policy#lib/action_policy/rails/controller.rb:8
 class ActionPolicy::UnauthorizedAction < ::ActionPolicy::Error
-  # @return [UnauthorizedAction] a new instance of UnauthorizedAction
-  #
-  # source://action_policy//lib/action_policy/rails/controller.rb#9
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:9
   def initialize(controller, action); end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#24
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:24
 class ActionPolicy::UnknownNamedScope < ::ActionPolicy::Error
   include ::ActionPolicy::SuggestMessage
 
-  # @return [UnknownNamedScope] a new instance of UnknownNamedScope
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#31
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:31
   def initialize(policy_class, type, name); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#29
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:29
   def message; end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#27
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:27
 ActionPolicy::UnknownNamedScope::MESSAGE_TEMPLATE = T.let(T.unsafe(nil), String)
 
 # Raised when `resolve_rule` failed to find an approriate
 # policy rule method for the activity
 #
-# source://action_policy//lib/action_policy/policy/core.rb#18
+# pkg:gem/action_policy#lib/action_policy/policy/core.rb:18
 class ActionPolicy::UnknownRule < ::ActionPolicy::Error
   include ::ActionPolicy::SuggestMessage
 
-  # @return [UnknownRule] a new instance of UnknownRule
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#23
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:23
   def initialize(policy, rule); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#21
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:21
   def message; end
 
-  # Returns the value of attribute policy.
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#21
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:21
   def policy; end
 
-  # Returns the value of attribute rule.
-  #
-  # source://action_policy//lib/action_policy/policy/core.rb#21
+  # pkg:gem/action_policy#lib/action_policy/policy/core.rb:21
   def rule; end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#8
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:8
 class ActionPolicy::UnknownScopeType < ::ActionPolicy::Error
   include ::ActionPolicy::SuggestMessage
 
-  # @return [UnknownScopeType] a new instance of UnknownScopeType
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#15
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:15
   def initialize(policy_class, type); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#13
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:13
   def message; end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#11
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:11
 ActionPolicy::UnknownScopeType::MESSAGE_TEMPLATE = T.let(T.unsafe(nil), String)
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#39
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:39
 class ActionPolicy::UnrecognizedScopeTarget < ::ActionPolicy::Error
-  # @return [UnrecognizedScopeTarget] a new instance of UnrecognizedScopeTarget
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#44
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:44
   def initialize(target); end
 
-  # Returns the value of attribute message.
-  #
-  # source://action_policy//lib/action_policy/policy/scoping.rb#42
+  # pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:42
   def message; end
 end
 
-# source://action_policy//lib/action_policy/policy/scoping.rb#40
+# pkg:gem/action_policy#lib/action_policy/policy/scoping.rb:40
 ActionPolicy::UnrecognizedScopeTarget::MESSAGE_TEMPLATE = T.let(T.unsafe(nil), String)
 
 # Raised when `authorized_scope` hasn't been called for action
 #
-# source://action_policy//lib/action_policy/rails/controller.rb#15
+# pkg:gem/action_policy#lib/action_policy/rails/controller.rb:15
 class ActionPolicy::UnscopedAction < ::ActionPolicy::Error
-  # @return [UnscopedAction] a new instance of UnscopedAction
-  #
-  # source://action_policy//lib/action_policy/rails/controller.rb#16
+  # pkg:gem/action_policy#lib/action_policy/rails/controller.rb:16
   def initialize(controller, action); end
 end
 
-# source://action_policy//lib/action_policy/version.rb#4
+# pkg:gem/action_policy#lib/action_policy/version.rb:4
 ActionPolicy::VERSION = T.let(T.unsafe(nil), String)

@@ -5,11 +5,11 @@
 # Please instead update this file by running `bin/tapioca gem jsbundling-rails`.
 
 
-# source://jsbundling-rails//lib/jsbundling-rails.rb#1
+# pkg:gem/jsbundling-rails#lib/jsbundling-rails.rb:1
 module Jsbundling; end
 
-# source://jsbundling-rails//lib/jsbundling/engine.rb#2
+# pkg:gem/jsbundling-rails#lib/jsbundling/engine.rb:2
 class Jsbundling::Engine < ::Rails::Engine; end
 
-# source://jsbundling-rails//lib/jsbundling/version.rb#2
+# pkg:gem/jsbundling-rails#lib/jsbundling/version.rb:2
 Jsbundling::VERSION = T.let(T.unsafe(nil), String)

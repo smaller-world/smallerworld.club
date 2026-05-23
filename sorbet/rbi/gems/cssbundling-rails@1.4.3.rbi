@@ -5,11 +5,11 @@
 # Please instead update this file by running `bin/tapioca gem cssbundling-rails`.
 
 
-# source://cssbundling-rails//lib/cssbundling-rails.rb#1
+# pkg:gem/cssbundling-rails#lib/cssbundling-rails.rb:1
 module Cssbundling; end
 
-# source://cssbundling-rails//lib/cssbundling/engine.rb#2
+# pkg:gem/cssbundling-rails#lib/cssbundling/engine.rb:2
 class Cssbundling::Engine < ::Rails::Engine; end
 
-# source://cssbundling-rails//lib/cssbundling/version.rb#2
+# pkg:gem/cssbundling-rails#lib/cssbundling/version.rb:2
 Cssbundling::VERSION = T.let(T.unsafe(nil), String)

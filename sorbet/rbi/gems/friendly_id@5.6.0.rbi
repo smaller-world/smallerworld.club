@@ -14,6 +14,8 @@ class FalseClass
   include ::FriendlyId::UnfriendlyUtils
 end
 
+# @guide begin
+#
 # ## About FriendlyId
 #
 # FriendlyId is an add-on to Ruby's Active Record that allows you to replace ids
@@ -47,7 +49,9 @@ end
 #     Person.find(82542335)
 #     Person.friendly.find("joe")
 #
-# source://friendly_id//lib/friendly_id/base.rb#1
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/base.rb:1
 module FriendlyId
   class << self
     # Set global defaults for all models using FriendlyId.
@@ -56,11 +60,11 @@ module FriendlyId
     #
     # @example
     #   FriendlyId.defaults do |config|
-    #   config.base :name
-    #   config.use :slugged
+    #     config.base :name
+    #     config.use :slugged
     #   end
     #
-    # source://friendly_id//lib/friendly_id.rb#102
+    # pkg:gem/friendly_id#lib/friendly_id.rb:102
     def defaults(&block); end
 
     # FriendlyId takes advantage of `extended` to do basic model setup, primarily
@@ -86,15 +90,15 @@ module FriendlyId
     #
     # For examples of this, see the source for {Scoped.included}.
     #
-    # source://friendly_id//lib/friendly_id.rb#75
+    # pkg:gem/friendly_id#lib/friendly_id.rb:75
     def extended(model_class); end
 
     # Allow developers to `include` FriendlyId or `extend` it.
     #
-    # source://friendly_id//lib/friendly_id.rb#89
+    # pkg:gem/friendly_id#lib/friendly_id.rb:89
     def included(model_class); end
 
-    # source://friendly_id//lib/friendly_id/object_utils.rb#62
+    # pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:62
     def mark_as_unfriendly(klass); end
 
     # Set the ActiveRecord table name prefix to friendly_id_
@@ -102,11 +106,13 @@ module FriendlyId
     # This makes 'slugs' into 'friendly_id_slugs' and also respects any
     # 'global' table_name_prefix set on ActiveRecord::Base.
     #
-    # source://friendly_id//lib/friendly_id.rb#111
+    # pkg:gem/friendly_id#lib/friendly_id.rb:111
     def table_name_prefix; end
   end
 end
 
+# @guide begin
+#
 # ## Setting Up FriendlyId in Your Model
 #
 # To use FriendlyId in your ActiveRecord models, you must first either extend or
@@ -160,13 +166,14 @@ end
 # in a URL can be repetitive and surprisingly tricky, so for this reason it's
 # often better and easier to use {FriendlyId::Slugged slugs}.
 #
-# source://friendly_id//lib/friendly_id/base.rb#58
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/base.rb:58
 module FriendlyId::Base
   # Returns a scope that includes the friendly finders.
-  #
   # @see FriendlyId::FinderMethods
   #
-  # source://friendly_id//lib/friendly_id/base.rb#216
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:216
   def friendly; end
 
   # Configure FriendlyId's behavior in a model.
@@ -268,87 +275,111 @@ module FriendlyId::Base
   #       }
   #     end
   #
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @param options [Hash] a customizable set of options
+  #
+  # @option options [Symbol,Module] :use The addon or name of an addon to use.
+  #   By default, FriendlyId provides {FriendlyId::Slugged :slugged},
+  #   {FriendlyId::Reserved :finders}, {FriendlyId::History :history},
+  #   {FriendlyId::Reserved :reserved}, {FriendlyId::Scoped :scoped}, and
+  #   {FriendlyId::SimpleI18n :simple_i18n}.
+  #
+  # @option options [Array] :reserved_words Available when using `:reserved`,
+  #   which is loaded by default. Sets an array of words banned for use as
+  #   the basis of a friendly_id. By default this includes "edit" and "new".
+  #
+  # @option options [Symbol] :scope Available when using `:scoped`.
+  #   Sets the relation or column used to scope generated friendly ids. This
+  #   option has no default value.
+  #
+  # @option options [Symbol] :sequence_separator Available when using `:slugged`.
+  #   Configures the sequence of characters used to separate a slug from a
+  #   sequence. Defaults to `-`.
+  #
+  # @option options [Symbol] :slug_column Available when using `:slugged`.
+  #   Configures the name of the column where FriendlyId will store the slug.
+  #   Defaults to `:slug`.
+  #
+  # @option options [Integer] :slug_limit Available when using `:slugged`.
+  #   Configures the limit of the slug. This option has no default value.
+  #
+  # @option options [Symbol] :slug_generator_class Available when using `:slugged`.
+  #   Sets the class used to generate unique slugs. You should not specify this
+  #   unless you're doing some extensive hacking on FriendlyId. Defaults to
+  #   {FriendlyId::SlugGenerator}.
+  #
   # @yield Provides access to the model class's friendly_id_config, which
   #   allows an alternate configuration syntax, and conditional configuration
   #   logic.
+  #
+  # @option options [Symbol,Boolean] :dependent Available when using `:history`.
+  #   Sets the value used for the slugged association's dependent option. Use
+  #   `false` if you do not want to dependently destroy the associated slugged
+  #   record. Defaults to `:destroy`.
+  #
+  # @option options [Symbol] :routes When set to anything other than :friendly,
+  #   ensures that all routes generated by default do *not* use the slug.  This
+  #   allows `form_for` and `polymorphic_path` to continue to generate paths like
+  #   `/team/1` instead of `/team/number-one`.  You can still generate paths
+  #   like the latter using: team_path(team.slug).  When set to :friendly, or
+  #   omitted, the default friendly_id behavior is maintained.
+  #
   # @yieldparam config The model class's {FriendlyId::Configuration friendly_id_config}.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#206
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:206
   def friendly_id(base = T.unsafe(nil), options = T.unsafe(nil), &block); end
 
   # Returns the model class's {FriendlyId::Configuration friendly_id_config}.
-  #
   # @note In the case of Single Table Inheritance (STI), this method will
   #   duplicate the parent class's FriendlyId::Configuration and relation class
   #   on first access. If you're concerned about thread safety, then be sure
   #   to invoke {#friendly_id} in your class for each model.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#234
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:234
   def friendly_id_config; end
 
-  # source://friendly_id//lib/friendly_id/base.rb#240
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:240
   def primary_key_type; end
 end
 
 # This class provides the slug candidate functionality.
-#
 # @see FriendlyId::Slugged
 #
-# source://friendly_id//lib/friendly_id/candidates.rb#6
+# pkg:gem/friendly_id#lib/friendly_id/candidates.rb:6
 class FriendlyId::Candidates
   include ::Enumerable
 
-  # @return [Candidates] a new instance of Candidates
-  #
-  # source://friendly_id//lib/friendly_id/candidates.rb#9
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:9
   def initialize(object, *array); end
 
-  # source://friendly_id//lib/friendly_id/candidates.rb#14
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:14
   def each(*args, &block); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/candidates.rb#21
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:21
   def candidates; end
 
-  # source://friendly_id//lib/friendly_id/candidates.rb#34
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:34
   def filter(candidates); end
 
-  # source://friendly_id//lib/friendly_id/candidates.rb#28
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:28
   def normalize(candidates); end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/candidates.rb#64
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:64
   def reserved?(slug); end
 
-  # source://friendly_id//lib/friendly_id/candidates.rb#41
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:41
   def to_candidate_array(object, array); end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/candidates.rb#60
+  # pkg:gem/friendly_id#lib/friendly_id/candidates.rb:60
   def wanted?(slug); end
 end
 
 # The configuration parameters passed to {Base#friendly_id} will be stored in
 # this object.
 #
-# source://friendly_id//lib/friendly_id/configuration.rb#4
+# pkg:gem/friendly_id#lib/friendly_id/configuration.rb:4
 class FriendlyId::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
-  # source://friendly_id//lib/friendly_id/configuration.rb#26
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:26
   def initialize(model_class, values = T.unsafe(nil)); end
 
   # The base column or method used by FriendlyId as the basis of a friendly id
@@ -371,78 +402,91 @@ class FriendlyId::Configuration
   #   value is usually set by passing it as the first argument to
   #   {FriendlyId::Base#friendly_id friendly_id}.
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#93
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:93
   def base(*value); end
 
-  # Sets the attribute base
+  # The base column or method used by FriendlyId as the basis of a friendly id
+  # or slug.
   #
-  # @param value the value to set the attribute base to.
+  # For models that don't use {FriendlyId::Slugged}, this is the column that
+  # is used to store the friendly id. For models using {FriendlyId::Slugged},
+  # the base is a column or method whose value is used as the basis of the
+  # slug.
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#5
+  # For example, if you have a model representing blog posts and that uses
+  # slugs, you likely will want to use the "title" attribute as the base, and
+  # FriendlyId will take care of transforming the human-readable title into
+  # something suitable for use in a URL.
+  #
+  # If you pass an argument, it will be used as the base. Otherwise the current
+  # value is returned.
+  #
+  # @param value A symbol referencing a column or method in the model. This
+  #   value is usually set by passing it as the first argument to
+  #   {FriendlyId::Base#friendly_id friendly_id}.
+  #
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:5
   def base=(_arg0); end
 
   # The default configuration options.
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#8
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:8
   def defaults; end
 
   # The value used for the slugged association's dependent option
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#21
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:21
   def dependent; end
 
   # The value used for the slugged association's dependent option
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#21
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:21
   def dependent=(_arg0); end
 
   # The module to use for finders
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#18
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:18
   def finder_methods; end
 
   # The module to use for finders
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#18
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:18
   def finder_methods=(_arg0); end
 
   # The model class that this configuration belongs to.
-  #
   # @return ActiveRecord::Base
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#15
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:15
   def model_class; end
 
   # The model class that this configuration belongs to.
-  #
   # @return ActiveRecord::Base
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#15
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:15
   def model_class=(_arg0); end
 
   # The modules in use
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#11
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:11
   def modules; end
 
   # The column that FriendlyId will use to find the record when querying by
   # friendly id.
   #
   # This method is generally only used internally by FriendlyId.
-  #
   # @return String
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#70
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:70
   def query_field; end
 
   # Route generation preferences
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#24
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:24
   def routes; end
 
   # Route generation preferences
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#24
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:24
   def routes=(_arg0); end
 
   # Lets you specify the addon modules to use with FriendlyId.
@@ -453,45 +497,40 @@ class FriendlyId::Configuration
   #
   # @example
   #   class Book < ActiveRecord::Base
-  #   extend FriendlyId
-  #   friendly_id :name, :use => :slugged
+  #     extend FriendlyId
+  #     friendly_id :name, :use => :slugged
   #   end
-  # @param modules [#to_s, Module] Arguments should be Modules, or symbols or
+  #
+  # @param [#to_s,Module] modules Arguments should be Modules, or symbols or
   #   strings that correspond with the name of an addon to use with FriendlyId.
   #   By default FriendlyId provides `:slugged`, `:finders`, `:history`,
   #   `:reserved`, `:simple_i18n`, and `:scoped`.
   #
-  # source://friendly_id//lib/friendly_id/configuration.rb#52
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:52
   def use(*modules); end
 
   # Returns whether the given module is in use.
   #
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/configuration.rb#61
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:61
   def uses?(mod); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/configuration.rb#103
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:103
   def get_module(object); end
 
-  # source://friendly_id//lib/friendly_id/configuration.rb#107
+  # pkg:gem/friendly_id#lib/friendly_id/configuration.rb:107
   def set(values); end
 end
 
-# source://friendly_id//lib/friendly_id/finder_methods.rb#2
+# pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:2
 module FriendlyId::FinderMethods
   # Returns true if a record with the given id exists.
   #
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#40
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:40
   def exists?(conditions = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#53
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:53
   def exists_by_friendly_id?(id); end
 
   # Finds a record using the given id.
@@ -501,6 +540,7 @@ module FriendlyId::FinderMethods
   # id matching '123' and then fall back to looking for a record with the
   # numeric id '123'.
   #
+  # @param [Boolean] allow_nil (default: false)
   # Use allow_nil: true if you'd like the finder to return nil instead of
   # raising ActivRecord::RecordNotFound
   #
@@ -517,24 +557,21 @@ module FriendlyId::FinderMethods
   # method.
   #
   # If you want to search only by the friendly id, use {#find_by_friendly_id}.
-  #
-  # @param allow_nil [Boolean] (default: false)
   # @raise ActiveRecord::RecordNotFound
   #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#28
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:28
   def find(*args, allow_nil: T.unsafe(nil)); end
 
   # Finds exclusively by the friendly id, completely bypassing original
   # `find`.
-  #
   # @raise ActiveRecord::RecordNotFound
   #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#49
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:49
   def find_by_friendly_id(id); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#77
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:77
   def first_by_friendly_id(id); end
 
   # Parse the given value to make it suitable for use as a slug according to
@@ -564,21 +601,21 @@ module FriendlyId::FinderMethods
   #       end
   #     end
   #
-  # @param value [#to_s] The slug to be parsed.
+  # @param [#to_s] value The slug to be parsed.
   # @return The parsed slug, which is not modified by default.
   #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#110
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:110
   def parse_friendly_id(value); end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#59
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:59
   def potential_primary_key?(id); end
 
-  # source://friendly_id//lib/friendly_id/finder_methods.rb#114
+  # pkg:gem/friendly_id#lib/friendly_id/finder_methods.rb:114
   def raise_not_found_exception(id); end
 end
 
+# @guide begin
+#
 # ## Performing Finds with FriendlyId
 #
 # FriendlyId offers enhanced finders which will search for your record by
@@ -640,17 +677,21 @@ end
 #       end
 #     end
 #
-# source://friendly_id//lib/friendly_id/finders.rb#66
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/finders.rb:66
 module FriendlyId::Finders
   class << self
-    # source://friendly_id//lib/friendly_id/finders.rb#76
+    # pkg:gem/friendly_id#lib/friendly_id/finders.rb:76
     def setup(model_class); end
   end
 end
 
-# source://friendly_id//lib/friendly_id/finders.rb#67
+# pkg:gem/friendly_id#lib/friendly_id/finders.rb:67
 module FriendlyId::Finders::ClassMethods; end
 
+# @guide begin
+#
 # ## History: Avoiding 404's When Slugs Change
 #
 # FriendlyId's {FriendlyId::History History} module adds the ability to store a
@@ -701,91 +742,87 @@ module FriendlyId::Finders::ClassMethods; end
 #       end
 #     end
 #
-# source://friendly_id//lib/friendly_id/history.rb#55
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/history.rb:55
 module FriendlyId::History
   private
 
-  # source://friendly_id//lib/friendly_id/history.rb#122
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:122
   def create_slug; end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/history.rb#137
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:137
   def history_is_up_to_date?; end
 
   # If we're updating, don't consider historic slugs for the same record
   # to be conflicts. This will allow a record to revert to a previously
   # used slug.
   #
-  # source://friendly_id//lib/friendly_id/history.rb#111
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:111
   def scope_for_slug_generator; end
 
   class << self
     # Configures the model instance to use the History add-on.
     #
-    # source://friendly_id//lib/friendly_id/history.rb#72
+    # pkg:gem/friendly_id#lib/friendly_id/history.rb:72
     def included(model_class); end
 
-    # source://friendly_id//lib/friendly_id/history.rb#62
+    # pkg:gem/friendly_id#lib/friendly_id/history.rb:62
     def setup(model_class); end
   end
 end
 
-# source://friendly_id//lib/friendly_id/history.rb#56
+# pkg:gem/friendly_id#lib/friendly_id/history.rb:56
 module FriendlyId::History::Configuration
-  # source://friendly_id//lib/friendly_id/history.rb#57
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:57
   def dependent_value; end
 end
 
-# source://friendly_id//lib/friendly_id/history.rb#84
+# pkg:gem/friendly_id#lib/friendly_id/history.rb:84
 module FriendlyId::History::FinderMethods
   include ::FriendlyId::FinderMethods
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/history.rb#87
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:87
   def exists_by_friendly_id?(id); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/history.rb#93
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:93
   def first_by_friendly_id(id); end
 
-  # source://friendly_id//lib/friendly_id/history.rb#101
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:101
   def slug_history_clause(id); end
 
-  # source://friendly_id//lib/friendly_id/history.rb#97
+  # pkg:gem/friendly_id#lib/friendly_id/history.rb:97
   def slug_table_record(id); end
 end
 
 # Instance methods that will be added to all classes using FriendlyId.
 #
-# source://friendly_id//lib/friendly_id/base.rb#246
+# pkg:gem/friendly_id#lib/friendly_id/base.rb:246
 module FriendlyId::Model
   # Clears slug on duplicate records when calling `dup`.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#271
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:271
   def dup; end
 
   # Get the instance's friendly_id.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#257
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:257
   def friendly_id; end
 
   # Convenience method for accessing the class method of the same name.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#252
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:252
   def friendly_id_config; end
 
   # Either the friendly_id, or the numeric id cast to a string.
   #
-  # source://friendly_id//lib/friendly_id/base.rb#262
+  # pkg:gem/friendly_id#lib/friendly_id/base.rb:262
   def to_param; end
 
   class << self
-    # @private
-    #
-    # source://friendly_id//lib/friendly_id/base.rb#247
+    # pkg:gem/friendly_id#lib/friendly_id/base.rb:247
     def included(model_class); end
   end
 end
@@ -798,7 +835,7 @@ end
 # names that unambigously refer to the library of their origin, which should
 # be sufficient to avoid conflicts with other libraries.
 #
-# source://friendly_id//lib/friendly_id/object_utils.rb#21
+# pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:21
 module FriendlyId::ObjectUtils
   # True if the id is definitely friendly, false if definitely unfriendly,
   # else nil.
@@ -819,20 +856,18 @@ module FriendlyId::ObjectUtils
   #     "123".friendly_id?                #=> nil
   #     "abc123".friendly_id?             #=> true
   #
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/object_utils.rb#40
+  # pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:40
   def friendly_id?; end
 
   # True if the id is definitely unfriendly, false if definitely friendly,
   # else nil.
   #
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/object_utils.rb#46
+  # pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:46
   def unfriendly_id?; end
 end
 
+# @guide begin
+#
 # ## Reserved Words
 #
 # The {FriendlyId::Reserved Reserved} module adds the ability to exclude a list of
@@ -859,13 +894,15 @@ end
 #       end
 #     end
 #
-# source://friendly_id//lib/friendly_id/reserved.rb#31
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/reserved.rb:31
 module FriendlyId::Reserved
   class << self
     # When included, this module adds configuration options to the model class's
     # friendly_id_config.
     #
-    # source://friendly_id//lib/friendly_id/reserved.rb#34
+    # pkg:gem/friendly_id#lib/friendly_id/reserved.rb:34
     def included(model_class); end
   end
 end
@@ -873,33 +910,23 @@ end
 # This module adds the `:reserved_words` configuration option to
 # {FriendlyId::Configuration FriendlyId::Configuration}.
 #
-# source://friendly_id//lib/friendly_id/reserved.rb#45
+# pkg:gem/friendly_id#lib/friendly_id/reserved.rb:45
 module FriendlyId::Reserved::Configuration
-  # Returns the value of attribute reserved_words.
-  #
-  # source://friendly_id//lib/friendly_id/reserved.rb#46
+  # pkg:gem/friendly_id#lib/friendly_id/reserved.rb:46
   def reserved_words; end
 
-  # Sets the attribute reserved_words
-  #
-  # @param value the value to set the attribute reserved_words to.
-  #
-  # source://friendly_id//lib/friendly_id/reserved.rb#46
+  # pkg:gem/friendly_id#lib/friendly_id/reserved.rb:46
   def reserved_words=(_arg0); end
 
-  # Returns the value of attribute treat_reserved_as_conflict.
-  #
-  # source://friendly_id//lib/friendly_id/reserved.rb#47
+  # pkg:gem/friendly_id#lib/friendly_id/reserved.rb:47
   def treat_reserved_as_conflict; end
 
-  # Sets the attribute treat_reserved_as_conflict
-  #
-  # @param value the value to set the attribute treat_reserved_as_conflict to.
-  #
-  # source://friendly_id//lib/friendly_id/reserved.rb#47
+  # pkg:gem/friendly_id#lib/friendly_id/reserved.rb:47
   def treat_reserved_as_conflict=(_arg0); end
 end
 
+# @guide begin
+#
 # ## Unique Slugs by Scope
 #
 # The {FriendlyId::Scoped} module allows FriendlyId to generate unique slugs
@@ -996,35 +1023,35 @@ end
 #     http://example.org/cities/seattle/restaurants/joes-diner
 #     http://example.org/cities/chicago/restaurants/joes-diner
 #
-# source://friendly_id//lib/friendly_id/scoped.rb#103
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/scoped.rb:103
 module FriendlyId::Scoped
-  # source://friendly_id//lib/friendly_id/scoped.rb#118
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:118
   def serialized_scope; end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/scoped.rb#140
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:140
   def should_generate_new_friendly_id?; end
 
   private
 
-  # source://friendly_id//lib/friendly_id/scoped.rb#122
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:122
   def scope_for_slug_generator; end
 
-  # source://friendly_id//lib/friendly_id/scoped.rb#135
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:135
   def slug_generator; end
 
   class << self
     # Sets up behavior and configuration options for FriendlyId's scoped slugs
     # feature.
     #
-    # source://friendly_id//lib/friendly_id/scoped.rb#112
+    # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:112
     def included(model_class); end
 
     # FriendlyId::Config.use will invoke this method when present, to allow
     # loading dependent modules prior to overriding them when necessary.
     #
-    # source://friendly_id//lib/friendly_id/scoped.rb#106
+    # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:106
     def setup(model_class); end
   end
 end
@@ -1032,7 +1059,7 @@ end
 # This module adds the `:scope` configuration option to
 # {FriendlyId::Configuration FriendlyId::Configuration}.
 #
-# source://friendly_id//lib/friendly_id/scoped.rb#146
+# pkg:gem/friendly_id#lib/friendly_id/scoped.rb:146
 module FriendlyId::Scoped::Configuration
   # Gets the scope value.
   #
@@ -1041,7 +1068,7 @@ module FriendlyId::Scoped::Configuration
   #
   # @return Symbol The scope value
   #
-  # source://friendly_id//lib/friendly_id/scoped.rb#153
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:153
   def scope; end
 
   # Gets the scope value.
@@ -1051,7 +1078,7 @@ module FriendlyId::Scoped::Configuration
   #
   # @return Symbol The scope value
   #
-  # source://friendly_id//lib/friendly_id/scoped.rb#153
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:153
   def scope=(_arg0); end
 
   # Gets the scope columns.
@@ -1063,122 +1090,98 @@ module FriendlyId::Scoped::Configuration
   #
   # @return String The scope column
   #
-  # source://friendly_id//lib/friendly_id/scoped.rb#163
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:163
   def scope_columns; end
 
   private
 
-  # source://friendly_id//lib/friendly_id/scoped.rb#169
+  # pkg:gem/friendly_id#lib/friendly_id/scoped.rb:169
   def reflection_foreign_key(scope); end
 end
 
-# source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#2
+# pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:2
 module FriendlyId::SequentiallySlugged
-  # source://friendly_id//lib/friendly_id/sequentially_slugged.rb#9
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged.rb:9
   def resolve_friendly_id_conflict(candidate_slugs); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged.rb#24
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged.rb:24
   def slug_base_class; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged.rb#32
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged.rb:32
   def slug_column; end
 
   class << self
-    # source://friendly_id//lib/friendly_id/sequentially_slugged.rb#5
+    # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged.rb:5
     def setup(model_class); end
   end
 end
 
-# source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#3
+# pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:3
 class FriendlyId::SequentiallySlugged::Calculator
-  # @return [Calculator] a new instance of Calculator
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#6
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:6
   def initialize(scope, slug, slug_column, sequence_separator, base_class); end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#14
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:14
   def next_slug; end
 
-  # Returns the value of attribute scope.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def scope; end
 
-  # Sets the attribute scope
-  #
-  # @param value the value to set the attribute scope to.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def scope=(_arg0); end
 
-  # Returns the value of attribute sequence_separator.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def sequence_separator; end
 
-  # Sets the attribute sequence_separator
-  #
-  # @param value the value to set the attribute sequence_separator to.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def sequence_separator=(_arg0); end
 
-  # Returns the value of attribute slug.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def slug; end
 
-  # Sets the attribute slug
-  #
-  # @param value the value to set the attribute slug to.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def slug=(_arg0); end
 
-  # Returns the value of attribute slug_column.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def slug_column; end
 
-  # Sets the attribute slug_column
-  #
-  # @param value the value to set the attribute slug_column to.
-  #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#4
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:4
   def slug_column=(_arg0); end
 
   private
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#20
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:20
   def conflict_query; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#32
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:32
   def last_sequence_number; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#28
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:28
   def next_sequence_number; end
 
   # Return the unnumbered (shortest) slug first, followed by the numbered ones
   # in ascending order.
   #
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#43
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:43
   def ordering_query; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#47
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:47
   def regexp; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#51
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:51
   def sequential_slug_matcher; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#58
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:58
   def slug_conflicts; end
 
-  # source://friendly_id//lib/friendly_id/sequentially_slugged/calculator.rb#64
+  # pkg:gem/friendly_id#lib/friendly_id/sequentially_slugged/calculator.rb:64
   def sql_length; end
 end
 
+# @guide begin
+#
 # ## Translating Slugs Using Simple I18n
 #
 # The {FriendlyId::SimpleI18n SimpleI18n} module adds very basic i18n support to
@@ -1247,41 +1250,41 @@ end
 #       post.set_friendly_id("La guerra de las galaxias")
 #     end
 #
-# source://friendly_id//lib/friendly_id/simple_i18n.rb#75
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:75
 module FriendlyId::SimpleI18n
   include ::FriendlyId::SimpleI18n::Model
 
   class << self
-    # @private
-    #
-    # source://friendly_id//lib/friendly_id/simple_i18n.rb#82
+    # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:82
     def included(model_class); end
 
     # FriendlyId::Config.use will invoke this method when present, to allow
     # loading dependent modules prior to overriding them when necessary.
     #
-    # source://friendly_id//lib/friendly_id/simple_i18n.rb#78
+    # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:78
     def setup(model_class); end
   end
 end
 
-# source://friendly_id//lib/friendly_id/simple_i18n.rb#102
+# pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:102
 module FriendlyId::SimpleI18n::Configuration
-  # source://friendly_id//lib/friendly_id/simple_i18n.rb#103
+  # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:103
   def slug_column; end
 
   private
 
-  # source://friendly_id//lib/friendly_id/simple_i18n.rb#109
+  # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:109
   def locale_suffix; end
 end
 
-# source://friendly_id//lib/friendly_id/simple_i18n.rb#89
+# pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:89
 module FriendlyId::SimpleI18n::Model
-  # source://friendly_id//lib/friendly_id/simple_i18n.rb#90
+  # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:90
   def set_friendly_id(text, locale = T.unsafe(nil)); end
 
-  # source://friendly_id//lib/friendly_id/simple_i18n.rb#96
+  # pkg:gem/friendly_id#lib/friendly_id/simple_i18n.rb:96
   def slug=(value); end
 end
 
@@ -1289,80 +1292,98 @@ end
 #
 # @see FriendlyId::History
 #
-# source://friendly_id//lib/friendly_id/slug.rb#5
+# pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
 class FriendlyId::Slug < ::ActiveRecord::Base
   include ::FriendlyId::Slug::GeneratedAttributeMethods
   include ::FriendlyId::Slug::GeneratedAssociationMethods
 
-  # source://friendly_id//lib/friendly_id/slug.rb#6
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
   def _run_save_callbacks(&block); end
 
-  # source://friendly_id//lib/friendly_id/slug.rb#6
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
   def autosave_associated_records_for_sluggable(*args); end
 
-  # source://friendly_id//lib/friendly_id/slug.rb#8
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:8
   def sluggable; end
 
-  # source://friendly_id//lib/friendly_id/slug.rb#12
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:12
   def to_param; end
 
   class << self
     private
 
-    # source://friendly_id//lib/friendly_id/slug.rb#6
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
     def __class_attr___callbacks; end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#6
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
     def __class_attr___callbacks=(new_value); end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#6
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
     def __class_attr__reflections; end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#6
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
     def __class_attr__reflections=(new_value); end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#5
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
     def __class_attr__validators; end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#5
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
     def __class_attr__validators=(new_value); end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#5
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
     def __class_attr_defined_enums; end
 
-    # source://friendly_id//lib/friendly_id/slug.rb#5
+    # pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
     def __class_attr_defined_enums=(new_value); end
   end
 end
 
+# pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
+module FriendlyId::Slug::GeneratedAssociationMethods
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def reload_sluggable; end
+
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def reset_sluggable; end
+
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def sluggable; end
+
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def sluggable=(value); end
+
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def sluggable_changed?; end
+
+  # pkg:gem/friendly_id#lib/friendly_id/slug.rb:6
+  def sluggable_previously_changed?; end
+end
+
+# pkg:gem/friendly_id#lib/friendly_id/slug.rb:5
 module FriendlyId::Slug::GeneratedAttributeMethods; end
 
 # The default slug generator offers functionality to check slug candidates for
 # availability.
 #
-# source://friendly_id//lib/friendly_id/slug_generator.rb#4
+# pkg:gem/friendly_id#lib/friendly_id/slug_generator.rb:4
 class FriendlyId::SlugGenerator
-  # @return [SlugGenerator] a new instance of SlugGenerator
-  #
-  # source://friendly_id//lib/friendly_id/slug_generator.rb#5
+  # pkg:gem/friendly_id#lib/friendly_id/slug_generator.rb:5
   def initialize(scope, config); end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/slug_generator.rb#10
+  # pkg:gem/friendly_id#lib/friendly_id/slug_generator.rb:10
   def available?(slug); end
 
-  # source://friendly_id//lib/friendly_id/slug_generator.rb#22
+  # pkg:gem/friendly_id#lib/friendly_id/slug_generator.rb:22
   def generate(candidates); end
 
   private
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/slug_generator.rb#29
+  # pkg:gem/friendly_id#lib/friendly_id/slug_generator.rb:29
   def purely_numeric_slug?(slug); end
 end
 
+# @guide begin
+#
 # ## Slugged Models
 #
 # FriendlyId can use a separate column to store slugs for models which require
@@ -1611,7 +1632,9 @@ end
 # creating more than one nested record for a model that uses FriendlyId. See [this
 # Github issue](https://github.com/norman/friendly_id/issues/185) for discussion.
 #
-# source://friendly_id//lib/friendly_id/slugged.rb#256
+# @guide end
+#
+# pkg:gem/friendly_id#lib/friendly_id/slugged.rb:256
 module FriendlyId::Slugged
   # Process the given value to make it suitable for use as a slug.
   #
@@ -1647,10 +1670,10 @@ module FriendlyId::Slugged
   # which is the slugging library used by FriendlyId prior to version 4, which
   # offers some specialized functionality missing from Active Support.
   #
-  # @param value [#to_s] The value used as the basis of the slug.
+  # @param [#to_s] value The value used as the basis of the slug.
   # @return The candidate slug text, without a sequence.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#307
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:307
   def normalize_friendly_id(value); end
 
   # Public: Resolve conflicts.
@@ -1670,7 +1693,7 @@ module FriendlyId::Slugged
   #
   # Returns the String with new slug.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#337
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:337
   def resolve_friendly_id_conflict(candidates); end
 
   # Whether to generate a new slug.
@@ -1678,9 +1701,7 @@ module FriendlyId::Slugged
   # You can override this method in your model if, for example, you only want
   # slugs to be generated once, and then never updated.
   #
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#317
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:317
   def should_generate_new_friendly_id?; end
 
   private
@@ -1692,7 +1713,7 @@ module FriendlyId::Slugged
   #
   # Return the String with truncated candidate.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#351
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:351
   def apply_slug_limit(candidate, uuid); end
 
   # Private: Get max length of candidate.
@@ -1701,28 +1722,28 @@ module FriendlyId::Slugged
   #
   # Returns the Integer with max length.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#363
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:363
   def candidate_limit(uuid); end
 
-  # source://friendly_id//lib/friendly_id/slugged.rb#381
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:381
   def scope_for_slug_generator; end
 
   # Sets the slug.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#372
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:372
   def set_slug(normalized_slug = T.unsafe(nil)); end
 
-  # source://friendly_id//lib/friendly_id/slugged.rb#389
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:389
   def slug_generator; end
 
-  # source://friendly_id//lib/friendly_id/slugged.rb#394
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:394
   def unset_slug_if_invalid; end
 
   class << self
     # Sets up behavior and configuration options for FriendlyId's slugging
     # feature.
     #
-    # source://friendly_id//lib/friendly_id/slugged.rb#259
+    # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:259
     def included(model_class); end
   end
 end
@@ -1731,13 +1752,12 @@ end
 # and `:slug_generator_class` configuration options to
 # {FriendlyId::Configuration FriendlyId::Configuration}.
 #
-# source://friendly_id//lib/friendly_id/slugged.rb#405
+# pkg:gem/friendly_id#lib/friendly_id/slugged.rb:405
 module FriendlyId::Slugged::Configuration
   # Makes FriendlyId use the slug column for querying.
-  #
   # @return String The slug column.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#411
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:411
   def query_field; end
 
   # The string used to separate a slug base from a numeric sequence.
@@ -1745,85 +1765,66 @@ module FriendlyId::Slugged::Configuration
   # You can change the default separator by setting the
   # {FriendlyId::Slugged::Configuration#sequence_separator
   # sequence_separator} configuration option.
-  #
   # @return String The sequence separator string. Defaults to "`-`".
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#421
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:421
   def sequence_separator; end
 
-  # Sets the attribute sequence_separator
+  # The string used to separate a slug base from a numeric sequence.
   #
-  # @param value the value to set the attribute sequence_separator to.
+  # You can change the default separator by setting the
+  # {FriendlyId::Slugged::Configuration#sequence_separator
+  # sequence_separator} configuration option.
+  # @return String The sequence separator string. Defaults to "`-`".
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#406
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:406
   def sequence_separator=(_arg0); end
 
   # The column that will be used to store the generated slug.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#426
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:426
   def slug_column; end
 
-  # Sets the attribute slug_column
+  # The column that will be used to store the generated slug.
   #
-  # @param value the value to set the attribute slug_column to.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#406
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:406
   def slug_column=(_arg0); end
 
-  # Returns the value of attribute slug_generator_class.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#407
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:407
   def slug_generator_class; end
 
-  # Sets the attribute slug_generator_class
-  #
-  # @param value the value to set the attribute slug_generator_class to.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#407
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:407
   def slug_generator_class=(_arg0); end
 
   # The limit that will be used for slug.
   #
-  # source://friendly_id//lib/friendly_id/slugged.rb#431
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:431
   def slug_limit; end
 
-  # Sets the attribute slug_limit
+  # The limit that will be used for slug.
   #
-  # @param value the value to set the attribute slug_limit to.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#406
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:406
   def slug_limit=(_arg0); end
 
-  # Returns the value of attribute treat_numeric_as_conflict.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#407
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:407
   def treat_numeric_as_conflict; end
 
-  # Sets the attribute treat_numeric_as_conflict
-  #
-  # @param value the value to set the attribute treat_numeric_as_conflict to.
-  #
-  # source://friendly_id//lib/friendly_id/slugged.rb#407
+  # pkg:gem/friendly_id#lib/friendly_id/slugged.rb:407
   def treat_numeric_as_conflict=(_arg0); end
 end
 
 # Instances of these classes will never be considered a friendly id.
-#
 # @see FriendlyId::ObjectUtils#friendly_id
 #
-# source://friendly_id//lib/friendly_id/object_utils.rb#4
+# pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:4
 FriendlyId::UNFRIENDLY_CLASSES = T.let(T.unsafe(nil), Array)
 
-# source://friendly_id//lib/friendly_id/object_utils.rb#52
+# pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:52
 module FriendlyId::UnfriendlyUtils
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/object_utils.rb#53
+  # pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:53
   def friendly_id?; end
 
-  # @return [Boolean]
-  #
-  # source://friendly_id//lib/friendly_id/object_utils.rb#57
+  # pkg:gem/friendly_id#lib/friendly_id/object_utils.rb:57
   def unfriendly_id?; end
 end
 

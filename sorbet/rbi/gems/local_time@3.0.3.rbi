@@ -5,36 +5,36 @@
 # Please instead update this file by running `bin/tapioca gem local_time`.
 
 
-# source://local_time//lib/local_time.rb#1
+# pkg:gem/local_time#lib/local_time.rb:1
 module LocalTime
-  # source://local_time//lib/local_time.rb#3
+  # pkg:gem/local_time#lib/local_time.rb:3
   def default_date_format; end
 
-  # source://local_time//lib/local_time.rb#3
+  # pkg:gem/local_time#lib/local_time.rb:3
   def default_date_format=(val); end
 
-  # source://local_time//lib/local_time.rb#2
+  # pkg:gem/local_time#lib/local_time.rb:2
   def default_time_format; end
 
-  # source://local_time//lib/local_time.rb#2
+  # pkg:gem/local_time#lib/local_time.rb:2
   def default_time_format=(val); end
 
   class << self
-    # source://local_time//lib/local_time.rb#3
+    # pkg:gem/local_time#lib/local_time.rb:3
     def default_date_format; end
 
-    # source://local_time//lib/local_time.rb#3
+    # pkg:gem/local_time#lib/local_time.rb:3
     def default_date_format=(val); end
 
-    # source://local_time//lib/local_time.rb#2
+    # pkg:gem/local_time#lib/local_time.rb:2
     def default_time_format; end
 
-    # source://local_time//lib/local_time.rb#2
+    # pkg:gem/local_time#lib/local_time.rb:2
     def default_time_format=(val); end
   end
 end
 
-# source://local_time//lib/local_time.rb#5
+# pkg:gem/local_time#lib/local_time.rb:5
 class LocalTime::Engine < ::Rails::Engine; end
 
 module LocalTimeHelper
