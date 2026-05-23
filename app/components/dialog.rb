@@ -24,16 +24,25 @@ class Components::Dialog < Components::Base
   sig { override.params(content: T.proc.bind(T.self_type).void).void }
   def view_template(&content)
     vanish(&content)
-    trigger_button_block = @trigger_button_block or raise "Missing trigger"
     content_block = @content_block or raise "Missing content"
 
-    el_dialog(**@attributes) do
-      trigger_button_block.call
+    el_dialog(**mix(
+      {
+        data: {
+          controller: "dialog",
+        },
+      },
+      @attributes,
+    )) do
+      @trigger_button_block&.call
       content_block.call
     end
   end
 
   # == Interface ==
+
+  sig { returns(String) }
+  attr_reader :id
 
   sig do
     params(
@@ -46,7 +55,8 @@ class Components::Dialog < Components::Base
   def with_trigger_button(variant: :default, size: :default, **attributes, &content)
     @trigger_button_block = ->() {
       render Components::Button.new(
-        variant:, size:,
+        variant:,
+        size:,
         **mix({ command: "show-modal", commandfor: @id }, attributes),
         &content
       )

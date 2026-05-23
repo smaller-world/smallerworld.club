@@ -7,33 +7,51 @@ import Uppy, {
   type UppyFile,
 } from "@uppy/core";
 import DragDrop from "@uppy/drag-drop";
+import ImageEditor from "@uppy/image-editor";
 import { isEmpty, map } from "lodash-es";
 
+import { isDevelopment } from "#helpers/env_helpers";
+
 export default class UppyDndController extends Controller<HTMLElement> {
+  // == Targets ==
+
+  static targets = [
+    "dropzone",
+    "imageEditorDialog",
+    "imageEditor",
+    "hiddenInput",
+  ];
+  declare readonly dropzoneTarget: HTMLElement;
+  declare readonly imageEditorDialogTarget: HTMLElement;
+  declare readonly imageEditorTarget: HTMLElement;
+  declare readonly hiddenInputTarget: HTMLInputElement;
+  declare readonly hasDropzoneTarget: boolean;
+  declare readonly hasImageEditorDialogTarget: boolean;
+  declare readonly hasImageEditorTarget: boolean;
+  declare readonly hasHiddenInputTarget: boolean;
+
   // == Values ==
+
   static values = {
     directUploadUrl: String,
     previewUrlTemplate: String,
     previewSignedId: String,
     inputId: String,
+    imageEditorDialogId: String,
     multiple: Boolean,
     required: Boolean,
     allowedFileTypes: String,
+    cropToAspectRatio: Number,
   };
   declare readonly directUploadUrlValue: string;
   declare readonly previewUrlTemplateValue: string;
   declare previewSignedIdValue: string | undefined;
   declare readonly inputIdValue: string;
+  declare readonly imageEditorDialogIdValue: string;
   declare readonly multipleValue: boolean;
   declare readonly requiredValue: boolean;
   declare readonly allowedFileTypesValue: string;
-
-  // == Targets ==
-  static targets = ["dropzone", "hiddenInput"];
-  declare readonly dropzoneTarget: HTMLDivElement;
-  declare readonly hasDropzoneTarget: boolean;
-  declare readonly hiddenInputTarget: HTMLInputElement;
-  declare readonly hasHiddenInputTarget: boolean;
+  declare readonly cropToAspectRatioValue: number;
 
   // == Properties ==
 
@@ -50,8 +68,8 @@ export default class UppyDndController extends Controller<HTMLElement> {
     }
 
     this.#uppy?.destroy();
-    const uppy = new Uppy<Meta, { signed_id: string }>({
-      // debug: isDevelopment(),
+    let uppy = new Uppy<Meta, { signed_id: string }>({
+      debug: isDevelopment(),
       restrictions: {
         minNumberOfFiles: this.requiredValue ? 1 : null,
         maxNumberOfFiles: this.multipleValue ? null : 1,
@@ -75,7 +93,7 @@ export default class UppyDndController extends Controller<HTMLElement> {
         directUploadUrl: this.directUploadUrlValue,
       })
       .on("files-added", (files) => {
-        const [_, ...otherFiles] = files;
+        const [file, ...otherFiles] = files;
         if (!isEmpty(otherFiles)) {
           uppy.removeFiles(map(otherFiles, "id"));
           this.dispatch("multiple-upload", {
@@ -84,7 +102,17 @@ export default class UppyDndController extends Controller<HTMLElement> {
             },
           });
         }
-        void uppy.upload();
+        if (!file) {
+          return;
+        }
+        const imageEditor = uppy.getPlugin("ImageEditor");
+        if (!this.multipleValue && imageEditor?.canEditFile(file)) {
+          this.dispatch("open-image-editor", {
+            target: this.imageEditorDialogTarget,
+          });
+        } else {
+          void uppy.upload();
+        }
       })
       .on("upload", () => {
         this.element.ariaBusy = "true";
@@ -104,14 +132,41 @@ export default class UppyDndController extends Controller<HTMLElement> {
           for (const file of successful) {
             this.#addCompletedFile(file);
           }
-          fileIDs.concat(map(successful, "id"));
+          fileIDs.push(...map(successful, "id"));
         }
         if (failed) {
-          fileIDs.concat(map(failed, "id"));
+          fileIDs.push(...map(failed, "id"));
         }
         uppy.removeFiles(fileIDs);
         this.dispatch("uploaded");
       });
+    if (this.hasImageEditorTarget) {
+      uppy = uppy
+        .use(ImageEditor, {
+          target: this.imageEditorTarget,
+          quality: 1,
+          cropperOptions: {
+            aspectRatio: this.cropToAspectRatioValue,
+            responsive: true,
+          },
+          actions: {
+            cropSquare: false,
+            cropWidescreen: false,
+            cropWidescreenVertical: false,
+          },
+        })
+        .on("file-editor:complete", () => {
+          const imageEditor = uppy.getPlugin("ImageEditor");
+          imageEditor?.stop();
+          void uppy.upload();
+        })
+        .on("file-editor:cancel", (file) => {
+          const imageEditor = uppy.getPlugin("ImageEditor");
+          imageEditor?.stop();
+          uppy.removeFile(file.id);
+        });
+    }
+
     this.#uppy = uppy;
     this.#customizeUI();
     setTimeout(() => {
@@ -176,6 +231,35 @@ export default class UppyDndController extends Controller<HTMLElement> {
   clear(): void {
     this.previewSignedIdValue = undefined;
     this.hiddenInputTarget.value = "";
+  }
+
+  saveImageEdit(): void {
+    const imageEditor = this.#uppy?.getPlugin("ImageEditor");
+    imageEditor?.save();
+  }
+
+  selectEditorImage(): void {
+    if (!this.#uppy) {
+      return;
+    }
+    const imageEditor = this.#uppy.getPlugin("ImageEditor");
+    const [file, ...otherFiles] = this.#uppy.getFiles();
+    if (!isEmpty(otherFiles)) {
+      throw new Error("Ambiguous editor image");
+    }
+    if (imageEditor && file) {
+      imageEditor.selectFile(file);
+    }
+  }
+
+  cancelImageEdit(): void {
+    if (!this.#uppy) {
+      return;
+    }
+    const [file] = this.#uppy.getFiles();
+    if (file) {
+      this.#uppy.emit("file-editor:cancel", file);
+    }
   }
 
   // == Helpers ==

@@ -49,7 +49,7 @@ class Components::PostCard < Components::Base
       if (thumbnails = @post.image_thumbnails.presence)
         card.footer(class: "grid grid-cols-2 gap-4 mt-4") do
           thumbnails.each do |thumbnails|
-            image_tag(thumbnails, class: "aspect-square rounded-lg object-cover")
+            image_tag(thumbnails, class: "aspect-square rounded-lg object-contain")
           end
         end
       end

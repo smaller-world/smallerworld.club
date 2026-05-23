@@ -5,6 +5,7 @@ import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
 import ComboboxController from "./combobox_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
+import DialogController from "./dialog_controller";
 import DisabledController from "./disabled_controller";
 import FlashController from "./flash_controller";
 import FormController from "./form_controller";
@@ -41,6 +42,7 @@ application.register("phone-number-input", PhoneNumberInputController);
 application.register("account-form", AccountFormController);
 application.register("radio-group", RadioGroupController);
 application.register("form", FormController);
+application.register("dialog", DialogController);
 application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
 

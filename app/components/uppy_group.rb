@@ -12,6 +12,7 @@ class Components::UppyGroup < Components::Input
       required: T::Boolean,
       max_files: T.nilable(Integer),
       allowed_file_types: T.nilable(T::Array[String]),
+      preview_fit: T.nilable(Symbol),
       dropzone_class: T.nilable(String),
       attributes: T.untyped,
     )
@@ -24,12 +25,14 @@ class Components::UppyGroup < Components::Input
     required: false,
     max_files: nil,
     allowed_file_types: nil,
+    preview_fit: nil,
     dropzone_class: nil,
     **attributes
   )
     @required = required
     @max_files = max_files
     @allowed_file_types = allowed_file_types
+    @preview_fit = preview_fit
     @dropzone_class = dropzone_class
     @blobs = T.let(
       value&.to_a ||
@@ -85,6 +88,7 @@ class Components::UppyGroup < Components::Input
       form: @form,
       field: @field,
       allowed_file_types: @allowed_file_types,
+      preview_fit: @preview_fit,
       dropzone_class: @dropzone_class,
       multiple: true,
       max_files: remaining_files,

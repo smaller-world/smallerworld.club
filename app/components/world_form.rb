@@ -40,6 +40,7 @@ class Components::WorldForm < Components::Base
               "image/svg+xml",
               "image/avif",
             ],
+            crop_to_aspect_ratio: 1,
             dropzone_class: "size-40 rounded-world-icon",
             data: {
               action: "uppy:error->field#showError",

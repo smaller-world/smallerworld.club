@@ -58,6 +58,7 @@ class Components::PostForm < Components::Base
           ],
           class: "grid grid-cols-2 mt-1",
           dropzone_class: "aspect-square",
+          preview_fit: :contain,
         )
         f.error
       end

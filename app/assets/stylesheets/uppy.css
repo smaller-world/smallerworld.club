@@ -1,5 +1,6 @@
 @import "@uppy/core/css/style.min.css" layer(base);
 @import "@uppy/drag-drop/css/style.min.css" layer(base);
+@import "@uppy/image-editor/css/style.min.css" layer(base);
 
 @layer components {
   .uppy-dnd-dropzone {
@@ -22,10 +23,11 @@
       color: unset;
 
       &::before {
-        @apply absolute inset-px bg-cover;
+        @apply absolute inset-px bg-cover bg-center bg-no-repeat;
 
         content: "";
         background-image: var(--preview-image);
+        background-size: var(--preview-fit, cover);
         border-radius: inherit;
       }
     }
@@ -79,6 +81,12 @@
     [data-controller~="uppy-dnd"]:not([data-uppy-dnd-preview-signed-id-value])
       & {
       @apply hidden;
+    }
+  }
+
+  .uppy-dnd-cropper {
+    .uppy-ImageCropper-controls {
+      @apply p-0;
     }
   }
 
