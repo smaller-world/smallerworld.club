@@ -16,11 +16,11 @@ class UiDocsController < ApplicationController
   # GET /ui/:component
   def show
     component = params.fetch(:component)
-    component_class = component.pluralize.camelize
-    begin
-      render Views::UiDocs.const_get(component_class.to_sym) # rubocop:disable Sorbet/ConstantsFromStrings
-    rescue NameError
-      redirect_to(ui_docs_path, alert: "No doc for component: #{component_class}")
+    case component
+    when "alerts"
+      render Views::UiDocs::Alerts
+    else
+      redirect_to(ui_docs_path, alert: "no docs for: #{component}")
     end
   end
 end
