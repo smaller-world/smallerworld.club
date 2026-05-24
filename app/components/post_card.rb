@@ -22,18 +22,18 @@ class Components::PostCard < Components::Base
       **mix(
         {
           id: dom_id(@post),
-          class: "gap-0 shadow-sm",
+          class: "shadow-sm",
         },
         @attributes,
       ),
     ) do |card|
-      card.header(class: "gap-0.5") do
+      card.header do
         card.description(class: class_names(
-          "text-xs flex gap-2",
-          "mb-2" => @post.title.nil?,
+          "text-xs flex gap-2 relative",
+          "pl-7" => @post.emoji.present?,
         )) do
           if (emoji = @post.emoji)
-            div(class: "text-lg font-emoji relative -mt-1") do
+            div(class: "text-lg font-emoji absolute -top-1 left-0") do
               emoji
             end
           end
@@ -54,7 +54,7 @@ class Components::PostCard < Components::Base
           end
         end
       end
-      card.content(class: "flex flex-col gap-6 pb-6") do
+      card.content(class: "flex flex-col gap-6 -mt-5") do
         div(class: "text-sm") do
           @post.body.to_s
         end

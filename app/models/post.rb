@@ -94,18 +94,13 @@ class Post < ApplicationRecord
   sig { returns(T.nilable(String)) }
   def title_snippet
     if (title = fun_title)
-      snip(title.strip.truncate(92))
+      title.strip.truncate(92)
     end
   end
 
   sig { returns(String) }
-  def truncated_plain_body
-    plain_body.strip.truncate(120)
-  end
-
-  sig { returns(String) }
   def body_snippet
-    snip(truncated_plain_body.gsub("\n\n", "\n"))
+    plain_body.strip.truncate(120)
   end
 
   sig { returns(String) }
@@ -113,24 +108,22 @@ class Post < ApplicationRecord
     [ title_snippet, body_snippet ].compact.join("\n")
   end
 
-  sig { returns(String) }
-  def reply_snippet
-    snippet + "\n\n"
+  sig { params(platform: Symbol).returns(String) }
+  def reply_snippet_for(platform)
+    if platform == :whatsapp
+      "> " + snippet.gsub("\n", "\n>\u2800") + "\n\n\u2800"
+    else
+      "> " + snippet.gsub("\n", "\n>") + "\n\n"
+    end
   end
 
   sig { params(platform: Symbol).returns(String) }
   def reply_url(platform:)
-    author!.dm_url(platform:, message: reply_snippet)
+    message = reply_snippet_for(platform)
+    author!.dm_url(platform:, message:)
   end
 
   private
-
-  # == Helpers ==
-
-  sig { params(text: String).returns(String) }
-  def snip(text)
-    "> " + text.split("\n").join("\n> ")
-  end
 
   # == Callbacks ==
 
