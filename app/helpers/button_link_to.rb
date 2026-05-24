@@ -16,11 +16,12 @@ module ButtonLinkTo
     params(
       args: T.untyped,
       icon: T.nilable(String),
+      icon_class: T.nilable(String),
       attributes: T.untyped,
       block: T.nilable(T.proc.void),
     ).void
   end
-  def button_link_to(*args, icon: nil, **attributes, &block)
+  def button_link_to(*args, icon: nil, icon_class: nil, **attributes, &block)
     if block_given?
       label = capture(&block)
       target = args.first
@@ -35,7 +36,7 @@ module ButtonLinkTo
       **attributes,
     ) do |button|
       if icon.present?
-        button.inline_start_icon(icon)
+        button.inline_start_icon(icon, class: icon_class)
         if block_given?
           raw(label) # rubocop:disable Rails/OutputSafety
         else

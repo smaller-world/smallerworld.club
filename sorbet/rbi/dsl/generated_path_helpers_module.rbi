@@ -178,6 +178,12 @@ module GeneratedPathHelpersModule
   def turbo_resume_historical_location_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def ui_doc_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def ui_docs_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

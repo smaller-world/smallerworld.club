@@ -178,6 +178,12 @@ module GeneratedUrlHelpersModule
   def turbo_resume_historical_location_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def ui_doc_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def ui_docs_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -27,7 +27,10 @@ class Components::Base
 end
 
 class Current
-  sig { params(args: T.untyped, kwargs: T.untyped, block: T.untyped).returns(User) }
+  sig do
+    params(args: T.untyped, kwargs: T.untyped, block: T.untyped)
+      .returns(T.nilable(User))
+  end
   def self.user(*args, **kwargs, &block); end
 end
 

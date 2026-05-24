@@ -19,6 +19,15 @@ module Components
     params(
       variant: ::Symbol,
       attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Alert).void)
+    ).void
+  end
+  def Alert(variant: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      variant: ::Symbol,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
     ).void
   end
@@ -415,6 +424,15 @@ module Components
       ).void
     end
     def AccountForm(user:, **options, &block); end
+
+    sig do
+      params(
+        variant: ::Symbol,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Alert).void)
+      ).void
+    end
+    def Alert(variant: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

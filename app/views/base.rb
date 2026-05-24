@@ -16,6 +16,7 @@ class Views::Base < Components::Base
 
   sig { void }
   def initialize
+    @current_user = T.let(Current.user, T.nilable(User))
     # Don't pass anything to `super()`
     super()
   end
@@ -24,11 +25,4 @@ class Views::Base < Components::Base
 
   # More caching options at https://www.phlex.fun/components/caching
   def cache_store = Rails.cache
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(T.nilable(User)) }
-  def current_user =Current.user
 end

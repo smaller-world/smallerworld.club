@@ -83,6 +83,9 @@ Rails.application.routes.draw do
     status: 307,
   )
 
+  # == UI Docs
+  resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
+
   # == Admin
   namespace :admin do
     scope controller: :dashboard, as: :dashboard do

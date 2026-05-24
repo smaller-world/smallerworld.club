@@ -75,11 +75,54 @@ class Post < ApplicationRecord
     },
     size: { less_than: 64.megabytes }
 
-  # == Callbacks ==
+  # == Hooks ==
 
   before_save :set_plain_body
 
+  # == Snippets ==
+
+  sig { returns(T.nilable(String)) }
+  def title_snippet
+    if (title = self.title)
+      snip(title.strip.truncate(92))
+    end
+  end
+
+  sig { returns(String) }
+  def truncated_body_text
+    body.to_plain_text.strip.truncate(120)
+  end
+
+  sig { returns(String) }
+  def body_snippet
+    snip(truncated_body_text.gsub("\n\n", "\n"))
+  end
+
+  sig { returns(String) }
+  def snippet
+    [ title_snippet, body_snippet ].compact.join("\n")
+  end
+
+  sig { returns(String) }
+  def reply_snippet
+    snippet + "\n\n"
+  end
+
+  sig { params(platform: Symbol).returns(String) }
+  def reply_url(platform:)
+    author!.dm_url(platform:, message: reply_snippet)
+  end
+
   private
+
+  # == Helpers ==
+
+  sig { params(text: String).returns(String) }
+  def snip(text)
+    "> " + text.split("\n").join("\n> ")
+  end
+
+  # == Callbacks ==
 
   sig { void }
   def set_plain_body

@@ -34,24 +34,29 @@ class Components::PostCard < Components::Base
           end
           if allowed_to?(:manage?, @post)
             card.action do
-              dropdown_menu
+              actions_menu
             end
           end
         elsif allowed_to?(:manage?, @post)
           card.action(class: "w-14 relative self-stretch") do
-            dropdown_menu(class: "absolute right-0 bottom-0")
+            actions_menu(class: "absolute right-0 bottom-0")
           end
         end
       end
-      card.content(class: "text-sm") do
-        @post.body.to_s
-      end
-      if (thumbnails = @post.images_thumbnails.presence)
-        card.footer(class: "grid grid-cols-2 gap-4 mt-4") do
-          thumbnails.each do |thumbnails|
-            image_tag(thumbnails, class: "aspect-square rounded-lg object-contain")
+      card.content(class: "flex flex-col gap-6 pb-6") do
+        div(class: "text-sm") do
+          @post.body.to_s
+        end
+        if (thumbnails = @post.images_thumbnails.presence)
+          div(class: "grid grid-cols-2 gap-4") do
+            thumbnails.each do |thumbnails|
+              image_tag(thumbnails, class: "aspect-square rounded-lg object-contain")
+            end
           end
         end
+      end
+      card.footer(class: "flex justify-center gap-4") do
+        reply_via_menu
       end
     end
   end
@@ -61,9 +66,13 @@ class Components::PostCard < Components::Base
   # == Helpers ==
 
   sig { params(attributes: T.untyped).void }
-  def dropdown_menu(**attributes)
+  def actions_menu(**attributes)
     Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(variant: :outline, size: :xs, **attributes) do
+      menu.with_trigger_button(
+        variant: :outline,
+        size: :xs,
+        **attributes,
+      ) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")
@@ -85,5 +94,39 @@ class Components::PostCard < Components::Base
         end
       end
     end
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def reply_via_menu(**attributes)
+    Components::DropdownMenu() do |menu|
+      menu.with_trigger_button(**mix({ class: "rounded-full" }, attributes)) do |button|
+        button.inline_start_icon("huge/mail-reply-01")
+        span { "reply via" }
+      end
+
+      menu.with_content(anchor: [ :bottom, :end ]) do |content|
+        User::MESSAGING_PLATFORMS.each do |platform|
+          content.link_item_to(@post.reply_url(platform:)) do
+            reply_platform_icon(platform)
+            span { platform.to_s.humanize(capitalize: false) }
+          end
+        end
+      end
+    end
+  end
+
+  sig { params(platform: T.anything, attributes: T.untyped).void }
+  def reply_platform_icon(platform, **attributes)
+    icon = case platform
+    when :sms
+      "huge/message-01"
+    when :whatsapp
+      "huge/whatsapp"
+    when :telegram
+      "huge/telegram"
+    else
+      raise ArgumentError, "Unknown platform: #{platform}"
+    end
+    Icon(icon, **attributes)
   end
 end

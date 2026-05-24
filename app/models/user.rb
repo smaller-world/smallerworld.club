@@ -22,6 +22,10 @@ class User < ApplicationRecord
   include NormalizesPhoneNumber
   include HasTimeZone
 
+  # == Constants ==
+
+  MESSAGING_PLATFORMS = [ :sms, :whatsapp, :telegram ].freeze
+
   # == Attributes ==
 
   sig { returns(Phonelib::Phone) }
@@ -65,4 +69,21 @@ class User < ApplicationRecord
     uniqueness: { message: "already registered" },
     phone: { possible: true, types: :mobile, extensions: false }
   validates_time_zone_name
+
+  # == Methods ==
+
+  sig { params(platform: Symbol, message: String).returns(String) }
+  def dm_url(platform:, message:)
+    escaped_message = CGI.escapeURIComponent(message)
+    case platform
+    when :sms
+      "sms:#{phone_number}?body=#{escaped_message}"
+    when :whatsapp
+      "https://wa.me/#{phone_number}?text=#{escaped_message}"
+    when :telegram
+      "https://t.me/#{phone_number}?text=#{escaped_message}"
+    else
+      raise ArgumentError, "Unsupported platform: #{platform.inspect}"
+    end
+  end
 end

@@ -17,7 +17,7 @@
     }
 
     .uppy-DragDrop-container {
-      @apply relative flex flex-col items-stretch border-muted-foreground/75 bg-background;
+      @apply relative flex flex-col items-stretch border-muted-foreground/75 bg-input/30;
 
       border-radius: inherit;
       color: unset;

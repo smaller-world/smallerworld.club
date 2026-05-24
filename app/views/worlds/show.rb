@@ -24,7 +24,7 @@ class Views::Worlds::Show < Views::Base
   def view_template
     Components::Layout(page_title: @world.name) do |layout|
       layout.page_container(class: "max-w-lg space-y-8") do
-        section(class: "space-y-4") do
+        section(class: "flex flex-col gap-4") do
           div(class: "flex justify-between") do
             button_back_to(:home)
 
@@ -35,7 +35,7 @@ class Views::Worlds::Show < Views::Base
                 icon: "huge/pencil-edit-01",
                 variant: :secondary,
               )
-            elsif (user = current_user) &&
+            elsif (user = Current.user) &&
                 (keys = @world.keys.where(recipient: user).presence)
               div(class: "flex gap-0.5 justify-center self-center") do
                 keys.each do |key|
@@ -50,21 +50,17 @@ class Views::Worlds::Show < Views::Base
             end
           end
 
-          Components::Card() do |card|
-            card.header(class: "flex flex-col items-center gap-y-2") do
-              image_tag(
-                @world.page_icon_variant,
-                class: "size-24 rounded-world-icon object-cover",
-              )
-              card.title(element: :h1, class: "text-xl text-center") do
-                @world.name
+          if allowed_to?(:manage?, @world)
+            Components::Card() do |card|
+              card.header(class: "flex flex-col items-center gap-2") do
+                image_tag(
+                  @world.page_icon_variant,
+                  class: "size-32 rounded-world-icon object-cover",
+                )
+                card.title(element: :h1, class: "text-2xl text-center") do
+                  @world.name
+                end
               end
-            end
-            card.content(class: "text-center") do
-              "welcome to my lovely world..."
-              # Components::WorldForm(world: @world)
-            end
-            if allowed_to?(:manage?, @world)
               card.footer(class: "flex gap-2 justify-center") do
                 button_link_to(
                   "your friends",
@@ -80,6 +76,16 @@ class Views::Worlds::Show < Views::Base
                 )
               end
             end
+          else
+            div(class: "flex flex-col items-center gap-2 pt-6") do
+              image_tag(
+                @world.page_icon_variant,
+                class: "size-32 rounded-world-icon object-cover",
+              )
+              h1(class: "text-2xl text-center") do
+                @world.name
+              end
+            end
           end
 
           if allowed_to?(:manage?, @world)
@@ -89,14 +95,28 @@ class Views::Worlds::Show < Views::Base
               variant: :default,
               size: :lg,
               icon: "huge/quill-write-02",
-              class: "w-full text-base font-bold",
+              class: "text-lg font-bold rounded-full px-3 self-center gap-2",
+              icon_class: "size-5",
             )
           end
         end
 
         section(class: "space-y-4") do
-          ul(id: "posts", class: "space-y-4") do
-            Components::WorldPostItems(posts: @posts)
+          if @posts.any?
+            ul(id: "posts", class: "space-y-4") do
+              Components::WorldPostItems(posts: @posts)
+            end
+          else
+            Components::Empty() do |empty|
+              empty.header(class: "gap-0") do
+                empty.media(variant: :icon) do
+                  Icon("huge/message-edit-01")
+                end
+                empty.title do
+                  "no posts yet"
+                end
+              end
+            end
           end
 
           if @pagy.nil? || @pagy.next
