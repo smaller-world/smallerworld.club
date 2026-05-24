@@ -14,7 +14,7 @@ class Components::Dialog < Components::Base
   end
   def initialize(id: "dialog_#{SecureRandom.uuid}", **attributes)
     @id = id
-    @trigger_button_block = T.let(nil, T.nilable(T.proc.void))
+    @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
     super(**attributes)
   end
@@ -34,7 +34,7 @@ class Components::Dialog < Components::Base
       },
       @attributes,
     )) do
-      @trigger_button_block&.call
+      @trigger_block&.call
       content_block.call
     end
   end
@@ -53,7 +53,7 @@ class Components::Dialog < Components::Base
     ).void
   end
   def with_trigger_button(variant: :default, size: :default, **attributes, &content)
-    @trigger_button_block = ->() {
+    @trigger_block = ->() {
       render Components::Button.new(
         variant:,
         size:,
@@ -61,6 +61,11 @@ class Components::Dialog < Components::Base
         &content
       )
     }
+  end
+
+  sig { params(block: T.proc.void).void }
+  def with_trigger(&block)
+    @trigger_block = block
   end
 
   sig do

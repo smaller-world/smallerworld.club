@@ -20,12 +20,23 @@ class Components::PostCard < Components::Base
   def view_template
     Components::Card(
       **mix(
-        { id: dom_id(@post), class: "gap-0 shadow-sm" },
+        {
+          id: dom_id(@post),
+          class: "gap-0 shadow-sm",
+        },
         @attributes,
       ),
     ) do |card|
-      card.header do
-        card.description(class: "text-xs") do
+      card.header(class: "gap-0.5") do
+        card.description(class: class_names(
+          "text-xs flex gap-2",
+          "mb-2" => @post.title.nil?,
+        )) do
+          if (emoji = @post.emoji)
+            div(class: "text-lg font-emoji relative -mt-1") do
+              emoji
+            end
+          end
           local_time(@post.created_at, class: "lowercase")
         end
         if (title = @post.title)
@@ -100,11 +111,11 @@ class Components::PostCard < Components::Base
   def reply_via_menu(**attributes)
     Components::DropdownMenu() do |menu|
       menu.with_trigger_button(**mix({ class: "rounded-full" }, attributes)) do |button|
-        button.inline_start_icon("huge/mail-reply-01")
+        button.inline_start_icon("huge/arrow-move-up-left")
         span { "reply via" }
       end
 
-      menu.with_content(anchor: [ :bottom, :end ]) do |content|
+      menu.with_content(anchor: [ :bottom ]) do |content|
         User::MESSAGING_PLATFORMS.each do |platform|
           content.link_item_to(@post.reply_url(platform:)) do
             reply_platform_icon(platform)

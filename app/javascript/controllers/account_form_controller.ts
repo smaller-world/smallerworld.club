@@ -12,13 +12,13 @@ export default class AccountFormController extends Controller {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasNameInputTarget) {
       throw new Error("Missing nameInput target");
     }
     if (!this.hasSubmitButtonLabelTarget) {
       throw new Error("Missing submitButtonLabel target");
     }
-    super.connect();
   }
 
   // == Actions ==

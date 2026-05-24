@@ -10,6 +10,9 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_keys_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def account_time_zone_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -62,9 +65,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_key_grant_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_post_url(*args); end
@@ -190,10 +190,10 @@ module GeneratedUrlHelpersModule
   def verify_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_key_url(*args); end
+  def world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_keys_url(*args); end
+  def world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_url(*args); end

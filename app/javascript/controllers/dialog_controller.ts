@@ -10,10 +10,10 @@ export default class DialogController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasContentTarget) {
       throw new Error("Missing content target");
     }
-    super.connect();
   }
 
   // == Actions ==

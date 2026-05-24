@@ -709,6 +709,7 @@ DEPENDENCIES
   thruster
   turbo-rails
   tzinfo-data
+  unicode-emoji (~> 4.2)
   web-console
 
 CHECKSUMS

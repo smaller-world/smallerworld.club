@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Components::WorldKeyForm < Components::Base
+class Components::AcceptWorldKeyForm < Components::Base
   # == Initialization ==
 
   sig { params(key: WorldKey, attributes: T.untyped).void }
@@ -22,7 +22,7 @@ class Components::WorldKeyForm < Components::Base
         style: "color: var(--world-key-color-#{@key.color})",
       )
 
-      form_with(model: @key) do |form|
+      form_with(model: [ :accept, @key ]) do |form|
         form.hidden_field(:grant, value: @world.key_grant(color: @key.color))
         submit_button_for(form, size: :lg) do
           Icon("huge/door-01")

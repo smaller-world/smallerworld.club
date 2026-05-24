@@ -4,3 +4,4 @@ import "./tailwind_elements";
 import "./active_storage";
 import "./lexxy";
 import "./sentry";
+import "./emoji_mart";

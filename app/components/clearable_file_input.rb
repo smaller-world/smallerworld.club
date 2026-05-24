@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::ClearableFileInput < Components::Input
@@ -21,10 +21,7 @@ class Components::ClearableFileInput < Components::Input
     attributes: T.untyped
   )
     @direct_upload = direct_upload
-    @input_options = T.let(
-      { required: },
-      T.nilable(T::Hash[Symbol, T.untyped]),
-    )
+    @required = required
     @blob = T.let(
       case value
       when ActiveStorage::Blob
@@ -96,7 +93,7 @@ class Components::ClearableFileInput < Components::Input
       html = @form.hidden_field(@field, value: nil)
       raw(html) # rubocop:disable Rails/OutputSafety
     end
-    group.file_input(direct_upload: @direct_upload, **@input_options)
+    group.file_input(direct_upload: @direct_upload, required: @required)
     group.addon(
       align: :inline_end,
       data: { clearable_file_input_target: "spinner" },

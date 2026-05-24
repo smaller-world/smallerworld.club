@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Views::WorldKeys::New < Views::Base
+class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
   sig { params(key: WorldKey).void }
@@ -27,7 +27,7 @@ class Views::WorldKeys::New < Views::Base
             end
           end
           card.content do
-            Components::WorldKeyForm(key: @key)
+            Components::AcceptWorldKeyForm(key: @key)
           end
         end
       end

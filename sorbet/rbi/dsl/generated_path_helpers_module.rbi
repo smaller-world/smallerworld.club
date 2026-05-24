@@ -10,6 +10,9 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_keys_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -62,9 +65,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_key_grant_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def new_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_path(*args); end
@@ -190,10 +190,10 @@ module GeneratedPathHelpersModule
   def verify_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_key_path(*args); end
+  def world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_keys_path(*args); end
+  def world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end

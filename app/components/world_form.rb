@@ -22,7 +22,14 @@ class Components::WorldForm < Components::Base
     ) do |form|
       field_for(form, :name) do |f|
         f.label { "name" }
-        f.text_input(required: true)
+        f.text_input(required: true, placeholder: @world.owner!.default_world_name)
+        f.error
+      end
+
+      field_for(form, :blurb) do |f|
+        f.label { "blurb (optional)" }
+        f.textarea
+        f.description { "appears just below the world name" }
         f.error
       end
 

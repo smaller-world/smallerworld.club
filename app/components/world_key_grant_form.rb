@@ -81,7 +81,7 @@ class Components::WorldKeyGrantForm < Components::Base
                 class: "self-center text-muted-foreground text-xs",
                 data: {
                   controller: "clipboard flash",
-                  clipboard_copy_value: new_world_key_url(@key_color),
+                  clipboard_copy_value: world_key_grant_url(@key_color),
                   flash_text_value: "copied!",
                   action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
                 },
@@ -102,14 +102,14 @@ class Components::WorldKeyGrantForm < Components::Base
 
   sig { params(key_color: Symbol).void }
   def qr_code(key_color)
-    qr_code = RQRCode::QRCode.new(new_world_key_url(key_color))
+    qr_code = RQRCode::QRCode.new(world_key_grant_url(key_color))
     svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
     raw(safe(svg)) # rubocop:disable Rails/OutputSafety
   end
 
   sig { params(key_color: Symbol).returns(String) }
-  def new_world_key_url(key_color)
+  def world_key_grant_url(key_color)
     grant = @world.key_grant(color: key_color)
-    shortlinked.new_world_key_url(grant:)
+    shortlinked.world_key_grant_url(grant:)
   end
 end

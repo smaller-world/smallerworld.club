@@ -61,7 +61,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
-        world_params = params.expect(world: [ :name, :icon ])
+        world_params = params.expect(world: [ :name, :blurb, :icon ])
         world = current_user.build_own_world(**world_params)
         if world.save
           redirect_to(world)
@@ -77,7 +77,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
-        world_params = params.expect(world: [ :name, :icon ])
+        world_params = params.expect(world: [ :name, :blurb, :icon ])
         if world.update(**world_params)
           redirect_to(world)
         else

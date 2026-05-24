@@ -24,10 +24,10 @@ export default class UppyGroupController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasDndTemplateTarget) {
       throw new Error("Missing dndTemplate target");
     }
-    super.connect();
   }
 
   // == Actions ==

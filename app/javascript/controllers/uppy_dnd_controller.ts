@@ -60,6 +60,7 @@ export default class UppyDndController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasDropzoneTarget) {
       throw new Error("Missing dropzone target");
     }
@@ -176,7 +177,6 @@ export default class UppyDndController extends Controller<HTMLElement> {
     setTimeout(() => {
       this.dispatch("ready");
     });
-    super.connect();
   }
 
   disconnect(): void {

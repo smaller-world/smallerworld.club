@@ -7,6 +7,7 @@
 # Table name: worlds
 #
 #  id         :uuid             not null, primary key
+#  blurb      :text
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -24,6 +25,7 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class World < ApplicationRecord
   extend FriendlyId
+  include NormalizesText
 
   # == Configuration ==
 
@@ -89,6 +91,11 @@ class World < ApplicationRecord
     end
   end
 
+  # == Normalizations ==
+
+  strips_text :name, :blurb
+  nilify_blanks :blurb
+
   # == Validations ==
 
   validates :name,
@@ -128,7 +135,7 @@ class World < ApplicationRecord
   sig { void }
   def set_default_name
     if (owner = self.owner)
-      self[:name] ||= "#{owner.name}'s world"
+      self[:name] ||= owner.default_world_name
     end
   end
 end

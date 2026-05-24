@@ -129,6 +129,9 @@ gem "action_policy", "~> 0.7.6"
 # Render QR codes
 gem "rqrcode", "~> 3.2"
 
+# Up-to-date Emoji Regex
+gem "unicode-emoji", "~> 4.2", require: "unicode/emoji"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

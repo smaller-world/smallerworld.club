@@ -33,6 +33,7 @@ export default class ComboboxController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasInputTarget) {
       throw new Error("Missing input target");
     }
@@ -45,7 +46,6 @@ export default class ComboboxController extends Controller<HTMLElement> {
         attributeFilter: ["aria-expanded"],
       });
     }
-    super.connect();
   }
 
   inlineStartAddonConnected(): void {

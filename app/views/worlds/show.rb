@@ -15,6 +15,14 @@ class Views::Worlds::Show < Views::Base
     @world = world
     @posts = posts
     @pagy = pagy
+    @keys = T.let(
+      if (user = Current.user)
+        @world.keys.accepted.where(recipient: user).to_a
+      else
+        []
+      end,
+      T::Array[WorldKey],
+    )
     super()
   end
 
@@ -23,7 +31,7 @@ class Views::Worlds::Show < Views::Base
   sig { override.void }
   def view_template
     Components::Layout(page_title: @world.name) do |layout|
-      layout.page_container(class: "max-w-lg space-y-8") do
+      layout.page_container(class: "max-w-lg flex flex-col gap-8") do
         section(class: "flex flex-col gap-4") do
           div(class: "flex justify-between") do
             button_back_to(:home)
@@ -35,10 +43,9 @@ class Views::Worlds::Show < Views::Base
                 icon: "huge/pencil-edit-01",
                 variant: :secondary,
               )
-            elsif (user = Current.user) &&
-                (keys = @world.keys.where(recipient: user).presence)
+            elsif @keys.any?
               div(class: "flex gap-0.5 justify-center self-center") do
-                keys.each do |key|
+                @keys.each do |key|
                   Components::Badge(variant: :ghost, class: "h-6 px-1.5 [&>svg]:size-4") do
                     Icon(
                       "huge/key-02",
@@ -52,13 +59,18 @@ class Views::Worlds::Show < Views::Base
 
           if allowed_to?(:manage?, @world)
             Components::Card() do |card|
-              card.header(class: "flex flex-col items-center gap-2") do
+              card.content(class: "flex flex-col items-center gap-2") do
                 image_tag(
                   @world.page_icon_variant,
                   class: "size-32 rounded-world-icon object-cover",
                 )
                 card.title(element: :h1, class: "text-2xl text-center") do
                   @world.name
+                end
+                if (blurb = @world.blurb)
+                  p(class: "whitespace-pre-wrap text-center text-muted-foreground text-sm") do
+                    blurb
+                  end
                 end
               end
               card.footer(class: "flex gap-2 justify-center") do
@@ -85,20 +97,25 @@ class Views::Worlds::Show < Views::Base
               h1(class: "text-2xl text-center") do
                 @world.name
               end
+              if (blurb = @world.blurb)
+                p(class: "whitespace-pre-wrap text-center text-muted-foreground text-sm") do
+                  blurb
+                end
+              end
             end
           end
+        end
 
-          if allowed_to?(:manage?, @world)
-            button_link_to(
-              "new post",
-              [ :new, @world, :post ],
-              variant: :default,
-              size: :lg,
-              icon: "huge/quill-write-02",
-              class: "text-lg font-bold rounded-full px-3 self-center gap-2",
-              icon_class: "size-5",
-            )
-          end
+        if allowed_to?(:manage?, @world)
+          button_link_to(
+            "new post",
+            [ :new, @world, :post ],
+            variant: :default,
+            size: :lg,
+            icon: "huge/quill-write-02",
+            class: "text-lg font-bold rounded-full px-3 self-center gap-2",
+            icon_class: "size-5",
+          )
         end
 
         section(class: "space-y-4") do

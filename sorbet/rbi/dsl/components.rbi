@@ -8,6 +8,15 @@
 module Components
   sig do
     params(
+      key: ::WorldKey,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+    ).void
+  end
+  def AcceptWorldKeyForm(key:, **attributes, &block); end
+
+  sig do
+    params(
       user: ::User,
       options: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
@@ -90,6 +99,16 @@ module Components
 
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
   def DropdownMenu(**attributes, &block); end
+
+  sig do
+    params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
+    ).void
+  end
+  def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -380,15 +399,6 @@ module Components
 
   sig do
     params(
-      key: ::WorldKey,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
-    ).void
-  end
-  def WorldKeyForm(key:, **attributes, &block); end
-
-  sig do
-    params(
       world: ::World,
       key_color: T.nilable(::Symbol),
       attributes: T.untyped,
@@ -416,6 +426,15 @@ module Components
   def WorldPostItems(posts:, &block); end
 
   class << self
+    sig do
+      params(
+        key: ::WorldKey,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+      ).void
+    end
+    def AcceptWorldKeyForm(key:, **attributes, &block); end
+
     sig do
       params(
         user: ::User,
@@ -505,6 +524,16 @@ module Components
       ).void
     end
     def DropdownMenu(**attributes, &block); end
+
+    sig do
+      params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
+      ).void
+    end
+    def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -792,15 +821,6 @@ module Components
       ).void
     end
     def WorldForm(world:, **options, &block); end
-
-    sig do
-      params(
-        key: ::WorldKey,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
-      ).void
-    end
-    def WorldKeyForm(key:, **attributes, &block); end
 
     sig do
       params(

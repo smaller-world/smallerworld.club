@@ -1,9 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
-import tippy, { type Instance, type Placement, roundArrow } from "tippy.js";
+import tippy, {
+  type Instance,
+  type Placement,
+  type Props,
+  roundArrow,
+} from "tippy.js";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class TooltipController extends Controller<HTMLElement> {
+export default class TippyController extends Controller<HTMLElement> {
   // == Values ==
 
   static values = {
@@ -11,7 +16,8 @@ export default class TooltipController extends Controller<HTMLElement> {
     trigger: String,
     placement: { type: String, default: "top" },
     hideOnClick: { type: Boolean, default: true },
-    flashImmediately: Boolean,
+    showOnCreate: Boolean,
+    flashOnCreate: Boolean,
     flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
   };
@@ -19,13 +25,14 @@ export default class TooltipController extends Controller<HTMLElement> {
   declare readonly triggerValue: string;
   declare readonly placementValue: Placement;
   declare readonly hideOnClickValue: boolean;
-  declare readonly flashImmediatelyValue: boolean;
+  declare readonly showOnCreateValue: boolean;
+  declare readonly flashOnCreateValue: boolean;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
 
   // == State ==
 
-  #tooltip?: Instance | null;
+  #tippy?: Instance | null;
   #showFlashTimeout?: number | null;
   #hideFlashTimeout?: number | null;
 
@@ -33,20 +40,20 @@ export default class TooltipController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
-    this.#tooltip = tippy(this.element, {
+    const props: Partial<Props> = {
       content: this.contentValue,
       inertia: true,
       arrow: roundArrow,
       animation: "scale",
       placement: this.placementValue,
       hideOnClick: this.hideOnClickValue,
-    });
+      showOnCreate: this.showOnCreateValue,
+    };
     if (this.triggerValue) {
-      this.#tooltip.setProps({
-        trigger: this.triggerValue,
-      });
+      props.trigger = this.triggerValue;
     }
-    if (this.flashImmediatelyValue) {
+    this.#tippy = tippy(this.element, props);
+    if (this.flashOnCreateValue) {
       this.flash();
     }
     addCleanupAction(this, "destroy");
@@ -60,17 +67,17 @@ export default class TooltipController extends Controller<HTMLElement> {
   // == Actions ==
 
   flash(): void {
-    if (!this.#tooltip || !this.element.checkVisibility()) {
+    if (!this.#tippy || !this.element.checkVisibility()) {
       return;
     }
     this.#showFlashTimeout = setTimeout(() => {
-      if (!this.element.checkVisibility() || !this.#tooltip) {
+      if (!this.element.checkVisibility() || !this.#tippy) {
         return;
       }
-      this.#tooltip.show();
+      this.#tippy.show();
       if (this.flashDurationValue) {
         this.#hideFlashTimeout = setTimeout(() => {
-          this.#tooltip?.hide();
+          this.#tippy?.hide();
         }, this.flashDurationValue);
       }
     }, this.flashDelayValue);
@@ -85,9 +92,9 @@ export default class TooltipController extends Controller<HTMLElement> {
       clearTimeout(this.#hideFlashTimeout);
       this.#hideFlashTimeout = null;
     }
-    if (this.#tooltip) {
-      this.#tooltip.destroy();
-      this.#tooltip = null;
+    if (this.#tippy) {
+      this.#tippy.destroy();
+      this.#tippy = null;
     }
   }
 }

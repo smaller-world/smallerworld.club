@@ -54,13 +54,20 @@ Rails.application.routes.draw do
       path: "/keys",
       only: [ :index ]
     resources :world_key_grants,
-      path: "/key_grants",
-      only: :new,
-      as: :key_grants
+      path: "/invitations",
+      as: :key_grants,
+      only: :new
   end
 
-  # == World keys
-  resources :world_keys, only: [ :new, :create, :destroy ]
+  # == World Keys
+  resources :world_keys, only: [ :destroy ] do
+    collection do
+      post :accept
+    end
+  end
+
+  # == World Key Grants
+  resources :world_key_grants, only: [ :show ], param: :grant, path: "/world_invitations"
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ]

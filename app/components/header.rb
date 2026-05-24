@@ -6,6 +6,8 @@ class Components::Header < Components::Base
 
   sig { override.params(content: T.nilable(T.proc.void)).void }
   def view_template(&content)
+    logo_button_options = { variant: :ghost, class: "gap-x-1.5" }
+
     root_element(:header, class: "flex justify-center py-2") do
       if authenticated?
         Components::DropdownMenu() do |menu|
@@ -42,14 +44,6 @@ class Components::Header < Components::Base
   private
 
   # == Helpers ==
-
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def logo_button_options
-    {
-      variant: :ghost,
-      class: "gap-x-1.5",
-    }
-  end
 
   sig { void }
   def logo_button_content

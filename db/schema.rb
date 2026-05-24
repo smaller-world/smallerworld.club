@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_13_204402) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_24_062757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_204402) do
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "emoji"
     t.text "plain_body", null: false
     t.string "title"
     t.datetime "updated_at", null: false
@@ -240,17 +241,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_204402) do
   end
 
   create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "accepted_at"
     t.string "color", null: false
     t.datetime "created_at", null: false
     t.uuid "recipient_id", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.index ["accepted_at"], name: "index_world_keys_on_accepted_at"
     t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
     t.index ["world_id", "recipient_id", "color"], name: "index_world_keys_uniqueness", unique: true
     t.index ["world_id"], name: "index_world_keys_on_world_id"
   end
 
   create_table "worlds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "blurb"
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.uuid "owner_id", null: false

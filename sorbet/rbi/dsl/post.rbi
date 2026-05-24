@@ -687,6 +687,51 @@ class Post
     sig { void }
     def created_at_will_change!; end
 
+    sig { returns(T.nilable(::String)) }
+    def emoji; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def emoji=(value); end
+
+    sig { returns(T::Boolean) }
+    def emoji?; end
+
+    sig { returns(T.nilable(::String)) }
+    def emoji_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def emoji_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def emoji_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def emoji_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def emoji_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def emoji_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def emoji_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def emoji_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def emoji_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def emoji_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def emoji_was; end
+
+    sig { void }
+    def emoji_will_change!; end
+
     sig { returns(::String) }
     def id; end
 
@@ -826,6 +871,9 @@ class Post
     def restore_created_at!; end
 
     sig { void }
+    def restore_emoji!; end
+
+    sig { void }
     def restore_id!; end
 
     sig { void }
@@ -848,6 +896,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_emoji; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_emoji?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -977,6 +1031,9 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_emoji?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

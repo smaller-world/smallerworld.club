@@ -20,7 +20,7 @@ class Components::PostForm < Components::Base
       model:,
       **mix(
         {
-          class: "flex flex-col gap-y-4",
+          class: "flex flex-col gap-4",
           data: {
             controller: "form",
           },
@@ -28,9 +28,14 @@ class Components::PostForm < Components::Base
         @options,
       ),
     ) do |form|
-      field_for(form, :title) do |f|
-        f.text_input(placeholder: "a title!")
-        f.error
+      Components::FieldGroup(class: "flex-row gap-3") do
+        field_for(form, :emoji, class: "flex-0") do |f|
+          f.emoji_input(**f.error_tooltip_attributes)
+        end
+        field_for(form, :title, class: "flex-1") do |f|
+          f.text_input(placeholder: "a title!")
+          f.error
+        end
       end
       field_for(form, :body) do |f|
         f.lexxy_editor(

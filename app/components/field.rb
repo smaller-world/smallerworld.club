@@ -241,6 +241,11 @@ class Components::Field < Components::Base
     )
   end
 
+  sig { params(attributes: T.untyped).void }
+  def emoji_input(**attributes)
+    render Components::EmojiInput.new(form: @form, field: @field, **attributes)
+  end
+
   sig do
     params(
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
@@ -312,6 +317,22 @@ class Components::Field < Components::Base
   # def otp_input(**attributes)
   #   Components::OtpInput(form: @form, field: @field, **attributes)
   # end
+
+  sig { returns(T::Hash[Symbol, T.untyped]) }
+  def error_tooltip_attributes
+    if (message = error_messages&.first)
+      {
+        data: {
+          controller: "tippy",
+          tippy_content_value: message,
+          tippy_placement_value: "bottom",
+          tippy_show_on_create_value: true,
+        },
+      }
+    else
+      {}
+    end
+  end
 
   private
 

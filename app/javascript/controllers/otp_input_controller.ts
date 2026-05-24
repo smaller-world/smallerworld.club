@@ -22,6 +22,7 @@ export default class OtpInputController extends Controller {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasInputTarget) {
       throw new Error("Missing input target");
     }

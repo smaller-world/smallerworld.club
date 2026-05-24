@@ -4,7 +4,7 @@
 
 @layer components {
   .tippy-box {
-    @apply rounded-xl bg-foreground;
+    @apply rounded-md bg-foreground;
   }
 
   .tippy-arrow {

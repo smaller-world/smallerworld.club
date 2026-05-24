@@ -72,6 +72,11 @@ class User < ApplicationRecord
 
   # == Methods ==
 
+  sig { returns(String) }
+  def default_world_name
+    "#{name}'s world"
+  end
+
   sig { params(platform: Symbol, message: String).returns(String) }
   def dm_url(platform:, message:)
     escaped_message = CGI.escapeURIComponent(message)

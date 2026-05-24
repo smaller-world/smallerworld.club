@@ -8,10 +8,10 @@ export default class FieldController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     if (!this.hasErrorTarget) {
       throw new Error("Missing error target");
     }
-    super.connect();
   }
 
   // == Actions ==

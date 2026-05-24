@@ -7,6 +7,7 @@
 # Table name: posts
 #
 #  id         :uuid             not null, primary key
+#  emoji      :string
 #  plain_body :text             not null
 #  title      :string
 #  created_at :datetime         not null
@@ -61,10 +62,12 @@ class Post < ApplicationRecord
 
   # == Normalizations
 
-  nilify_blanks :title
+  strips_text :title
+  nilify_blanks :title, :emoji
 
   # == Validations ==
 
+  validates :emoji, emoji: true, allow_nil: true
   validates :body, presence: true
   validates :images,
     processable_file: true,
@@ -79,23 +82,30 @@ class Post < ApplicationRecord
 
   before_save :set_plain_body
 
+  # == Emoji ==
+
+  sig { returns(String) }
+  def fun_title
+    [ emoji, title ].compact.join(" ")
+  end
+
   # == Snippets ==
 
   sig { returns(T.nilable(String)) }
   def title_snippet
-    if (title = self.title)
+    if (title = fun_title)
       snip(title.strip.truncate(92))
     end
   end
 
   sig { returns(String) }
-  def truncated_body_text
-    body.to_plain_text.strip.truncate(120)
+  def truncated_plain_body
+    plain_body.strip.truncate(120)
   end
 
   sig { returns(String) }
   def body_snippet
-    snip(truncated_body_text.gsub("\n\n", "\n"))
+    snip(truncated_plain_body.gsub("\n\n", "\n"))
   end
 
   sig { returns(String) }
