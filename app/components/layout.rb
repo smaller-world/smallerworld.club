@@ -95,7 +95,7 @@ class Components::Layout < Components::Base
 
       body(class: [ "flex min-h-dvh flex-col", @body_class ]) do
         Components::Header()
-        flash_card(class: "m-4 self-center")
+        flash_alert
         raw(body) # rubocop:disable Rails/OutputSafety
         update_account_time_zone_form
       end
@@ -155,23 +155,18 @@ class Components::Layout < Components::Base
     meta(name: "twitter:image", content: "/banner.png")
   end
 
-  sig { params(attributes: T.untyped).void }
-  def flash_card(**attributes)
+  sig { void }
+  def flash_alert
     message = flash[:notice] || flash[:alert] or return
-    Components::Card(
-      size: :sm,
-      **mix(
-        {
-          class: "flash",
-          data: {
-            variant: ("alert" if flash.key?(:alert)),
-          }.compact,
-        },
-        **attributes,
-      ),
-    ) do |card|
-      card.content(class: "font-medium") do
-        message
+    is_alert = flash.key?(:alert)
+    div(class: "max-w-lg p-4 self-center w-full") do
+      Components::Alert(
+        variant: is_alert ? :destructive : :default,
+      ) do |alert|
+        Icon(is_alert ? "huge/alert-01" : "huge/information-circle")
+        alert.description do
+          message
+        end
       end
     end
   end

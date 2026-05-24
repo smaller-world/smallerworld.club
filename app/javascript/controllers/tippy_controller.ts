@@ -15,6 +15,7 @@ export default class TippyController extends Controller<HTMLElement> {
     content: String,
     trigger: String,
     placement: { type: String, default: "top" },
+    animation: { type: String, default: "shift-away" },
     hideOnClick: { type: Boolean, default: true },
     showOnCreate: Boolean,
     flashOnCreate: Boolean,
@@ -24,6 +25,7 @@ export default class TippyController extends Controller<HTMLElement> {
   declare readonly contentValue: string;
   declare readonly triggerValue: string;
   declare readonly placementValue: Placement;
+  declare readonly animationValue: string;
   declare readonly hideOnClickValue: boolean;
   declare readonly showOnCreateValue: boolean;
   declare readonly flashOnCreateValue: boolean;
@@ -40,11 +42,14 @@ export default class TippyController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
+    if (!this.contentValue) {
+      return;
+    }
     const props: Partial<Props> = {
       content: this.contentValue,
       inertia: true,
       arrow: roundArrow,
-      animation: "scale",
+      animation: this.animationValue,
       placement: this.placementValue,
       hideOnClick: this.hideOnClickValue,
       showOnCreate: this.showOnCreateValue,

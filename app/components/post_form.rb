@@ -20,7 +20,7 @@ class Components::PostForm < Components::Base
       model:,
       **mix(
         {
-          class: "flex flex-col gap-4",
+          class: "flex flex-col gap-6",
           data: {
             controller: "form",
           },
@@ -28,25 +28,27 @@ class Components::PostForm < Components::Base
         @options,
       ),
     ) do |form|
-      Components::FieldGroup(class: "flex-row gap-3") do
-        field_for(form, :emoji, class: "flex-0") do |f|
-          f.emoji_input(**f.error_tooltip_attributes)
+      div(class: "flex flex-col gap-4") do
+        Components::FieldGroup(class: "flex-row gap-3") do
+          field_for(form, :emoji, class: "flex-0") do |f|
+            f.emoji_input(**f.error_tooltip_attributes)
+          end
+          field_for(form, :title, class: "flex-1") do |f|
+            f.text_input(placeholder: "a title!")
+            f.error
+          end
         end
-        field_for(form, :title, class: "flex-1") do |f|
-          f.text_input(placeholder: "a title!")
+        field_for(form, :body) do |f|
+          f.lexxy_editor(
+            placeholder: "something i want to share...",
+            required: true,
+            class: "min-h-36",
+            data: {
+              action: "keydown.meta+enter->form#submit",
+            },
+          )
           f.error
         end
-      end
-      field_for(form, :body) do |f|
-        f.lexxy_editor(
-          placeholder: "something i want to share...",
-          required: true,
-          class: "min-h-36",
-          data: {
-            action: "keydown.meta+enter->form#submit",
-          },
-        )
-        f.error
       end
       field_for(form, :images) do |f|
         f.label { "add up to 4 pics" }

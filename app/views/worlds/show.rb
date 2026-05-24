@@ -46,10 +46,15 @@ class Views::Worlds::Show < Views::Base
             elsif @keys.any?
               div(class: "flex gap-0.5 justify-center self-center") do
                 @keys.each do |key|
-                  Components::Badge(variant: :ghost, class: "h-6 px-1.5 [&>svg]:size-4") do
+                  Components::Badge(variant: :ghost, class: "h-8 px-2", data: {
+                    controller: "tippy",
+                    tippy_content_value: "you've got #{key_descriptor(key)} to #{@world.name}",
+                    tippy_placement_value: "bottom-end",
+                  }) do
                     Icon(
                       "huge/key-02",
                       style: "color: var(--world-key-color-#{key.color})",
+                      class: "size-5",
                     )
                   end
                 end
@@ -143,6 +148,20 @@ class Views::Worlds::Show < Views::Base
           end
         end
       end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(key: WorldKey).returns(String) }
+  def key_descriptor(key)
+    color = key.color
+    if color.match?(/^[aeiou]/i)
+      "an #{color} key"
+    else
+      "a #{color} key"
     end
   end
 end

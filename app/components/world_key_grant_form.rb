@@ -104,7 +104,18 @@ class Components::WorldKeyGrantForm < Components::Base
   def qr_code(key_color)
     qr_code = RQRCode::QRCode.new(world_key_grant_url(key_color))
     svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
-    raw(safe(svg)) # rubocop:disable Rails/OutputSafety
+    div(class: "relative") do
+      raw(safe(svg)) # rubocop:disable Rails/OutputSafety
+      div(class: "absolute inset-0 flex items-center justify-center") do
+        div(class: "size-20 bg-foreground flex justify-center p-3 rounded-xl border-4 border-background") do
+          image_tag(
+            "logo.png",
+            alt: [ Rails.configuration.x.site.name, "logo" ].compact.join(" "),
+            class: "flex-1",
+          )
+        end
+      end
+    end
   end
 
   sig { params(key_color: Symbol).returns(String) }
