@@ -3,7 +3,7 @@
 
 module Views; end
 
-module Components
+module Components # rubocop:disable Style/OneClassPerFile
   extend Phlex::Kit
 end
 

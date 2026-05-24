@@ -190,6 +190,17 @@ module Components
 
   sig do
     params(
+      images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
+      max_height: ::Integer,
+      flip_boundary: ::Integer,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ImageStack).void)
+    ).void
+  end
+  def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       attributes: T.untyped,
@@ -612,6 +623,17 @@ module Components
       ).void
     end
     def Header(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
+        max_height: ::Integer,
+        flip_boundary: ::Integer,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ImageStack).void)
+      ).void
+    end
+    def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

@@ -174,7 +174,7 @@ class Components::DropdownMenu::Content < Components::Base
   sig { returns(T.nilable(String)) }
   def anchor_property
     if (values = Array.wrap(@anchor).presence)
-      values.map(&:to_s).join(" ")
+      values.join(" ")
     end
   end
 end

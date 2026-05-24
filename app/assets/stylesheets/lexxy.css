@@ -11,6 +11,11 @@
     hr {
       @apply w-full text-ring/50;
     }
+
+    ol,
+    ul:not(.lexxy-prompt-menu) {
+      @apply ml-6;
+    }
   }
 
   lexxy-editor {

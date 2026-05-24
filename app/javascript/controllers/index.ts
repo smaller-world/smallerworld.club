@@ -12,6 +12,7 @@ import EmojiMartController from "./emoji_mart_controller";
 import FlashController from "./flash_controller";
 import FormController from "./form_controller";
 import HelloController from "./hello_controller";
+import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
@@ -49,5 +50,6 @@ application.register("form", FormController);
 application.register("dialog", DialogController);
 application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
+application.register("image-stack", ImageStackController);
 
 // application.register("otp-input", OtpInputController);

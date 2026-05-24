@@ -78,7 +78,7 @@ class Views::Worlds::Show < Views::Base
                   end
                 end
               end
-              card.footer(class: "flex gap-2 justify-center") do
+              card.footer(class: "flex flex-wrap gap-x-2 gap-y-1 justify-center") do
                 button_link_to(
                   "your friends",
                   [ @world, WorldKey ],

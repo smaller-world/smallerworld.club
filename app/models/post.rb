@@ -49,7 +49,7 @@ class Post < ApplicationRecord
   end
 
   sig { returns(T::Array[T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)]) }
-  def images_thumbnails
+  def image_thumbnails
     images_attachments.map do |attachment|
       blob = attachment.blob or next
       if blob.content_type == "image/gif"

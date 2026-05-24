@@ -22,7 +22,7 @@ class Components::PostCard < Components::Base
       **mix(
         {
           id: dom_id(@post),
-          class: "shadow-sm",
+          class: "shadow-sm overflow-visible",
         },
         @attributes,
       ),
@@ -58,12 +58,8 @@ class Components::PostCard < Components::Base
         div(class: "text-sm") do
           @post.body.to_s
         end
-        if (thumbnails = @post.images_thumbnails.presence)
-          div(class: "grid grid-cols-2 gap-4") do
-            thumbnails.each do |thumbnails|
-              image_tag(thumbnails, class: "aspect-square rounded-lg object-contain")
-            end
-          end
+        if (images = @post.image_thumbnails.presence)
+          Components::ImageStack(images:)
         end
       end
       card.footer(class: "flex justify-center gap-4") do
@@ -76,14 +72,10 @@ class Components::PostCard < Components::Base
 
   # == Helpers ==
 
-  sig { params(attributes: T.untyped).void }
-  def actions_menu(**attributes)
+  sig { params(class: T.nilable(String)).void }
+  def actions_menu(class: nil)
     Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(
-        variant: :outline,
-        size: :xs,
-        **attributes,
-      ) do
+      menu.with_trigger_button(variant: :outline, size: :xs, class:) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")
@@ -107,11 +99,11 @@ class Components::PostCard < Components::Base
     end
   end
 
-  sig { params(attributes: T.untyped).void }
-  def reply_via_menu(**attributes)
+  sig { void }
+  def reply_via_menu
     Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(**mix({ class: "rounded-full" }, attributes)) do |button|
-        button.inline_start_icon("huge/arrow-move-up-left")
+      menu.with_trigger_button(class: "rounded-full") do |button|
+        button.inline_start_icon("huge/message-01")
         span { "reply via" }
       end
 
@@ -126,8 +118,8 @@ class Components::PostCard < Components::Base
     end
   end
 
-  sig { params(platform: T.anything, attributes: T.untyped).void }
-  def reply_platform_icon(platform, **attributes)
+  sig { params(platform: T.anything).void }
+  def reply_platform_icon(platform)
     icon = case platform
     when :sms
       "huge/message-01"
@@ -138,6 +130,6 @@ class Components::PostCard < Components::Base
     else
       raise ArgumentError, "Unknown platform: #{platform}"
     end
-    Icon(icon, **attributes)
+    Icon(icon)
   end
 end
