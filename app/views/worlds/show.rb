@@ -4,17 +4,9 @@
 class Views::Worlds::Show < Views::Base
   # == Initialization ==
 
-  sig do
-    params(
-      world: World,
-      posts: T::Enumerable[Post],
-      pagy: T.nilable(Pagy),
-    ).void
-  end
-  def initialize(world:, posts:, pagy:)
+  sig { params(world: World).void }
+  def initialize(world:)
     @world = world
-    @posts = posts
-    @pagy = pagy
     @keys = T.let(
       if (user = Current.user)
         @world.keys.accepted.where(recipient: user).to_a
@@ -54,7 +46,7 @@ class Views::Worlds::Show < Views::Base
                     Icon(
                       "huge/key-02",
                       style: "color: var(--world-key-color-#{key.color})",
-                      class: "size-5",
+                      class: "size-4.5",
                     )
                   end
                 end
@@ -123,27 +115,20 @@ class Views::Worlds::Show < Views::Base
           )
         end
 
-        section(class: "space-y-4") do
-          if @posts.any?
-            ul(id: "posts", class: "space-y-4") do
-              Components::WorldPostItems(posts: @posts)
+        turbo_frame_tag(:posts, src: [ @world, :posts ], class: "space-y-4") do
+          Components::Card(class: "shadow-sm") do |card|
+            card.header do
+              card.description(class: "skeleton") { "placeholder" }
             end
-          else
-            Components::Empty() do |empty|
-              empty.header(class: "gap-0") do
-                empty.media(variant: :icon) do
-                  Icon("huge/message-edit-01")
-                end
-                empty.title do
-                  "no posts yet"
-                end
+            card.content(class: "flex flex-col gap-4") do
+              1..2.times do
+                p(class: "skeleton h-24")
               end
             end
-          end
-
-          if @pagy.nil? || @pagy.next
-            div(class: "flex flex-col items-center") do
-              Components::WorldNextPageControl(world: @world, pagy: @pagy)
+            card.footer(class: "flex justify-center") do
+              Components::Button(class: "rounded-full skeleton") do
+                "placeholder"
+              end
             end
           end
         end

@@ -18,11 +18,21 @@ class Components::WorldForm < Components::Base
     form_with(
       model: @world,
       class: "flex flex-col gap-y-4",
+      data: {
+        controller: "world-form",
+      },
       **@options,
     ) do |form|
       field_for(form, :name) do |f|
         f.label { "name" }
-        f.text_input(required: true, placeholder: @world.owner!.default_world_name)
+        f.text_input(
+          required: true,
+          placeholder: @world.owner!.default_world_name,
+          data: {
+            world_form_target: "nameInput",
+            action: "world-form#updateSubmitButtonLabel",
+          },
+        )
         f.error
       end
 
@@ -60,7 +70,9 @@ class Components::WorldForm < Components::Base
       submit_button_for(form) do |button|
         if @world.new_record?
           button.inline_start_icon("huge/plus-sign-square")
-          span { "create world" }
+          span(data: { world_form_target: "submitButtonLabel" }) do
+            "create world"
+          end
         else
           button.inline_start_icon("huge/floppy-disk")
           span { "save changes" }

@@ -14,7 +14,7 @@ class Components::NextPageControl < Components::Base
       disable_for: T.nilable(ActiveSupport::Duration),
       variant: Symbol,
       size: Symbol,
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
   def initialize(
@@ -22,9 +22,9 @@ class Components::NextPageControl < Components::Base
     pagy:,
     autoclick: false,
     disable_for: nil,
-    variant: :default,
+    variant: :secondary,
     size: :default,
-    **options
+    **attributes
   )
     super()
     @target = target
@@ -33,7 +33,7 @@ class Components::NextPageControl < Components::Base
     @variant = variant
     @size = size
     @disable_for = disable_for
-    @options = options
+    super(**attributes)
   end
 
   # == Component ==
@@ -56,7 +56,7 @@ class Components::NextPageControl < Components::Base
         page_attributes,
         autoclick_attributes,
         disable_for_attributes,
-        @options,
+        @attributes,
       ),
       &content
     )

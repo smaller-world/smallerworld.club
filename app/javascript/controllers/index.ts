@@ -1,4 +1,3 @@
-import AccountFormController from "./account_form_controller";
 import { application } from "./application";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
@@ -24,6 +23,7 @@ import ScrollToBottomController from "./scroll_to_bottom_controller";
 import TippyController from "./tippy_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
+import WorldFormController from "./world_form_controller";
 
 // import LoremPicsumController from "./lorem_picsum_controller";
 
@@ -44,7 +44,7 @@ application.register("lexxy-editor", LexxyEditorController);
 application.register("phone-number-input", PhoneNumberInputController);
 application.register("emoji-mart", EmojiMartController);
 application.register("emoji-input", EmojiInputController);
-application.register("account-form", AccountFormController);
+application.register("world-form", WorldFormController);
 application.register("radio-group", RadioGroupController);
 application.register("form", FormController);
 application.register("dialog", DialogController);

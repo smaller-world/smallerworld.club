@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_24_062757) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_24_221625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_24_062757) do
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.index ["world_id"], name: "index_posts_on_world_id"
+  end
+
+  create_table "reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "created_at", null: false
+    t.string "emoji", null: false
+    t.uuid "post_id", null: false
+    t.uuid "reactor_id", null: false
+    t.index ["post_id", "emoji", "reactor_id"], name: "index_reactions_uniqueness", unique: true
+    t.index ["post_id"], name: "index_reactions_on_post_id"
+    t.index ["reactor_id"], name: "index_reactions_on_reactor_id"
   end
 
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -266,6 +276,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_24_062757) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "posts", "worlds"
+  add_foreign_key "reactions", "posts"
+  add_foreign_key "reactions", "users", column: "reactor_id"
   add_foreign_key "sessions", "phone_number_verification_requests"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

@@ -1,0 +1,49 @@
+# typed: true
+# frozen_string_literal: true
+
+class Views::Posts::Index < Views::Base
+  # == Initialization ==
+
+  sig do
+    params(
+      world: World,
+      posts: T::Enumerable[Post],
+      pagy: T.nilable(Pagy),
+    ).void
+  end
+  def initialize(world:, posts:, pagy:)
+    @world = world
+    @posts = posts
+    @pagy = pagy
+    super()
+  end
+
+  # == View ==
+
+  sig { override.void }
+  def view_template
+    turbo_frame_tag(:posts, class: "space-y-4") do
+      if @posts.any?
+        ul(id: "post_items", class: "space-y-4") do
+          Components::WorldPostItems(posts: @posts)
+        end
+      else
+        Components::Empty() do |empty|
+          empty.header(class: "gap-0") do
+            empty.media(variant: :icon) do
+              Icon("huge/message-edit-01")
+            end
+            empty.title do
+              "no posts yet"
+            end
+          end
+        end
+      end
+      if @pagy.nil? || @pagy.next
+        div(class: "flex flex-col items-center") do
+          Components::WorldNextPageControl(world: @world, pagy: @pagy)
+        end
+      end
+    end
+  end
+end

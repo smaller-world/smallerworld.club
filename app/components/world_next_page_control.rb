@@ -4,12 +4,11 @@
 class Components::WorldNextPageControl < Components::Base
   # == Initialization ==
 
-  sig { params(world: World, pagy: T.nilable(Pagy), options: T.untyped).void }
-  def initialize(world:, pagy:, **options)
+  sig { params(world: World, pagy: T.nilable(Pagy), attributes: T.untyped).void }
+  def initialize(world:, pagy:, **attributes)
     @world = world
     @pagy = pagy
-    @options = options
-    super()
+    super(**attributes)
   end
 
   # == Component ==
@@ -20,7 +19,7 @@ class Components::WorldNextPageControl < Components::Base
       target: [ @world, :posts ],
       pagy: @pagy,
       autoclick: true,
-      **@options,
+      **@attributes,
     ) do
       Icon("huge/loading-03", data: { icon: "inline-start" })
       span { "load more" }

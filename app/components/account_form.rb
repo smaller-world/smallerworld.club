@@ -26,9 +26,9 @@ class Components::AccountForm < Components::Base
       model: @user,
       url: account_path,
       class: "flex flex-col gap-2",
-      data: {
-        controller: "account-form",
-      },
+      # data: {
+      #   controller: "account-form",
+      # },
       **@options,
     ) do |form|
       form.hidden_field(:time_zone_name, data: { controller: "current-time-zone-input" })
@@ -38,8 +38,8 @@ class Components::AccountForm < Components::Base
           placeholder: "your name",
           autocomplete: "given-name",
           data: {
-            account_form_target: "nameInput",
-            action: "account-form#updateSubmitButtonLabel",
+            # account_form_target: "nameInput",
+            # action: "account-form#updateSubmitButtonLabel",
           },
         )
         f.error
@@ -47,9 +47,7 @@ class Components::AccountForm < Components::Base
 
       submit_button_for(form) do |button|
         button.inline_start_icon("huge/earth")
-        span(data: { account_form_target: "submitButtonLabel" }) do
-          "create your world"
-        end
+        span { "create account" }
       end
     end
   end

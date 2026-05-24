@@ -5,19 +5,19 @@
     /* == Variants == */
 
     &[data-variant="default"] {
-      @apply bg-primary text-primary-foreground [a]:hover:bg-primary/80;
+      @apply bg-primary text-primary-foreground [a,button]:hover:bg-primary/80;
     }
 
     &[data-variant="secondary"] {
-      @apply bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80;
+      @apply bg-secondary text-secondary-foreground [a,button]:hover:bg-secondary/80;
     }
 
     &[data-variant="destructive"] {
-      @apply bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20;
+      @apply bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a,button]:hover:bg-destructive/20;
     }
 
     &[data-variant="outline"] {
-      @apply border-border bg-input/30 text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground;
+      @apply border-border bg-input/30 text-foreground [a,button]:hover:bg-muted [a,button]:hover:text-muted-foreground;
     }
 
     &[data-variant="ghost"] {

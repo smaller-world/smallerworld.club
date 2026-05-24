@@ -3,16 +3,10 @@
 
 module Views; end
 
-module Components # rubocop:disable Style/OneClassPerFile
+module Components
   extend Phlex::Kit
 end
 
-Rails.autoloaders.main.push_dir(
-  Rails.root.join("app/views"),
-  namespace: Views,
-)
-
-Rails.autoloaders.main.push_dir(
-  Rails.root.join("app/components"),
-  namespace: Components,
-)
+autoloader = Rails.autoloaders.main
+autoloader.push_dir(Rails.root.join("app/views"), namespace: Views)
+autoloader.push_dir(Rails.root.join("app/components"), namespace: Components)

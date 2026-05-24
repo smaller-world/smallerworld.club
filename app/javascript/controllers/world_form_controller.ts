@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class AccountFormController extends Controller {
+export default class WorldFormController extends Controller {
   // == Targets ==
 
   static targets = ["nameInput", "submitButtonLabel"];
@@ -16,17 +16,18 @@ export default class AccountFormController extends Controller {
     if (!this.hasNameInputTarget) {
       throw new Error("Missing nameInput target");
     }
-    if (!this.hasSubmitButtonLabelTarget) {
-      throw new Error("Missing submitButtonLabel target");
-    }
+    this.updateSubmitButtonLabel();
   }
 
   // == Actions ==
 
   updateSubmitButtonLabel(): void {
+    if (!this.hasSubmitButtonLabelTarget) {
+      return;
+    }
     const { value } = this.nameInputTarget;
     this.submitButtonLabelTarget.textContent = value
-      ? `create ${value}'s world`
-      : `create your world`;
+      ? `create ${value}`
+      : `create world`;
   }
 }

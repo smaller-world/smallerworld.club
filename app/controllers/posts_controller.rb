@@ -6,19 +6,22 @@ class PostsController < ApplicationController
 
   # GET /world/:world_id/posts
   def index
+    world = find_world
+    pagy, posts = pagy(
+      :countless,
+      world.posts
+        .reverse_chronological
+        .with_rich_text_body_and_embeds
+        .with_attached_images,
+      limit: 5,
+    )
     respond_to do |format|
+      format.html do
+        render Views::Posts::Index.new(world:, posts:, pagy:)
+      end
       format.turbo_stream do
-        world = find_world
-        pagy, posts = pagy(
-          :countless,
-          world.posts
-            .reverse_chronological
-            .with_rich_text_body_and_embeds
-            .with_attached_images,
-          limit: 5,
-        )
-        append_posts = turbo_stream.append(
-          :posts,
+        append_post_items = turbo_stream.append(
+          :post_items,
           renderable: Components::WorldPostItems.new(posts:),
         )
         update_next_page_control = if pagy.next
@@ -29,7 +32,7 @@ class PostsController < ApplicationController
         else
           turbo_stream.remove(:next_page_control)
         end
-        render turbo_stream: [ append_posts, update_next_page_control ]
+        render turbo_stream: [ append_post_items, update_next_page_control ]
       end
     end
   end

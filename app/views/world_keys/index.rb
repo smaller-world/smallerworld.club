@@ -30,7 +30,7 @@ class Views::WorldKeys::Index < Views::Base
           end
           card.content do
             if (keys_by_recipient = @keys_by_recipient.presence)
-              Components::ItemGroup() do
+              Components::ItemGroup(class: "gap-2") do
                 keys_by_recipient.each_pair do |recipient, keys|
                   item(recipient:, keys:)
                 end
@@ -89,7 +89,7 @@ class Views::WorldKeys::Index < Views::Base
       item.actions do
         keys.each do |key|
           Components::DropdownMenu() do |menu|
-            menu.with_trigger_badge(variant: :secondary, class: "h-6 [&>svg]:size-4") do
+            menu.with_trigger_badge(variant: :outline, class: "h-6 [&>svg]:size-4") do
               Icon("huge/key-02", style: "color: var(--world-key-color-#{key.color})")
             end
             menu.with_content(anchor: [ :bottom, :end ]) do |content|

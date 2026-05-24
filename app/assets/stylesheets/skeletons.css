@@ -1,0 +1,3 @@
+@utility skeleton {
+  @apply pointer-events-none animate-pulse rounded-md bg-muted text-transparent;
+}
