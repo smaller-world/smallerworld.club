@@ -51,6 +51,10 @@ class User < ApplicationRecord
     class_name: "World",
     through: :world_keys,
     source: :world
+  has_many :reactions,
+    dependent: :destroy,
+    inverse_of: :reactor,
+    foreign_key: :reactor_id
 
   sig { returns(World) }
   def own_world!

@@ -95,7 +95,7 @@ class Components::Layout < Components::Base
 
       body(class: [ "flex min-h-dvh flex-col", @body_class ]) do
         Components::Header()
-        flash_alert
+        flash_section
         raw(body) # rubocop:disable Rails/OutputSafety
         update_account_time_zone_form
       end
@@ -156,17 +156,11 @@ class Components::Layout < Components::Base
   end
 
   sig { void }
-  def flash_alert
-    message = flash[:notice] || flash[:alert] or return
-    is_alert = flash.key?(:alert)
-    div(class: "max-w-lg p-4 self-center w-full") do
-      Components::Alert(
-        variant: is_alert ? :destructive : :default,
-      ) do |alert|
-        Icon(is_alert ? "huge/alert-01" : "huge/information-circle")
-        alert.description do
-          message
-        end
+  def flash_section
+    section(id: "flash", class: "max-w-lg p-4 self-center w-full empty:hidden") do
+      if (message = flash[:notice] || flash[:alert])
+        type = flash.key?(:alert) ? :alert : :notice
+        Components::FlashAlert(message:, type:)
       end
     end
   end

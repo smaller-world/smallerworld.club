@@ -4,7 +4,7 @@
 class PublicController < ApplicationController
   abstract!
 
-  # == Filters ==
+  # == Configuration ==
 
   allow_unauthenticated_access
 end

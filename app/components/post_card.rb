@@ -62,8 +62,13 @@ class Components::PostCard < Components::Base
           Components::ImageStack(images:)
         end
       end
-      card.footer(class: "flex justify-center gap-4") do
+      card.footer(class: "flex items-end justify-between gap-6") do
         reply_via_menu
+        turbo_frame_tag(
+          dom_id(@post, :reactions),
+          src: [ @post, :reactions ],
+          loading: :lazy,
+        )
       end
     end
   end

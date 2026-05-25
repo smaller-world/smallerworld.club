@@ -2,6 +2,26 @@
 # frozen_string_literal: true
 
 class Components::EmojiInput < Components::Input
+  # == Initialization ==
+
+  sig do
+    params(
+      form: T.nilable(PhlexFormBuilder),
+      field: T.nilable(Symbol),
+      required: T::Boolean,
+      attributes: T.untyped,
+    ).void
+  end
+  def initialize(
+    form: nil,
+    field: nil,
+    required: false,
+    **attributes
+  )
+    @required = required
+    super(form:, field:, **attributes)
+  end
+
   # == Component ==
 
   sig { override.void }
@@ -18,7 +38,8 @@ class Components::EmojiInput < Components::Input
             form: @form,
             field: @field,
             readonly: true,
-            placeholder: "",
+            required: @required,
+            placeholder: " ",
             **mix(
               {
                 class: "emoji-input",

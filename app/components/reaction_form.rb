@@ -1,0 +1,88 @@
+# typed: true
+# frozen_string_literal: true
+
+class Components::ReactionForm < Components::Base
+  # == Initialization ==
+
+  sig { params(reaction: Reaction, attributes: T.untyped).void }
+  def initialize(reaction:, **attributes)
+    @reaction = reaction
+    @post = T.let(@reaction.post!, Post)
+    super(**attributes)
+  end
+
+  # == Component ==
+
+  sig { override.void }
+  def view_template
+    form_with(model: [ @post, @reaction ], **mix(
+      {
+        data: {
+          controller: "form emoji-input",
+          action: "emoji-input:emoji-set->form#submit",
+        },
+      },
+    )) do |form|
+      form.hidden_field(:emoji, data: { emoji_input_target: "input" })
+
+      Components::Dialog() do |dialog|
+        dialog.with_trigger_button(
+          variant: :ghost,
+          size: :icon,
+          **mix(
+            {
+              class: "rounded-full loading-while-submitting",
+              data: {
+                form_target: "disableWhileSubmitting",
+              },
+              aria: {
+                invalid: ("true" if error_messages.any?),
+              },
+            },
+            error_tooltip_attributes,
+            @attributes,
+          ),
+        ) do
+          Icon("huge/heart-add")
+        end
+        dialog.with_content(
+          show_close_button: false,
+          panel: { class: "p-0 w-min" },
+        ) do
+          div(data: {
+            controller: "emoji-mart",
+            action: [
+              "emoji-mart:select->emoji-input#setEmoji",
+              "emoji-mart:select->dialog#close",
+            ],
+          })
+        end
+      end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(T::Hash[Symbol, T.untyped]) }
+  def error_tooltip_attributes
+    if (message = error_messages.first)
+      {
+        data: {
+          controller: "tippy",
+          tippy_content_value: message,
+          tippy_placement_value: "bottom",
+          tippy_show_on_create_value: true,
+        },
+      }
+    else
+      {}
+    end
+  end
+
+  sig { returns(T::Array[String]) }
+  def error_messages
+    @reaction.errors.messages_for(:emoji)
+  end
+end

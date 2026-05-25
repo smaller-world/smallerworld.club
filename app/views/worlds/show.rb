@@ -115,19 +115,30 @@ class Views::Worlds::Show < Views::Base
           )
         end
 
-        turbo_frame_tag(:posts, src: [ @world, :posts ], class: "space-y-4") do
-          Components::Card(class: "shadow-sm") do |card|
-            card.header do
-              card.description(class: "skeleton") { "placeholder" }
-            end
-            card.content(class: "flex flex-col gap-4") do
-              1..2.times do
-                p(class: "skeleton h-24")
+        turbo_frame_tag(:posts, src: [ @world, :posts ], target: "_top") do
+          div(class: "space-y-4") do
+            Components::Card(class: "shadow-sm") do |card|
+              card.header do
+                card.description do
+                  span(class: "skeleton") do
+                    "timestamp"
+                  end
+                end
+                card.title do
+                  span(class: "skeleton") do
+                    "post title placeholder"
+                  end
+                end
               end
-            end
-            card.footer(class: "flex justify-center") do
-              Components::Button(class: "rounded-full skeleton") do
-                "placeholder"
+              card.content(class: "flex flex-col gap-4") do
+                1..2.times do
+                  p(class: "skeleton h-24")
+                end
+              end
+              card.footer(class: "flex justify-center") do
+                Components::Button(class: "rounded-full skeleton") do
+                  "placeholder"
+                end
               end
             end
           end

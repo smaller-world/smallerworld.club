@@ -367,6 +367,9 @@ class Reaction
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_reactor(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def build_world(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::Post) }
     def create_post(*args, &blk); end
 
@@ -378,6 +381,12 @@ class Reaction
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_reactor!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def create_world(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
+    def create_world!(*args, &blk); end
 
     sig { returns(T.nilable(::Post)) }
     def post; end
@@ -409,11 +418,23 @@ class Reaction
     sig { returns(T.nilable(::User)) }
     def reload_reactor; end
 
+    sig { returns(T.nilable(::World)) }
+    def reload_world; end
+
     sig { void }
     def reset_post; end
 
     sig { void }
     def reset_reactor; end
+
+    sig { void }
+    def reset_world; end
+
+    sig { returns(T.nilable(::World)) }
+    def world; end
+
+    sig { params(value: T.nilable(::World)).void }
+    def world=(value); end
   end
 
   module GeneratedAssociationRelationMethods

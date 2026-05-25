@@ -15,7 +15,7 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
   include Phlex::Rails::Helpers::FieldID
-  # include Phlex::Rails::Helpers::DOMID
+  include Phlex::Rails::Helpers::DOMID
 
   include PhlexIcons
 
@@ -57,6 +57,7 @@ class Components::Base < Phlex::HTML
   sig { params(element: T.nilable(Symbol), attributes: T.untyped).void }
   def initialize(element: nil, **attributes)
     super()
+    @current_user = T.let(Current.user, T.nilable(User))
     @element = element
     @attributes = attributes
   end

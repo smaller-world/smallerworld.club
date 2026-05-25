@@ -16,7 +16,6 @@ class Views::Base < Components::Base
 
   sig { void }
   def initialize
-    @current_user = T.let(Current.user, T.nilable(User))
     # Don't pass anything to `super()`
     super()
   end

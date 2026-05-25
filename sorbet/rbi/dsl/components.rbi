@@ -104,11 +104,12 @@ module Components
     params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
+      required: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
     ).void
   end
-  def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -178,6 +179,16 @@ module Components
     ).void
   end
   def FileItem(attachment:, &block); end
+
+  sig do
+    params(
+      message: ::String,
+      type: ::Symbol,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::FlashAlert).void)
+    ).void
+  end
+  def FlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -267,11 +278,11 @@ module Components
       disable_for: T.nilable(::ActiveSupport::Duration),
       variant: ::Symbol,
       size: ::Symbol,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
     ).void
   end
-  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -328,6 +339,16 @@ module Components
 
   sig do
     params(
+      post: ::Post,
+      new_reaction: ::Reaction,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
+    ).void
+  end
+  def PostReactions(post:, new_reaction: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       attributes: T.untyped,
@@ -335,6 +356,15 @@ module Components
     ).void
   end
   def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      reaction: ::Reaction,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ReactionForm).void)
+    ).void
+  end
+  def ReactionForm(reaction:, **attributes, &block); end
 
   sig do
     params(
@@ -422,11 +452,11 @@ module Components
     params(
       world: ::World,
       pagy: T.nilable(::Pagy),
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
     ).void
   end
-  def WorldNextPageControl(world:, pagy:, **options, &block); end
+  def WorldNextPageControl(world:, pagy:, **attributes, &block); end
 
   sig do
     params(
@@ -540,11 +570,12 @@ module Components
       params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
+        required: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
       ).void
     end
-    def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -614,6 +645,16 @@ module Components
       ).void
     end
     def FileItem(attachment:, &block); end
+
+    sig do
+      params(
+        message: ::String,
+        type: ::Symbol,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::FlashAlert).void)
+      ).void
+    end
+    def FlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -703,11 +744,11 @@ module Components
         disable_for: T.nilable(::ActiveSupport::Duration),
         variant: ::Symbol,
         size: ::Symbol,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
       ).void
     end
-    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **options, &block); end
+    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -764,6 +805,16 @@ module Components
 
     sig do
       params(
+        post: ::Post,
+        new_reaction: ::Reaction,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
+      ).void
+    end
+    def PostReactions(post:, new_reaction: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
         attributes: T.untyped,
@@ -771,6 +822,15 @@ module Components
       ).void
     end
     def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        reaction: ::Reaction,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ReactionForm).void)
+      ).void
+    end
+    def ReactionForm(reaction:, **attributes, &block); end
 
     sig do
       params(
@@ -858,11 +918,11 @@ module Components
       params(
         world: ::World,
         pagy: T.nilable(::Pagy),
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
       ).void
     end
-    def WorldNextPageControl(world:, pagy:, **options, &block); end
+    def WorldNextPageControl(world:, pagy:, **attributes, &block); end
 
     sig do
       params(

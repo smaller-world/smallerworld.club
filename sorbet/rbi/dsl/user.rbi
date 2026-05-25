@@ -390,6 +390,20 @@ class User
     sig { params(value: T.nilable(::World)).void }
     def own_world=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def reaction_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def reaction_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :reactions`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Reaction::PrivateCollectionProxy) }
+    def reactions; end
+
+    sig { params(value: T::Enumerable[::Reaction]).void }
+    def reactions=(value); end
+
     sig { returns(T.nilable(::World)) }
     def reload_own_world; end
 

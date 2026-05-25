@@ -21,6 +21,7 @@ export default class EmojiInputController extends Controller<HTMLElement> {
   setEmoji(event: CustomEvent<{ native: string }>): void {
     this.inputTarget.value = event.detail.native;
     this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }));
+    this.dispatch("emoji-set");
   }
 
   clearOrOpenDialog(): void {

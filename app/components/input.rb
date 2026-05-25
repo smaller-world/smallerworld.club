@@ -48,7 +48,7 @@ class Components::Input < Components::Base
   end
   def with_invalid_aria(attributes)
     if field_has_errors?
-      mix({ aria: { invalid: true } }, attributes)
+      mix({ aria: { invalid: "true" } }, attributes)
     else
       attributes
     end

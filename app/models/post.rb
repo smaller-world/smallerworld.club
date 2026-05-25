@@ -30,6 +30,7 @@ class Post < ApplicationRecord
 
   belongs_to :world
   has_one :author, through: :world, source: :owner
+  has_many :reactions, dependent: :destroy
 
   sig { returns(World) }
   def world!

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class UiDocsController < ApplicationController
-  # == Filters ==
+  # == Configuration ==
 
   allow_unauthenticated_access
 

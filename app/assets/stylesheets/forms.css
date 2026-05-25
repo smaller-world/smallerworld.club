@@ -4,3 +4,9 @@
     @apply contents;
   }
 }
+
+@utility loading-while-submitting {
+  form[aria-busy="true"] &:disabled {
+    @apply loading relative *:invisible;
+  }
+}

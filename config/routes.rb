@@ -70,7 +70,12 @@ Rails.application.routes.draw do
   resources :world_key_grants, only: [ :show ], param: :grant, path: "/world_invitations"
 
   # == Posts
-  resources :posts, only: [ :show, :edit, :update, :destroy ]
+  resources :posts, only: [ :show, :edit, :update, :destroy ] do
+    resources :reactions, only: [ :index, :create ]
+  end
+
+  # == Reactions
+  resources :reactions, only: :destroy
 
   # == Devtools
   get "/fly" => redirect(

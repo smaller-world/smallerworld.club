@@ -76,6 +76,9 @@ module GeneratedUrlHelpersModule
   def phone_number_verification_requests_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def post_reactions_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -161,6 +164,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def rails_storage_redirect_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def reaction_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end

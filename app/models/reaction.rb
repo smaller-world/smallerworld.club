@@ -28,5 +28,31 @@ class Reaction < ApplicationRecord
   # == Associations ==
 
   belongs_to :post
+  has_one :world, through: :post
   belongs_to :reactor, class_name: "User"
+
+  sig { returns(Post) }
+  def post!
+    post or raise ActiveRecord::RecordNotFound, "Missing associated post"
+  end
+
+  # == Validations ==
+
+  validates :emoji,
+    presence: true,
+    emoji: true,
+    uniqueness: { scope: [ :post_id, :reactor_id ], message: "already added to this post" }
+  validate :validate_reactor_not_post_author
+
+  private
+
+  # == Validators ==
+
+  sig { void }
+  def validate_reactor_not_post_author
+    if (world = self.world) && (reactor_id = self[:reactor_id]) &&
+        reactor_id == world.owner_id
+      errors.add(:reactor_id, "cannot be the post author")
+    end
+  end
 end

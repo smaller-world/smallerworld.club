@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  # == Filters ==
+  # == Configuration ==
 
   allow_unauthenticated_access only: [ :new ]
 

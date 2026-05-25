@@ -18,7 +18,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         render Views::Posts::Index.new(world:, posts:, pagy:)
-      end
+      end if turbo_frame_request?
       format.turbo_stream do
         append_post_items = turbo_stream.append(
           :post_items,

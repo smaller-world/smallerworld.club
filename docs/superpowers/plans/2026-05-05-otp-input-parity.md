@@ -118,7 +118,7 @@ def input_options
           "paste->otp-input#handlePaste",
         ].join(" "),
       },
-      aria: invalid? ? { invalid: true } : {},
+      aria: invalid? ? { invalid: "true" } : {},
     },
     resolved_input_attributes,
   )
