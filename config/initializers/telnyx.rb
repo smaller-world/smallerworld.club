@@ -11,19 +11,9 @@ class Smallerworld::Application
       T.nilable(Telnyx::Client),
     )
   end
-
-  sig { void }
-  def invalidate_telnyx_client
-    @telnyx_client = nil
-  end
-
+  
   sig { returns(String) }
   def telnyx_phone_number
     Rails.application.credentials.telnyx!.phone_number!
   end
-end
-
-# Invalidate memoized value after hot-reload
-Rails.application.reloader.to_complete do
-  Smallerworld.application.invalidate_telnyx_client
 end
