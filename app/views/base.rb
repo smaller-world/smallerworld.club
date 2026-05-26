@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # The `Views::Base` is an abstract class for all your views.
@@ -23,5 +23,6 @@ class Views::Base < Components::Base
   # == Caching ==
 
   # More caching options at https://www.phlex.fun/components/caching
+  sig { returns(ActiveSupport::Cache::Store) }
   def cache_store = Rails.cache
 end

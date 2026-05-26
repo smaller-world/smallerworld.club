@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Views::Home::Show < Views::Base
@@ -22,7 +22,7 @@ class Views::Home::Show < Views::Base
           @current_user.own_world || new_world_path,
           class: "flex flex-col items-center gap-2 hover:underline",
         ) do
-          icon_class = "size-32 rounded-world-icon shadow-lg shadow-accent"
+          icon_class = "size-32 rounded-world-icon shadow-md"
           if (world = @current_user.own_world)
             image_tag(world.page_icon_variant, class: icon_class)
           else
@@ -48,7 +48,7 @@ class Views::Home::Show < Views::Base
               ) do
                 image_tag(
                   world.page_icon_variant,
-                  class: "size-20 rounded-world-icon",
+                  class: "size-20 shadow-md rounded-world-icon",
                 )
                 span(class: "text-xs font-semibold font-heading") { world.name }
               end

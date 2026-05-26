@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::Layout < Components::Base
+  # == Helpers ==
+
   include Phlex::Rails::Helpers::CSRFMetaTags
   include Phlex::Rails::Helpers::CSPMetaTag
   include Phlex::Rails::Helpers::StyleSheetLinkTag
@@ -9,6 +11,8 @@ class Components::Layout < Components::Base
   include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::AssetPath
   include Phlex::Rails::Helpers::ActionCableMetaTag
+
+  # == Initialization ==
 
   sig do
     params(
@@ -97,6 +101,10 @@ class Components::Layout < Components::Base
         Components::Header()
         flash_section
         raw(body) # rubocop:disable Rails/OutputSafety
+        canvas(
+          id: Rails.configuration.x.layout.confetti_canvas_id,
+          class: "fixed inset-0 pointer-events-none z-50",
+        )
         update_account_time_zone_form
       end
     end

@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::RadioGroup < Components::Base
@@ -56,7 +56,6 @@ class Components::RadioGroup < Components::Base
       id:,
       orientation:,
       invalid:,
-      radio_group: @radio_group,
       **attributes,
       &content
     )
@@ -94,12 +93,15 @@ class Components::RadioGroup < Components::Base
 
   sig { returns(String) }
   def namespace
-    @namespace ||= if @form && @field
-      @form.field_id(@field)
-    elsif @field
-      @field.to_s
-    else
-      SecureRandom.uuid
-    end
+    @namespace ||= T.let(
+      if @form && @field
+        @form.field_id(@field)
+      elsif @field
+        @field.to_s
+      else
+        SecureRandom.uuid
+      end,
+      T.nilable(String),
+    )
   end
 end

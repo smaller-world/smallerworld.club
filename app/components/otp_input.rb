@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # OTP input component for verification codes.
@@ -6,11 +6,14 @@
 class Components::OtpInput < Components::Input
   # == Configuration ==
 
-  PATTERN_PRESETS = {
-    digits: "\\d",
-    chars: "[a-zA-Z]",
-    alphanumeric: "[a-zA-Z0-9]",
-  }.freeze
+  PATTERN_PRESETS = T.let(
+    {
+      digits: "\\d",
+      chars: "[a-zA-Z]",
+      alphanumeric: "[a-zA-Z0-9]",
+    }.freeze,
+    T::Hash[Symbol, String],
+  )
 
   # == Initialization ==
 

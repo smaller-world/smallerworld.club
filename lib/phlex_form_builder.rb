@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # A wrapper for Phlex::Rails::Builder that enables us to add distinct

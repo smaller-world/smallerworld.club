@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Views::Sessions::New < Views::Base
@@ -20,6 +20,16 @@ class Views::Sessions::New < Views::Base
       title: "sign in to smaller world",
       body_class: "bg-muted [&_.flash]:bg-background",
     ) do |layout|
+      layout.with_head do
+        # JS for Cloudflare Turnstile
+        link(rel: "preconnect", href: "https://challenges.cloudflare.com")
+        script(
+          src: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad",
+          async: true,
+          defer: true,
+        )
+      end
+
       main(class: "flex-1 flex flex-col justify-center pb-20") do
         layout.page_container(
           class: "flex flex-col items-center justify-center",
@@ -36,7 +46,7 @@ class Views::Sessions::New < Views::Base
 
   sig { void }
   def login_card
-    Components::Card(class: "w-full max-w-xs") do |card|
+    Components::Card(class: "w-full max-w-90") do |card|
       card.header(class: "flex flex-col items-center gap-y-3") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do

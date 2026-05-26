@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
@@ -35,12 +35,14 @@ class World < ApplicationRecord
 
   # TODO: Parse this out into a module.
   module FinderMethods
+    extend T::Sig
     include FriendlyId::FinderMethods
 
     private
 
+    sig { params(value: String).returns(String) }
     def parse_friendly_id(value)
-      value.split("-").last
+      value.split("-").last || value
     end
   end
 

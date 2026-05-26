@@ -9,6 +9,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     within: 3.minutes,
     only: :create,
     with: :handle_rate_limit_exceeded if Rails.env.production?
+  before_action :verify_turnstile_request, only: :create
 
   # == Actions ==
 
@@ -16,14 +17,6 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        if Rails.env.production?
-          redirect_to(
-            new_session_path,
-            alert:
-              "login disabled due to recent attacks on our login systems 😔",
-          ) and return
-        end
-
         verification_request_params = params.expect(
           phone_number_verification_request: [ :phone_number ],
         )
@@ -111,5 +104,21 @@ class PhoneNumberVerificationRequestsController < ApplicationController
       new_session_path,
       alert: "you have requested a login code too many times. please try again later.",
     )
+  end
+
+  sig { void }
+  def verify_turnstile_request
+    if (response = params["cf-turnstile-response"])
+      begin
+        Smallerworld.application.turnstile_client.verify(
+          response:,
+          remoteip: request.remote_ip,
+        )
+      rescue => error
+        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}")
+      end
+    else
+      redirect_to(new_session_path, alert: "please verify you are human!")
+    end
   end
 end

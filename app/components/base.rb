@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::Base < Phlex::HTML
@@ -6,6 +6,8 @@ class Components::Base < Phlex::HTML
   extend T::Helpers
 
   abstract!
+
+  # == Helpers ==
 
   include Phlex::Rails::Helpers::ClassNames
   include Phlex::Rails::Helpers::TokenList
@@ -24,6 +26,7 @@ class Components::Base < Phlex::HTML
   include CompactMix
   include FormHelpers
   include FormWith
+  include TurnstileTag
 
   # == Errors ==
 
@@ -65,9 +68,11 @@ class Components::Base < Phlex::HTML
   # == Component ==
 
   if Rails.env.development?
+    sig { void }
     def before_template
       comment { "Before #{self.class.name}" }
       super
+      comment { "After #{self.class.name}" }
     end
   end
 

@@ -1,3 +1,4 @@
+import "./turnstile";
 import "./turbo";
 import "./local_time";
 import "./tailwind_elements";

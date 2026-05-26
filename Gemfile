@@ -44,6 +44,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 2.0", require: false
 gem "ruby-vips", "~> 2.3"
+gem "mini_magick", "~> 5.3", group: :development, require: false # or else Tapioca rbi generation fails
 
 # Use Active Storage with S3-compatible services (Cloudflare R2)
 gem "aws-sdk-s3", require: false
@@ -109,7 +110,7 @@ gem "rgeo"
 gem "email_validator", "~> 2.2"
 
 # Sign in with Apple
-gem "apple_id", "~> 1.6"
+# gem "apple_id", "~> 1.6"
 
 # Render inline SVGs in views
 gem "inline_svg", "~> 1.10"
@@ -131,6 +132,10 @@ gem "rqrcode", "~> 3.2"
 
 # Up-to-date Emoji Regex
 gem "unicode-emoji", "~> 4.2", require: "unicode/emoji"
+
+# Telnyx client
+gem "telnyx", "~> 5.118"
+gem "standardwebhooks", "~> 1.1"
 
 group :development, :test do
   # Run tests with Minitest

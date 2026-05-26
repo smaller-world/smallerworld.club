@@ -15,7 +15,6 @@ gem:
     - ruby-lsp
     - listen
     - phlex-icons
-    - image_processing
   # workers: 5
 
 dsl:

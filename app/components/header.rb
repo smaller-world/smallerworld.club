@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::Header < Components::Base
@@ -17,12 +17,12 @@ class Components::Header < Components::Base
 
           menu.with_content(anchor: :bottom, class: "w-56") do |content|
             content.group do
-              content.label { "[some group]" }
+              # content.label { "[some group]" }
               content.link_item_to(:home) do
                 Icon("huge/home-01", class: "size-4")
                 span { "home" }
               end
-              content.button_item { "[some item]" }
+              # content.button_item { "[some item]" }
             end
             content.separator
             form_with(url: session_path, method: :delete) do

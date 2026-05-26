@@ -19,7 +19,7 @@ class Components::PostReactions < Components::Base
 
   sig { override.void }
   def view_template
-    root_element(:div, class: "flex flex-wrap gap-1") do
+    root_element(:div, class: "flex justify-end flex-wrap gap-1") do
       @reactions_by_emoji.each do |emoji, reactions|
         current_user_reaction = if (user = @current_user)
           reactions.find { |r| r.reactor_id == user.id }
@@ -27,16 +27,26 @@ class Components::PostReactions < Components::Base
         form_with(
           model: current_user_reaction || [ @post, @post.reactions.build(emoji:) ],
           method: current_user_reaction ? :delete : :post,
+          data: {
+            controller: token_list("confetti" => @current_user && !current_user_reaction),
+            action: "turbo:submit-end->confetti#launch",
+            confetti_emoji_value: emoji,
+            confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
+          },
         ) do |form|
           form.hidden_field(:emoji)
           submit_button_for(
             form,
             variant: current_user_reaction ? :outline : :ghost,
             size: reactions.size > 1 ? :default : :icon,
+            disabled: !allowed_to?(:react?, @post),
             class: class_names(
-              "rounded-full gap-x-1",
+              "opacity-100 rounded-full gap-x-1",
               "px-2" => reactions.size > 1,
             ),
+            data: {
+              confetti_target: "position",
+            },
           ) do
             span(class: class_names(
               "font-emoji",
@@ -50,10 +60,12 @@ class Components::PostReactions < Components::Base
           end
         end
       end
-      Components::ReactionForm(
-        reaction: @new_reaction,
-        variant: @reactions_by_emoji.any? ? :ghost : :default,
-      )
+      if allowed_to?(:react?, @post)
+        Components::ReactionForm(
+          reaction: @new_reaction,
+          variant: @reactions_by_emoji.any? ? :ghost : :default,
+        )
+      end
     end
   end
 end

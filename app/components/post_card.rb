@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::PostCard < Components::Base
@@ -28,16 +28,13 @@ class Components::PostCard < Components::Base
       ),
     ) do |card|
       card.header do
-        card.description(class: class_names(
-          "text-xs flex gap-2 relative",
-          "pl-7" => @post.emoji.present?,
-        )) do
+        card.description(class: "flex gap-2") do
           if (emoji = @post.emoji)
-            div(class: "text-lg font-emoji absolute -top-1 left-0") do
+            div(class: "text-sm font-emoji") do
               emoji
             end
           end
-          local_time(@post.created_at, class: "lowercase")
+          local_time(@post.created_at, class: "lowercase text-xs")
         end
         if (title = @post.title)
           card.title(class: "text-lg font-semibold font-heading") do

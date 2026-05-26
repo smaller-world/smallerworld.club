@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
@@ -20,7 +20,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Configuration ==
 
-  EXPIRATION_DURATION = 5.minutes
+  EXPIRATION_DURATION = T.let(5.minutes, ActiveSupport::Duration)
   DAILY_RATE_LIMIT = 7
 
   # == Attributes ==

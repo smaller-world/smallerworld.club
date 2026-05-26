@@ -14,4 +14,10 @@ class PostPolicy < ApplicationPolicy
     user = user!
     post.author! == user
   end
+
+  def react?
+    post = T.let(record, Post)
+    user = user!
+    post.author! != user
+  end
 end

@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
@@ -114,7 +114,7 @@ class Post < ApplicationRecord
     if platform == :whatsapp
       "> " + snippet.gsub("\n", "\n>\u2800") + "\n\n\u2800"
     else
-      "> " + snippet.gsub("\n", "\n>") + "\n\n"
+      "> " + snippet.gsub("\n", "\n> ") + "\n\n"
     end
   end
 

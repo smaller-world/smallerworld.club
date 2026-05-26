@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::PhoneNumberInput < Components::Input
@@ -12,6 +12,7 @@ class Components::PhoneNumberInput < Components::Input
       field: T.nilable(Symbol),
       default_country_code: String,
       disabled: T::Boolean,
+      required: T::Boolean,
       value: T.nilable(T.any(String, Phonelib::Phone)),
       attributes: T.untyped,
     ).void
@@ -21,11 +22,13 @@ class Components::PhoneNumberInput < Components::Input
     field: nil,
     default_country_code: "CA",
     disabled: false,
+    required: false,
     value: nil,
     **attributes
   )
     @default_country_code = default_country_code
     @disabled = disabled
+    @required = required
     @value = value
     super(form:, field:, **attributes)
   end
@@ -98,6 +101,7 @@ class Components::PhoneNumberInput < Components::Input
         value: phone_number&.national_number,
         autocomplete: "tel-national",
         disabled: @disabled,
+        required: @required,
         **mix(
           {
             data: {
@@ -147,11 +151,14 @@ class Components::PhoneNumberInput < Components::Input
   def phone_number
     return @phone_number if defined?(@phone_number)
 
-    @phone_number = if @value
-      normalize_phone_number(@value)
-    elsif (object = @form&.object) && @field && (value = object.public_send(@field))
-      normalize_phone_number(value)
-    end
+    @phone_number = T.let(
+      if @value
+        normalize_phone_number(@value)
+      elsif (object = @form&.object) && @field && (value = object.public_send(@field))
+        normalize_phone_number(value)
+      end,
+      T.nilable(Phonelib::Phone),
+    )
   end
 
   sig { params(value: T.any(String, Phonelib::Phone)).returns(Phonelib::Phone) }
@@ -166,9 +173,12 @@ class Components::PhoneNumberInput < Components::Input
 
   sig { returns(ISO3166::Country) }
   def country
-    @country ||= begin
-      country_code = phone_number&.country || @default_country_code
-      ISO3166::Country[country_code]
-    end
+    @country ||= T.let(
+      begin
+        country_code = phone_number&.country || @default_country_code
+        ISO3166::Country[country_code]
+      end,
+      T.nilable(ISO3166::Country),
+    )
   end
 end

@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::ReactionForm < Components::Base
@@ -18,12 +18,16 @@ class Components::ReactionForm < Components::Base
     form_with(model: [ @post, @reaction ], **mix(
       {
         data: {
-          controller: "form emoji-input",
-          action: "emoji-input:emoji-set->form#submit",
+          controller: "form emoji-input confetti",
+          action: "emoji-input:emoji-set->form#submit turbo:submit-end->confetti#launch",
+          confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
         },
       },
     )) do |form|
-      form.hidden_field(:emoji, data: { emoji_input_target: "input" })
+      form.hidden_field(:emoji, data: {
+        confetti_target: "input",
+        emoji_input_target: "input",
+      })
 
       Components::Dialog() do |dialog|
         dialog.with_trigger_button(

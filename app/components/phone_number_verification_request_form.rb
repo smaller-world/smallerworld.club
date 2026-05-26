@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::PhoneNumberVerificationRequestForm < Components::Base
@@ -43,11 +43,14 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
         field.phone_number_input(
           placeholder: "your phone #",
           disabled: @verification_request.persisted?,
+          required: true,
         )
         field.error
       end
 
-      if @verification_request.persisted?
+      if @verification_request.new_record?
+        turnstile_tag(data: { size: "flexible" })
+      else
         field_for(form, :verification_code) do |field|
           field.text_input(
             placeholder: "verification code",

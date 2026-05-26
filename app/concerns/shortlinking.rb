@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 module Shortlinking
@@ -10,7 +10,7 @@ module Shortlinking
 
   # == Interface ==
 
-  sig { abstract.returns(Hash) }
+  sig { abstract.returns(T::Hash[Symbol, String]) }
   def url_options; end
 
   private

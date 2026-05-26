@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Views::Accounts::New < Views::Base
@@ -34,7 +34,7 @@ class Views::Accounts::New < Views::Base
 
   sig { void }
   def account_card
-    Components::Card(class: "w-full max-w-xs") do |card|
+    Components::Card(class: "w-full max-w-90") do |card|
       card.header(class: "flex flex-col items-center gap-y-3") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do

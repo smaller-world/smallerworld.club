@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Views::Worlds::Show < Views::Base
@@ -55,7 +55,7 @@ class Views::Worlds::Show < Views::Base
           end
 
           if allowed_to?(:manage?, @world)
-            Components::Card() do |card|
+            Components::Card(class: "gap-4") do |card|
               card.content(class: "flex flex-col items-center gap-2") do
                 image_tag(
                   @world.page_icon_variant,

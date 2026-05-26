@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Views::Reactions::Index < Views::Base
@@ -16,7 +16,10 @@ class Views::Reactions::Index < Views::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(dom_id(@post, :reactions)) do
-      Components::PostReactions(post: @post, new_reaction: @new_reaction)
+      Components::PostReactions(
+        post: @post,
+        new_reaction: @new_reaction,
+      )
     end
   end
 end

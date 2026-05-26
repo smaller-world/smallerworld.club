@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::UppyGroup < Components::Input
@@ -39,7 +39,7 @@ class Components::UppyGroup < Components::Input
         if form && field
           case (value = form.object.try(field))
           when Enumerable
-            T.cast(value.to_a, T::Array[ActiveStorage::Blob])
+            value.to_a
           when ActiveStorage::Attached::Many
             value.blobs.to_a
           end
