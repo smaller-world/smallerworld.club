@@ -3,17 +3,17 @@
 
 class Smallerworld::Application
   sig { returns(Turnstile::Client) }
-  def initialize_turnstile_client
-    @turnstile_client = T.let(@turnstile_client, T.nilable(Turnstile::Client))
-    @turnstile_client = Turnstile::Client.new
-  end
-
-  sig { returns(Turnstile::Client) }
   def turnstile_client
-    @turnstile_client ||= initialize_turnstile_client
+    @turnstile_client ||= T.let(Turnstile::Client.new, T.nilable(Turnstile::Client))
   end
 
-  config.to_prepare do
-    Smallerworld.application.initialize_turnstile_client
+  sig { void }
+  def invalidate_turnstile_client
+    @turnstile_client = nil
   end
+end
+
+# Invalidate memoized value after hot-reload
+Rails.application.reloader.to_complete do
+  Smallerworld.application.invalidate_turnstile_client
 end
