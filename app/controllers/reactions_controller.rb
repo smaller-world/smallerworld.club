@@ -25,7 +25,10 @@ class ReactionsController < ApplicationController
         current_user = current_user!
         post = find_post
         reaction_params = params.expect(reaction: [ :emoji ])
-        reaction = post.reactions.build(reactor: current_user, **reaction_params)
+        reaction = post.reactions.find_or_initialize_by(
+          reactor: current_user,
+          **reaction_params,
+        )
         if reaction.save
           redirect_to([ post, :reactions ])
         else
@@ -43,6 +46,8 @@ class ReactionsController < ApplicationController
         reaction = find_reaction
         reaction.destroy!
         redirect_to([ reaction.post!, :reactions ])
+      rescue ActiveRecord::RecordNotFound
+        head(:not_found)
       end
     end
   end

@@ -11,7 +11,7 @@ class Smallerworld::Application
       T.nilable(Telnyx::Client),
     )
   end
-  
+
   sig { returns(String) }
   def telnyx_phone_number
     Rails.application.credentials.telnyx!.phone_number!

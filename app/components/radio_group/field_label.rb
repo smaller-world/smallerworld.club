@@ -14,8 +14,8 @@ class Components::RadioGroup::FieldLabel < Components::FieldLabel
     ).void
   end
   def initialize(radio_group:, form: nil, field: nil, id: nil, **attributes)
-    @radio_group = radio_group
     super(form:, field:, id:, **attributes)
+    @radio_group = radio_group
   end
 
   # == Interface ==

@@ -26,11 +26,11 @@ class Components::PhoneNumberInput < Components::Input
     value: nil,
     **attributes
   )
+    super(form:, field:, **attributes)
     @default_country_code = default_country_code
     @disabled = disabled
     @required = required
     @value = value
-    super(form:, field:, **attributes)
   end
 
   # == Component ==

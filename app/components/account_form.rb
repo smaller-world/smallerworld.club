@@ -6,16 +6,10 @@ class Components::AccountForm < Components::Base
 
   # == Initialization ==
 
-  sig do
-    params(
-      user: User,
-      options: T.untyped,
-    ).void
-  end
-  def initialize(user:, **options)
+  sig { params(user: User, attributes: T.untyped).void }
+  def initialize(user:, **attributes)
+    super(**attributes)
     @user = user
-    @options = options
-    super()
   end
 
   # == Component ==
@@ -26,10 +20,7 @@ class Components::AccountForm < Components::Base
       model: @user,
       url: account_path,
       class: "flex flex-col gap-2",
-      # data: {
-      #   controller: "account-form",
-      # },
-      **@options,
+      **@attributes,
     ) do |form|
       form.hidden_field(:time_zone_name, data: { controller: "current-time-zone-input" })
 

@@ -23,7 +23,7 @@ class Components::Base < Phlex::HTML
 
   include ButtonBackTo
   include ButtonLinkTo
-  include CompactMix
+  include AttributeHelpers
   include FormHelpers
   include FormWith
   include TurnstileTag
@@ -35,9 +35,9 @@ class Components::Base < Phlex::HTML
 
     sig { params(parameter: Symbol, value: T.untyped).void }
     def initialize(parameter:, value:)
+      super("Invalid #{parameter}: #{value.inspect}")
       @parameter = parameter
       @value = value
-      super("Invalid #{parameter}: #{value.inspect}")
     end
 
     sig { returns(Symbol) }

@@ -4,9 +4,9 @@
 class Components::Separator < Components::Base
   sig { params(orientation: Symbol, decorative: T::Boolean, attributes: T.untyped).void }
   def initialize(orientation: :horizontal, decorative: true, **attributes)
+    super(**attributes)
     @orientation = orientation
     @decorative = decorative
-    super(**attributes)
   end
 
   # == Component ==

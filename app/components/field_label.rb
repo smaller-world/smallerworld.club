@@ -15,10 +15,10 @@ class Components::FieldLabel < Components::Base
     ).void
   end
   def initialize(form: nil, field: nil, id: nil, **attributes)
+    super(**attributes)
     @id = id
     @form = form
     @field = field
-    super(**attributes)
   end
 
   # == Component ==

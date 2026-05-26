@@ -18,8 +18,8 @@ class Components::EmojiInput < Components::Input
     required: false,
     **attributes
   )
-    @required = required
     super(form:, field:, **attributes)
+    @required = required
   end
 
   # == Component ==

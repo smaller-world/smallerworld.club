@@ -14,8 +14,8 @@ class Components::InputGroup::Addon < Components::Base
       raise InvalidParameter.new(parameter: :align, value: align)
     end
 
-    @align = T.let(align, Symbol)
     super(**attributes)
+    @align = T.let(align, Symbol)
   end
 
   # == Component ==

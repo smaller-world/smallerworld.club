@@ -13,10 +13,10 @@ class Components::Dialog < Components::Base
     ).void
   end
   def initialize(id: "dialog_#{SecureRandom.uuid}", **attributes)
+    super(**attributes)
     @id = id
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
-    super(**attributes)
   end
 
   # == Component ==

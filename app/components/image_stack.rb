@@ -17,10 +17,10 @@ class Components::ImageStack < Components::Base
     ).void
   end
   def initialize(images:, max_height: 360, flip_boundary: 100, **attributes)
+    super(**attributes)
     @images = T.let(images.to_a, T::Array[Image])
     @max_height = max_height
     @flip_boundary = flip_boundary
-    super(**attributes)
   end
 
   # == Component ==

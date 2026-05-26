@@ -29,6 +29,7 @@ class Components::UppyGroup < Components::Input
     dropzone_class: nil,
     **attributes
   )
+    super(form:, field:, **attributes)
     @required = required
     @max_files = max_files
     @allowed_file_types = allowed_file_types
@@ -47,7 +48,6 @@ class Components::UppyGroup < Components::Input
         [],
       T::Array[ActiveStorage::Blob],
     )
-    super(form:, field:, **attributes)
   end
 
   # == Component ==

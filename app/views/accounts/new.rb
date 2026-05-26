@@ -6,8 +6,8 @@ class Views::Accounts::New < Views::Base
 
   sig { params(user: User).void }
   def initialize(user:)
-    @user = user
     super()
+    @user = user
   end
 
   # == View ==

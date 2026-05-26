@@ -26,6 +26,7 @@ class Components::Combobox < Components::Base
     input: {},
     **attributes
   )
+    super(**attributes)
     @form = form
     @field = field
     @clear_on_expand = clear_on_expand
@@ -37,7 +38,6 @@ class Components::Combobox < Components::Base
     )
     @content_block = T.let(nil, T.nilable(T.proc.void))
     @default_value = default_value
-    super(**attributes)
   end
 
   # == Component ==

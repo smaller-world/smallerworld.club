@@ -19,6 +19,11 @@ class Views::Reactions::Index < Views::Base
       Components::PostReactions(
         post: @post,
         new_reaction: @new_reaction,
+        existing_reactions_form: {
+          data: {
+            action: "turbo:before-fetch-response->frame#reloadWhenNotFound",
+          },
+        },
       )
     end
   end

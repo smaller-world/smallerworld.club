@@ -6,9 +6,9 @@ class Components::WorldNextPageControl < Components::Base
 
   sig { params(world: World, pagy: T.nilable(Pagy), attributes: T.untyped).void }
   def initialize(world:, pagy:, **attributes)
+    super(**attributes)
     @world = world
     @pagy = pagy
-    super(**attributes)
   end
 
   # == Component ==

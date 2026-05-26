@@ -16,12 +16,12 @@ class Components::Combobox::Content < Components::Base
     ).void
   end
   def initialize(anchor:, anchor_strategy: nil, popover: true, **attributes)
+    super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy
     @popover = popover
     @empty_block = T.let(nil, T.nilable(T.proc.void))
     @list_block = T.let(nil, T.nilable(T.proc.void))
-    super(**attributes)
   end
 
   # == Component ==

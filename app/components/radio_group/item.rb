@@ -22,11 +22,11 @@ class Components::RadioGroup::Item < Components::Input
     checked: nil,
     **attributes
   )
+    super(**attributes)
     @value = T.let(value.to_s, String)
     @input_options = input
     @radio_group = radio_group
     @checked = checked
-    super(**attributes)
   end
 
   # == Component ==

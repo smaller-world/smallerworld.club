@@ -30,12 +30,12 @@ class Components::Field < Components::Base
       raise InvalidParameter.new(parameter: :orientation, value: orientation)
     end
 
+    super(**attributes)
     @form = form
     @field = field
     @id = id
     @orientation = orientation
     @force_invalid = invalid
-    super(**attributes)
   end
 
   # == Component ==

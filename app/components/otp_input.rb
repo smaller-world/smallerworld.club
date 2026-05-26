@@ -35,6 +35,7 @@ class Components::OtpInput < Components::Input
     input: {},
     **attributes
   )
+    super(form:, field:, **attributes)
     @max_length = max_length
     @pattern = T.let(
       case pattern
@@ -48,7 +49,6 @@ class Components::OtpInput < Components::Input
       String,
     )
     @input_options = input
-    super(form:, field:, **attributes)
   end
 
   # == Component ==

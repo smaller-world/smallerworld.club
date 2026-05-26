@@ -51,7 +51,11 @@ class Components::ClearableFileInput < Components::Input
       form: @form,
       field: @field,
       **mix(
-        { data: { controller: "clearable-file-input" } },
+        {
+          data: {
+            controller: "clearable-file-input",
+          },
+        },
         @attributes,
       ),
     ) do |group|

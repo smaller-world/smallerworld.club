@@ -26,11 +26,11 @@ class Components::DropdownMenu::Content < Components::Base
     open: false,
     **attributes
   )
+    super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy
     @popover = popover
     @open = open
-    super(**attributes)
   end
 
   # == Component ==

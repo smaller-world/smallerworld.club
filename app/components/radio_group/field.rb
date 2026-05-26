@@ -24,8 +24,8 @@ class Components::RadioGroup::Field < Components::Field
     invalid: false,
     **attributes
   )
-    @radio_group = radio_group
     super(form:, field:, id:, orientation:, invalid:, **attributes)
+    @radio_group = radio_group
   end
 
   # == Interface ==

@@ -8,8 +8,8 @@ class Views::Home::Show < Views::Base
 
   sig { params(current_user: User).void }
   def initialize(current_user:)
-    @current_user = current_user
     super()
+    @current_user = current_user
   end
 
   # == View ==

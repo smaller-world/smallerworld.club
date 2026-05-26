@@ -12,9 +12,9 @@ class Components::RadioGroup < Components::Base
     ).void
   end
   def initialize(form: nil, field: nil, **attributes)
+    super(**attributes)
     @form = form
     @field = field
-    super(**attributes)
   end
 
   # == Component ==

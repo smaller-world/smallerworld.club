@@ -8,23 +8,24 @@ class Components::WorldKeyGrantForm < Components::Base
 
   sig { params(world: World, key_color: T.nilable(Symbol), attributes: T.untyped).void }
   def initialize(world:, key_color:, **attributes)
+    super(**attributes)
     @world = world
     @key_color = key_color
-    super(**attributes)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(
-      url: [ :new, @world, :key_grant ],
-      method: :get,
-      class: "flex flex-col gap-6",
-      data: {
-        controller: "form",
+    form_with(url: [ :new, @world, :key_grant ], method: :get, **normalize_mix(
+      {
+        class: "flex flex-col gap-6",
+        data: {
+          controller: "form",
+        },
       },
-    ) do |form|
+      @attributes,
+    )) do |form|
       radio_group_for(
         form,
         :key_color,

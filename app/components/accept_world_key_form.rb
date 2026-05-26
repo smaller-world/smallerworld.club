@@ -6,9 +6,9 @@ class Components::AcceptWorldKeyForm < Components::Base
 
   sig { params(key: WorldKey, attributes: T.untyped).void }
   def initialize(key:, **attributes)
+    super(**attributes)
     @key = key
     @world = T.let(key.world!, World)
-    super(**attributes)
   end
 
   # == Component ==

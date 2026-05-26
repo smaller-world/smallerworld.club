@@ -9,13 +9,12 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
   sig do
     params(
       verification_request: PhoneNumberVerificationRequest,
-      options: T.untyped,
+      attributes: T.untyped,
     ).void
   end
-  def initialize(verification_request:, **options)
+  def initialize(verification_request:, **attributes)
+    super(**attributes)
     @verification_request = verification_request
-    @options = options
-    super()
   end
 
   # == Component ==
@@ -28,15 +27,15 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
       @verification_request
     end
 
-    form_with(
-      model:,
-      method: :post,
-      class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
-      data: {
-        turbo_action: "replace",
+    form_with(model:, method: :post, **mix(
+      {
+        class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
+        data: {
+          turbo_action: "replace",
+        },
       },
-      **@options,
-    ) do |form|
+      @attributes,
+    )) do |form|
       hidden_field(:user, :time_zone_name, data: { controller: "current-time-zone-input" })
 
       field_for(form, :phone_number) do |field|

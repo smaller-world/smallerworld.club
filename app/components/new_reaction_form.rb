@@ -1,14 +1,14 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::ReactionForm < Components::Base
+class Components::NewReactionForm < Components::Base
   # == Initialization ==
 
   sig { params(reaction: Reaction, attributes: T.untyped).void }
   def initialize(reaction:, **attributes)
+    super(**attributes)
     @reaction = reaction
     @post = T.let(@reaction.post!, Post)
-    super(**attributes)
   end
 
   # == Component ==
@@ -23,6 +23,7 @@ class Components::ReactionForm < Components::Base
           confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
         },
       },
+      @attributes,
     )) do |form|
       form.hidden_field(:emoji, data: {
         confetti_target: "input",
@@ -33,7 +34,7 @@ class Components::ReactionForm < Components::Base
         dialog.with_trigger_button(
           variant: :ghost,
           size: :icon,
-          **mix(
+          **compact_mix(
             {
               class: "rounded-full loading-while-submitting",
               data: {
@@ -44,7 +45,6 @@ class Components::ReactionForm < Components::Base
               },
             },
             error_tooltip_attributes,
-            @attributes,
           ),
         ) do
           Icon("huge/heart-add")
@@ -69,7 +69,7 @@ class Components::ReactionForm < Components::Base
 
   # == Helpers ==
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
+  sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
   def error_tooltip_attributes
     if (message = error_messages.first)
       {
@@ -80,8 +80,6 @@ class Components::ReactionForm < Components::Base
           tippy_show_on_create_value: true,
         },
       }
-    else
-      {}
     end
   end
 

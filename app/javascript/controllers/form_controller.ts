@@ -1,4 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
+import {
+  FrameElement,
+  type TurboBeforeFetchResponseEvent,
+} from "@hotwired/turbo";
 
 import { addAction, addCleanupAction } from "#helpers/stimulus_helpers";
 

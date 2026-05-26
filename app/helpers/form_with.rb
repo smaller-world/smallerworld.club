@@ -8,6 +8,7 @@ module FormWith
   requires_ancestor { Phlex::HTML }
 
   include Phlex::Rails::Helpers::FormWith
+  include AttributeHelpers
 
   # == Helper ==
 

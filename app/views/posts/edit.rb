@@ -6,9 +6,9 @@ class Views::Posts::Edit < Views::Base
 
   sig { params(post: Post).void }
   def initialize(post:)
+    super()
     @post = post
     @world = T.let(post.world!, World)
-    super()
   end
 
   # == View ==

@@ -6,9 +6,9 @@ class Components::FlashAlert < Components::Base
 
   sig { params(message: String, type: Symbol, attributes: T.untyped).void }
   def initialize(message:, type: :notice, **attributes)
+    super(**attributes)
     @message = message
     @type = type
-    super(**attributes)
   end
 
   # == Component ==

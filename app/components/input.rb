@@ -14,9 +14,9 @@ class Components::Input < Components::Base
     ).void
   end
   def initialize(form: nil, field: nil, **attributes)
+    super(**attributes)
     @form = form
     @field = field
-    super(**attributes)
   end
 
   # == Component ==
@@ -51,23 +51,6 @@ class Components::Input < Components::Base
       mix({ aria: { invalid: "true" } }, attributes)
     else
       attributes
-    end
-  end
-
-  sig do
-    params(attributes: T::Hash[Symbol, T.untyped])
-      .returns(T::Hash[Symbol, T.untyped])
-  end
-  def normalize_attributes(attributes)
-    attributes.transform_values do |value|
-      case value
-      when Hash
-        normalize_attributes(value)
-      when Array
-        token_list(value)
-      else
-        value
-      end
     end
   end
 

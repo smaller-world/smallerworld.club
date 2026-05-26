@@ -4,30 +4,26 @@
 class Components::PostForm < Components::Base
   # == Initialization ==
 
-  sig { params(post: Post, options: T.untyped).void }
-  def initialize(post:, **options)
+  sig { params(post: Post, attributes: T.untyped).void }
+  def initialize(post:, **attributes)
+    super(**attributes)
     @post = post
     @world = T.let(post.world!, World)
-    @options = options
-    super()
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(
-      model:,
-      **mix(
-        {
-          class: "flex flex-col gap-6",
-          data: {
-            controller: "form",
-          },
+    form_with(model:, **mix(
+      {
+        class: "flex flex-col gap-6",
+        data: {
+          controller: "form",
         },
-        @options,
-      ),
-    ) do |form|
+      },
+      @attributes,
+    )) do |form|
       div(class: "flex flex-col gap-4") do
         Components::FieldGroup(class: "flex-row gap-3") do
           field_for(form, :emoji, class: "flex-0") do |f|

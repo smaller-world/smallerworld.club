@@ -35,8 +35,9 @@ class Components::UppyDnd < Components::Input
     dropzone_class: nil,
     **attributes
   )
-    @required = required
+    super(form:, field:, **attributes)
     @multiple = multiple
+    @required = required
     @allowed_file_types = allowed_file_types
     @crop_to_aspect_ratio = crop_to_aspect_ratio
     @clear_action = clear_action
@@ -60,7 +61,6 @@ class Components::UppyDnd < Components::Input
       end,
       T.nilable(ActiveStorage::Blob),
     )
-    super(form:, field:, **attributes)
   end
 
   # == Component ==

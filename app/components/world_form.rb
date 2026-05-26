@@ -4,25 +4,25 @@
 class Components::WorldForm < Components::Base
   # == Initialization ==
 
-  sig { params(world: World, options: T.untyped).void }
-  def initialize(world:, **options)
+  sig { params(world: World, attributes: T.untyped).void }
+  def initialize(world:, **attributes)
+    super(**attributes)
     @world = world
-    @options = options
-    super()
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(
-      model: @world,
-      class: "flex flex-col gap-y-4",
-      data: {
-        controller: "world-form",
+    form_with(model: @world, **mix(
+      {
+        class: "flex flex-col gap-y-4",
+        data: {
+          controller: "world-form",
+        },
       },
-      **@options,
-    ) do |form|
+      @attributes,
+    )) do |form|
       field_for(form, :name) do |f|
         f.label { "name" }
         f.text_input(

@@ -6,8 +6,8 @@ class Components::WorldPostItems < Components::Base
 
   sig { params(posts: T::Enumerable[Post]).void }
   def initialize(posts:)
-    @posts = posts
     super()
+    @posts = posts
   end
 
   # == Component ==

@@ -19,9 +19,9 @@ class Components::Item < Components::Base
       raise InvalidParameter.new(parameter: :size, value: size)
     end
 
+    super(**attributes)
     @variant = variant
     @size = size
-    super(**attributes)
   end
 
   # == Component ==

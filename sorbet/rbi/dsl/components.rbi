@@ -18,11 +18,11 @@ module Components
   sig do
     params(
       user: ::User,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
     ).void
   end
-  def AccountForm(user:, **options, &block); end
+  def AccountForm(user:, **attributes, &block); end
 
   sig do
     params(
@@ -119,6 +119,17 @@ module Components
     ).void
   end
   def Empty(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      post: ::Post,
+      emoji: ::String,
+      reactions: T::Array[::Reaction],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ExistingReactionForm).void)
+    ).void
+  end
+  def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
 
   sig do
     params(
@@ -272,6 +283,15 @@ module Components
 
   sig do
     params(
+      reaction: ::Reaction,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::NewReactionForm).void)
+    ).void
+  end
+  def NewReactionForm(reaction:, **attributes, &block); end
+
+  sig do
+    params(
       target: ::Object,
       pagy: T.nilable(::Pagy),
       autoclick: T::Boolean,
@@ -303,21 +323,22 @@ module Components
       field: T.nilable(::Symbol),
       default_country_code: ::String,
       disabled: T::Boolean,
+      required: T::Boolean,
       value: T.nilable(T.any(::Phonelib::Phone, ::String)),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
     ).void
   end
-  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), required: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
       verification_request: ::PhoneNumberVerificationRequest,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
     ).void
   end
-  def PhoneNumberVerificationRequestForm(verification_request:, **options, &block); end
+  def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
 
   sig do
     params(
@@ -331,11 +352,11 @@ module Components
   sig do
     params(
       post: ::Post,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostForm).void)
     ).void
   end
-  def PostForm(post:, **options, &block); end
+  def PostForm(post:, **attributes, &block); end
 
   sig do
     params(
@@ -356,15 +377,6 @@ module Components
     ).void
   end
   def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      reaction: ::Reaction,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ReactionForm).void)
-    ).void
-  end
-  def ReactionForm(reaction:, **attributes, &block); end
 
   sig do
     params(
@@ -397,21 +409,21 @@ module Components
 
   sig do
     params(
-      form: T.nilable(::PhlexFormBuilder),
-      field: T.nilable(::Symbol),
-      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
-      required: T::Boolean,
-      multiple: T::Boolean,
-      allowed_file_types: T.nilable(T::Array[::String]),
-      crop_to_aspect_ratio: T.nilable(::Numeric),
-      clear_action: T.nilable(::String),
-      preview_fit: T.nilable(::Symbol),
-      dropzone_class: T.nilable(::String),
+      form: T.untyped,
+      field: T.untyped,
+      value: T.untyped,
+      multiple: T.untyped,
+      required: T.untyped,
+      allowed_file_types: T.untyped,
+      crop_to_aspect_ratio: T.untyped,
+      clear_action: T.untyped,
+      preview_fit: T.untyped,
+      dropzone_class: T.untyped,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
     ).void
   end
-  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), multiple: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -432,11 +444,11 @@ module Components
   sig do
     params(
       world: ::World,
-      options: T.untyped,
+      attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
     ).void
   end
-  def WorldForm(world:, **options, &block); end
+  def WorldForm(world:, **attributes, &block); end
 
   sig do
     params(
@@ -479,11 +491,11 @@ module Components
     sig do
       params(
         user: ::User,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
       ).void
     end
-    def AccountForm(user:, **options, &block); end
+    def AccountForm(user:, **attributes, &block); end
 
     sig do
       params(
@@ -585,6 +597,17 @@ module Components
       ).void
     end
     def Empty(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        post: ::Post,
+        emoji: ::String,
+        reactions: T::Array[::Reaction],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ExistingReactionForm).void)
+      ).void
+    end
+    def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
 
     sig do
       params(
@@ -738,6 +761,15 @@ module Components
 
     sig do
       params(
+        reaction: ::Reaction,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::NewReactionForm).void)
+      ).void
+    end
+    def NewReactionForm(reaction:, **attributes, &block); end
+
+    sig do
+      params(
         target: ::Object,
         pagy: T.nilable(::Pagy),
         autoclick: T::Boolean,
@@ -769,21 +801,22 @@ module Components
         field: T.nilable(::Symbol),
         default_country_code: ::String,
         disabled: T::Boolean,
+        required: T::Boolean,
         value: T.nilable(T.any(::Phonelib::Phone, ::String)),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
       ).void
     end
-    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
+    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), required: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
         verification_request: ::PhoneNumberVerificationRequest,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
       ).void
     end
-    def PhoneNumberVerificationRequestForm(verification_request:, **options, &block); end
+    def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
 
     sig do
       params(
@@ -797,11 +830,11 @@ module Components
     sig do
       params(
         post: ::Post,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostForm).void)
       ).void
     end
-    def PostForm(post:, **options, &block); end
+    def PostForm(post:, **attributes, &block); end
 
     sig do
       params(
@@ -822,15 +855,6 @@ module Components
       ).void
     end
     def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        reaction: ::Reaction,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ReactionForm).void)
-      ).void
-    end
-    def ReactionForm(reaction:, **attributes, &block); end
 
     sig do
       params(
@@ -863,21 +887,21 @@ module Components
 
     sig do
       params(
-        form: T.nilable(::PhlexFormBuilder),
-        field: T.nilable(::Symbol),
-        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
-        required: T::Boolean,
-        multiple: T::Boolean,
-        allowed_file_types: T.nilable(T::Array[::String]),
-        crop_to_aspect_ratio: T.nilable(::Numeric),
-        clear_action: T.nilable(::String),
-        preview_fit: T.nilable(::Symbol),
-        dropzone_class: T.nilable(::String),
+        form: T.untyped,
+        field: T.untyped,
+        value: T.untyped,
+        multiple: T.untyped,
+        required: T.untyped,
+        allowed_file_types: T.untyped,
+        crop_to_aspect_ratio: T.untyped,
+        clear_action: T.untyped,
+        preview_fit: T.untyped,
+        dropzone_class: T.untyped,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
       ).void
     end
-    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), multiple: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -898,11 +922,11 @@ module Components
     sig do
       params(
         world: ::World,
-        options: T.untyped,
+        attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
       ).void
     end
-    def WorldForm(world:, **options, &block); end
+    def WorldForm(world:, **attributes, &block); end
 
     sig do
       params(

@@ -26,14 +26,13 @@ class Components::NextPageControl < Components::Base
     size: :default,
     **attributes
   )
-    super()
+    super(**attributes)
     @target = target
     @pagy = pagy
     @autoclick = autoclick
     @variant = variant
     @size = size
     @disable_for = disable_for
-    super(**attributes)
   end
 
   # == Component ==

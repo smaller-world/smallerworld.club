@@ -14,8 +14,8 @@ class Components::Alert < Components::Base
       raise InvalidParameter.new(parameter: :variant, value: variant)
     end
 
-    @variant = variant
     super(**attributes)
+    @variant = variant
   end
 
   # == Component ==

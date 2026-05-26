@@ -13,9 +13,10 @@ class Components::Button < Components::Base
   sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
   def initialize(variant: :default, size: :default, **attributes)
     self.class.check_parameters!(variant:, size:)
+
+    super(**attributes)
     @variant = variant
     @size = size
-    super(**attributes)
   end
 
   # == Component ==

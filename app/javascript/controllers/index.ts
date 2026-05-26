@@ -11,6 +11,7 @@ import EmojiInputController from "./emoji_input_controller";
 import EmojiMartController from "./emoji_mart_controller";
 import FlashController from "./flash_controller";
 import FormController from "./form_controller";
+import FrameController from "./frame_controller";
 import HelloController from "./hello_controller";
 import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
@@ -56,5 +57,6 @@ application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
 application.register("image-stack", ImageStackController);
 application.register("confetti", ConfettiController);
+application.register("frame", FrameController);
 
 // application.register("otp-input", OtpInputController);

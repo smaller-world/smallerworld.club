@@ -8,10 +8,10 @@ class Components::PostCard < Components::Base
 
   sig { params(post: Post, attributes: T.untyped).void }
   def initialize(post:, **attributes)
+    super(**attributes)
     @post = post
     @author = T.let(post.author!, User)
     @world = T.let(post.world!, World)
-    super(**attributes)
   end
 
   # == Component ==
@@ -65,6 +65,9 @@ class Components::PostCard < Components::Base
           dom_id(@post, :reactions),
           src: [ @post, :reactions ],
           loading: :lazy,
+          data: {
+            controller: "frame",
+          },
         )
       end
     end
