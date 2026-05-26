@@ -7,8 +7,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # == Custom Configuration ==
-
-  config.x.perform_whatsapp_deliveries = true
+  config.x.phone_number_verification_requests.perform_deliveries = true
 
   # == Rails Configuration ==
 

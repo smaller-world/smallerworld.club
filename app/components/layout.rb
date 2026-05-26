@@ -87,7 +87,7 @@ class Components::Layout < Components::Base
         javascript_include_tag("application", "data-turbo-track": "reload", type: "module")
 
         # == OpenGraph
-        if (description = Rails.configuration.x.site_description)
+        if (description = Rails.configuration.x.site.description)
           meta(name: "description", content: description)
         end
         og_tags

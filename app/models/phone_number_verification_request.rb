@@ -56,6 +56,10 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     presence: true,
     phone: { possible: true, types: :mobile, extensions: false, allow_blank: true }
 
+  # == Callbacks ==
+
+  after_create_commit :deliver_verification_code, if: :should_deliver_verification_code?
+
   # == Scopes ==
 
   scope :pending_verification, -> {
@@ -112,13 +116,17 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { void }
   def deliver_verification_code
-    raise NotImplementedError
-    # TwilioService.send_message(to: phone_number, body: login_code_message)
+    application = Smallerworld.application
+    application.telnyx_client.messages.send_long_code(
+      from: application.telnyx_phone_number,
+      to: phone_number,
+      text: verification_code_message,
+    )
   end
 
   sig { returns(T::Boolean) }
   def should_deliver_verification_code?
-    Rails.env.production?
+    Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false
   end
 
   sig { params(code: String).returns(T::Boolean) }
