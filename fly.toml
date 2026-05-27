@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "smallerworld"
+app = "smallerworld-v2"
 primary_region = "iad"
 console_command = "./bin/rails console"
 swap_size_mb = 1024
@@ -13,7 +13,7 @@ strategy = "bluegreen"
 release_command = "./bin/prepare-deployment"
 
 [env]
-CANONICAL_HOST = "smallerworld.club"
+CANONICAL_HOST = "app.smallerworld.club"
 HTTP_PORT = "8080"
 HTTPS_PORT = "8443"
 

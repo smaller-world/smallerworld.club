@@ -26,21 +26,20 @@ jobs:
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
 
-  # TODO: Re-enable when shadcn's transitive hono dep is patched (GHSA-458j-xx4x-4375)
-  # scan_js:
-  #   name: Scan for JavaScript security issues
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
-  #     - name: Set up Bun
-  #       uses: jdx/mise-action@v3
-  #       with:
-  #         install_args: bun
-  #     - name: Install Bun packages
-  #       run: mise x -- bun install
-  #     - name: Scan for known security vulnerabilities in packages used
-  #       run: bun audit
+  scan_js:
+    name: Scan for JavaScript security issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Bun
+        uses: jdx/mise-action@v3
+        with:
+          install_args: bun
+      - name: Install Bun packages
+        run: mise x -- bun install
+      - name: Scan for known security vulnerabilities in packages used
+        run: bun audit
 
   check:
     name: Check code issues

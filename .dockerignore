@@ -51,4 +51,4 @@
 /Dockerfile*
 
 # Ignore vendored packages
-/vendor/
+# /vendor/

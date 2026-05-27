@@ -47,7 +47,7 @@ ARG BUN_VERSION=1.3.7
 RUN curl -fsSL https://bun.sh/install | bash -s -- "bun-v${BUN_VERSION}"
 
 # Install application gems
-# COPY vendor/* ./vendor/
+COPY vendor/* ./vendor/
 COPY Gemfile Gemfile.lock ./
 
 RUN bundle install && \

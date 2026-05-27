@@ -8,7 +8,7 @@ run-name: "Deploy from ${{ github.event.workflow_run.head_branch }} (${{ github.
 on:
   workflow_run:
     workflows: [ci]
-    branches: [main]
+    branches: [main, v2]
     types: [completed]
 
 jobs:
@@ -53,10 +53,9 @@ jobs:
         uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: smallerworld
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: production
-          projects: smallerworld
           disable_telemetry: true
           sourcemaps: ./app/assets/builds/
-          ignore_missing: true
