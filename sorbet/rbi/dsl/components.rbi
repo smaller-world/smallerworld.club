@@ -362,11 +362,13 @@ module Components
     params(
       post: ::Post,
       new_reaction: ::Reaction,
+      existing_reactions_form: T::Hash[::Symbol, T.untyped],
+      new_reaction_form: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
     ).void
   end
-  def PostReactions(post:, new_reaction: T.unsafe(nil), **attributes, &block); end
+  def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -409,21 +411,21 @@ module Components
 
   sig do
     params(
-      form: T.untyped,
-      field: T.untyped,
-      value: T.untyped,
-      multiple: T.untyped,
-      required: T.untyped,
-      allowed_file_types: T.untyped,
-      crop_to_aspect_ratio: T.untyped,
-      clear_action: T.untyped,
-      preview_fit: T.untyped,
-      dropzone_class: T.untyped,
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+      required: T::Boolean,
+      multiple: T::Boolean,
+      allowed_file_types: T.nilable(T::Array[::String]),
+      crop_to_aspect_ratio: T.nilable(::Numeric),
+      clear_action: T.nilable(::String),
+      preview_fit: T.nilable(::Symbol),
+      dropzone_class: T.nilable(::String),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
     ).void
   end
-  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), multiple: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -840,11 +842,13 @@ module Components
       params(
         post: ::Post,
         new_reaction: ::Reaction,
+        existing_reactions_form: T::Hash[::Symbol, T.untyped],
+        new_reaction_form: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
       ).void
     end
-    def PostReactions(post:, new_reaction: T.unsafe(nil), **attributes, &block); end
+    def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -887,21 +891,21 @@ module Components
 
     sig do
       params(
-        form: T.untyped,
-        field: T.untyped,
-        value: T.untyped,
-        multiple: T.untyped,
-        required: T.untyped,
-        allowed_file_types: T.untyped,
-        crop_to_aspect_ratio: T.untyped,
-        clear_action: T.untyped,
-        preview_fit: T.untyped,
-        dropzone_class: T.untyped,
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+        required: T::Boolean,
+        multiple: T::Boolean,
+        allowed_file_types: T.nilable(T::Array[::String]),
+        crop_to_aspect_ratio: T.nilable(::Numeric),
+        clear_action: T.nilable(::String),
+        preview_fit: T.nilable(::Symbol),
+        dropzone_class: T.nilable(::String),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
       ).void
     end
-    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), multiple: T.unsafe(nil), required: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
