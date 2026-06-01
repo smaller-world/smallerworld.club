@@ -14,23 +14,12 @@ class Views::Worlds::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout() do |layout|
-      layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to(:home)
+    Components::AppLayout(page_title: "create your world") do |layout|
+      layout.page_container(class: "max-w-lg space-y-6") do
+        button_back_to(:home) unless hotwire_native_app?
 
-        Components::Card() do |card|
-          card.header(class: "text-center") do
-            card.title(element: :h1, class: "text-xl") do
-              "create your world"
-            end
-            card.description do
-              "> hint: your world is the place where your posts live!"
-            end
-          end
-          card.content do
-            Components::WorldForm(world: @world)
-          end
-        end
+        Components::HintAlert(message: "your world is the place where your posts live!")
+        Components::WorldForm(world: @world)
       end
     end
   end

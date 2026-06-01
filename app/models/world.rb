@@ -29,6 +29,7 @@ class World < ApplicationRecord
 
   # == Configuration ==
 
+  NAME_MAX_LENGTH = 30
   ICON_CONTENT_TYPES = [ "image/*", "video/*" ]
 
   # == FriendlyId ==
@@ -101,7 +102,8 @@ class World < ApplicationRecord
   # == Validations ==
 
   validates :name,
-    length: { minimum: 2, maximum: 30 },
+    presence: true,
+    length: { maximum: NAME_MAX_LENGTH },
     uniqueness: {
       scope: :owner_id,
       message: ->(_object, data) {

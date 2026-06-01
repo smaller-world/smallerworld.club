@@ -32,12 +32,12 @@ class Components::WorldKeyGrantForm < Components::Base
         class: "flex flex-wrap max-w-96 self-center justify-center",
       ) do |group|
         WorldKey.color.values.each do |color|
-          group.field_label_for(color, class: "w-26 cursor-pointer py-1") do |label|
+          group.field_label_for(color, class: "w-24 cursor-pointer py-1") do |label|
             label.field do |field|
               field.content(class: "items-center") do
                 Icon(
                   "huge/key-02",
-                  class: "size-10",
+                  class: "size-8",
                   style: "color: var(--world-key-color-#{color})",
                 )
                 field.title(
@@ -54,7 +54,7 @@ class Components::WorldKeyGrantForm < Components::Base
                 class: "hidden",
                 input: {
                   data: {
-                    action: "change->form#submit",
+                    action: "change->form#requestSubmit",
                   },
                 },
               )
@@ -108,7 +108,7 @@ class Components::WorldKeyGrantForm < Components::Base
     div(class: "relative") do
       raw(safe(svg)) # rubocop:disable Rails/OutputSafety
       div(class: "absolute inset-0 flex items-center justify-center") do
-        div(class: "size-20 bg-foreground flex justify-center p-3 rounded-xl border-4 border-background") do
+        div(class: "bg-background flex items-center rounded-world-icon size-17 p-2.5") do
           image_tag(
             "logo.png",
             alt: [ Rails.configuration.x.site.name, "logo" ].compact.join(" "),

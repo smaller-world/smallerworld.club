@@ -6,7 +6,7 @@ class Views::UiDocs::Alerts < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(page_title: [ "ui", "alerts" ]) do |layout|
+    Components::AppLayout(page_title: [ "ui", "alerts" ]) do |layout|
       layout.page_container do
         div(class: "mx-auto max-w-2xl space-y-10 py-8") do
           # Back link

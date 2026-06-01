@@ -15,7 +15,7 @@ class Views::Worlds::Index < Views::Base
   sig { override.void }
   def view_template
     raise NotImplementedError
-    # Components::Layout() do |layout|
+    # Components::AppLayout() do |layout|
     #   layout.page_container(class: "max-w-lg") do
     #     h1(class: "text-2xl") { "your worlds" }
     #     ul do

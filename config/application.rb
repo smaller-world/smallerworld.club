@@ -56,6 +56,13 @@ module Smallerworld
 
     # Set a PID file
     config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")
+
+    # == Custom Helpers ==
+
+    sig { returns(String) }
+    def site_name
+      Rails.configuration.x.site.name or raise "Missing site name"
+    end
   end
 
   sig { returns(Smallerworld::Application) }

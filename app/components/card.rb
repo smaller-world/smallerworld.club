@@ -33,6 +33,11 @@ class Components::Card < Components::Base
     )
   end
 
+  # == Interface ==
+
+  sig { returns(Symbol) }
+  attr_reader :size
+
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def header(**attributes, &content)
     slot("card-header", **attributes, &content)

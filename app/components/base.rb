@@ -28,6 +28,13 @@ class Components::Base < Phlex::HTML
   include FormWith
   include TurnstileTag
 
+  register_output_helper :local_time
+  register_output_helper :inline_svg_tag
+  register_value_helper :auto_link
+  register_value_helper :authenticated?
+  register_value_helper :allowed_to?
+  register_value_helper :hotwire_native_app?
+
   # == Errors ==
 
   class InvalidParameter < ArgumentError
@@ -46,14 +53,6 @@ class Components::Base < Phlex::HTML
     sig { returns(Symbol) }
     attr_reader :value
   end
-
-  # == Configuration ==
-
-  register_output_helper :local_time
-  register_output_helper :inline_svg_tag
-  register_value_helper :auto_link
-  register_value_helper :authenticated?
-  register_value_helper :allowed_to?
 
   # == Initialization ==
 

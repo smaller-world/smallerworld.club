@@ -25,6 +25,7 @@ class User < ApplicationRecord
   # == Constants ==
 
   MESSAGING_PLATFORMS = [ :sms, :whatsapp, :telegram ].freeze
+  NAME_MAX_LENGTH = 22
 
   # == Attributes ==
 
@@ -33,10 +34,15 @@ class User < ApplicationRecord
     Phonelib.parse(phone_number)
   end
 
+  sig { returns(String) }
+  def interpreted_first_name
+    name.split(" ").first || name
+  end
+
   # == Associations ==
 
   has_many :sessions, dependent: :destroy
-  has_one :own_world,
+  has_many :owned_worlds,
     class_name: "World",
     dependent: :destroy,
     inverse_of: :owner,
@@ -55,11 +61,7 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :reactor,
     foreign_key: :reactor_id
-
-  sig { returns(World) }
-  def own_world!
-    own_world or raise ActiveRecord::RecordNotFound, "Missing world"
-  end
+  has_many :devices, dependent: :destroy, inverse_of: :owner, foreign_key: :owner_id
 
   # == Normalizations ==
 
@@ -67,7 +69,7 @@ class User < ApplicationRecord
 
   # == Validations ==
 
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: NAME_MAX_LENGTH }
   validates :phone_number,
     presence: true,
     uniqueness: { message: "already registered" },
@@ -78,7 +80,7 @@ class User < ApplicationRecord
 
   sig { returns(String) }
   def default_world_name
-    "#{name}'s world"
+    "#{interpreted_first_name}'s world"
   end
 
   sig { params(platform: Symbol, message: String).returns(String) }

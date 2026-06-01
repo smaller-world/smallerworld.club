@@ -35,7 +35,10 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // JSX
+    "jsx": "react-jsx"
   },
   "include": ["app/javascript/**/*.ts", "app/javascript/**/*.tsx"]
 }

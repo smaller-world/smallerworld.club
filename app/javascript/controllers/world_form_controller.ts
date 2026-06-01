@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus";
+import FormController from "./form_controller";
 
-export default class WorldFormController extends Controller {
+export default class WorldFormController extends FormController {
   // == Targets ==
 
   static targets = ["nameInput", "submitButtonLabel"];

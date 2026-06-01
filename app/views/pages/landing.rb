@@ -6,7 +6,7 @@ class Views::Pages::Landing < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(site_title:) do |layout|
+    Components::AppLayout(title:) do |layout|
       main(class: "flex-1 flex flex-col justify-center pb-20") do
         layout.page_container(class: "flex flex-col items-center gap-y-6") do
           div(class: "flex flex-col items-center gap-y-2") do
@@ -49,7 +49,7 @@ class Views::Pages::Landing < Views::Base
   # == Helpers ==
 
   sig { returns(T.nilable(String)) }
-  def site_title
+  def title
     site = Rails.configuration.x.site
     [ site.name, site.tagline ].compact.join(" | ").presence
   end

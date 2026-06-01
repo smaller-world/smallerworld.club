@@ -15,7 +15,7 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(page_title: "you got a key!") do |layout|
+    Components::AppLayout(page_title: "you got a key!") do |layout|
       layout.page_container(class: "max-w-lg space-y-4") do
         Components::Card(class: "overflow-visible") do |card|
           card.header(class: "text-center") do

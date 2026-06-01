@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::FlashAlert < Components::Base
+class Components::AppFlashAlert < Components::Base
   # == Initialization ==
 
   sig { params(message: String, type: Symbol, attributes: T.untyped).void }

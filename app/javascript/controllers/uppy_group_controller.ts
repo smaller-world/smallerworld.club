@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 import type { Meta, MinimalRequiredUppyFile } from "@uppy/core";
-import { isEmpty } from "lodash-es";
 
 export default class UppyGroupController extends Controller<HTMLElement> {
   // == Targets ==

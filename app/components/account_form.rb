@@ -26,12 +26,9 @@ class Components::AccountForm < Components::Base
 
       field_for(form, :name) do |f|
         f.text_input(
-          placeholder: "your name",
+          placeholder: "what's your name?",
           autocomplete: "given-name",
-          data: {
-            # account_form_target: "nameInput",
-            # action: "account-form#updateSubmitButtonLabel",
-          },
+          maxlength: User::NAME_MAX_LENGTH,
         )
         f.error
       end

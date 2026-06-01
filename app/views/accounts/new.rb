@@ -14,7 +14,7 @@ class Views::Accounts::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(
+    Components::AppLayout(
       title: "create account",
       body_class: "bg-muted",
     ) do |layout|
@@ -38,7 +38,8 @@ class Views::Accounts::New < Views::Base
       card.header(class: "flex flex-col items-center gap-y-3") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do
-          "join smaller world"
+          plain("welcome to ")
+          span(class: "font-semibold") { Rails.configuration.x.site.name }
         end
       end
       card.content(class: "flex flex-col items-stretch gap-y-3") do

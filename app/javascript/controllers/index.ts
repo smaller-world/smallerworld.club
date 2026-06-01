@@ -1,3 +1,12 @@
+import {
+  AlertBridgeController,
+  ButtonBridgeController,
+  HapticBridgeController,
+  NotificationTokenBridgeController,
+  // @ts-expect-error - Untyped package
+} from "@joemasilotti/bridge-components";
+
+import AccountTimeZoneFormController from "./account_time_zone_form_controller";
 import { application } from "./application";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
@@ -21,17 +30,34 @@ import MaintainScrollController from "./maintain_scroll_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import RadioGroupController from "./radio_group_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
+import StreamedLogMessageController from "./streamed_log_message_controller";
+import StreamedToastController from "./streamed_toast_controller";
 import TippyController from "./tippy_controller";
+import ToasterController from "./toaster_controller";
+// @ts-expect-error - Untyped package
+import TransitionController from "./transition_controller";
+import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
 import WorldFormController from "./world_form_controller";
 
-// == Demo
-application.register("hello", HelloController);
+// == Bridge Components
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+application.register("alert-bridge", AlertBridgeController);
+application.register("button-bridge", ButtonBridgeController);
+application.register("haptic-bridge", HapticBridgeController);
+application.register(
+  "notification-token-bridge",
+  NotificationTokenBridgeController,
+);
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 // == Services
 application.register("turnstile", TurnstileController);
+
+// == Demo
+application.register("hello", HelloController);
 
 application.register("tippy", TippyController);
 application.register("scroll-to-bottom", ScrollToBottomController);
@@ -58,5 +84,11 @@ application.register("uppy-group", UppyGroupController);
 application.register("image-stack", ImageStackController);
 application.register("confetti", ConfettiController);
 application.register("frame", FrameController);
+application.register("toaster", ToasterController);
+application.register("account-time-zone-form", AccountTimeZoneFormController);
+application.register("streamed-log-message", StreamedLogMessageController);
+application.register("streamed-toast", StreamedToastController);
+application.register("transition-group", TransitionGroupController);
+application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
 
 // application.register("otp-input", OtpInputController);

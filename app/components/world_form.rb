@@ -28,6 +28,7 @@ class Components::WorldForm < Components::Base
         f.text_input(
           required: true,
           placeholder: @world.owner!.default_world_name,
+          maxlength: World::NAME_MAX_LENGTH,
           data: {
             world_form_target: "nameInput",
             action: "world-form#updateSubmitButtonLabel",
@@ -67,7 +68,7 @@ class Components::WorldForm < Components::Base
         f.error(data: { field_target: "error" })
       end
 
-      submit_button_for(form) do |button|
+      submit_button_for(form, size: :lg) do |button|
         if @world.new_record?
           button.inline_start_icon("huge/plus-sign-square")
           span(data: { world_form_target: "submitButtonLabel" }) do

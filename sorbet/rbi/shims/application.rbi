@@ -24,6 +24,9 @@ class Components::Base
 
   sig { returns(T::Boolean) }
   def authenticated?; end
+
+  sig { returns(T::Boolean) }
+  def hotwire_native_app?; end
 end
 
 class Current
@@ -32,6 +35,20 @@ class Current
       .returns(T.nilable(User))
   end
   def self.user(*args, **kwargs, &block); end
+end
+
+class ActionDispatch::Routing::RouteSet
+  sig do
+    params(supports_path: TrueClass).returns(T.all(
+      Module,
+      GeneratedUrlHelpersModule,
+      GeneratedPathHelpersModule,
+    ))
+  end
+  sig do
+    params(supports_path: FalseClass).returns(GeneratedUrlHelpersModule)
+  end
+  def url_helpers(supports_path = true); end
 end
 
 # class ActiveRecord::Migration::Current

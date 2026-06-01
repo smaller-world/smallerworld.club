@@ -4,6 +4,6 @@
   }
 
   .image-stack-image {
-    @apply absolute top-0 origin-[top_center] touch-none rounded-lg bg-background shadow-lg transition-[filter] duration-200 ease-in select-none data-blur:blur-[2px] data-blur:brightness-75;
+    @apply absolute top-0 origin-[top_center] rounded-lg bg-background shadow-lg transition-[filter] duration-200 ease-in select-none data-blur:blur-[2px] data-blur:brightness-75;
   }
 }

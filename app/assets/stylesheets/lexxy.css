@@ -58,16 +58,34 @@
     }
 
     :where(lexxy-toolbar) {
-      .lexxy-editor__toolbar-button {
+      > .lexxy-editor__toolbar-button,
+      > .lexxy-editor__toolbar-dropdown
+        > :is(
+          .lexxy-editor__toolbar-button,
+          .lexxy-editor__toolbar-overflow-menu > .lexxy-editor__toolbar-button
+        ) {
         @apply md:block-(--lexxy-toolbar-button-desktop-size);
+        @apply dark:bg-transparent dark:hover:bg-(--lexxy-color-canvas) dark:aria-pressed:bg-(--lexxy-color-selected);
 
-        &::after {
-          @apply bg-border;
+        &.lexxy-editor__toolbar-button--chevron::after {
+          @apply size-1.5;
         }
       }
 
-      .lexxy-editor__toolbar-dropdown > button > svg path {
-        @apply dark:fill-foreground;
+      > .lexxy-editor__toolbar-dropdown
+        > .lexxy-editor__toolbar-overflow-menu
+        > .lexxy-editor__toolbar-button {
+        @apply aria-disabled:opacity-30;
+      }
+
+      > .lexxy-editor__toolbar-dropdown {
+        > button > svg path {
+          @apply dark:fill-foreground;
+        }
+
+        > [data-dropdown-panel] {
+          @apply p-1;
+        }
       }
 
       .lexxy-editor__toolbar-dropdown-list {
@@ -76,6 +94,12 @@
 
         span {
           @apply lowercase;
+        }
+      }
+
+      .lexxy-editor__toolbar-dropdown-actions {
+        button {
+          @apply h-9 text-sm font-medium whitespace-nowrap lowercase transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
         }
       }
 

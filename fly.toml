@@ -14,17 +14,16 @@ release_command = "./bin/prepare-deployment"
 
 [env]
 CANONICAL_HOST = "app.smallerworld.club"
+THRUSTER_HTTP_PORT = "8080"
 
 [processes]
-app = "./bin/thrust ./bin/rails server -b 0.0.0.0"
+app = "./bin/thrust ./bin/rails server"
 jobs = "./bin/jobs"
 
 [http_service]
-internal_port = 3000
 force_https = true
-auto_stop_machines = "stop"
+auto_stop_machines = "off"
 auto_start_machines = false
-min_machines_running = 1
 processes = ["app"]
 
 [[http_service.checks]]
@@ -38,7 +37,7 @@ protocol = "http"
 [[vm]]
 processes = ["app"]
 cpus = 1
-memory_mb = 512
+memory_mb = 768
 
 [[vm]]
 name = ["jobs"]

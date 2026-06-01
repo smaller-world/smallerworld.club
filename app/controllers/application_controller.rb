@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Method
   include Authentication
   include TaggedLogging
+  include LogStreaming
 
   # == Configuration ==
 

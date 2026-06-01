@@ -19,39 +19,40 @@ class Components::PostCard < Components::Base
   sig { override.void }
   def view_template
     Components::Card(
+      id: dom_id(@post),
+      size: hotwire_native_app? ? :sm : :default,
       **mix(
         {
-          id: dom_id(@post),
           class: "shadow-sm overflow-visible",
         },
         @attributes,
       ),
     ) do |card|
-      card.header do
-        card.description(class: "flex gap-2") do
-          if (emoji = @post.emoji)
-            div(class: "text-sm font-emoji") do
-              emoji
+      card.header(class: "gap-1.5") do
+        card.description(class: "flex items-end justify-between") do
+          div(class: "flex gap-2 items-center") do
+            if (emoji = @post.emoji)
+              div(class: "font-emoji text-sm") do
+                emoji
+              end
             end
+            local_time(@post.created_at, class: "lowercase text-xs block")
           end
-          local_time(@post.created_at, class: "lowercase text-xs")
+
+          if allowed_to?(:manage?, @post)
+            edit_menu(card:)
+          end
         end
         if (title = @post.title)
-          card.title(class: "text-lg font-semibold font-heading") do
+          card.title(class: "text-lg font-semibold font-heading leading-tight") do
             title
-          end
-          if allowed_to?(:manage?, @post)
-            card.action do
-              actions_menu
-            end
-          end
-        elsif allowed_to?(:manage?, @post)
-          card.action(class: "w-14 relative self-stretch") do
-            actions_menu(class: "absolute right-0 bottom-0")
           end
         end
       end
-      card.content(class: "flex flex-col gap-6 -mt-5") do
+      card.content(class: class_names(
+        "flex flex-col gap-6",
+        card.size == :sm ? "-mt-2" : "-mt-5",
+      )) do
         div(class: "text-sm") do
           @post.body.to_s
         end
@@ -60,7 +61,10 @@ class Components::PostCard < Components::Base
         end
       end
       card.footer(class: "flex items-end justify-between gap-6") do
-        reply_via_menu
+        if allowed_to?(:react?, @post)
+          reply_via_menu
+        end
+
         turbo_frame_tag(
           dom_id(@post, :reactions),
           src: [ @post, :reactions ],
@@ -77,12 +81,16 @@ class Components::PostCard < Components::Base
 
   # == Helpers ==
 
-  sig { params(class: T.nilable(String)).void }
-  def actions_menu(class: nil)
+  sig { params(card: Components::Card).void }
+  def edit_menu(card:)
     Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(variant: :outline, size: :xs, class:) do
+      menu.with_trigger_button(
+        variant: :outline,
+        size: :xs,
+        class: class_names("-mt-2" => card.size == :default),
+      ) do
         div(class: "relative h-full w-1.5") do
-          div(class: "absolute top-0 bottom-0 -left-1.25 flex items-center") do
+          div(class: "absolute bottom-0 top-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")
           end
         end

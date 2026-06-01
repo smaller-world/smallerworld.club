@@ -1,0 +1,5 @@
+@layer components {
+  .world-action-button[data-size="lg"] {
+    @apply gap-2 rounded-full px-3.5 text-base font-bold has-data-[icon=inline-start]:pl-3 [&_svg]:size-5;
+  }
+}

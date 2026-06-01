@@ -30,11 +30,16 @@ Rails.application.routes.draw do
 
   # == Account
   resource :account, only: [ :new, :create ] do
-    resource :time_zone, only: [ :update ]
+    scope(module: :accounts) do
+      resource :time_zone, only: [ :update ]
+    end
   end
 
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id
+
+  # == Devices
+  resources :devices, only: :create
 
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
   #   post :callback

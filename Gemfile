@@ -137,6 +137,12 @@ gem "unicode-emoji", "~> 4.2", require: "unicode/emoji"
 gem "telnyx", "~> 5.118"
 gem "standardwebhooks", "~> 1.1"
 
+# Push notification with Action Push Native
+gem "action_push_native", "~> 0.3.1"
+
+# Detect device name
+gem "device_detector", "~> 1.1"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

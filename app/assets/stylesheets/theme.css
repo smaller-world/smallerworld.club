@@ -50,6 +50,13 @@
   --lexxy-color-red: var(--destructive);
   --lexxy-radius: var(--radius-md);
   --lexxy-content-margin: var(--spacing);
+  --lexxy-color-accent-dark: var(--color-accent-foreground);
+  --lexxy-color-ink-lightest: var(--color-secondary);
+  --lexxy-color-accent-medium: color-mix(
+    in oklab,
+    var(--color-primary) 80%,
+    transparent
+  );
   /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
 
   /* World keys */
@@ -179,6 +186,9 @@
 
   body {
     @apply bg-background text-foreground;
+
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   html {

@@ -44,7 +44,10 @@ class Components::ImageStack < Components::Base
           width: metadata["width"],
           height: metadata["height"],
           draggable: false,
-          class: "image-stack-image",
+          class: class_names(
+            "image-stack-image",
+            "touch-none" => @images.size > 1,
+          ),
           data: {
             image_stack_target: "image",
             action: token_list(

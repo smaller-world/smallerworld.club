@@ -16,6 +16,7 @@ class Components::UppyDnd < Components::Input
       allowed_file_types: T.nilable(T::Array[String]),
       crop_to_aspect_ratio: T.nilable(Numeric),
       clear_action: T.nilable(String),
+      clear_label: String,
       preview_fit: T.nilable(Symbol),
       dropzone_class: T.nilable(String),
       attributes: T.untyped,
@@ -31,6 +32,7 @@ class Components::UppyDnd < Components::Input
     allowed_file_types: nil,
     crop_to_aspect_ratio: nil,
     clear_action: nil,
+    clear_label: "clear",
     preview_fit: nil,
     dropzone_class: nil,
     **attributes
@@ -41,6 +43,7 @@ class Components::UppyDnd < Components::Input
     @allowed_file_types = allowed_file_types
     @crop_to_aspect_ratio = crop_to_aspect_ratio
     @clear_action = clear_action
+    @clear_label = clear_label
     @preview_fit = preview_fit
     @dropzone_class = dropzone_class
     @blob = T.let(
@@ -103,15 +106,17 @@ class Components::UppyDnd < Components::Input
         hidden_field_tag(@field, @blob&.signed_id, id: nil, **input_options)
       end
 
-      Components::Button(
-        variant: :link,
-        size: :sm,
-        class: "uppy-dnd-clear",
-        data: {
-          action: [ "uppy-dnd#clear", @clear_action ],
-        },
-      ) do
-        "clear"
+      unless @required
+        Components::Button(
+          variant: :link,
+          size: :sm,
+          class: "uppy-dnd-clear",
+          data: {
+            action: [ "uppy-dnd#clear", @clear_action ],
+          },
+        ) do
+          @clear_label
+        end
       end
 
       if @crop_to_aspect_ratio
@@ -128,7 +133,7 @@ class Components::UppyDnd < Components::Input
           dialog.with_content(
             show_close_button: false,
             panel: {
-              class: "gap-4 p-0",
+              class: "gap-0 p-0",
             },
           ) do |content|
             div(

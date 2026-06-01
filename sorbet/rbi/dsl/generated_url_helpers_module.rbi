@@ -25,6 +25,9 @@ module GeneratedUrlHelpersModule
   def challenge_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def devices_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -1,0 +1,23 @@
+@custom-variant native {
+  html[data-hotwire-native] & {
+    @slot;
+  }
+}
+
+@custom-variant not-native {
+  html:not([data-hotwire-native]) & {
+    @slot;
+  }
+}
+
+@custom-variant with-button-bridge {
+  html[data-bridge-components~="button"] & {
+    @slot;
+  }
+}
+
+@custom-variant with-notification-token-bridge {
+  html[data-bridge-components~="notification-token"] & {
+    @slot;
+  }
+}

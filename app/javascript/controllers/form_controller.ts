@@ -1,8 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-import {
-  FrameElement,
-  type TurboBeforeFetchResponseEvent,
-} from "@hotwired/turbo";
 
 import { addAction, addCleanupAction } from "#helpers/stimulus_helpers";
 
@@ -16,7 +12,8 @@ export default class FormController extends Controller<HTMLFormElement> {
 
   // == Lifecycle ==
 
-  connected(): void {
+  connect(): void {
+    super.connect();
     addAction(this, "turbo:submit-start", "disableWhileSubmitting");
     addAction(this, "turbo:submit-end", "enableAfterSubmitting");
     addCleanupAction(this, "enableAfterSubmitting");
@@ -24,7 +21,7 @@ export default class FormController extends Controller<HTMLFormElement> {
 
   // == Actions ==
 
-  submit(): void {
+  requestSubmit(): void {
     this.element.requestSubmit();
   }
 

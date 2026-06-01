@@ -11,6 +11,7 @@ import ImageEditor from "@uppy/image-editor";
 import { isEmpty, map } from "lodash-es";
 
 import { isDevelopment } from "#helpers/env_helpers";
+import { addCleanupAction } from "#helpers/stimulus_helpers";
 
 export default class UppyDndController extends Controller<HTMLElement> {
   // == Targets ==
@@ -68,7 +69,6 @@ export default class UppyDndController extends Controller<HTMLElement> {
       throw new Error("Missing hiddenInput target");
     }
 
-    this.#uppy?.destroy();
     let uppy = new Uppy<Meta, { signed_id: string }>({
       debug: isDevelopment(),
       restrictions: {
@@ -177,14 +177,12 @@ export default class UppyDndController extends Controller<HTMLElement> {
     setTimeout(() => {
       this.dispatch("ready");
     });
+    addCleanupAction(this, "destroy");
   }
 
   disconnect(): void {
-    if (this.#uppy) {
-      this.#uppy.destroy();
-      this.#uppy = null;
-    }
     super.disconnect();
+    this.destroy();
   }
 
   previewSignedIdValueChanged(signedId: string) {
@@ -263,6 +261,13 @@ export default class UppyDndController extends Controller<HTMLElement> {
     const [file] = this.#uppy.getFiles();
     if (file) {
       this.#uppy.emit("file-editor:cancel", file);
+    }
+  }
+
+  destroy(): void {
+    if (this.#uppy) {
+      this.#uppy.destroy();
+      this.#uppy = null;
     }
   }
 

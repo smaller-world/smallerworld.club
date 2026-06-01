@@ -16,9 +16,10 @@ class Views::Sessions::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(
-      title: "sign in to smaller world",
+    Components::AppLayout(
+      title: ("sign in to smaller world" unless hotwire_native_app?),
       body_class: "bg-muted [&_.flash]:bg-background",
+      disable_cache: true,
     ) do |layout|
       layout.with_head do
         # JS for Cloudflare Turnstile
@@ -50,11 +51,9 @@ class Views::Sessions::New < Views::Base
       card.header(class: "flex flex-col items-center gap-y-3") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do
-          if (site_name = Rails.configuration.x.site.name)
-            plain("sign in to ")
-            span(class: "font-semibold") { site_name }
-          else
-            plain("sign in")
+          plain("sign in to ")
+          span(class: "font-semibold") do
+            Smallerworld.application.site_name
           end
         end
       end

@@ -2330,6 +2330,90 @@ class ActiveStorage::Service::Registry
   def services; end
 end
 
+# = Active Storage \S3 \Service
+#
+# Wraps the Amazon Simple Storage Service (S3) as an Active Storage service.
+# See ActiveStorage::Service for the generic API documentation that applies to all services.
+#
+# pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:13
+class ActiveStorage::Service::S3Service < ::ActiveStorage::Service
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:17
+  def initialize(bucket:, upload: T.unsafe(nil), public: T.unsafe(nil), **options); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:14
+  def bucket; end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:14
+  def client; end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:101
+  def compose(source_keys, destination_key, filename: T.unsafe(nil), content_type: T.unsafe(nil), disposition: T.unsafe(nil), custom_metadata: T.unsafe(nil)); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:63
+  def delete(key); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:69
+  def delete_prefixed(prefix); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:41
+  def download(key, &block); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:55
+  def download_chunk(key, range); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:75
+  def exist?(key); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:95
+  def headers_for_direct_upload(key, content_type:, checksum:, filename: T.unsafe(nil), disposition: T.unsafe(nil), custom_metadata: T.unsafe(nil), **_arg6); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:15
+  def multipart_upload_threshold; end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:29
+  def upload(key, io, checksum: T.unsafe(nil), filename: T.unsafe(nil), content_type: T.unsafe(nil), disposition: T.unsafe(nil), custom_metadata: T.unsafe(nil), **_arg7); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:15
+  def upload_options; end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:83
+  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:, custom_metadata: T.unsafe(nil)); end
+
+  private
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:182
+  def custom_metadata_headers(metadata); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:163
+  def object_for(key); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:129
+  def private_url(key, expires_in:, filename:, disposition:, content_type:, **client_opts); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:135
+  def public_url(key, **client_opts); end
+
+  # Reads the object for the given key in chunks, yielding each to the block.
+  #
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:168
+  def stream(key); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:121
+  def upload_stream(key:, **options, &block); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:148
+  def upload_with_multipart(key, io, content_type: T.unsafe(nil), content_disposition: T.unsafe(nil), custom_metadata: T.unsafe(nil)); end
+
+  # pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:142
+  def upload_with_single_part(key, io, checksum: T.unsafe(nil), content_type: T.unsafe(nil), content_disposition: T.unsafe(nil), custom_metadata: T.unsafe(nil)); end
+end
+
+# pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:139
+ActiveStorage::Service::S3Service::MAXIMUM_UPLOAD_PARTS_COUNT = T.let(T.unsafe(nil), Integer)
+
+# pkg:gem/activestorage#lib/active_storage/service/s3_service.rb:140
+ActiveStorage::Service::S3Service::MINIMUM_UPLOAD_PART_SIZE = T.let(T.unsafe(nil), Integer)
+
 module ActiveStorage::SetBlob
   extend ::ActiveSupport::Concern
 

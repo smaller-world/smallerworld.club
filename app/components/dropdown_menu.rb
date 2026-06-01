@@ -49,7 +49,12 @@ class Components::DropdownMenu < Components::Base
   end
   def with_trigger_button(variant: :default, size: :default, **attributes, &content)
     @trigger_block = ->() {
-      render Components::Button.new(variant:, size:, **attributes, &content)
+      render Components::Button.new(
+        variant:,
+        size:,
+        **mix({ class: "flex" }, attributes),
+        &content
+      )
     }
   end
 

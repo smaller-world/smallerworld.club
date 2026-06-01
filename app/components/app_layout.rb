@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::Layout < Components::Base
+class Components::AppLayout < Components::Base
   # == Helpers ==
 
   include Phlex::Rails::Helpers::CSRFMetaTags
@@ -16,20 +16,23 @@ class Components::Layout < Components::Base
 
   sig do
     params(
-      site_title: T.nilable(String),
       page_title: T.nilable(T.any(String, T::Array[String])),
+      title: T.nilable(String),
       body_class: T.nilable(String),
+      display_header: T.nilable(TrueClass),
+      disable_cache: T::Boolean,
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    site_title: nil,
     page_title: nil,
+    title: nil,
     body_class: nil,
+    display_header: nil,
+    disable_cache: false,
     **attributes
   )
     super(**attributes)
-    @site_title = site_title
     @page_title = T.let(
       if page_title.is_a?(Array)
         page_title.reverse.compact.join(" | ")
@@ -38,7 +41,10 @@ class Components::Layout < Components::Base
       end,
       T.nilable(String),
     )
+    @title = title
     @body_class = body_class
+    @display_header = display_header
+    @disable_cache = disable_cache
   end
 
   # == Component ==
@@ -51,23 +57,28 @@ class Components::Layout < Components::Base
 
     root_element(:html) do
       head do
-        if (text = title_text)
-          title { text }
+        if (site_title = self.site_title)
+          title { site_title }
         end
 
         meta(charset: "UTF-8")
-        meta(name: "viewport", content: "width=device-width,initial-scale=1")
+        meta(name: "viewport", content: "width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
         meta(name: "apple-mobile-web-app-capable", content: "yes")
-        if (site_name = Rails.configuration.x.site.name)
-          meta(name: "application-name", content: site_name)
-        end
+        meta(name: "application-name", content: Smallerworld.application.site_name)
         meta(name: "mobile-web-app-capable", content: "yes")
+        meta(name: "view-transition", content: "same-origin")
 
         csrf_meta_tags
         csp_meta_tag
         action_cable_meta_tag
 
         meta(name: "env", content: Rails.env)
+
+        # == Turbo
+        meta(name: "turbo-refresh-scroll", content: "preserve")
+        if @disable_cache
+          meta(name: "turbo-cache-control", content: "no-cache")
+        end
 
         # == Favicons
         link(rel: "shortcut icon", href: "/favicon.ico")
@@ -98,14 +109,15 @@ class Components::Layout < Components::Base
       end
 
       body(class: [ "flex min-h-dvh flex-col", @body_class ]) do
-        Components::Header()
+        if @display_header || !hotwire_native_app?
+          Components::AppHeader()
+        end
         flash_section
         raw(body) # rubocop:disable Rails/OutputSafety
-        canvas(
-          id: Rails.configuration.x.layout.confetti_canvas_id,
-          class: "fixed inset-0 pointer-events-none z-50",
-        )
-        update_account_time_zone_form
+        confetti_canvas
+        logs_container
+        toasts_container
+        account_time_zone_form
       end
     end
   end
@@ -127,22 +139,34 @@ class Components::Layout < Components::Base
   # == Helpers ==
 
   sig { returns(T.nilable(String)) }
-  def title_text
-    @site_title ||
-      [ @page_title, Rails.configuration.x.site.name ]
-        .compact.join(" | ").presence
+  def root_domain
+    url_options[:host]
   end
 
   sig { returns(T.nilable(String)) }
-  def root_domain
-    url_options[:host]
+  def site_title
+    return @site_title if defined?(@site_title)
+
+    @site_title ||= T.let(
+      @title ||
+        if hotwire_native_app?
+          @page_title
+        else
+          [ @page_title, Smallerworld.application.site_name ]
+            .compact
+            .join(" | ")
+        end,
+      T.nilable(String),
+    )
   end
 
   sig { void }
   def og_tags
     meta(property: "og:type", content: "website")
     meta(property: "og:url", content: root_url)
-    meta(property: "og:title", content: title_text)
+    if @page_title
+      meta(property: "og:title", content: @page_title)
+    end
     if (description = Rails.configuration.x.site_description)
       meta(property: "og:description", content: description)
     end
@@ -156,7 +180,9 @@ class Components::Layout < Components::Base
       meta(property: "twitter:domain", content: domain)
     end
     meta(property: "twitter:url", content: root_url)
-    meta(name: "twitter:title", content: title_text)
+    if @page_title
+      meta(name: "twitter:title", content: @page_title)
+    end
     if (description = Rails.configuration.x.site_description)
       meta(name: "twitter:description", content: description)
     end
@@ -168,22 +194,57 @@ class Components::Layout < Components::Base
     section(id: "flash", class: "max-w-lg p-4 self-center w-full empty:hidden") do
       if (message = flash[:notice] || flash[:alert])
         type = flash.key?(:alert) ? :alert : :notice
-        Components::FlashAlert(message:, type:)
+        Components::AppFlashAlert(message:, type:)
       end
     end
   end
 
   sig { void }
-  def update_account_time_zone_form
+  def confetti_canvas
+    canvas(
+      id: Rails.configuration.x.layout.confetti_canvas_id,
+      class: "fixed inset-0 pointer-events-none z-50",
+    )
+  end
+
+  sig { void }
+  def logs_container
+    div(id: "logs", hidden: true)
+  end
+
+  sig { void }
+  def toasts_container
+    div(id: "toasts") do
+      div(data: {
+        controller: "toaster",
+        action: "toast@document->toaster#toast",
+      })
+      # if (message = flash[:notice])
+      #   Components::StreamedToast(message:, type: :info)
+      # end
+      # if (message = flash[:alert])
+      #   Components::StreamedToast(message:, type: :warning)
+      # end
+    end
+  end
+
+  sig { void }
+  def account_time_zone_form
     if (user = Current.user)
       form_with(
         model: user,
         url: account_time_zone_path,
-        class: "hidden",
+        hidden: true,
+        data: {
+          controller: "account-time-zone-form",
+        },
       ) do |form|
         form.hidden_field(
           :time_zone_name,
-          data: { controller: "current-time-zone-input" },
+          data: {
+            controller: "current-time-zone-input",
+            action: "current-time-zone-input:changed->account-time-zone-form#requestSubmit",
+          },
         )
       end
     end

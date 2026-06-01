@@ -66,7 +66,7 @@ class PostsController < ApplicationController
         post_params = params.expect(post: [ :emoji, :title, :body, images: [] ])
         post = world.posts.build(**post_params)
         if post.save
-          redirect_to(world)
+          refresh_or_redirect_to(world)
         else
           render Views::Posts::New.new(post:), status: :unprocessable_content
         end
@@ -81,7 +81,7 @@ class PostsController < ApplicationController
         post = find_post
         post_params = params.expect(post: [ :emoji, :title, :body, images: [] ])
         if post.update(post_params)
-          redirect_to(post.world!)
+          refresh_or_redirect_to(post.world!)
         else
           render Views::Posts::Edit.new(post:), status: :unprocessable_content
         end

@@ -19,9 +19,7 @@ const prettierIgnores = readFileSync(".prettierignore", "utf8")
 export default defineConfig([
   { ignores: prettierIgnores },
   js.configs.recommended,
-  // @ts-expect-error - Bad typing, but it works
   importX.flatConfigs.recommended,
-  // @ts-expect-error - Bad typing, but it works
   importX.flatConfigs.typescript,
   {
     settings: {
@@ -63,7 +61,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["app/javascript/**/*.ts"],
+    files: ["app/javascript/**/*.{ts,tsx}"],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -98,7 +96,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["*.config.js", "app/javascript/**/*.{js,ts}"],
+    files: ["*.config.js", "app/javascript/**/*.{js,ts,tsx}"],
     plugins: {
       "simple-import-sort": simpleImportSortPlugin,
     },

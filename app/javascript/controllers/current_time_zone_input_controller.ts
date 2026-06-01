@@ -5,6 +5,10 @@ export default class CurrentTimeZoneInputController extends Controller<HTMLInput
 
   connect(): void {
     super.connect();
-    this.element.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
+    if (this.element.value !== timeZone) {
+      this.element.value = timeZone;
+      this.dispatch("changed", { detail: { timeZone } });
+    }
   }
 }

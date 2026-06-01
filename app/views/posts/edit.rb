@@ -15,23 +15,11 @@ class Views::Posts::Edit < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(page_title: "edit post") do |layout|
-      layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to(@world.name, @world)
+    Components::AppLayout(page_title: "edit post") do |layout|
+      layout.page_container(class: "max-w-lg space-y-6") do
+        button_back_to(@world.name, @world) unless hotwire_native_app?
 
-        Components::Card(class: "overflow-visible") do |card|
-          card.header(class: "text-center") do
-            card.title(element: :h1, class: "text-xl") do
-              "edit post"
-            end
-            card.description do
-              "> hint: a good post is one that feels good to write!"
-            end
-          end
-          card.content do
-            Components::PostForm(post: @post)
-          end
-        end
+        Components::PostForm(post: @post)
       end
     end
   end

@@ -93,6 +93,7 @@ class Components::UppyGroup < Components::Input
       multiple: true,
       max_files: remaining_files,
       clear_action: "uppy-group#removeDnd",
+      clear_label: "remove",
       **mix(
         {
           data: {

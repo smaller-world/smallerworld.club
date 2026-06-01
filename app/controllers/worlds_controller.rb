@@ -40,7 +40,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
-        world = current_user.build_own_world
+        world = current_user.owned_worlds.build
         render Views::Worlds::New.new(world:)
       end
     end
@@ -62,7 +62,7 @@ class WorldsController < ApplicationController
       format.html do
         current_user = current_user!
         world_params = params.expect(world: [ :name, :blurb, :icon ])
-        world = current_user.build_own_world(**world_params)
+        world = current_user.owned_worlds.build(**world_params)
         if world.save
           redirect_to(world)
         else

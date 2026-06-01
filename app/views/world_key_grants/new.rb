@@ -15,24 +15,16 @@ class Views::WorldKeyGrants::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(page_title: "share world key") do |layout|
-      layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to(@world.name, @world)
+    Components::AppLayout(page_title: "share a key to your world") do |layout|
+      layout.page_container(class: "max-w-lg space-y-6") do
+        button_back_to(@world.name, @world) unless hotwire_native_app?
 
-        Components::Card(class: "overflow-visible") do |card|
-          card.header(class: "text-center") do
-            card.title(element: :h1, class: "text-xl") do
-              "share a key to your world"
-            end
-            card.description(class: "text-balance") do
-              "> hint: when you write posts, you can select which colors can see your post"
-            end
-          end
-          card.content do
-            turbo_frame_tag(:form) do
-              Components::WorldKeyGrantForm(world: @world, key_color: @key_color)
-            end
-          end
+        Components::HintAlert(
+          message:
+            "choose wisely! your friends will be grouped by their key color.",
+        )
+        turbo_frame_tag(:form) do
+          Components::WorldKeyGrantForm(world: @world, key_color: @key_color)
         end
       end
     end

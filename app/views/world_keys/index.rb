@@ -15,60 +15,44 @@ class Views::WorldKeys::Index < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(page_title: "share world key") do |layout|
-      layout.page_container(class: "max-w-lg space-y-4") do
-        button_back_to(@world.name, @world)
+    Components::AppLayout(page_title: "your friends") do |layout|
+      layout.page_container(class: "max-w-lg space-y-6") do
+        button_back_to(@world.name, @world) unless hotwire_native_app?
 
-        Components::Card(class: "overflow-visible") do |card|
-          card.header(class: "text-center") do
-            card.title(element: :h1, class: "text-xl") do
-              "friends who have access to your world"
-            end
-            # card.description do
-            #   "> hint: when you write posts, you can select which colors can see your post"
-            # end
-          end
-          card.content do
-            if (keys_by_recipient = @keys_by_recipient.presence)
-              Components::ItemGroup(class: "gap-2") do
-                keys_by_recipient.each_pair do |recipient, keys|
-                  item(recipient:, keys:)
-                end
-              end
-            else
-              Components::Empty(class: "gap-2") do |empty|
-                empty.header(class: "gap-0.5") do
-                  empty.title do
-                    "nobody has access to your world!"
-                  end
-                  empty.description do
-                    "you haven't shared any world keys with anyone yet"
-                  end
-                end
-                empty.content do
-                  button_link_to(
-                    "invite a friend to your world",
-                    [ :new, @world, :key_grant ],
-                    variant: :secondary,
-                    icon: "huge/user-add-01",
-                  )
-                end
-              end
+        if (keys_by_recipient = @keys_by_recipient.presence)
+          Components::ItemGroup(class: "gap-2") do
+            keys_by_recipient.each_pair do |recipient, keys|
+              item(recipient:, keys:)
             end
           end
 
-          if @keys_by_recipient.present?
-            card.footer(class: "flex flex-col items-center") do
+          button_link_to(
+            "invite another friend",
+            [ :new, @world, :key_grant ],
+            variant: :default,
+            icon: "huge/user-add-01",
+            class: "self-center",
+          )
+        else
+          Components::Empty() do |empty|
+            empty.header do
+              empty.title do
+                "nobody has access to your world!"
+              end
+              empty.description do
+                "you haven't shared any world keys with anyone yet"
+              end
+            end
+            empty.content do
               button_link_to(
-                "invite another friend",
+                "invite a friend to your world",
                 [ :new, @world, :key_grant ],
-                variant: :secondary,
-                size: :sm,
+                variant: :default,
                 icon: "huge/user-add-01",
-                class: "self-center text-xs",
               )
             end
           end
+
         end
       end
     end

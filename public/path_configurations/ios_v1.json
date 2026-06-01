@@ -1,0 +1,43 @@
+{
+  "settings": {},
+  "rules": [
+    {
+      "patterns": ["^/home$"],
+      "properties": {
+        "presentation": "replace_root"
+      }
+    },
+    {
+      "patterns": ["/new$", "/edit$"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["^/sessions/new$"],
+      "properties": {
+        "modal_dismiss_gesture_enabled": false
+      }
+    },
+    {
+      "patterns": ["^/worlds/new$"],
+      "properties": {
+        "modal_style": "full"
+      }
+    },
+    {
+      "patterns": ["^/worlds/[\\w-]+$"],
+      "properties": {
+        "interactive_content_pop_gesture_enabled": false
+      }
+    },
+    {
+      "patterns": ["^/scan_qr_code$"],
+      "properties": {
+        "view_controller": "qr_code_scanner",
+        "context": "modal"
+      }
+    }
+  ]
+}

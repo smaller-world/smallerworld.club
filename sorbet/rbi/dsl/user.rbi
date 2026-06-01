@@ -375,20 +375,33 @@ class User
     sig { params(value: T::Enumerable[::World]).void }
     def accessible_worlds=(value); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def build_own_world(*args, &blk); end
+    sig { returns(T::Array[T.untyped]) }
+    def device_ids; end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def create_own_world(*args, &blk); end
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def device_ids=(ids); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
-    def create_own_world!(*args, &blk); end
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :devices`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Device::PrivateCollectionProxy) }
+    def devices; end
 
-    sig { returns(T.nilable(::World)) }
-    def own_world; end
+    sig { params(value: T::Enumerable[::Device]).void }
+    def devices=(value); end
 
-    sig { params(value: T.nilable(::World)).void }
-    def own_world=(value); end
+    sig { returns(T::Array[T.untyped]) }
+    def owned_world_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def owned_world_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :owned_worlds`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::World::PrivateCollectionProxy) }
+    def owned_worlds; end
+
+    sig { params(value: T::Enumerable[::World]).void }
+    def owned_worlds=(value); end
 
     sig { returns(T::Array[T.untyped]) }
     def reaction_ids; end
@@ -403,12 +416,6 @@ class User
 
     sig { params(value: T::Enumerable[::Reaction]).void }
     def reactions=(value); end
-
-    sig { returns(T.nilable(::World)) }
-    def reload_own_world; end
-
-    sig { void }
-    def reset_own_world; end
 
     sig { returns(T::Array[T.untyped]) }
     def session_ids; end

@@ -4,6 +4,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@import "./hotwire_native.css";
 @import "./tippy.css";
 @import "./pagy.css";
 @import "./lexxy.css";
@@ -34,5 +35,6 @@
 @import "./radio_groups.css";
 
 @import "./layouts.css";
+@import "./worlds.css";
 @import "./sign_in_with_apple.css";
 @import "./sign_in_with_google.css";

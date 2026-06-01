@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
+import { addCleanupAction } from "#helpers/stimulus_helpers";
+
 export default class ScrollToBottomController extends Controller<HTMLElement> {
   // == State ==
 
@@ -17,12 +19,21 @@ export default class ScrollToBottomController extends Controller<HTMLElement> {
       }
     });
     this.#observer.observe(this.element);
+    addCleanupAction(this, "stop");
   }
 
   disconnect(): void {
     super.disconnect();
-    this.#observer?.disconnect();
-    this.#observer = null;
+    this.stop();
+  }
+
+  // == Actions ==
+
+  stop(): void {
+    if (this.#observer) {
+      this.#observer.disconnect();
+      this.#observer = null;
+    }
   }
 
   // == Helpers ==

@@ -811,7 +811,7 @@ class Views::Sessions::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::Layout(
+    Components::AppLayout(
       title: "sign in to smaller world",
       body_class: "bg-muted",
     ) do |layout|
@@ -850,12 +850,8 @@ class Views::Sessions::New < Views::Base
       card.header(class: "flex flex-col items-center gap-y-3") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do
-          if (site_name = Rails.configuration.x.site.name)
             plain("sign in to ")
-            span(class: "font-semibold") { site_name }
-          else
-            plain("sign in")
-          end
+            span(class: "font-semibold") { Smallerworld.application.site_name }
         end
       end
       card.content(class: "flex flex-col gap-3") do

@@ -4,7 +4,7 @@
 class Views::Admin::Dashboard::Show < Views::Base
   sig { override.void }
   def view_template
-    Components::Layout() do |layout|
+    Components::AppLayout() do |layout|
       layout.page_container(class: "flex flex-col gap-y-4") do
         div do
           h1(class: "text-2xl font-bold") { "admin dashboard" }

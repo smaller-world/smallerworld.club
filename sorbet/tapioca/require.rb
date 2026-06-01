@@ -5,3 +5,4 @@
 # this list)
 
 require "tapioca/dsl/helpers/active_record_constants_helper"
+require "active_storage/service/s3_service"

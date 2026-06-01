@@ -35,6 +35,38 @@ module Components
 
   sig do
     params(
+      message: ::String,
+      type: ::Symbol,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
+    ).void
+  end
+  def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AppHeader).void)
+    ).void
+  end
+  def AppHeader(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      page_title: T.nilable(T.any(::String, T::Array[::String])),
+      title: T.nilable(::String),
+      body_class: T.nilable(::String),
+      display_header: T.nilable(::TrueClass),
+      disable_cache: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+    ).void
+  end
+  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       variant: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Badge).void)
@@ -194,21 +226,11 @@ module Components
   sig do
     params(
       message: ::String,
-      type: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FlashAlert).void)
+      block: T.nilable(T.proc.params(instance: Components::HintAlert).void)
     ).void
   end
-  def FlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Header).void)
-    ).void
-  end
-  def Header(element: T.unsafe(nil), **attributes, &block); end
+  def HintAlert(message:, **attributes, &block); end
 
   sig do
     params(
@@ -259,17 +281,6 @@ module Components
     ).void
   end
   def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
-
-  sig do
-    params(
-      site_title: T.nilable(::String),
-      page_title: T.nilable(T.any(::String, T::Array[::String])),
-      body_class: T.nilable(::String),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Layout).void)
-    ).void
-  end
-  def Layout(site_title: T.unsafe(nil), page_title: T.unsafe(nil), body_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -401,6 +412,28 @@ module Components
 
   sig do
     params(
+      message: ::String,
+      controller_name: ::String,
+      action_name: ::String,
+      log_level: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
+    ).void
+  end
+  def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      message: ::String,
+      type: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
+    ).void
+  end
+  def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       attributes: T.untyped,
@@ -507,6 +540,38 @@ module Components
       ).void
     end
     def Alert(variant: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        message: ::String,
+        type: ::Symbol,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
+      ).void
+    end
+    def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AppHeader).void)
+      ).void
+    end
+    def AppHeader(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        page_title: T.nilable(T.any(::String, T::Array[::String])),
+        title: T.nilable(::String),
+        body_class: T.nilable(::String),
+        display_header: T.nilable(::TrueClass),
+        disable_cache: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+      ).void
+    end
+    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -674,21 +739,11 @@ module Components
     sig do
       params(
         message: ::String,
-        type: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FlashAlert).void)
+        block: T.nilable(T.proc.params(instance: Components::HintAlert).void)
       ).void
     end
-    def FlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Header).void)
-      ).void
-    end
-    def Header(element: T.unsafe(nil), **attributes, &block); end
+    def HintAlert(message:, **attributes, &block); end
 
     sig do
       params(
@@ -739,17 +794,6 @@ module Components
       ).void
     end
     def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
-
-    sig do
-      params(
-        site_title: T.nilable(::String),
-        page_title: T.nilable(T.any(::String, T::Array[::String])),
-        body_class: T.nilable(::String),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Layout).void)
-      ).void
-    end
-    def Layout(site_title: T.unsafe(nil), page_title: T.unsafe(nil), body_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(
@@ -878,6 +922,28 @@ module Components
       ).void
     end
     def Spinner(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        message: ::String,
+        controller_name: ::String,
+        action_name: ::String,
+        log_level: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
+      ).void
+    end
+    def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        message: ::String,
+        type: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
+      ).void
+    end
+    def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

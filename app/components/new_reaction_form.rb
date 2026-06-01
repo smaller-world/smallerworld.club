@@ -19,7 +19,7 @@ class Components::NewReactionForm < Components::Base
       {
         data: {
           controller: "form emoji-input confetti",
-          action: "emoji-input:emoji-set->form#submit turbo:submit-end->confetti#launch",
+          action: "emoji-input:emoji-set->form#requestSubmit turbo:submit-end->confetti#launch",
           confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
         },
       },

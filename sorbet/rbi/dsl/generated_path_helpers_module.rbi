@@ -25,6 +25,9 @@ module GeneratedPathHelpersModule
   def challenge_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def devices_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
