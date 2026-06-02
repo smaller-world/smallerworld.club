@@ -8,7 +8,7 @@ class WorldKeyGrantsController < ApplicationController
 
   # == Actions ==
 
-  # GET /world_key_grants/:grant
+  # GET /world_invitations/:grant
   def show
     grant = params.fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
@@ -24,6 +24,7 @@ class WorldKeyGrantsController < ApplicationController
   # GET /worlds/:world_id/key_grants/new
   def new
     world = find_world
+    authorize!(world, to: :manage?)
     key_color = params[:key_color]&.to_sym
     render Views::WorldKeyGrants::New.new(world:, key_color:)
   end

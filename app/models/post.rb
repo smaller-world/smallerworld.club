@@ -31,6 +31,7 @@ class Post < ApplicationRecord
   belongs_to :world
   has_one :author, through: :world, source: :owner
   has_many :reactions, dependent: :destroy
+  has_many :reply_initiations, dependent: :destroy
 
   sig { returns(World) }
   def world!
@@ -118,10 +119,10 @@ class Post < ApplicationRecord
     end
   end
 
-  sig { params(platform: Symbol).returns(String) }
-  def reply_url(platform:)
+  sig { params(platform: Symbol, native: T::Boolean).returns(String) }
+  def reply_url(platform:, native: false)
     message = reply_snippet_for(platform)
-    author!.dm_url(platform:, message:)
+    author!.dm_url(platform:, message:, native:)
   end
 
   private

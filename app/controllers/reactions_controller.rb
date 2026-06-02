@@ -11,6 +11,7 @@ class ReactionsController < ApplicationController
   # GET /posts/:post_id/reactions
   def index
     post = find_post
+    authorize!(post, to: :show?)
     respond_to do |format|
       format.html do
         render Views::Reactions::Index.new(post:)
@@ -24,6 +25,7 @@ class ReactionsController < ApplicationController
       format.html do
         current_user = current_user!
         post = find_post
+        authorize!(post, to: :react?)
         reaction_params = params.expect(reaction: [ :emoji ])
         reaction = post.reactions.find_or_initialize_by(
           reactor: current_user,
@@ -44,6 +46,7 @@ class ReactionsController < ApplicationController
     respond_to do |format|
       format.html do
         reaction = find_reaction
+        authorize!(reaction)
         reaction.destroy!
         redirect_to([ reaction.post!, :reactions ])
       rescue ActiveRecord::RecordNotFound

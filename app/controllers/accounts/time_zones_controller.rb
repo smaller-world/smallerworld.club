@@ -17,11 +17,13 @@ module Accounts
               level: :info,
             )
           else
+            message = "Failed to update user timezone"
+            if (error = user.errors.full_messages.first)
+              message = "#{message}: #{error}"
+            end
+            Sentry.capture_message(message)
             render(
-              turbo_stream: append_log_message(
-                user.errors.full_messages.first || "Failed to update user",
-                level: :error,
-              ),
+              turbo_stream: append_log_message(message, level: :error),
               status: :unprocessable_content,
             )
           end

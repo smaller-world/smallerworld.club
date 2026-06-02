@@ -4,7 +4,14 @@
 class Components::ExistingReactionForm < Components::Base
   # == Initialization ==
 
-  sig { params(post: Post, emoji: String, reactions: T::Array[Reaction], attributes: T.untyped).void }
+  sig do
+    params(
+      post: Post,
+      emoji: String,
+      reactions: T::Array[Reaction],
+      attributes: T.untyped,
+    ).void
+  end
   def initialize(post:, emoji:, reactions:, **attributes)
     super(**attributes)
     @post = post
@@ -49,12 +56,12 @@ class Components::ExistingReactionForm < Components::Base
       form.hidden_field(:emoji) unless @current_user_reaction
       submit_button_for(
         form,
-        variant: @current_user_reaction ? :outline : :ghost,
+        variant: button_variant,
         size: @reactions_count > 1 ? :default : :icon,
         disabled: !allowed_to?(:react?, @post),
         class: class_names(
-          "opacity-100 rounded-full gap-x-1",
-          "px-2" => @reactions_count > 1,
+          "opacity-100 rounded-full",
+          "gap-x-1 px-2" => @reactions_count > 1,
         ),
         data: {
           confetti_target: "position",
@@ -80,5 +87,14 @@ class Components::ExistingReactionForm < Components::Base
   sig { returns(Object) }
   def model
     @current_user_reaction || [ @post, @post.reactions.build(emoji: @emoji) ]
+  end
+
+  sig { returns(Symbol) }
+  def button_variant
+    if !allowed_to?(:react?, @post)
+      :secondary
+    else
+      @current_user_reaction ? :outline : :ghost
+    end
   end
 end

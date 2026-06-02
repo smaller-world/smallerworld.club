@@ -24,7 +24,6 @@ class User < ApplicationRecord
 
   # == Constants ==
 
-  MESSAGING_PLATFORMS = [ :sms, :whatsapp, :telegram ].freeze
   NAME_MAX_LENGTH = 22
 
   # == Attributes ==
@@ -61,6 +60,10 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :reactor,
     foreign_key: :reactor_id
+  has_many :reply_initiations,
+    dependent: :destroy,
+    inverse_of: :replier,
+    foreign_key: :replier_id
   has_many :devices, dependent: :destroy, inverse_of: :owner, foreign_key: :owner_id
 
   # == Normalizations ==
@@ -83,8 +86,8 @@ class User < ApplicationRecord
     "#{interpreted_first_name}'s world"
   end
 
-  sig { params(platform: Symbol, message: String).returns(String) }
-  def dm_url(platform:, message:)
+  sig { params(platform: Symbol, message: String, native: T::Boolean).returns(String) }
+  def dm_url(platform:, message:, native: false)
     escaped_message = CGI.escapeURIComponent(message)
     case platform
     when :sms
@@ -92,7 +95,11 @@ class User < ApplicationRecord
     when :whatsapp
       "https://wa.me/#{phone_number}?text=#{escaped_message}"
     when :telegram
-      "https://t.me/#{phone_number}?text=#{escaped_message}"
+      if native
+        "tg://msg?to=#{phone_number}&text=#{escaped_message}"
+      else
+        "https://t.me/#{phone_number}?text=#{escaped_message}"
+      end
     else
       raise ArgumentError, "Unsupported platform: #{platform.inspect}"
     end

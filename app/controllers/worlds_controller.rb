@@ -18,19 +18,8 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
-        if allowed_to?(:show?, world)
-          # pagy, posts = pagy(
-          #   :countless,
-          #   world.posts
-          #     .reverse_chronological
-          #     .with_rich_text_body_and_embeds
-          #     .with_attached_images,
-          #   limit: 5,
-          # )
-          render Views::Worlds::Show.new(world:)
-        else
-          redirect_to(root_path, alert: "You don't have access to this world")
-        end
+        authorize!(world)
+        render Views::Worlds::Show.new(world:)
       end
     end
   end
@@ -40,6 +29,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
+        authorize!
         world = current_user.owned_worlds.build
         render Views::Worlds::New.new(world:)
       end
@@ -51,6 +41,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
+        authorize!(world)
         render Views::Worlds::Edit.new(world:)
       end
     end
@@ -61,6 +52,7 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = current_user!
+        authorize!
         world_params = params.expect(world: [ :name, :blurb, :icon ])
         world = current_user.owned_worlds.build(**world_params)
         if world.save
@@ -77,9 +69,10 @@ class WorldsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
+        authorize!(world)
         world_params = params.expect(world: [ :name, :blurb, :icon ])
         if world.update(**world_params)
-          redirect_to(world)
+          refresh_or_redirect_to(world)
         else
           render Views::Worlds::Edit.new(world:), status: :unprocessable_content
         end

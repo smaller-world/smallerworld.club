@@ -38,7 +38,7 @@ class Components::AppHeader < Components::Base
     image_tag(
       "logo.png",
       alt: [ site_name, "logo" ].join(" "),
-      class: "size-5 dark:size-5.5",
+      class: "size-6",
       data: {
         icon: "inline-start",
       },
@@ -51,21 +51,23 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    # content.group do
-    #   # content.label { "[some group]" }
-    #   content.link_item_to(:home) do
-    #     Icon("huge/home-01")
-    #     span { "home" }
-    #   end
-    #   if (world = @current_user&.owned_worlds&.chronological&.first)
-    #     content.link_item_to(world) do
-    #       Icon("huge/earth")
-    #       span { world.name }
-    #     end
-    #   end
-    #   # content.button_item { "[some item]" }
-    # end
-    # content.separator
+    unless hotwire_native_app?
+      content.group do
+        # content.label { "[some group]" }
+        content.link_item_to(:home) do
+          Icon("huge/home-01")
+          span { "home" }
+        end
+        if (world = @current_user&.owned_worlds&.chronological&.first)
+          content.link_item_to(world) do
+            Icon("huge/earth")
+            span { world.name }
+          end
+        end
+        # content.button_item { "[some item]" }
+      end
+      content.separator
+    end
     form_with(url: session_path, method: :delete) do
       content.button_item(type: :submit, variant: :destructive) do
         Icon("huge/logout-01", class: "size-4")

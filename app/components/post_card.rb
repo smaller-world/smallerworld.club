@@ -60,9 +60,13 @@ class Components::PostCard < Components::Base
           Components::ImageStack(images:)
         end
       end
-      card.footer(class: "flex items-end justify-between gap-6") do
-        if allowed_to?(:react?, @post)
-          reply_via_menu
+      card.footer(
+        class: class_names("flex items-end justify-between gap-6"),
+      ) do
+        if allowed_to?(:reply?, @post)
+          Components::ReplyInitiationForm(
+            reply_initiation: @post.reply_initiations.build,
+          )
         end
 
         turbo_frame_tag(
@@ -72,7 +76,18 @@ class Components::PostCard < Components::Base
           data: {
             controller: "frame",
           },
-        )
+        ) do
+          Components::Button(
+            element: :div,
+            variant: :ghost,
+            size: :icon,
+            class: "rounded-full skeleton",
+          ) do
+            span(class: "font-emoji text-lg") do
+              "🤣"
+            end
+          end
+        end
       end
     end
   end
@@ -110,39 +125,5 @@ class Components::PostCard < Components::Base
         end
       end
     end
-  end
-
-  sig { void }
-  def reply_via_menu
-    Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(class: "rounded-full") do |button|
-        button.inline_start_icon("huge/message-01")
-        span { "reply via" }
-      end
-
-      menu.with_content(anchor: [ :bottom ]) do |content|
-        User::MESSAGING_PLATFORMS.each do |platform|
-          content.link_item_to(@post.reply_url(platform:)) do
-            reply_platform_icon(platform)
-            span { platform.to_s.humanize(capitalize: false) }
-          end
-        end
-      end
-    end
-  end
-
-  sig { params(platform: T.anything).void }
-  def reply_platform_icon(platform)
-    icon = case platform
-    when :sms
-      "huge/message-01"
-    when :whatsapp
-      "huge/whatsapp"
-    when :telegram
-      "huge/telegram"
-    else
-      raise ArgumentError, "Unknown platform: #{platform}"
-    end
-    Icon(icon)
   end
 end

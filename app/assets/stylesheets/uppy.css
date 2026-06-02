@@ -2,7 +2,7 @@
 @import "@uppy/drag-drop/css/style.min.css" layer(base);
 @import "@uppy/image-editor/css/style.min.css" layer(base);
 
-@layer components {
+@layer base {
   .uppy-dnd-dropzone {
     @apply flex flex-col rounded-xl;
 
@@ -87,6 +87,17 @@
   .uppy-dnd-cropper {
     .uppy-ImageCropper-controls {
       @apply p-0;
+    }
+
+    .uppy-ImageCropper-container {
+      .cropper-view-box {
+        @apply outline-accent-foreground dark:outline-background;
+      }
+
+      .cropper-point,
+      .cropper-line {
+        @apply bg-accent-foreground dark:bg-background;
+      }
     }
   }
 

@@ -37,11 +37,43 @@ class Components::WorldForm < Components::Base
         f.error
       end
 
-      field_for(form, :blurb) do |f|
-        f.label { "blurb (optional)" }
-        f.textarea
-        f.description { "appears just below the world name" }
-        f.error
+      div(
+        class: "flex flex-col gap-2",
+        data: { controller: "transition-group" },
+      ) do
+        if @world.blurb.blank?
+          Components::Button(
+            variant: :ghost,
+            class: "text-muted-foreground",
+            data: {
+              transition_group_target: "item",
+              controller: "transition",
+              action: "transition#leave transition:transitioned->transition-group#startNext",
+              transition_leave: "transition-opacity ease-out",
+              transition_leave_end: "opacity-0",
+            },
+          ) do
+            "add a tagline"
+          end
+        end
+
+        field_for(
+          form,
+          :blurb,
+          class: class_names("hidden" => @world.blurb.blank?),
+          data: {
+            transition_group_target: "item",
+            controller: "transition",
+            action: "transition-group:start->transition#enter",
+            transition_enter: "transition-opacity ease-in",
+            transition_enter_start: "opacity-0",
+          },
+        ) do |f|
+          f.label { "tagline (optional)" }
+          f.text_input
+          f.description { "appears just below the world name" }
+          f.error
+        end
       end
 
       field_for(form, :icon, data: { controller: "field" }) do |f|

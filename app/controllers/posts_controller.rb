@@ -7,6 +7,7 @@ class PostsController < ApplicationController
   # GET /world/:world_id/posts
   def index
     world = find_world
+    authorize!(world, to: :show?)
     pagy, posts = pagy(
       :countless,
       world.posts
@@ -42,6 +43,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
+        authorize!(world, to: :post?)
         post = world.posts.build
         render Views::Posts::New.new(post:)
       end
@@ -53,6 +55,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         post = find_post
+        authorize!(post, to: :edit?)
         render Views::Posts::Edit.new(post:)
       end
     end

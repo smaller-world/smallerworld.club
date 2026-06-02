@@ -89,7 +89,10 @@ export default class PhoneNumberInputController extends Controller {
     }
   }
 
-  async normalizeNationalNumber(): Promise<void> {
+  async normalizeNationalNumber(event?: InputEvent): Promise<void> {
+    if (event?.inputType?.startsWith("deleteContent")) {
+      return;
+    }
     const { default: metadata } =
       await import("libphonenumber-js/min/metadata");
     if (this.#inputCountryCode) {

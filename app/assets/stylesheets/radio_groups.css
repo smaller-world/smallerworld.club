@@ -1,4 +1,4 @@
-@layer components {
+@layer base {
   .radio-group {
     @apply grid w-full gap-3;
   }

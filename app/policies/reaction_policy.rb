@@ -4,11 +4,9 @@
 class ReactionPolicy < ApplicationPolicy
   # == Rules ==
 
-  def index?
-    true
-  end
-
-  def show?
-    true
+  def manage?
+    reaction = T.let(record, Reaction)
+    user = user!
+    reaction.reactor_id == user.id
   end
 end

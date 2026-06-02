@@ -418,6 +418,20 @@ class User
     def reactions=(value); end
 
     sig { returns(T::Array[T.untyped]) }
+    def reply_initiation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def reply_initiation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :reply_initiations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::ReplyInitiation::PrivateCollectionProxy) }
+    def reply_initiations; end
+
+    sig { params(value: T::Enumerable[::ReplyInitiation]).void }
+    def reply_initiations=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
     def session_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }

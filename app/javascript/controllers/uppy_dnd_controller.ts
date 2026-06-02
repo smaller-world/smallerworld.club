@@ -155,6 +155,12 @@ export default class UppyDndController extends Controller<HTMLElement> {
             responsive: true,
           },
           actions: {
+            revert: false,
+            rotate: false,
+            granularRotate: false,
+            flip: false,
+            zoomIn: false,
+            zoomOut: false,
             cropSquare: false,
             cropWidescreen: false,
             cropWidescreenVertical: false,

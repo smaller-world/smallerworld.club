@@ -41,4 +41,8 @@ class ApplicationController < ActionController::Base
       Prosopite.finish
     end
   end
+
+  # == Action Policy ==
+
+  verify_authorized
 end

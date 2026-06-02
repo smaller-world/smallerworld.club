@@ -1,4 +1,4 @@
-@layer components {
+@layer base {
   .combobox-input-group {
     @apply w-auto;
   }

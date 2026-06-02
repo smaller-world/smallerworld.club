@@ -8,7 +8,7 @@
       }
     },
     {
-      "patterns": ["/new$", "/edit$"],
+      "patterns": ["/new$", "/edit$", "^/world_invitations/.+$"],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false
@@ -21,7 +21,7 @@
       }
     },
     {
-      "patterns": ["^/worlds/new$"],
+      "patterns": ["^/worlds/new$", "posts/new$"],
       "properties": {
         "modal_style": "full"
       }

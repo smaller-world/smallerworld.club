@@ -85,6 +85,9 @@ module GeneratedPathHelpersModule
   def post_reactions_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def post_reply_initiations_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def pwa_manifest_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

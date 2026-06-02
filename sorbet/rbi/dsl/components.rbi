@@ -393,6 +393,15 @@ module Components
 
   sig do
     params(
+      reply_initiation: ::ReplyInitiation,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
+    ).void
+  end
+  def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
+
+  sig do
+    params(
       orientation: ::Symbol,
       decorative: T::Boolean,
       attributes: T.untyped,
@@ -452,13 +461,14 @@ module Components
       allowed_file_types: T.nilable(T::Array[::String]),
       crop_to_aspect_ratio: T.nilable(::Numeric),
       clear_action: T.nilable(::String),
+      clear_label: ::String,
       preview_fit: T.nilable(::Symbol),
       dropzone_class: T.nilable(::String),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
     ).void
   end
-  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -906,6 +916,15 @@ module Components
 
     sig do
       params(
+        reply_initiation: ::ReplyInitiation,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
+      ).void
+    end
+    def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
+
+    sig do
+      params(
         orientation: ::Symbol,
         decorative: T::Boolean,
         attributes: T.untyped,
@@ -965,13 +984,14 @@ module Components
         allowed_file_types: T.nilable(T::Array[::String]),
         crop_to_aspect_ratio: T.nilable(::Numeric),
         clear_action: T.nilable(::String),
+        clear_label: ::String,
         preview_fit: T.nilable(::Symbol),
         dropzone_class: T.nilable(::String),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
       ).void
     end
-    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

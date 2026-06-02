@@ -56,7 +56,7 @@ class Views::Worlds::Show < Views::Base
           end
         end
 
-        section(class: "flex flex-col items-center gap-2 pt-6") do
+        section(class: "flex flex-col items-center gap-2") do
           image_tag(
             @world.page_icon_variant,
             class: "size-32 rounded-world-icon object-cover",
@@ -92,29 +92,35 @@ class Views::Worlds::Show < Views::Base
           end
         end
 
-        turbo_frame_tag(:posts, src: [ @world, :posts ], target: "_top") do
+        turbo_frame_tag(
+          :posts,
+          src: [ @world, :posts ],
+          target: "_top",
+        ) do
           div(class: "space-y-4") do
-            Components::Card(class: "shadow-sm") do |card|
-              card.header do
-                card.description do
-                  span(class: "skeleton") do
-                    "timestamp"
+            10.times do
+              Components::Card(class: "shadow-sm") do |card|
+                card.header do
+                  card.description do
+                    span(class: "skeleton") do
+                      "timestamp"
+                    end
+                  end
+                  card.title do
+                    span(class: "skeleton") do
+                      "post title placeholder"
+                    end
                   end
                 end
-                card.title do
-                  span(class: "skeleton") do
-                    "post title placeholder"
+                card.content(class: "flex flex-col gap-4") do
+                  1..2.times do
+                    p(class: "skeleton h-24")
                   end
                 end
-              end
-              card.content(class: "flex flex-col gap-4") do
-                1..2.times do
-                  p(class: "skeleton h-24")
-                end
-              end
-              card.footer(class: "flex justify-center") do
-                Components::Button(class: "rounded-full skeleton") do
-                  "placeholder"
+                card.footer(class: "flex justify-center") do
+                  Components::Button(class: "rounded-full skeleton") do
+                    "placeholder"
+                  end
                 end
               end
             end

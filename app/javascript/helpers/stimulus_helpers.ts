@@ -9,7 +9,11 @@ const updateActions = (
     parser.className = element.dataset.action;
   }
   update(parser.classList);
-  element.dataset.action = parser.className;
+  if (parser.className) {
+    element.dataset.action = parser.className;
+  } else {
+    delete element.dataset.action;
+  }
 };
 
 export const addCleanupAction = (

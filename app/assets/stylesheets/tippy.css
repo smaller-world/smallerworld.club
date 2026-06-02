@@ -3,7 +3,7 @@
 /*@import "tippy.js/animations/scale.css" layer(components);*/
 @import "tippy.js/animations/shift-away.css" layer(base);
 
-@layer components {
+@layer base {
   .tippy-box {
     @apply rounded-md bg-foreground;
   }

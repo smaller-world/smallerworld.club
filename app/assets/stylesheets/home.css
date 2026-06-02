@@ -1,0 +1,28 @@
+@layer components {
+  .home-world-link {
+    @apply flex flex-col items-center gap-2 hover:underline;
+
+    .home-world-icon {
+      box-shadow: 0 0 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+
+      @apply size-32 rounded-world-icon border border-accent-foreground/80 dark:border-muted-foreground/80;
+      @apply dark:shadow-muted-foreground/80;
+    }
+
+    .home-world-label {
+      @apply font-heading font-semibold;
+    }
+
+    &[data-size="sm"] {
+      .home-world-icon {
+        box-shadow: 0 0 15px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+
+        @apply size-20 border-border dark:border-muted-foreground/50;
+      }
+
+      .home-world-label {
+        @apply text-xs;
+      }
+    }
+  }
+}

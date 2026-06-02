@@ -14,8 +14,8 @@ export default class FormController extends Controller<HTMLFormElement> {
 
   connect(): void {
     super.connect();
-    addAction(this, "turbo:submit-start", "disableWhileSubmitting");
-    addAction(this, "turbo:submit-end", "enableAfterSubmitting");
+    addAction(this, "turbo:submit-start", "disableTargetsWhileSubmitting");
+    addAction(this, "turbo:submit-end", "enableTargetsAfterSubmitting");
     addCleanupAction(this, "enableAfterSubmitting");
   }
 
@@ -25,13 +25,13 @@ export default class FormController extends Controller<HTMLFormElement> {
     this.element.requestSubmit();
   }
 
-  disableWhileSubmitting(): void {
+  disableTargetsWhileSubmitting(): void {
     for (const target of this.disableWhileSubmittingTargets) {
       target.disabled = true;
     }
   }
 
-  enableAfterSubmitting(): void {
+  enableTargetsAfterSubmitting(): void {
     for (const target of this.disableWhileSubmittingTargets) {
       target.disabled = false;
     }

@@ -2,6 +2,10 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
+  # == Configuration ==
+
+  skip_verify_authorized
+
   # == Actions ==
 
   # GET /home

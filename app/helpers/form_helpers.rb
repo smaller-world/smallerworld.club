@@ -15,20 +15,21 @@ module FormHelpers
       variant: Symbol,
       size: Symbol,
       attributes: T.untyped,
-      block: T.proc.params(field: Components::Button).void,
+      content: T.proc.params(field: Components::Button).void,
     ).void
   end
   def submit_button_for(
     form,
     variant: :default,
     size: :default,
-    **attributes, &block
+    **attributes,
+    &content
   )
     Components::Button(
       variant:,
       size:,
       **mix({ type: :submit }, attributes),
-      &block
+      &content
     )
   end
 
@@ -39,17 +40,17 @@ module FormHelpers
       orientation: Symbol,
       invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.proc.params(field: Components::Field).void,
+      content: T.proc.params(field: Components::Field).void,
     ).void
   end
-  def field_for(form, method, orientation: :vertical, invalid: false, **attributes, &block)
+  def field_for(form, method, orientation: :vertical, invalid: false, **attributes, &content)
     Components::Field(
       form:,
       field: method,
       orientation:,
       invalid:,
       **attributes,
-      &block
+      &content
     )
   end
 
@@ -58,10 +59,10 @@ module FormHelpers
       form: PhlexFormBuilder,
       method: Symbol,
       attributes: T.untyped,
-      block: T.proc.params(field: Components::RadioGroup).void,
+      content: T.proc.params(field: Components::RadioGroup).void,
     ).void
   end
-  def radio_group_for(form, method, **attributes, &block)
-    Components::RadioGroup(form:, field: method, **attributes, &block)
+  def radio_group_for(form, method, **attributes, &content)
+    Components::RadioGroup(form:, field: method, **attributes, &content)
   end
 end

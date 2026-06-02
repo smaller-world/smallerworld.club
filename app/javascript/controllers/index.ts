@@ -8,6 +8,7 @@ import {
 
 import AccountTimeZoneFormController from "./account_time_zone_form_controller";
 import { application } from "./application";
+import AutoclickController from "./autoclick_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
@@ -29,6 +30,7 @@ import LexxyEditorController from "./lexxy_editor_controller";
 import MaintainScrollController from "./maintain_scroll_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import RadioGroupController from "./radio_group_controller";
+import ReplyInitiationFormController from "./reply_initiation_form_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
@@ -53,13 +55,16 @@ application.register(
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
-// == Services
+// == Libraries
 application.register("turnstile", TurnstileController);
+application.register("tippy", TippyController);
+application.register("toaster", ToasterController);
 
 // == Demo
 application.register("hello", HelloController);
 
-application.register("tippy", TippyController);
+// == Components ==
+application.register("autoclick", AutoclickController);
 application.register("scroll-to-bottom", ScrollToBottomController);
 application.register("intersection", IntersectionController);
 application.register("maintain-scroll", MaintainScrollController);
@@ -75,7 +80,6 @@ application.register("lexxy-editor", LexxyEditorController);
 application.register("phone-number-input", PhoneNumberInputController);
 application.register("emoji-mart", EmojiMartController);
 application.register("emoji-input", EmojiInputController);
-application.register("world-form", WorldFormController);
 application.register("radio-group", RadioGroupController);
 application.register("form", FormController);
 application.register("dialog", DialogController);
@@ -84,11 +88,14 @@ application.register("uppy-group", UppyGroupController);
 application.register("image-stack", ImageStackController);
 application.register("confetti", ConfettiController);
 application.register("frame", FrameController);
-application.register("toaster", ToasterController);
-application.register("account-time-zone-form", AccountTimeZoneFormController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
 application.register("transition-group", TransitionGroupController);
 application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
+
+// == Forms ==
+application.register("account-time-zone-form", AccountTimeZoneFormController);
+application.register("world-form", WorldFormController);
+application.register("reply-initiation-form", ReplyInitiationFormController);
 
 // application.register("otp-input", OtpInputController);

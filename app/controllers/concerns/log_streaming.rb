@@ -21,8 +21,8 @@ module LogStreaming
       "logs",
       renderable: Components::StreamedLogMessage.new(
         message:,
-        controller: controller_name,
-        action: action_name,
+        controller_name:,
+        action_name:,
         level:,
       ),
     )

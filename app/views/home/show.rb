@@ -8,6 +8,10 @@ class Views::Home::Show < Views::Base
   def initialize(current_user:)
     super()
     @current_user = current_user
+    @friend_worlds = T.let(
+      @current_user.accessible_worlds,
+      World::PrivateCollectionProxy,
+    )
   end
 
   # == View ==
@@ -15,84 +19,72 @@ class Views::Home::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(display_header: true) do |layout|
-      # layout.with_head do
-      #   meta(name: "turbo-visit-control", content: "reload")
-      # end
-
-      layout.page_container(class: "max-w-lg flex flex-col gap-8") do
+      layout.page_container(
+        class: "flex-1 max-w-lg flex flex-col gap-8 justify-center",
+      ) do
         div(class: "flex gap-6 flex-wrap justify-center") do
-          link_class = "flex flex-col items-center gap-2 hover:underline"
-          icon_class = "size-32 rounded-world-icon shadow-md"
-          label_class = "font-semibold font-heading"
-
           @current_user.owned_worlds.each do |world|
-            link_to(world, class: link_class) do
-              image_tag(world.page_icon_variant, class: icon_class)
-              span(class: label_class) do
+            link_to(world, class: "home-world-link") do
+              image_tag(
+                world.page_icon_variant,
+                class: "home-world-icon",
+              )
+              span(class: "home-world-label") do
                 world.name
               end
             end
           end
 
           if @current_user.owned_worlds.empty?
-            link_to(new_world_path, class: link_class) do
+            link_to(new_world_path, class: "home-world-link") do
               Components::Button(
                 element: :div,
                 variant: :outline,
-                class: icon_class,
+                class: "home-world-icon border-dashed",
               ) do
-                Icon("huge/plus-sign-square", class: "size-7 text-muted-foreground")
+                image_tag("logo.png", class: "size-12")
               end
-              span(class: label_class) do
+              span(class: "home-world-label") do
                 "create your world"
               end
             end
           end
         end
 
-        if (worlds = @current_user.accessible_worlds.presence)
-          Components::Separator()
-          div(class: "flex gap-4 flex-wrap justify-center") do
-            worlds.each do |world|
-              link_to(
-                world,
-                class: "flex flex-col items-center gap-2 hover:underline",
-              ) do
-                image_tag(
-                  world.page_icon_variant,
-                  class: "size-20 shadow-md rounded-world-icon",
-                )
-                span(class: "text-xs font-semibold font-heading") { world.name }
+        div(class: "flex gap-4 flex-wrap justify-center") do
+          @friend_worlds.each do |world|
+            link_to(world, class: "home-world-link", data: { size: "sm" }) do
+              image_tag(
+                world.page_icon_variant,
+                class: "home-world-icon",
+                data: { size: "sm" },
+              )
+              span(class: "home-world-label", data: { size: "sm" }) do
+                world.name
               end
             end
           end
-          # div(class: "flex flex-col gap-2") do
-          #   h2 { "worlds you can visit:" }
-          #   Components::ItemGroup() do
-          #     worlds.find_each do |world|
-          #       Components::Item(
-          #         element: :a,
-          #         href: url_for(world),
-          #         variant: :muted,
-          #       ) do |item|
-          #         item.media do
-          #           image_tag(
-          #             world.page_icon_variant,
-          #             class: "size-16 rounded-world-icon",
-          #           )
-          #         end
-          #         item.content(class: "gap-0") do
-          #           item.title do
-          #             world.name
-          #           end
-          #           item.description do
-          #             world.friendly_id
-          #           end
-          #         end
-          #       end
-          #     end
-          #   end
-          # end
+
+          if hotwire_native_app?
+            link_to(
+              "/scan_qr_code",
+              class: "home-world-link",
+              data: {
+                size: "sm",
+              },
+            ) do
+              Components::Button(
+                element: :div,
+                variant: :outline,
+                class: "home-world-icon shadow-none border-dashed",
+              ) do
+                Icon("huge/qr-code", class: "size-7 text-muted-foreground")
+              end
+              span(class: "home-world-label font-normal") do
+                "scan to add friend"
+              end
+            end
+          end
         end
       end
     end

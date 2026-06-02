@@ -1,4 +1,4 @@
-@layer components {
+@layer base {
   .dropdown-menu-content {
     @apply z-50 w-(--button-width) min-w-32 overflow-x-hidden overflow-y-auto rounded-md bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none;
     @apply data-closed:overflow-hidden;
