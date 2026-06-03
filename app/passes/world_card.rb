@@ -38,7 +38,7 @@ class Passes::WorldCard < Passkit::BasePass
   def background_color = "rgb(255, 255, 255)"
   def foreground_color = "rgb(12, 12, 9)"
   def label_color = "rgb(124, 124, 103)"
-  def organization_name = "smaller world"
+  def organization_name = @world.name
   def logo_text = @world.name
   def suppress_strip_shine = false # rubocop:disable Naming/PredicateMethod
 

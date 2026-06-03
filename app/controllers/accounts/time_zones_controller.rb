@@ -3,6 +3,10 @@
 
 module Accounts
   class TimeZonesController < ApplicationController
+    # == Configuration ==
+
+    skip_verify_authorized
+
     # == Actions ==
 
     # PUT /accounts/time_zone

@@ -30,8 +30,9 @@ Rails.application.routes.draw do
 
   # == Account
   resource :account, only: [ :new, :create ] do
-    scope(module: :accounts) do
+    scope module: :accounts  do
       resource :time_zone, only: [ :update ]
+      resource :world_cards, only: [ :update ]
     end
   end
 

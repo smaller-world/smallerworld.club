@@ -66,6 +66,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         world = find_world
+        authorize!(world, to: :post?)
         post_params = params.expect(post: [ :emoji, :title, :body, images: [] ])
         post = world.posts.build(**post_params)
         if post.save

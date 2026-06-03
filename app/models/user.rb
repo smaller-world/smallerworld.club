@@ -71,6 +71,9 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :cardholder,
     foreign_key: :cardholder_id
+  has_many :world_card_passes,
+    through: :world_cards,
+    source: :pass
 
   # == Normalizations ==
 

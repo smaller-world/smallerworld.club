@@ -4,8 +4,8 @@
 class WorldCardsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access
-  skip_verify_authorized
+  allow_unauthenticated_access only: [ :show, :create ]
+  skip_verify_authorized only: [ :show, :create ]
 
   # == Actions ==
 
@@ -43,8 +43,6 @@ class WorldCardsController < ApplicationController
       end
     end
   end
-
-  private
 
   # == Helpers ==
 

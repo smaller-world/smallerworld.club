@@ -7,6 +7,7 @@ import {
 } from "@joemasilotti/bridge-components";
 
 import AccountTimeZoneFormController from "./account_time_zone_form_controller";
+import AccountWorldCardsFormController from "./account_world_cards_form_controller";
 import { application } from "./application";
 import AutoclickController from "./autoclick_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
@@ -28,6 +29,7 @@ import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import MaintainScrollController from "./maintain_scroll_controller";
+import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import RadioGroupController from "./radio_group_controller";
 import ReplyInitiationFormController from "./reply_initiation_form_controller";
@@ -55,6 +57,7 @@ application.register(
   NotificationTokenBridgeController,
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
+application.register("passes-bridge", PassesBridgeController);
 
 // == Libraries
 application.register("turnstile", TurnstileController);
@@ -96,6 +99,10 @@ application.register("transition", TransitionController); // eslint-disable-line
 
 // == Forms ==
 application.register("account-time-zone-form", AccountTimeZoneFormController);
+application.register(
+  "account-world-cards-form",
+  AccountWorldCardsFormController,
+);
 application.register("world-form", WorldFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
 application.register("world-card-form", WorldCardFormController);

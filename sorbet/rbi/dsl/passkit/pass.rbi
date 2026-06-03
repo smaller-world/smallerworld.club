@@ -703,51 +703,6 @@ class Passkit::Pass
     sig { void }
     def created_at_will_change!; end
 
-    sig { returns(T.untyped) }
-    def data; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def data=(value); end
-
-    sig { returns(T::Boolean) }
-    def data?; end
-
-    sig { returns(T.untyped) }
-    def data_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def data_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def data_came_from_user?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def data_change; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def data_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def data_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def data_in_database; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def data_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def data_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def data_previously_was; end
-
-    sig { returns(T.untyped) }
-    def data_was; end
-
-    sig { void }
-    def data_will_change!; end
-
     sig { returns(T.nilable(::String)) }
     def generator_id; end
 
@@ -980,9 +935,6 @@ class Passkit::Pass
     def restore_created_at!; end
 
     sig { void }
-    def restore_data!; end
-
-    sig { void }
     def restore_generator_id!; end
 
     sig { void }
@@ -1014,12 +966,6 @@ class Passkit::Pass
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def saved_change_to_data; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_data?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_generator_id; end
@@ -1158,9 +1104,6 @@ class Passkit::Pass
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_data?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_generator_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

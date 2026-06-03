@@ -25,7 +25,7 @@ end
 
 require "extensions/passkit/support_generation_without_barcodes"
 
-# Configure demo pass, dashboard auth.
+# Configure demo pass, dashboard auth
 Passkit.configure do |config|
   config.available_passes["Passes::DemoPass"] = -> { nil }
 
@@ -39,8 +39,27 @@ Passkit.configure do |config|
   end
 end
 
-# Add application passes.
 Rails.application.configure do
+  # Modify models
+  config.to_prepare do
+    Passkit::Pass.has_many(
+      :registrations,
+      foreign_key: :passkit_pass_id,
+      dependent: :restrict_with_error,
+    )
+    Passkit::Pass.has_many(
+      :devices,
+      through: :registrations,
+    )
+
+    Passkit::Device.has_many(
+      :registrations,
+      foreign_key: :passkit_device_id,
+      dependent: :destroy,
+    )
+  end
+
+  # Add application passes
   config.after_initialize do
     Passkit.configure do |config|
       config.available_passes["Passes::WorldCard"] = -> {

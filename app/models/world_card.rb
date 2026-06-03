@@ -32,10 +32,41 @@ class WorldCard < ApplicationRecord
   # == Associations ==
 
   belongs_to :world
+  has_many :world_keys, through: :world, source: :keys
+
   belongs_to :cardholder, class_name: "User", optional: true
+  has_one :pass,
+    as: :generator,
+    class_name: "Passkit::Pass",
+    dependent: :destroy
+  has_many :pass_registrations,
+    class_name: "Passkit::Registration",
+    through: :pass,
+    source: :registrations
+  has_many :pass_devices,
+    class_name: "Passkit::Device",
+    through: :pass_registrations,
+    source: :device
 
   sig { returns(World) }
   def world!
     world or raise ActiveRecord::RecordNotFound, "Missing associated world"
+  end
+
+  # == Hooks ==
+
+  after_save :create_granted_key,
+    if: [ :cardholder_id?, :cardholder_id_previously_changed? ]
+
+  private
+
+  # == Callbacks ==
+
+  sig { void }
+  def create_granted_key
+    world!.keys.find_or_create_by!(
+      color: granted_key_color,
+      recipient: cardholder,
+    )
   end
 end

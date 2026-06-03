@@ -8,7 +8,6 @@
 class Device
   include GeneratedAssociationMethods
   include GeneratedAttributeMethods
-  include EnumMethodsModule
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
@@ -26,9 +25,6 @@ class Device
 
     sig { returns(Enumerize::Attribute) }
     def platform; end
-
-    sig { returns(T::Hash[T.any(String, Symbol), String]) }
-    def platforms; end
   end
 
   module CommonRelationMethods
@@ -370,8 +366,6 @@ class Device
     def third_to_last!; end
   end
 
-  module EnumMethodsModule; end
-
   module GeneratedAssociationMethods
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_owner(*args, &blk); end
@@ -412,10 +406,10 @@ class Device
     def annotate(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def apple(*args, &blk); end
+    def arel_columns(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def arel_columns(*args, &blk); end
+    def chronological(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def create_with(*args, &blk); end
@@ -440,9 +434,6 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def from(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def google(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelationGroupChain) }
     def group(*args, &blk); end
@@ -481,12 +472,6 @@ class Device
     def none(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def not_apple(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def not_google(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def null_relation?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -521,6 +506,9 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def reselect(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def reverse_chronological(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def reverse_order(*args, &blk); end
@@ -1088,10 +1076,10 @@ class Device
     def annotate(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def apple(*args, &blk); end
+    def arel_columns(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def arel_columns(*args, &blk); end
+    def chronological(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def create_with(*args, &blk); end
@@ -1116,9 +1104,6 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def from(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def google(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelationGroupChain) }
     def group(*args, &blk); end
@@ -1157,12 +1142,6 @@ class Device
     def none(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def not_apple(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def not_google(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def null_relation?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1197,6 +1176,9 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def reselect(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def reverse_chronological(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def reverse_order(*args, &blk); end

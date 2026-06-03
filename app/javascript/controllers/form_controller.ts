@@ -16,7 +16,7 @@ export default class FormController extends Controller<HTMLFormElement> {
     super.connect();
     addAction(this, "turbo:submit-start", "disableTargetsWhileSubmitting");
     addAction(this, "turbo:submit-end", "enableTargetsAfterSubmitting");
-    addCleanupAction(this, "enableAfterSubmitting");
+    addCleanupAction(this, "enableTargetsAfterSubmitting");
   }
 
   // == Actions ==

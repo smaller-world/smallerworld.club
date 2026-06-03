@@ -420,6 +420,9 @@ class WorldCard
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_cardholder(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
+    def build_pass(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
@@ -441,20 +444,66 @@ class WorldCard
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_cardholder!(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
+    def create_pass(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
+    def create_pass!(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
 
+    sig { returns(T.nilable(::Passkit::Pass)) }
+    def pass; end
+
+    sig { params(value: T.nilable(::Passkit::Pass)).void }
+    def pass=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def pass_device_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def pass_device_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :pass_devices, through: :pass_registrations`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Passkit::Device::PrivateCollectionProxy) }
+    def pass_devices; end
+
+    sig { params(value: T::Enumerable[::Passkit::Device]).void }
+    def pass_devices=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def pass_registration_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def pass_registration_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :pass_registrations, through: :pass`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Passkit::Registration::PrivateCollectionProxy) }
+    def pass_registrations; end
+
+    sig { params(value: T::Enumerable[::Passkit::Registration]).void }
+    def pass_registrations=(value); end
+
     sig { returns(T.nilable(::User)) }
     def reload_cardholder; end
+
+    sig { returns(T.nilable(::Passkit::Pass)) }
+    def reload_pass; end
 
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
     sig { void }
     def reset_cardholder; end
+
+    sig { void }
+    def reset_pass; end
 
     sig { void }
     def reset_world; end
@@ -467,6 +516,20 @@ class WorldCard
 
     sig { returns(T::Boolean) }
     def world_changed?; end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :world_keys, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldKey::PrivateCollectionProxy) }
+    def world_keys; end
+
+    sig { params(value: T::Enumerable[::WorldKey]).void }
+    def world_keys=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
