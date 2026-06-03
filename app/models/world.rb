@@ -66,6 +66,9 @@ class World < ApplicationRecord
   has_many :keys, class_name: "WorldKey", dependent: :destroy
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
 
+  # TODO: Touch cards when world name or icon changes.
+  has_many :cards, class_name: "WorldCard", dependent: :destroy
+
   sig { returns(User) }
   def owner!
     owner or raise ActiveRecord::RecordNotFound, "Missing owner"
@@ -76,6 +79,32 @@ class World < ApplicationRecord
   has_one_attached :icon do |attachable|
     attachable.variant(:favicon, resize_to_fill: [ 144, 144 ])
     attachable.variant(:page_icon, resize_to_fill: [ 512, 512 ])
+
+    attachable.variant(
+      :passkit_logo,
+      passkit_world_icon: [ 50 ],
+      format: :png,
+    )
+    attachable.variant(
+      :passkit_logo_2x,
+      passkit_world_icon: [ 100 ],
+      format: :png,
+    )
+    attachable.variant(
+      :passkit_icon,
+      passkit_world_icon: [ 29 ],
+      format: :png,
+    )
+    attachable.variant(
+      :passkit_icon_2x,
+      passkit_world_icon: [ 58 ],
+      format: :png,
+    )
+    attachable.variant(
+      :passkit_icon_3x,
+      passkit_world_icon: [ 87 ],
+      format: :png,
+    )
   end
 
   sig { returns(T.nilable(ActiveStorage::VariantWithRecord)) }

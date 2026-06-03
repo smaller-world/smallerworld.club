@@ -971,6 +971,51 @@ class ActionPushNative::Device
     sig { void }
     def platform_will_change!; end
 
+    sig { returns(::String) }
+    def push_token; end
+
+    sig { params(value: ::String).returns(::String) }
+    def push_token=(value); end
+
+    sig { returns(T::Boolean) }
+    def push_token?; end
+
+    sig { returns(T.nilable(::String)) }
+    def push_token_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def push_token_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def push_token_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def push_token_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def push_token_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def push_token_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def push_token_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def push_token_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def push_token_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def push_token_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def push_token_was; end
+
+    sig { void }
+    def push_token_will_change!; end
+
     sig { void }
     def restore_created_at!; end
 
@@ -993,7 +1038,7 @@ class ActionPushNative::Device
     def restore_platform!; end
 
     sig { void }
-    def restore_token!; end
+    def restore_push_token!; end
 
     sig { void }
     def restore_updated_at!; end
@@ -1041,61 +1086,16 @@ class ActionPushNative::Device
     def saved_change_to_platform?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_token; end
+    def saved_change_to_push_token; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_token?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_push_token?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(::String) }
-    def token; end
-
-    sig { params(value: ::String).returns(::String) }
-    def token=(value); end
-
-    sig { returns(T::Boolean) }
-    def token?; end
-
-    sig { returns(T.nilable(::String)) }
-    def token_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def token_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def token_came_from_user?; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def token_change; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def token_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def token_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def token_in_database; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def token_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def token_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def token_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def token_was; end
-
-    sig { void }
-    def token_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -1164,7 +1164,7 @@ class ActionPushNative::Device
     def will_save_change_to_platform?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_token?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_push_token?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end

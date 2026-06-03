@@ -82,6 +82,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         post = find_post
+        authorize!(post)
         post_params = params.expect(post: [ :emoji, :title, :body, images: [] ])
         if post.update(post_params)
           refresh_or_redirect_to(post.world!)
@@ -97,6 +98,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         post = find_post
+        authorize!(post)
         post.destroy!
         redirect_to(post.world!)
       end

@@ -58,6 +58,9 @@ Rails.application.routes.draw do
     resources :world_keys,
       path: "/keys",
       only: [ :index ]
+    resources :world_cards,
+      path: "/cards",
+      only: [ :create ]
     resources :world_key_grants,
       path: "/invitations",
       as: :key_grants,
@@ -71,6 +74,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # == World Cards
+  resources :world_cards, only: [ :show ]
+
   # == World Key Grants
   resources :world_key_grants, only: [ :show ], param: :grant, path: "/world_invitations"
 
@@ -82,6 +88,9 @@ Rails.application.routes.draw do
 
   # == Reactions
   resources :reactions, only: :destroy
+
+  # == Passkit
+  mount Passkit::Engine => "/passkit", as: "passkit"
 
   # == Devtools
   get "/fly" => redirect(

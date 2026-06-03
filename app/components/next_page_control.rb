@@ -41,7 +41,7 @@ class Components::NextPageControl < Components::Base
   def view_template(&content)
     button_to(
       @target,
-      compact_mix(
+      **compact_mix(
         Components::Button.root_attributes(variant: @variant, size: @size),
         {
           form: {

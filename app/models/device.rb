@@ -9,7 +9,7 @@
 #  id              :uuid             not null, primary key
 #  name            :string
 #  platform        :string           not null
-#  token           :string           not null
+#  push_token      :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  installation_id :string           not null
@@ -25,14 +25,11 @@
 #  fk_rails_...  (owner_id => users.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
-class Device < ActionPushNative::Device
+class Device < ApplicationRecord
   extend Enumerize
   extend T::Sig
 
-  # == Configuration ==
-
-  # Customize TokenError handling (default: destroy!)
-  # rescue_from (ActionPushNative::TokenError) { Rails.logger.error("Device #{id} token is invalid") }
+  include ActiveSupport::Rescuable
 
   # == Attributes ==
 
@@ -51,7 +48,20 @@ class Device < ActionPushNative::Device
 
   validates :installation_id, uniqueness: true
 
+  # == Hooks ==
+
+  # Destroy device if push token is invalid
+  rescue_from ActionPushNative::TokenError, with: :destroy!
+
   # == Methods ==
+
+  sig { params(notification: PushNotification).void }
+  def push(notification)
+    notification.token = push_token
+    ActionPushNative.service_for(platform, notification).push(notification)
+  rescue => error
+    rescue_with_handler(error) || raise
+  end
 
   # sig { void }
   # def send_test_notification

@@ -488,6 +488,15 @@ module Components
 
   sig do
     params(
+      card: ::WorldCard,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldCardForm).void)
+    ).void
+  end
+  def WorldCardForm(card:, **attributes, &block); end
+
+  sig do
+    params(
       world: ::World,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
@@ -1008,6 +1017,15 @@ module Components
       ).void
     end
     def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        card: ::WorldCard,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldCardForm).void)
+      ).void
+    end
+    def WorldCardForm(card:, **attributes, &block); end
 
     sig do
       params(

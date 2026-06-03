@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_02_152405) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_154755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -67,10 +67,47 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_152405) do
     t.string "name"
     t.uuid "owner_id", null: false
     t.string "platform", null: false
-    t.string "token", null: false
+    t.string "push_token", null: false
     t.datetime "updated_at", null: false
     t.index ["installation_id"], name: "index_devices_on_installation_id", unique: true
     t.index ["owner_id"], name: "index_devices_on_owner_id"
+  end
+
+  create_table "passkit_devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "identifier", null: false
+    t.string "push_token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifier"], name: "index_passkit_devices_on_identifier", unique: true
+  end
+
+  create_table "passkit_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "passkit_passes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "authentication_token", null: false
+    t.datetime "created_at", null: false
+    t.json "data"
+    t.uuid "generator_id"
+    t.string "generator_type"
+    t.string "klass", null: false
+    t.string "serial_number", null: false
+    t.datetime "updated_at", null: false
+    t.index ["generator_type", "generator_id"], name: "index_passkit_passes_on_generator"
+    t.index ["serial_number"], name: "index_passkit_passes_on_serial_number", unique: true
+  end
+
+  create_table "passkit_registrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.uuid "passkit_device_id", null: false
+    t.uuid "passkit_pass_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["passkit_device_id"], name: "index_passkit_registrations_on_passkit_device_id"
+    t.index ["passkit_pass_id", "passkit_device_id"], name: "index_passkit_registrations_uniqueness", unique: true
+    t.index ["passkit_pass_id"], name: "index_passkit_registrations_on_passkit_pass_id"
   end
 
   create_table "phone_number_verification_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -275,6 +312,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_152405) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
+  create_table "world_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cardholder_id"
+    t.datetime "created_at", null: false
+    t.string "granted_key_color", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "world_id", null: false
+    t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
+    t.index ["world_id"], name: "index_world_cards_on_world_id"
+  end
+
   create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.timestamptz "accepted_at"
     t.string "color", null: false
@@ -301,6 +348,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_152405) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "devices", "users", column: "owner_id"
+  add_foreign_key "passkit_registrations", "passkit_devices"
+  add_foreign_key "passkit_registrations", "passkit_passes"
   add_foreign_key "posts", "worlds"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
@@ -314,6 +363,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_152405) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "world_cards", "users", column: "cardholder_id"
+  add_foreign_key "world_cards", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"
   add_foreign_key "world_keys", "worlds"
   add_foreign_key "worlds", "users", column: "owner_id"

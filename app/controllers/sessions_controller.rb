@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   # == Configuration ==
 
   allow_unauthenticated_access only: [ :new ]
+  skip_verify_authorized
 
   # rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
   #   T.bind(self, SessionsController)

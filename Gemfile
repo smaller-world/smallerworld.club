@@ -43,7 +43,7 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 2.0", require: false
-gem "ruby-vips", "~> 2.3"
+gem "ruby-vips", "~> 2.3", require: false
 gem "mini_magick", "~> 5.3", group: :development, require: false # or else Tapioca rbi generation fails
 
 # Use Active Storage with S3-compatible services (Cloudflare R2)
@@ -142,6 +142,15 @@ gem "action_push_native", "~> 0.3.1"
 
 # Detect device name
 gem "device_detector", "~> 1.1"
+
+# Generate Apple Wallet passes
+gem "passkit", "~> 0.7.0"
+
+# Concurrent operations
+gem "concurrent-ruby", "~> 1.3"
+
+# Shorten/expand UUIDs
+gem "shortuuid", "~> 0.6.0"
 
 group :development, :test do
   # Run tests with Minitest

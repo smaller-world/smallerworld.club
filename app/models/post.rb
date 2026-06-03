@@ -86,9 +86,9 @@ class Post < ApplicationRecord
 
   # == Emoji ==
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def fun_title
-    [ emoji, title ].compact.join(" ")
+    [ emoji, title ].compact.presence&.join(" ")
   end
 
   # == Snippets ==
@@ -108,6 +108,12 @@ class Post < ApplicationRecord
   sig { returns(String) }
   def snippet
     [ title_snippet, body_snippet ].compact.join("\n")
+  end
+
+  sig { returns(String) }
+  def card_snippet
+    text = title_snippet || T.must(body_snippet.lines.first)
+    text.strip.truncate(36)
   end
 
   sig { params(platform: Symbol).returns(String) }
@@ -131,6 +137,6 @@ class Post < ApplicationRecord
 
   sig { void }
   def set_plain_body
-    self.plain_body = rich_text_body.to_plain_text
+    self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
   end
 end

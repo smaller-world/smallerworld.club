@@ -8,12 +8,12 @@ module Shortlinking
 
   abstract!
 
+  private
+
   # == Interface ==
 
   sig { abstract.returns(T::Hash[Symbol, String]) }
   def url_options; end
-
-  private
 
   # == Helpers ==
 

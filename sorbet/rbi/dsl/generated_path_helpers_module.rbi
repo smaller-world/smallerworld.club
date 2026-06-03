@@ -76,6 +76,9 @@ module GeneratedPathHelpersModule
   def new_world_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def passkit_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -202,6 +205,9 @@ module GeneratedPathHelpersModule
   def verify_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_card_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -212,6 +218,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_world_cards_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_world_keys_path(*args); end

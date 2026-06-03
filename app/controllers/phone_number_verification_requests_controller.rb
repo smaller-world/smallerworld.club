@@ -5,6 +5,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   # == Configuration ==
 
   allow_unauthenticated_access
+  skip_verify_authorized
   rate_limit to: 3,
     within: 3.minutes,
     only: :create,

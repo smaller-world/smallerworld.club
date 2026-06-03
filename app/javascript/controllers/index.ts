@@ -42,6 +42,7 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
+import WorldCardFormController from "./world_card_form_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -97,5 +98,6 @@ application.register("transition", TransitionController); // eslint-disable-line
 application.register("account-time-zone-form", AccountTimeZoneFormController);
 application.register("world-form", WorldFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
+application.register("world-card-form", WorldCardFormController);
 
 // application.register("otp-input", OtpInputController);

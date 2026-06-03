@@ -76,6 +76,9 @@ module GeneratedUrlHelpersModule
   def new_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def passkit_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -202,6 +205,9 @@ module GeneratedUrlHelpersModule
   def verify_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_card_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -212,6 +218,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_world_cards_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_world_keys_url(*args); end

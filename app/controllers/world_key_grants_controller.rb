@@ -5,6 +5,7 @@ class WorldKeyGrantsController < ApplicationController
   # == Configuration ==
 
   allow_unauthenticated_access only: :show
+  skip_verify_authorized only: :show
 
   # == Actions ==
 
@@ -16,8 +17,12 @@ class WorldKeyGrantsController < ApplicationController
     if (recipient = current_user) && recipient.world_keys.exists?(world:, color:)
       redirect_to(world)
     else
-      key = WorldKey.new(world:, color:, recipient: current_user)
-      render Views::WorldKeyGrants::Show.new(key:)
+      key_or_card = if hotwire_native_app?
+        world.keys.build(color:, recipient: current_user)
+      else
+        world.cards.build(granted_key_color: color, cardholder: current_user)
+      end
+      render Views::WorldKeyGrants::Show.new(key_or_card:)
     end
   end
 
