@@ -6,6 +6,12 @@ class PushNotification < ActionPushNative::Notification
 
   ApplicationPushNotificationJob = PushNotificationJob
 
+  # The action_push_native `application:` config block is special-cased as
+  # the shared base for every notification class. Pointing PushNotification
+  # at it means main-app pushes read their topic directly from that block,
+  # so we don't need a separate per-app block just for the defaults.
+  self.application = "application"
+
   # Set a custom job queue_name
   # queue_as :realtime
 

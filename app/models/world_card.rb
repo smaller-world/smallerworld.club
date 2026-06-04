@@ -57,6 +57,38 @@ class WorldCard < ApplicationRecord
 
   after_save :create_granted_key,
     if: [ :cardholder_id?, :cardholder_id_previously_changed? ]
+  after_commit :trigger_pass_update_later, on: :update
+
+  # == Pass Updates ==
+
+  # Push a silent notification to every device that has registered this
+  # card's pass. On per-device APNs token errors, prune the registration
+  # (and the device, if it now has no remaining registrations) so we stop
+  # pinging dead tokens — per Apple's "prune devices that fail APNs
+  # delivery" guidance.
+  sig { void }
+  def trigger_pass_update
+    pass_devices.find_each do |device|
+      notification = PasskitPushNotification.silent.new
+      notification.token = device.push_token
+      begin
+        ActionPushNative.service_for(:apple, notification).push(notification)
+        tag_logger do
+          Rails.logger.info("Pushed pass update to passkit device #{device.id}")
+        end
+      rescue ActionPushNative::TokenError
+        device.destroy!
+      end
+    end
+  end
+
+  # Enqueue the silent APNs push that tells Apple Wallet to re-download this
+  # card's `.pkpass`. Wired to `after_commit on: :update` (fires on touches
+  # too, which is how `World#touch_cards` propagates name/icon changes).
+  sig { void }
+  def trigger_pass_update_later
+    TriggerWorldCardPassUpdateJob.perform_later(self)
+  end
 
   private
 

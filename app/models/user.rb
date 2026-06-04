@@ -26,6 +26,10 @@ class User < ApplicationRecord
 
   NAME_MAX_LENGTH = 22
 
+  # Attributes that, when changed, invalidate the on-device pass for each world
+  # card.
+  WORLD_CARD_ATTRIBUTES = T.let([ "name" ].freeze, T::Array[String])
+
   # == Attributes ==
 
   sig { returns(Phonelib::Phone) }
@@ -88,6 +92,12 @@ class User < ApplicationRecord
     phone: { possible: true, types: :mobile, extensions: false }
   validates_time_zone_name
 
+  # == Hooks ==
+
+  after_commit :touch_world_cards,
+    on: :update,
+    if: :world_card_attributes_changed?
+
   # == Methods ==
 
   sig { returns(String) }
@@ -112,5 +122,21 @@ class User < ApplicationRecord
     else
       raise ArgumentError, "Unsupported platform: #{platform.inspect}"
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def world_card_attributes_changed?
+    saved_changes.keys.intersect?(WORLD_CARD_ATTRIBUTES)
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def touch_world_cards
+    world_cards.find_each(&:touch)
   end
 end

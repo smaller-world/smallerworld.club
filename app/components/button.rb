@@ -71,13 +71,4 @@ class Components::Button < Components::Base
       raise InvalidParameter.new(parameter: :size, value: size)
     end
   end
-
-  private
-
-  # == Helpers ==
-
-  sig { params(name: String, align: String, attributes: T.untyped).void }
-  def icon_addon(name, align:, **attributes)
-    Icon(name, **mix({ data: { icon: align } }, attributes))
-  end
 end

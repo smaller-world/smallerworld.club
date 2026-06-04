@@ -115,10 +115,7 @@ Rails.application.routes.draw do
   resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
 
   # == Admin
-  namespace :admin do
-    scope controller: :dashboard, as: :dashboard do
-      get "/", action: :show
-    end
+  if Rails.env.development?
+    mount MissionControl::Jobs::Engine, at: "/jobs"
   end
-  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 end

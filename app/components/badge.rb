@@ -32,4 +32,16 @@ class Components::Badge < Components::Base
       &content
     )
   end
+
+  # == Interface ==
+
+  sig { params(name: String, attributes: T.untyped).void }
+  def inline_start_icon(name, **attributes)
+    Icon(name, **mix({ data: { icon: "inline-start" } }, attributes))
+  end
+
+  sig { params(name: String, attributes: T.untyped).void }
+  def inline_end_icon(name, **attributes)
+    Icon(name, **mix({ data: { icon: "inline-end" } }, attributes))
+  end
 end

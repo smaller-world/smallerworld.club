@@ -32,6 +32,10 @@ class World < ApplicationRecord
   NAME_MAX_LENGTH = 30
   ICON_CONTENT_TYPES = [ "image/*", "video/*" ]
 
+  # Attributes that, when changed, invalidate the on-device pass for each card.
+  # Icon changes are handled separately via `after_attached :icon`.
+  CARD_ATTRIBUTES = T.let([ "name" ].freeze, T::Array[String])
+
   # == FriendlyId ==
 
   # TODO: Parse this out into a module.
@@ -65,8 +69,6 @@ class World < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :keys, class_name: "WorldKey", dependent: :destroy
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
-
-  # TODO: Touch cards when world name or icon changes.
   has_many :cards, class_name: "WorldCard", dependent: :destroy
 
   sig { returns(User) }
@@ -149,9 +151,11 @@ class World < ApplicationRecord
     },
     size: { less_than: 64.megabytes }
 
-  # == Initialization ==
+  # == Hooks ==
 
   after_initialize :set_default_name, if: :new_record?
+  after_commit :touch_cards, on: :update, if: :card_attributes_changed?
+  after_attached :icon, :touch_cards
 
   # == Keys ==
 
@@ -170,5 +174,17 @@ class World < ApplicationRecord
     if (owner = self.owner)
       self[:name] ||= owner.default_world_name
     end
+  end
+
+  sig { returns(T::Boolean) }
+  def card_attributes_changed?
+    saved_changes.keys.intersect?(CARD_ATTRIBUTES)
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def touch_cards
+    cards.find_each(&:touch)
   end
 end

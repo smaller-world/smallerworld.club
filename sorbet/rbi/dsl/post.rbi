@@ -498,6 +498,20 @@ class Post
     sig { params(value: T.nilable(::World)).void }
     def world=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def world_card_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_card_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_cards, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldCard::PrivateCollectionProxy) }
+    def world_cards; end
+
+    sig { params(value: T::Enumerable[::WorldCard]).void }
+    def world_cards=(value); end
+
     sig { returns(T::Boolean) }
     def world_changed?; end
 

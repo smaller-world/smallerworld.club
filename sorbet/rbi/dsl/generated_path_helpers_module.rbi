@@ -22,9 +22,6 @@ module GeneratedPathHelpersModule
   def account_world_cards_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def admin_dashboard_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def challenge_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

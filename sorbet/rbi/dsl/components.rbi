@@ -497,6 +497,15 @@ module Components
 
   sig do
     params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldCardPassesBadge).void)
+    ).void
+  end
+  def WorldCardPassesBadge(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       world: ::World,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
@@ -1026,6 +1035,15 @@ module Components
       ).void
     end
     def WorldCardForm(card:, **attributes, &block); end
+
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldCardPassesBadge).void)
+      ).void
+    end
+    def WorldCardPassesBadge(element: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

@@ -152,6 +152,9 @@ gem "concurrent-ruby", "~> 1.3"
 # Shorten/expand UUIDs
 gem "shortuuid", "~> 0.6.0"
 
+# Run callbacks after ActiveStorage attachment changes
+gem "after_attached", "~> 0.1.1"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

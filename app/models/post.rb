@@ -29,6 +29,7 @@ class Post < ApplicationRecord
   # == Associations ==
 
   belongs_to :world
+  has_many :world_cards, through: :world, source: :cards
   has_one :author, through: :world, source: :owner
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
@@ -83,6 +84,7 @@ class Post < ApplicationRecord
   # == Hooks ==
 
   before_save :set_plain_body
+  after_commit :touch_cards, on: [ :create, :destroy ]
 
   # == Emoji ==
 
@@ -138,5 +140,12 @@ class Post < ApplicationRecord
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def touch_world_cards
+    world_cards.find_each(&:touch)
   end
 end

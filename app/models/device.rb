@@ -59,6 +59,9 @@ class Device < ApplicationRecord
   def push(notification)
     notification.token = push_token
     ActionPushNative.service_for(platform, notification).push(notification)
+    tag_logger do
+      Rails.logger.info("Pushed notification to device #{id}")
+    end
   rescue => error
     rescue_with_handler(error) || raise
   end

@@ -4,7 +4,7 @@
 require "image_processing/vips"
 
 class ImageProcessing::Vips::Processor
-  module PasskitWorldIcon
+  module PasskitWorldIconTransformation
     extend T::Sig
     extend T::Helpers
 
@@ -26,5 +26,5 @@ class ImageProcessing::Vips::Processor
     end
   end
 
-  prepend PasskitWorldIcon
+  include PasskitWorldIconTransformation
 end

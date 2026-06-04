@@ -2,10 +2,6 @@
 # frozen_string_literal: true
 
 class PagesController < PublicController
-  # == Configuration ==
-
-  skip_verify_authorized
-
   # == Actions ==
 
   # GET /

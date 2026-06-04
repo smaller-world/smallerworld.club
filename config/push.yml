@@ -1,29 +1,39 @@
 shared:
   # Use bin/rails credentials:edit to set the apns secrets (as action_push_native:apns:key_id|encryption_key)
   apple:
+    # Shared base config for all APNs notification classes (multi-app mode).
+    # The `application:` key is special-cased by action_push_native: every
+    # notification class's per-app block is merged on top of this one.
+    # PushNotification sets `self.application = "application"` so the base
+    # block also serves as the default app — main app pushes use the topic
+    # defined here directly.
+    #
     # Token auth params
     # See https://developer.apple.com/documentation/usernotifications/establishing-a-token-based-connection-to-apns
-    key_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :key_id) %>
-    encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :encryption_key)&.dump %>
+    application:
+      key_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :key_id) %>
+      encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :encryption_key)&.dump %>
 
-    team_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :team_id) %>
-    # Your identifier found on https://developer.apple.com/account/resources/identifiers/list
-    topic: <%= Rails.application.credentials.dig(:action_push_native, :apns, :topic) %>
+      team_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :team_id) %>
+      # Main app topic (bundle identifier).
+      # Your identifier found on https://developer.apple.com/account/resources/identifiers/list
+      topic: <%= Rails.application.credentials.dig(:action_push_native, :apns, :topic) %>
 
-    # Set this to the number of threads used to process notifications (default: 5).
-    # When the pool size is too small a ConnectionPoolTimeoutError will be raised.
-    # connection_pool_size: 5
+      # Set this to the number of threads used to process notifications (default: 5).
+      # When the pool size is too small a ConnectionPoolTimeoutError will be raised.
+      # connection_pool_size: 5
 
-    # Change the request timeout (default: 30).
-    # request_timeout: 60
+      # Change the request timeout (default: 30).
+      # request_timeout: 60
 
-    # Decide when to connect to APNs development server.
-    # Please note that anything built directly from Xcode and loaded on your phone will have
-    # the app generate DEVELOPMENT tokens, while everything else (TestFlight, Apple Store, ...)
-    # will be considered as PRODUCTION environment.
-    # connect_to_development_server: <%= Rails.env.development? %>
+    # Wallet pass update pushes (PasskitPushNotification): overrides topic
+    # with the Pass Type ID. All other auth params inherit from `application:`.
+    passkit:
+      topic: <%= Rails.application.credentials.dig(:passkit, :pass_type_identifier) %>
+      connect_to_development_server: false
 
   # Use bin/rails credentials:edit to set the fcm secrets (as action_push_native:fcm:encryption_key)
+  # NOTE: google config is still in single-app (flat) shape — no multi-app rollout for FCM yet.
   google:
     # Your Firebase project service account credentials
     # See https://firebase.google.com/docs/cloud-messaging/auth-server
@@ -38,3 +48,26 @@ shared:
 
     # Change the request timeout (default: 15).
     # request_timeout: 30
+
+development: &development
+  apple:
+    application:
+      # Decide when to connect to APNs development server.
+      # Please note that anything built directly from Xcode and loaded on your phone will have
+      # the app generate DEVELOPMENT tokens, while everything else (TestFlight, Apple Store, ...)
+      # will be considered as PRODUCTION environment.
+      connect_to_development_server: true
+
+    # Passkit requires production credentials to push pass updates
+    passkit:
+      key_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :production_key_id) %>
+      encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :production_encryption_key)&.dump %>
+
+test:
+  <<: *development
+
+production:
+  apple:
+    application:
+      connect_to_development_server: false
+

@@ -45,6 +45,7 @@ import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
 import WorldCardFormController from "./world_card_form_controller";
+import WorldCardPassesBadgeController from "./world_card_passes_badge_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -106,5 +107,6 @@ application.register(
 application.register("world-form", WorldFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
 application.register("world-card-form", WorldCardFormController);
+application.register("world-card-passes-badge", WorldCardPassesBadgeController);
 
 // application.register("otp-input", OtpInputController);

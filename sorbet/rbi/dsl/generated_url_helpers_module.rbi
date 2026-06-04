@@ -22,9 +22,6 @@ module GeneratedUrlHelpersModule
   def account_world_cards_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def admin_dashboard_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def challenge_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

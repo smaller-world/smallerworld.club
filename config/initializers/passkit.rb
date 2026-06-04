@@ -57,6 +57,10 @@ Rails.application.configure do
       foreign_key: :passkit_device_id,
       dependent: :destroy,
     )
+    Passkit::Device.has_many(
+      :passes,
+      through: :registrations,
+    )
   end
 
   # Add application passes

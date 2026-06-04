@@ -30,6 +30,7 @@
     "@uppy/image-editor": "^4.2.0",
     "el-transition": "^0.0.7",
     "emoji-mart": "^5.6.0",
+    "inflection": "^3.0.2",
     "input-otp": "^1.4.2",
     "libphonenumber-js": "^1.13.2",
     "local-time": "^3.0.3",
