@@ -108,7 +108,12 @@ class Components::AppLayout < Components::Base
         @head&.call
       end
 
-      body(class: [ "flex min-h-dvh flex-col", @body_class ]) do
+      body(
+        class: [ "flex min-h-dvh flex-col", @body_class ],
+        data: {
+          controller: "page-load-bridge",
+        },
+      ) do
         if @display_header || !hotwire_native_app?
           Components::AppHeader()
         end

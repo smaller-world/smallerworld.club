@@ -71,6 +71,10 @@ export default class TippyController extends Controller<HTMLElement> {
 
   // == Actions ==
 
+  show(): void {
+    this.#tippy?.show();
+  }
+
   flash(): void {
     if (!this.#tippy || !this.element.checkVisibility()) {
       return;

@@ -29,6 +29,7 @@ import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import MaintainScrollController from "./maintain_scroll_controller";
+import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import RadioGroupController from "./radio_group_controller";
@@ -42,10 +43,10 @@ import ToasterController from "./toaster_controller";
 import TransitionController from "./transition_controller";
 import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
+import UnlinkedWorldCardsFormController from "./unlinked_world_cards_form_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
 import WorldCardFormController from "./world_card_form_controller";
-import WorldCardPassesBadgeController from "./world_card_passes_badge_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -59,6 +60,7 @@ application.register(
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 application.register("passes-bridge", PassesBridgeController);
+application.register("page-load-bridge", PageLoadBridgeController);
 
 // == Libraries
 application.register("turnstile", TurnstileController);
@@ -104,9 +106,12 @@ application.register(
   "account-world-cards-form",
   AccountWorldCardsFormController,
 );
-application.register("world-form", WorldFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
+application.register(
+  "unlinked-world-cards-form",
+  UnlinkedWorldCardsFormController,
+);
+application.register("world-form", WorldFormController);
 application.register("world-card-form", WorldCardFormController);
-application.register("world-card-passes-badge", WorldCardPassesBadgeController);
 
 // application.register("otp-input", OtpInputController);

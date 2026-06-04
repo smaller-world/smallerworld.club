@@ -199,6 +199,9 @@ module GeneratedPathHelpersModule
   def ui_docs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def unlinked_world_cards_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -31,12 +31,20 @@ class Views::Sessions::New < Views::Base
         )
       end
 
-      main(class: "flex-1 flex flex-col justify-center pb-20") do
+      main(class: "flex-1 flex flex-col items-center justify-center") do
         layout.page_container(class: "flex flex-col items-center justify-center gap-6") do
           login_card
 
           if hotwire_native_app?
-            Components::WorldCardPassesBadge()
+            turbo_frame_tag(
+              :unlinked_world_cards,
+              class: "w-full max-w-72",
+              data: {
+                turbo_permanent: true,
+              },
+            ) do
+              Components::UnlinkedWorldCardsForm()
+            end
           end
         end
       end

@@ -62,14 +62,20 @@ class Views::Home::Show < Views::Base
                 )
                 if @current_user.world_cards.exists?(world:)
                   Components::Button(
+                    element: :div,
                     variant: :outline,
                     size: :icon_xs,
-                    class: "rounded-full absolute -right-2 -top-2",
-                  ) do
-                    Icon("huge/cards-02", class: "size-4", data: {
+                    class: "bg-muted rounded-full absolute -right-2 -top-2",
+                    data: {
                       controller: "tippy",
                       tippy_content_value: "you have a wallet card for #{world.name}!",
-                    })
+                      action: "click->tippy#show:prevent:stop",
+                    },
+                  ) do
+                    Icon(
+                      "huge/cards-02",
+                      class: "text-muted-foreground size-4",
+                    )
                   end
                 end
               end
@@ -100,40 +106,10 @@ class Views::Home::Show < Views::Base
             end
           end
         end
-
-        if hotwire_native_app?
-          account_world_cards_form
-        end
-      end
-    end
-  end
-
-  private
-
-  sig { void }
-  def account_world_cards_form
-    form_with(
-      url: account_world_cards_path,
-      method: :put,
-      scope: :user,
-      data: {
-        controller: "account-world-cards-form passes-bridge",
-        action: "passes-bridge:received->account-world-cards-form#submitPasses",
-      },
-    ) do |form|
-      template(data: { account_world_cards_form_target: "inputTemplate" }) do
-        form.hidden_field(:world_card_pass_serial_numbers, multiple: true, value: nil)
       end
 
-      @current_user.world_card_passes.pluck(:serial_number).each do |value|
-        form.hidden_field(
-          :world_card_pass_serial_numbers,
-          multiple: true,
-          value:,
-          data: {
-            account_world_cards_form_target: "existingInput",
-          },
-        )
+      if hotwire_native_app?
+        Components::AccountWorldCardsForm(current_user: @current_user)
       end
     end
   end

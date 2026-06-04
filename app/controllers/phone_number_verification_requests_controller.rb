@@ -63,30 +63,34 @@ class PhoneNumberVerificationRequestsController < ApplicationController
 
   # POST /verifications/:id/challenge
   def verify
-    verification_request = find_verification_request
-    verification_code = params
-      .require(:phone_number_verification_request)
-      .fetch(:verification_code)
-    if verification_request.verify(verification_code)
-      user = User.find_by(phone_number: verification_request.phone_number)
-      if user
-        time_zone_name = params.require(:user).fetch(:time_zone_name)
-        user.update!(time_zone_name:)
-        start_new_session_for(
-          user,
-          phone_number_verification_request: verification_request,
-        )
-        redirect_to(after_authentication_url)
-      else
-        session[:phone_number_verification_token] =
-          verification_request.generate_registration_token
-        redirect_to(new_account_path)
+    respond_to do |format|
+      format.html do
+        verification_request = find_verification_request
+        verification_code = params
+          .require(:phone_number_verification_request)
+          .fetch(:verification_code)
+        if verification_request.verify(verification_code)
+          user = User.find_by(phone_number: verification_request.phone_number)
+          if user
+            time_zone_name = params.require(:user).fetch(:time_zone_name)
+            user.update!(time_zone_name:)
+            start_new_session_for(
+              user,
+              phone_number_verification_request: verification_request,
+            )
+            redirect_to(after_authentication_url)
+          else
+            session[:phone_number_verification_token] =
+              verification_request.generate_registration_token
+            redirect_to(new_account_path)
+          end
+        else
+          redirect_to(
+            [ :challenge, verification_request ],
+            alert: "invalid verification code. please try again.",
+          )
+        end
       end
-    else
-      redirect_to(
-        [ :challenge, verification_request ],
-        alert: "invalid verification code. please try again.",
-      )
     end
   end
 
@@ -116,7 +120,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           remoteip: request.remote_ip,
         )
       rescue => error
-        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}")
+        redirect_to(new_session_path, alert: "Cloudflare verification failed: #{error.message}")
       end
     else
       redirect_to(new_session_path, alert: "please verify you are human!")

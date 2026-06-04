@@ -24,6 +24,12 @@
   },
   "tailwindCSS.experimental.classRegex": [
     "class:\\s*['\"]([^'\"]*)['\"]",
+    "transition_enter:\\s*['\"]([^'\"]*)['\"]",
+    "transition_enter_start:\\s*['\"]([^'\"]*)['\"]",
+    "transition_enter_end:\\s*['\"]([^'\"]*)['\"]",
+    "transition_exit:\\s*['\"]([^'\"]*)['\"]",
+    "transition_exit_start:\\s*['\"]([^'\"]*)['\"]",
+    "transition_exit_end:\\s*['\"]([^'\"]*)['\"]",
     ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
   ],
 

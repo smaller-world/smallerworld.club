@@ -4,6 +4,13 @@ export default class TransitionGroupController extends Controller {
   static targets = ["item"];
   declare readonly itemTargets: HTMLCollectionOf<HTMLElement>;
 
+  // == Lifecycle ==
+
+  connect(): void {
+    super.connect();
+    console.debug("transition-group connected, items:", this.itemTargets);
+  }
+
   // == Actions ==
 
   startNext(event: Event): void {
@@ -12,7 +19,7 @@ export default class TransitionGroupController extends Controller {
     }
     const nextItem = this.#nextItemTargetAfter(event.target);
     if (nextItem) {
-      this.dispatch("start", { target: nextItem });
+      this.dispatch("start", { target: nextItem, bubbles: false });
     }
   }
 

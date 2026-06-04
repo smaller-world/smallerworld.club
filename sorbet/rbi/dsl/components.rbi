@@ -26,6 +26,15 @@ module Components
 
   sig do
     params(
+      current_user: ::User,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AccountWorldCardsForm).void)
+    ).void
+  end
+  def AccountWorldCardsForm(current_user:, **attributes, &block); end
+
+  sig do
+    params(
       variant: ::Symbol,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Alert).void)
@@ -453,6 +462,15 @@ module Components
 
   sig do
     params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::UnlinkedWorldCardsForm).void)
+    ).void
+  end
+  def UnlinkedWorldCardsForm(element: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
       form: T.nilable(::PhlexFormBuilder),
       field: T.nilable(::Symbol),
       value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
@@ -497,12 +515,13 @@ module Components
 
   sig do
     params(
-      element: T.nilable(::Symbol),
+      url: ::String,
+      pass_serial_numbers: T::Array[::String],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldCardPassesBadge).void)
+      block: T.nilable(T.proc.params(instance: Components::WorldCardsForm).void)
     ).void
   end
-  def WorldCardPassesBadge(element: T.unsafe(nil), **attributes, &block); end
+  def WorldCardsForm(url:, pass_serial_numbers: T.unsafe(nil), **attributes, &block); end
 
   sig do
     params(
@@ -559,6 +578,15 @@ module Components
       ).void
     end
     def AccountForm(user:, **attributes, &block); end
+
+    sig do
+      params(
+        current_user: ::User,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AccountWorldCardsForm).void)
+      ).void
+    end
+    def AccountWorldCardsForm(current_user:, **attributes, &block); end
 
     sig do
       params(
@@ -994,6 +1022,15 @@ module Components
 
     sig do
       params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::UnlinkedWorldCardsForm).void)
+      ).void
+    end
+    def UnlinkedWorldCardsForm(element: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
         form: T.nilable(::PhlexFormBuilder),
         field: T.nilable(::Symbol),
         value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
@@ -1038,12 +1075,13 @@ module Components
 
     sig do
       params(
-        element: T.nilable(::Symbol),
+        url: ::String,
+        pass_serial_numbers: T::Array[::String],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldCardPassesBadge).void)
+        block: T.nilable(T.proc.params(instance: Components::WorldCardsForm).void)
       ).void
     end
-    def WorldCardPassesBadge(element: T.unsafe(nil), **attributes, &block); end
+    def WorldCardsForm(url:, pass_serial_numbers: T.unsafe(nil), **attributes, &block); end
 
     sig do
       params(

@@ -1,4 +1,7 @@
+import { isEmpty } from "lodash-es";
 import invariant from "tiny-invariant";
+
+import { addCleanupAction } from "#helpers/stimulus_helpers";
 
 import FormController from "./form_controller";
 import type { PassData } from "./passes_bridge_controller";
@@ -10,10 +13,12 @@ export default class AccountWorldCardsFormController extends FormController {
     ...FormController.targets,
     "inputTemplate",
     "existingInput",
+    "addedInput",
   ];
   declare readonly inputTemplateTarget: HTMLTemplateElement;
   declare readonly hasInputTemplateTarget: boolean;
   declare readonly existingInputTargets: HTMLCollectionOf<HTMLInputElement>;
+  declare readonly addedInputTargets: HTMLCollectionOf<HTMLInputElement>;
 
   // == Lifecycle ==
 
@@ -22,6 +27,7 @@ export default class AccountWorldCardsFormController extends FormController {
     if (!this.hasInputTemplateTarget) {
       throw new Error("Missing inputTemplate target");
     }
+    addCleanupAction(this, "removeAddedInputs");
   }
 
   // == Actions ==
@@ -31,7 +37,7 @@ export default class AccountWorldCardsFormController extends FormController {
     const newSerialNumbers = new Set<string>();
     const { passes } = event.detail;
     for (const pass of passes) {
-      if (pass.serialNumber in existingSerialNumbers) {
+      if (existingSerialNumbers.has(pass.serialNumber)) {
         continue;
       }
       newSerialNumbers.add(pass.serialNumber);
@@ -41,8 +47,14 @@ export default class AccountWorldCardsFormController extends FormController {
       input.value = pass.serialNumber;
       this.element.appendChild(input);
     }
-    if (newSerialNumbers.size > 0) {
+    if (!isEmpty(newSerialNumbers)) {
       this.requestSubmit();
+    }
+  }
+
+  removeAddedInputs(): void {
+    for (const input of this.addedInputTargets) {
+      input.remove();
     }
   }
 

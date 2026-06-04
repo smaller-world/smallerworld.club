@@ -76,7 +76,11 @@ Rails.application.routes.draw do
   end
 
   # == World Cards
-  resources :world_cards, only: [ :show ]
+  resources :world_cards, only: [ :show ] do
+    collection do
+      get :unlinked
+    end
+  end
 
   # == World Key Grants
   resources :world_key_grants, only: [ :show ], param: :grant, path: "/world_invitations"

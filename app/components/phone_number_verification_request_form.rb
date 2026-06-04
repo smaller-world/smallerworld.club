@@ -27,15 +27,19 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
       @verification_request
     end
 
-    form_with(model:, method: :post, **mix(
-      {
-        class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
-        data: {
-          turbo_action: "replace",
+    form_with(
+      model:,
+      method: :post,
+      **normalize_mix(
+        {
+          class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
+          data: {
+            turbo_action: "replace",
+          },
         },
-      },
-      @attributes,
-    )) do |form|
+        @attributes,
+      ),
+    ) do |form|
       hidden_field(:user, :time_zone_name, data: { controller: "current-time-zone-input" })
 
       field_for(form, :phone_number) do |field|

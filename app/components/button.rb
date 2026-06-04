@@ -26,7 +26,10 @@ class Components::Button < Components::Base
     root_element(
       :button,
       **mix(
-        { type: "button", data: { slot: "button" } },
+        {
+          type: ("button" if @element.nil? || @element == :button),
+          data: { slot: "button" },
+        },
         self.class.root_attributes(variant: @variant, size: @size),
       ),
       &content

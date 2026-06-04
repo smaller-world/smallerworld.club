@@ -231,3 +231,10 @@
     @apply text-muted-foreground underline-offset-4 hover:underline;
   }
 }
+
+@layer utilities {
+  .hidden[data-hidden-inline] {
+    display: revert-layer;
+    opacity: 0;
+  }
+}

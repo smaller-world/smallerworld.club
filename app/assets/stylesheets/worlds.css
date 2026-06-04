@@ -2,4 +2,11 @@
   .world-action-button {
     @apply gap-2 rounded-full px-3.5 text-base font-bold has-data-[icon=inline-start]:pl-3 [&_svg]:size-5;
   }
+
+  .world-icon {
+    box-shadow: 0 0 15px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+
+    @apply size-12 rounded-world-icon border border-border dark:border-muted-foreground/50;
+    @apply dark:shadow-muted-foreground/80;
+  }
 }

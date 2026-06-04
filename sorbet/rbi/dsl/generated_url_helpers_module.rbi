@@ -199,6 +199,9 @@ module GeneratedUrlHelpersModule
   def ui_docs_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def unlinked_world_cards_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -13,9 +13,11 @@ class ReactionsController < ApplicationController
     post = find_post
     authorize!(post, to: :show?)
     respond_to do |format|
-      format.html do
-        render Views::Reactions::Index.new(post:)
-      end if turbo_frame_request?
+      if turbo_frame_request?
+        format.html do
+          render Views::Reactions::Index.new(post:)
+        end
+      end
     end
   end
 

@@ -17,7 +17,9 @@
     {
       "patterns": ["^/sessions/new$"],
       "properties": {
-        "modal_dismiss_gesture_enabled": false
+        "context": "default",
+        "presentation": "replace_root",
+        "pull_to_refresh_enabled": true
       }
     },
     {
