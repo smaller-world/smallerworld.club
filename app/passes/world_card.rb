@@ -107,7 +107,7 @@ class Passes::WorldCard < Passkit::BasePass
         key: "last_post",
         label: "last post in #{@world.name}",
         value: post.snippet,
-        "changeMessage" => "new post in #{@world.name}: %@",
+        "changeMessage" => "%@",
       }
     end
     fields << {

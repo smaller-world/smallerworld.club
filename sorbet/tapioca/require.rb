@@ -6,3 +6,8 @@
 
 require "tapioca/dsl/helpers/active_record_constants_helper"
 require "active_storage/service/s3_service"
+
+ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
+ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
+ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
+require "passkit/generator"

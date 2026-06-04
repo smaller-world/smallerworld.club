@@ -12,9 +12,9 @@ class WorldCardsController < ApplicationController
   # GET /world_cards/:id
   def show
     card = find_card
-    pass_path = Passkit::Factory.create_pass(Passes::WorldCard, card)
+    pkpass_path = card.passkit_generator.generate_and_sign
     send_file(
-      pass_path,
+      pkpass_path,
       type: "application/vnd.apple.pkpass",
       disposition: "attachment",
     )

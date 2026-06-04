@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
@@ -58,6 +58,18 @@ class WorldCard < ApplicationRecord
   after_save :create_granted_key,
     if: [ :cardholder_id?, :cardholder_id_previously_changed? ]
   after_commit :trigger_pass_update_later, on: :update
+
+  # == Methods ==
+
+  sig { returns(Passkit::Pass) }
+  def pass!
+    pass || create_pass!(klass: Passes::WorldCard.name, generator: self)
+  end
+
+  sig { returns(Passkit::Generator) }
+  def passkit_generator
+    Passkit::Generator.new(pass!)
+  end
 
   # == Pass Updates ==
 

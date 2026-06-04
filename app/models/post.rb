@@ -84,7 +84,7 @@ class Post < ApplicationRecord
   # == Hooks ==
 
   before_save :set_plain_body
-  after_commit :touch_cards, on: [ :create, :destroy ]
+  after_commit :touch_world_cards, on: [ :create, :destroy ]
 
   # == Emoji ==
 

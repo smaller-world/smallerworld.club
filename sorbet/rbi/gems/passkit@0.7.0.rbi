@@ -584,6 +584,57 @@ class Passkit::Factory
   end
 end
 
+# pkg:gem/passkit#lib/passkit/generator.rb:4
+class Passkit::Generator
+  # pkg:gem/passkit#lib/passkit/generator.rb:7
+  def initialize(pass); end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:12
+  def generate_and_sign; end
+
+  private
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:28
+  def check_necessary_files; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:43
+  def clean_ds_store_files; end
+
+  # :nocov:
+  #
+  # pkg:gem/passkit#lib/passkit/generator.rb:137
+  def compress_pass_file; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:39
+  def copy_pass_to_tmp_location; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:32
+  def create_temporary_directory; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:107
+  def generate_json_manifest; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:47
+  def generate_json_pass; end
+
+  # :nocov:
+  #
+  # pkg:gem/passkit#lib/passkit/generator.rb:122
+  def sign_manifest; end
+end
+
+# pkg:gem/passkit#lib/passkit/generator.rb:117
+Passkit::Generator::CERTIFICATE = T.let(T.unsafe(nil), Pathname)
+
+# pkg:gem/passkit#lib/passkit/generator.rb:119
+Passkit::Generator::CERTIFICATE_PASSWORD = T.let(T.unsafe(nil), String)
+
+# pkg:gem/passkit#lib/passkit/generator.rb:118
+Passkit::Generator::INTERMEDIATE_CERTIFICATE = T.let(T.unsafe(nil), Pathname)
+
+# pkg:gem/passkit#lib/passkit/generator.rb:5
+Passkit::Generator::TMP_FOLDER = T.let(T.unsafe(nil), Pathname)
+
 class Passkit::Log < ::ActiveRecord::Base
   include ::Passkit::Log::GeneratedAttributeMethods
   include ::Passkit::Log::GeneratedAssociationMethods
