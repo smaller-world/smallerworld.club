@@ -19,7 +19,7 @@ jobs:
         with:
           install_args: ruby
       - name: Install Ruby gems
-        run: mise x -- bundle install
+        run: bundle install
       - name:
           Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
@@ -37,7 +37,7 @@ jobs:
         with:
           install_args: bun
       - name: Install Bun packages
-        run: mise x -- bun install
+        run: bun install
       - name: Scan for known security vulnerabilities in packages used
         run: bun audit
 
@@ -51,10 +51,12 @@ jobs:
         uses: actions/checkout@v6
       - name: Set up tools
         uses: jdx/mise-action@v3
+        with:
+          install_args: ruby bun
       - name: Install Ruby gems
-        run: mise x -- bundle install
+        run: bundle install
       - name: Install Bun packages
-        run: mise x -- bun install
+        run: bun install
       - name: Prepare RuboCop cache
         uses: actions/cache@v5
         env:
