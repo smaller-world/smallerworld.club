@@ -111,6 +111,7 @@ class WorldCard < ApplicationRecord
     world!.keys.find_or_create_by!(
       color: granted_key_color,
       recipient: cardholder,
+      accepted_at: Time.current,
     )
   end
 end

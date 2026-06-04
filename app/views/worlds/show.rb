@@ -9,7 +9,7 @@ class Views::Worlds::Show < Views::Base
     @world = world
     @keys = T.let(
       if (user = Current.user)
-        @world.keys.where(recipient: user).to_a
+        @world.keys.accepted.where(recipient: user).to_a
       else
         []
       end,

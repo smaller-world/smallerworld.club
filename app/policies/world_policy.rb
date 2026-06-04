@@ -8,7 +8,7 @@ class WorldPolicy < ApplicationPolicy
   def show?
     world = T.let(record, World)
     user = user!
-    user == world.owner! || world.keys.exists?(recipient: user)
+    user == world.owner! || world.keys.accepted.exists?(recipient: user)
   end
 
   # World owner can manage world

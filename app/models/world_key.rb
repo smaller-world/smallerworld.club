@@ -1,12 +1,18 @@
 # typed: strict
 # frozen_string_literal: true
 
+# NOTE: `accepted_at` can be null in the future when a user creates a key to
+# invite another user to their world directly from the app. i.e. Bob invites
+# Alice to his world, she accepts his key via QR code, and then she sends a
+# return-key to Bob from within the app from a CTA.
+#
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
 # == Schema Information
 #
 # Table name: world_keys
 #
 #  id           :uuid             not null, primary key
+#  accepted_at  :timestamptz
 #  color        :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -15,6 +21,7 @@
 #
 # Indexes
 #
+#  index_world_keys_on_accepted_at   (accepted_at)
 #  index_world_keys_on_recipient_id  (recipient_id)
 #  index_world_keys_on_world_id      (world_id)
 #  index_world_keys_uniqueness       (world_id,recipient_id,color) UNIQUE
@@ -58,6 +65,11 @@ class WorldKey < ApplicationRecord
     },
   }
   validate :validate_recipient_not_world_owner, on: :create
+
+  # == Scopes ==
+
+  scope :accepted, -> { where.not(accepted_at: nil) }
+  scope :pending_acceptance, -> { where(accepted_at: nil) }
 
   # == Grants ==
 

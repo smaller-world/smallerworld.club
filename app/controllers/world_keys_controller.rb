@@ -14,7 +14,10 @@ class WorldKeysController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        keys_by_recipient = world.keys.includes(:recipient).group_by(&:recipient)
+        keys_by_recipient = world.keys
+          .accepted
+          .includes(:recipient)
+          .group_by(&:recipient)
         render Views::WorldKeys::Index.new(world:, keys_by_recipient:)
       end
     end
@@ -28,7 +31,11 @@ class WorldKeysController < ApplicationController
         grant = params.require(:world_key).fetch(:grant)
         WorldKey.verify_grant(grant) => { world_id:, color: }
         world = World.find(world_id)
-        key = current_user.world_keys.build(world_id:, color:)
+        key = current_user.world_keys.build(
+          world_id:,
+          color:,
+          accepted_at: Time.current,
+        )
         if key.save
           redirect_to(world, notice: "welcome to #{world.name}!")
         else
