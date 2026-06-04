@@ -39,7 +39,7 @@ jobs:
       - name: Install Bun packages
         run: bun install
       - name: Scan for known security vulnerabilities in packages used
-        run: bun audit
+        run: bun audit --audit-level high
 
   check:
     name: Check code issues

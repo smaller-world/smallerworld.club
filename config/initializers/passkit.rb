@@ -1,8 +1,6 @@
 # typed: strict
 # frozen_string_literal: true
 
-return if Rails.env.test?
-
 ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
   .default_url_options
   .fetch_values(:protocol, :host).join("://")
