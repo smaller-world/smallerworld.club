@@ -21,9 +21,11 @@ if (credentials = Rails.application.credentials.passkit)
     File.binwrite(path, Base64.decode64(certificate))
     ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = path.to_s
   end
+elsif Rails.env.test?
+  ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
+  ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
+  ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
 end
-
-require "extensions/passkit/support_generation_without_barcodes"
 
 # Configure demo pass, dashboard auth
 Passkit.configure do |config|
