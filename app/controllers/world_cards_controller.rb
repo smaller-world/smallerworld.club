@@ -51,7 +51,7 @@ class WorldCardsController < ApplicationController
         format.html do
           pass_serial_numbers = params.fetch(:pass_serial_numbers)
           passes = Passkit::Pass.where(serial_number: pass_serial_numbers)
-          world_cards = WorldCard.where(pass: passes)
+          world_cards = WorldCard.unlinked.where(pass: passes)
           render Views::WorldCards::Unlinked.new(world_cards:)
         end
       end

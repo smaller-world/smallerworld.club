@@ -18,7 +18,8 @@ class Components::WorldForm < Components::Base
       {
         class: "flex flex-col gap-y-4",
         data: {
-          controller: "world-form",
+          controller: "world-form haptic-bridge",
+          action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
       @attributes,

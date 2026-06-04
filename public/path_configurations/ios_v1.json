@@ -15,7 +15,7 @@
       }
     },
     {
-      "patterns": ["^/sessions/new$"],
+      "patterns": ["^/session/new$"],
       "properties": {
         "context": "default",
         "presentation": "replace_root",

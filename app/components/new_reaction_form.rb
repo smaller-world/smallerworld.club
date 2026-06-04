@@ -15,11 +15,15 @@ class Components::NewReactionForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model: [ @post, @reaction ], **mix(
+    form_with(model: [ @post, @reaction ], **normalize_mix(
       {
         data: {
-          controller: "form emoji-input confetti",
-          action: "emoji-input:emoji-set->form#requestSubmit turbo:submit-end->confetti#launch",
+          controller: "form emoji-input confetti haptic-bridge",
+          action: [
+            "emoji-input:emoji-set->form#requestSubmit",
+            "turbo:submit-end->confetti#launch",
+            "turbo:submit-end->haptic-bridge#vibrate",
+          ],
           confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
         },
       },

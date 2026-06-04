@@ -53,6 +53,10 @@ class WorldCard < ApplicationRecord
     world or raise ActiveRecord::RecordNotFound, "Missing associated world"
   end
 
+  # == Scopes ==
+
+  scope :unlinked, -> { where(cardholder_id: nil) }
+
   # == Hooks ==
 
   after_save :create_granted_key,

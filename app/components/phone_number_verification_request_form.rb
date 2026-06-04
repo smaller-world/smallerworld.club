@@ -34,7 +34,9 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
         {
           class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
           data: {
+            controller: "haptic-bridge",
             turbo_action: "replace",
+            action: ("turbo:submit-end->haptic-bridge#vibrate" if @verification_request.persisted?),
           },
         },
         @attributes,

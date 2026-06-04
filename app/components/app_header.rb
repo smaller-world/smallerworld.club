@@ -68,7 +68,10 @@ class Components::AppHeader < Components::Base
       end
       content.separator
     end
-    form_with(url: session_path, method: :delete) do
+    form_with(url: session_path, method: :delete, data: {
+      controller: "haptic-bridge",
+      action: "turbo:submit-end->haptic-bridge#vibrate",
+    }) do
       content.button_item(type: :submit, variant: :destructive) do
         Icon("huge/logout-01", class: "size-4")
         span { "sign out" }

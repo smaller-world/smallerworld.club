@@ -17,6 +17,8 @@ class Views::WorldCards::Unlinked < Views::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(:unlinked_world_cards) do
+      next if @world_cards.blank?
+
       div(
         class: class_names("flex flex-col gap-3 overflow-hidden", "hidden"),
         data: {

@@ -24,7 +24,8 @@ class Components::ReplyInitiationForm < Components::Base
       url: [ @post, :reply_initiations ],
       method: :post,
       data: {
-        controller: "reply-initiation-form",
+        controller: "reply-initiation-form haptic-bridge",
+        action: "turbo:submit-end->haptic-bridge#vibrate",
       },
       **@attributes,
     ) do |form|

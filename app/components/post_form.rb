@@ -19,7 +19,8 @@ class Components::PostForm < Components::Base
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "form",
+          controller: "form haptic-bridge",
+          action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
       @attributes,

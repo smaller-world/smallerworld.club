@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
 
   # == Actions ==
 
-  # GET /sessions/new
+  # GET /session/new
   def new
     respond_to do |format|
       format.html do
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  # POST /sessions
+  # POST /session
   def create
     # verification_request_params = params.expect(phone_number_verification_request: [
     #   :phone_number,
@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
     # redirect_to(after_authentication_url)
   end
 
-  # DELETE /sessions
+  # DELETE /session
   def destroy
     terminate_session
     redirect_to(new_session_path, status: :see_other)
