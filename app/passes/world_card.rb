@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 class Passes::WorldCard < Passkit::BasePass
+  include ActionView::Helpers::TagHelper
   include Shortlinking
 
   extend T::Sig
@@ -101,28 +102,41 @@ class Passes::WorldCard < Passkit::BasePass
   end
 
   def back_fields
+    receives_app_notifications = cardholder_receives_app_notifications?
     fields = []
     if (post = @world.posts.chronological.last)
       field = {
         key: "last_post",
-        label: "last post in #{@world.name}",
+        label: "✍️ last post in #{@world.name}",
         value: post.snippet,
       }
-      unless cardholder_receives_app_notifications?
+      unless receives_app_notifications
         field["changeMessage"] = "%@"
       end
       fields << field
     end
     fields << {
-      key: "world_link",
-      label: "world link",
-      value: shortlinked.world_url(@world),
-      "dataDetectorTypes" => [ "PKDataDetectorTypeLink" ],
-    }
-    fields << {
       key: "contact",
-      label: "contact smaller world",
+      label: "🛟 contact smaller world",
       value: "team@smallerworld.club",
+    }
+    if receives_app_notifications
+      world_url = shortlinked.world_url(@world)
+      fields << {
+        key: "world_link",
+        label: "🔗 world link",
+        value: world_url,
+        "attributedValue" => tag.a(
+          "open #{@world.name} in the app",
+          href: world_url,
+        ),
+        "dataDetectorTypes" => [ "PKDataDetectorTypeLink" ],
+      }
+    end
+    fields << {
+      key: "card_id",
+      label: "🪪 card id (for developers)",
+      value: @card.id,
     }
     fields
   end
