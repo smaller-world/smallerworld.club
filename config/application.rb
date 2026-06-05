@@ -33,6 +33,11 @@ module Smallerworld
     config.x.site.name = "smaller world"
     config.x.site.tagline = "share your inner world with close friends"
     config.x.layout.confetti_canvas_id = "confetti_canvas"
+
+    config.fly_url = "https://fly.io/apps/smallerworld"
+    config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
+    config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
+    config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
     config.testflight_url = "https://testflight.apple.com/join/n6v7J3Nd"
     # config.x.instagram_url = "https://instagram.com/smallerworld"
     # config.x.appleid.signin_scope = "email name"

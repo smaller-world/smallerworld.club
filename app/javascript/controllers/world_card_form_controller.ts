@@ -29,7 +29,22 @@ export default class WorldCardFormController extends FormController {
       event.preventDefault();
       this.submitButtonTarget.disabled = true;
       this.submitButtonTarget.innerText = "card is downloading...";
-      window.location.href = fetchResponse.location.toString();
+      this.#downloadFileAtUrl(fetchResponse.location.toString());
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     }
+  }
+
+  // == Helpers ==
+
+  #downloadFileAtUrl(url: string): void {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "";
+    link.hidden = true;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }

@@ -100,26 +100,19 @@ Rails.application.routes.draw do
   # == Reactions
   resources :reactions, only: :destroy
 
+  # == Testflight
+  get "/testflight",
+    to: redirect(Rails.configuration.testflight_url, status: 307),
+    as: :testflight
+
   # == Passkit
   mount Passkit::Engine => "/passkit", as: "passkit"
 
   # == Devtools
-  get "/fly" => redirect(
-    "https://fly.io/apps/smallerworld",
-    redirect: 307,
-  )
-  get "/logs" => redirect(
-    "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld",
-    status: 307,
-  )
-  get "/metrics" => redirect(
-    "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld",
-    status: 307,
-  )
-  get "/errors" => redirect(
-    "https://smallerworld.sentry.io/issues/?project=4510862952235008",
-    status: 307,
-  )
+  get "/fly" => redirect(Rails.configuration.fly_url, redirect: 307)
+  get "/logs" => redirect(Rails.configuration.logs_url, status: 307)
+  get "/metrics" => redirect(Rails.configuration.metrics_url, status: 307)
+  get "/errors" => redirect(Rails.configuration.sentry_url, status: 307)
 
   # == UI Docs
   resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component

@@ -7,38 +7,21 @@ class Views::Pages::Landing < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(title:) do |layout|
-      main(class: "flex-1 flex flex-col justify-center pb-20") do
-        layout.page_container(class: "flex flex-col items-center gap-y-6") do
-          div(class: "flex flex-col items-center gap-y-2") do
-            image_tag("logo.png", class: "size-14")
-            h1(class: "text-2xl font-bold") do
-              "welcome to smaller world!!"
+      main(class: "flex-1 flex flex-col justify-center") do
+        layout.page_container(class: "flex flex-col items-center gap-6") do
+          div(class: "flex flex-col items-center gap-1 text-center text-balance") do
+            h1(class: "text-foreground font-medium text-lg") { "hi. welcome to smaller world!" }
+            p(class: "max-w-xs text-balance text-muted-foreground") do
+              plain("smaller world is a place where you can share your inner world with close friends :)")
             end
           end
-          div(class: "font-cursive text-xl text-center text-muted-foreground") do
-            p do
-              "i'm rebuilding smaller world from scratch"
-            end
-            p do
-              "cuz i'm terrible at prioritizing my time"
-            end
-            p do
-              "and also i operate entirely on"
-            end
-            p do
-              "✨ creative inspiration ✨"
-            end
-          end
-          Components::Button(
-            element: :a,
-            href: home_path,
+          button_link_to(
+            "install smaller world on ios",
+            testflight_path,
+            variant: :default,
             size: :lg,
-          ) do |button|
-            button.inline_start_icon("huge/door-01")
-            span do
-              "enter if u dare"
-            end
-          end
+            icon: "huge/apple",
+          )
         end
       end
     end
