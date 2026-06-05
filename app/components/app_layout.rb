@@ -217,6 +217,9 @@ class Components::AppLayout < Components::Base
     canvas(
       id: Rails.configuration.x.layout.confetti_canvas_id,
       class: "fixed inset-0 pointer-events-none z-50",
+      data: {
+        turbo_permanent: true,
+      },
     )
   end
 
@@ -229,6 +232,7 @@ class Components::AppLayout < Components::Base
   def toasts_container
     div(id: "toasts") do
       div(data: {
+        turbo_permanent: true,
         controller: "toaster",
         action: "toast@document->toaster#toast",
       })
