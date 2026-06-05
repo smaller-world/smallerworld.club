@@ -4,14 +4,11 @@
 # belong in git's global ignore instead:
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
-
 # == Sorbet
 sorbet/rbi/hidden-definitions/errors.txt
 
-
 # == ESLint
 .eslintcache
-
 
 # == Rails
 # Ignore bundler config.
@@ -26,6 +23,11 @@ sorbet/rbi/hidden-definitions/errors.txt
 !/log/.keep
 !/tmp/.keep
 
+# Ignore passkit, but keep the directory.
+/tmp/passkit/*
+!/tmp/passkit/
+!/tmp/passkit/.keep
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
@@ -33,25 +35,25 @@ sorbet/rbi/hidden-definitions/errors.txt
 
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
+!/storage/
 !/storage/.keep
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
 
-/public/assets
-
-# Ignore key files for decrypting credentials and more.
-/config/*.key
-
+# Ignore built assets.
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
+# Ignore node_modules.
 /node_modules
 
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+/config/credentials/*.key
 
 # == Agents
 .cursor/hooks/state/
-
 
 # == IDE
 # VSCode (keeping workspace configurations):
@@ -64,7 +66,6 @@ sorbet/rbi/hidden-definitions/errors.txt
 # IntelliJ:
 **/.idea/
 
-
 # == OS
 # macOS:
 **/.DS_Store
@@ -73,7 +74,3 @@ sorbet/rbi/hidden-definitions/errors.txt
 
 # Windows:
 **/Thumbs.db
-
-# Ignore key files for decrypting credentials and more.
-/config/credentials/*.key
-
