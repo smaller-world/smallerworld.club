@@ -8,7 +8,7 @@ run-name: "Deploy from ${{ github.event.workflow_run.head_branch }} (${{ github.
 on:
   workflow_run:
     workflows: [ci]
-    branches: [main, v2]
+    branches: [v2]
     types: [completed]
 
 jobs:
@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy on Fly
@@ -36,6 +38,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Set up tooling
         uses: jdx/mise-action@v4
         with:
