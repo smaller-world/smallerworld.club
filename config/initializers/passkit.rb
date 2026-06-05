@@ -5,7 +5,11 @@ ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
   .default_url_options
   .fetch_values(:protocol, :host).join("://")
 
-if (credentials = Rails.application.credentials.passkit)
+if Rails.env.test?
+  ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
+  ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
+  ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
+elsif (credentials = Rails.application.credentials.passkit)
   ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = credentials.apple_team_identifier
   ENV["PASSKIT_PASS_TYPE_IDENTIFIER"] = credentials.pass_type_identifier
   ENV["PASSKIT_CERTIFICATE_KEY"] = credentials.certificate_key
@@ -19,11 +23,6 @@ if (credentials = Rails.application.credentials.passkit)
     File.binwrite(path, Base64.decode64(certificate))
     ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = path.to_s
   end
-elsif Rails.env.test?
-  ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = "dummy"
-  ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
-  ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
-  ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
 end
 
 # Configure demo pass, dashboard auth
@@ -38,7 +37,7 @@ Passkit.configure do |config|
         "Dashboard is not available"
     end
   end
-end
+end unless Rails.env.test?
 
 Rails.application.configure do
   # Modify models
@@ -72,7 +71,7 @@ Rails.application.configure do
         WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
       }
     end
-  end
+  end unless Rails.env.test?
 end
 
 module Passes; end
