@@ -1,0 +1,11 @@
+@layer base {
+  .toast[data-sonner-toast] {
+    &[data-y-position="top"] {
+      top: env(safe-area-inset-top) !important;
+    }
+
+    &[data-y-position="bottom"] {
+      bottom: env(safe-area-inset-bottom) !important;
+    }
+  }
+}

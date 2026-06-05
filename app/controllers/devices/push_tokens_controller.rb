@@ -15,10 +15,13 @@ class Devices::PushTokensController < ApplicationController
       format.turbo_stream do
         current_device = Current.device!
         current_device.send_test_notification
-        render turbo_stream: append_log_message(
-          "Test notification sent to device",
-          level: :info,
-        )
+        render turbo_stream: [
+          append_toast("test notification sent!", type: :success),
+          append_log_message(
+            "Test notification sent to device",
+            level: :info,
+          ),
+        ]
       end
     end
   end
