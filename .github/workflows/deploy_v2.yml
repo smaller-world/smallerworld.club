@@ -37,13 +37,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up tooling
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
       - name: Install Ruby gems
-        run: mise x -- bundle install
+        run: bundle install
       - name: Install Bun packages
-        run: mise x -- bun install
+        run: bun install
       - name: Build source maps
         run: bin/rails assets:precompile
         env:
