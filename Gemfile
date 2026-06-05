@@ -66,7 +66,7 @@ gem "phlex-icons"
 gem "enumerize", "~> 2.8"
 
 # Create human-friendly identifiers for models
-gem "friendly_id", "~> 5.6"
+gem "friendly_id", "~> 5.7"
 
 # Fast HTTP client
 gem "http", "~> 6.0"
