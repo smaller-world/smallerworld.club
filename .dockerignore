@@ -24,6 +24,10 @@
 /tmp/pids/*
 !/tmp/pids/.keep
 
+# Ignore passkit, but keep the directory.
+/tmp/passkit/*
+!/tmp/passkit/.keep
+
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep

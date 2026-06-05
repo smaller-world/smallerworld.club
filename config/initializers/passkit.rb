@@ -1,15 +1,16 @@
 # typed: strict
 # frozen_string_literal: true
 
-ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
-  .default_url_options
-  .fetch_values(:protocol, :host).join("://")
+passkit_disabled = Rails.env.test? || ENV["SECRET_KEY_BASE_DUMMY"]
 
-if Rails.env.test?
+if passkit_disabled
   ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
   ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
   ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
 elsif (credentials = Rails.application.credentials.passkit)
+  ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
+    .default_url_options
+    .fetch_values(:protocol, :host).join("://")
   ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = credentials.apple_team_identifier
   ENV["PASSKIT_PASS_TYPE_IDENTIFIER"] = credentials.pass_type_identifier
   ENV["PASSKIT_CERTIFICATE_KEY"] = credentials.certificate_key
@@ -37,7 +38,7 @@ Passkit.configure do |config|
         "Dashboard is not available"
     end
   end
-end unless Rails.env.test?
+end unless passkit_disabled
 
 Rails.application.configure do
   # Modify models
@@ -71,7 +72,7 @@ Rails.application.configure do
         WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
       }
     end
-  end unless Rails.env.test?
+  end unless passkit_disabled
 end
 
 module Passes; end
