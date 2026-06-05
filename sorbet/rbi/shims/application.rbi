@@ -30,6 +30,9 @@ class Components::Base
 end
 
 class Current
+  sig { returns(T.nilable(Session)) }
+  def self.session; end
+
   sig do
     params(args: T.untyped, kwargs: T.untyped, block: T.untyped)
       .returns(T.nilable(User))

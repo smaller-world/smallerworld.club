@@ -27,7 +27,7 @@ class WorldKeysController < ApplicationController
   def accept
     respond_to do |format|
       format.html do
-        current_user = current_user!
+        current_user = Current.user!
         grant = params.require(:world_key).fetch(:grant)
         WorldKey.verify_grant(grant) => { world_id:, color: }
         world = World.find(world_id)

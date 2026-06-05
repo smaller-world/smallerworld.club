@@ -32,7 +32,6 @@ Rails.application.routes.draw do
   resource :account, only: [ :new, :create ] do
     scope module: :accounts  do
       resource :time_zone, only: [ :update ]
-      resource :world_cards, only: [ :update ]
     end
   end
 
@@ -40,7 +39,14 @@ Rails.application.routes.draw do
   resources :media_previews, only: [ :show ], param: :signed_id
 
   # == Devices
-  resources :devices, only: :create
+  resource :device, only: [] do
+    scope module: :devices do
+      resource :push_token, only: [ :update ] do
+        post :test
+      end
+      resource :world_cards, only: [ :update ]
+    end
+  end
 
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
   #   post :callback

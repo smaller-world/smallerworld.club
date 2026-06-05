@@ -14,13 +14,13 @@ class WorldKeyGrantsController < ApplicationController
     grant = params.fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
     world = World.find(world_id)
-    if (recipient = current_user) && recipient.world_keys.exists?(world:, color:)
+    if (recipient = Current.user) && recipient.world_keys.exists?(world:, color:)
       redirect_to(world)
     else
       key_or_card = if hotwire_native_app?
-        world.keys.build(color:, recipient: current_user)
+        world.keys.build(color:, recipient: Current.user)
       else
-        world.cards.build(granted_key_color: color, cardholder: current_user)
+        world.cards.build(granted_key_color: color, cardholder: Current.user)
       end
       render Views::WorldKeyGrants::Show.new(key_or_card:)
     end

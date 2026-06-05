@@ -117,7 +117,10 @@ class Components::PostCard < Components::Base
           Icon("huge/pencil-edit-01")
           span { "edit" }
         end
-        form_with(url: @post, method: :delete) do
+        form_with(url: @post, method: :delete, data: {
+          controller: "haptic-bridge",
+          action: "turbo:submit-end->haptic-bridge#vibrate",
+        }) do
           content.button_item(type: :submit, variant: :destructive) do
             Icon("huge/delete-01")
             span { "delete" }

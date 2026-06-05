@@ -6,21 +6,22 @@
 #
 # Table name: world_cards
 #
-#  id                :uuid             not null, primary key
-#  granted_key_color :string           not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  cardholder_id     :uuid
-#  world_id          :uuid             not null
+#  id                     :uuid             not null, primary key
+#  granted_key_color      :string           not null
+#  granted_key_created_at :timestamptz
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  device_id              :uuid
+#  world_id               :uuid             not null
 #
 # Indexes
 #
-#  index_world_cards_on_cardholder_id  (cardholder_id)
-#  index_world_cards_on_world_id       (world_id)
+#  index_world_cards_on_device_id  (device_id)
+#  index_world_cards_on_world_id   (world_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (cardholder_id => users.id)
+#  fk_rails_...  (device_id => devices.id)
 #  fk_rails_...  (world_id => worlds.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
@@ -29,12 +30,16 @@ class WorldCard < ApplicationRecord
 
   enumerize :granted_key_color, in: WorldKey.color.values
 
+  sig { returns(T::Boolean) }
+  def granted_key_created? = granted_key_created_at?
+
   # == Associations ==
 
   belongs_to :world
-  has_many :world_keys, through: :world, source: :keys
 
-  belongs_to :cardholder, class_name: "User", optional: true
+  belongs_to :device, optional: true
+  has_one :cardholder, through: :device, source: :owner
+
   has_one :pass,
     as: :generator,
     class_name: "Passkit::Pass",
@@ -55,12 +60,14 @@ class WorldCard < ApplicationRecord
 
   # == Scopes ==
 
-  scope :unlinked, -> { where(cardholder_id: nil) }
+  scope :unlinked, -> { where(device_id: nil) }
+  scope :pending_granted_key_creation, -> { where(granted_key_created_at: nil) }
 
   # == Hooks ==
 
-  after_save :create_granted_key,
-    if: [ :cardholder_id?, :cardholder_id_previously_changed? ]
+  after_save :create_granted_key!,
+    if: [ :device_id?, :device_id_previously_changed? ],
+    unless: :granted_key_created?
   after_commit :trigger_pass_update_later, on: :update
 
   # == Methods ==
@@ -73,6 +80,21 @@ class WorldCard < ApplicationRecord
   sig { returns(Passkit::Generator) }
   def passkit_generator
     Passkit::Generator.new(pass!)
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def create_granted_key!
+    if (cardholder = self.cardholder)
+      cardholder.world_keys.find_or_create_by!(
+        world_id:,
+        color: granted_key_color,
+      ) do |key|
+        key.accepted_at = Time.current
+      end
+      update!(granted_key_created_at: Time.current)
+    end
   end
 
   # == Pass Updates ==
@@ -104,18 +126,5 @@ class WorldCard < ApplicationRecord
   sig { void }
   def trigger_pass_update_later
     TriggerWorldCardPassUpdateJob.perform_later(self)
-  end
-
-  private
-
-  # == Callbacks ==
-
-  sig { void }
-  def create_granted_key
-    world!.keys.find_or_create_by!(
-      color: granted_key_color,
-      recipient: cardholder,
-      accepted_at: Time.current,
-    )
   end
 end

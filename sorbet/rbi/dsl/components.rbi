@@ -28,10 +28,10 @@ module Components
     params(
       current_user: ::User,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AccountWorldCardsForm).void)
+      block: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
     ).void
   end
-  def AccountWorldCardsForm(current_user:, **attributes, &block); end
+  def AccountTimeZoneForm(current_user:, **attributes, &block); end
 
   sig do
     params(
@@ -128,6 +128,24 @@ module Components
     ).void
   end
   def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+
+  sig do
+    params(
+      current_device: ::Device,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
+    ).void
+  end
+  def DevicePushTokenForm(current_device:, **attributes, &block); end
+
+  sig do
+    params(
+      current_device: ::Device,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DeviceWorldCardsForm).void)
+    ).void
+  end
+  def DeviceWorldCardsForm(current_device:, **attributes, &block); end
 
   sig do
     params(
@@ -583,10 +601,10 @@ module Components
       params(
         current_user: ::User,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AccountWorldCardsForm).void)
+        block: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
       ).void
     end
-    def AccountWorldCardsForm(current_user:, **attributes, &block); end
+    def AccountTimeZoneForm(current_user:, **attributes, &block); end
 
     sig do
       params(
@@ -683,6 +701,24 @@ module Components
       ).void
     end
     def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+
+    sig do
+      params(
+        current_device: ::Device,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
+      ).void
+    end
+    def DevicePushTokenForm(current_device:, **attributes, &block); end
+
+    sig do
+      params(
+        current_device: ::Device,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DeviceWorldCardsForm).void)
+      ).void
+    end
+    def DeviceWorldCardsForm(current_device:, **attributes, &block); end
 
     sig do
       params(

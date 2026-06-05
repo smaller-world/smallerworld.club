@@ -8,7 +8,7 @@ class ReplyInitiationsController < ApplicationController
   def create
     respond_to do |format|
       format.turbo_stream do
-        current_user = current_user!
+        current_user = Current.user!
         post = find_post
         authorize!(post, to: :reply?)
         reply_initiation_params = params.expect(reply_initiation: :platform)

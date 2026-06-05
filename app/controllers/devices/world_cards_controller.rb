@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-module Accounts
+module Devices
   class WorldCardsController < ApplicationController
     # == Configuration ==
 
@@ -9,20 +9,20 @@ module Accounts
 
     # == Actions ==
 
-    # PUT /accounts/world_card_passes
+    # PUT /device/world_cards
     def update
       respond_to do |format|
         format.turbo_stream do
-          current_user = current_user!
-          pass_serial_numbers = params.require(:user)
+          current_device = Current.device!
+          pass_serial_numbers = params.require(:device)
             .fetch(:world_card_pass_serial_numbers)
           passes = Passkit::Pass.where(serial_number: pass_serial_numbers)
           world_cards = WorldCard.where(pass: passes)
-          current_user.update!(world_cards:)
+          current_device.update!(world_cards:)
           refresh_or_redirect_to(home_path)
         rescue => error
           render turbo_stream: append_log_message(
-            "Failed to link WorldCards to user: #{error.message}",
+            "Failed to link cards to device: #{error.message}",
             level: :error,
           )
         end

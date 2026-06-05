@@ -6,19 +6,19 @@
 #
 # Table name: devices
 #
-#  id              :uuid             not null, primary key
-#  name            :string
-#  platform        :string           not null
-#  push_token      :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  installation_id :string           not null
-#  owner_id        :uuid             not null
+#  id         :uuid             not null, primary key
+#  identifier :string           not null
+#  name       :string
+#  platform   :string           not null
+#  push_token :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  owner_id   :uuid
 #
 # Indexes
 #
-#  index_devices_on_installation_id  (installation_id) UNIQUE
-#  index_devices_on_owner_id         (owner_id)
+#  index_devices_on_identifier  (identifier) UNIQUE
+#  index_devices_on_owner_id    (owner_id)
 #
 # Foreign Keys
 #
@@ -35,9 +35,18 @@ class Device < ApplicationRecord
 
   enumerize :platform, in: [ :apple, :google ]
 
+  sig { returns(String) }
+  def push_token!
+    push_token or raise ApplicationError, "Missing push token"
+  end
+
   # == Associations ==
 
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", optional: true
+  has_many :world_cards, dependent: :destroy
+  has_many :world_card_passes,
+    through: :world_cards,
+    source: :pass
 
   sig { returns(User) }
   def owner!
@@ -46,18 +55,25 @@ class Device < ApplicationRecord
 
   # == Validations ==
 
-  validates :installation_id, uniqueness: true
+  validates :identifier, uniqueness: true
 
   # == Hooks ==
 
-  # Destroy device if push token is invalid
-  rescue_from ActionPushNative::TokenError, with: :destroy!
+  after_save :create_granted_keys_on_world_cards!,
+    if: [ :owner_id?, :owner_id_previously_changed? ]
+
+  # Remove push token if token is invalid
+  rescue_from ActionPushNative::TokenError, with: :remove_push_token!
+
+  # == Scopes ==
+
+  scope :notifiable, -> { where.not(push_token: nil) }
 
   # == Methods ==
 
   sig { params(notification: PushNotification).void }
   def push(notification)
-    notification.token = push_token
+    notification.token = push_token!
     ActionPushNative.service_for(platform, notification).push(notification)
     tag_logger do
       Rails.logger.info("Pushed notification to device #{id}")
@@ -66,16 +82,32 @@ class Device < ApplicationRecord
     rescue_with_handler(error) || raise
   end
 
-  # sig { void }
-  # def send_test_notification
-  #   url_helpers = Rails.application.routes.url_helpers
-  #   notification = PushNotification
-  #     .with_data(target_url: url_helpers.world_path)
-  #     .new(
-  #       title: "test notification",
-  #       body: "this is a test notification. if you are seeing this, then " \
-  #         "your push notifications are working!",
-  #     )
-  #   notification.deliver_to(self)
-  # end
+  sig { void }
+  def send_test_notification
+    url_helpers = Rails.application.routes.url_helpers
+    notification = PushNotification
+      .with_data(target_url: url_helpers.home_path)
+      .new(
+        title: "test notification",
+        body: "this is a test notification. if you are seeing this, then " \
+          "your push notifications are working!",
+      )
+    notification.deliver_to(self)
+  end
+
+  private
+
+  # == Callbacks ==
+
+  sig { void }
+  def create_granted_keys_on_world_cards!
+    world_cards
+      .pending_granted_key_creation
+      .find_each(&:create_granted_key!)
+  end
+
+  sig { void }
+  def remove_push_token!
+    update!(push_token: nil)
+  end
 end

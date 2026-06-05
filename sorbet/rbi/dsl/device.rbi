@@ -393,6 +393,34 @@ class Device
 
     sig { void }
     def reset_owner; end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_card_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_card_ids=(ids); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_card_pass_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_card_pass_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Device` class because it declared `has_many :world_card_passes, through: :world_cards`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Passkit::Pass::PrivateCollectionProxy) }
+    def world_card_passes; end
+
+    sig { params(value: T::Enumerable[::Passkit::Pass]).void }
+    def world_card_passes=(value); end
+
+    # This method is created by ActiveRecord on the `Device` class because it declared `has_many :world_cards`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldCard::PrivateCollectionProxy) }
+    def world_cards; end
+
+    sig { params(value: T::Enumerable[::WorldCard]).void }
+    def world_cards=(value); end
   end
 
   module GeneratedAssociationRelationMethods
@@ -470,6 +498,9 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def none(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def notifiable(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def null_relation?(*args, &blk); end
@@ -687,49 +718,49 @@ class Device
     def id_will_change!; end
 
     sig { returns(::String) }
-    def installation_id; end
+    def identifier; end
 
     sig { params(value: ::String).returns(::String) }
-    def installation_id=(value); end
+    def identifier=(value); end
 
     sig { returns(T::Boolean) }
-    def installation_id?; end
+    def identifier?; end
 
     sig { returns(T.nilable(::String)) }
-    def installation_id_before_last_save; end
+    def identifier_before_last_save; end
 
     sig { returns(T.untyped) }
-    def installation_id_before_type_cast; end
+    def identifier_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def installation_id_came_from_user?; end
+    def identifier_came_from_user?; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def installation_id_change; end
+    def identifier_change; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def installation_id_change_to_be_saved; end
+    def identifier_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def installation_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def identifier_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def installation_id_in_database; end
+    def identifier_in_database; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def installation_id_previous_change; end
+    def identifier_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def installation_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def identifier_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def installation_id_previously_was; end
+    def identifier_previously_was; end
 
     sig { returns(T.nilable(::String)) }
-    def installation_id_was; end
+    def identifier_was; end
 
     sig { void }
-    def installation_id_will_change!; end
+    def identifier_will_change!; end
 
     sig { returns(T.nilable(::String)) }
     def name; end
@@ -776,10 +807,10 @@ class Device
     sig { void }
     def name_will_change!; end
 
-    sig { returns(::String) }
+    sig { returns(T.nilable(::String)) }
     def owner_id; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def owner_id=(value); end
 
     sig { returns(T::Boolean) }
@@ -794,10 +825,10 @@ class Device
     sig { returns(T::Boolean) }
     def owner_id_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def owner_id_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def owner_id_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -806,7 +837,7 @@ class Device
     sig { returns(T.nilable(::String)) }
     def owner_id_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def owner_id_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -866,10 +897,10 @@ class Device
     sig { void }
     def platform_will_change!; end
 
-    sig { returns(::String) }
+    sig { returns(T.nilable(::String)) }
     def push_token; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
     def push_token=(value); end
 
     sig { returns(T::Boolean) }
@@ -884,10 +915,10 @@ class Device
     sig { returns(T::Boolean) }
     def push_token_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def push_token_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def push_token_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -896,7 +927,7 @@ class Device
     sig { returns(T.nilable(::String)) }
     def push_token_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def push_token_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -921,7 +952,7 @@ class Device
     def restore_id_value!; end
 
     sig { void }
-    def restore_installation_id!; end
+    def restore_identifier!; end
 
     sig { void }
     def restore_name!; end
@@ -957,10 +988,10 @@ class Device
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_installation_id; end
+    def saved_change_to_identifier; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_installation_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_identifier?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_name; end
@@ -968,7 +999,7 @@ class Device
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_owner_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -980,7 +1011,7 @@ class Device
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_platform?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_push_token; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1047,7 +1078,7 @@ class Device
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_installation_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_identifier?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1140,6 +1171,9 @@ class Device
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def none(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def notifiable(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def null_relation?(*args, &blk); end

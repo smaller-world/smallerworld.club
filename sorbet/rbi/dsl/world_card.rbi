@@ -420,6 +420,9 @@ class WorldCard
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_cardholder(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Device) }
+    def build_device(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
     def build_pass(*args, &blk); end
 
@@ -432,17 +435,17 @@ class WorldCard
     sig { params(value: T.nilable(::User)).void }
     def cardholder=(value); end
 
-    sig { returns(T::Boolean) }
-    def cardholder_changed?; end
-
-    sig { returns(T::Boolean) }
-    def cardholder_previously_changed?; end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_cardholder(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_cardholder!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Device) }
+    def create_device(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Device) }
+    def create_device!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
     def create_pass(*args, &blk); end
@@ -455,6 +458,18 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
+
+    sig { returns(T.nilable(::Device)) }
+    def device; end
+
+    sig { params(value: T.nilable(::Device)).void }
+    def device=(value); end
+
+    sig { returns(T::Boolean) }
+    def device_changed?; end
+
+    sig { returns(T::Boolean) }
+    def device_previously_changed?; end
 
     sig { returns(T.nilable(::Passkit::Pass)) }
     def pass; end
@@ -493,6 +508,9 @@ class WorldCard
     sig { returns(T.nilable(::User)) }
     def reload_cardholder; end
 
+    sig { returns(T.nilable(::Device)) }
+    def reload_device; end
+
     sig { returns(T.nilable(::Passkit::Pass)) }
     def reload_pass; end
 
@@ -501,6 +519,9 @@ class WorldCard
 
     sig { void }
     def reset_cardholder; end
+
+    sig { void }
+    def reset_device; end
 
     sig { void }
     def reset_pass; end
@@ -516,20 +537,6 @@ class WorldCard
 
     sig { returns(T::Boolean) }
     def world_changed?; end
-
-    sig { returns(T::Array[T.untyped]) }
-    def world_key_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_key_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :world_keys, through: :world`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::WorldKey::PrivateCollectionProxy) }
-    def world_keys; end
-
-    sig { params(value: T::Enumerable[::WorldKey]).void }
-    def world_keys=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
@@ -630,6 +637,9 @@ class WorldCard
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def pending_granted_key_creation(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -694,51 +704,6 @@ class WorldCard
   end
 
   module GeneratedAttributeMethods
-    sig { returns(T.nilable(::String)) }
-    def cardholder_id; end
-
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-    def cardholder_id=(value); end
-
-    sig { returns(T::Boolean) }
-    def cardholder_id?; end
-
-    sig { returns(T.nilable(::String)) }
-    def cardholder_id_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def cardholder_id_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def cardholder_id_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def cardholder_id_change; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def cardholder_id_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def cardholder_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def cardholder_id_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def cardholder_id_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def cardholder_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def cardholder_id_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def cardholder_id_was; end
-
-    sig { void }
-    def cardholder_id_will_change!; end
-
     sig { returns(::ActiveSupport::TimeWithZone) }
     def created_at; end
 
@@ -784,6 +749,51 @@ class WorldCard
     sig { void }
     def created_at_will_change!; end
 
+    sig { returns(T.nilable(::String)) }
+    def device_id; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def device_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def device_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def device_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def device_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def device_id_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def device_id_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def device_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def device_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def device_id_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def device_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def device_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def device_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def device_id_was; end
+
+    sig { void }
+    def device_id_will_change!; end
+
     sig { returns(T.untyped) }
     def granted_key_color; end
 
@@ -828,6 +838,51 @@ class WorldCard
 
     sig { void }
     def granted_key_color_will_change!; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at; end
+
+    sig { params(value: T.nilable(::ActiveSupport::TimeWithZone)).returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at=(value); end
+
+    sig { returns(T::Boolean) }
+    def granted_key_created_at?; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def granted_key_created_at_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def granted_key_created_at_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def granted_key_created_at_change; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def granted_key_created_at_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def granted_key_created_at_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def granted_key_created_at_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def granted_key_created_at_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at_previously_was; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def granted_key_created_at_was; end
+
+    sig { void }
+    def granted_key_created_at_will_change!; end
 
     sig { returns(::String) }
     def id; end
@@ -920,13 +975,16 @@ class WorldCard
     def id_will_change!; end
 
     sig { void }
-    def restore_cardholder_id!; end
-
-    sig { void }
     def restore_created_at!; end
 
     sig { void }
+    def restore_device_id!; end
+
+    sig { void }
     def restore_granted_key_color!; end
+
+    sig { void }
+    def restore_granted_key_created_at!; end
 
     sig { void }
     def restore_id!; end
@@ -940,23 +998,29 @@ class WorldCard
     sig { void }
     def restore_world_id!; end
 
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def saved_change_to_cardholder_id; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_cardholder_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_created_at; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_device_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_device_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
     sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_granted_key_color; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_granted_key_color?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def saved_change_to_granted_key_created_at; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_granted_key_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -1028,13 +1092,16 @@ class WorldCard
     def updated_at_will_change!; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_cardholder_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_device_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_granted_key_color?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_granted_key_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1187,6 +1254,9 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def order(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def pending_granted_key_creation(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end

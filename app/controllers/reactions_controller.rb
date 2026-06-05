@@ -25,7 +25,7 @@ class ReactionsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        current_user = current_user!
+        current_user = Current.user!
         post = find_post
         authorize!(post, to: :react?)
         reaction_params = params.expect(reaction: [ :emoji ])

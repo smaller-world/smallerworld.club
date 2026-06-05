@@ -8,4 +8,18 @@ class Current < ActiveSupport::CurrentAttributes
 
   attribute :session
   delegate :user, to: :session, allow_nil: true
+
+  attribute :device
+
+  # == Helpers ==
+
+  sig { returns(User) }
+  def self.user!
+    user or raise ApplicationError, "Missing current user"
+  end
+
+  sig { returns(Device) }
+  def self.device!
+    device or raise ApplicationError, "Missing current device"
+  end
 end

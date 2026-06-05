@@ -60,6 +60,7 @@ class Components::Base < Phlex::HTML
   def initialize(element: nil, **attributes)
     super()
     @current_user = T.let(Current.user, T.nilable(User))
+    @current_device = T.let(Current.device, T.nilable(Device))
     @element = element
     @attributes = attributes
   end

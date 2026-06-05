@@ -19,13 +19,13 @@ module GeneratedPathHelpersModule
   def account_time_zone_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def account_world_cards_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def challenge_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def devices_path(*args); end
+  def device_push_token_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def device_world_cards_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
@@ -182,6 +182,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_path(*args); end

@@ -68,16 +68,13 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :replier,
     foreign_key: :replier_id
-  has_many :devices, dependent: :destroy, inverse_of: :owner, foreign_key: :owner_id
 
-  # TODO: Touch cards when user name or details changes.
-  has_many :world_cards,
+  has_many :devices,
     dependent: :destroy,
-    inverse_of: :cardholder,
-    foreign_key: :cardholder_id
-  has_many :world_card_passes,
-    through: :world_cards,
-    source: :pass
+    inverse_of: :owner,
+    foreign_key: :owner_id
+  has_many :world_cards,
+    through: :devices
 
   # == Normalizations ==
 

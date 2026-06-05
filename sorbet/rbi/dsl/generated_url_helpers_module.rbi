@@ -19,13 +19,13 @@ module GeneratedUrlHelpersModule
   def account_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def account_world_cards_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def challenge_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def devices_url(*args); end
+  def device_push_token_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def device_world_cards_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_url(*args); end
@@ -182,6 +182,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def session_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_url(*args); end

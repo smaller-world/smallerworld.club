@@ -20,6 +20,7 @@ if (credentials = Rails.application.credentials.passkit)
     ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = path.to_s
   end
 elsif Rails.env.test?
+  ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = "dummy"
   ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
   ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
   ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
@@ -76,4 +77,7 @@ end
 
 module Passes; end
 
-Rails.autoloaders.main.push_dir(Rails.root.join("app/passes"), namespace: Passes)
+Rails.autoloaders.main.push_dir(
+  Rails.root.join("app/passes"),
+  namespace: Passes,
+)

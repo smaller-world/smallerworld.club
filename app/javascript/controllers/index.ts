@@ -6,8 +6,6 @@ import {
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
 
-import AccountTimeZoneFormController from "./account_time_zone_form_controller";
-import AccountWorldCardsFormController from "./account_world_cards_form_controller";
 import { application } from "./application";
 import AutoclickController from "./autoclick_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
@@ -16,6 +14,7 @@ import ClipboardController from "./clipboard_controller";
 import ComboboxController from "./combobox_controller";
 import ConfettiController from "./confetti_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
+import DeviceWorldCardsFormController from "./device_world_cards_form_controller";
 import DialogController from "./dialog_controller";
 import DisabledController from "./disabled_controller";
 import EmojiInputController from "./emoji_input_controller";
@@ -32,6 +31,7 @@ import MaintainScrollController from "./maintain_scroll_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
+import PushTokenInputController from "./push_token_input";
 import RadioGroupController from "./radio_group_controller";
 import ReplyInitiationFormController from "./reply_initiation_form_controller";
 import ScrollToBottomController from "./scroll_to_bottom_controller";
@@ -70,7 +70,7 @@ application.register("toaster", ToasterController);
 // == Demo
 application.register("hello", HelloController);
 
-// == Components ==
+// == Components
 application.register("autoclick", AutoclickController);
 application.register("scroll-to-bottom", ScrollToBottomController);
 application.register("intersection", IntersectionController);
@@ -80,13 +80,9 @@ application.register("flash", FlashController);
 application.register("combobox", ComboboxController);
 application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);
-application.register("current-time-zone-input", CurrentTimeZoneInputController);
-application.register("clearable-file-input", ClearableFileInputController);
 application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
-application.register("phone-number-input", PhoneNumberInputController);
 application.register("emoji-mart", EmojiMartController);
-application.register("emoji-input", EmojiInputController);
 application.register("radio-group", RadioGroupController);
 application.register("form", FormController);
 application.register("dialog", DialogController);
@@ -100,12 +96,15 @@ application.register("streamed-toast", StreamedToastController);
 application.register("transition-group", TransitionGroupController);
 application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
 
-// == Forms ==
-application.register("account-time-zone-form", AccountTimeZoneFormController);
-application.register(
-  "account-world-cards-form",
-  AccountWorldCardsFormController,
-);
+// == Inputs
+application.register("clearable-file-input", ClearableFileInputController);
+application.register("current-time-zone-input", CurrentTimeZoneInputController);
+application.register("emoji-input", EmojiInputController);
+application.register("phone-number-input", PhoneNumberInputController);
+application.register("push-token-input", PushTokenInputController);
+
+// == Forms
+application.register("device-world-cards-form", DeviceWorldCardsFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
 application.register(
   "unlinked-world-cards-form",

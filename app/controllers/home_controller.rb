@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        current_user = current_user!
+        current_user = Current.user!
         render Views::Home::Show.new(current_user:)
       end
     end

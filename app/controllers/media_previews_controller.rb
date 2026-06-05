@@ -9,7 +9,7 @@ class MediaPreviewsController < ApplicationController
     representation = if blob.content_type == "image/gif"
       blob
     else
-      blob.variant(resize_to_limit: [ 800, 800 ], convert: "png")
+      blob.variant(resize_to_limit: [ 512, 512 ], convert: "png")
     end
     redirect_to(rails_representation_path(representation))
   end

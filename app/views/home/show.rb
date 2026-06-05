@@ -108,8 +108,8 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      if hotwire_native_app?
-        Components::AccountWorldCardsForm(current_user: @current_user)
+      if (current_device = @current_device) && current_device.owner.present?
+        Components::DeviceWorldCardsForm(current_device:)
       end
     end
   end

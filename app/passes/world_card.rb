@@ -102,7 +102,7 @@ class Passes::WorldCard < Passkit::BasePass
   end
 
   def back_fields
-    receives_app_notifications = cardholder_receives_app_notifications?
+    receives_app_notifications = @card.device&.push_token?
     fields = []
     if (post = @world.posts.chronological.last)
       field = {
@@ -164,17 +164,5 @@ class Passes::WorldCard < Passkit::BasePass
   sig { override.returns(T::Hash[Symbol, String]) }
   def url_options
     Rails.configuration.action_mailer.default_url_options
-  end
-
-  sig { returns(T::Boolean) }
-  def cardholder_receives_app_notifications?
-    if (cardholder = @cardholder)
-      cardholder.devices.exists?(
-        platform: :apple,
-        push_token: @card.pass_devices.select(:push_token),
-      )
-    else
-      false
-    end
   end
 end

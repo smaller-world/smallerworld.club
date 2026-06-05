@@ -122,7 +122,15 @@ class Components::AppLayout < Components::Base
         confetti_canvas
         logs_container
         toasts_container
-        account_time_zone_form
+
+        if (current_user = @current_user)
+          # Auto-update user time zone
+          Components::AccountTimeZoneForm(current_user:)
+        end
+        if (current_device = @current_device) && !current_device.push_token?
+          # Auto-register device push token
+          Components::DevicePushTokenForm(current_device:)
+        end
       end
     end
   end
@@ -230,28 +238,6 @@ class Components::AppLayout < Components::Base
       # if (message = flash[:alert])
       #   Components::StreamedToast(message:, type: :warning)
       # end
-    end
-  end
-
-  sig { void }
-  def account_time_zone_form
-    if (user = Current.user)
-      form_with(
-        model: user,
-        url: account_time_zone_path,
-        hidden: true,
-        data: {
-          controller: "account-time-zone-form",
-        },
-      ) do |form|
-        form.hidden_field(
-          :time_zone_name,
-          data: {
-            controller: "current-time-zone-input",
-            action: "current-time-zone-input:changed->account-time-zone-form#requestSubmit",
-          },
-        )
-      end
     end
   end
 end

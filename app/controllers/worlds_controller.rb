@@ -2,6 +2,12 @@
 # frozen_string_literal: true
 
 class WorldsController < ApplicationController
+  # == Configuration ==
+
+  skip_verify_authorized only: [ :new, :create ]
+
+  # == Actions ==
+
   # GET /worlds
   def index
     # respond_to do |format|
@@ -28,8 +34,7 @@ class WorldsController < ApplicationController
   def new
     respond_to do |format|
       format.html do
-        current_user = current_user!
-        authorize!
+        current_user = Current.user!
         world = current_user.owned_worlds.build
         render Views::Worlds::New.new(world:)
       end
@@ -51,8 +56,7 @@ class WorldsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        current_user = current_user!
-        authorize!
+        current_user = Current.user!
         world_params = params.expect(world: [ :name, :blurb, :icon ])
         world = current_user.owned_worlds.build(**world_params)
         if world.save

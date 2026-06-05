@@ -29,7 +29,7 @@ class WorldCardsController < ApplicationController
         WorldKey.verify_grant(grant) => { color: }
         card = world.cards.build(
           granted_key_color: color,
-          cardholder: current_user,
+          cardholder: Current.user,
         )
         if card.save
           redirect_to(card, status: :see_other)

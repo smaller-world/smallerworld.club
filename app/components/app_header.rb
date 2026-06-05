@@ -51,7 +51,18 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    unless hotwire_native_app?
+    if @current_device
+      form_with(url: test_device_push_token_path, data: {
+        controller: "haptic-bridge",
+        action: "turbo:submit-end->haptic-bridge#vibrate",
+      }) do
+        content.button_item(type: :submit) do
+          Icon("huge/notification-01")
+          span { "send test notification" }
+        end
+      end
+      content.separator
+    elsif !hotwire_native_app?
       content.group do
         # content.label { "[some group]" }
         content.link_item_to(:home) do
@@ -68,12 +79,13 @@ class Components::AppHeader < Components::Base
       end
       content.separator
     end
+
     form_with(url: session_path, method: :delete, data: {
       controller: "haptic-bridge",
       action: "turbo:submit-end->haptic-bridge#vibrate",
     }) do
       content.button_item(type: :submit, variant: :destructive) do
-        Icon("huge/logout-01", class: "size-4")
+        Icon("huge/logout-01")
         span { "sign out" }
       end
       # if Rails.env.development?

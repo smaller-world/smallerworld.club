@@ -13,16 +13,16 @@ module Accounts
     def update
       respond_to do |format|
         format.turbo_stream do
-          user = current_user!
+          current_user = Current.user!
           user_params = params.expect(user: :time_zone_name)
-          if user.update(user_params)
+          if current_user.update(user_params)
             render turbo_stream: append_log_message(
               "User time zone updated",
               level: :info,
             )
           else
             message = "Failed to update user timezone"
-            if (error = user.errors.full_messages.first)
+            if (error = current_user.errors.full_messages.first)
               message = "#{message}: #{error}"
             end
             Sentry.capture_message(message)

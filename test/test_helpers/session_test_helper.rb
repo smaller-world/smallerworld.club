@@ -21,7 +21,7 @@ module SessionTestHelper
     )
 
     ActionDispatch::TestRequest.create.cookie_jar.tap do |cookie_jar|
-      cookie_jar.signed[:session_id] = Current.session.id
+      cookie_jar.signed[:session_id] = Current.session&.id
       cookies["session_id"] = cookie_jar[:session_id]
     end
   end

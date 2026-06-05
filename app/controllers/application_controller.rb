@@ -6,9 +6,12 @@ class ApplicationController < ActionController::Base
   extend T::Helpers
 
   include Pagy::Method
-  include Authentication
   include TaggedLogging
+
+  include Authentication
+  include DeviceTracking
   include LogStreaming
+  include ToastStreaming
 
   # == Configuration ==
 
@@ -17,17 +20,11 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  # == Authentication ==
+  # == Action Policy ==
 
-  sig { returns(T.nilable(User)) }
-  def current_user
-    Current.user
-  end
-
-  sig { returns(User) }
-  def current_user!
-    current_user or raise ApplicationError, "Missing current user"
-  end
+  verify_authorized
+  authorize :user, through: -> { Current.user }
+  authorize :device, through: -> { Current.device }
 
   # == Prosopite ==
 
@@ -41,8 +38,4 @@ class ApplicationController < ActionController::Base
       Prosopite.finish
     end
   end
-
-  # == Action Policy ==
-
-  verify_authorized
 end
