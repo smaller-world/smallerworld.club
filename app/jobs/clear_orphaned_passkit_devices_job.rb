@@ -10,6 +10,6 @@ class ClearOrphanedPasskitDevicesJob < ApplicationJob
 
   sig { void }
   def perform
-    Passkit::Device.where.missing(:registrations).delete_all
+    Passkit::Device.where.missing(:registrations).destroy_all
   end
 end

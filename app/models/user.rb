@@ -74,7 +74,9 @@ class User < ApplicationRecord
     inverse_of: :owner,
     foreign_key: :owner_id
   has_many :world_cards,
-    through: :devices
+    dependent: :destroy,
+    inverse_of: :cardholder,
+    foreign_key: :cardholder_id
 
   # == Normalizations ==
 
@@ -91,9 +93,7 @@ class User < ApplicationRecord
 
   # == Hooks ==
 
-  after_commit :touch_world_cards,
-    on: :update,
-    if: :world_card_attributes_changed?
+  after_update_commit :touch_world_cards, if: :world_card_attributes_changed?
 
   # == Methods ==
 

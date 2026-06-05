@@ -28,10 +28,10 @@ class Views::Pages::Landing < Views::Base
           end
 
           button_link_to(
-            "install ios app",
+            "get the app!",
             appstore_path,
             variant: :default,
-            size: :lg,
+            size: :xl,
             icon: "huge/app-store",
           )
         end
@@ -46,6 +46,6 @@ class Views::Pages::Landing < Views::Base
   sig { returns(T.nilable(String)) }
   def title
     site = Rails.configuration.x.site
-    [ site.name, site.tagline ].compact.join(" | ").presence
+    [ site.tagline, site.name ].compact.join(" | ").presence
   end
 end

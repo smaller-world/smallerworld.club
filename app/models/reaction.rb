@@ -46,7 +46,7 @@ class Reaction < ApplicationRecord
 
   private
 
-  # == Validators ==
+  # == Callbacks ==
 
   sig { void }
   def validate_reactor_not_post_author

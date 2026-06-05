@@ -20,19 +20,21 @@ class Views::WorldKeys::Index < Views::Base
         button_back_to(@world.name, @world) unless hotwire_native_app?
 
         if (keys_by_recipient = @keys_by_recipient.presence)
-          Components::ItemGroup(class: "gap-2") do
-            keys_by_recipient.each_pair do |recipient, keys|
-              item(recipient:, keys:)
+          div(class: "flex flex-col gap-4") do
+            Components::ItemGroup(class: "gap-2") do
+              keys_by_recipient.each_pair do |recipient, keys|
+                item(recipient:, keys:)
+              end
             end
-          end
 
-          button_link_to(
-            "invite another friend",
-            [ :new, @world, :key_grant ],
-            variant: :default,
-            icon: "huge/user-add-01",
-            class: "self-center",
-          )
+            button_link_to(
+              "invite another friend",
+              [ :new, @world, :key_grant ],
+              variant: :default,
+              icon: "huge/user-add-01",
+              class: "self-center",
+            )
+          end
         else
           Components::Empty() do |empty|
             empty.header do

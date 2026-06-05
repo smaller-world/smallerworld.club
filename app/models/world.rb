@@ -154,7 +154,7 @@ class World < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_default_name, if: :new_record?
-  after_commit :touch_cards, on: :update, if: :card_attributes_changed?
+  after_update_commit :touch_cards, if: :card_attributes_changed?
   after_attached :icon, :touch_cards
 
   # == Keys ==

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_05_004937) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_184353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -312,13 +312,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_004937) do
   end
 
   create_table "world_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cardholder_id"
     t.datetime "created_at", null: false
     t.uuid "device_id"
     t.string "granted_key_color", null: false
     t.timestamptz "granted_key_created_at"
+    t.timestamptz "revoked_at"
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
     t.index ["device_id"], name: "index_world_cards_on_device_id"
+    t.index ["revoked_at"], name: "index_world_cards_on_revoked_at"
     t.index ["world_id"], name: "index_world_cards_on_world_id"
   end
 
@@ -364,6 +368,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_004937) do
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "world_cards", "devices"
+  add_foreign_key "world_cards", "users", column: "cardholder_id"
   add_foreign_key "world_cards", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"
   add_foreign_key "world_keys", "worlds"

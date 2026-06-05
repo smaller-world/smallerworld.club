@@ -14,6 +14,6 @@ class ClearUnregisteredWorldCardsJob < ApplicationJob
       .where(updated_at: ..1.week.ago)
     WorldCard.where.missing(:pass)
       .or(WorldCard.where(pass: unregistered_passes))
-      .delete_all
+      .destroy_all
   end
 end

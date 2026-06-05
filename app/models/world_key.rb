@@ -53,6 +53,11 @@ class WorldKey < ApplicationRecord
     world_owner or raise ActiveRecord::RecordNotFound, "Missing associated world owner"
   end
 
+  sig { returns(User) }
+  def recipient!
+    recipient or raise ActiveRecord::RecordNotFound, "Missing recipient"
+  end
+
   # == Validations ==
 
   validates :color, presence: true
@@ -65,6 +70,11 @@ class WorldKey < ApplicationRecord
     },
   }
   validate :validate_recipient_not_world_owner, on: :create
+
+  # == Hooks ==
+
+  after_destroy :revoke_recipient_world_cards!,
+    unless: :recipient_has_other_keys?
 
   # == Scopes ==
 
@@ -86,12 +96,26 @@ class WorldKey < ApplicationRecord
 
   private
 
-  # == Validators ==
+  # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def recipient_has_other_keys?
+    WorldKey.where.not(id:).exists?(world_id:, recipient_id:)
+  end
+
+  # == Callbacks ==
 
   sig { void }
   def validate_recipient_not_world_owner
     if recipient_id == world&.owner_id
       errors.add(:recipient_id, "cannot be the world owner")
     end
+  end
+
+  sig { void }
+  def revoke_recipient_world_cards!
+    world = world!
+    cardholder = recipient!
+    WorldCard.revoke_for!(world:, cardholder:)
   end
 end

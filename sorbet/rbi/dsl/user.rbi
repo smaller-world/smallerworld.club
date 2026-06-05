@@ -451,8 +451,8 @@ class User
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
     def world_card_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `User` class because it declared `has_many :world_cards, through: :devices`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :world_cards`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
     sig { returns(::WorldCard::PrivateCollectionProxy) }
     def world_cards; end
 

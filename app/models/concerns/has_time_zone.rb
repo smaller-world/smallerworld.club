@@ -53,7 +53,7 @@ module HasTimeZone
 
   private
 
-  # == Validators ==
+  # == Callbacks ==
 
   sig { void }
   def validate_time_zone_name

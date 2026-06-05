@@ -10,6 +10,6 @@ class ClearOldPasskitLogsJob < ApplicationJob
 
   sig { void }
   def perform
-    Passkit::Log.where(created_at: ..2.weeks.ago).delete_all
+    Passkit::Log.where(created_at: ..2.weeks.ago).destroy_all
   end
 end

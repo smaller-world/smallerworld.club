@@ -97,7 +97,7 @@ class Components::AppLayout < Components::Base
         stylesheet_link_tag("application", "data-turbo-track": "reload")
         javascript_include_tag("application", "data-turbo-track": "reload", type: "module")
 
-        # == OpenGraph
+        # == Meta & OpenGraphh
         if (description = Rails.configuration.x.site.description)
           meta(name: "description", content: description)
         end
@@ -180,7 +180,7 @@ class Components::AppLayout < Components::Base
     if @page_title
       meta(property: "og:title", content: @page_title)
     end
-    if (description = Rails.configuration.x.site_description)
+    if (description = Rails.configuration.x.site.description)
       meta(property: "og:description", content: description)
     end
     meta(property: "og:image", content: asset_path("/banner.png"))
@@ -196,7 +196,7 @@ class Components::AppLayout < Components::Base
     if @page_title
       meta(name: "twitter:title", content: @page_title)
     end
-    if (description = Rails.configuration.x.site_description)
+    if (description = Rails.configuration.x.site.description)
       meta(name: "twitter:description", content: description)
     end
     meta(name: "twitter:image", content: "/banner.png")

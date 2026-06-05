@@ -5,7 +5,7 @@ class Components::Button < Components::Base
   # == Configuration ==
 
   VARIANTS = [ :default, :outline, :secondary, :ghost, :destructive, :link ].freeze
-  SIZES = [ :default, :xs, :sm, :lg, :icon, :icon_xs, :icon_sm, :icon_lg ].freeze
+  SIZES = [ :default, :xs, :sm, :lg, :xl, :icon, :icon_xs, :icon_sm, :icon_lg ].freeze
   ICON_ALIGNMENT = [ :inline_start, :inline_end ].freeze
 
   # == Initialization ==

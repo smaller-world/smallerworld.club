@@ -28,8 +28,8 @@ class Passes::WorldCard < Passkit::BasePass
   sig { override.params(card: WorldCard).void }
   def initialize(card)
     @card = card
-    @cardholder = T.let(card.cardholder, T.nilable(User))
     @world = T.let(card.world!, World)
+    @cardholder = T.let(card.cardholder, T.nilable(User))
     super(card)
   end
 
@@ -110,7 +110,7 @@ class Passes::WorldCard < Passkit::BasePass
         label: "✍️ last post in #{@world.name}",
         value: post.snippet,
       }
-      unless receives_app_notifications
+      if !receives_app_notifications && !@card.revoked?
         field["changeMessage"] = "%@"
       end
       fields << field
@@ -155,6 +155,10 @@ class Passes::WorldCard < Passkit::BasePass
 
   def relevant_date
     @card.created_at.iso8601
+  end
+
+  def voided # rubocop:disable Naming/PredicateMethod
+    @card.revoked?
   end
 
   private
