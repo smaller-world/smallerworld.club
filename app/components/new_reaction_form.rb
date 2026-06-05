@@ -36,7 +36,7 @@ class Components::NewReactionForm < Components::Base
 
       Components::Dialog() do |dialog|
         dialog.with_trigger_button(
-          variant: :ghost,
+          variant: @post.reactions.any? ? :ghost : :default,
           size: :icon,
           **compact_mix(
             {

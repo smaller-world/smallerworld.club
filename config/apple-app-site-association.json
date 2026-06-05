@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["UB3SB3746X.club.smallerworld.ios"],
+        "components": [{ "/": "/", "exclude": true }, { "/": "/*" }]
+      }
+    ]
+  }
+}

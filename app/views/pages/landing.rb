@@ -10,9 +10,12 @@ class Views::Pages::Landing < Views::Base
       main(class: "flex-1 flex flex-col justify-center") do
         layout.page_container(class: "flex flex-col items-center gap-6") do
           div(class: "flex flex-col items-center gap-1 text-center text-balance") do
-            h1(class: "text-foreground font-medium text-lg") { "hi. welcome to smaller world!" }
-            p(class: "max-w-xs text-balance text-muted-foreground") do
-              plain("smaller world is a place where you can share your inner world with close friends :)")
+            h1(class: "text-foreground font-medium text-lg") do
+              "hi. welcome to smaller world!"
+            end
+            p(class: "text-balance text-muted-foreground max-w-xs") do
+              "smaller world is a place where you can share your inner world with " \
+                "close friends :)"
             end
           end
           button_link_to(

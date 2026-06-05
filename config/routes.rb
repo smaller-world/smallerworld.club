@@ -9,12 +9,15 @@ Rails.application.routes.draw do
   get :up, to: "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # == Well-known
+  scope controller: :well_known, path: "/.well-known" do
+    get "/apple-app-site-association", action: :apple_app_site_association
+  end
 
+  # == Pages
   scope controller: :pages do
     root action: :landing
   end

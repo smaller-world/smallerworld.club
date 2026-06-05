@@ -35,7 +35,10 @@ class Views::Posts::Index < Views::Base
                 Icon("huge/message-edit-01")
               end
               empty.title do
-                "no posts yet"
+                "no posts yet!"
+              end
+              empty.description do
+                button_link_to("need some inspo on what to write?")
               end
             end
           end

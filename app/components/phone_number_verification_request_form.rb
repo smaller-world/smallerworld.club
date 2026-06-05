@@ -76,7 +76,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
       end
 
       div(class: "flex flex-col") do
-        submit_button_for(form) do |button|
+        submit_button_for(form, size: :lg) do |button|
           if @verification_request.new_record?
             button.inline_start_icon("huge/sms-code")
             span { "send verification code" }
