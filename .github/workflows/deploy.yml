@@ -107,7 +107,7 @@ jobs:
           SENTRY_ORG: smallerworld
         with:
           environment: production
-          projects: smallerworld
+          projects: smallerworld_v1
           ignore_missing: true
           disable_telemetry: true
           sourcemaps: ./public/dist
