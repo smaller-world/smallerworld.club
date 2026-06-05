@@ -37,7 +37,7 @@ class WorldKeysController < ApplicationController
           accepted_at: Time.current,
         )
         if key.save
-          redirect_to(world, notice: "welcome to #{world.name}!")
+          redirect_to(world, celebrate: true)
         else
           flash.now.alert = key.errors.full_messages.first
           render(

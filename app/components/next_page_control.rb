@@ -22,7 +22,7 @@ class Components::NextPageControl < Components::Base
     pagy:,
     autoclick: false,
     disable_for: nil,
-    variant: :secondary,
+    variant: :ghost,
     size: :default,
     **attributes
   )
@@ -41,7 +41,7 @@ class Components::NextPageControl < Components::Base
   def view_template(&content)
     button_to(
       @target,
-      **compact_mix(
+      **normalize_mix(
         Components::Button.root_attributes(variant: @variant, size: @size),
         {
           form: {
@@ -51,6 +51,7 @@ class Components::NextPageControl < Components::Base
             },
           },
           method: :get,
+          class: "rounded-full",
         },
         page_attributes,
         autoclick_attributes,

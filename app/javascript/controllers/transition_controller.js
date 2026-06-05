@@ -2,28 +2,6 @@ import { Controller } from "@hotwired/stimulus";
 import { enter, leave } from "el-transition";
 
 export default class TransitionController extends Controller {
-  // == Values ==
-  static values = {
-    enterImmediately: Boolean,
-    leaveImmediately: Boolean,
-  };
-
-  // == Lifecycle ==
-
-  connect() {
-    super.connect();
-    if (this.enterImmediatelyValue && this.leaveImmediatelyValue) {
-      throw new Error(
-        "Only one of enterImmediatelyValue or leaveImmediatelyValue can be true",
-      );
-    }
-    if (this.enterImmediatelyValue) {
-      this.enter();
-    } else if (this.leaveImmediatelyValue) {
-      this.leave();
-    }
-  }
-
   // == Actions ==
 
   enter() {

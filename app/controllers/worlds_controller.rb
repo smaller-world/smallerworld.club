@@ -25,7 +25,8 @@ class WorldsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world)
-        render Views::Worlds::Show.new(world:)
+        celebrate = !!params[:celebrate]
+        render Views::Worlds::Show.new(world:, celebrate:)
       end
     end
   end

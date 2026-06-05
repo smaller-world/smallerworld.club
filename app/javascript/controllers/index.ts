@@ -13,6 +13,7 @@ import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
 import ComboboxController from "./combobox_controller";
 import ConfettiController from "./confetti_controller";
+import ConnectionController from "./connection_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DeviceWorldCardsFormController from "./device_world_cards_form_controller";
 import DialogController from "./dialog_controller";
@@ -22,7 +23,6 @@ import EmojiMartController from "./emoji_mart_controller";
 import FlashController from "./flash_controller";
 import FormController from "./form_controller";
 import FrameController from "./frame_controller";
-import HelloController from "./hello_controller";
 import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
@@ -66,10 +66,8 @@ application.register("turnstile", TurnstileController);
 application.register("tippy", TippyController);
 application.register("toaster", ToasterController);
 
-// == Demo
-application.register("hello", HelloController);
-
 // == Components
+application.register("connection", ConnectionController);
 application.register("autoclick", AutoclickController);
 application.register("scroll-to-bottom", ScrollToBottomController);
 application.register("intersection", IntersectionController);

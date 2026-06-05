@@ -22,13 +22,15 @@ class Views::WorldCards::Unlinked < Views::Base
       div(
         class: class_names("flex flex-col gap-3 overflow-hidden", "hidden"),
         data: {
-          controller: "transition-group transition",
+          controller: "transition-group transition connection",
           transition_group_target: "item",
           transition_enter: "transition-[max-height] duration-400 ease-in",
           transition_enter_start: "max-h-0",
           transition_enter_end: "max-h-[1000px]",
-          transition_enter_immediately_value: true,
-          action: "transition:transitioned->transition-group#startNext",
+          action: [
+            "transition:transitioned->transition-group#startNext",
+            "connection:connect->transition#enter",
+          ],
         },
       ) do
         Components::Badge(

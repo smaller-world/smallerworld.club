@@ -34,6 +34,6 @@ module AttributeHelpers
 
   sig { params(args: T.untyped).returns(T::Hash[Symbol, T.untyped]) }
   def normalize_mix(*args)
-    normalize_attributes(mix(*T.unsafe(args.compact)))
+    normalize_attributes(compact_mix(*T.unsafe(args.compact)))
   end
 end

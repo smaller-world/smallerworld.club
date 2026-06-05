@@ -36,12 +36,13 @@ class Components::NewReactionForm < Components::Base
 
       Components::Dialog() do |dialog|
         dialog.with_trigger_button(
-          variant: @post.reactions.any? ? :ghost : :default,
+          variant: existing_reactions? ? :ghost : :outline,
           size: :icon,
-          **compact_mix(
+          **normalize_mix(
             {
               class: "rounded-full loading-while-submitting",
               data: {
+                confetti_target: "position",
                 form_target: "disableWhileSubmitting",
               },
               aria: {
@@ -51,7 +52,7 @@ class Components::NewReactionForm < Components::Base
             error_tooltip_attributes,
           ),
         ) do
-          Icon("huge/heart-add")
+          Icon("huge/heart-add", class: "size-4.5")
         end
         dialog.with_content(
           show_close_button: false,
@@ -90,5 +91,15 @@ class Components::NewReactionForm < Components::Base
   sig { returns(T::Array[String]) }
   def error_messages
     @reaction.errors.messages_for(:emoji)
+  end
+
+  sig { returns(T::Boolean) }
+  def existing_reactions?
+    reactions = @post.reactions
+    if reactions.loaded?
+      reactions.any?(&:persisted?)
+    else
+      reactions.exists?
+    end
   end
 end

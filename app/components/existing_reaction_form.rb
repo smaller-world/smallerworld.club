@@ -42,11 +42,11 @@ class Components::ExistingReactionForm < Components::Base
               "form haptic-bridge",
               "confetti" => @current_user && !@current_user_reaction,
             ),
-            action: [
+            action: token_list(
               "turbo:submit-end->confetti#launch",
-              "turbo:submit-end->haptic-bridge#vibrate",
               "turbo:before-fetch-response->form#reloadFrameIfNotFound",
-            ],
+              "turbo:submit-end->haptic-bridge#vibrate" => !@current_user_reaction,
+            ),
             confetti_emoji_value: @emoji,
             confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
           },

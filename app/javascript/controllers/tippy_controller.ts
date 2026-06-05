@@ -17,8 +17,7 @@ export default class TippyController extends Controller<HTMLElement> {
     placement: { type: String, default: "top" },
     animation: { type: String, default: "shift-away" },
     hideOnClick: { type: Boolean, default: true },
-    showOnCreate: Boolean,
-    flashOnCreate: Boolean,
+    showOnCreate: { type: Boolean, default: false },
     flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
   };
@@ -28,7 +27,6 @@ export default class TippyController extends Controller<HTMLElement> {
   declare readonly animationValue: string;
   declare readonly hideOnClickValue: boolean;
   declare readonly showOnCreateValue: boolean;
-  declare readonly flashOnCreateValue: boolean;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
 
@@ -58,9 +56,6 @@ export default class TippyController extends Controller<HTMLElement> {
       props.trigger = this.triggerValue;
     }
     this.#tippy = tippy(this.element, props);
-    if (this.flashOnCreateValue) {
-      this.flash();
-    }
     addCleanupAction(this, "destroy");
   }
 

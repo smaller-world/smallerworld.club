@@ -4,7 +4,7 @@
     @apply native:select-none;
 
     form[aria-busy="true"] &[type="submit"]:disabled {
-      @apply loading relative *:invisible;
+      @apply loading relative text-muted-foreground *:invisible;
     }
 
     &:not(button) {

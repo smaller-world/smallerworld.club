@@ -4,8 +4,8 @@
 class Views::Worlds::Show < Views::Base
   # == Initialization ==
 
-  sig { params(world: World).void }
-  def initialize(world:)
+  sig { params(world: World, celebrate: T::Boolean).void }
+  def initialize(world:, celebrate: false)
     @world = world
     @keys = T.let(
       if (user = Current.user)
@@ -15,6 +15,7 @@ class Views::Worlds::Show < Views::Base
       end,
       T::Array[WorldKey],
     )
+    @celebrate = celebrate
     super()
   end
 
@@ -60,6 +61,14 @@ class Views::Worlds::Show < Views::Base
           image_tag(
             @world.page_icon_variant,
             class: "size-32 rounded-world-icon object-cover",
+            data: {
+              controller: "confetti connection",
+              confetti_emoji_value: "🎉",
+              confetti_canvas_id_value:
+                Rails.configuration.x.layout.confetti_canvas_id,
+              connection_delay_value: 400,
+              action: ("connection:connect->confetti#launch" if @celebrate),
+            },
           )
           h1(class: "text-2xl text-center") do
             @world.name
