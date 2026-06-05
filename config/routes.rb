@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resource :session, only: [ :new, :destroy ]
   resources :phone_number_verification_requests, path: "verifications", only: [ :create ] do
     member do
-      get :challenge
+      # get :challenge
       post :verify
     end
   end

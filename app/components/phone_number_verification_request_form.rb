@@ -30,6 +30,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
     form_with(
       model:,
       method: :post,
+      id: :login_form,
       **normalize_mix(
         {
           class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",

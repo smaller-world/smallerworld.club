@@ -27,7 +27,7 @@ jobs:
       - name: Deploy on Fly
         run: flyctl deploy --remote-only --ha=false
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.V2_FLY_API_TOKEN }}
 
   release:
     name: Release on Sentry

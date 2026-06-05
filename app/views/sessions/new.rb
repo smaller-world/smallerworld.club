@@ -67,34 +67,10 @@ class Views::Sessions::New < Views::Base
           end
         end
       end
-      card.content(class: "flex flex-col items-stretch gap-y-3") do
+      card.content do
         Components::PhoneNumberVerificationRequestForm(
           verification_request: @verification_request,
         )
-        # Components::SignInWithAppleButton()
-        # Components::SignInWithGoogleButton()
-        # if Rails.env.development? && (users = User.all.presence)
-        #   Components::DropdownMenu(anchor: :bottom, class: "mx-auto") do |menu|
-        #     menu.trigger do
-        #       Components::Button(
-        #         variant: :link,
-        #         class: "text-muted-foreground",
-        #       ) do
-        #         "[development] sign in as..."
-        #       end
-        #     end
-        #     menu.content do
-        #       users.find_each do |user|
-        #         button_to(
-        #           user.email_address_with_name,
-        #           session_path,
-        #           params: { user_id: user.id },
-        #           **menu.item_attributes,
-        #         )
-        #       end
-        #     end
-        #   end
-        # end
       end
     end
   end

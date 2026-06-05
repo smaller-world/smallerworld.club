@@ -17,7 +17,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   # POST /verifications
   def create
     respond_to do |format|
-      format.html do
+      format.turbo_stream do
         verification_request_params = params.expect(
           phone_number_verification_request: [ :phone_number ],
         )
@@ -33,35 +33,25 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                 "#{verification_request.verification_code}",
             )
           end
-          redirect_to([ :challenge, verification_request ])
+          render turbo_stream: turbo_stream.replace(
+            :login_form,
+            renderable: Components::PhoneNumberVerificationRequestForm
+              .new(verification_request:),
+          )
         elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
           redirect_to(new_session_path, alert: message)
         else
-          render(
-            Views::Sessions::New.new(verification_request:),
-            status: :unprocessable_content,
+          render turbo_stream: turbo_stream.replace(
+            :login_form,
+            renderable: Components::PhoneNumberVerificationRequestForm
+              .new(verification_request:),
           )
         end
       end
     end
   end
 
-  # GET /verifications/:id/challenge
-  def challenge
-    verification_request = find_verification_request
-    if verification_request.expired?
-      redirect_to(
-        new_session_path,
-        alert: "the verification code has expired. please try again.",
-      )
-    elsif verification_request.verified?
-      redirect_to(new_session_path, alert: "verification code has been invalidated.")
-    else
-      render Views::Sessions::New.new(verification_request:)
-    end
-  end
-
-  # POST /verifications/:id/challenge
+  # POST /verifications/:id/verify
   def verify
     respond_to do |format|
       format.html do
