@@ -41,7 +41,7 @@ class WorldKeysController < ApplicationController
         else
           flash.now.alert = key.errors.full_messages.first
           render(
-            Views::WorldKeyGrants::Show.new(key_or_card: key),
+            Views::WorldKeyGrants::Show.new(key:),
             status: :unprocessable_content,
           )
         end

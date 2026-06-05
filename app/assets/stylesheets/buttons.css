@@ -7,6 +7,10 @@
       @apply loading relative *:invisible;
     }
 
+    &:not(button) {
+      @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+    }
+
     /* == Variants == */
 
     &[data-variant="default"] {

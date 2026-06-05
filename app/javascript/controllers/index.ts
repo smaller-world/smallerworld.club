@@ -46,7 +46,6 @@ import TurnstileController from "./turnstile_controller";
 import UnlinkedWorldCardsFormController from "./unlinked_world_cards_form_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
-import WorldCardFormController from "./world_card_form_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -111,6 +110,5 @@ application.register(
   UnlinkedWorldCardsFormController,
 );
 application.register("world-form", WorldFormController);
-application.register("world-card-form", WorldCardFormController);
 
 // application.register("otp-input", OtpInputController);

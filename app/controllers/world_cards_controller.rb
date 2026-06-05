@@ -4,44 +4,28 @@
 class WorldCardsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access only: [ :show, :create, :unlinked ]
-  skip_verify_authorized only: [ :show, :create, :unlinked ]
+  allow_unauthenticated_access
+  skip_verify_authorized only: :unlinked
 
   # == Actions ==
 
   # GET /world_cards/:id
   def show
     card = find_card
+    authorize!(card)
+    render Views::WorldCards::Show.new(card:)
+  end
+
+  # GET /world_cards/:id/download
+  def download
+    card = find_card
+    authorize!(card, to: :show?)
     pkpass_path = card.passkit_generator.generate_and_sign
     send_file(
       pkpass_path,
       type: "application/vnd.apple.pkpass",
       disposition: "attachment",
     )
-  end
-
-  # POST /worlds/:world_id/cards
-  def create
-    respond_to do |format|
-      format.html do
-        world = find_world
-        grant = params.require(:world_card).fetch(:grant)
-        WorldKey.verify_grant(grant) => { color: }
-        card = world.cards.build(
-          granted_key_color: color,
-          cardholder: Current.user,
-        )
-        if card.save
-          redirect_to(card, status: :see_other)
-        else
-          flash.now.alert = card.errors.full_messages.first
-          render(
-            Views::WorldKeyGrants::Show.new(key_or_card: card),
-            status: :unprocessable_content,
-          )
-        end
-      end
-    end
   end
 
   # GET /world_cards/unlinked?pass_serial_numbers[]=...

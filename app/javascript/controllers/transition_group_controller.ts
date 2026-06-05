@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { first } from "lodash-es";
 
 export default class TransitionGroupController extends Controller {
   static targets = ["item"];
@@ -12,6 +13,13 @@ export default class TransitionGroupController extends Controller {
   }
 
   // == Actions ==
+
+  start(): void {
+    const item = first(this.itemTargets);
+    if (item) {
+      this.dispatch("start", { target: item, bubbles: false });
+    }
+  }
 
   startNext(event: Event): void {
     if (!(event.target instanceof HTMLElement)) {

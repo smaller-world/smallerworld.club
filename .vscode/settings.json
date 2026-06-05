@@ -27,9 +27,9 @@
     "transition_enter:\\s*['\"]([^'\"]*)['\"]",
     "transition_enter_start:\\s*['\"]([^'\"]*)['\"]",
     "transition_enter_end:\\s*['\"]([^'\"]*)['\"]",
-    "transition_exit:\\s*['\"]([^'\"]*)['\"]",
-    "transition_exit_start:\\s*['\"]([^'\"]*)['\"]",
-    "transition_exit_end:\\s*['\"]([^'\"]*)['\"]",
+    "transition_leave:\\s*['\"]([^'\"]*)['\"]",
+    "transition_leave_start:\\s*['\"]([^'\"]*)['\"]",
+    "transition_leave_end:\\s*['\"]([^'\"]*)['\"]",
     ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
   ],
 

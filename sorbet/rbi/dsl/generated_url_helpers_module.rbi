@@ -19,13 +19,19 @@ module GeneratedUrlHelpersModule
   def account_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def challenge_phone_number_verification_request_url(*args); end
+  def apple_app_site_association_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def appstore_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def device_world_cards_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def download_world_card_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_url(*args); end
@@ -89,9 +95,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def post_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def pwa_manifest_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_representation_proxy_url(*args); end
@@ -185,9 +188,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def testflight_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_url(*args); end

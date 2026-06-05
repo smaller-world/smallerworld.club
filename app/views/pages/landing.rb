@@ -9,21 +9,30 @@ class Views::Pages::Landing < Views::Base
     Components::AppLayout(title:) do |layout|
       main(class: "flex-1 flex flex-col justify-center") do
         layout.page_container(class: "flex flex-col items-center gap-6") do
-          div(class: "flex flex-col items-center gap-1 text-center text-balance") do
-            h1(class: "text-foreground font-medium text-lg") do
-              "hi. welcome to smaller world!"
-            end
-            p(class: "text-balance text-muted-foreground max-w-xs") do
-              "smaller world is a place where you can share your inner world with " \
-                "close friends :)"
+          div(class: "flex flex-col items-center gap-4") do
+            image_tag(
+              "logo.png",
+              alt: [ Smallerworld.application.site_name, "logo" ].join(" "),
+              class: "size-10",
+            )
+
+            div(class: "flex flex-col items-center gap-1 text-center text-balance") do
+              h1(class: "text-foreground font-medium text-lg") do
+                "hi. welcome to smaller world!"
+              end
+              p(class: "text-balance text-muted-foreground max-w-xs") do
+                "smaller world is a place where you can share your inner world with " \
+                  "close friends :)"
+              end
             end
           end
+
           button_link_to(
-            "install smaller world on ios",
-            testflight_path,
+            "install ios app",
+            appstore_path,
             variant: :default,
             size: :lg,
-            icon: "huge/apple",
+            icon: "huge/app-store",
           )
         end
       end

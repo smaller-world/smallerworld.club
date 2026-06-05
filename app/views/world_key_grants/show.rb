@@ -4,10 +4,10 @@
 class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
-  sig { params(key_or_card: T.any(WorldKey, WorldCard)).void }
-  def initialize(key_or_card:)
-    @key_or_card = T.let(key_or_card, T.any(WorldKey, WorldCard))
-    @world = T.let(@key_or_card.world!, World)
+  sig { params(key: WorldKey).void }
+  def initialize(key:)
+    @key = key
+    @world = T.let(@key.world!, World)
     super()
   end
 
@@ -20,7 +20,7 @@ class Views::WorldKeyGrants::Show < Views::Base
         class: "flex-1 max-w-lg flex flex-col items-center justify-center gap-8",
       ) do
         span(class: "text-lg font-semibold") do
-          "you've been given a #{label} to:"
+          "you've been given a key to:"
         end
         div(class: "home-world-link") do
           div(class: "relative") do
@@ -34,12 +34,7 @@ class Views::WorldKeyGrants::Show < Views::Base
           end
         end
 
-        case @key_or_card
-        when WorldKey
-          Components::AcceptWorldKeyForm(key: @key_or_card)
-        when WorldCard
-          Components::WorldCardForm(card: @key_or_card)
-        end
+        Components::AcceptWorldKeyForm(key: @key)
       end
     end
   end
@@ -50,7 +45,7 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { returns(String) }
   def label
-    if @key_or_card.is_a?(WorldKey)
+    if @key.is_a?(WorldKey)
       "key"
     else
       "keycard"

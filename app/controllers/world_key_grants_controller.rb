@@ -16,13 +16,12 @@ class WorldKeyGrantsController < ApplicationController
     world = World.find(world_id)
     if (recipient = Current.user) && recipient.world_keys.exists?(world:, color:)
       redirect_to(world)
+    elsif hotwire_native_app?
+      key = world.keys.build(color:, recipient: Current.user)
+      render Views::WorldKeyGrants::Show.new(key:)
     else
-      key_or_card = if hotwire_native_app?
-        world.keys.build(color:, recipient: Current.user)
-      else
-        world.cards.build(granted_key_color: color, cardholder: Current.user)
-      end
-      render Views::WorldKeyGrants::Show.new(key_or_card:)
+      card = world.cards.create!(granted_key_color: color)
+      redirect_to(card)
     end
   end
 

@@ -42,7 +42,16 @@
     "tailwindcss-language-server": {
       "settings": {
         "experimental": {
-          "classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"]
+          "classRegex": [
+            "class:\\s*['\"]([^'\"]*)['\"]",
+            "transition_enter:\\s*['\"]([^'\"]*)['\"]",
+            "transition_enter_start:\\s*['\"]([^'\"]*)['\"]",
+            "transition_enter_end:\\s*['\"]([^'\"]*)['\"]",
+            "transition_leave:\\s*['\"]([^'\"]*)['\"]",
+            "transition_leave_start:\\s*['\"]([^'\"]*)['\"]",
+            "transition_leave_end:\\s*['\"]([^'\"]*)['\"]",
+            ["class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']"]
+          ]
         }
       }
     }

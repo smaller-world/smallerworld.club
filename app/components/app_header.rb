@@ -6,22 +6,24 @@ class Components::AppHeader < Components::Base
 
   sig { override.params(content: T.nilable(T.proc.void)).void }
   def view_template(&content)
-    logo_button_options = { variant: :ghost, class: "gap-x-1.5" }
-
     root_element(:header, class: "flex justify-center py-2") do
-      if authenticated?
-        Components::DropdownMenu() do |menu|
-          menu.with_trigger_button(**logo_button_options) do
-            logo_button_content
-          end
-
-          menu.with_content(anchor: :bottom, class: "w-56") do |content|
-            menu_content(content)
+      Components::DropdownMenu() do |menu|
+        menu.with_trigger_button(variant: :ghost, class: "gap-x-1.5") do
+          site_name = Smallerworld.application.site_name
+          image_tag(
+            "logo.png",
+            alt: [ site_name, "logo" ].join(" "),
+            class: "size-6",
+            data: {
+              icon: "inline-start",
+            },
+          )
+          span(class: "font-heading font-semibold text-lg") do
+            site_name
           end
         end
-      else
-        button_link_to(root_path, **logo_button_options) do
-          logo_button_content
+        menu.with_content(anchor: :bottom, class: "w-56") do |content|
+          menu_content(content)
         end
       end
     end
@@ -30,24 +32,6 @@ class Components::AppHeader < Components::Base
   private
 
   # == Helpers ==
-
-  sig { void }
-  def logo_button_content
-    site_name = Smallerworld.application.site_name
-
-    image_tag(
-      "logo.png",
-      alt: [ site_name, "logo" ].join(" "),
-      class: "size-6",
-      data: {
-        icon: "inline-start",
-      },
-    )
-
-    span(class: "font-heading font-semibold text-lg") do
-      site_name
-    end
-  end
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
@@ -62,36 +46,35 @@ class Components::AppHeader < Components::Base
         end
       end
       content.separator
-    elsif !hotwire_native_app?
-      content.group do
-        # content.label { "[some group]" }
-        content.link_item_to(:home) do
-          Icon("huge/home-01")
-          span { "home" }
+    elsif !hotwire_native_app? && (current_user = @current_user)
+      content.link_item_to(:home) do
+        Icon("huge/home-01")
+        span { "home" }
+      end
+      if (world = current_user.owned_worlds.chronological.first)
+        content.link_item_to(world) do
+          Icon("huge/earth")
+          span { world.name }
         end
-        if (world = @current_user&.owned_worlds&.chronological&.first)
-          content.link_item_to(world) do
-            Icon("huge/earth")
-            span { world.name }
-          end
-        end
-        # content.button_item { "[some item]" }
       end
       content.separator
     end
 
-    form_with(url: session_path, method: :delete, data: {
-      controller: "haptic-bridge",
-      action: "turbo:submit-end->haptic-bridge#vibrate",
-    }) do
-      content.button_item(type: :submit, variant: :destructive) do
-        Icon("huge/logout-01")
-        span { "sign out" }
+    if @current_user
+      form_with(url: session_path, method: :delete, data: {
+        controller: "haptic-bridge",
+        action: "turbo:submit-end->haptic-bridge#vibrate",
+      }) do
+        content.button_item(type: :submit, variant: :destructive) do
+          Icon("huge/logout-01")
+          span { "sign out" }
+        end
       end
-      # if Rails.env.development?
-      #   content.separator
-      #   # ...
-      # end
+    else
+      content.link_item_to(new_session_path) do
+        Icon("huge/door-01")
+        span { "sign in" }
+      end
     end
   end
 end

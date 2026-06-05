@@ -64,7 +64,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
             autocomplete: "one-time-code",
             maxlength: 6,
             pattern: "[0-9]{6}",
-            value: Rails.env.development? ? @verification_request.verification_code : nil,
+            value: (@verification_request.verification_code if Rails.env.development?),
           )
           if Rails.env.development?
             field.description(class: "text-xs text-center") do
