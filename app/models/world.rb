@@ -183,8 +183,8 @@ class World < ApplicationRecord
 
   # == Callbacks ==
 
-  sig { void }
-  def touch_cards
+  sig { params(args: T.untyped).void }
+  def touch_cards(*args)
     cards.find_each(&:touch)
   end
 end

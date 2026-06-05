@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class MediaPreviewsController < ApplicationController
+class MediaPreviewsController < PublicController
   # GET /media_previews/:signed_id
   def show
     signed_id = params.fetch(:signed_id)
