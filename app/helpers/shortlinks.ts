@@ -14,8 +14,8 @@ export const useShortlink = (
   return url;
 };
 
-export const shortlinkIfAvailable = (url: URL): void => {
-  if (url.hostname === "smallerworld.club") {
-    url.hostname = "smlr.world";
-  }
+export const shortlinkIfAvailable = (_url: URL): void => {
+  // if (url.hostname === "smallerworld.club") {
+  //   url.hostname = "smlr.world";
+  // }
 };
