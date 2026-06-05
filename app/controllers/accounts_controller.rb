@@ -4,7 +4,8 @@
 class AccountsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access only: [ :new, :create ]
+  allow_unauthenticated_access
+  skip_verify_authorized
 
   # == Actions ==
 
