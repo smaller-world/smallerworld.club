@@ -42,7 +42,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 2.0", require: false
+gem "image_processing", "~> 2.0"
 gem "ruby-vips", "~> 2.3", require: false
 gem "mini_magick", "~> 5.3", group: :development, require: false # or else Tapioca rbi generation fails
 
