@@ -5,7 +5,7 @@ class WorldCardsController < ApplicationController
   # == Configuration ==
 
   allow_unauthenticated_access
-  skip_verify_authorized only: :unlinked
+  skip_verify_authorized
 
   # == Actions ==
 
@@ -19,7 +19,6 @@ class WorldCardsController < ApplicationController
   # GET /world_cards/:id/download
   def download
     card = find_card
-    authorize!(card, to: :show?)
     pkpass_path = card.passkit_generator.generate_and_sign
     send_file(
       pkpass_path,
