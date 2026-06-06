@@ -12,7 +12,6 @@ class WorldCardsController < ApplicationController
   # GET /world_cards/:id
   def show
     card = find_card
-    authorize!(card)
     render Views::WorldCards::Show.new(card:)
   end
 

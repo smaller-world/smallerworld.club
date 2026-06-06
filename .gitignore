@@ -44,6 +44,7 @@ sorbet/rbi/hidden-definitions/errors.txt
 # Ignore built assets.
 /app/assets/builds/*
 !/app/assets/builds/.keep
+/public/assets/
 
 # Ignore node_modules.
 /node_modules
