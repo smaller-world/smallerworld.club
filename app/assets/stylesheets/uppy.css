@@ -90,6 +90,14 @@
     }
 
     .uppy-ImageCropper-container {
+      .cropper-drag-box {
+        @apply pointer-events-none;
+      }
+
+      .cropper-crop-box {
+        @apply pointer-events-auto;
+      }
+
       .cropper-view-box {
         @apply outline-accent-foreground dark:outline-background;
       }
@@ -97,6 +105,42 @@
       .cropper-point,
       .cropper-line {
         @apply bg-accent-foreground dark:bg-background;
+      }
+
+      .cropper-point {
+        @apply size-3;
+
+        &[data-cropper-action="ne"] {
+          @apply -top-1.5 -right-1.5;
+        }
+
+        &[data-cropper-action="nw"] {
+          @apply -top-1.5 -left-1.5;
+        }
+
+        &[data-cropper-action="sw"] {
+          @apply -bottom-1.5 -left-1.5;
+        }
+
+        &[data-cropper-action="se"] {
+          @apply -right-1.5 -bottom-1.5;
+        }
+
+        &[data-cropper-action="n"] {
+          @apply -top-1.5;
+        }
+
+        &[data-cropper-action="e"] {
+          @apply -right-1.5;
+        }
+
+        &[data-cropper-action="s"] {
+          @apply -bottom-1.5;
+        }
+
+        &[data-cropper-action="w"] {
+          @apply -left-1.5;
+        }
       }
     }
   }

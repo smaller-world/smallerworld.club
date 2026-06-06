@@ -2,20 +2,20 @@
   "settings": {},
   "rules": [
     {
-      "patterns": ["^/home$"],
+      "patterns": ["^\/home$"],
       "properties": {
         "presentation": "replace_root"
       }
     },
     {
-      "patterns": ["/new$", "/edit$", "^/world_invitations/.+$"],
+      "patterns": ["\/new$", "\/edit$", "^\/world_invitations\/.+$"],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false
       }
     },
     {
-      "patterns": ["^/session/new$"],
+      "patterns": ["^\/session\/new$"],
       "properties": {
         "context": "default",
         "presentation": "replace_root",
@@ -23,19 +23,24 @@
       }
     },
     {
-      "patterns": ["^/worlds/new$", "posts/new$"],
+      "patterns": [
+        "^\/worlds\/new$",
+        "^\/worlds\/[\\w-]+\/edit$",
+        "\/posts\/new",
+        "^\/posts\/[\\w-]+\/edit$"
+      ],
       "properties": {
         "modal_style": "full"
       }
     },
     {
-      "patterns": ["^/worlds/[\\w-]+$"],
+      "patterns": ["^\/worlds\/[\\w-]+$"],
       "properties": {
         "interactive_content_pop_gesture_enabled": false
       }
     },
     {
-      "patterns": ["^/scan_qr_code$"],
+      "patterns": ["^\/scan_qr_code$"],
       "properties": {
         "view_controller": "qr_code_scanner",
         "context": "modal"
