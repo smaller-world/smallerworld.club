@@ -115,10 +115,7 @@ jobs:
         run: mise x -- bun install
       - name: Prepare database
         run: bin/rails db:test:prepare
-      - name:
-          Run tests
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
+      - name: Run tests
         run: mise test -vv
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}

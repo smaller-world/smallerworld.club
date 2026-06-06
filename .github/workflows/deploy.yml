@@ -61,5 +61,6 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: production
-          disable_telemetry: true
           sourcemaps: ./app/assets/builds/
+          disable_telemetry: true
+          ignore_missing: true
