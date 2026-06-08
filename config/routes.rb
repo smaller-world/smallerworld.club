@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       resource :push_token, only: [ :update ] do
         post :test
       end
-      resource :world_cards, only: [ :update ]
+      # resource :world_cards, only: [ :update ]
     end
   end
 
@@ -64,6 +64,10 @@ Rails.application.routes.draw do
 
   # == Worlds
   resources :worlds, except: :index do
+    member do
+      post :leave
+    end
+
     resources :posts, only: [ :index, :new, :create ]
     resources :world_keys,
       path: "/keys",
@@ -75,6 +79,10 @@ Rails.application.routes.draw do
       path: "/invitations",
       as: :key_grants,
       only: :new
+    resource :world_settings,
+      path: "/settings",
+      as: :settings,
+      only: :show
   end
 
   # == World Keys
@@ -95,7 +103,16 @@ Rails.application.routes.draw do
   end
 
   # == World Key Grants
-  resources :world_key_grants, only: [ :show ], param: :grant, path: "/world_invitations"
+  resources(
+    :world_key_grants,
+    only: [ :show ],
+    param: :grant,
+    path: "/world_invitations",
+  ) do
+    member do
+      post :accept
+    end
+  end
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do

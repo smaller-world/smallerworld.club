@@ -6,7 +6,7 @@ import { addCleanupAction } from "#helpers/stimulus_helpers";
 import FormController from "./form_controller";
 import type { PassData } from "./passes_bridge_controller";
 
-export default class UnlinkedWorldCardsFormController extends FormController {
+export default class DevicePassesFormController extends FormController {
   // == Targets ==
 
   static targets = [...FormController.targets, "inputTemplate", "input"];

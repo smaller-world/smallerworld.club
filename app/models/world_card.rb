@@ -6,15 +6,14 @@
 #
 # Table name: world_cards
 #
-#  id                     :uuid             not null, primary key
-#  granted_key_color      :string           not null
-#  granted_key_created_at :timestamptz
-#  revoked_at             :timestamptz
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  cardholder_id          :uuid
-#  device_id              :uuid
-#  world_id               :uuid             not null
+#  id                :uuid             not null, primary key
+#  granted_key_color :string           not null
+#  revoked_at        :timestamptz
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  cardholder_id     :uuid
+#  device_id         :uuid
+#  world_id          :uuid             not null
 #
 # Indexes
 #
@@ -36,10 +35,13 @@ class WorldCard < ApplicationRecord
   enumerize :granted_key_color, in: WorldKey.color.values
 
   sig { returns(T::Boolean) }
-  def granted_key_created? = granted_key_created_at?
+  def revoked? = revoked_at?
 
   sig { returns(T::Boolean) }
-  def revoked? = revoked_at?
+  def active? = !revoked?
+
+  sig { returns(T::Boolean) }
+  def unlinked? = !device_id?
 
   # == Associations ==
 
@@ -78,13 +80,9 @@ class WorldCard < ApplicationRecord
   scope :revoked, -> { where.not(revoked_at: nil) }
   scope :linked, -> { where.not(device_id: nil) }
   scope :unlinked, -> { where(device_id: nil) }
-  scope :pending_granted_key_creation, -> { where(granted_key_created_at: nil) }
 
   # == Hooks ==
 
-  after_save :create_granted_key!,
-    if: [ :device_id?, :device_id_previously_changed? ],
-    unless: :granted_key_created?
   after_update_commit :trigger_pass_update_later, unless: :revoked_prior_to_last_save?
 
   # == Pass Updates ==
@@ -124,19 +122,6 @@ class WorldCard < ApplicationRecord
   sig { returns(Passkit::Generator) }
   def passkit_generator
     Passkit::Generator.new(pass!)
-  end
-
-  sig { void }
-  def create_granted_key!
-    if (cardholder = self.cardholder)
-      cardholder.world_keys.find_or_create_by!(
-        world_id:,
-        color: granted_key_color,
-      ) do |key|
-        key.accepted_at = Time.current
-      end
-      update!(granted_key_created_at: Time.current)
-    end
   end
 
   sig { returns(TrueClass) }

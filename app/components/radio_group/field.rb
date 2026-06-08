@@ -38,7 +38,7 @@ class Components::RadioGroup::Field < Components::Field
       attributes: T.untyped,
     ).void
   end
-  def radio_group_item(value:, input: {}, checked: nil, **attributes)
+  def radio_group_item_for(value, input: {}, checked: nil, **attributes)
     render Components::RadioGroup::Item.new(
       form: @form,
       field: @field,

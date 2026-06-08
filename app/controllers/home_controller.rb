@@ -15,12 +15,20 @@ class HomeController < ApplicationController
 
   # == Actions ==
 
-  # GET /home[?require_app=1]
+  # GET /home[?require_app=1][&pass_serial_numbers[]=...]
   def show
     respond_to do |format|
       format.html do
         if (current_user = Current.user)
-          render Views::Home::Show.new(current_user:)
+          world_cards_pending_key_creation = if (pass_serial_numbers = params[:pass_serial_numbers])
+            current_user
+              .world_cards_pending_key_creation(pass_serial_numbers:)
+              .includes(:world)
+          end
+          render Views::Home::Show.new(
+            current_user:,
+            world_cards_pending_key_creation:,
+          )
         else
           redirect_to(new_session_path)
         end

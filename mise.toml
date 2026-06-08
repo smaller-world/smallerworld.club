@@ -16,6 +16,7 @@ restart = { run = "bin/overmind restart" }
 
 # Rails shortcuts
 rr = { run = "bin/rails restart" }
+rk = { run = "bin/rails kill" }
 rc = { run = "bin/rails console" }
 
 # Development tasks

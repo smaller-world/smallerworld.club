@@ -1,11 +1,4 @@
-@custom-variant dark {
-  @media (prefers-color-scheme: dark) {
-    :where(body:not(.no-dark)) & {
-      @slot;
-    }
-  }
-}
-
+/*  == Base == */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.153 0.006 107.1);
@@ -40,32 +33,6 @@
   --sidebar-border: oklch(0.93 0.007 106.5);
   --sidebar-ring: oklch(0.737 0.021 106.9);
 
-  /* Lexxy */
-  --lexxy-color-selected: var(--color-olive-300);
-  --lexxy-color-selected-hover: var(--color-olive-100);
-  --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
-  --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
-  --lexxy-focus-ring-size: 0px;
-  --lexxy-color-ink: var(--color-olive-950);
-  --lexxy-color-red: var(--destructive);
-  --lexxy-radius: var(--radius-md);
-  --lexxy-content-margin: var(--spacing);
-  --lexxy-color-accent-dark: var(--color-accent-foreground);
-  --lexxy-color-ink-lightest: var(--color-secondary);
-  --lexxy-color-accent-medium: color-mix(
-    in oklab,
-    var(--color-primary) 80%,
-    transparent
-  );
-  /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
-
-  /* World keys */
-  --world-key-color-green: #70b200;
-  --world-key-color-orange: #d55b31;
-  --world-key-color-red: #92224c;
-  --world-key-color-blue: #404299;
-  --world-key-color-pink: #cc5555;
-
   @media (prefers-color-scheme: dark) {
     --background: oklch(0.153 0.006 107.1);
     --foreground: oklch(0.988 0.003 106.5);
@@ -98,30 +65,12 @@
     --sidebar-accent-foreground: oklch(0.988 0.003 106.5);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.58 0.031 107.3);
-
-    /* Lexxy */
-    --lexxy-color-ink: var(--color-olive-50);
-    --lexxy-color-ink-inverted: var(--color-olive-800);
-    --lexxy-color-ink-lightest: var(--color-olive-700);
-    --lexxy-color-selected: var(--color-olive-600);
-    --lexxy-color-selected-hover: var(--color-olive-700);
-
-    /* World keys */
-    --world-key-color-green: #c6f871;
-    --world-key-color-pink: #f48c8c;
-    --world-key-color-red: #ac3d66;
-    --world-key-color-blue: #5d5fae;
-    --world-key-color-orange: #ec7d56;
   }
 }
 
 @theme inline {
-  --font-sans: Manrope, sans-serif;
   --font-heading: Figtree, sans-serif;
-  --font-cursive: "Single Day", "Comic Sans MS", Manrope, cursive;
-  --font-emoji:
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji", sans-serif;
+  --font-sans: Manrope, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -153,7 +102,6 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -161,9 +109,76 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+}
 
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  html {
+    @apply font-sans;
+  }
+}
+
+/* == Customizations == */
+
+:root {
+  /* Lexxy */
+  --lexxy-color-selected: var(--color-olive-300);
+  --lexxy-color-selected-hover: var(--color-olive-100);
+  --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
+  --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
+  --lexxy-focus-ring-size: 0px;
+  --lexxy-color-ink: var(--color-olive-950);
+  --lexxy-color-red: var(--destructive);
+  --lexxy-radius: var(--radius-md);
+  --lexxy-content-margin: var(--spacing);
+  --lexxy-color-accent-dark: var(--color-accent-foreground);
+  --lexxy-color-ink-lightest: var(--color-secondary);
+  --lexxy-color-accent-medium: color-mix(
+    in oklab,
+    var(--color-primary) 80%,
+    transparent
+  );
+  /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
+
+  /* World keys */
+  --world-key-color-green: #70b200;
+  --world-key-color-orange: #d55b31;
+  --world-key-color-red: #92224c;
+  --world-key-color-blue: #404299;
+  --world-key-color-pink: #cc5555;
+
+  @media (prefers-color-scheme: dark) {
+    /* Lexxy */
+    --lexxy-color-ink: var(--color-olive-50);
+    --lexxy-color-ink-inverted: var(--color-olive-800);
+    --lexxy-color-ink-lightest: var(--color-olive-700);
+    --lexxy-color-selected: var(--color-olive-600);
+    --lexxy-color-selected-hover: var(--color-olive-700);
+
+    /* World keys */
+    --world-key-color-green: #c6f871;
+    --world-key-color-pink: #f48c8c;
+    --world-key-color-red: #ac3d66;
+    --world-key-color-blue: #5d5fae;
+    --world-key-color-orange: #ec7d56;
+  }
+}
+
+@theme inline {
+  --font-cursive: "Single Day", "Comic Sans MS", Manrope, cursive;
   --radius-world-icon: calc(1 / 4.5 * 100%);
-
   --animate-caret-blink: caret-blink 1s ease-out infinite;
 
   @keyframes caret-blink {
@@ -180,24 +195,9 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
   body {
-    @apply bg-background text-foreground;
-
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  html {
-    @apply font-sans;
-  }
-
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    @apply cursor-pointer;
   }
 
   h1,
@@ -236,5 +236,13 @@
   .hidden[data-hidden-inline] {
     display: revert-layer;
     opacity: 0;
+  }
+}
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    :where(body:not(.no-dark)) & {
+      @slot;
+    }
   }
 }

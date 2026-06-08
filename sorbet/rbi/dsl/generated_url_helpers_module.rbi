@@ -10,6 +10,9 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_key_grant_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def accept_world_keys_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -28,9 +31,6 @@ module GeneratedUrlHelpersModule
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def device_world_cards_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def download_world_card_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -47,6 +47,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def home_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def leave_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def logs_url(*args); end
@@ -224,6 +227,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_settings_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_url(*args); end

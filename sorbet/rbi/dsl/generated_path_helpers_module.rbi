@@ -10,6 +10,9 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_key_grant_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def accept_world_keys_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -28,9 +31,6 @@ module GeneratedPathHelpersModule
   def device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def device_world_cards_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def download_world_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -47,6 +47,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def home_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def leave_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def logs_path(*args); end
@@ -227,6 +230,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_settings_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_world_cards_path(*args); end

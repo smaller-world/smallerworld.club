@@ -24,8 +24,11 @@ module NormalizesText
     sig { params(attributes: T.any(Symbol, String)).void }
     def strips_text(*attributes)
       normalizes(*T.unsafe(attributes), with: ->(value) {
-        s = T.cast(value, String)
-        s.strip
+        if value.is_a?(String)
+          value.strip
+        else
+          value
+        end
       })
     end
   end

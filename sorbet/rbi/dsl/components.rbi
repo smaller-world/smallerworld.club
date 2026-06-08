@@ -6,6 +6,7 @@
 
 
 module Components
+  # app/components/accept_world_key_form.rb
   sig do
     params(
       key: ::WorldKey,
@@ -15,6 +16,18 @@ module Components
   end
   def AcceptWorldKeyForm(key:, **attributes, &block); end
 
+  # app/components/accept_world_key_grant_form.rb
+  sig do
+    params(
+      key: ::WorldKey,
+      card: T.nilable(::WorldCard),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
+    ).void
+  end
+  def AcceptWorldKeyGrantForm(key:, card:, **attributes, &block); end
+
+  # app/components/account_form.rb
   sig do
     params(
       user: ::User,
@@ -24,6 +37,7 @@ module Components
   end
   def AccountForm(user:, **attributes, &block); end
 
+  # app/components/account_time_zone_form.rb
   sig do
     params(
       current_user: ::User,
@@ -33,6 +47,7 @@ module Components
   end
   def AccountTimeZoneForm(current_user:, **attributes, &block); end
 
+  # app/components/alert.rb
   sig do
     params(
       variant: ::Symbol,
@@ -42,6 +57,7 @@ module Components
   end
   def Alert(variant: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/app_flash_alert.rb
   sig do
     params(
       message: ::String,
@@ -52,6 +68,7 @@ module Components
   end
   def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/app_header.rb
   sig do
     params(
       element: T.nilable(::Symbol),
@@ -61,6 +78,7 @@ module Components
   end
   def AppHeader(element: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/app_layout.rb
   sig do
     params(
       page_title: T.nilable(T.any(::String, T::Array[::String])),
@@ -74,6 +92,7 @@ module Components
   end
   def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/badge.rb
   sig do
     params(
       variant: ::Symbol,
@@ -83,6 +102,7 @@ module Components
   end
   def Badge(variant: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/button.rb
   sig do
     params(
       variant: ::Symbol,
@@ -93,6 +113,7 @@ module Components
   end
   def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/card.rb
   sig do
     params(
       size: ::Symbol,
@@ -102,6 +123,31 @@ module Components
   end
   def Card(size: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/checkbox.rb
+  sig do
+    params(
+      value: T.any(::Enumerize::Value, ::String, ::Symbol),
+      checked: T.nilable(T::Boolean),
+      multiple: T::Boolean,
+      input: T::Hash[::Symbol, T.untyped],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Checkbox).void)
+    ).void
+  end
+  def Checkbox(value: T.unsafe(nil), checked: T.unsafe(nil), multiple: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+
+  # app/components/checkbox_group.rb
+  sig do
+    params(
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::CheckboxGroup).void)
+    ).void
+  end
+  def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+  # app/components/clearable_file_input.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -115,6 +161,7 @@ module Components
   end
   def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
 
+  # app/components/combobox.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -129,6 +176,17 @@ module Components
   end
   def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/device_passes_form.rb
+  sig do
+    params(
+      url: T.untyped,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
+    ).void
+  end
+  def DevicePassesForm(url:, **attributes, &block); end
+
+  # app/components/device_push_token_form.rb
   sig do
     params(
       current_device: ::Device,
@@ -138,15 +196,7 @@ module Components
   end
   def DevicePushTokenForm(current_device:, **attributes, &block); end
 
-  sig do
-    params(
-      current_device: ::Device,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DeviceWorldCardsForm).void)
-    ).void
-  end
-  def DeviceWorldCardsForm(current_device:, **attributes, &block); end
-
+  # app/components/dialog.rb
   sig do
     params(
       id: ::String,
@@ -156,9 +206,11 @@ module Components
   end
   def Dialog(id: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/dropdown_menu.rb
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
   def DropdownMenu(**attributes, &block); end
 
+  # app/components/emoji_input.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -170,6 +222,7 @@ module Components
   end
   def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/empty.rb
   sig do
     params(
       element: T.nilable(::Symbol),
@@ -179,6 +232,7 @@ module Components
   end
   def Empty(element: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/existing_reaction_form.rb
   sig do
     params(
       post: ::Post,
@@ -190,6 +244,7 @@ module Components
   end
   def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
 
+  # app/components/field.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -203,15 +258,18 @@ module Components
   end
   def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/field_group.rb
   sig do
     params(
-      element: T.nilable(::Symbol),
+      form: T.nilable(::PhlexFormBuilder),
+      field: T.nilable(::Symbol),
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::FieldGroup).void)
     ).void
   end
-  def FieldGroup(element: T.unsafe(nil), **attributes, &block); end
+  def FieldGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/field_label.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -223,6 +281,7 @@ module Components
   end
   def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/field_set.rb
   sig do
     params(
       element: T.nilable(::Symbol),
@@ -232,6 +291,7 @@ module Components
   end
   def FieldSet(element: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/file_input.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -242,6 +302,7 @@ module Components
   end
   def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/file_item.rb
   sig do
     params(
       attachment: ::ActiveStorage::Attachment,
@@ -250,6 +311,7 @@ module Components
   end
   def FileItem(attachment:, &block); end
 
+  # app/components/hint_alert.rb
   sig do
     params(
       message: ::String,
@@ -259,6 +321,7 @@ module Components
   end
   def HintAlert(message:, **attributes, &block); end
 
+  # app/components/image_stack.rb
   sig do
     params(
       images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
@@ -270,6 +333,7 @@ module Components
   end
   def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/input.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -280,6 +344,7 @@ module Components
   end
   def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/input_group.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -290,6 +355,7 @@ module Components
   end
   def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/item.rb
   sig do
     params(
       variant: ::Symbol,
@@ -300,6 +366,7 @@ module Components
   end
   def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/item_group.rb
   sig do
     params(
       element: T.nilable(::Symbol),
@@ -309,6 +376,17 @@ module Components
   end
   def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/label.rb
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::Label).void)
+    ).void
+  end
+  def Label(element: T.unsafe(nil), **attributes, &block); end
+
+  # app/components/lexxy_editor.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -319,6 +397,7 @@ module Components
   end
   def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/new_reaction_form.rb
   sig do
     params(
       reaction: ::Reaction,
@@ -328,6 +407,7 @@ module Components
   end
   def NewReactionForm(reaction:, **attributes, &block); end
 
+  # app/components/next_page_control.rb
   sig do
     params(
       target: ::Object,
@@ -342,6 +422,7 @@ module Components
   end
   def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/otp_input.rb
   sig do
     params(
       max_length: ::Integer,
@@ -355,6 +436,7 @@ module Components
   end
   def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/phone_number_input.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -369,6 +451,7 @@ module Components
   end
   def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), required: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/phone_number_verification_request_form.rb
   sig do
     params(
       verification_request: ::PhoneNumberVerificationRequest,
@@ -378,6 +461,7 @@ module Components
   end
   def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
 
+  # app/components/post_card.rb
   sig do
     params(
       post: ::Post,
@@ -387,6 +471,7 @@ module Components
   end
   def PostCard(post:, **attributes, &block); end
 
+  # app/components/post_form.rb
   sig do
     params(
       post: ::Post,
@@ -396,6 +481,7 @@ module Components
   end
   def PostForm(post:, **attributes, &block); end
 
+  # app/components/post_reactions.rb
   sig do
     params(
       post: ::Post,
@@ -408,6 +494,7 @@ module Components
   end
   def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/radio_group.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -418,6 +505,7 @@ module Components
   end
   def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/reply_initiation_form.rb
   sig do
     params(
       reply_initiation: ::ReplyInitiation,
@@ -427,6 +515,7 @@ module Components
   end
   def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
 
+  # app/components/separator.rb
   sig do
     params(
       orientation: ::Symbol,
@@ -437,6 +526,7 @@ module Components
   end
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/spinner.rb
   sig do
     params(
       element: T.nilable(::Symbol),
@@ -446,6 +536,7 @@ module Components
   end
   def Spinner(element: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/streamed_log_message.rb
   sig do
     params(
       message: ::String,
@@ -458,6 +549,7 @@ module Components
   end
   def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/streamed_toast.rb
   sig do
     params(
       message: ::String,
@@ -468,6 +560,7 @@ module Components
   end
   def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/textarea.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -478,15 +571,7 @@ module Components
   end
   def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::UnlinkedWorldCardsForm).void)
-    ).void
-  end
-  def UnlinkedWorldCardsForm(element: T.unsafe(nil), **attributes, &block); end
-
+  # app/components/uppy_dnd.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -506,6 +591,7 @@ module Components
   end
   def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/uppy_group.rb
   sig do
     params(
       form: T.nilable(::PhlexFormBuilder),
@@ -522,6 +608,7 @@ module Components
   end
   def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
+  # app/components/world_form.rb
   sig do
     params(
       world: ::World,
@@ -531,6 +618,7 @@ module Components
   end
   def WorldForm(world:, **attributes, &block); end
 
+  # app/components/world_key_grant_form.rb
   sig do
     params(
       world: ::World,
@@ -541,6 +629,7 @@ module Components
   end
   def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
 
+  # app/components/world_next_page_control.rb
   sig do
     params(
       world: ::World,
@@ -551,6 +640,7 @@ module Components
   end
   def WorldNextPageControl(world:, pagy:, **attributes, &block); end
 
+  # app/components/world_post_items.rb
   sig do
     params(
       posts: T::Enumerable[::Post],
@@ -560,6 +650,7 @@ module Components
   def WorldPostItems(posts:, &block); end
 
   class << self
+    # app/components/accept_world_key_form.rb
     sig do
       params(
         key: ::WorldKey,
@@ -569,6 +660,18 @@ module Components
     end
     def AcceptWorldKeyForm(key:, **attributes, &block); end
 
+    # app/components/accept_world_key_grant_form.rb
+    sig do
+      params(
+        key: ::WorldKey,
+        card: T.nilable(::WorldCard),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
+      ).void
+    end
+    def AcceptWorldKeyGrantForm(key:, card:, **attributes, &block); end
+
+    # app/components/account_form.rb
     sig do
       params(
         user: ::User,
@@ -578,6 +681,7 @@ module Components
     end
     def AccountForm(user:, **attributes, &block); end
 
+    # app/components/account_time_zone_form.rb
     sig do
       params(
         current_user: ::User,
@@ -587,6 +691,7 @@ module Components
     end
     def AccountTimeZoneForm(current_user:, **attributes, &block); end
 
+    # app/components/alert.rb
     sig do
       params(
         variant: ::Symbol,
@@ -596,6 +701,7 @@ module Components
     end
     def Alert(variant: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/app_flash_alert.rb
     sig do
       params(
         message: ::String,
@@ -606,6 +712,7 @@ module Components
     end
     def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/app_header.rb
     sig do
       params(
         element: T.nilable(::Symbol),
@@ -615,6 +722,7 @@ module Components
     end
     def AppHeader(element: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/app_layout.rb
     sig do
       params(
         page_title: T.nilable(T.any(::String, T::Array[::String])),
@@ -628,6 +736,7 @@ module Components
     end
     def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/badge.rb
     sig do
       params(
         variant: ::Symbol,
@@ -637,6 +746,7 @@ module Components
     end
     def Badge(variant: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/button.rb
     sig do
       params(
         variant: ::Symbol,
@@ -647,6 +757,7 @@ module Components
     end
     def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/card.rb
     sig do
       params(
         size: ::Symbol,
@@ -656,6 +767,31 @@ module Components
     end
     def Card(size: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/checkbox.rb
+    sig do
+      params(
+        value: T.any(::Enumerize::Value, ::String, ::Symbol),
+        checked: T.nilable(T::Boolean),
+        multiple: T::Boolean,
+        input: T::Hash[::Symbol, T.untyped],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Checkbox).void)
+      ).void
+    end
+    def Checkbox(value: T.unsafe(nil), checked: T.unsafe(nil), multiple: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+
+    # app/components/checkbox_group.rb
+    sig do
+      params(
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::CheckboxGroup).void)
+      ).void
+    end
+    def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    # app/components/clearable_file_input.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -669,6 +805,7 @@ module Components
     end
     def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
 
+    # app/components/combobox.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -683,6 +820,17 @@ module Components
     end
     def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), default_value: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/device_passes_form.rb
+    sig do
+      params(
+        url: T.untyped,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
+      ).void
+    end
+    def DevicePassesForm(url:, **attributes, &block); end
+
+    # app/components/device_push_token_form.rb
     sig do
       params(
         current_device: ::Device,
@@ -692,15 +840,7 @@ module Components
     end
     def DevicePushTokenForm(current_device:, **attributes, &block); end
 
-    sig do
-      params(
-        current_device: ::Device,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DeviceWorldCardsForm).void)
-      ).void
-    end
-    def DeviceWorldCardsForm(current_device:, **attributes, &block); end
-
+    # app/components/dialog.rb
     sig do
       params(
         id: ::String,
@@ -710,6 +850,7 @@ module Components
     end
     def Dialog(id: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/dropdown_menu.rb
     sig do
       params(
         attributes: T.untyped,
@@ -718,6 +859,7 @@ module Components
     end
     def DropdownMenu(**attributes, &block); end
 
+    # app/components/emoji_input.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -729,6 +871,7 @@ module Components
     end
     def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/empty.rb
     sig do
       params(
         element: T.nilable(::Symbol),
@@ -738,6 +881,7 @@ module Components
     end
     def Empty(element: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/existing_reaction_form.rb
     sig do
       params(
         post: ::Post,
@@ -749,6 +893,7 @@ module Components
     end
     def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
 
+    # app/components/field.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -762,15 +907,18 @@ module Components
     end
     def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/field_group.rb
     sig do
       params(
-        element: T.nilable(::Symbol),
+        form: T.nilable(::PhlexFormBuilder),
+        field: T.nilable(::Symbol),
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::FieldGroup).void)
       ).void
     end
-    def FieldGroup(element: T.unsafe(nil), **attributes, &block); end
+    def FieldGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/field_label.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -782,6 +930,7 @@ module Components
     end
     def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/field_set.rb
     sig do
       params(
         element: T.nilable(::Symbol),
@@ -791,6 +940,7 @@ module Components
     end
     def FieldSet(element: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/file_input.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -801,6 +951,7 @@ module Components
     end
     def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/file_item.rb
     sig do
       params(
         attachment: ::ActiveStorage::Attachment,
@@ -809,6 +960,7 @@ module Components
     end
     def FileItem(attachment:, &block); end
 
+    # app/components/hint_alert.rb
     sig do
       params(
         message: ::String,
@@ -818,6 +970,7 @@ module Components
     end
     def HintAlert(message:, **attributes, &block); end
 
+    # app/components/image_stack.rb
     sig do
       params(
         images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
@@ -829,6 +982,7 @@ module Components
     end
     def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/input.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -839,6 +993,7 @@ module Components
     end
     def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/input_group.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -849,6 +1004,7 @@ module Components
     end
     def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/item.rb
     sig do
       params(
         variant: ::Symbol,
@@ -859,6 +1015,7 @@ module Components
     end
     def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/item_group.rb
     sig do
       params(
         element: T.nilable(::Symbol),
@@ -868,6 +1025,17 @@ module Components
     end
     def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/label.rb
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::Label).void)
+      ).void
+    end
+    def Label(element: T.unsafe(nil), **attributes, &block); end
+
+    # app/components/lexxy_editor.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -878,6 +1046,7 @@ module Components
     end
     def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/new_reaction_form.rb
     sig do
       params(
         reaction: ::Reaction,
@@ -887,6 +1056,7 @@ module Components
     end
     def NewReactionForm(reaction:, **attributes, &block); end
 
+    # app/components/next_page_control.rb
     sig do
       params(
         target: ::Object,
@@ -901,6 +1071,7 @@ module Components
     end
     def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/otp_input.rb
     sig do
       params(
         max_length: ::Integer,
@@ -914,6 +1085,7 @@ module Components
     end
     def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/phone_number_input.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -928,6 +1100,7 @@ module Components
     end
     def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), default_country_code: T.unsafe(nil), disabled: T.unsafe(nil), required: T.unsafe(nil), value: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/phone_number_verification_request_form.rb
     sig do
       params(
         verification_request: ::PhoneNumberVerificationRequest,
@@ -937,6 +1110,7 @@ module Components
     end
     def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
 
+    # app/components/post_card.rb
     sig do
       params(
         post: ::Post,
@@ -946,6 +1120,7 @@ module Components
     end
     def PostCard(post:, **attributes, &block); end
 
+    # app/components/post_form.rb
     sig do
       params(
         post: ::Post,
@@ -955,6 +1130,7 @@ module Components
     end
     def PostForm(post:, **attributes, &block); end
 
+    # app/components/post_reactions.rb
     sig do
       params(
         post: ::Post,
@@ -967,6 +1143,7 @@ module Components
     end
     def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/radio_group.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -977,6 +1154,7 @@ module Components
     end
     def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/reply_initiation_form.rb
     sig do
       params(
         reply_initiation: ::ReplyInitiation,
@@ -986,6 +1164,7 @@ module Components
     end
     def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
 
+    # app/components/separator.rb
     sig do
       params(
         orientation: ::Symbol,
@@ -996,6 +1175,7 @@ module Components
     end
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/spinner.rb
     sig do
       params(
         element: T.nilable(::Symbol),
@@ -1005,6 +1185,7 @@ module Components
     end
     def Spinner(element: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/streamed_log_message.rb
     sig do
       params(
         message: ::String,
@@ -1017,6 +1198,7 @@ module Components
     end
     def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/streamed_toast.rb
     sig do
       params(
         message: ::String,
@@ -1027,6 +1209,7 @@ module Components
     end
     def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/textarea.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -1037,15 +1220,7 @@ module Components
     end
     def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::UnlinkedWorldCardsForm).void)
-      ).void
-    end
-    def UnlinkedWorldCardsForm(element: T.unsafe(nil), **attributes, &block); end
-
+    # app/components/uppy_dnd.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -1065,6 +1240,7 @@ module Components
     end
     def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/uppy_group.rb
     sig do
       params(
         form: T.nilable(::PhlexFormBuilder),
@@ -1081,6 +1257,7 @@ module Components
     end
     def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
 
+    # app/components/world_form.rb
     sig do
       params(
         world: ::World,
@@ -1090,6 +1267,7 @@ module Components
     end
     def WorldForm(world:, **attributes, &block); end
 
+    # app/components/world_key_grant_form.rb
     sig do
       params(
         world: ::World,
@@ -1100,6 +1278,7 @@ module Components
     end
     def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
 
+    # app/components/world_next_page_control.rb
     sig do
       params(
         world: ::World,
@@ -1110,6 +1289,7 @@ module Components
     end
     def WorldNextPageControl(world:, pagy:, **attributes, &block); end
 
+    # app/components/world_post_items.rb
     sig do
       params(
         posts: T::Enumerable[::Post],

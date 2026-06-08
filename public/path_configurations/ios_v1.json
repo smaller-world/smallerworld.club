@@ -8,7 +8,12 @@
       }
     },
     {
-      "patterns": ["\/new$", "\/edit$", "^\/world_invitations\/.+$"],
+      "patterns": [
+        "\/new$",
+        "\/edit$",
+        "^\/world_invitations\/.+$",
+        "\/settings$"
+      ],
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false

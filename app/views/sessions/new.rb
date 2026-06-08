@@ -43,7 +43,7 @@ class Views::Sessions::New < Views::Base
                 turbo_permanent: true,
               },
             ) do
-              Components::UnlinkedWorldCardsForm()
+              Components::DevicePassesForm(url: unlinked_world_cards_path)
             end
           end
         end

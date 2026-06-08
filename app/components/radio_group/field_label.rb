@@ -39,10 +39,10 @@ class Components::RadioGroup::FieldLabel < Components::FieldLabel
     render Components::RadioGroup::Field.new(
       form: @form,
       field: @field,
+      radio_group: @radio_group,
       id:,
       orientation:,
       invalid:,
-      radio_group: @radio_group,
       **attributes,
       &content
     )

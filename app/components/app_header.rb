@@ -22,7 +22,7 @@ class Components::AppHeader < Components::Base
             site_name
           end
         end
-        menu.with_content(anchor: :bottom, class: "w-56") do |content|
+        menu.with_content(anchor: :bottom) do |content|
           menu_content(content)
         end
       end

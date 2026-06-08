@@ -4,10 +4,11 @@
 class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
-  sig { params(key: WorldKey).void }
-  def initialize(key:)
+  sig { params(key: WorldKey, card: T.nilable(WorldCard)).void }
+  def initialize(key:, card:)
     @key = key
     @world = T.let(@key.world!, World)
+    @card = card
     super()
   end
 
@@ -26,7 +27,7 @@ class Views::WorldKeyGrants::Show < Views::Base
           div(class: "relative") do
             image_tag(@world.page_icon_variant, class: "home-world-icon")
             div(class: "absolute inset-0 flex items-center justify-center") do
-              Icon("huge/key-02", class: "size-14 text-background")
+              Icon("huge/key-02", class: "size-14 text-white")
             end
           end
           span(class: "home-world-label") do
@@ -34,7 +35,7 @@ class Views::WorldKeyGrants::Show < Views::Base
           end
         end
 
-        Components::AcceptWorldKeyForm(key: @key)
+        Components::AcceptWorldKeyGrantForm(key: @key, card: @card)
       end
     end
   end

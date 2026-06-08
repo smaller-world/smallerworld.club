@@ -85,6 +85,15 @@ class WorldsController < ApplicationController
     end
   end
 
+  # POST /worlds/:id/leave
+  def leave
+    current_user = Current.user!
+    world = find_world
+    authorize!(world)
+    world.keys.accepted.where(recipient: current_user).destroy_all
+    recede_or_redirect_to(home_path)
+  end
+
   # DELETE /worlds/:id
   def destroy
     raise NotImplementedError

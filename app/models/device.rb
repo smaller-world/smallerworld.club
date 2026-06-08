@@ -97,15 +97,6 @@ class Device < ApplicationRecord
 
   private
 
-  # == Callbacks ==
-
-  sig { void }
-  def create_granted_keys_on_world_cards!
-    world_cards
-      .pending_granted_key_creation
-      .find_each(&:create_granted_key!)
-  end
-
   sig { void }
   def remove_push_token!
     update!(push_token: nil)

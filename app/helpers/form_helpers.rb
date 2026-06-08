@@ -59,6 +59,18 @@ module FormHelpers
       form: PhlexFormBuilder,
       method: Symbol,
       attributes: T.untyped,
+      content: T.proc.params(field: Components::CheckboxGroup).void,
+    ).void
+  end
+  def checkbox_group_for(form, method, **attributes, &content)
+    Components::CheckboxGroup(form:, field: method, **attributes, &content)
+  end
+
+  sig do
+    params(
+      form: PhlexFormBuilder,
+      method: Symbol,
+      attributes: T.untyped,
       content: T.proc.params(field: Components::RadioGroup).void,
     ).void
   end

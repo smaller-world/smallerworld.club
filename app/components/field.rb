@@ -52,7 +52,7 @@ class Components::Field < Components::Base
       data: {
         slot: "field",
         orientation: @orientation,
-        invalid: (true if invalid?),
+        invalid: ("true" if invalid?),
       },
     ) do
       raw(captured_content) # rubocop:disable Rails/OutputSafety
@@ -311,6 +311,31 @@ class Components::Field < Components::Base
   end
   def uppy_group(value: nil, **attributes)
     render Components::UppyGroup.new(form: @form, field: @field, value:, **attributes)
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def checkbox(**attributes)
+    render Components::Checkbox.new(form: @form, field: @field, **attributes)
+  end
+
+  sig do
+    params(
+      attributes: T.untyped,
+      content: T.proc.params(group: Components::CheckboxGroup).void,
+    ).void
+  end
+  def checkbox_group(**attributes, &content)
+    render Components::CheckboxGroup.new(form: @form, field: @field, **attributes, &content)
+  end
+
+  sig do
+    params(
+      attributes: T.untyped,
+      content: T.proc.params(group: Components::RadioGroup).void,
+    ).void
+  end
+  def radio_group(**attributes, &content)
+    render Components::RadioGroup.new(form: @form, field: @field, **attributes, &content)
   end
 
   # sig { params(attributes: T.untyped).void }

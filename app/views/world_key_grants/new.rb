@@ -20,8 +20,7 @@ class Views::WorldKeyGrants::New < Views::Base
         button_back_to(@world.name, @world) unless hotwire_native_app?
 
         Components::HintAlert(
-          message:
-            "choose wisely! your friends will be grouped by their key color.",
+          message: "choose wisely! your friends will be grouped by their key color.",
         )
         turbo_frame_tag(:form) do
           Components::WorldKeyGrantForm(world: @world, key_color: @key_color)

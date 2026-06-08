@@ -121,6 +121,20 @@ class User < ApplicationRecord
     end
   end
 
+  sig do
+    params(pass_serial_numbers: T::Array[String])
+      .returns(WorldCard::PrivateRelation)
+  end
+  def world_cards_pending_key_creation(pass_serial_numbers:)
+    matching_key = WorldKey
+      .where("world_keys.world_id = world_cards.world_id")
+      .where("world_keys.color = world_cards.granted_key_color")
+      .where(recipient_id: id)
+    WorldCard.active.unlinked
+      .joins(:pass).where(passkit_passes: { serial_number: pass_serial_numbers })
+      .where.not(matching_key.arel.exists)
+  end
+
   private
 
   # == Helpers ==

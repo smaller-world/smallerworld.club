@@ -8,6 +8,7 @@
 #
 #  id         :uuid             not null, primary key
 #  emoji      :string
+#  key_colors :string           is an Array
 #  plain_body :text             not null
 #  title      :string
 #  created_at :datetime         not null
@@ -16,7 +17,8 @@
 #
 # Indexes
 #
-#  index_posts_on_world_id  (world_id)
+#  index_posts_on_key_colors  (key_colors)
+#  index_posts_on_world_id    (world_id)
 #
 # Foreign Keys
 #
@@ -25,6 +27,14 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
   include NormalizesText
+  include NormalizesArrays
+
+  # == Attributes ==
+
+  sig { returns(T::Boolean) }
+  def selectively_shown?
+    !key_colors.nil?
+  end
 
   # == Associations ==
 
@@ -67,6 +77,7 @@ class Post < ApplicationRecord
 
   strips_text :title
   nilify_blanks :title, :emoji
+  compacts_blanks :key_colors
 
   # == Validations ==
 
@@ -80,9 +91,11 @@ class Post < ApplicationRecord
       spoofing_protection: true,
     },
     size: { less_than: 64.megabytes }
+  validates :key_colors, inclusion: { in: WorldKey.color.values }, allow_nil: true
 
   # == Hooks ==
 
+  before_validation :unset_key_colors, if: :all_key_colors_set?
   before_save :set_plain_body
   after_commit :touch_world_cards, on: [ :create, :destroy ]
 
@@ -135,6 +148,17 @@ class Post < ApplicationRecord
 
   private
 
+  # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def all_key_colors_set?
+    if (key_colors = self.key_colors)
+      key_colors.to_set == WorldKey.color.values.to_set
+    else
+      false
+    end
+  end
+
   # == Callbacks ==
 
   sig { void }
@@ -142,10 +166,13 @@ class Post < ApplicationRecord
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
   end
 
-  # == Callbacks ==
-
   sig { void }
   def touch_world_cards
     world_cards.find_each(&:touch)
+  end
+
+  sig { void }
+  def unset_key_colors
+    self.key_colors = nil
   end
 end

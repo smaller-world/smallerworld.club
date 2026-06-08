@@ -52,7 +52,7 @@ class Components::DropdownMenu < Components::Base
       render Components::Button.new(
         variant:,
         size:,
-        **mix({ class: "flex" }, attributes),
+        **attributes,
         &content
       )
     }

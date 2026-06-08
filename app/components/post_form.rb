@@ -19,7 +19,7 @@ class Components::PostForm < Components::Base
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "form haptic-bridge",
+          controller: "post-form haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
@@ -41,7 +41,7 @@ class Components::PostForm < Components::Base
             required: true,
             class: "min-h-36",
             data: {
-              action: "keydown.meta+enter->form#requestSubmit",
+              action: "keydown.meta+enter->post-form#requestSubmit",
             },
           )
           f.error
@@ -52,7 +52,7 @@ class Components::PostForm < Components::Base
         unless @post.images.attached?
           Components::Button(
             variant: :outline,
-            class: "self-center rounded-full px-3",
+            class: "self-center",
             data: {
               transition_group_target: "item",
               controller: "transition",
@@ -60,8 +60,8 @@ class Components::PostForm < Components::Base
               transition_leave: "transition-all duration-100 ease-out",
               transition_leave_end: "opacity-0 scale-95",
             },
-          ) do
-            Icon("huge/image-01")
+          ) do |button|
+            button.inline_start_icon("huge/image-01")
             span { "add pics" }
           end
         end
@@ -98,13 +98,58 @@ class Components::PostForm < Components::Base
         end
       end
 
-      submit_button_for(form, size: :lg) do |button|
-        if @post.new_record?
-          button.inline_start_icon("huge/mail-send-01")
-          span { "submit" }
-        else
-          button.inline_start_icon("huge/floppy-disk")
-          span { "save changes" }
+      Components::Card(size: :sm) do |card|
+        card.content(class: "flex flex-col items-stretch gap-4") do
+          field_for(form, :key_colors) do |field|
+            form.hidden_field(:key_colors, multiple: true, value: nil)
+
+            field.checkbox_group(class: "flex-row justify-center") do |group|
+              WorldKey.color.values.each do |key_color|
+                group.field_label_for(
+                  key_color,
+                  class: "cursor-pointer w-auto",
+                ) do |label|
+                  label.field(class: "p-2") do |field|
+                    field.content(class: "items-center") do
+                      Icon(
+                        "huge/key-02",
+                        class: "size-4.5",
+                        style: "color: var(--world-key-color-#{key_color})",
+                      )
+                    end
+                    field.checkbox_group_item_for(
+                      key_color,
+                      hidden: true,
+                      checked: checkbox_group_item_checked?(key_color:),
+                      input: {
+                        data: {
+                          post_form_target: "keyColorsInput",
+                          action: "change->post-form#updateKeyColorsDescription",
+                        },
+                      },
+                    )
+                  end
+                end
+              end
+            end
+            field.description(
+              class: "text-center text-xs empty:opacity-0",
+              data: {
+                post_form_target: "keyColorsDescription",
+              },
+            )
+            field.error(class: "text-center text-xs")
+          end
+
+          submit_button_for(form, size: :lg) do |button|
+            if @post.new_record?
+              button.inline_start_icon("huge/mail-send-01")
+              span { "submit post" }
+            else
+              button.inline_start_icon("huge/floppy-disk")
+              span { "save changes" }
+            end
+          end
         end
       end
     end
@@ -120,6 +165,15 @@ class Components::PostForm < Components::Base
       [ @world, @post ]
     else
       @post
+    end
+  end
+
+  sig { params(key_color: Enumerize::Value).returns(T::Boolean) }
+  def checkbox_group_item_checked?(key_color:)
+    if (key_colors = @post.key_colors)
+      key_colors.include?(key_color)
+    else
+      true
     end
   end
 end

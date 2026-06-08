@@ -23,14 +23,17 @@ class Components::PostCard < Components::Base
       size: hotwire_native_app? ? :sm : :default,
       **mix(
         {
-          class: "shadow-sm overflow-visible",
+          class: class_names(
+            "shadow-sm overflow-visible",
+            "bg-card/50 border border-dashed border-foreground/10 ring-0" => @post.selectively_shown?,
+          ),
         },
         @attributes,
       ),
     ) do |card|
       card.header(class: "gap-1.5") do
-        card.description(class: "flex items-end justify-between") do
-          div(class: "flex gap-2 items-center") do
+        card.description(class: "flex items-end gap-2") do
+          div(class: "flex-1 flex gap-2 items-center") do
             if (emoji = @post.emoji)
               div(class: "font-emoji text-sm") do
                 emoji
@@ -40,7 +43,25 @@ class Components::PostCard < Components::Base
           end
 
           if allowed_to?(:manage?, @post)
-            edit_menu(card:)
+            div(class: class_names(
+              "flex gap-1 items-center",
+              "-mt-2" => card.size == :default,
+            )) do
+              if (key_colors = @post.key_colors)
+                key_colors.each do |key_color|
+                  Components::Badge(variant: :secondary, class: "px-1.5") do
+                    Icon("huge/key-02", style: "color: var(--world-key-color-#{key_color})")
+                  end
+                end
+                if key_colors.empty?
+                  Components::Badge(variant: :secondary, class: "px-1.5 text-muted-foreground") do
+                    Icon("huge/square-lock-01")
+                  end
+                end
+              end
+
+              edit_menu(card:)
+            end
           end
         end
         if (title = @post.title)
@@ -99,11 +120,7 @@ class Components::PostCard < Components::Base
   sig { params(card: Components::Card).void }
   def edit_menu(card:)
     Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(
-        variant: :outline,
-        size: :xs,
-        class: class_names("-mt-2" => card.size == :default),
-      ) do
+      menu.with_trigger_button(variant: :outline, size: :xs) do
         div(class: "relative h-full w-1.5") do
           div(class: "absolute bottom-0 top-0 -left-1.25 flex items-center") do
             Icon("huge/more-vertical", class: "size-3.5")

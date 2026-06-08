@@ -77,7 +77,7 @@ class Passes::WorldCard < Passkit::BasePass
       {
         key: "installation_instructions",
         label: "install the smaller world app 👇 to get started",
-        value: "🔗 app.smallerworld.club",
+        value: "🔗 #{app_domain}",
       }
     end
     [ field ]
@@ -142,13 +142,17 @@ class Passes::WorldCard < Passkit::BasePass
   end
 
   def barcodes
-    card_id = ShortUUID.shorten(@card.id)
+    message = if Rails.env.production?
+      ShortUUID.shorten(@card.id)
+    else
+      "(development)"
+    end
     [
       {
         messageEncoding: "utf-8",
         format: "PKBarcodeFormatPDF417",
-        message: card_id,
-        altText: card_id,
+        message:,
+        altText: message,
       },
     ]
   end
@@ -168,5 +172,10 @@ class Passes::WorldCard < Passkit::BasePass
   sig { override.returns(T::Hash[Symbol, String]) }
   def url_options
     Rails.configuration.action_mailer.default_url_options
+  end
+
+  sig { returns(String) }
+  def app_domain
+    url_options.fetch(:host)
   end
 end

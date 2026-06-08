@@ -8,24 +8,24 @@ class Components::RadioGroup::Item < Components::Input
 
   sig do
     params(
-      value: T.any(Symbol, String, Enumerize::Value),
-      input: T::Hash[Symbol, T.untyped],
       radio_group: Components::RadioGroup,
+      value: T.any(Symbol, String, Enumerize::Value),
       checked: T.nilable(T::Boolean),
+      input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    value:,
-    input:,
     radio_group:,
+    value:,
     checked: nil,
+    input: {},
     **attributes
   )
     super(**attributes)
+    @radio_group = radio_group
     @value = T.let(value.to_s, String)
     @input_options = input
-    @radio_group = radio_group
     @checked = checked
   end
 
@@ -33,32 +33,17 @@ class Components::RadioGroup::Item < Components::Input
 
   sig { override.void }
   def view_template
-    input_options = mix(
-      {
-        tabindex: -1,
-        id: field_id(@radio_group.namespace, @value),
-        data: {
-          radio_group_target: "itemInput",
-          action: "change->radio-group#select",
-        },
-        aria: {
-          hidden: true,
-          labelledby: field_id(@radio_group.namespace, @value),
-        },
-      },
-      @input_options,
-    )
-
     root_element(
       :span,
       class: "radio-group-item group/radio-group-item peer",
       role: "radio",
       tabindex: 0,
       data: {
+        controller: "radio",
         slot: "radio-group-item",
         checked: ("" if checked?),
         unchecked: ("" unless checked?),
-        action: "click->radio-group#forwardItemClick",
+        action: "click->radio#forwardItemClick",
       },
       aria: {
         checked: !!checked?,
@@ -95,5 +80,20 @@ class Components::RadioGroup::Item < Components::Input
     else
       @checked
     end
+  end
+
+  sig { returns(T::Hash[Symbol, T.untyped]) }
+  def input_options
+    normalize_mix(
+      {
+        tabindex: -1,
+        id: field_id(@radio_group.namespace, @value),
+        aria: {
+          hidden: true,
+          labelledby: field_id(@radio_group.namespace, @value, :label),
+        },
+      },
+      @input_options,
+    )
   end
 end

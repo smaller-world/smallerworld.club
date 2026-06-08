@@ -40,7 +40,11 @@ class Components::Card < Components::Base
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def header(**attributes, &content)
-    slot("card-header", **attributes, &content)
+    slot(
+      "card-header",
+      **mix({ class: "group/card-header" }, attributes),
+      &content
+    )
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }

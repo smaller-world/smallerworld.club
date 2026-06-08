@@ -48,7 +48,7 @@ module DeviceTracking
 
   sig { returns(T.nilable(String)) }
   def parse_device_name
-    detector = DeviceDetector.new(request.user_agent, request.headers.to_h)
-    detector.device_name
+    client = DeviceDetector.new(request.user_agent, request.headers.to_h)
+    client.device_name
   end
 end

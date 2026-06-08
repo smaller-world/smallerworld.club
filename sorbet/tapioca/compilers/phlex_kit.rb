@@ -83,12 +83,14 @@ module Tapioca
           block_type =
             "T.nilable(T.proc.params(instance: #{component.name}).void)"
           parameters << create_block_param("block", type: block_type)
+          comments = source_comments(component)
 
           # Instance method: available inside Phlex templates via include
           scope.create_method(
             name,
             parameters:,
             return_type: "void",
+            comments:,
           )
 
           # Singleton method: available as Components::Button(...)
@@ -97,7 +99,20 @@ module Tapioca
             parameters:,
             return_type: "void",
             class_method: true,
+            comments:,
           )
+        end
+
+        sig do
+          params(component: T.class_of(::Phlex::SGML)).returns(T::Array[RBI::Comment])
+        end
+        def source_comments(component)
+          location = Object.const_source_location(T.must(component.name))
+          return [] unless location
+
+          path, = location
+          relative_path = Pathname.new(path).relative_path_from(Rails.root).to_s
+          [ RBI::Comment.new(relative_path) ]
         end
 
         sig do

@@ -1,4 +1,4 @@
-import { Separator as SeparatorPrimitive } from "app/components/shadcn/separator"
+import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 
 import { cn } from "@/lib/utils"
 

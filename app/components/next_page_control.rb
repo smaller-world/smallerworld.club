@@ -51,7 +51,6 @@ class Components::NextPageControl < Components::Base
             },
           },
           method: :get,
-          class: "rounded-full",
         },
         page_attributes,
         autoclick_attributes,

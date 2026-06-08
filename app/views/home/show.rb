@@ -4,10 +4,16 @@
 class Views::Home::Show < Views::Base
   # == Initialization ==
 
-  sig { params(current_user: User).void }
-  def initialize(current_user:)
+  sig do
+    params(
+      current_user: User,
+      world_cards_pending_key_creation: T.nilable(WorldCard::PrivateRelation),
+    ).void
+  end
+  def initialize(current_user:, world_cards_pending_key_creation:)
     super()
     @current_user = current_user
+    @world_cards_pending_key_creation = world_cards_pending_key_creation
     @friend_worlds = T.let(
       @current_user.accessible_worlds.with_attached_icon,
       World::PrivateAssociationRelation,
@@ -19,9 +25,7 @@ class Views::Home::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(display_header: true) do |layout|
-      layout.page_container(
-        class: "flex-1 max-w-lg flex flex-col gap-8 justify-center",
-      ) do
+      layout.page_container(class: "flex-1 max-w-lg flex flex-col gap-8 justify-center") do
         div(class: "flex gap-6 flex-wrap justify-center") do
           @current_user.owned_worlds.each do |world|
             link_to(world, class: "home-world-link") do
@@ -85,6 +89,30 @@ class Views::Home::Show < Views::Base
             end
           end
 
+          @world_cards_pending_key_creation&.each do |card|
+            world = card.world!
+            grant = world.key_grant(color: card.granted_key_color)
+            link_to(
+              world_key_grant_path(grant),
+              class: "home-world-link",
+              data: { size: "sm" },
+            ) do
+              div(class: "relative") do
+                image_tag(
+                  world.page_icon_variant,
+                  class: "home-world-icon opacity-50",
+                  data: { size: "sm" },
+                )
+                div(class: "absolute inset-0 flex items-center justify-center") do
+                  Icon("huge/key-02", class: "size-8 text-white")
+                end
+              end
+              span(class: "home-world-label text-foreground/50", data: { size: "sm" }) do
+                world.name
+              end
+            end
+          end
+
           if hotwire_native_app?
             link_to(
               "/scan_qr_code",
@@ -108,8 +136,8 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      if (current_device = @current_device) && current_device.owner.present?
-        Components::DeviceWorldCardsForm(current_device:)
+      unless @world_cards_pending_key_creation
+        Components::DevicePassesForm(url: home_path)
       end
     end
   end

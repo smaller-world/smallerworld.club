@@ -17,4 +17,11 @@ class WorldPolicy < ApplicationPolicy
     user = user!
     user == world.owner!
   end
+
+  # Only key recipients can manage settings
+  def leave?
+    world = T.let(record, World)
+    user = user!
+    world.keys.accepted.exists?(recipient: user)
+  end
 end

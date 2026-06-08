@@ -39,34 +39,29 @@ class Views::Worlds::Show < Views::Base
               },
             )
           elsif @keys.any? # TODO: Represent on mobile
-            div(class: "flex gap-0.5 justify-center self-center") do
-              @keys.each do |key|
-                Components::Badge(variant: :ghost, class: "h-8 px-2", data: {
-                  controller: "tippy",
-                  tippy_content_value: "you've got #{key_descriptor(key)} to #{@world.name}",
-                  tippy_placement_value: "bottom-end",
-                }) do
-                  Icon(
-                    "huge/key-02",
-                    style: "color: var(--world-key-color-#{key.color})",
-                    class: "size-4.5",
-                  )
-                end
-              end
-            end
+            button_link_to(
+              "settings",
+              [ @world, :settings ],
+              icon: "huge/settings-01",
+              variant: :secondary,
+              data: {
+                controller: "button-bridge",
+                bridge_ios_image: "gearshape.fill",
+              },
+            )
           end
         end
 
         section(class: "flex flex-col items-center gap-2") do
           image_tag(
             @world.page_icon_variant,
-            class: "size-32 rounded-world-icon object-cover",
+            class: "world-icon size-32",
             data: {
               controller: "confetti connection",
               confetti_emoji_value: "🎉",
               confetti_canvas_id_value:
                 Rails.configuration.x.layout.confetti_canvas_id,
-              connection_delay_value: 400,
+              connection_delay_value: 1000,
               action: ("connection:connect->confetti#launch" if @celebrate),
             },
           )
@@ -105,6 +100,11 @@ class Views::Worlds::Show < Views::Base
           :posts,
           src: [ @world, :posts ],
           target: "_top",
+          data: {
+            turbo_permanent: true,
+            controller: "frame",
+            action: "turbo:load@document->frame#reloadAndPreserveScroll",
+          },
         ) do
           div(class: "space-y-4") do
             10.times do
@@ -127,7 +127,7 @@ class Views::Worlds::Show < Views::Base
                   end
                 end
                 card.footer(class: "flex justify-center") do
-                  Components::Button(class: "rounded-full skeleton") do
+                  Components::Button(class: "skeleton") do
                     "placeholder"
                   end
                 end

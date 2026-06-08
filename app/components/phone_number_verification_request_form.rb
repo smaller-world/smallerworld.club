@@ -33,7 +33,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
       id: :login_form,
       **normalize_mix(
         {
-          class: "flex flex-col gap-2 **:data-[slot=field]:gap-1",
+          class: "flex flex-col gap-4 **:data-[slot=field]:gap-1",
           data: {
             controller: "haptic-bridge",
             turbo_action: "replace",
@@ -55,7 +55,9 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
       end
 
       if @verification_request.new_record?
-        turnstile_tag(data: { size: "flexible" })
+        div(class: "rounded-xl ring-1 ring-foreground/10 overflow-hidden h-[61px] bg-card") do
+          turnstile_tag(class: "-m-[2px]", data: { size: "flexible" })
+        end
       else
         field_for(form, :verification_code) do |field|
           field.text_input(
@@ -75,7 +77,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
         end
       end
 
-      div(class: "flex flex-col") do
+      div(class: "flex flex-col gap-1") do
         submit_button_for(form, size: :lg) do |button|
           if @verification_request.new_record?
             button.inline_start_icon("huge/sms-code")

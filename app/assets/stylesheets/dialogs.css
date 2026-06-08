@@ -1,7 +1,7 @@
 @layer base {
   .dialog-overlay {
-    @apply fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs;
-    @apply transition data-closed:opacity-0;
+    @apply fixed inset-0 isolate z-50 bg-black/30 duration-100 supports-backdrop-filter:backdrop-blur-sm; /* data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0; */
+    @apply transition transition-discrete data-closed:opacity-0;
   }
 
   .dialog-content {

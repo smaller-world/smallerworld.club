@@ -38,7 +38,7 @@ class Components::ReplyInitiationForm < Components::Base
           variant: button_variant,
           **compact_mix(
             {
-              class: "rounded-full loading-while-submitting",
+              class: "loading-while-submitting",
               data: {
                 reply_initiation_form_target: "disableWhileSubmitting",
               },

@@ -69,8 +69,8 @@ class Components::ExistingReactionForm < Components::Base
         },
       ) do
         span(class: class_names(
-          "font-emoji",
-          @reactions_count > 1 ? "text-base" : "text-lg",
+          "font-emoji align-middle",
+          @reactions_count > 1 ? "text-base" : "text-xl",
         )) do
           @emoji
         end

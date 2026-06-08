@@ -864,6 +864,51 @@ class Post
     sig { void }
     def id_will_change!; end
 
+    sig { returns(T.nilable(T::Array[::String])) }
+    def key_colors; end
+
+    sig { params(value: T.nilable(T::Array[::String])).returns(T.nilable(T::Array[::String])) }
+    def key_colors=(value); end
+
+    sig { returns(T::Boolean) }
+    def key_colors?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def key_colors_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def key_colors_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def key_colors_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
+    def key_colors_change; end
+
+    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
+    def key_colors_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_colors_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def key_colors_in_database; end
+
+    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
+    def key_colors_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_colors_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def key_colors_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def key_colors_was; end
+
+    sig { void }
+    def key_colors_will_change!; end
+
     sig { returns(::String) }
     def plain_body; end
 
@@ -922,6 +967,9 @@ class Post
     def restore_id_value!; end
 
     sig { void }
+    def restore_key_colors!; end
+
+    sig { void }
     def restore_plain_body!; end
 
     sig { void }
@@ -956,6 +1004,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
+    def saved_change_to_key_colors; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_key_colors?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_plain_body; end
@@ -1082,6 +1136,9 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_key_colors?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_plain_body?(from: T.unsafe(nil), to: T.unsafe(nil)); end

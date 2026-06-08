@@ -19,7 +19,7 @@
 @import "./badges.css";
 @import "./buttons.css";
 @import "./cards.css";
-@import "./image_stacks.css";
+@import "./labels.css";
 @import "./dialogs.css";
 @import "./dropdown_menus.css";
 @import "./separators.css";
@@ -31,9 +31,12 @@
 @import "./fields.css";
 @import "./forms.css";
 @import "./comboboxes.css";
-@import "./phone_number_inputs.css";
-@import "./otp_inputs.css";
 @import "./radio_groups.css";
+@import "./checkboxes.css";
+
+@import "./phone_number_inputs.css";
+@import "./image_stacks.css";
+/*@import "./otp_inputs.css";*/
 
 @import "./layouts.css";
 @import "./worlds.css";

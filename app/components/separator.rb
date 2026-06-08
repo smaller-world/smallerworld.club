@@ -11,8 +11,8 @@ class Components::Separator < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
-  def view_template(&content)
+  sig { override.void }
+  def view_template
     root_element(
       :div,
       role: (@decorative ? "none" : "separator"),
@@ -24,7 +24,6 @@ class Components::Separator < Components::Base
       aria: {
         orientation: (:vertical if @decorative && @orientation == :vertical),
       },
-      &content
     )
   end
 end
