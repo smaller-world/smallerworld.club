@@ -54,7 +54,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   # POST /verifications/:id/verify
   def verify
     respond_to do |format|
-      format.html do
+      format.turbo_stream do
         verification_request = find_verification_request
         verification_code = params
           .require(:phone_number_verification_request)
@@ -75,9 +75,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
             redirect_to(new_account_path)
           end
         else
-          redirect_to(
-            [ :challenge, verification_request ],
-            alert: "invalid verification code. please try again.",
+          render turbo_stream: turbo_stream.replace(
+            :login_form,
+            renderable: Components::PhoneNumberVerificationRequestForm
+              .new(verification_request:),
           )
         end
       end
