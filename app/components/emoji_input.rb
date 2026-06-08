@@ -19,6 +19,7 @@ class Components::EmojiInput < Components::Input
     **attributes
   )
     super(form:, field:, **attributes)
+    @value = T.let(attributes[:value], T.nilable(String))
     @required = required
   end
 
@@ -45,7 +46,14 @@ class Components::EmojiInput < Components::Input
                 class: "emoji-input",
                 data: {
                   emoji_input_target: "input",
-                  action: "click->emoji-input#clearOrOpenDialog",
+                  controller: "tippy",
+                  tippy_trigger_value: "mouseenter",
+                  tippy_content_value: "click to clear",
+                  tippy_disabled_value: !has_value?,
+                  action: [
+                    "click->emoji-input#clearOrOpenDialog",
+                    "change->emoji-input#toggleInputTooltip",
+                  ],
                 },
               },
               @attributes,
@@ -69,5 +77,13 @@ class Components::EmojiInput < Components::Input
         })
       end
     end
+  end
+
+  private
+
+  sig { returns(T::Boolean) }
+  def has_value?
+    !!@value ||
+      ((object = @form&.object) && (field = @field) && !!object.public_send(field))
   end
 end

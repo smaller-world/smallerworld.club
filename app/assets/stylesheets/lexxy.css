@@ -63,8 +63,9 @@
           .lexxy-editor__toolbar-button,
           .lexxy-editor__toolbar-overflow-menu > .lexxy-editor__toolbar-button
         ) {
+        @apply bg-transparent transition-colors duration-100 hover:bg-(--lexxy-color-canvas);
         @apply md:block-(--lexxy-toolbar-button-desktop-size);
-        @apply dark:bg-transparent dark:hover:bg-(--lexxy-color-canvas) dark:aria-pressed:bg-(--lexxy-color-selected);
+        @apply aria-pressed:bg-(--lexxy-color-selected);
 
         &.lexxy-editor__toolbar-button--chevron::after {
           @apply size-1.5;

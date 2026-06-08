@@ -17,7 +17,7 @@ class Views::Pages::Landing < Views::Base
             )
 
             div(class: "flex flex-col items-center gap-1 text-center text-balance") do
-              h1(class: "text-foreground font-medium text-lg") do
+              h1(class: "text-foreground font-semibold text-lg") do
                 "hi. welcome to smaller world!"
               end
               p(class: "text-balance text-muted-foreground max-w-xs") do

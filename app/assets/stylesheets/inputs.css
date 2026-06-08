@@ -4,7 +4,7 @@
   }
 
   .emoji-input {
-    @apply w-9 px-0 text-center text-xl;
+    @apply w-9 cursor-pointer px-0 text-center text-xl;
 
     &:not(:placeholder-shown) {
       @apply cursor-pointer;

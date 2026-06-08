@@ -32,4 +32,12 @@ export default class EmojiInputController extends Controller<HTMLElement> {
       this.dispatch("open-dialog");
     }
   }
+
+  toggleInputTooltip(): void {
+    if (this.inputTarget.value) {
+      delete this.inputTarget.dataset.tippyDisabledValue;
+    } else {
+      this.inputTarget.dataset.tippyDisabledValue = "true";
+    }
+  }
 }

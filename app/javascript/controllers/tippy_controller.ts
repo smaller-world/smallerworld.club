@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { last } from "lodash-es";
 import tippy, {
   type Instance,
   type Placement,
@@ -13,11 +14,12 @@ export default class TippyController extends Controller<HTMLElement> {
 
   static values = {
     content: String,
-    trigger: String,
+    trigger: { type: String, default: "mouseenter focus" },
     placement: { type: String, default: "top" },
     animation: { type: String, default: "shift-away" },
     hideOnClick: { type: Boolean, default: true },
-    showOnCreate: { type: Boolean, default: false },
+    showOnCreate: Boolean,
+    disabled: Boolean,
     flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
   };
@@ -29,6 +31,7 @@ export default class TippyController extends Controller<HTMLElement> {
   declare readonly showOnCreateValue: boolean;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
+  declare readonly disabledValue: boolean;
 
   // == State ==
 
@@ -40,28 +43,27 @@ export default class TippyController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
-    if (!this.contentValue) {
-      return;
+    if (this.contentValue) {
+      this.#mountOrUpdate();
     }
-    const props: Partial<Props> = {
-      content: this.contentValue,
-      inertia: true,
-      arrow: roundArrow,
-      animation: this.animationValue,
-      placement: this.placementValue,
-      hideOnClick: this.hideOnClickValue,
-      showOnCreate: this.showOnCreateValue,
-    };
-    if (this.triggerValue) {
-      props.trigger = this.triggerValue;
-    }
-    this.#tippy = tippy(this.element, props);
     addCleanupAction(this, "destroy");
   }
 
   disconnect(): void {
     super.disconnect();
     this.destroy();
+  }
+
+  contentValueChanged(): void {
+    this.#mountOrUpdate();
+  }
+
+  disabledValueChanged(disabled: boolean): void {
+    if (this.#tippy && disabled) {
+      this.#tippy.disable();
+    } else {
+      this.#mountOrUpdate();
+    }
   }
 
   // == Actions ==
@@ -71,17 +73,18 @@ export default class TippyController extends Controller<HTMLElement> {
   }
 
   flash(): void {
-    if (!this.#tippy || !this.element.checkVisibility()) {
+    const tippy = this.#tippy;
+    if (!tippy || !tippy.state.isEnabled || !this.element.checkVisibility()) {
       return;
     }
     this.#showFlashTimeout = setTimeout(() => {
-      if (!this.element.checkVisibility() || !this.#tippy) {
+      if (!tippy.state.isEnabled || !this.element.checkVisibility()) {
         return;
       }
-      this.#tippy.show();
+      tippy.show();
       if (this.flashDurationValue) {
         this.#hideFlashTimeout = setTimeout(() => {
-          this.#tippy?.hide();
+          tippy.hide();
         }, this.flashDurationValue);
       }
     }, this.flashDelayValue);
@@ -100,5 +103,50 @@ export default class TippyController extends Controller<HTMLElement> {
       this.#tippy.destroy();
       this.#tippy = null;
     }
+  }
+
+  // == Helpers ==
+
+  #mountOrUpdate() {
+    const props: Partial<Props> = {
+      content: this.contentValue,
+      animation: this.animationValue,
+      placement: this.placementValue,
+      trigger: this.triggerValue,
+      hideOnClick: this.hideOnClickValue,
+      showOnCreate: this.showOnCreateValue,
+    };
+    if (this.#tippy) {
+      if (!this.contentValue) {
+        const tippy = this.#tippy;
+        tippy.hide();
+        setTimeout(() => {
+          tippy.setProps(props);
+          tippy.disable();
+        }, this.#hideDuration(tippy));
+      } else {
+        this.#tippy.setProps(props);
+        if (!this.disabledValue) {
+          this.#tippy.enable();
+        }
+      }
+    } else if (this.contentValue) {
+      this.#tippy = tippy(this.element, {
+        ...props,
+        arrow: roundArrow,
+        inertia: true,
+      });
+      if (this.disabledValue) {
+        this.#tippy.disable();
+      }
+    }
+  }
+
+  #hideDuration(tippy: Instance): number {
+    const { duration } = tippy.props;
+    if (Array.isArray(duration)) {
+      return last(duration) ?? 0;
+    }
+    return duration;
   }
 }
