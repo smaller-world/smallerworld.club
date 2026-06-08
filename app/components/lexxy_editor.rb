@@ -13,8 +13,6 @@ class Components::LexxyEditor < Components::Input
     attributes = mix(
       {
         class: "lexxy-content",
-        attachments: false,
-        markdown: false,
         data: {
           controller: "lexxy-editor",
         },

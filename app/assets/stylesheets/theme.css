@@ -141,7 +141,7 @@
   --lexxy-focus-ring-size: 0px;
   --lexxy-color-ink: var(--color-olive-950);
   --lexxy-color-red: var(--destructive);
-  --lexxy-radius: var(--radius-4xl);
+  --lexxy-radius: var(--radius-xl);
   --lexxy-content-margin: var(--spacing);
   --lexxy-color-accent-dark: var(--color-accent-foreground);
   --lexxy-color-ink-lightest: var(--color-secondary);

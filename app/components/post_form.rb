@@ -107,7 +107,7 @@ class Components::PostForm < Components::Base
               WorldKey.color.values.each do |key_color|
                 group.field_label_for(
                   key_color,
-                  class: "cursor-pointer w-auto",
+                  class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
                 ) do |label|
                   label.field(class: "p-2") do |field|
                     field.content(class: "items-center") do
