@@ -26,6 +26,7 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
+  include Noticeable
   include NormalizesText
   include NormalizesArrays
 
@@ -41,6 +42,8 @@ class Post < ApplicationRecord
   belongs_to :world
   has_many :world_cards, through: :world, source: :cards
   has_one :author, through: :world, source: :owner
+  has_many :world_key_recipients, through: :world, source: :key_recipients
+
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
 
@@ -53,6 +56,16 @@ class Post < ApplicationRecord
   def author!
     author or raise ActiveRecord::RecordNotFound, "Missing author"
   end
+
+  # == Scopes ==
+
+  scope :visible_to, ->(user) {
+    owned = World.where(owner: user).where("worlds.id = posts.world_id")
+    keyed = WorldKey.accepted.where(recipient: user)
+      .where("world_keys.world_id = posts.world_id")
+      .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
+    where(owned.arel.exists.or(keyed.arel.exists))
+  }
 
   # == Attachments
 
@@ -98,6 +111,31 @@ class Post < ApplicationRecord
   before_validation :unset_key_colors, if: :all_key_colors_set?
   before_save :set_plain_body
   after_commit :touch_world_cards, on: [ :create, :destroy ]
+  after_create_commit :create_notifications_for_world_key_recipients!
+
+  # == Noticeable ==
+
+  sig { override.params(recipient: User).returns(Notification::Message) }
+  def notification_message(recipient:)
+    world = world!
+    Notification::Message.new(
+      target_url: world,
+      title: world.name,
+      body: snippet,
+      world:,
+    )
+  end
+
+  sig { void }
+  def create_notifications_for_world_key_recipients!
+    recipients = world_key_recipients
+    if (key_colors = self.key_colors)
+      recipients = recipients.where(color: key_colors)
+    end
+    recipients.find_each do |recipient|
+      notifications.create!(recipient:)
+    end
+  end
 
   # == Emoji ==
 

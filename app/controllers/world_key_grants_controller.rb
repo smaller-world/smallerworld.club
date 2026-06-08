@@ -9,7 +9,7 @@ class WorldKeyGrantsController < ApplicationController
 
   # == Actions ==
 
-  # GET /world_invitations/:grant?linked_card_id=...
+  # GET /world_invitations/:grant?card_id=...
   def show
     grant = params.fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
@@ -51,7 +51,7 @@ class WorldKeyGrantsController < ApplicationController
           accepted_at: Time.current,
         )
         if key.save
-          if (card_id = params[:linked_card_id])
+          if (card_id = params[:card_id])
             card = WorldCard.find(card_id)
             if card.world_id == world_id && card.active? && card.unlinked?
               link_card(card)

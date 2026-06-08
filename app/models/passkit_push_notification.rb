@@ -4,6 +4,8 @@
 # Silent APNs notification used to tell Apple Wallet that a pass has changed.
 # Wallet receives the ping, then calls our PassKit web service to pull the
 # refreshed `.pkpass`.
-class PasskitPushNotification < PushNotification
+class PasskitPushNotification < DevicePushNotification
+  # == Configuration ==
+
   self.application = "passkit"
 end

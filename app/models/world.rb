@@ -81,6 +81,7 @@ class World < ApplicationRecord
   has_one_attached :icon do |attachable|
     # attachable.variant(:favicon, resize_to_fill: [ 144, 144 ])
     attachable.variant(:page_icon, resize_to_fill: [ 255, 256 ])
+    attachable.variant(:notification_icon, resize_to_fill: [ 192, 192 ])
 
     attachable.variant(
       :passkit_logo,
@@ -125,6 +126,11 @@ class World < ApplicationRecord
     end
   end
 
+  sig { returns(T.nilable(ActiveStorage::VariantWithRecord)) }
+  def notification_icon_variant
+    icon_attachment&.variant(:notification_icon)
+  end
+
   # == Normalizations ==
 
   strips_text :name, :blurb
@@ -154,7 +160,7 @@ class World < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_default_name, if: :new_record?
-  after_update_commit :touch_cards, if: :card_attributes_changed?
+  after_update_commit :touch_cards, if: :saved_changes_to_card_attributes?
   after_attached :icon, :touch_cards
 
   # == Keys ==
@@ -177,7 +183,7 @@ class World < ApplicationRecord
   end
 
   sig { returns(T::Boolean) }
-  def card_attributes_changed?
+  def saved_changes_to_card_attributes?
     saved_changes.keys.intersect?(CARD_ATTRIBUTES)
   end
 

@@ -13,11 +13,8 @@ shared:
     application:
       key_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :key_id) %>
       encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :encryption_key)&.dump %>
-
       team_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :team_id) %>
-      # Main app topic (bundle identifier).
-      # Your identifier found on https://developer.apple.com/account/resources/identifiers/list
-      topic: <%= Rails.application.credentials.dig(:action_push_native, :apns, :topic) %>
+
 
       # Set this to the number of threads used to process notifications (default: 5).
       # When the pool size is too small a ConnectionPoolTimeoutError will be raised.
@@ -31,6 +28,11 @@ shared:
     passkit:
       topic: <%= Rails.application.credentials.dig(:passkit, :pass_type_identifier) %>
       connect_to_development_server: false
+
+    # Main app topic (bundle identifier).
+    # Your identifier found on https://developer.apple.com/account/resources/identifiers/list
+    device:
+      topic: <%= Rails.application.credentials.dig(:action_push_native, :apns, :topic) %>
 
   # Use bin/rails credentials:edit to set the fcm secrets (as action_push_native:fcm:encryption_key)
   # NOTE: google config is still in single-app (flat) shape — no multi-app rollout for FCM yet.
@@ -70,4 +72,3 @@ production:
   apple:
     application:
       connect_to_development_server: false
-

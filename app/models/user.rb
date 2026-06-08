@@ -6,12 +6,13 @@
 #
 # Table name: users
 #
-#  id             :uuid             not null, primary key
-#  name           :string           not null
-#  phone_number   :string           not null
-#  time_zone_name :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                            :uuid             not null, primary key
+#  name                          :string           not null
+#  notifications_last_cleared_at :timestamptz
+#  phone_number                  :string           not null
+#  time_zone_name                :string           not null
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
 #
 # Indexes
 #
@@ -47,10 +48,32 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :owned_worlds,
     class_name: "World",
-    dependent: :destroy,
     inverse_of: :owner,
-    foreign_key: :owner_id
+    foreign_key: :owner_id,
+    dependent: :destroy
   has_many :posts, through: :worlds
+  has_many :reactions,
+    inverse_of: :reactor,
+    foreign_key: :reactor_id,
+    dependent: :destroy
+  has_many :reply_initiations,
+    inverse_of: :replier,
+    foreign_key: :replier_id,
+    dependent: :destroy
+  has_many :devices,
+    inverse_of: :owner,
+    foreign_key: :owner_id,
+    dependent: :destroy
+  has_many :world_cards,
+    inverse_of: :cardholder,
+    foreign_key: :cardholder_id,
+    dependent: :destroy
+  has_many :received_notifications,
+    class_name: "Notification",
+    inverse_of: :recipient,
+    foreign_key: :recipient_id,
+    dependent: :destroy
+
   has_many :world_keys,
     dependent: :destroy,
     inverse_of: :recipient,
@@ -60,23 +83,6 @@ class User < ApplicationRecord
     class_name: "World",
     through: :world_keys,
     source: :world
-  has_many :reactions,
-    dependent: :destroy,
-    inverse_of: :reactor,
-    foreign_key: :reactor_id
-  has_many :reply_initiations,
-    dependent: :destroy,
-    inverse_of: :replier,
-    foreign_key: :replier_id
-
-  has_many :devices,
-    dependent: :destroy,
-    inverse_of: :owner,
-    foreign_key: :owner_id
-  has_many :world_cards,
-    dependent: :destroy,
-    inverse_of: :cardholder,
-    foreign_key: :cardholder_id
 
   # == Normalizations ==
 
@@ -93,7 +99,23 @@ class User < ApplicationRecord
 
   # == Hooks ==
 
-  after_update_commit :touch_world_cards, if: :world_card_attributes_changed?
+  after_update_commit :touch_world_cards, if: :saved_changes_to_world_card_attributes?
+
+  # == Notifications ==
+
+  sig do
+    returns(T.any(
+      Notification::PrivateAssociationRelation,
+      Notification::PrivateCollectionProxy,
+    ))
+  end
+  def notifications_received_since_last_cleared
+    if (last_cleared_at = notifications_last_cleared_at)
+      received_notifications.where("created_at > ?", last_cleared_at)
+    else
+      received_notifications
+    end
+  end
 
   # == Methods ==
 
@@ -130,9 +152,10 @@ class User < ApplicationRecord
       .where("world_keys.world_id = world_cards.world_id")
       .where("world_keys.color = world_cards.granted_key_color")
       .where(recipient_id: id)
-    WorldCard.active.unlinked
-      .joins(:pass).where(passkit_passes: { serial_number: pass_serial_numbers })
-      .where.not(matching_key.arel.exists)
+    WorldCard.where(
+      id: WorldCard.ids_pending_key_creation(pass_serial_numbers:)
+        .where.not(matching_key.arel.exists),
+    )
   end
 
   private
@@ -140,7 +163,7 @@ class User < ApplicationRecord
   # == Helpers ==
 
   sig { returns(T::Boolean) }
-  def world_card_attributes_changed?
+  def saved_changes_to_world_card_attributes?
     saved_changes.keys.intersect?(WORLD_CARD_ATTRIBUTES)
   end
 

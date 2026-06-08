@@ -695,6 +695,9 @@ class WorldCard
     def unlinked(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def unrevoked(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
 
     sig { returns(PrivateAssociationRelation) }
@@ -1375,6 +1378,9 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unlinked(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def unrevoked(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end

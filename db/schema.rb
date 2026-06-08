@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_021154) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_192603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,6 +71,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_021154) do
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_devices_on_identifier", unique: true
     t.index ["owner_id"], name: "index_devices_on_owner_id"
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.timestamptz "delivered_at"
+    t.uuid "noticeable_id", null: false
+    t.string "noticeable_type", null: false
+    t.timestamptz "received_at"
+    t.uuid "recipient_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["noticeable_type", "noticeable_id"], name: "index_notifications_on_noticeable"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
   create_table "passkit_devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -307,6 +319,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_021154) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
+    t.timestamptz "notifications_last_cleared_at"
     t.string "phone_number", null: false
     t.string "time_zone_name", null: false
     t.datetime "updated_at", null: false
@@ -353,6 +366,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_021154) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "devices", "users", column: "owner_id"
+  add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "passkit_registrations", "passkit_devices"
   add_foreign_key "passkit_registrations", "passkit_passes"
   add_foreign_key "posts", "worlds"

@@ -32,9 +32,7 @@ class WorldCardsController < ApplicationController
       if turbo_frame_request?
         format.html do
           pass_serial_numbers = params.fetch(:pass_serial_numbers)
-          world_cards = WorldCard.unlinked
-            .joins(:pass)
-            .where(passkit_passes: { serial_number: pass_serial_numbers })
+          world_cards = WorldCard.pending_key_creation(pass_serial_numbers:)
           render Views::WorldCards::Unlinked.new(world_cards:)
         end
       end

@@ -33,6 +33,8 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class WorldKey < ApplicationRecord
+  include Noticeable
+
   # == Attributes ==
 
   enumerize :color, in: [ :green, :orange, :pink, :blue, :red ]
@@ -75,11 +77,32 @@ class WorldKey < ApplicationRecord
 
   after_destroy :revoke_recipient_world_cards!,
     unless: :recipient_has_other_keys?
+  after_commit :create_notification_for_world_owner!,
+    on: [ :create, :update ],
+    if: [ :accepted_at?, :saved_change_to_accepted_at? ]
 
   # == Scopes ==
 
   scope :accepted, -> { where.not(accepted_at: nil) }
   scope :pending_acceptance, -> { where(accepted_at: nil) }
+
+  # == Noticeable ==
+
+  sig { override.params(recipient: User).returns(Notification::Message) }
+  def notification_message(recipient:)
+    world = world!
+    key_recipient = recipient!
+    Notification::Message.new(
+      target_url: [ world, WorldKey ],
+      title: "#{key_recipient.name} joined your world!",
+      world:,
+    )
+  end
+
+  sig { void }
+  def create_notification_for_world_owner!
+    notifications.create!(recipient: world_owner!)
+  end
 
   # == Grants ==
 

@@ -441,6 +441,20 @@ class Post
     def images_blobs=(value); end
 
     sig { returns(T::Array[T.untyped]) }
+    def notification_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def notification_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :notifications`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Notification::PrivateCollectionProxy) }
+    def notifications; end
+
+    sig { params(value: T::Enumerable[::Notification]).void }
+    def notifications=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
     def reaction_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
@@ -514,6 +528,20 @@ class Post
 
     sig { returns(T::Boolean) }
     def world_changed?; end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_recipient_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_recipient_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_key_recipients, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def world_key_recipients; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def world_key_recipients=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
@@ -659,6 +687,9 @@ class Post
     sig { returns(PrivateAssociationRelation) }
     sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
     def unscoped(&block); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def visible_to(*args, &blk); end
 
     sig { returns(PrivateAssociationRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
@@ -1338,6 +1369,9 @@ class Post
     sig { returns(PrivateRelation) }
     sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
     def unscoped(&block); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def visible_to(*args, &blk); end
 
     sig { returns(PrivateRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateRelation) }

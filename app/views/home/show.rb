@@ -64,7 +64,7 @@ class Views::Home::Show < Views::Base
                   class: "home-world-icon",
                   data: { size: "sm" },
                 )
-                if @current_user.world_cards.exists?(world:)
+                if @current_user.world_cards.active.exists?(world:)
                   Components::Button(
                     element: :div,
                     variant: :outline,
@@ -93,7 +93,7 @@ class Views::Home::Show < Views::Base
             world = card.world!
             grant = world.key_grant(color: card.granted_key_color)
             link_to(
-              world_key_grant_path(grant),
+              world_key_grant_path(grant, card_id: card.id),
               class: "home-world-link",
               data: { size: "sm" },
             ) do

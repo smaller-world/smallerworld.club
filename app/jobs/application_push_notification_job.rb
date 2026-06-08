@@ -1,7 +1,7 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
-class PushNotificationJob < ActionPushNative::NotificationJob
+class ApplicationPushNotificationJob < ApplicationJob
   # Enable logging job arguments (default: false)
   self.log_arguments = true
 

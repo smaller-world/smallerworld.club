@@ -21,7 +21,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
       **@attributes,
     ) do |form|
       if (card = @card)
-        form.hidden_field(:linked_card_id, value: card.id)
+        form.hidden_field(:card_id, value: card.id)
       end
 
       submit_button_for(form, size: :lg) do

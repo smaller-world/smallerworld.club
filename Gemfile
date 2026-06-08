@@ -155,6 +155,9 @@ gem "shortuuid", "~> 0.6.0"
 # Run callbacks after ActiveStorage attachment changes
 gem "after_attached", "~> 0.1.1"
 
+# Ruby accessors on steroids
+gem "smart_properties", "~> 1.17"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

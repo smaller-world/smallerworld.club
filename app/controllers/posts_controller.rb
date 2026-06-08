@@ -8,14 +8,11 @@ class PostsController < ApplicationController
   def index
     world = find_world
     authorize!(world, to: :show?)
-    pagy, posts = pagy(
-      :countless,
-      world.posts
-        .reverse_chronological
-        .with_rich_text_body_and_embeds
-        .with_attached_images,
-      limit: 5,
-    )
+    posts_scope = authorized_scope(world.posts)
+      .reverse_chronological
+      .with_rich_text_body_and_embeds
+      .with_attached_images
+    pagy, posts = pagy(:countless, posts_scope, limit: 5)
     respond_to do |format|
       if turbo_frame_request?
         format.html do

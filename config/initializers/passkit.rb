@@ -46,7 +46,7 @@ Rails.application.configure do
     Passkit::Pass.has_many(
       :registrations,
       foreign_key: :passkit_pass_id,
-      dependent: :restrict_with_error,
+      dependent: :destroy,
     )
     Passkit::Pass.has_many(
       :devices,

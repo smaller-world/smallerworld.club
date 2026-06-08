@@ -38,7 +38,9 @@ class WorldCard < ApplicationRecord
   def revoked? = revoked_at?
 
   sig { returns(T::Boolean) }
-  def active? = !revoked?
+  def active?
+    !revoked? && pass_registrations.any?
+  end
 
   sig { returns(T::Boolean) }
   def unlinked? = !device_id?
@@ -76,10 +78,30 @@ class WorldCard < ApplicationRecord
 
   # == Scopes ==
 
-  scope :active, -> { where(revoked_at: nil) }
+  scope :active, -> { unrevoked.where.associated(:pass_registrations) }
+  scope :unrevoked, -> { where(revoked_at: nil) }
   scope :revoked, -> { where.not(revoked_at: nil) }
   scope :linked, -> { where.not(device_id: nil) }
   scope :unlinked, -> { where(device_id: nil) }
+
+  sig do
+    params(pass_serial_numbers: T::Array[String])
+      .returns(WorldCard::PrivateRelation)
+  end
+  def self.ids_pending_key_creation(pass_serial_numbers:)
+    WorldCard.unrevoked.unlinked
+      .joins(:pass).where(passkit_passes: { serial_number: pass_serial_numbers })
+      .select("DISTINCT ON (world_cards.world_id) world_cards.id")
+      .order("world_cards.world_id", created_at: :desc)
+  end
+
+  sig do
+    params(pass_serial_numbers: T::Array[String])
+      .returns(WorldCard::PrivateRelation)
+  end
+  def self.pending_key_creation(pass_serial_numbers:)
+    WorldCard.where(id: ids_pending_key_creation(pass_serial_numbers:))
+  end
 
   # == Hooks ==
 
@@ -142,7 +164,7 @@ class WorldCard < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def revoked_prior_to_last_save?
-    revoked? && !saved_change_to_attribute?(:revoked_at)
+    revoked? && !saved_change_to_revoked_at?
   end
 
   # == Callbacks ==

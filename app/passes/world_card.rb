@@ -142,17 +142,13 @@ class Passes::WorldCard < Passkit::BasePass
   end
 
   def barcodes
-    message = if Rails.env.production?
-      ShortUUID.shorten(@card.id)
-    else
-      "(development)"
-    end
+    card_id = ShortUUID.shorten(@card.id)
     [
       {
         messageEncoding: "utf-8",
         format: "PKBarcodeFormatPDF417",
-        message:,
-        altText: message,
+        message: card_id,
+        altText: Rails.env.production? ? card_id : "#{card_id} (dev)",
       },
     ]
   end

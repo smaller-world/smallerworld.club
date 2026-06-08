@@ -11,8 +11,10 @@ class ClearUnregisteredWorldCardsJob < ApplicationJob
   sig { void }
   def perform
     unregistered_passes = Passkit::Pass.where.missing(:registrations)
-      .where(updated_at: ..1.week.ago)
-    WorldCard.where.missing(:pass)
+      .where(updated_at: ..1.day.ago)
+    WorldCard
+      .where(updated_at: ..1.day.ago)
+      .where.missing(:pass)
       .or(WorldCard.where(pass: unregistered_passes))
       .destroy_all
   end

@@ -57,11 +57,6 @@ class Device < ApplicationRecord
 
   validates :identifier, uniqueness: true
 
-  # == Hooks ==
-
-  after_save :create_granted_keys_on_world_cards!,
-    if: [ :owner_id?, :owner_id_previously_changed? ]
-
   # Remove push token if token is invalid
   rescue_from ActionPushNative::TokenError, with: :remove_push_token!
 
@@ -71,7 +66,7 @@ class Device < ApplicationRecord
 
   # == Methods ==
 
-  sig { params(notification: PushNotification).void }
+  sig { params(notification: DevicePushNotification).void }
   def push(notification)
     notification.token = push_token!
     ActionPushNative.service_for(platform, notification).push(notification)
@@ -85,7 +80,7 @@ class Device < ApplicationRecord
   sig { void }
   def send_test_notification
     url_helpers = Rails.application.routes.url_helpers
-    notification = PushNotification
+    notification = DevicePushNotification
       .with_data(target_url: url_helpers.home_path)
       .new(
         title: "test notification",

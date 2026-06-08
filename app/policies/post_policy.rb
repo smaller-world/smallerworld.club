@@ -7,8 +7,13 @@ class PostPolicy < ApplicationPolicy
   def show?
     user = user!
     post = T.let(record, Post)
-    post.author! == user ||
-      WorldKey.exists?(world_id: post.world_id, recipient: user)
+    post.author! == user || (
+      if (key_colors = post.key_colors)
+        WorldKey.exists?(world_id: post.world_id, recipient: user, color: key_colors)
+      else
+        WorldKey.exists?(world_id: post.world_id, recipient: user)
+      end
+    )
   end
 
   # World owner can manage post
@@ -28,5 +33,16 @@ class PostPolicy < ApplicationPolicy
   def reply?
     post = T.let(record, Post)
     allowed_to?(:react?, post)
+  end
+
+  # == Scopes ==
+
+  scope_for :active_record_relation do |relation|
+    relation = T.let(relation, Post::PrivateRelation)
+    if (user = self.user)
+      relation.visible_to(user)
+    else
+      relation.none
+    end
   end
 end
