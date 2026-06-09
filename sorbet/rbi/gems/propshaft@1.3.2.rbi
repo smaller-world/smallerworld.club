@@ -51,34 +51,37 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/asset.rb:5
 class Propshaft::Asset
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:17
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:19
   def initialize(path, logical_path:, load_path:); end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:71
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:81
   def ==(other_asset); end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:21
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:23
   def compiled_content; end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:25
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:27
   def content(encoding: T.unsafe(nil)); end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:29
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:31
   def content_type; end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:37
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:35
+  def content_type_with_charset; end
+
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:47
   def digest; end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:59
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:69
   def digested_path; end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:67
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:77
   def fresh?(digest); end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:41
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:51
   def integrity(hash_algorithm:); end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:33
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:43
   def length; end
 
   # pkg:gem/propshaft#lib/propshaft/asset.rb:6
@@ -92,17 +95,20 @@ class Propshaft::Asset
 
   private
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:80
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:90
   def already_digested?; end
 
-  # pkg:gem/propshaft#lib/propshaft/asset.rb:76
+  # pkg:gem/propshaft#lib/propshaft/asset.rb:86
   def content_with_compile_references; end
 
   class << self
-    # pkg:gem/propshaft#lib/propshaft/asset.rb:9
+    # pkg:gem/propshaft#lib/propshaft/asset.rb:11
     def extract_path_and_digest(digested_path); end
   end
 end
+
+# pkg:gem/propshaft#lib/propshaft/asset.rb:8
+Propshaft::Asset::CONTENT_TYPES_WITH_UTF8_CHARSET = T.let(T.unsafe(nil), Array)
 
 # Base compiler from which other compilers can inherit
 #
