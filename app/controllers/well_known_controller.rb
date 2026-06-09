@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class WellKnownController < ApplicationController
+class WellKnownController < PublicController
   # == Actions ==
 
   # GET /.well-known/apple-app-site-association
