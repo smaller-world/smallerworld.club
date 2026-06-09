@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up Ruby
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby
       - name: Install Ruby gems
@@ -33,7 +33,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up Bun
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: bun
       - name: Install Bun packages
@@ -50,7 +50,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up tools
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
       - name: Install Ruby gems
@@ -106,7 +106,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up tooling
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
       - name: Install Ruby gems
@@ -146,7 +146,7 @@ jobs:
   #     - name: Checkout code
   #       uses: actions/checkout@v6
   #     - name: Set up tools
-  #       uses: jdx/mise-action@v3
+  #       uses: jdx/mise-action@v4
   #     - name: Install Ruby gems
   #       run: mise x -- bundle install
   #     - name: Install Bun packages
