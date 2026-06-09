@@ -835,6 +835,51 @@ class World
     sig { void }
     def id_will_change!; end
 
+    sig { returns(T.untyped) }
+    def key_labels; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def key_labels=(value); end
+
+    sig { returns(T::Boolean) }
+    def key_labels?; end
+
+    sig { returns(T.untyped) }
+    def key_labels_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def key_labels_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def key_labels_came_from_user?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def key_labels_change; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def key_labels_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_labels_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def key_labels_in_database; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def key_labels_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_labels_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def key_labels_previously_was; end
+
+    sig { returns(T.untyped) }
+    def key_labels_was; end
+
+    sig { void }
+    def key_labels_will_change!; end
+
     sig { returns(::String) }
     def name; end
 
@@ -938,6 +983,9 @@ class World
     def restore_id_value!; end
 
     sig { void }
+    def restore_key_labels!; end
+
+    sig { void }
     def restore_name!; end
 
     sig { void }
@@ -969,6 +1017,12 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def saved_change_to_key_labels; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_key_labels?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
@@ -1044,6 +1098,9 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_key_labels?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end

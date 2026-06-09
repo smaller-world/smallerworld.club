@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 # module Turbo::StreamsHelper
 #   sig { returns(Turbo::Streams::TagBuilder) }

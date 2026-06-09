@@ -4,9 +4,36 @@
   }
 
   .world-icon {
-    box-shadow: 0 0 10px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+    box-shadow: 0 0 var(--shadow-spread) -5px
+      var(--tw-shadow-color, rgb(0 0 0 / 0.5));
 
-    @apply size-12 rounded-world-icon border border-border object-cover dark:border-muted-foreground/50;
-    @apply dark:shadow-muted-foreground/80;
+    @apply rounded-world-icon object-cover;
+    @apply border border-accent-foreground/80 dark:border-muted-foreground/80 dark:shadow-muted-foreground/80;
+    @apply size-32 [--shadow-spread:18px];
+
+    &[data-size="sm"],
+    &[data-world-icon-size="sm"],
+    &[data-size="xs"],
+    &[data-world-icon-size="xs"] {
+      @apply border-border shadow-black/20 dark:border-muted-foreground/50 dark:shadow-muted-foreground/50;
+    }
+
+    &[data-size="sm"],
+    &[data-world-icon-size="sm"] {
+      @apply size-20 [--shadow-spread:14px];
+    }
+
+    &[data-size="xs"],
+    &[data-world-icon-size="xs"] {
+      @apply size-12 [--shadow-spread:10px];
+    }
+  }
+
+  .world-icon-label {
+    @apply text-sm font-semibold;
+  }
+
+  .world-icon-container {
+    @apply flex flex-col items-center gap-2;
   }
 }

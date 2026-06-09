@@ -1,6 +1,9 @@
 # typed: strict
 # frozen_string_literal: true
 
+require "sorbet-runtime"
+require "http"
+
 module Turnstile
   class Client
     extend T::Sig

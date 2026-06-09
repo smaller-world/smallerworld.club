@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class PgSearch::Document
   module GeneratedAssociationMethods

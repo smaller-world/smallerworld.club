@@ -6,10 +6,11 @@ class Components::PostCard < Components::Base
 
   # == Initialization ==
 
-  sig { params(post: Post, attributes: T.untyped).void }
-  def initialize(post:, **attributes)
+  sig { params(post: Post, replied_post_ids: T::Set[String], attributes: T.untyped).void }
+  def initialize(post:, replied_post_ids:, **attributes)
     super(**attributes)
     @post = post
+    @replied_post_ids = replied_post_ids
     @author = T.let(post.author!, User)
     @world = T.let(post.world!, World)
   end
@@ -43,23 +44,8 @@ class Components::PostCard < Components::Base
           end
 
           if allowed_to?(:manage?, @post)
-            div(class: class_names(
-              "flex gap-1 items-center",
-              "-mt-2" => card.size == :default,
-            )) do
-              if (key_colors = @post.key_colors)
-                key_colors.each do |key_color|
-                  Components::Badge(variant: :secondary, class: "px-1.5") do
-                    Icon("huge/key-02", style: "color: var(--world-key-color-#{key_color})")
-                  end
-                end
-                if key_colors.empty?
-                  Components::Badge(variant: :secondary, class: "px-1.5 text-muted-foreground") do
-                    Icon("huge/square-lock-01")
-                  end
-                end
-              end
-
+            div(class: "flex gap-1.5 items-center -my-1") do
+              key_badges
               edit_menu(card:)
             end
           end
@@ -81,31 +67,33 @@ class Components::PostCard < Components::Base
           Components::ImageStack(images:)
         end
       end
-      card.footer(
-        class: class_names("flex items-end justify-between gap-6"),
-      ) do
-        if allowed_to?(:reply?, @post)
-          Components::ReplyInitiationForm(
-            reply_initiation: @post.reply_initiations.build,
-          )
-        end
 
-        turbo_frame_tag(
-          dom_id(@post, :reactions),
-          src: [ @post, :reactions ],
-          loading: :lazy,
-          data: {
-            controller: "frame",
-          },
-        ) do
-          Components::Button(
-            element: :div,
-            variant: :ghost,
-            size: :icon,
-            class: "rounded-full skeleton",
+      if allowed_to?(:reply?, @post) || @post.reactions.any?
+        card.footer(class: "flex items-end justify-between gap-6") do
+          if allowed_to?(:reply?, @post)
+            Components::ReplyInitiationForm(
+              reply_initiation: @post.reply_initiations.build,
+              replied_post_ids: @replied_post_ids,
+            )
+          end
+
+          turbo_frame_tag(
+            dom_id(@post, :reactions),
+            src: [ @post, :reactions ],
+            loading: :lazy,
+            data: {
+              controller: "frame",
+            },
           ) do
-            span(class: "font-emoji text-lg") do
-              "🤣"
+            Components::Button(
+              element: :div,
+              variant: :ghost,
+              size: :icon,
+              class: "rounded-full skeleton",
+            ) do
+              span(class: "font-emoji text-lg") do
+                "🤣"
+              end
             end
           end
         end
@@ -141,6 +129,24 @@ class Components::PostCard < Components::Base
           content.button_item(type: :submit, variant: :destructive) do
             Icon("huge/delete-01")
             span { "delete" }
+          end
+        end
+      end
+    end
+  end
+
+  sig { void }
+  def key_badges
+    div(class: "flex gap-1 items-center") do
+      if (key_colors = @post.key_colors)
+        key_colors.each do |key_color|
+          Components::Badge(variant: :secondary, class: "px-1.5") do
+            Icon("huge/key-02", style: "color: var(--world-key-color-#{key_color})")
+          end
+        end
+        if key_colors.empty?
+          Components::Badge(variant: :secondary, class: "px-1.5 text-muted-foreground") do
+            Icon("huge/square-lock-01")
           end
         end
       end

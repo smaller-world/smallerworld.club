@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class ActionController::Base
   include ActionPolicy::Controller

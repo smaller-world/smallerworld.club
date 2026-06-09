@@ -4,9 +4,21 @@
 class Views::Worlds::Show < Views::Base
   # == Initialization ==
 
-  sig { params(world: World, celebrate: T::Boolean).void }
-  def initialize(world:, celebrate: false)
+  sig do
+    params(
+      world: World,
+      unclaimed_world_cards: T.nilable(WorldCard::PrivateRelation),
+      celebrate: T::Boolean,
+    ).void
+  end
+  def initialize(
+    world:,
+    unclaimed_world_cards:,
+    celebrate: false
+  )
     @world = world
+    @unclaimed_world_cards = unclaimed_world_cards
+    @celebrate = celebrate
     @keys = T.let(
       if (user = Current.user)
         @world.keys.accepted.where(recipient: user).to_a
@@ -15,7 +27,6 @@ class Views::Worlds::Show < Views::Base
       end,
       T::Array[WorldKey],
     )
-    @celebrate = celebrate
     super()
   end
 
@@ -49,6 +60,22 @@ class Views::Worlds::Show < Views::Base
                 bridge_ios_image: "gearshape.fill",
               },
             )
+          end
+        end
+
+        unless allowed_to?(:manage?, @world)
+          turbo_frame_tag(
+            :unclaimed_world_card_notice,
+            target: "_top",
+            class: "empty:hidden has-[>_form]:hidden",
+          ) do
+            if (cards = @unclaimed_world_cards)
+              unclaimed_world_cards(cards)
+            else
+              Components::DevicePassesForm(url: @world, data: {
+                turbo_frame: :unclaimed_world_card_notice,
+              })
+            end
           end
         end
 
@@ -103,7 +130,7 @@ class Views::Worlds::Show < Views::Base
           data: {
             turbo_permanent: true,
             controller: "frame",
-            action: "turbo:load@document->frame#reloadAndPreserveScroll",
+            action: "turbo:reload@document->frame#reloadAndPreserveScroll",
           },
         ) do
           div(class: "space-y-4") do
@@ -151,5 +178,63 @@ class Views::Worlds::Show < Views::Base
     else
       "a #{color} key"
     end
+  end
+
+  sig { params(cards: WorldCard::PrivateRelation).void }
+  def unclaimed_world_cards(cards)
+    Components::ItemGroup(
+      class: "hidden",
+      data: {
+        controller: "transition-group transition connection",
+        transition_group_target: "item",
+        transition_enter: "transition-[max-height] duration-400 ease-in-quart",
+        transition_enter_start: "max-h-0",
+        transition_enter_end: "max-h-[1000px]",
+        action: [
+          "transition:transitioned->transition-group#startNext",
+          "connection:connect->transition#enter",
+        ],
+      },
+    ) do
+      cards.find_each do |card|
+        Components::Item(
+          variant: :muted,
+          size: :sm,
+          class: "gap-y-2 hidden [&.hidden]:scale-95",
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-[opacity,scale] ease-in",
+            transition_enter_start: "scale-95",
+            action: [
+              "transition-group:start->transition#enter",
+              "transition:transitioned->transition-group#startNext",
+            ],
+          },
+        ) do |item|
+          item.media do
+            Icon("huge/loyalty-card", class: "size-5")
+          end
+          item.content(class: "gap-0") do
+            item.title do
+              "you have an unlinked card for #{@world.name}"
+            end
+            item.description(class: "flex gap-1") do
+              plain("card id:")
+              span(class: "font-mono") { card.short_id }
+            end
+          end
+          item.actions(class: "mx-auto") do
+            form_with(model: [ :claim, card ], method: :post) do |form|
+              submit_button_for(form, size: :sm) do |button|
+                button.inline_start_icon("huge/link-01")
+                span { "claim card" }
+              end
+            end
+          end
+        end
+      end
+    end if cards.any?
   end
 end

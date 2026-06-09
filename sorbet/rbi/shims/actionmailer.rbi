@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class ActionMailer::Base
   sig { returns(T::Hash[Symbol, T.untyped]) }

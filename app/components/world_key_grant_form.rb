@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class Components::WorldKeyGrantForm < Components::Base
-  include Shortlinking
-
   # == Initialization ==
 
   sig { params(world: World, key_color: T.nilable(Symbol), attributes: T.untyped).void }
@@ -122,6 +120,6 @@ class Components::WorldKeyGrantForm < Components::Base
   sig { params(key_color: Symbol).returns(String) }
   def world_key_grant_url(key_color)
     grant = @world.key_grant(color: key_color)
-    shortlinked.world_key_grant_url(grant:)
+    shortlinked_url_helpers.world_key_grant_url(grant:)
   end
 end

@@ -47,7 +47,6 @@ Rails.application.routes.draw do
       resource :push_token, only: [ :update ] do
         post :test
       end
-      # resource :world_cards, only: [ :update ]
     end
   end
 
@@ -76,7 +75,7 @@ Rails.application.routes.draw do
       path: "/cards",
       only: [ :create ]
     resources :world_key_grants,
-      path: "/invitations",
+      path: "/key_grants",
       as: :key_grants,
       only: :new
     resource :world_settings,
@@ -94,21 +93,24 @@ Rails.application.routes.draw do
 
   # == World Cards
   resources :world_cards, only: [ :show ] do
-    collection do
-      get :unlinked
-    end
     member do
       get :download
+      post :claim
+    end
+    scope module: :world_cards do
+      resource(
+        :world_key_grant,
+        path: "/key_grant",
+        as: :key_grant,
+        only: :show,
+      ) do
+        post :accept
+      end
     end
   end
 
   # == World Key Grants
-  resources(
-    :world_key_grants,
-    only: [ :show ],
-    param: :grant,
-    path: "/world_invitations",
-  ) do
+  resources(:world_key_grants, only: [ :show ], param: :grant) do
     member do
       post :accept
     end
@@ -123,10 +125,8 @@ Rails.application.routes.draw do
   # == Reactions
   resources :reactions, only: :destroy
 
-  # == App
-  get "/appstore",
-    to: redirect(Rails.configuration.testflight_url, status: 302),
-    as: :appstore
+  # == Appstore Listing
+  resource :appstore_listing, path: "/appstore", only: :show
 
   # == Passkit
   mount Passkit::Engine => "/passkit", as: "passkit"

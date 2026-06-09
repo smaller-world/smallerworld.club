@@ -24,7 +24,10 @@ shared: &shared
     schedule: every day at 3:23am
   clear_unregistered_world_cards:
     class: ClearUnregisteredWorldCardsJob
-    schedule: every day at 3:17am
+    schedule: every hour at minute 14
+  clear_expired_relevant_date_on_world_cards:
+    class: ClearExpiredRelevantDateOnWorldCardsJob
+    schedule: every hour at minute 59
 
 development:
   <<: *shared

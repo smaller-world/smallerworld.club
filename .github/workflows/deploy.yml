@@ -8,7 +8,7 @@ run-name: "Deploy from ${{ github.event.workflow_run.head_branch }} (${{ github.
 on:
   workflow_run:
     workflows: [ci]
-    branches: [v2]
+    branches: [main]
     types: [completed]
 
 jobs:

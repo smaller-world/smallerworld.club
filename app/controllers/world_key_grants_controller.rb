@@ -9,23 +9,18 @@ class WorldKeyGrantsController < ApplicationController
 
   # == Actions ==
 
-  # GET /world_invitations/:grant?card_id=...
+  # GET /world_key_grants/:grant
   def show
     grant = params.fetch(:grant)
     WorldKey.verify_grant(grant) => { world_id:, color: }
     world = World.find(world_id)
     if (recipient = Current.user) && recipient.world_keys.exists?(world:, color:)
       redirect_to(world)
-    elsif hotwire_native_app? || !ios_browser?
-      key = world.keys.build(color:, recipient: Current.user)
-      card = if (card_id = params[:card_id])
-        card = WorldCard.find(card_id)
-        card if card.world_id == world_id && card.active? && card.unlinked?
-      end
-      render Views::WorldKeyGrants::Show.new(key:, card:)
-    else
+    elsif ios_browser? && !hotwire_native_app?
       card = world.cards.create!(granted_key_color: color)
       redirect_to(card)
+    else
+      render Views::WorldKeyGrants::Show.new(world:, grant:)
     end
   end
 
@@ -37,7 +32,7 @@ class WorldKeyGrantsController < ApplicationController
     render Views::WorldKeyGrants::New.new(world:, key_color:)
   end
 
-  # POST /world_invitations/:grant/accept
+  # POST /world_key_grants/:grant/accept
   def accept
     respond_to do |format|
       format.html do
@@ -51,17 +46,15 @@ class WorldKeyGrantsController < ApplicationController
           accepted_at: Time.current,
         )
         if key.save
-          if (card_id = params[:card_id])
-            card = WorldCard.find(card_id)
-            if card.world_id == world_id && card.active? && card.unlinked?
-              link_card(card)
-            end
-          end
           redirect_to([ world, celebrate: true ])
         else
-          flash.now.alert = key.errors.full_messages.first
+          message = "Failed to accept key"
+          if (error = key.errors.full_messages.first)
+            message = "#{message}: #{error}"
+          end
+          flash.now.alert = message
           render(
-            Views::WorldKeyGrants::Show.new(key:),
+            Views::WorldKeyGrants::Show.new(world:, grant:),
             status: :unprocessable_content,
           )
         end
@@ -81,19 +74,5 @@ class WorldKeyGrantsController < ApplicationController
   def ios_browser?
     client = DeviceDetector.new(request.user_agent, request.headers.to_h)
     client.os_family == "iOS"
-  end
-
-  sig { params(card: WorldCard).void }
-  def link_card(card)
-    unless card.update(cardholder: Current.user!, device: Current.device!)
-      message = "Failed to link card"
-      if (error = card.errors.full_messages.first)
-        message = "#{message}: #{error}"
-      end
-      Sentry.capture_message(message)
-      tag_logger do
-        logger.error(message)
-      end
-    end
   end
 end

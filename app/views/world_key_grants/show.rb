@@ -4,11 +4,10 @@
 class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
-  sig { params(key: WorldKey, card: T.nilable(WorldCard)).void }
-  def initialize(key:, card:)
-    @key = key
-    @world = T.let(@key.world!, World)
-    @card = card
+  sig { params(world: World, grant: String).void }
+  def initialize(world:, grant:)
+    @world = world
+    @grant = grant
     super()
   end
 
@@ -23,33 +22,20 @@ class Views::WorldKeyGrants::Show < Views::Base
         span(class: "text-lg font-semibold") do
           "you've been given a key to:"
         end
-        div(class: "home-world-link") do
+        div(class: "world-icon-container") do
           div(class: "relative") do
-            image_tag(@world.page_icon_variant, class: "home-world-icon")
+            image_tag(@world.page_icon_variant, class: "world-icon")
             div(class: "absolute inset-0 flex items-center justify-center") do
               Icon("huge/key-02", class: "size-14 text-white")
             end
           end
-          span(class: "home-world-label") do
+          span(class: "world-icon-label") do
             @world.name
           end
         end
 
-        Components::AcceptWorldKeyGrantForm(key: @key, card: @card)
+        Components::AcceptWorldKeyGrantForm(world: @world, grant: @grant)
       end
-    end
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(String) }
-  def label
-    if @key.is_a?(WorldKey)
-      "key"
-    else
-      "keycard"
     end
   end
 end

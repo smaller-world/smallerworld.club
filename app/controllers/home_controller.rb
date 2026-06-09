@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 
   # == Actions ==
 
-  # GET /home[?require_app=1][&pass_serial_numbers[]=...]
+  # GET /home?require_app=1&pass_serial_numbers[]=...
   def show
     respond_to do |format|
       format.html do
@@ -58,7 +58,7 @@ class HomeController < ApplicationController
   sig { void }
   def redirect_to_appstore_if_app_required
     if params[:require_app].present?
-      redirect_to(appstore_path)
+      redirect_to(appstore_listing_path)
     end
   end
 end

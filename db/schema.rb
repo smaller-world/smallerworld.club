@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_192603) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_09_174029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -331,11 +331,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_192603) do
     t.datetime "created_at", null: false
     t.uuid "device_id"
     t.string "granted_key_color", null: false
+    t.timestamptz "relevant_date", default: -> { "now()" }
     t.timestamptz "revoked_at"
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
     t.index ["device_id"], name: "index_world_cards_on_device_id"
+    t.index ["relevant_date"], name: "index_world_cards_on_relevant_date"
     t.index ["revoked_at"], name: "index_world_cards_on_revoked_at"
     t.index ["world_id"], name: "index_world_cards_on_world_id"
   end
@@ -356,6 +358,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_192603) do
   create_table "worlds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "blurb"
     t.datetime "created_at", null: false
+    t.jsonb "key_labels", default: {}, null: false
     t.string "name", null: false
     t.uuid "owner_id", null: false
     t.datetime "updated_at", null: false

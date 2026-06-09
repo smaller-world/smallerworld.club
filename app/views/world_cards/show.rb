@@ -22,14 +22,14 @@ class Views::WorldCards::Show < Views::Base
         span(class: "text-lg font-semibold") do
           "you've been given an access card to:"
         end
-        div(class: "home-world-link") do
+        div(class: "world-icon-container") do
           div(class: "relative") do
-            image_tag(@world.page_icon_variant, class: "home-world-icon")
+            image_tag(@world.page_icon_variant, class: "world-icon")
             div(class: "absolute inset-0 flex items-center justify-center") do
               Icon("huge/key-02", class: "size-14 text-background")
             end
           end
-          span(class: "home-world-label") do
+          span(class: "world-icon-label") do
             @world.name
           end
         end
@@ -46,13 +46,14 @@ class Views::WorldCards::Show < Views::Base
             download: true,
             variant: :default,
             size: :lg,
+            class: "data-disabled:bg-secondary data-disabled:text-secondary-foreground",
             data: {
               controller: "disabled",
               disabled_message_value: "your card is downloading...",
               action: "disabled#disable transition-group#start",
             },
           ) do |button|
-            button.inline_start_icon("huge/cards-02")
+            button.inline_start_icon("huge/loyalty-card")
             span(data: { disabled_target: "message" }) do
               "add card to wallet"
             end
@@ -74,7 +75,7 @@ class Views::WorldCards::Show < Views::Base
             plain("once you've ")
             link_to(
               "downloaded the app",
-              appstore_url,
+              appstore_listing_url,
               target: "_blank",
               rel: "noopener noreferrer",
               class: "text-primary",
@@ -83,7 +84,7 @@ class Views::WorldCards::Show < Views::Base
           end
 
           div(
-            class: [ "flex items-center gap-0.5", "hidden" ],
+            class: [ "flex flex-col items-center gap-2", "hidden" ],
             data: {
               transition_group_target: "item",
               controller: "transition",
@@ -97,9 +98,10 @@ class Views::WorldCards::Show < Views::Base
             end
             button_link_to(
               "open the smaller world app!",
-              appstore_path,
+              home_path(require_app: 1),
+              variant: :default,
+              size: :lg,
               icon: "huge/app-store",
-              class: "h-8",
             )
           end
         end

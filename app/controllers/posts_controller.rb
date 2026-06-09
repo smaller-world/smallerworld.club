@@ -6,6 +6,7 @@ class PostsController < ApplicationController
 
   # GET /world/:world_id/posts
   def index
+    current_user = Current.user!
     world = find_world
     authorize!(world, to: :show?)
     posts_scope = authorized_scope(world.posts)
@@ -13,16 +14,20 @@ class PostsController < ApplicationController
       .with_rich_text_body_and_embeds
       .with_attached_images
     pagy, posts = pagy(:countless, posts_scope, limit: 5)
+    replied_post_ids = ReplyInitiation
+      .where(post_id: posts.map(&:id), replier: current_user)
+      .pluck(:post_id)
+      .to_set
     respond_to do |format|
       if turbo_frame_request?
         format.html do
-          render Views::Posts::Index.new(world:, posts:, pagy:)
+          render Views::Posts::Index.new(world:, posts:, pagy:, replied_post_ids:)
         end
       end
       format.turbo_stream do
         append_post_items = turbo_stream.append(
           :post_items,
-          renderable: Components::WorldPostItems.new(posts:),
+          renderable: Components::WorldPostItems.new(posts:, replied_post_ids:),
         )
         update_next_page_control = if pagy.next
           turbo_stream.replace(

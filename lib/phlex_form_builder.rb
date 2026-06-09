@@ -1,6 +1,9 @@
 # typed: strict
 # frozen_string_literal: true
 
+require "sorbet-runtime"
+require "phlex-rails"
+
 # A wrapper for Phlex::Rails::Builder that enables us to add distinct
 # type declarations corresponding to ActionView::Helpers::FormBuilder.
 class PhlexFormBuilder < Phlex::Rails::Builder

@@ -33,19 +33,11 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                 "#{verification_request.verification_code}",
             )
           end
-          render turbo_stream: turbo_stream.replace(
-            :login_form,
-            renderable: Components::PhoneNumberVerificationRequestForm
-              .new(verification_request:),
-          )
+          render turbo_stream: replace_login_form(verification_request:)
         elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
           redirect_to(new_session_path, alert: message)
         else
-          render turbo_stream: turbo_stream.replace(
-            :login_form,
-            renderable: Components::PhoneNumberVerificationRequestForm
-              .new(verification_request:),
-          )
+          render turbo_stream: replace_login_form(verification_request:)
         end
       end
     end
@@ -75,11 +67,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
             redirect_to(new_account_path)
           end
         else
-          render turbo_stream: turbo_stream.replace(
-            :login_form,
-            renderable: Components::PhoneNumberVerificationRequestForm
-              .new(verification_request:),
-          )
+          render turbo_stream: replace_login_form(verification_request:)
         end
       end
     end
@@ -94,13 +82,16 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     PhoneNumberVerificationRequest.find(params.fetch(:id))
   end
 
-  sig { void }
-  def handle_rate_limit_exceeded
-    redirect_to(
-      new_session_path,
-      alert: "you have requested a login code too many times. please try again later.",
-    )
+  sig do
+    params(verification_request: PhoneNumberVerificationRequest)
+      .returns(ActiveSupport::SafeBuffer)
   end
+  def replace_login_form(verification_request:)
+    form = Components::PhoneNumberVerificationRequestForm.new(verification_request:)
+    turbo_stream.replace(:login_form, renderable: form)
+  end
+
+  # == Callbacks ==
 
   sig { void }
   def verify_turnstile_request
@@ -111,10 +102,18 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           remoteip: request.remote_ip,
         )
       rescue => error
-        redirect_to(new_session_path, alert: "Cloudflare verification failed: #{error.message}")
+        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}")
       end
     else
       redirect_to(new_session_path, alert: "please verify you are human!")
     end
+  end
+
+  sig { void }
+  def handle_rate_limit_exceeded
+    redirect_to(
+      new_session_path,
+      alert: "you have requested a login code too many times. please try again later.",
+    )
   end
 end

@@ -7,12 +7,14 @@ class Components::ReplyInitiationForm < Components::Base
   sig do
     params(
       reply_initiation: ReplyInitiation,
+      replied_post_ids: T::Set[String],
       attributes: T.untyped,
     ).void
   end
-  def initialize(reply_initiation:, **attributes)
+  def initialize(reply_initiation:, replied_post_ids:, **attributes)
     super(**attributes)
     @reply_initiation = reply_initiation
+    @replied_post_ids = replied_post_ids
     @post = T.let(@reply_initiation.post!, Post)
   end
 
@@ -101,7 +103,7 @@ class Components::ReplyInitiationForm < Components::Base
 
   sig { returns(Symbol) }
   def button_variant
-    if @post.reply_initiations.exists?(replier: @current_user)
+    if @replied_post_ids.include?(@post.id)
       :ghost
     else
       :default

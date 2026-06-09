@@ -1,0 +1,111 @@
+name: Deploy V1
+
+# prettier-ignore
+run-name: "Deploy from ${{ github.event.workflow_run.head_branch }} (${{ github.event.workflow_run.head_commit.message }})"
+
+on:
+  workflow_run:
+    workflows: [check]
+    branches: [v1]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  # prettier-ignore
+  group: "${{ github.event.workflow_run.head_branch }}-${{ github.event.workflow_run.conclusion }}"
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Set up Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Get last working image
+        id: last_image
+        run: |
+          # Get the last successful release image
+          set -e
+          LAST_IMAGE=$(flyctl releases --json | jq -r '.[] | select(.Status == "complete") | .ImageRef' | head -n 1)
+          if [ -z "$LAST_IMAGE" ]; then
+            echo "No successful releases found"
+            echo "image=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          echo "Found last working image: $LAST_IMAGE"
+          echo "image=$LAST_IMAGE" >> $GITHUB_OUTPUT
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Deploy
+        run: flyctl deploy --remote-only --vm-memory=1024
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Revert to last working image on failure
+        if: failure() || cancelled()
+        run: |
+          if [ -n "${{ steps.last_image.outputs.image }}" ]; then
+            echo "Reverting to last known working image: ${{ steps.last_image.outputs.image }}"
+            flyctl deploy --image "${{ steps.last_image.outputs.image }}" --remote-only --ha=false --memory=768
+          else
+            echo "No previous working image found, scaling to 1"
+            flyctl scale count 1 --yes
+          fi
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  release:
+    runs-on: ubuntu-latest
+    needs: deploy
+    env:
+      BUNDLE_PATH: vendor/bundle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Install dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libjemalloc-dev libvips
+      - name: Set up mise
+        uses: jdx/mise-action@v2
+        env:
+          MISE_VERBOSE: "1"
+      - name: Cache Bundler
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-bundle-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-bundle-
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
+      - name: Set up environment
+        run: bin/setup --without-database
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      - name: Build source maps
+        run: bin/rails assets:precompile
+        env:
+          RAILS_ENV: production
+          SECRET_KEY_BASE_DUMMY: "1"
+      - name: Create Sentry release
+        uses: getsentry/action-release@v3
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: smallerworld
+        with:
+          environment: production
+          projects: smallerworld_v1
+          ignore_missing: true
+          disable_telemetry: true
+          sourcemaps: ./public/dist

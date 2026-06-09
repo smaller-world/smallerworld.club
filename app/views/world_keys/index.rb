@@ -66,7 +66,7 @@ class Views::WorldKeys::Index < Views::Base
 
   sig { params(recipient: User, keys: T::Array[WorldKey]).void }
   def item(recipient:, keys:)
-    Components::Item(variant: :outline) do |item|
+    Components::Item(variant: :muted) do |item|
       item.content do
         item.title do
           recipient.name

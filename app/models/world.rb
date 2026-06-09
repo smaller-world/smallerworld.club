@@ -8,6 +8,7 @@
 #
 #  id         :uuid             not null, primary key
 #  blurb      :text
+#  key_labels :jsonb            not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -38,30 +39,7 @@ class World < ApplicationRecord
 
   # == FriendlyId ==
 
-  # TODO: Parse this out into a module.
-  module FinderMethods
-    extend T::Sig
-    include FriendlyId::FinderMethods
-
-    private
-
-    sig { params(value: String).returns(String) }
-    def parse_friendly_id(value)
-      value.split("-").last || value
-    end
-  end
-
-  friendly_id do |config|
-    config.base = :id
-    config.finder_methods = FinderMethods
-  end
-
-  sig { returns(T.nilable(String)) }
-  def friendly_id
-    if (name = self[:name]) && (id = self[:id])
-      "#{name[..32].strip.parameterize}-#{id.delete("-")}"
-    end
-  end
+  friendly_id :name, use: FriendlyId::DynamicSlugged
 
   # == Associations ==
 

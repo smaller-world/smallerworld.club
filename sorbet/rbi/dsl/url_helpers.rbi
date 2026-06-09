@@ -5,20 +5,7 @@
 # Please instead update this file by running `bin/tapioca dsl UrlHelpers`.
 
 
-module UrlHelpers
-  include GeneratedInstanceMethods
-
-  mixes_in_class_methods GeneratedClassMethods
-
-  module GeneratedClassMethods
-    def default_url_options; end
-    def default_url_options=(value); end
-    def default_url_options?; end
-  end
-
-  module GeneratedInstanceMethods
-    def default_url_options; end
-    def default_url_options=(value); end
-    def default_url_options?; end
-  end
+class UrlHelpers
+  include GeneratedUrlHelpersModule
+  include GeneratedPathHelpersModule
 end

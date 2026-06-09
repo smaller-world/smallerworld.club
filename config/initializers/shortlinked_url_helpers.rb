@@ -4,13 +4,15 @@
 class Smallerworld::Application
   sig do
     params(fallback_url_options: T::Hash[Symbol, T.untyped])
-      .returns(ShortlinkedUrlHelpers)
+      .returns(UrlHelpers)
   end
-  def shortlinked_url_helpers(fallback_url_options = {})
+  def shortlinked_url_helpers(
+    fallback_url_options = Rails.configuration.action_mailer.default_url_options
+  )
     if Rails.env.production?
-      ShortlinkedUrlHelpers.new(protocol: "https", host: "smlr.world")
+      UrlHelpers.new(protocol: "https", host: "smlr.world")
     else
-      ShortlinkedUrlHelpers.new(**fallback_url_options)
+      UrlHelpers.new(**fallback_url_options)
     end
   end
 end

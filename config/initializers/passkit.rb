@@ -75,9 +75,7 @@ Rails.application.configure do
   end unless passkit_disabled
 end
 
-module Passes; end
-
 Rails.autoloaders.main.push_dir(
-  Rails.root.join("app/passes"),
-  namespace: Passes,
+  Rails.root.join("app/passkit"),
+  namespace: Passkit,
 )

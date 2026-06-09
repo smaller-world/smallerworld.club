@@ -1,9 +1,8 @@
-# typed: true
+# typed: strict
 
 class ApplicationCable::Connection
   sig { params(value: T.nilable(User)).returns(T.nilable(User)) }
-  def current_user=(value)
-  end
+  def current_user=(value); end
 
   sig { returns(T.nilable(User)) }
   def current_user; end
@@ -43,7 +42,7 @@ end
 class ActionDispatch::Routing::RouteSet
   sig do
     params(supports_path: TrueClass).returns(T.all(
-      Module,
+      T::Module[T.anything],
       GeneratedUrlHelpersModule,
       GeneratedPathHelpersModule,
     ))

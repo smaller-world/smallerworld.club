@@ -1,4 +1,4 @@
-# typed: strong
+# typed: strict
 
 module Enumerize
   include Base::ClassMethods

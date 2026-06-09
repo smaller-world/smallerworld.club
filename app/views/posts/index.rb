@@ -9,12 +9,14 @@ class Views::Posts::Index < Views::Base
       world: World,
       posts: T::Enumerable[Post],
       pagy: T.nilable(Pagy),
+      replied_post_ids: T::Set[String],
     ).void
   end
-  def initialize(world:, posts:, pagy:)
+  def initialize(world:, posts:, pagy:, replied_post_ids:)
     @world = world
     @posts = posts
     @pagy = pagy
+    @replied_post_ids = replied_post_ids
     super()
   end
 
@@ -26,7 +28,10 @@ class Views::Posts::Index < Views::Base
       div(class: "space-y-4") do
         if @posts.any?
           ul(id: "post_items", class: "space-y-4") do
-            Components::WorldPostItems(posts: @posts)
+            Components::WorldPostItems(
+              posts: @posts,
+              replied_post_ids: @replied_post_ids,
+            )
           end
         else
           Components::Empty() do |empty|

@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class ActiveRecord::Migration
   sig { params(name: T.untyped, _arg1: T.untyped).void }

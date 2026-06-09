@@ -1,7 +1,12 @@
-# typed: true
+# typed: strict
 
 module FriendlyId
   include FriendlyId::Base
+end
+
+module FriendlyId::Base
+  sig { returns(FriendlyId::Configuration) }
+  def friendly_id_config; end
 end
 
 module FriendlyId::Slugged

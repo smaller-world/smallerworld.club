@@ -8,6 +8,7 @@
 #
 #  id                :uuid             not null, primary key
 #  granted_key_color :string           not null
+#  relevant_date     :timestamptz
 #  revoked_at        :timestamptz
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -19,6 +20,7 @@
 #
 #  index_world_cards_on_cardholder_id  (cardholder_id)
 #  index_world_cards_on_device_id      (device_id)
+#  index_world_cards_on_relevant_date  (relevant_date)
 #  index_world_cards_on_revoked_at     (revoked_at)
 #  index_world_cards_on_world_id       (world_id)
 #
@@ -30,8 +32,13 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class WorldCard < ApplicationRecord
+  # == Configuration ==
+
+  RELEVANT_DATE_EXPIRES_IN = T.let(12.hours, ActiveSupport::Duration)
+
   # == Attributes ==
 
+  attribute :relevant_date, default: -> { Time.current }
   enumerize :granted_key_color, in: WorldKey.color.values
 
   sig { returns(T::Boolean) }
@@ -43,7 +50,19 @@ class WorldCard < ApplicationRecord
   end
 
   sig { returns(T::Boolean) }
-  def unlinked? = !device_id?
+  def unclaimed?
+    !cardholder_id?
+  end
+
+  sig { returns(String) }
+  def short_id
+    ShortUUID.shorten(id)
+  end
+
+  sig { params(short_id: String).returns(WorldCard) }
+  def self.find_by_short_id!(short_id)
+    WorldCard.find(ShortUUID.expand(short_id))
+  end
 
   # == Associations ==
 
@@ -74,40 +93,37 @@ class WorldCard < ApplicationRecord
   before_validation :set_cardholder_id,
     if: [ :device_id?, :device_id_changed? ],
     unless: :cardholder_id?
-  validates :cardholder, presence: true, if: :device_id?
+  validates :device, presence: true, if: :cardholder_id?
 
   # == Scopes ==
 
   scope :active, -> { unrevoked.where.associated(:pass_registrations) }
   scope :unrevoked, -> { where(revoked_at: nil) }
   scope :revoked, -> { where.not(revoked_at: nil) }
-  scope :linked, -> { where.not(device_id: nil) }
-  scope :unlinked, -> { where(device_id: nil) }
-
-  sig do
-    params(pass_serial_numbers: T::Array[String])
-      .returns(WorldCard::PrivateRelation)
-  end
-  def self.ids_pending_key_creation(pass_serial_numbers:)
-    WorldCard.unrevoked.unlinked
-      .joins(:pass).where(passkit_passes: { serial_number: pass_serial_numbers })
-      .select("DISTINCT ON (world_cards.world_id) world_cards.id")
-      .order("world_cards.world_id", created_at: :desc)
-  end
-
-  sig do
-    params(pass_serial_numbers: T::Array[String])
-      .returns(WorldCard::PrivateRelation)
-  end
-  def self.pending_key_creation(pass_serial_numbers:)
-    WorldCard.where(id: ids_pending_key_creation(pass_serial_numbers:))
-  end
+  scope :claimed, -> { where.not(cardholder_id: nil) }
+  scope :unclaimed, -> { where(cardholder_id: nil) }
+  scope :with_expired_relevant_date, -> {
+    where(relevant_date: ..(Time.current - RELEVANT_DATE_EXPIRES_IN))
+  }
+  scope :with_pass_serial_numbers, ->(serial_numbers) {
+    joins(:pass).where(passkit_passes: { serial_number: serial_numbers })
+  }
 
   # == Hooks ==
 
   after_update_commit :trigger_pass_update_later, unless: :revoked_prior_to_last_save?
 
-  # == Pass Updates ==
+  # == Passkit ==
+
+  sig { returns(Passkit::Pass) }
+  def pass!
+    pass || create_pass!(klass: Passkit::WorldCardPass.name, generator: self)
+  end
+
+  sig { returns(Passkit::Generator) }
+  def passkit_generator
+    Passkit::Generator.new(pass!)
+  end
 
   # Push a silent notification to every device that has registered this card's pass.
   sig { void }
@@ -136,19 +152,19 @@ class WorldCard < ApplicationRecord
 
   # == Methods ==
 
-  sig { returns(Passkit::Pass) }
-  def pass!
-    pass || create_pass!(klass: Passes::WorldCard.name, generator: self)
-  end
-
-  sig { returns(Passkit::Generator) }
-  def passkit_generator
-    Passkit::Generator.new(pass!)
-  end
-
   sig { returns(TrueClass) }
   def revoke!
     update!(revoked_at: Time.current)
+  end
+
+  sig { returns(TrueClass) }
+  def release!
+    update!(cardholder: nil, device: nil)
+  end
+
+  sig { returns(TrueClass) }
+  def clear_relevant_date!
+    update!(relevant_date: nil)
   end
 
   sig { params(world: World, cardholder: User).returns(T.untyped) }

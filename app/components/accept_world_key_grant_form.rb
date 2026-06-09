@@ -4,26 +4,18 @@
 class Components::AcceptWorldKeyGrantForm < Components::Base
   # == Initialization ==
 
-  sig { params(key: WorldKey, card: T.nilable(WorldCard), attributes: T.untyped).void }
-  def initialize(key:, card:, **attributes)
+  sig { params(world: World, grant: String, attributes: T.untyped).void }
+  def initialize(world:, grant:, **attributes)
     super(**attributes)
-    @key = key
-    @world = T.let(key.world!, World)
-    @card = card
+    @world = world
+    @grant = grant
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(
-      url: accept_world_key_grant_path(grant: @world.key_grant(color: @key.color)),
-      **@attributes,
-    ) do |form|
-      if (card = @card)
-        form.hidden_field(:card_id, value: card.id)
-      end
-
+    form_with(url: accept_world_key_grant_path(grant: @grant), **@attributes) do |form|
       submit_button_for(form, size: :lg) do
         Icon("huge/door-01")
         span { "enter #{@world.name}" }

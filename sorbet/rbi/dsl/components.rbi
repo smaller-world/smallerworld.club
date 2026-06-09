@@ -6,26 +6,26 @@
 
 
 module Components
-  # app/components/accept_world_key_form.rb
+  # app/components/accept_world_card_key_grant_form.rb
   sig do
     params(
-      key: ::WorldKey,
+      card: ::WorldCard,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+      block: T.nilable(T.proc.params(instance: Components::AcceptWorldCardKeyGrantForm).void)
     ).void
   end
-  def AcceptWorldKeyForm(key:, **attributes, &block); end
+  def AcceptWorldCardKeyGrantForm(card:, **attributes, &block); end
 
   # app/components/accept_world_key_grant_form.rb
   sig do
     params(
-      key: ::WorldKey,
-      card: T.nilable(::WorldCard),
+      world: ::World,
+      grant: ::String,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
     ).void
   end
-  def AcceptWorldKeyGrantForm(key:, card:, **attributes, &block); end
+  def AcceptWorldKeyGrantForm(world:, grant:, **attributes, &block); end
 
   # app/components/account_form.rb
   sig do
@@ -465,11 +465,12 @@ module Components
   sig do
     params(
       post: ::Post,
+      replied_post_ids: T::Set[::String],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostCard).void)
     ).void
   end
-  def PostCard(post:, **attributes, &block); end
+  def PostCard(post:, replied_post_ids:, **attributes, &block); end
 
   # app/components/post_form.rb
   sig do
@@ -509,11 +510,12 @@ module Components
   sig do
     params(
       reply_initiation: ::ReplyInitiation,
+      replied_post_ids: T::Set[::String],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
     ).void
   end
-  def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
+  def ReplyInitiationForm(reply_initiation:, replied_post_ids:, **attributes, &block); end
 
   # app/components/separator.rb
   sig do
@@ -644,32 +646,33 @@ module Components
   sig do
     params(
       posts: T::Enumerable[::Post],
+      replied_post_ids: T::Set[::String],
       block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
     ).void
   end
-  def WorldPostItems(posts:, &block); end
+  def WorldPostItems(posts:, replied_post_ids:, &block); end
 
   class << self
-    # app/components/accept_world_key_form.rb
+    # app/components/accept_world_card_key_grant_form.rb
     sig do
       params(
-        key: ::WorldKey,
+        card: ::WorldCard,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyForm).void)
+        block: T.nilable(T.proc.params(instance: Components::AcceptWorldCardKeyGrantForm).void)
       ).void
     end
-    def AcceptWorldKeyForm(key:, **attributes, &block); end
+    def AcceptWorldCardKeyGrantForm(card:, **attributes, &block); end
 
     # app/components/accept_world_key_grant_form.rb
     sig do
       params(
-        key: ::WorldKey,
-        card: T.nilable(::WorldCard),
+        world: ::World,
+        grant: ::String,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
       ).void
     end
-    def AcceptWorldKeyGrantForm(key:, card:, **attributes, &block); end
+    def AcceptWorldKeyGrantForm(world:, grant:, **attributes, &block); end
 
     # app/components/account_form.rb
     sig do
@@ -1114,11 +1117,12 @@ module Components
     sig do
       params(
         post: ::Post,
+        replied_post_ids: T::Set[::String],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostCard).void)
       ).void
     end
-    def PostCard(post:, **attributes, &block); end
+    def PostCard(post:, replied_post_ids:, **attributes, &block); end
 
     # app/components/post_form.rb
     sig do
@@ -1158,11 +1162,12 @@ module Components
     sig do
       params(
         reply_initiation: ::ReplyInitiation,
+        replied_post_ids: T::Set[::String],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
       ).void
     end
-    def ReplyInitiationForm(reply_initiation:, **attributes, &block); end
+    def ReplyInitiationForm(reply_initiation:, replied_post_ids:, **attributes, &block); end
 
     # app/components/separator.rb
     sig do
@@ -1293,9 +1298,10 @@ module Components
     sig do
       params(
         posts: T::Enumerable[::Post],
+        replied_post_ids: T::Set[::String],
         block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
       ).void
     end
-    def WorldPostItems(posts:, &block); end
+    def WorldPostItems(posts:, replied_post_ids:, &block); end
   end
 end

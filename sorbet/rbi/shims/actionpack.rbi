@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 # module ActionController::RateLimiting::ClassMethods
 #   sig do

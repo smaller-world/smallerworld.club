@@ -10,6 +10,9 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def accept_world_card_key_grant_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def accept_world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -25,7 +28,10 @@ module GeneratedPathHelpersModule
   def apple_app_site_association_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def appstore_path(*args); end
+  def appstore_listing_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def claim_world_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
@@ -208,13 +214,13 @@ module GeneratedPathHelpersModule
   def ui_docs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def unlinked_world_cards_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def verify_phone_number_verification_request_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_card_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_card_path(*args); end

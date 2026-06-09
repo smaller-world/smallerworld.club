@@ -95,7 +95,6 @@ class WorldKey < ApplicationRecord
     Notification::Message.new(
       target_url: [ world, WorldKey ],
       title: "#{key_recipient.name} joined your world!",
-      world:,
     )
   end
 
@@ -110,7 +109,7 @@ class WorldKey < ApplicationRecord
   def self.grant_verifier
     Rails.application.message_verifier(:world_key_grant)
   end
-  delegate :grant_verifier, to: :class
+  # delegate :grant_verifier, to: :class
 
   sig { params(grant: String).returns({ world_id: String, color: String }) }
   def self.verify_grant(grant)

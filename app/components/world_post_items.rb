@@ -4,10 +4,11 @@
 class Components::WorldPostItems < Components::Base
   # == Initialization ==
 
-  sig { params(posts: T::Enumerable[Post]).void }
-  def initialize(posts:)
+  sig { params(posts: T::Enumerable[Post], replied_post_ids: T::Set[String]).void }
+  def initialize(posts:, replied_post_ids:)
     super()
     @posts = posts
+    @replied_post_ids = replied_post_ids
   end
 
   # == Component ==
@@ -16,7 +17,7 @@ class Components::WorldPostItems < Components::Base
   def view_template
     @posts.each do |post|
       li do
-        Components::PostCard(post:)
+        Components::PostCard(post:, replied_post_ids: @replied_post_ids)
       end
     end
   end

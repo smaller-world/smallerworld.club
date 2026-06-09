@@ -29,7 +29,7 @@ class Views::Pages::Landing < Views::Base
 
           button_link_to(
             "get the app!",
-            appstore_path,
+            appstore_listing_path,
             variant: :default,
             size: :xl,
             icon: "huge/app-store",

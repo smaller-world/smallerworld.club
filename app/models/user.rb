@@ -148,14 +148,18 @@ class User < ApplicationRecord
       .returns(WorldCard::PrivateRelation)
   end
   def world_cards_pending_key_creation(pass_serial_numbers:)
-    matching_key = WorldKey
+    matching_keys = WorldKey
       .where("world_keys.world_id = world_cards.world_id")
       .where("world_keys.color = world_cards.granted_key_color")
       .where(recipient_id: id)
-    WorldCard.where(
-      id: WorldCard.ids_pending_key_creation(pass_serial_numbers:)
-        .where.not(matching_key.arel.exists),
-    )
+    WorldCard
+      .where(
+        id: WorldCard.unrevoked.unclaimed
+          .with_pass_serial_numbers(pass_serial_numbers)
+          .select("DISTINCT ON (world_cards.world_id) world_cards.id")
+          .order("world_cards.world_id", created_at: :desc),
+      )
+      .where.not(matching_keys.arel.exists)
   end
 
   private

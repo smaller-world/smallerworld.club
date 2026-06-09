@@ -11,7 +11,8 @@
       "patterns": [
         "\/new$",
         "\/edit$",
-        "^\/world_invitations\/.+$",
+        "^\/world_key_grants\/.+$",
+        "^\/world_cards\/[\\w+]\/key_grant$",
         "\/settings$"
       ],
       "properties": {

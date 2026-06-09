@@ -98,6 +98,11 @@ class Components::Base < Phlex::HTML
     )
   end
 
+  sig { returns(UrlHelpers) }
+  def shortlinked_url_helpers
+    Smallerworld.application.shortlinked_url_helpers(url_options)
+  end
+
   # sig do
   #   params(hash: T::Hash[Symbol, T.untyped], keys: Symbol)
   #     .returns(T::Hash[Symbol, T.untyped])

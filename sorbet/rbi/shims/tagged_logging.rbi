@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module TaggedLogging
   sig { returns(T.any(ActiveSupport::Logger, ActiveSupport::BroadcastLogger)) }

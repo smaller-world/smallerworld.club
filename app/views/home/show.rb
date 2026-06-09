@@ -14,7 +14,7 @@ class Views::Home::Show < Views::Base
     super()
     @current_user = current_user
     @world_cards_pending_key_creation = world_cards_pending_key_creation
-    @friend_worlds = T.let(
+    @accessible_worlds = T.let(
       @current_user.accessible_worlds.with_attached_icon,
       World::PrivateAssociationRelation,
     )
@@ -26,21 +26,22 @@ class Views::Home::Show < Views::Base
   def view_template
     Components::AppLayout(display_header: true) do |layout|
       layout.page_container(class: "flex-1 max-w-lg flex flex-col gap-8 justify-center") do
-        div(class: "flex gap-6 flex-wrap justify-center") do
+        turbo_frame_tag(
+          :your_worlds,
+          target: "_top",
+          class: "flex gap-6 flex-wrap justify-center",
+        ) do
           @current_user.owned_worlds.each do |world|
-            link_to(world, class: "home-world-link") do
-              image_tag(
-                world.page_icon_variant,
-                class: "home-world-icon",
-              )
-              span(class: "home-world-label") do
+            link_to(world, class: "world-icon-container hover:underline") do
+              image_tag(world.page_icon_variant, class: "world-icon")
+              span(class: "world-icon-label") do
                 world.name
               end
             end
           end
 
           if @current_user.owned_worlds.empty?
-            link_to(new_world_path, class: "home-world-link") do
+            link_to(new_world_path, class: "world-icon-container hover:underline") do
               Components::Button(
                 element: :div,
                 variant: :outline,
@@ -48,20 +49,27 @@ class Views::Home::Show < Views::Base
               ) do
                 image_tag("logo.png", class: "size-12")
               end
-              span(class: "home-world-label") do
+              span(class: "world-icon-label") do
                 "create your world"
               end
             end
           end
         end
 
-        div(class: "flex gap-4 flex-wrap justify-center") do
-          @friend_worlds.each do |world|
-            link_to(world, class: "home-world-link", data: { size: "sm" }) do
+        turbo_frame_tag(
+          :other_worlds,
+          class: "flex gap-4 flex-wrap justify-center",
+          target: "_top",
+        ) do
+          @accessible_worlds.each do |world|
+            link_to(
+              world,
+              class: "world-icon-container hover:underline",
+            ) do
               div(class: "relative") do
                 image_tag(
                   world.page_icon_variant,
-                  class: "home-world-icon",
+                  class: "world-icon",
                   data: { size: "sm" },
                 )
                 if @current_user.world_cards.active.exists?(world:)
@@ -77,13 +85,13 @@ class Views::Home::Show < Views::Base
                     },
                   ) do
                     Icon(
-                      "huge/cards-02",
+                      "huge/loyalty-card",
                       class: "text-muted-foreground size-4",
                     )
                   end
                 end
               end
-              span(class: "home-world-label", data: { size: "sm" }) do
+              span(class: "world-icon-label text-xs") do
                 world.name
               end
             end
@@ -91,53 +99,51 @@ class Views::Home::Show < Views::Base
 
           @world_cards_pending_key_creation&.each do |card|
             world = card.world!
-            grant = world.key_grant(color: card.granted_key_color)
             link_to(
-              world_key_grant_path(grant, card_id: card.id),
-              class: "home-world-link",
-              data: { size: "sm" },
+              [ card, :key_grant ],
+              class: "world-icon-container hover:underline",
             ) do
               div(class: "relative") do
                 image_tag(
                   world.page_icon_variant,
-                  class: "home-world-icon opacity-50",
+                  class: "world-icon opacity-50",
                   data: { size: "sm" },
                 )
                 div(class: "absolute inset-0 flex items-center justify-center") do
-                  Icon("huge/key-02", class: "size-8 text-white")
+                  Icon("huge/loyalty-card", class: "size-8 text-white")
                 end
               end
-              span(class: "home-world-label text-foreground/50", data: { size: "sm" }) do
+              span(class: "world-icon-label text-xs text-muted-foreground") do
                 world.name
               end
             end
           end
 
           if hotwire_native_app?
-            link_to(
-              "/scan_qr_code",
-              class: "home-world-link",
-              data: {
-                size: "sm",
-              },
-            ) do
+            link_to("/scan_qr_code", class: "world-icon-container hover:underline") do
               Components::Button(
                 element: :div,
                 variant: :outline,
-                class: "home-world-icon shadow-none border-dashed",
+                class: "world-icon shadow-none border-dashed",
+                data: { world_icon_size: "sm" },
               ) do
                 Icon("huge/qr-code", class: "size-7 text-muted-foreground")
               end
-              span(class: "home-world-label font-normal") do
+              span(class: "world-icon-label text-xs text-muted-foreground") do
                 "scan to add friend"
               end
             end
           end
-        end
-      end
 
-      unless @world_cards_pending_key_creation
-        Components::DevicePassesForm(url: home_path)
+          unless @world_cards_pending_key_creation
+            Components::DevicePassesForm(
+              url: home_path,
+              data: {
+                turbo_frame: :other_worlds,
+              },
+            )
+          end
+        end
       end
     end
   end
