@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up Ruby
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby
       - name: Install Ruby gems
@@ -33,7 +33,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up Bun
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: bun
       - name: Install Bun packages
@@ -50,7 +50,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up tools
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
       - name: Install Ruby gems
@@ -73,6 +73,8 @@ jobs:
             rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
       - name: Check code issues
         run: mise check --all
+        env:
+          MISE_SKIP_TOOLS: "1"
 
   test:
     name: Run tests
@@ -106,18 +108,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Set up tooling
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
       - name: Install Ruby gems
-        run: mise x -- bundle install
+        run: bundle install
       - name: Install Bun packages
-        run: mise x -- bun install
+        run: bun install
       - name: Prepare database
         run: bin/rails db:test:prepare
       - name: Run tests
         run: mise test -vv
         env:
+          MISE_SKIP_TOOLS: "1"
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   # system-test:
@@ -146,7 +149,7 @@ jobs:
   #     - name: Checkout code
   #       uses: actions/checkout@v6
   #     - name: Set up tools
-  #       uses: jdx/mise-action@v3
+  #       uses: jdx/mise-action@v4
   #     - name: Install Ruby gems
   #       run: mise x -- bundle install
   #     - name: Install Bun packages
