@@ -46,6 +46,7 @@ class Views::WorldKeys::Show < Views::Base
               "invite another friend",
               [ :new, @world, :key_grant ],
               variant: :default,
+              size: :lg,
               icon: "huge/user-add-01",
               class: "self-center",
             )

@@ -23,6 +23,13 @@ class Components::AppFlashAlert < Components::Base
       alert.description do
         @message
       end
+      # alert.action do
+      #   Components::Button(variant: :ghost, size: :icon_xs, data: {
+      #     action: "transition#leave",
+      #   }) do
+      #     Icon("huge/cancel-01")
+      #   end
+      # end
     end
   end
 end

@@ -34,6 +34,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :authenticated?
   register_value_helper :allowed_to?
   register_value_helper :hotwire_native_app?
+  register_value_helper :ios_browser?
 
   # == Errors ==
 

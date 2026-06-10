@@ -25,7 +25,26 @@ class Views::Home::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(display_header: true) do |layout|
-      layout.page_container(class: "flex-1 max-w-lg flex flex-col gap-8 justify-center") do
+      layout.page_container(class: "flex-1 max-w-lg flex flex-col gap-8") do
+        unless hotwire_native_app?
+          Components::Alert(class: "gap-y-1") do |alert|
+            alert.title do
+              "please try our app!!"
+            end
+            alert.description do
+              "it looks like you're using smaller world in the browser. to get the " \
+                "best experience, please download our app. thank you :)"
+            end
+            button_link_to(
+              "get the app!",
+              appstore_listing_path,
+              variant: :default,
+              icon: "huge/app-store",
+              class: "mt-1",
+            )
+          end
+        end
+
         turbo_frame_tag(
           :your_worlds,
           target: "_top",

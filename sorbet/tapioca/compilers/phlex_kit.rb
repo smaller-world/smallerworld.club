@@ -110,9 +110,9 @@ module Tapioca
           location = Object.const_source_location(T.must(component.name))
           return [] unless location
 
-          path, = location
+          path, line = location
           relative_path = Pathname.new(path).relative_path_from(Rails.root).to_s
-          [ RBI::Comment.new(relative_path) ]
+          [ RBI::Comment.new("workspace://#{relative_path}:#{line}") ]
         end
 
         sig do

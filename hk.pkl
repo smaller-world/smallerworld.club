@@ -31,7 +31,7 @@ local linters = new Mapping<String, Step> {
     fix = "bin/rubocop --force-exclusion --autocorrect {{ files }}"
   }
   ["sorbet"] = (Builtins.sorbet) {
-    exclude = List("sorbet/tapioca/compilers/**/*.rb", "bin/*")
+    exclude = List("sorbet/tapioca/compilers/**/*.rb", "bin/*", "ruby_lsp/**/*.rb")
     check = "bin/srb tc --no-error-count {{ files }}"
     fix = "bin/srb tc --no-error-count --autocorrect {{ files }}"
   }

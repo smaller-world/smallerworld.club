@@ -49,9 +49,6 @@ module GeneratedUrlHelpersModule
   def edit_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def errors_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def fly_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -194,6 +191,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def sentry_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def session_url(*args); end

@@ -70,9 +70,4 @@ class WorldKeyGrantsController < ApplicationController
   def find_world(scope: World.all)
     scope.friendly.find(params.fetch(:world_id))
   end
-
-  def ios_browser?
-    client = DeviceDetector.new(request.user_agent, request.headers.to_h)
-    client.os_family == "iOS"
-  end
 end

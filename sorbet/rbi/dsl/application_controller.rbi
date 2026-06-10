@@ -31,6 +31,9 @@ class ApplicationController
 
     sig { returns(T::Boolean) }
     def authenticated?; end
+
+    sig { returns(T::Boolean) }
+    def ios_browser?; end
   end
 
   class HelperProxy < ::ActionView::Base

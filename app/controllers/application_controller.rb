@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   include DeviceTracking
   include LogStreaming
   include ToastStreaming
+  include DeviceDetection
 
   # == Configuration ==
 

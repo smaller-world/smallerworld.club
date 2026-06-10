@@ -30,15 +30,15 @@ class Components::WorldKeyGrantForm < Components::Base
         class: "flex flex-wrap max-w-96 self-center justify-center",
       ) do |group|
         WorldKey.color.values.each do |color|
-          group.field_label_for(color, class: "w-30 cursor-pointer py-1 justify-center") do |label|
-            label.field(class: "items-center") do |field|
+          group.field_label_for(color, class: "w-28 min-h-28 cursor-pointer py-1 justify-center") do |label|
+            label.field(class: "items-center p-3") do |field|
               Icon(
                 "huge/key-02",
                 class: "size-8",
                 style: "color: var(--world-key-color-#{color})",
               )
               field.title(
-                class: "text-center text-balance text-xs font-heading text-muted-foreground w-auto",
+                class: "text-center text-balance text-xs w-auto",
               ) do
                 @world.key_label(color:)
               end

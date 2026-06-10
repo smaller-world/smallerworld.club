@@ -4,9 +4,9 @@
 --dir
 .
 --ignore=tmp/
---ignore=vendor/
 --ignore=node_modules/
 --ignore=storage/
 --ignore=log/
+--ignore=ruby_lsp/
 --suppress-payload-superclass-redefinition-for=Net::IMAP::Literal
 --suppress-payload-superclass-redefinition-for=Net::IMAP::QuotedString

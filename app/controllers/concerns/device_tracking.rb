@@ -4,15 +4,15 @@
 module DeviceTracking
   extend T::Sig
   extend T::Helpers
-
-  requires_ancestor { ApplicationController }
-
   extend ActiveSupport::Concern
+  include DeviceDetection
+
+  requires_ancestor { ActionController::Base }
 
   included do
     extend T::Sig
 
-    T.bind(self, T.class_of(ApplicationController))
+    T.bind(self, T.class_of(ActionController::Base))
 
     before_action :set_device
   end
@@ -24,7 +24,7 @@ module DeviceTracking
     if (identifier = cookies[:device_identifier])
       device = Device.find_or_initialize_by(identifier:) do |device|
         device.platform = parse_device_platform
-        device.name = parse_device_name
+        device.name = device_name
       end
       if (user = Current.user)
         device.owner = user
@@ -44,11 +44,5 @@ module DeviceTracking
     else
       raise ArgumentError, "Missing Hotwire Native platform marker"
     end
-  end
-
-  sig { returns(T.nilable(String)) }
-  def parse_device_name
-    client = DeviceDetector.new(request.user_agent, request.headers.to_h)
-    client.device_name
   end
 end

@@ -26,6 +26,9 @@ class Components::Base
 
   sig { returns(T::Boolean) }
   def hotwire_native_app?; end
+
+  sig { returns(T::Boolean) }
+  def ios_browser?; end
 end
 
 class Current
