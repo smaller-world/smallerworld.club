@@ -6,19 +6,19 @@
 #
 # Table name: posts
 #
-#  id               :uuid             not null, primary key
-#  emoji            :string
-#  plain_body       :text             not null
-#  title            :string
-#  world_key_colors :string           is an Array
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  world_id         :uuid             not null
+#  id         :uuid             not null, primary key
+#  emoji      :string
+#  key_colors :string           is an Array
+#  plain_body :text             not null
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  world_id   :uuid             not null
 #
 # Indexes
 #
-#  index_posts_on_world_id          (world_id)
-#  index_posts_on_world_key_colors  (world_key_colors)
+#  index_posts_on_key_colors  (key_colors)
+#  index_posts_on_world_id    (world_id)
 #
 # Foreign Keys
 #
@@ -63,7 +63,7 @@ class Post < ApplicationRecord
     owned = World.where(owner: user).where("worlds.id = posts.world_id")
     keyed = WorldKey.accepted.where(recipient: user)
       .where("world_keys.world_id = posts.world_id")
-      .where("posts.world_key_colors IS NULL OR world_keys.color = ANY (posts.world_key_colors)")
+      .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
     where(owned.arel.exists.or(keyed.arel.exists))
   }
 
@@ -129,8 +129,8 @@ class Post < ApplicationRecord
   sig { void }
   def create_notifications_for_world_key_recipients!
     recipients = world_key_recipients
-    if (key_colors = self.key_colors)
-      recipients = recipients.where(color: key_colors)
+    if (colors = key_colors)
+      recipients = recipients.where(color: colors)
     end
     recipients.find_each do |recipient|
       notifications.create!(recipient:)
@@ -190,8 +190,8 @@ class Post < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def all_key_colors_set?
-    if (key_colors = self.key_colors)
-      key_colors.to_set == WorldKey.color.values.to_set
+    if (colors = key_colors)
+      colors.to_set == WorldKey.color.values.to_set
     else
       false
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_035255) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_10_042028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -133,13 +133,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_035255) do
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "emoji"
+    t.string "key_colors", array: true
     t.text "plain_body", null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
-    t.string "world_key_colors", array: true
+    t.index ["key_colors"], name: "index_posts_on_key_colors"
     t.index ["world_id"], name: "index_posts_on_world_id"
-    t.index ["world_key_colors"], name: "index_posts_on_world_key_colors"
   end
 
   create_table "reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -72,7 +72,7 @@ class PostsController < ApplicationController
         world = find_world
         authorize!(world, to: :post?)
         post_params = params.expect(
-          post: [ :emoji, :title, :body, images: [], world_key_colors: [] ],
+          post: [ :emoji, :title, :body, images: [], key_colors: [] ],
         )
         post = world.posts.build(**post_params)
         if post.save
@@ -91,7 +91,7 @@ class PostsController < ApplicationController
         post = find_post
         authorize!(post)
         post_params = params.expect(
-          post: [ :emoji, :title, :body, images: [], world_key_colors: [] ],
+          post: [ :emoji, :title, :body, images: [], key_colors: [] ],
         )
         if post.update(post_params)
           refresh_or_redirect_to(post.world!)

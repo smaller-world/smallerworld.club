@@ -45,7 +45,7 @@ class Components::PostCard < Components::Base
 
           if allowed_to?(:manage?, @post)
             div(class: "flex gap-1.5 items-center -my-1") do
-              key_badges
+              world_key_badges
               edit_menu(card:)
             end
           end
@@ -137,16 +137,19 @@ class Components::PostCard < Components::Base
   end
 
   sig { void }
-  def key_badges
+  def world_key_badges
     div(class: "flex gap-1 items-center") do
-      if (key_colors = @post.key_colors)
-        key_colors.each do |key_color|
+      if (colors = @post.key_colors)
+        colors.each do |color|
           Components::Badge(variant: :secondary, class: "px-1.5") do
-            Icon("huge/key-02", style: "color: var(--world-key-color-#{key_color})")
+            Icon("huge/key-02", style: "color: var(--world-key-color-#{color})")
           end
         end
-        if key_colors.empty?
-          Components::Badge(variant: :secondary, class: "px-1.5 text-muted-foreground") do
+        if colors.empty?
+          Components::Badge(
+            variant: :secondary,
+            class: "px-1.5 text-muted-foreground",
+          ) do
             Icon("huge/square-lock-01")
           end
         end

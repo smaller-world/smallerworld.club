@@ -101,8 +101,8 @@ class Components::PostForm < Components::Base
 
       Components::Card(size: :sm) do |card|
         card.content(class: "flex flex-col items-stretch gap-4") do
-          field_for(form, :world_key_colors, class: "items-center") do |field|
-            form.hidden_field(:world_key_colors, multiple: true, value: nil)
+          field_for(form, :key_colors, class: "items-center") do |field|
+            form.hidden_field(:key_colors, multiple: true, value: nil)
 
             field.checkbox_group(class: "flex-row justify-center") do |group|
               WorldKey.color.values.each do |color|
@@ -171,7 +171,7 @@ class Components::PostForm < Components::Base
 
   sig { params(world_key_color: Enumerize::Value).returns(T::Boolean) }
   def checkbox_group_item_checked?(world_key_color:)
-    if (colors = @post.world_key_colors)
+    if (colors = @post.key_colors)
       colors.include?(world_key_color)
     else
       true
