@@ -6,6 +6,7 @@ on:
 
 env:
   BUNDLE_PATH: vendor/bundle
+  BUN_INSTALL_CACHE_DIR: vendor/bun
 
 jobs:
   scan_ruby:
@@ -14,11 +15,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Prepare gem cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: gems-${{ runner.os }}-
       - name: Set up Ruby
         uses: jdx/mise-action@v4
         with:
           install_args: ruby
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Ruby gems
+        run: bundle install
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
       - name:
@@ -31,11 +40,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Prepare bun cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bun
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
       - name: Set up Bun
         uses: jdx/mise-action@v4
         with:
           install_args: bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Bun packages
+        run: bun install
       - name: Scan for known security vulnerabilities in packages used
         run: bun audit --audit-level high
 
@@ -47,10 +64,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Prepare gem cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: gems-${{ runner.os }}-
+      - name: Prepare Bun cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bun
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
       - name: Set up tools
         uses: jdx/mise-action@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Ruby gems
+        run: bundle install
+      - name: Install Bun packages
+        run: bun install
       - name: Prepare RuboCop cache
         uses: actions/cache@v5
         env:
@@ -63,6 +96,20 @@ jobs:
           restore-keys: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
       - name: Check code issues
         run: mise check --all
+        env:
+          MISE_VERBOSE: "1"
+      - name: Dump hk output log on failure
+        if: failure()
+        run: |
+          echo "=== ~/.local/state/hk/output.log ==="
+          cat ~/.local/state/hk/output.log || echo "(no output.log found)"
+          echo
+          echo "=== dmesg tail (for segfault details) ==="
+          sudo dmesg | tail -50 || true
+          echo
+          echo "=== core dumps ==="
+          ls -la /var/lib/systemd/coredump/ 2>/dev/null || true
+          ls -la core* 2>/dev/null || true
 
   test:
     name: Run tests
@@ -95,17 +142,32 @@ jobs:
           libpq-dev libvips-dev
       - name: Checkout code
         uses: actions/checkout@v6
-      - name: Set up tooling
+      - name: Prepare gem cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: gems-${{ runner.os }}-
+      - name: Prepare Bun cache
+        uses: actions/cache@v5
+        with:
+          path: vendor/bun
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - name: Set up tools
         uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Ruby gems
+        run: bundle install
+      - name: Install Bun packages
+        run: bun install
       - name: Prepare database
         run: bin/rails db:test:prepare
       - name: Run tests
         run: mise test -vv
         env:
-          MISE_TASK_RUN_AUTO_INSTALL: "false"
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   # system-test:

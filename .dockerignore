@@ -55,4 +55,5 @@
 /Dockerfile*
 
 # Ignore vendored packages
-# /vendor/
+/vendor/
+!/vendor/stylesheets/

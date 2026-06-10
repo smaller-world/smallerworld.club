@@ -4,6 +4,7 @@
 --dir
 .
 --ignore=tmp/
+--ignore=vendor/
 --ignore=node_modules/
 --ignore=storage/
 --ignore=log/
