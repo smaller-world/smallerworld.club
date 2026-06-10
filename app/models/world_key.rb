@@ -109,11 +109,21 @@ class WorldKey < ApplicationRecord
   def self.grant_verifier
     Rails.application.message_verifier(:world_key_grant)
   end
-  # delegate :grant_verifier, to: :class
 
   sig { params(grant: String).returns({ world_id: String, color: String }) }
   def self.verify_grant(grant)
     grant_verifier.verify(grant).symbolize_keys
+  end
+
+  # == Methods ==
+
+  sig { returns(String) }
+  def label
+    if (world = self.world)
+      world.key_label(color:)
+    else
+      "#{color.humanize(capitalize: false)} key"
+    end
   end
 
   private

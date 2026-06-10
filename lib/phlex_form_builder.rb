@@ -1,4 +1,4 @@
-# typed: strict
+# typed: true
 # frozen_string_literal: true
 
 require "sorbet-runtime"
@@ -16,5 +16,20 @@ class PhlexFormBuilder < Phlex::Rails::Builder
   def self.from(builder, component:)
     object = builder.unwrap
     new(object, component:)
+  end
+
+  sig do
+    params(
+      record_name: ::Symbol,
+      record_object: ::T.nilable(::Object),
+      fields_options: ::T.nilable(::T::Hash[::Symbol, ::T.untyped]),
+      block: ::T.proc.params(builder: ::PhlexFormBuilder).void,
+    ).void
+  end
+  def fields_for(record_name, record_object = nil, fields_options = nil, &block)
+    html = @object.fields_for(record_name, record_object, fields_options) do |builder|
+      yield ::PhlexFormBuilder.new(builder, component: @component)
+    end
+    @component.raw(html)
   end
 end

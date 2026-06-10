@@ -9,7 +9,7 @@ class Components::InputGroup::Addon < Components::Base
   # == Initialization ==
 
   sig { params(align: Symbol, attributes: T.untyped).void }
-  def initialize(align:, **attributes)
+  def initialize(align: :inline_start, **attributes)
     unless align.in?(ALIGNMENTS)
       raise InvalidParameter.new(parameter: :align, value: align)
     end

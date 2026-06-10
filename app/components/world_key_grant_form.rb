@@ -29,26 +29,24 @@ class Components::WorldKeyGrantForm < Components::Base
         :key_color,
         class: "flex flex-wrap max-w-96 self-center justify-center",
       ) do |group|
-        WorldKey.color.values.each do |key_color|
-          group.field_label_for(key_color, class: "w-24 cursor-pointer py-1") do |label|
-            label.field do |field|
-              field.content(class: "items-center") do
-                Icon(
-                  "huge/key-02",
-                  class: "size-8",
-                  style: "color: var(--world-key-color-#{key_color})",
-                )
+        WorldKey.color.values.each do |color|
+          group.field_label_for(color, class: "w-30 cursor-pointer py-1 justify-center") do |label|
+            label.field(class: "items-center") do |field|
+              Icon(
+                "huge/key-02",
+                class: "size-8",
+                style: "color: var(--world-key-color-#{color})",
+              )
+              field.content do
                 field.title(
-                  class: "text-center text-xs font-heading text-muted-foreground",
+                  class: "text-center text-balance text-xs font-heading text-muted-foreground",
                 ) do
-                  plain(key_color)
-                  whitespace
-                  plain("key")
+                  @world.key_label(color:)
                 end
               end
               field.radio_group_item_for(
-                key_color,
-                checked: key_color == @key_color,
+                color,
+                checked: color == @key_color,
                 class: "hidden",
                 input: {
                   data: {

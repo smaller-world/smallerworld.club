@@ -8,7 +8,7 @@
 #
 #  id         :uuid             not null, primary key
 #  blurb      :text
-#  key_labels :jsonb            not null
+#  key_labels :jsonb
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -40,6 +40,18 @@ class World < ApplicationRecord
   # == FriendlyId ==
 
   friendly_id :name, use: FriendlyId::DynamicSlugged
+
+  # == Attributes ==
+
+  typed_store(
+    :key_labels,
+    suffix: :key_label,
+    coder: ActiveRecord::TypedStore::IdentityCoder,
+  ) do |s|
+    WorldKey.color.values.each do |color|
+      s.string(color.to_s, blank: false)
+    end
+  end
 
   # == Associations ==
 
@@ -113,6 +125,9 @@ class World < ApplicationRecord
 
   strips_text :name, :blurb
   nilify_blanks :blurb
+  normalizes :key_labels, with: ->(value) {
+    value.transform_values { |value| value&.strip }.compact_blank
+  }
 
   # == Validations ==
 
@@ -147,6 +162,13 @@ class World < ApplicationRecord
   def key_grant(color:)
     id = self[:id] or raise "Missing world ID"
     WorldKey.grant_verifier.generate({ world_id: id, color: color.to_s })
+  end
+
+  sig { params(color: T.any(Symbol, Enumerize::Value)).returns(String) }
+  def key_label(color:)
+    color = color.to_s
+    descriptor = key_labels[color] || color.humanize(capitalize: false)
+    "#{descriptor} key"
   end
 
   private

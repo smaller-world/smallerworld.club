@@ -75,7 +75,14 @@ class Views::WorldKeys::Index < Views::Base
       item.actions do
         keys.each do |key|
           Components::DropdownMenu() do |menu|
-            menu.with_trigger_badge(variant: :outline, class: "h-6 [&>svg]:size-4") do
+            menu.with_trigger_badge(
+              variant: :outline,
+              class: "h-6 [&>svg]:size-4",
+              data: {
+                controller: "tippy",
+                tippy_content_value: key.label,
+              },
+            ) do
               Icon("huge/key-02", style: "color: var(--world-key-color-#{key.color})")
             end
             menu.with_content(anchor: [ :bottom, :end ]) do |content|

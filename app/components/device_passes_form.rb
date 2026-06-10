@@ -17,12 +17,14 @@ class Components::DevicePassesForm < Components::Base
     form_with(
       url: @url,
       method: :get,
-      hidden: true,
       **normalize_mix(
         {
           data: {
             controller: "device-passes-form passes-bridge",
             action: "passes-bridge:received->device-passes-form#submitPasses",
+          },
+          html: {
+            hidden: true,
           },
         },
         @attributes,

@@ -158,6 +158,9 @@ gem "after_attached", "~> 0.1.1"
 # Ruby accessors on steroids
 gem "smart_properties", "~> 1.17"
 
+# Add typed stores to ActiveRecord
+gem "activerecord-typedstore", "~> 1.6"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

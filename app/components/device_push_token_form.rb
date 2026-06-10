@@ -17,10 +17,8 @@ class Components::DevicePushTokenForm < Components::Base
     form_with(
       model: @current_device,
       url: device_push_token_path,
-      hidden: true,
-      data: {
-        controller: "form",
-      },
+      data: { controller: "form" },
+      html: { hidden: true },
     ) do |form|
       form.hidden_field(
         :push_token,

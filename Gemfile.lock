@@ -74,6 +74,8 @@ GEM
     activerecord-postgis-adapter (11.1.1)
       activerecord (~> 8.1.0)
       rgeo-activerecord (~> 8.1.0)
+    activerecord-typedstore (1.6.0)
+      activerecord (>= 6.1)
     activestorage (8.1.2.1)
       actionpack (= 8.1.2.1)
       activejob (= 8.1.2.1)
@@ -648,6 +650,7 @@ DEPENDENCIES
   action_push_native (~> 0.3.1)
   active_storage_validations (~> 3.0)
   activerecord-postgis-adapter
+  activerecord-typedstore (~> 1.6)
   after_attached (~> 0.1.1)
   after_party
   annotaterb
@@ -743,6 +746,7 @@ CHECKSUMS
   activemodel (8.1.2.1) sha256=8f31a6f9c12fecb8e5a0fce8a8950cfd94f0d75829322935f99e8217a3e5f3c6
   activerecord (8.1.2.1) sha256=3f79140318ff6d23376f5d9b1b5b5e2c7d3cc8979dd71367e9a8394378ca630a
   activerecord-postgis-adapter (11.1.1) sha256=ae2b9bd88c9ed7bfd21583bf233345cd0f1cd58d3ef96d78d001470f944fbac2
+  activerecord-typedstore (1.6.0) sha256=c94036c0a55e27aca048f9605b2a3c6503c3a33e76ef43050d82cbdba61c1a40
   activestorage (8.1.2.1) sha256=36794c9b8853ac9276b0386cb1f8973374d8e71e8a9666bb02e70f5b7c9c5391
   activesupport (8.1.2.1) sha256=beec20ced12ad569194554399449a6372fdab03061b8f48a9ed6ef9b7dc251b2
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af

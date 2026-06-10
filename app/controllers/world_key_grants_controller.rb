@@ -66,9 +66,9 @@ class WorldKeyGrantsController < ApplicationController
 
   # == Helpers ==
 
-  sig { returns(World) }
-  def find_world
-    World.friendly.find(params.fetch(:world_id))
+  sig { params(scope: T.untyped).returns(World) }
+  def find_world(scope: World.all)
+    scope.friendly.find(params.fetch(:world_id))
   end
 
   def ios_browser?

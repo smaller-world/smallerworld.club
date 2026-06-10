@@ -80,7 +80,12 @@ class WorldsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world)
-        world_params = params.expect(world: [ :name, :blurb, :icon ])
+        world_params = params.expect(world: [
+          :name,
+          :blurb,
+          :icon,
+          *key_label_attributes,
+        ])
         if world.update(**world_params)
           refresh_or_redirect_to(world)
         else
@@ -111,5 +116,12 @@ class WorldsController < ApplicationController
   sig { returns(World) }
   def find_world
     World.friendly.find(params.fetch(:id))
+  end
+
+  sig { returns(T::Array[Symbol]) }
+  def key_label_attributes
+    WorldKey.color.values.map do |value|
+      :"#{value}_key_label"
+    end
   end
 end

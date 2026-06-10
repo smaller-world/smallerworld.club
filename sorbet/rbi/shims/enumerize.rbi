@@ -9,3 +9,8 @@ module Enumerize
   include Scope::ActiveRecord
   include ModuleAttributes
 end
+
+class Enumerize::Attribute
+  sig { returns(T::Array[Enumerize::Value]) }
+  def values; end
+end

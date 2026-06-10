@@ -28,7 +28,7 @@ class Components::FieldSet < Components::Base
       raise InvalidParameter.new(parameter: :variant, value: variant)
     end
 
-    legend(
+    super(
       **mix(
         {
           class: "field-legend",
@@ -41,5 +41,33 @@ class Components::FieldSet < Components::Base
       ),
       &content
     )
+  end
+
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def description(**attributes, &content)
+    p(
+      **mix(
+        {
+          class: "field-description",
+          data: {
+            slot: "field-description",
+          },
+        },
+        attributes,
+      ),
+      &content
+    )
+  end
+
+  sig do
+    params(
+      form: T.untyped,
+      field: T.untyped,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(group: Components::FieldGroup).void),
+    ).void
+  end
+  def group(form: nil, field: nil, **attributes, &content)
+    render Components::FieldGroup.new(form:, field:, **attributes, &content)
   end
 end

@@ -56,11 +56,11 @@ class Components::Input < Components::Base
 
   sig { returns(T::Boolean) }
   def field_has_errors?
-    (object = @form&.object) &&
+    !!((object = @form&.object) &&
       @field &&
       object.respond_to?(:errors) &&
       (errors = object.errors) &&
       errors.respond_to?(:[]) &&
-      errors[@field].present?
+      errors[@field].present?)
   end
 end

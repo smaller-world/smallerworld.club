@@ -39,7 +39,7 @@ class Components::InputGroup < Components::Base
       content: T.proc.params(component: Components::InputGroup::Addon).void,
     ).void
   end
-  def addon(align:, **attributes, &content)
+  def addon(align: :inline_start, **attributes, &content)
     render Components::InputGroup::Addon.new(align:, **attributes, &content)
   end
 
