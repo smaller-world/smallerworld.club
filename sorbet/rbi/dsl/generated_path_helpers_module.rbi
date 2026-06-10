@@ -43,6 +43,9 @@ module GeneratedPathHelpersModule
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_world_keys_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -232,6 +235,9 @@ module GeneratedPathHelpersModule
   def world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_keys_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -242,9 +248,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_world_cards_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_world_keys_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_path(*args); end

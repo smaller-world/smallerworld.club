@@ -93,7 +93,7 @@ class WorldKey < ApplicationRecord
     world = world!
     key_recipient = recipient!
     Notification::Message.new(
-      target_url: [ world, WorldKey ],
+      target_url: [ world, :keys ],
       title: "#{key_recipient.name} joined your world!",
     )
   end

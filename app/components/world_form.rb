@@ -101,13 +101,13 @@ class Components::WorldForm < Components::Base
         f.error(data: { field_target: "error" })
       end
 
-      if @world.persisted?
-        Components::Card(class: "mt-4", size: hotwire_native_app? ? :sm : :default) do |card|
-          card.content do
-            key_label_fields(form:)
-          end
-        end
-      end
+      # if @world.persisted?
+      #   Components::Card(class: "mt-4", size: hotwire_native_app? ? :sm : :default) do |card|
+      #     card.content do
+      #       key_label_fields(form:)
+      #     end
+      #   end
+      # end
 
       submit_button_for(form, size: :lg) do |button|
         if @world.new_record?
@@ -123,40 +123,40 @@ class Components::WorldForm < Components::Base
     end
   end
 
-  private
+  # private
 
   # == Helpers ==
 
-  sig { params(form: PhlexFormBuilder).void }
-  def key_label_fields(form:)
-    Components::FieldSet() do |set|
-      div do
-        set.legend(class: "mb-0") do
-          "key labels"
-        end
-        set.description do
-          "help yourself remember what your key colors represent!"
-        end
-      end
-      set.group(class: "md:grid md:grid-cols-2 gap-2") do
-        WorldKey.color.values.each do |value|
-          field_for(form, :"#{value}_key_label") do |field|
-            field.input_group do |group|
-              group.addon do
-                Icon("huge/key-02", style: "color: var(--world-key-color-#{value})")
-              end
-              group.text_input(
-                placeholder: value.humanize(capitalize: false),
-                class: "text-end",
-              )
-              group.addon(align: :inline_end) do |addon|
-                addon.text { "key" }
-              end
-            end
-            field.error
-          end
-        end
-      end
-    end
-  end
+  # sig { params(form: PhlexFormBuilder).void }
+  # def key_label_fields(form:)
+  #   Components::FieldSet() do |set|
+  #     div do
+  #       set.legend(class: "mb-0") do
+  #         "key labels"
+  #       end
+  #       set.description do
+  #         "help yourself remember what your key colors represent!"
+  #       end
+  #     end
+  #     set.group(class: "md:grid md:grid-cols-2 gap-2") do
+  #       WorldKey.color.values.each do |value|
+  #         field_for(form, :"#{value}_key_label") do |field|
+  #           field.input_group do |group|
+  #             group.addon do
+  #               Icon("huge/key-02", style: "color: var(--world-key-color-#{value})")
+  #             end
+  #             group.text_input(
+  #               placeholder: value.humanize(capitalize: false),
+  #               class: "text-end",
+  #             )
+  #             group.addon(align: :inline_end) do |addon|
+  #               addon.text { "key" }
+  #             end
+  #           end
+  #           field.error
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 end

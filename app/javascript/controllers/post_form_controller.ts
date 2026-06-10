@@ -7,51 +7,53 @@ export default class PostFormController extends FormController {
   // == Values ==
 
   static values = {
-    keyLabels: Object,
+    worldKeyLabels: Object,
   };
-  declare readonly keyLabelsValue: Record<string, string>;
+  declare readonly worldKeyLabelsValue: Record<string, string>;
 
   // == Targets ==
 
-  static targets = ["keyColorsInput", "keyColorsDescription"];
-  declare readonly keyColorsInputTargets: HTMLCollectionOf<HTMLInputElement>;
-  declare readonly keyColorsDescriptionTarget: HTMLElement;
-  declare readonly hasKeyColorsDescriptionTarget: boolean;
+  static targets = ["worldKeyColorsInput", "worldKeyColorsDescription"];
+  declare readonly worldKeyColorsInputTargets: HTMLCollectionOf<HTMLInputElement>;
+  declare readonly worldKeyColorsDescriptionTarget: HTMLElement;
+  declare readonly hasWorldKeyColorsDescriptionTarget: boolean;
 
   // == Lifecycle ==
 
   connect(): void {
     super.connect();
-    if (!this.hasKeyColorsDescriptionTarget) {
-      throw new Error("Missing keyColorsDescription target");
+    if (!this.hasWorldKeyColorsDescriptionTarget) {
+      throw new Error("Missing worldKeyColorsDescription target");
     }
-    this.updateKeyColorsDescription();
+    this.updateWorldKeyColorsDescription();
   }
 
   // == Actions ==
 
-  updateKeyColorsDescription(): void {
-    const keyLabels = this.#activeKeyLabels();
+  updateWorldKeyColorsDescription(): void {
+    const worldKeyLabels = this.#activeWorldKeyLabels();
     let audience: string | undefined;
-    if (isEmpty(keyLabels)) {
+    if (isEmpty(worldKeyLabels)) {
       audience = "only you";
-    } else if (keyLabels.length < this.keyColorsInputTargets.length) {
-      audience = `${arrayToSentence(keyLabels)} key friends`;
+    } else if (worldKeyLabels.length < this.worldKeyColorsInputTargets.length) {
+      audience = `${arrayToSentence(worldKeyLabels)} key friends`;
     } else {
       audience = '<span class="text-foreground">all friends</span>';
     }
-    this.keyColorsDescriptionTarget.innerHTML = `${audience} can see this post`;
+    this.worldKeyColorsDescriptionTarget.innerHTML = `${audience} can see this post`;
   }
 
-  #activeKeyColors(): string[] {
-    return Array.from(this.keyColorsInputTargets).flatMap((input) =>
+  // == Helpers ==
+
+  #activeWorldKeyColors(): string[] {
+    return Array.from(this.worldKeyColorsInputTargets).flatMap((input) =>
       input.checked ? [input.value] : [],
     );
   }
 
-  #activeKeyLabels(): string[] {
-    return this.#activeKeyColors().map((color) => {
-      const label = this.keyLabelsValue[color] ?? color;
+  #activeWorldKeyLabels(): string[] {
+    return this.#activeWorldKeyColors().map((color) => {
+      const label = this.worldKeyLabelsValue[color] ?? color;
       return `<span class="text-foreground">${label}</span>`;
     });
   }

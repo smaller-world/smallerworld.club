@@ -68,9 +68,10 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [ :index, :new, :create ]
-    resources :world_keys,
+    resource :world_keys,
       path: "/keys",
-      only: [ :index ]
+      as: :keys,
+      only: [ :show, :edit, :update ]
     resources :world_cards,
       path: "/cards",
       only: [ :create ]

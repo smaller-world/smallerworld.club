@@ -43,6 +43,9 @@ module GeneratedUrlHelpersModule
   def edit_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_world_keys_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -232,6 +235,9 @@ module GeneratedUrlHelpersModule
   def world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_keys_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_posts_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -242,9 +248,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_world_cards_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_world_keys_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_url(*args); end

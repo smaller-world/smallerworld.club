@@ -20,7 +20,7 @@ class Components::PostForm < Components::Base
         class: "flex flex-col gap-6",
         data: {
           controller: "post-form haptic-bridge",
-          post_form_key_labels_value: @world.key_labels.to_json,
+          post_form_world_key_labels_value: @world.key_labels.to_json,
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
@@ -101,13 +101,13 @@ class Components::PostForm < Components::Base
 
       Components::Card(size: :sm) do |card|
         card.content(class: "flex flex-col items-stretch gap-4") do
-          field_for(form, :key_colors, class: "items-center") do |field|
-            form.hidden_field(:key_colors, multiple: true, value: nil)
+          field_for(form, :world_key_colors, class: "items-center") do |field|
+            form.hidden_field(:world_key_colors, multiple: true, value: nil)
 
             field.checkbox_group(class: "flex-row justify-center") do |group|
-              WorldKey.color.values.each do |key_color|
+              WorldKey.color.values.each do |color|
                 group.field_label_for(
-                  key_color,
+                  color,
                   class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
                 ) do |label|
                   label.field(class: "p-2") do |field|
@@ -115,17 +115,17 @@ class Components::PostForm < Components::Base
                       Icon(
                         "huge/key-02",
                         class: "size-4.5",
-                        style: "color: var(--world-key-color-#{key_color})",
+                        style: "color: var(--world-key-color-#{color})",
                       )
                     end
                     field.checkbox_group_item_for(
-                      key_color,
+                      color,
                       hidden: true,
-                      checked: checkbox_group_item_checked?(key_color:),
+                      checked: checkbox_group_item_checked?(world_key_color: color),
                       input: {
                         data: {
-                          post_form_target: "keyColorsInput",
-                          action: "change->post-form#updateKeyColorsDescription",
+                          post_form_target: "worldKeyColorsInput",
+                          action: "change->post-form#updateWorldKeyColorsDescription",
                         },
                       },
                     )
@@ -134,9 +134,9 @@ class Components::PostForm < Components::Base
               end
             end
             field.description(
-              class: "text-center text-xs empty:opacity-0 max-w-96 text-balance",
+              class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
               data: {
-                post_form_target: "keyColorsDescription",
+                post_form_target: "worldKeyColorsDescription",
               },
             )
             field.error(class: "text-center text-xs")
@@ -169,10 +169,10 @@ class Components::PostForm < Components::Base
     end
   end
 
-  sig { params(key_color: Enumerize::Value).returns(T::Boolean) }
-  def checkbox_group_item_checked?(key_color:)
-    if (key_colors = @post.key_colors)
-      key_colors.include?(key_color)
+  sig { params(world_key_color: Enumerize::Value).returns(T::Boolean) }
+  def checkbox_group_item_checked?(world_key_color:)
+    if (colors = @post.world_key_colors)
+      colors.include?(world_key_color)
     else
       true
     end

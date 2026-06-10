@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Views::WorldKeys::Index < Views::Base
+class Views::WorldKeys::Show < Views::Base
   # == Initialization ==
 
   sig { params(world: World, keys_by_recipient: T::Hash[User, T::Array[WorldKey]]).void }
@@ -17,7 +17,22 @@ class Views::WorldKeys::Index < Views::Base
   def view_template
     Components::AppLayout(page_title: "your friends") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
-        button_back_to(@world.name, @world) unless hotwire_native_app?
+        div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
+          button_back_to(@world.name, @world)
+
+          if @keys_by_recipient.any?
+            button_link_to(
+              "edit key labels",
+              [ :edit, @world, :keys ],
+              icon: "huge/pencil-edit-01",
+              variant: :secondary,
+              data: {
+                controller: "button-bridge",
+                bridge_ios_image: "gearshape.fill",
+              },
+            )
+          end
+        end
 
         if (keys_by_recipient = @keys_by_recipient.presence)
           div(class: "flex flex-col gap-4") do

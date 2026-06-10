@@ -36,7 +36,7 @@ class Views::Worlds::Show < Views::Base
   def view_template
     Components::AppLayout(page_title: @world.name) do |layout|
       layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        div(class: "flex justify-between", hidden: hotwire_native_app?) do
+        div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
           button_back_to(:home)
 
           if allowed_to?(:manage?, @world)
@@ -114,7 +114,7 @@ class Views::Worlds::Show < Views::Base
             )
             button_link_to(
               "your friends",
-              [ @world, WorldKey ],
+              [ @world, :keys ],
               variant: :outline,
               size: :lg,
               icon: "huge/user-group",

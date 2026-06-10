@@ -37,12 +37,10 @@ class Components::WorldKeyGrantForm < Components::Base
                 class: "size-8",
                 style: "color: var(--world-key-color-#{color})",
               )
-              field.content do
-                field.title(
-                  class: "text-center text-balance text-xs font-heading text-muted-foreground",
-                ) do
-                  @world.key_label(color:)
-                end
+              field.title(
+                class: "text-center text-balance text-xs font-heading text-muted-foreground w-auto",
+              ) do
+                @world.key_label(color:)
               end
               field.radio_group_item_for(
                 color,

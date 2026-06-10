@@ -631,6 +631,16 @@ module Components
   end
   def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
 
+  # app/components/world_keys_form.rb
+  sig do
+    params(
+      world: ::World,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldKeysForm).void)
+    ).void
+  end
+  def WorldKeysForm(world:, **attributes, &block); end
+
   # app/components/world_next_page_control.rb
   sig do
     params(
@@ -1282,6 +1292,16 @@ module Components
       ).void
     end
     def WorldKeyGrantForm(world:, key_color:, **attributes, &block); end
+
+    # app/components/world_keys_form.rb
+    sig do
+      params(
+        world: ::World,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldKeysForm).void)
+      ).void
+    end
+    def WorldKeysForm(world:, **attributes, &block); end
 
     # app/components/world_next_page_control.rb
     sig do
