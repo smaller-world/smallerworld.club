@@ -69,7 +69,7 @@ class Components::PostCard < Components::Base
       end
 
       if allowed_to?(:reply?, @post) || @post.reactions.any?
-        card.footer(class: "flex items-end justify-between gap-6") do
+        card.footer(class: "flex items-end gap-6") do
           if allowed_to?(:reply?, @post)
             Components::ReplyInitiationForm(
               reply_initiation: @post.reply_initiations.build,
@@ -81,6 +81,7 @@ class Components::PostCard < Components::Base
             dom_id(@post, :reactions),
             src: [ @post, :reactions ],
             loading: :lazy,
+            class: "flex-1",
             data: {
               controller: "frame",
             },

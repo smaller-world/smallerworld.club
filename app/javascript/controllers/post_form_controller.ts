@@ -4,6 +4,13 @@ import { isEmpty } from "lodash-es";
 import FormController from "./form_controller";
 
 export default class PostFormController extends FormController {
+  // == Values ==
+
+  static values = {
+    keyLabels: Object,
+  };
+  declare readonly keyLabelsValue: Record<string, string>;
+
   // == Targets ==
 
   static targets = ["keyColorsInput", "keyColorsDescription"];
@@ -24,22 +31,28 @@ export default class PostFormController extends FormController {
   // == Actions ==
 
   updateKeyColorsDescription(): void {
-    const keyColors = this.#keyColors();
+    const keyLabels = this.#activeKeyLabels();
     let audience: string | undefined;
-    if (isEmpty(keyColors)) {
+    if (isEmpty(keyLabels)) {
       audience = "only you";
-    } else if (keyColors.length < this.keyColorsInputTargets.length) {
-      const keyColorsDescriptor = arrayToSentence(keyColors);
-      audience = `${keyColorsDescriptor} key friends`;
+    } else if (keyLabels.length < this.keyColorsInputTargets.length) {
+      audience = `${arrayToSentence(keyLabels)} key friends`;
     } else {
-      audience = "all friends";
+      audience = '<span class="text-foreground">all friends</span>';
     }
-    this.keyColorsDescriptionTarget.textContent = `${audience} can see this post`;
+    this.keyColorsDescriptionTarget.innerHTML = `${audience} can see this post`;
   }
 
-  #keyColors(): string[] {
+  #activeKeyColors(): string[] {
     return Array.from(this.keyColorsInputTargets).flatMap((input) =>
       input.checked ? [input.value] : [],
     );
+  }
+
+  #activeKeyLabels(): string[] {
+    return this.#activeKeyColors().map((color) => {
+      const label = this.keyLabelsValue[color] ?? color;
+      return `<span class="text-foreground">${label}</span>`;
+    });
   }
 }

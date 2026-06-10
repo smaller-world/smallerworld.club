@@ -20,6 +20,7 @@ class Components::PostForm < Components::Base
         class: "flex flex-col gap-6",
         data: {
           controller: "post-form haptic-bridge",
+          post_form_key_labels_value: @world.key_labels.to_json,
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
@@ -100,7 +101,7 @@ class Components::PostForm < Components::Base
 
       Components::Card(size: :sm) do |card|
         card.content(class: "flex flex-col items-stretch gap-4") do
-          field_for(form, :key_colors) do |field|
+          field_for(form, :key_colors, class: "items-center") do |field|
             form.hidden_field(:key_colors, multiple: true, value: nil)
 
             field.checkbox_group(class: "flex-row justify-center") do |group|
@@ -133,7 +134,7 @@ class Components::PostForm < Components::Base
               end
             end
             field.description(
-              class: "text-center text-xs empty:opacity-0",
+              class: "text-center text-xs empty:opacity-0 max-w-96 text-balance",
               data: {
                 post_form_target: "keyColorsDescription",
               },
