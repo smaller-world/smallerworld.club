@@ -18,13 +18,14 @@ jobs:
         uses: jdx/mise-action@v4
         with:
           install_args: ruby
-      - name: Install Ruby gems
-        run: bundle install
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          MISE_NO_HOOKS: "true"
+      - name: Scan for known security vulnerabilities in gems used
+        run: bin/bundler-audit
       - name:
           Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      - name: Scan for known security vulnerabilities in gems used
-        run: bin/bundler-audit
 
   scan_js:
     name: Scan for JavaScript security issues
@@ -36,8 +37,9 @@ jobs:
         uses: jdx/mise-action@v4
         with:
           install_args: bun
-      - name: Install Bun packages
-        run: bun install
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          MISE_NO_HOOKS: "true"
       - name: Scan for known security vulnerabilities in packages used
         run: bun audit --audit-level high
 
@@ -52,29 +54,21 @@ jobs:
       - name: Set up tools
         uses: jdx/mise-action@v4
         with:
-          install_args: ruby bun
-      - name: Install Ruby gems
-        run: bundle install
-      - name: Install Bun packages
-        run: bun install
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          MISE_NO_HOOKS: "true"
       - name: Prepare RuboCop cache
         uses: actions/cache@v5
         env:
-          DEPENDENCIES_HASH:
-            ${{ hashFiles('.ruby-version', '**/.rubocop.yml',
-            '**/.rubocop_todo.yml', 'Gemfile.lock') }}
+          # prettier-ignore
+          DEPENDENCIES_HASH: ${{ hashFiles('.ruby-version', '**/.rubocop.yml', '**/.rubocop_todo.yml', 'Gemfile.lock') }}
         with:
           path: ${{ env.RUBOCOP_CACHE_ROOT }}
-          key:
-            rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-${{
-            github.ref_name == github.event.repository.default_branch &&
-            github.run_id || 'default' }}
-          restore-keys: |
-            rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
+          # prettier-ignore
+          key: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
+          restore-keys: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
       - name: Check code issues
         run: mise check --all
-        env:
-          MISE_SKIP_TOOLS: "1"
 
   test:
     name: Run tests
@@ -111,16 +105,15 @@ jobs:
         uses: jdx/mise-action@v4
         with:
           install_args: ruby bun
-      - name: Install Ruby gems
-        run: bundle install
-      - name: Install Bun packages
-        run: bun install
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          MISE_NO_HOOKS: "true"
       - name: Prepare database
         run: bin/rails db:test:prepare
       - name: Run tests
         run: mise test -vv
         env:
-          MISE_SKIP_TOOLS: "1"
+          MISE_TASK_RUN_AUTO_INSTALL: "false"
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   # system-test:

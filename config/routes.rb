@@ -136,7 +136,7 @@ Rails.application.routes.draw do
   get "/fly" => redirect(Rails.configuration.fly_url, redirect: 302)
   get "/logs" => redirect(Rails.configuration.logs_url, status: 302)
   get "/metrics" => redirect(Rails.configuration.metrics_url, status: 302)
-  get "/errors" => redirect(Rails.configuration.sentry_url, status: 302)
+  get "/sentry" => redirect(Rails.configuration.sentry_url, status: 302)
 
   # == UI Docs
   resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
