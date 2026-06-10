@@ -14,7 +14,7 @@ class Components::WorldForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model: @world, **mix(
+    form_with(model: @world, **normalize_mix(
       {
         class: "flex flex-col gap-4",
         data: {

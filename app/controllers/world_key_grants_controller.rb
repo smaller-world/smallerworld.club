@@ -48,7 +48,7 @@ class WorldKeyGrantsController < ApplicationController
         if key.save
           redirect_to([ world, celebrate: true ])
         else
-          message = "Failed to accept key"
+          message = "failed to accept key"
           if (error = key.errors.full_messages.first)
             message = "#{message}: #{error}"
           end

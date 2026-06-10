@@ -112,11 +112,4 @@ class WorldsController < ApplicationController
   def find_world
     World.friendly.find(params.fetch(:id))
   end
-
-  # sig { returns(T::Array[Symbol]) }
-  # def key_label_attributes
-  #   WorldKey.color.values.map do |value|
-  #     :"#{value}_key_label"
-  #   end
-  # end
 end

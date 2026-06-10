@@ -14,26 +14,30 @@ class Components::WorldKeysForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model: @world, **mix(
-      {
-        class: "flex flex-col gap-4",
-        data: {
-          controller: "world-form haptic-bridge",
-          action: "turbo:submit-end->haptic-bridge#vibrate",
+    form_with(
+      model: @world,
+      url: [ @world, :keys ],
+      **normalize_mix(
+        {
+          class: "flex flex-col gap-4",
+          data: {
+            controller: "haptic-bridge",
+            action: "turbo:submit-end->haptic-bridge#vibrate",
+          },
         },
-      },
-      @attributes,
-    )) do |form|
+        @attributes,
+      ),
+    ) do |form|
       Components::FieldSet(class: "gap-4") do |set|
         div do
           set.legend(class: "mb-0") do
-            "key labels"
+            "custom key names"
           end
           set.description do
-            "help yourself remember what your key colors represent!"
+            "set custom names for your keys. only you see these names."
           end
         end
-        set.group(class: "md:grid md:grid-cols-2 gap-2") do
+        set.group(class: "min-[500px]:grid min-[500px]:grid-cols-2 gap-2") do
           WorldKey.color.values.each do |value|
             field_for(form, :"#{value}_key_label") do |field|
               field.input_group do |group|

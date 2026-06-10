@@ -32,13 +32,18 @@ class WorldKeysController < ApplicationController
       format.html do
         world = find_world
         authorize!(world)
-        world_params = params.expect(world: [ :name, :blurb, :icon ])
+        world_params = params.expect(world: [ *key_label_attributes ])
         if world.update(**world_params)
           refresh_or_redirect_to(
             [ world, :keys ],
             notice: "your world key labels were saved",
           )
         else
+          message = "failed to update world key labels"
+          if (error = world.errors.full_messages.first)
+            message = "#{message}: #{error}"
+          end
+          flash.now[:alert] = message
           render Views::WorldKeys::Edit.new(world:), status: :unprocessable_content
         end
       end
@@ -69,5 +74,12 @@ class WorldKeysController < ApplicationController
   sig { returns(WorldKey) }
   def find_key
     WorldKey.find(params.fetch(:id))
+  end
+
+  sig { returns(T::Array[Symbol]) }
+  def key_label_attributes
+    WorldKey.color.values.map do |value|
+      :"#{value}_key_label"
+    end
   end
 end

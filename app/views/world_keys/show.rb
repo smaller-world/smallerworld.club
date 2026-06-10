@@ -22,7 +22,7 @@ class Views::WorldKeys::Show < Views::Base
 
           if @keys_by_recipient.any?
             button_link_to(
-              "edit key labels",
+              "customize keys",
               [ :edit, @world, :keys ],
               icon: "huge/pencil-edit-01",
               variant: :secondary,
