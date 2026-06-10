@@ -235,15 +235,3 @@ url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"
 [tools.ruby."platforms.macos-x64-baseline"]
 checksum = "sha256:3924be2d05db30f4e35f859bf028be85f4b7dd01714142fd823e4af5de2faf9d"
 url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"
-
-[[tools.ruby]]
-version = "4.0.1"
-backend = "core:ruby"
-
-[tools.ruby."platforms.windows-x64"]
-checksum = "sha256:45cd5ac6aa0fdd976acbc0b0c768e38e8f5357b1b07d2c803cccafd7de758fb1"
-url = "https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-4.0.1-1/rubyinstaller-4.0.1-1-x64.7z"
-
-[tools.ruby."platforms.windows-x64-baseline"]
-checksum = "sha256:45cd5ac6aa0fdd976acbc0b0c768e38e8f5357b1b07d2c803cccafd7de758fb1"
-url = "https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-4.0.1-1/rubyinstaller-4.0.1-1-x64.7z"
