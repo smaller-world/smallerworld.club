@@ -73,6 +73,11 @@ class Components::Base < Phlex::HTML
     def before_template
       comment { "Before #{self.class.name}" }
       super
+    end
+
+    sig { void }
+    def after_template
+      super
       comment { "After #{self.class.name}" }
     end
   end

@@ -18,7 +18,7 @@ class Views::WorldKeys::Show < Views::Base
     Components::AppLayout(page_title: "your friends") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
-          button_back_to(@world.name, @world)
+          button_back_to(@world.name, @world, variant: :secondary)
 
           if @keys_by_recipient.any?
             button_link_to(

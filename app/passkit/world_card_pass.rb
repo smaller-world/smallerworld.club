@@ -134,7 +134,7 @@ module Passkit
       fields << {
         key: "card_id",
         label: "🪪 card id (for developers)",
-        value: @card.id,
+        value: @card.short_id,
       }
       fields
     end

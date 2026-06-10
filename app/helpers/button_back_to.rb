@@ -21,7 +21,6 @@ module ButtonBackTo
       "back to #{label}",
       target,
       icon: "huge/link-backward",
-      variant: :secondary,
       **attributes,
     )
   end

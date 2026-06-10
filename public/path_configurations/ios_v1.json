@@ -51,6 +51,17 @@
         "view_controller": "qr_code_scanner",
         "context": "modal"
       }
+    },
+    {
+      "patterns": [
+        "^\/worlds$",
+        "^\/world_key_grants$",
+        "^\/world_cards$",
+        "^\/world_cards\/[\\w-]+$"
+      ],
+      "properties": {
+        "unroutable": true
+      }
     }
   ]
 }

@@ -17,7 +17,9 @@ class Views::Posts::New < Views::Base
   def view_template
     Components::AppLayout(page_title: "new post") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
-        button_back_to(@world.name, @world) unless hotwire_native_app?
+        unless hotwire_native_app?
+          button_back_to(@world.name, @world, variant: :secondary)
+        end
 
         Components::HintAlert(
           message: "a good post is one that feels good to write!",
