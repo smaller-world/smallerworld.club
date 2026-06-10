@@ -99,47 +99,16 @@ class Components::PostForm < Components::Base
         end
       end
 
-      Components::Card(size: :sm) do |card|
-        card.content(class: "flex flex-col items-stretch gap-4") do
-          field_for(form, :key_colors, class: "items-center") do |field|
-            form.hidden_field(:key_colors, multiple: true, value: nil)
-
-            field.checkbox_group(class: "flex-row justify-center") do |group|
-              WorldKey.color.values.each do |color|
-                group.field_label_for(
-                  color,
-                  class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
-                ) do |label|
-                  label.field(class: "p-2") do |field|
-                    field.content(class: "items-center") do
-                      Icon(
-                        "huge/key-02",
-                        class: "size-4.5",
-                        style: "color: var(--world-key-color-#{color})",
-                      )
-                    end
-                    field.checkbox_group_item_for(
-                      color,
-                      hidden: true,
-                      checked: checkbox_group_item_checked?(world_key_color: color),
-                      input: {
-                        data: {
-                          post_form_target: "worldKeyColorsInput",
-                          action: "change->post-form#updateWorldKeyColorsDescription",
-                        },
-                      },
-                    )
-                  end
-                end
-              end
-            end
-            field.description(
-              class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
-              data: {
-                post_form_target: "worldKeyColorsDescription",
-              },
-            )
-            field.error(class: "text-center text-xs")
+      show_key_colors_field = @world.keys.any?
+      Components::Card(
+        size: :sm,
+        class: class_names("contents" => !show_key_colors_field),
+      ) do |card|
+        card.content(
+          class: show_key_colors_field ? "flex flex-col items-stretch gap-4" : "contents",
+        ) do
+          if show_key_colors_field
+            key_colors_field_for(form)
           end
 
           submit_button_for(form, size: :lg) do |button|
@@ -166,6 +135,50 @@ class Components::PostForm < Components::Base
       [ @world, @post ]
     else
       @post
+    end
+  end
+
+  sig { params(form: PhlexFormBuilder).void }
+  def key_colors_field_for(form)
+    field_for(form, :key_colors, class: "items-center") do |field|
+      form.hidden_field(:key_colors, multiple: true, value: nil)
+
+      field.checkbox_group(class: "flex-row justify-center") do |group|
+        WorldKey.color.values.each do |color|
+          group.field_label_for(
+            color,
+            class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
+          ) do |label|
+            label.field(class: "p-2") do |field|
+              field.content(class: "items-center") do
+                Icon(
+                  "huge/key-02",
+                  class: "size-4.5",
+                  style: "color: var(--world-key-color-#{color})",
+                )
+              end
+              field.checkbox_group_item_for(
+                color,
+                hidden: true,
+                checked: checkbox_group_item_checked?(world_key_color: color),
+                input: {
+                  data: {
+                    post_form_target: "worldKeyColorsInput",
+                    action: "change->post-form#updateWorldKeyColorsDescription",
+                  },
+                },
+              )
+            end
+          end
+        end
+      end
+      field.description(
+        class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
+        data: {
+          post_form_target: "worldKeyColorsDescription",
+        },
+      )
+      field.error(class: "text-center text-xs")
     end
   end
 
