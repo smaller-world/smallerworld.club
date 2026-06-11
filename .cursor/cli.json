@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(mise)",
+      "Shell(bin/rails:routes)",
+      "Shell(bin/rails:s)",
+      "Shell(bin/rails:server*)",
+      "Shell(bin/rails:tmp:clear)",
+      "Shell(bin/rails:assets:precompile)",
+      "Shell(bin/rails:assets:clobber)",
+      "Shell(bin/rails:test*)"
+    ],
+    "deny": [
+      "Shell(mise:run fly*)"
+    ]
+  }
+}
