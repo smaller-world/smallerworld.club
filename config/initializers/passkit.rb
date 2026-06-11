@@ -1,9 +1,9 @@
 # typed: strict
 # frozen_string_literal: true
 
-passkit_disabled = Rails.env.test? || ENV["SECRET_KEY_BASE_DUMMY"]
+use_dummy_envvars = ENV["SECRET_KEY_BASE_DUMMY"]
 
-if passkit_disabled
+if use_dummy_envvars
   ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
   ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
   ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
@@ -27,18 +27,20 @@ elsif (credentials = Rails.application.credentials.passkit)
 end
 
 # Configure demo pass, dashboard auth
-Passkit.configure do |config|
-  config.available_passes["Passes::DemoPass"] = -> { nil }
+unless use_dummy_envvars
+  Passkit.configure do |config|
+    config.available_passes["Passes::DemoPass"] = -> { nil }
 
-  config.authenticate_dashboard_with do
-    T.bind(self, Passkit::Dashboard::ApplicationController)
+    config.authenticate_dashboard_with do
+      T.bind(self, Passkit::Dashboard::ApplicationController)
 
-    unless Rails.env.development?
-      raise ActionController::RoutingError,
-        "Dashboard is not available"
+      unless Rails.env.development?
+        raise ActionController::RoutingError,
+          "Dashboard is not available"
+      end
     end
   end
-end unless passkit_disabled
+end
 
 Rails.application.configure do
   # Modify models
@@ -65,14 +67,16 @@ Rails.application.configure do
   end
 
   # Add application passes
-  config.after_initialize do
-    Passkit.configure do |config|
-      config.available_passes["Passes::WorldCard"] = -> {
-        world = World.new(name: "testy's world")
-        WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
-      }
+  unless use_dummy_envvars
+    config.after_initialize do
+      Passkit.configure do |config|
+        config.available_passes["Passes::WorldCard"] = -> {
+          world = World.new(name: "testy's world")
+          WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
+        }
+      end
     end
-  end unless passkit_disabled
+  end
 end
 
 Rails.autoloaders.main.push_dir(

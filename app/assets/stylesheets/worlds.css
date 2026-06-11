@@ -15,7 +15,7 @@
     &[data-world-icon-size="sm"],
     &[data-size="xs"],
     &[data-world-icon-size="xs"] {
-      @apply border-border shadow-black/20 dark:border-muted-foreground/50 dark:shadow-muted-foreground/50;
+      @apply shadow-black/20 dark:border-muted-foreground/50 dark:shadow-muted-foreground/50;
     }
 
     &[data-size="sm"],

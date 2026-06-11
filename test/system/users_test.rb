@@ -3,7 +3,7 @@
 
 require "application_system_test_case"
 
-class OnboardingTest < ApplicationSystemTestCase
+class UsersTest < ApplicationSystemTestCase
   test "a new phone number completes onboarding into a new account" do
     phone = Phonelib.parse("+14165551234")
 

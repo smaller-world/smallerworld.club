@@ -35,7 +35,6 @@ Style/ClassAndModuleChildren:
 Style/ClassMethodsDefinitions:
   Enabled: false
 Style/MethodCallWithArgsParentheses:
-  Enabled: false
   AllowedMethods:
     - render
     - raise

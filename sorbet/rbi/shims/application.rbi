@@ -22,6 +22,7 @@ class ActionDispatch::SystemTestCase
   include GeneratedPathHelpersModule
   include GeneratedUrlHelpersModule
   include SystemSessionTestHelper
+  include DownloadsTestHelper
   # WorldTestHelper comes transitively via ActiveSupport::TestCase.
 end
 

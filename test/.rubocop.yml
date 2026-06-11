@@ -6,7 +6,7 @@ Minitest/MultipleAssertions:
   Enabled: false
 
 Style/MethodCallWithArgsParentheses:
-  Enabled: true
   AllowedMethods:
     - post
     - visit
+    - raise

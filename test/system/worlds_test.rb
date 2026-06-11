@@ -3,7 +3,7 @@
 
 require "application_system_test_case"
 
-class FeedTest < ApplicationSystemTestCase
+class WorldsTest < ApplicationSystemTestCase
   test "scrolling the feed loads more posts via turbo stream" do
     owner = users(:bob)
     world = create_world(owner:, name: "Scroll World")

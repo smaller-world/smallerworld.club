@@ -21,8 +21,8 @@ module DeviceDetection
   # == Methods ==
 
   sig { returns(DeviceDetector) }
-  def request_client
-    @request_client ||= T.let(
+  def client
+    @client ||= T.let(
       DeviceDetector.new(request.user_agent, request.headers.to_h),
       T.nilable(DeviceDetector),
     )
@@ -30,11 +30,20 @@ module DeviceDetection
 
   sig { returns(T::Boolean) }
   def ios_browser?
-    request_client.os_family == "iOS"
+    client.os_family == "iOS" || emulate_ios_browser?
+  end
+
+  sig { returns(T::Boolean) }
+  def emulate_ios_browser?
+    if (param = params[:emulate_ios_browser])
+      ActiveModel::Type::Boolean.new.cast(param)
+    else
+      false
+    end
   end
 
   sig { returns(T.nilable(String)) }
   def device_name
-    request_client.device_name
+    client.device_name
   end
 end

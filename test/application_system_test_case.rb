@@ -14,6 +14,7 @@ end
 
 Capybara.configure do |config|
   config.test_id = "data-testid"
+  config.save_path = Rails.root.join("tmp/capybara")
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase

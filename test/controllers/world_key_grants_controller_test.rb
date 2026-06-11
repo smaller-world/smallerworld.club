@@ -30,12 +30,19 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to world_card_path(card)
   end
 
-  test "a Hotwire Native iOS app renders the grant page instead of issuing a card" do
+  test "a Hotwire Native iOS app renders the grant page" do
     assert_no_difference -> { @world.cards.count } do
       get world_key_grant_path(@grant),
         headers: {
           "User-Agent" => HOTWIRE_NATIVE_IOS_USER_AGENT,
         }
+    end
+    assert_response :success
+  end
+
+  test "non-iOS browsers render the grant page" do
+    assert_no_difference -> { @world.cards.count } do
+      get world_key_grant_path(@grant)
     end
     assert_response :success
   end
