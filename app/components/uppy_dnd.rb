@@ -130,12 +130,7 @@ class Components::UppyDnd < Components::Input
             ],
           },
         ) do |dialog|
-          dialog.with_content(
-            show_close_button: false,
-            panel: {
-              class: "gap-0 p-0",
-            },
-          ) do |content|
+          dialog.with_content(show_close_button: false) do |content|
             div(
               class: "uppy-dnd-cropper",
               data: {
