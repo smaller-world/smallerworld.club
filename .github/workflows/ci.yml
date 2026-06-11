@@ -118,15 +118,13 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgis://supabase_admin:postgres@localhost:5432
+      DATABASE_URL: postgis://supabase_admin:postgres@postgres:5432
     services:
       postgres:
         image: supabase/postgres:17.6.1.016
         env:
           POSTGRES_USER: supabase_admin
           POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
         options:
           --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s
           --health-retries=5 --health-start-period=5s
@@ -138,7 +136,7 @@ jobs:
     steps:
       - name: Install system packages
         # prettier-ignore
-        run: apt-get update && apt-get install --no-install-recommends -y libpq-dev libvips-dev
+        run: apt-get update && apt-get install --no-install-recommends -y file libpq-dev libvips-dev
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Prepare gem cache

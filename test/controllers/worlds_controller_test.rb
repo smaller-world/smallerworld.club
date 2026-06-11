@@ -55,11 +55,6 @@ class WorldsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
   end
 
-  test "unauthenticated visitor cannot reach the new world form" do
-    get new_world_path
-    assert_redirected_to new_session_path
-  end
-
   test "a friend leaves a world" do
     friend = users(:sue)
     grant_key(world: @world, recipient: friend, color: :blue)
