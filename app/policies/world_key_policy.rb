@@ -23,7 +23,7 @@ class WorldKeyPolicy < ApplicationPolicy
   scope_for :active_record_relation do |relation|
     relation = T.let(relation, WorldKey::PrivateRelation)
     if (user = self.user)
-      relation.where(recipient: user).or(WorldKey.where(world: user.owned_worlds))
+      relation.where(recipient: user).or(relation.where(world: user.owned_worlds))
     else
       relation.none
     end

@@ -119,6 +119,12 @@ class User < ApplicationRecord
 
   # == Methods ==
 
+  sig { params(phone_number: String).returns(T.nilable(User)) }
+  def self.find_by_phone_number(phone_number)
+    phone_number = User.normalize_value_for(:phone_number, phone_number)
+    find_by(phone_number:)
+  end
+
   sig { returns(String) }
   def default_world_name
     "#{interpreted_first_name}'s world"
@@ -154,7 +160,7 @@ class User < ApplicationRecord
       .where(recipient_id: id)
     WorldCard
       .where(
-        id: WorldCard.unrevoked.unclaimed
+        id: WorldCard.kept.unclaimed
           .with_pass_serial_numbers(pass_serial_numbers)
           .select("DISTINCT ON (world_cards.world_id) world_cards.id")
           .order("world_cards.world_id", created_at: :desc),

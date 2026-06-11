@@ -40,6 +40,7 @@ class Components::PhoneNumberInput < Components::Input
     div(class: "flex gap-2", data: { controller: "phone-number-input" }) do
       Components::Combobox(
         input: {
+          id: input_id(:country_code),
           type: "tel",
           value: country_value(country),
           required: true,
@@ -96,6 +97,7 @@ class Components::PhoneNumberInput < Components::Input
       Components::Input(
         form: @form,
         field: @field,
+        id: input_id(:national),
         type: "tel",
         name: nil,
         value: phone_number&.national_number,
@@ -180,5 +182,14 @@ class Components::PhoneNumberInput < Components::Input
       end,
       T.nilable(ISO3166::Country),
     )
+  end
+
+  sig { params(suffix: T.untyped).returns(T.nilable(String)) }
+  def input_id(suffix)
+    if @form
+      @form.field_id(@field, suffix)
+    elsif @field
+      field_id(@field, suffix)
+    end
   end
 end

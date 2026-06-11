@@ -52,7 +52,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           .require(:phone_number_verification_request)
           .fetch(:verification_code)
         if verification_request.verify(verification_code)
-          user = User.find_by(phone_number: verification_request.phone_number)
+          user = User.find_by_phone_number(verification_request.phone_number)
           if user
             time_zone_name = params.require(:user).fetch(:time_zone_name)
             user.update!(time_zone_name:)
@@ -95,7 +95,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
 
   sig { void }
   def verify_turnstile_request
-    if (response = params["cf-turnstile-response"])
+    if (response = params["cf-turnstile-response"].presence)
       begin
         Smallerworld.application.turnstile_client.verify(
           response:,
@@ -105,7 +105,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
         redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}")
       end
     else
-      redirect_to(new_session_path, alert: "please verify you are human!")
+      redirect_to(new_session_path, alert: "please click 'verify you are human'!")
     end
   end
 

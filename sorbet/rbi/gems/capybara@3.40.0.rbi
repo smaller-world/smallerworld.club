@@ -2371,6 +2371,9 @@ class Capybara::Node::Element < ::Capybara::Node::Base
   # pkg:gem/capybara#lib/capybara/node/element.rb:376
   def path; end
 
+  # pkg:gem/capybara#lib/capybara/node/element.rb:604
+  def perform_click_action(keys, **options); end
+
   # Whether or not the element is readonly.
   #
   # @return [Boolean]     Whether the element is readonly
@@ -2588,11 +2591,6 @@ class Capybara::Node::Element < ::Capybara::Node::Base
   #
   # pkg:gem/capybara#lib/capybara/node/element.rb:305
   def visible?; end
-
-  private
-
-  # pkg:gem/capybara#lib/capybara/node/element.rb:604
-  def perform_click_action(keys, wait: T.unsafe(nil), **options); end
 end
 
 # pkg:gem/capybara#lib/capybara/node/element.rb:590

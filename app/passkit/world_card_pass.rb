@@ -108,7 +108,7 @@ module Passkit
           label: "✍️ last post in #{@world.name}",
           value: post.snippet,
         }
-        if !receives_app_notifications && !@card.revoked?
+        if !receives_app_notifications && !@card.discarded?
           field["changeMessage"] = "%@"
         end
         fields << field
@@ -156,7 +156,7 @@ module Passkit
     end
 
     def voided # rubocop:disable Naming/PredicateMethod
-      @card.revoked?
+      @card.discarded?
     end
 
     private

@@ -17,10 +17,6 @@ class ApplicationPolicy < ActionPolicy::Base
   authorize :user, allow_nil: true
   authorize :device, allow_nil: true
 
-  # == Rules ==
-
-  private
-
   # == Helpers ==
 
   # Define shared methods useful for most policies.

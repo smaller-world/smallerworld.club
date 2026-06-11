@@ -128,12 +128,12 @@ class Post < ApplicationRecord
 
   sig { void }
   def create_notifications_for_world_key_recipients!
-    recipients = world_key_recipients
+    keys = world!.keys.accepted
     if (colors = key_colors)
-      recipients = recipients.where(color: colors)
+      keys = keys.where(color: colors)
     end
-    recipients.find_each do |recipient|
-      notifications.create!(recipient:)
+    keys.find_each do |key|
+      notifications.create!(recipient: key.recipient!)
     end
   end
 

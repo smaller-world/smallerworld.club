@@ -145,4 +145,11 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount MissionControl::Jobs::Engine, at: "/jobs"
   end
+
+  # == Testing
+  if Rails.env.test? || defined?(Tapioca::Dsl::Pipeline)
+    scope path: "/test", controller: :tests, as: :test do
+      get "sign_in/:user_id", action: :sign_in, as: :sign_in
+    end
+  end
 end

@@ -1,0 +1,38 @@
+# rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
+# == Schema Information
+#
+# Table name: devices
+#
+#  id         :uuid             not null, primary key
+#  identifier :string           not null
+#  name       :string
+#  platform   :string           not null
+#  push_token :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  owner_id   :uuid
+#
+# Indexes
+#
+#  index_devices_on_identifier  (identifier) UNIQUE
+#  index_devices_on_owner_id    (owner_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (owner_id => users.id)
+#
+# rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
+bobs_phone:
+  identifier: bob-iphone
+  platform: apple
+  owner: bob
+
+sues_phone:
+  identifier: sue-iphone
+  platform: apple
+  owner: sue
+
+sues_tablet:
+  identifier: sue-ipad
+  platform: apple
+  owner: sue

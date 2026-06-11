@@ -13,7 +13,7 @@ node_modules/
 public/dist*/
 sorbet/
 storage/
-test/fixtures/*.yml
+test/fixtures/**/*.yml
 tmp/
 vendor/
 package-lock.json

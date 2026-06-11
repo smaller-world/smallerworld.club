@@ -1,5 +1,4 @@
 # typed: true
-# frozen_string_literal: true
 
 # DO NOT EDIT MANUALLY
 # This file was pulled from a central RBI files repository.
@@ -9,6 +8,9 @@ module Rails
   class << self
     sig { returns(Rails::Application) }
     def application; end
+
+    sig { returns(Rails::Autoloaders) }
+    def autoloaders; end
 
     sig { returns(ActiveSupport::BacktraceCleaner) }
     def backtrace_cleaner; end
@@ -22,7 +24,12 @@ module Rails
     sig { returns(ActiveSupport::ErrorReporter) }
     def error; end
 
-    sig { returns(ActiveSupport::Logger) }
+    # @version >= 8.1.0.beta1
+    sig { returns(ActiveSupport::EventReporter) }
+    def event; end
+
+    # @version >= 7.1.0.rc1
+    sig { returns(ActiveSupport::BroadcastLogger) }
     def logger; end
 
     sig { returns(Pathname) }
@@ -33,7 +40,7 @@ module Rails
   end
 end
 
-class Rails::Application < Rails::Engine
+class Rails::Application < ::Rails::Engine
   class << self
     sig { params(block: T.proc.bind(Rails::Application).void).void }
     def configure(&block); end
@@ -46,14 +53,38 @@ class Rails::Application < Rails::Engine
   def config; end
 end
 
-class Rails::Engine < Rails::Railtie
-  sig { params(block: T.untyped).returns(ActionDispatch::Routing::RouteSet) }
+class Rails::Autoloaders
+  Elem = type_member(:out) { { fixed: Zeitwerk::Loader } }
+
+  sig { params(block: T.proc.params(arg0: Elem).returns(T.untyped)).returns(T.untyped) }
+  def each(&block); end
+
+  sig { returns(Zeitwerk::Loader) }
+  def main; end
+
+  sig { returns(Zeitwerk::Loader) }
+  def once; end
+end
+
+class Rails::Engine < ::Rails::Railtie
+  class << self
+    # @shim: delegated to the instance using `method_missing`
+    sig { params(block: T.nilable(T.proc.bind(ActionDispatch::Routing::Mapper).void)).returns(ActionDispatch::Routing::RouteSet) }
+    def routes(&block); end
+  end
+
+  sig { params(block: T.nilable(T.proc.bind(ActionDispatch::Routing::Mapper).void)).returns(ActionDispatch::Routing::RouteSet) }
   def routes(&block); end
 end
 
 class Rails::Railtie
   sig { params(block: T.proc.bind(Rails::Railtie).void).void }
   def configure(&block); end
+
+  class << self
+    sig { params(block: T.proc.bind(Rake::DSL).params(app: Rails::Application).void).void }
+    def rake_tasks(&block); end
+  end
 end
 
 class Rails::Railtie::Configuration

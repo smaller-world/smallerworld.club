@@ -147,6 +147,10 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara-playwright-driver (0.5.9)
+      addressable
+      capybara
+      playwright-ruby-client (>= 1.16.0)
     cgi (0.5.1)
     chunky_png (1.4.0)
     cloudflare-rails (7.0.0)
@@ -169,6 +173,8 @@ GEM
       reline (>= 0.3.8)
     device_detector (1.1.3)
     dig_bang (0.2.1)
+    discard (2.0.0)
+      activerecord (>= 7.0, < 9.0)
     dockerfile-rails (1.7.10)
       rails (>= 3.0.0)
     domain_name (0.6.20240107)
@@ -287,6 +293,10 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2026.0414)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -362,6 +372,10 @@ GEM
       railties (>= 7.1, < 9)
       zeitwerk (~> 2.7)
     phonelib (0.10.16)
+    playwright-ruby-client (1.60.0)
+      base64
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -429,7 +443,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rbi (0.3.12)
+    rbi (0.3.13)
       prism (~> 1.0)
       rbs (>= 4.0.1)
     rbs (4.0.2)
@@ -518,17 +532,11 @@ GEM
       ruby_llm-schema (~> 0)
       zeitwerk (~> 2)
     ruby_llm-schema (0.3.0)
-    rubydex (0.2.3-aarch64-linux)
-    rubydex (0.2.3-arm64-darwin)
-    rubydex (0.2.3-x86_64-linux)
+    rubydex (0.2.5-aarch64-linux)
+    rubydex (0.2.5-arm64-darwin)
+    rubydex (0.2.5-x86_64-linux)
     rubyzip (2.4.1)
     securerandom (0.4.1)
-    selenium-webdriver (4.40.0)
-      base64 (~> 0.2)
-      logger (~> 1.4)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 4.0)
-      websocket (~> 1.0)
     sentry-rails (6.3.1)
       railties (>= 5.2.0)
       sentry-ruby (~> 6.3.1)
@@ -559,16 +567,16 @@ GEM
       fugit (~> 1.11)
       railties (>= 7.1)
       thor (>= 1.3.1)
-    sorbet (0.6.13294)
-      sorbet-static (= 0.6.13294)
-    sorbet-runtime (0.6.13294)
-    sorbet-static (0.6.13294-aarch64-linux)
-    sorbet-static (0.6.13294-universal-darwin)
-    sorbet-static (0.6.13294-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13294)
-      sorbet (= 0.6.13294)
-      sorbet-runtime (= 0.6.13294)
-    spoom (1.7.15)
+    sorbet (0.6.13281)
+      sorbet-static (= 0.6.13281)
+    sorbet-runtime (0.6.13281)
+    sorbet-static (0.6.13281-aarch64-linux)
+    sorbet-static (0.6.13281-universal-darwin)
+    sorbet-static (0.6.13281-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13281)
+      sorbet (= 0.6.13281)
+      sorbet-runtime (= 0.6.13281)
+    spoom (1.7.16)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
       rbi (>= 0.3.3)
@@ -660,6 +668,7 @@ DEPENDENCIES
   brakeman (= 8.0.4)
   bundler-audit
   capybara
+  capybara-playwright-driver
   cloudflare-rails (~> 7.0)
   concurrent-ruby (~> 1.3)
   countries (~> 8.1)
@@ -667,6 +676,7 @@ DEPENDENCIES
   debug
   device_detector (~> 1.1)
   dig_bang
+  discard (~> 2.0)
   dockerfile-rails
   email_validator (~> 2.2)
   enumerize (~> 2.8)
@@ -692,6 +702,7 @@ DEPENDENCIES
   phlex-icons
   phlex-rails (~> 2.4)
   phonelib (~> 0.10.16)
+  playwright-ruby-client (= 1.60.0)
   propshaft
   prosopite
   puma (~> 8.0)
@@ -711,7 +722,6 @@ DEPENDENCIES
   ruby-lsp
   ruby-vips (~> 2.3)
   ruby_llm (~> 1.13)
-  selenium-webdriver
   sentry-rails
   sentry-ruby
   shortuuid (~> 0.6.0)
@@ -719,11 +729,11 @@ DEPENDENCIES
   solid_cable
   solid_cache
   solid_queue
-  sorbet
+  sorbet (= 0.6.13281)
   sorbet-runtime
   standardwebhooks (~> 1.1)
   stimulus-rails
-  tapioca
+  tapioca (>= 0.19.1)
   telnyx (~> 5.118)
   thruster
   turbo-rails
@@ -771,6 +781,7 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
+  capybara-playwright-driver (0.5.9) sha256=4c17fed20817b7e1bde2cfc8186e7bf5cd72017ce1aa695e35130f8e600e7282
   cgi (0.5.1) sha256=e93fcafc69b8a934fe1e6146121fa35430efa8b4a4047c4893764067036f18e9
   chunky_png (1.4.0) sha256=89d5b31b55c0cf4da3cf89a2b4ebc3178d8abe8cbaf116a1dba95668502fdcfe
   cloudflare-rails (7.0.0) sha256=9049b8305eab120e2d4ed9d04b42ce7030da5297fb62b0fa718b0a9e2d9af56c
@@ -784,6 +795,7 @@ CHECKSUMS
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   device_detector (1.1.3) sha256=c5fe3fe42cab2e8aa01f193b2074b8bb1510373ce47127206f28c7dea75a9c79
   dig_bang (0.2.1) sha256=94912d64bd481505f5eb642fa6d9bc38042019d3c11c75ae8e2881fce0f8b8a5
+  discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
   dockerfile-rails (1.7.10) sha256=04163273792ec6c6560244d32c0b44bbed705384a47b8063adcbf0d7bc8abd26
   domain_name (0.6.20240107) sha256=5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
@@ -837,6 +849,8 @@ CHECKSUMS
   mail (2.9.0) sha256=6fa6673ecd71c60c2d996260f9ee3dd387d4673b8169b502134659ece6d34941
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
+  mime-types (3.7.0) sha256=dcebf61c246f08e15a4de34e386ebe8233791e868564a470c3fe77c00eed5e56
+  mime-types-data (3.2026.0414) sha256=461c4c655373a44bd6c5fe54bcf5b7776026ea96e808144b1ec465c4b99148cc
   mini_magick (5.3.1) sha256=29395dfd76badcabb6403ee5aff6f681e867074f8f28ce08d78661e9e4a351c4
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
@@ -874,6 +888,7 @@ CHECKSUMS
   phlex-icons (2.56.0) sha256=83aa4dc223ffd3838f033cda1f67fd5c41341116d2d449865bafa24dae74f822
   phlex-rails (2.4.0) sha256=2bcddbd488681acb25753bab1887d3ac150e644244ff8ba307f2171a4d0195f5
   phonelib (0.10.16) sha256=719c4cc099cd2f356bdadb1a3bccbadd1c67fe332e96a9b3028525e44c425fea
+  playwright-ruby-client (1.60.0) sha256=942242d6130e797b21213d9c49dc09d31235cab429a9edae73401ed112c94853
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
@@ -898,7 +913,7 @@ CHECKSUMS
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   rb-fsevent (0.11.2) sha256=43900b972e7301d6570f64b850a5aa67833ee7d87b458ee92805d56b7318aefe
   rb-inotify (0.11.1) sha256=a0a700441239b0ff18eb65e3866236cd78613d6b9f78fea1f9ac47a85e47be6e
-  rbi (0.3.12) sha256=406ea58265942e7f2316744a11de742fdef8b2325bb6066c71c9765f53298eb2
+  rbi (0.3.13) sha256=6afd53a574268abcc71daed4c025673561f27a990b3b087e7889e8b073ab2d7a
   rbs (4.0.2) sha256=af75671e66cd03434cc546622741ebf83f6197ec4328375805306330bf78ef25
   rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
   refract (1.1.0) sha256=ee3b9627e39f7692831101e2fedd73e0d09a592ff5d5c05f171d14211fc7a9c7
@@ -926,12 +941,11 @@ CHECKSUMS
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   ruby_llm (1.13.2) sha256=f8bd7fa0e3c486368b318167775eac086896e3477986ad5ca2c3b38b1e2913c5
   ruby_llm-schema (0.3.0) sha256=a591edc5ca1b7f0304f0e2261de61ba4b3bea17be09f5cf7558153adfda3dec6
-  rubydex (0.2.3-aarch64-linux) sha256=f666ff383430cc800cb0889d52c77da7457e99165b5eef7c0d45491a5fafea87
-  rubydex (0.2.3-arm64-darwin) sha256=997d7895a0208ec3d7ef922c9d29243b62e10c67bc3c2396a9f978d7df117390
-  rubydex (0.2.3-x86_64-linux) sha256=796a54c1af9f8868c87bf92fee5f9ccc39ffd40eb8386e0875058a18beb76b09
+  rubydex (0.2.5-aarch64-linux) sha256=7cbc1cd8f926bd3138c7cdd5434f5d3140a287394ca7c4f4e9d93b4b900f20ce
+  rubydex (0.2.5-arm64-darwin) sha256=487cab3df687ccb2f3360c23236300320d402b1042643054cd4d09221e13915a
+  rubydex (0.2.5-x86_64-linux) sha256=4b05f0424b867071c41a1b2ac7d91e965829a422c806a532d43ffdb45ec33604
   rubyzip (2.4.1) sha256=8577c88edc1fde8935eb91064c5cb1aef9ad5494b940cf19c775ee833e075615
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
-  selenium-webdriver (4.40.0) sha256=16ef7aa9853c1d4b9d52eac45aafa916e3934c5c83cb4facb03f250adfd15e5b
   sentry-rails (6.3.1) sha256=53cce0aac52520a92f411180014fe2b684770865cc85bfa2bf5978631742e9b7
   sentry-ruby (6.3.1) sha256=b2de4e9bada1053a36f4224d75617a2b44d33157e9030b20b86a791358c2e154
   shortuuid (0.6.0) sha256=691b5d12f53188e3e536df400e7196ba4ab398151e6715e41c7426437951bcfa
@@ -940,13 +954,13 @@ CHECKSUMS
   solid_cable (3.0.12) sha256=a168a54731a455d5627af48d8441ea3b554b8c1f6e6cd6074109de493e6b0460
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
   solid_queue (1.3.1) sha256=d9580111180c339804ff1a810a7768f69f5dc694d31e86cf1535ff2cd7a87428
-  sorbet (0.6.13294) sha256=acd548c8697bbfa5434cc61a57434f3778735dfe3d34a07795b3fb163224510e
-  sorbet-runtime (0.6.13294) sha256=4a077c87f2277fff19f24e83729f05824f398508c1692654fc2681cb8e905b4a
-  sorbet-static (0.6.13294-aarch64-linux) sha256=07d30a326fcc484f4e3193f14ce4aa110ba324d097b1ef624c6bfb5ef7dee163
-  sorbet-static (0.6.13294-universal-darwin) sha256=61c7bb3b35e481c22c537b39d1de4a871208756fbb9384af24f439deee6b45ec
-  sorbet-static (0.6.13294-x86_64-linux) sha256=f3c61374dc9c0b5269d23d007b10abfa8e8cc15c2c38c8a382314b8d1a11520c
-  sorbet-static-and-runtime (0.6.13294) sha256=93dd90c2532cac81f7af56b0ce1bb8b3c0877f2e189309d174400da94853b883
-  spoom (1.7.15) sha256=39698a3bf7841841ae83c6145d5e008290ddb9433e84d9025e017b915bd36a83
+  sorbet (0.6.13281) sha256=833d748af6a58faa9c52cf099d4aaafa7eb8aae9d6ab46dcf0be1bd6d67e9728
+  sorbet-runtime (0.6.13281) sha256=dfff28370247fc33df942e1b462c326e5beefa635132b4cc6585e00de1c9fc25
+  sorbet-static (0.6.13281-aarch64-linux) sha256=e5695762fd102e26028c77af153752a28f4bcbb0047e09bc7ee2c30d290ec5c1
+  sorbet-static (0.6.13281-universal-darwin) sha256=896c4606620542d37b258847fad80f6b1fae4371f430d98abf35f618556e6739
+  sorbet-static (0.6.13281-x86_64-linux) sha256=31b814e85648659d2b112e759b689f85625ee41c0b792536449006fcf6e06314
+  sorbet-static-and-runtime (0.6.13281) sha256=f90eaeebfae3bbc7f5d6904dded4f2c38a30ad48255bca7d6a721c5eaf71baa6
+  spoom (1.7.16) sha256=b6033d1aaede800ef37505474d260d57a02fa63364b4725ea40b6f606e932d59
   sshkit (1.25.0) sha256=c8c6543cdb60f91f1d277306d585dd11b6a064cb44eab0972827e4311ff96744
   standardwebhooks (1.1.0) sha256=356ba711c14def4fb27310e4163b26bd5cccf325212c3440cabadd825e4be11f
   stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06

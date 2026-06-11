@@ -202,6 +202,9 @@ module GeneratedPathHelpersModule
   def test_device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def test_sign_in_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

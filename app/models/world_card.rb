@@ -7,9 +7,9 @@
 # Table name: world_cards
 #
 #  id                :uuid             not null, primary key
+#  discarded_at      :timestamptz
 #  granted_key_color :string           not null
 #  relevant_date     :timestamptz
-#  revoked_at        :timestamptz
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  cardholder_id     :uuid
@@ -20,8 +20,8 @@
 #
 #  index_world_cards_on_cardholder_id  (cardholder_id)
 #  index_world_cards_on_device_id      (device_id)
+#  index_world_cards_on_discarded_at   (discarded_at)
 #  index_world_cards_on_relevant_date  (relevant_date)
-#  index_world_cards_on_revoked_at     (revoked_at)
 #  index_world_cards_on_world_id       (world_id)
 #
 # Foreign Keys
@@ -32,6 +32,8 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class WorldCard < ApplicationRecord
+  include Discard::Model
+
   # == Configuration ==
 
   RELEVANT_DATE_EXPIRES_IN = T.let(12.hours, ActiveSupport::Duration)
@@ -42,11 +44,8 @@ class WorldCard < ApplicationRecord
   enumerize :granted_key_color, in: WorldKey.color.values
 
   sig { returns(T::Boolean) }
-  def revoked? = revoked_at?
-
-  sig { returns(T::Boolean) }
   def active?
-    !revoked? && pass_registrations.any?
+    kept? && pass_registrations.any?
   end
 
   sig { returns(T::Boolean) }
@@ -90,16 +89,11 @@ class WorldCard < ApplicationRecord
 
   # == Validations ==
 
-  before_validation :set_cardholder_id,
-    if: [ :device_id?, :device_id_changed? ],
-    unless: :cardholder_id?
   validates :device, presence: true, if: :cardholder_id?
 
   # == Scopes ==
 
-  scope :active, -> { unrevoked.where.associated(:pass_registrations) }
-  scope :unrevoked, -> { where(revoked_at: nil) }
-  scope :revoked, -> { where.not(revoked_at: nil) }
+  scope :active, -> { kept.where.associated(:pass_registrations) }
   scope :claimed, -> { where.not(cardholder_id: nil) }
   scope :unclaimed, -> { where(cardholder_id: nil) }
   scope :with_expired_relevant_date, -> {
@@ -111,7 +105,7 @@ class WorldCard < ApplicationRecord
 
   # == Hooks ==
 
-  after_update_commit :trigger_pass_update_later, unless: :revoked_prior_to_last_save?
+  after_update_commit :trigger_pass_update_later, unless: :discarded_prior_to_last_save?
 
   # == Passkit ==
 
@@ -153,11 +147,6 @@ class WorldCard < ApplicationRecord
   # == Methods ==
 
   sig { returns(TrueClass) }
-  def revoke!
-    update!(revoked_at: Time.current)
-  end
-
-  sig { returns(TrueClass) }
   def release!
     update!(cardholder: nil, device: nil)
   end
@@ -167,28 +156,12 @@ class WorldCard < ApplicationRecord
     update!(relevant_date: nil)
   end
 
-  sig { params(world: World, cardholder: User).returns(T.untyped) }
-  def self.revoke_for!(world:, cardholder:)
-    transaction do
-      world.cards.active.where(cardholder:).find_each(&:revoke!)
-    end
-  end
-
   private
 
   # == Helpers ==
 
   sig { returns(T::Boolean) }
-  def revoked_prior_to_last_save?
-    revoked? && !saved_change_to_revoked_at?
-  end
-
-  # == Callbacks ==
-
-  sig { void }
-  def set_cardholder_id
-    if (device = self.device)
-      self.cardholder_id = device.owner_id
-    end
+  def discarded_prior_to_last_save?
+    discarded? && !saved_change_to_discarded_at?
   end
 end

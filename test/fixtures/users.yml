@@ -16,12 +16,12 @@
 #  index_users_on_phone_number  (phone_number) UNIQUE
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
-one:
-  name: TestOne
-  phone_number: +14165558323
+bob:
+  name: Bob
+  phone_number: "+14165558323"
   time_zone_name: America/New_York
 
-two:
-  name: TestTwo
-  phone_number: +19054997382
+sue:
+  name: Sue
+  phone_number: "+19054997382"
   time_zone_name: America/New_York

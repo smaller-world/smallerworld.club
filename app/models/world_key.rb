@@ -75,7 +75,7 @@ class WorldKey < ApplicationRecord
 
   # == Hooks ==
 
-  after_destroy :revoke_recipient_world_cards!,
+  after_destroy :discard_recipient_world_cards!,
     unless: :recipient_has_other_keys?
   after_commit :create_notification_for_world_owner!,
     on: [ :create, :update ],
@@ -140,14 +140,14 @@ class WorldKey < ApplicationRecord
   sig { void }
   def validate_recipient_not_world_owner
     if recipient_id == world&.owner_id
-      errors.add(:recipient_id, "cannot be the world owner")
+      errors.add(:recipient, "cannot be the world owner")
     end
   end
 
   sig { void }
-  def revoke_recipient_world_cards!
+  def discard_recipient_world_cards!
     world = world!
-    cardholder = recipient!
-    WorldCard.revoke_for!(world:, cardholder:)
+    recipient = recipient!
+    world.cards.kept.where(cardholder: recipient).discard_all!
   end
 end

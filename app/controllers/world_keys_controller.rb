@@ -10,8 +10,7 @@ class WorldKeysController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        keys_by_recipient = authorized_scope(world.keys)
-          .accepted
+        keys_by_recipient = authorized_scope(world.keys.accepted)
           .includes(:recipient)
           .group_by(&:recipient)
         render Views::WorldKeys::Show.new(world:, keys_by_recipient:)

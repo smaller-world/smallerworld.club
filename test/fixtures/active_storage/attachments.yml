@@ -1,0 +1,14 @@
+bobs_world_one_icon:
+  name: icon
+  record: bobs_world_one (World)
+  blob: world_icon_blob
+
+bobs_world_two_icon:
+  name: icon
+  record: bobs_world_two (World)
+  blob: world_icon_blob
+
+sues_world_icon:
+  name: icon
+  record: sues_world (World)
+  blob: world_icon_blob

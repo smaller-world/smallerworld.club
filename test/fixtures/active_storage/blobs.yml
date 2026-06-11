@@ -1,0 +1,1 @@
+world_icon_blob: <%= ActiveStorage::FixtureSet.blob filename: "world_icon.png", service_name: "test_fixtures" %>

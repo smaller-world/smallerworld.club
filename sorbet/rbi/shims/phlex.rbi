@@ -1,5 +1,4 @@
 # typed: strict
-# frozen_string_literal: true
 
 class Phlex::SGML
   class << self

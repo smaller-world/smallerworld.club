@@ -15,7 +15,7 @@ module TurnstileTag
       {
         data: {
           controller: "turnstile",
-          turnstile_sitekey_value: Turnstile.site_key,
+          turnstile_sitekey_value: Rails.application.credentials.turnstile!.site_key!,
           turnstile_action_value: action,
         },
       },

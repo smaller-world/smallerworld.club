@@ -25,10 +25,7 @@ class WorldsController < ApplicationController
         world = find_world
         authorize!(world)
         unclaimed_world_cards = if (serial_numbers = params[:pass_serial_numbers])
-          world.cards
-            .unrevoked
-            .unclaimed
-            .with_pass_serial_numbers(serial_numbers)
+          world.cards.kept.unclaimed.with_pass_serial_numbers(serial_numbers)
         end
         celebrate = !!params[:celebrate]
         render Views::Worlds::Show.new(world:, unclaimed_world_cards:, celebrate:)

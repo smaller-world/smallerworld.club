@@ -16,17 +16,15 @@ module Tapioca
 
         ConstantType = type_member do
           {
-            fixed: T.all(
-              T.class_of(::ActiveRecord::Base),
-              ::FriendlyId::Base,
-            ),
+            fixed: T.all(T.class_of(::ActiveRecord::Base), ::FriendlyId::Base),
           }
         end
 
+        # == Methods ==
+
         sig { override.returns(T::Enumerable[T::Class[ActiveRecord::Base]]) }
         def self.gather_constants
-          descendants_of(::ActiveRecord::Base)
-            .grep(::FriendlyId::Base)
+          descendants_of(::ActiveRecord::Base).grep(::FriendlyId::Base)
         end
 
         sig { override.void }
@@ -48,6 +46,8 @@ module Tapioca
         end
 
         private
+
+        # == Helpers ==
 
         sig do
           params(scope: RBI::Scope, return_type: String).void

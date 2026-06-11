@@ -9,5 +9,5 @@ class WorldCardPolicy < ApplicationPolicy
     card.unclaimed? || card.cardholder == user!
   end
 
-  alias_rule :download?, :claim?, to: :show?
+  alias_rule :download?, :claim?, :accept?, to: :show?
 end

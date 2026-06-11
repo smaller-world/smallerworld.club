@@ -6,8 +6,38 @@
 
 
 class ActiveSupport::TestCase
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[ActiveStorage::Attachment]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(ActiveStorage::Attachment) }
+  sig do
+    params(
+      fixture_name: T.any(String, Symbol),
+      other_fixtures: T.any(String, Symbol)
+    ).returns(T::Array[ActiveStorage::Attachment])
+  end
+  def active_storage_attachments(fixture_name = nil, *other_fixtures); end
+
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[ActiveStorage::Blob]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(ActiveStorage::Blob) }
+  sig do
+    params(
+      fixture_name: T.any(String, Symbol),
+      other_fixtures: T.any(String, Symbol)
+    ).returns(T::Array[ActiveStorage::Blob])
+  end
+  def active_storage_blobs(fixture_name = nil, *other_fixtures); end
+
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[Device]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(Device) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[Device]) }
+  def devices(fixture_name = nil, *other_fixtures); end
+
   sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[User]) }
   sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(User) }
   sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[User]) }
   def users(fixture_name = nil, *other_fixtures); end
+
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[World]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(World) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[World]) }
+  def worlds(fixture_name = nil, *other_fixtures); end
 end

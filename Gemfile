@@ -161,6 +161,9 @@ gem "smart_properties", "~> 1.17"
 # Add typed stores to ActiveRecord
 gem "activerecord-typedstore", "~> 1.6"
 
+# Soft deletes for ActiveRecord
+gem "discard", "~> 2.0"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"
@@ -176,7 +179,7 @@ group :development, :test do
   gem "brakeman", "8.0.4", require: false
 
   # Generate Sorbet types from Rails code
-  gem "tapioca", require: false
+  gem "tapioca", ">= 0.19.1", require: false
 
   # Auto-detect and warn about N+1 queries
   gem "prosopite"
@@ -198,7 +201,7 @@ group :development do
   gem "ruby-lsp", require: false
 
   # Type checking with Sorbet
-  gem "sorbet", require: false
+  gem "sorbet", "0.6.13281", require: false
 
   # Live-reload for Hotwire
   gem "hotwire-spark", "~> 0.1.13"
@@ -216,7 +219,8 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "capybara-playwright-driver", require: false
+  gem "playwright-ruby-client", "1.60.0", require: false
 end
 
 group :production do

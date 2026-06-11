@@ -24,7 +24,7 @@ class Components::NewReactionForm < Components::Base
             "turbo:submit-end->confetti#launch",
             "turbo:submit-end->haptic-bridge#vibrate",
           ],
-          confetti_canvas_id_value: Rails.configuration.x.layout.confetti_canvas_id,
+          confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
         },
       },
       @attributes,
@@ -42,6 +42,7 @@ class Components::NewReactionForm < Components::Base
             {
               class: "rounded-full loading-while-submitting",
               data: {
+                testid: "new_reaction_dialog_trigger",
                 confetti_target: "position",
                 form_target: "disableWhileSubmitting",
               },

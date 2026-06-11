@@ -90,6 +90,23 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Methods ==
 
+  # Creates a verified request for `user` with throwaway transport metadata.
+  # Test-only: used by PhoneNumberVerificationRequestTestHelper and the test sign-in
+  # backdoor to satisfy Session's `phone_number_verification_request` requirement without
+  # walking the OTP flow.
+  sig { params(user: User, verified: T::Boolean).returns(PhoneNumberVerificationRequest) }
+  def self.create_test_mock_for!(user, verified:)
+    raise "Only available in test environment" unless Rails.env.test?
+
+    create!(
+      phone_number: user.phone_number,
+      user_agent: "test",
+      ip_address: IPAddr.new("127.0.0.1"),
+    ) do |request|
+      request.verified_at = Time.current if verified
+    end
+  end
+
   sig { returns(T::Enumerable[IPAddr]) }
   def self.ip_addresses_exceeding_daily_rate_limit
     where(created_at: (1.day.ago)..)

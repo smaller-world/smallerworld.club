@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_042028) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_11_053756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -330,15 +330,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_042028) do
     t.uuid "cardholder_id"
     t.datetime "created_at", null: false
     t.uuid "device_id"
+    t.timestamptz "discarded_at"
     t.string "granted_key_color", null: false
     t.timestamptz "relevant_date", default: -> { "now()" }
-    t.timestamptz "revoked_at"
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
     t.index ["device_id"], name: "index_world_cards_on_device_id"
+    t.index ["discarded_at"], name: "index_world_cards_on_discarded_at"
     t.index ["relevant_date"], name: "index_world_cards_on_relevant_date"
-    t.index ["revoked_at"], name: "index_world_cards_on_revoked_at"
     t.index ["world_id"], name: "index_world_cards_on_world_id"
   end
 

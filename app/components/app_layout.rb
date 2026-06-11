@@ -215,7 +215,7 @@ class Components::AppLayout < Components::Base
   sig { void }
   def confetti_canvas
     canvas(
-      id: Rails.configuration.x.layout.confetti_canvas_id,
+      id: Rails.configuration.x.confetti_canvas_id,
       class: "fixed inset-0 pointer-events-none z-50",
       data: {
         turbo_permanent: true,
