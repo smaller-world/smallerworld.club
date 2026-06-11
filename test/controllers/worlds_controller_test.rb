@@ -50,6 +50,16 @@ class WorldsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "updated blurb", @world.blurb
   end
 
+  test "unauthenticated visitor is redirected to sign in" do
+    get world_path(@world)
+    assert_redirected_to new_session_path
+  end
+
+  test "unauthenticated visitor cannot reach the new world form" do
+    get new_world_path
+    assert_redirected_to new_session_path
+  end
+
   test "a friend leaves a world" do
     friend = users(:sue)
     grant_key(world: @world, recipient: friend, color: :blue)

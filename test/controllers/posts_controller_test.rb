@@ -65,4 +65,21 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "visible post"
   end
+
+  test "a friend only sees posts their key grants access to" do
+    friend = users(:sue)
+    grant_key(world: @world, recipient: friend, color: :blue)
+
+    create_post(world: @world, body: "everyone with a key sees this")
+    create_post(world: @world, key_colors: [ :blue ], body: "blue key holders only")
+    create_post(world: @world, key_colors: [ :red ], body: "red key holders only")
+
+    sign_in_as(friend)
+    get world_posts_path(@world),
+      headers: { "Turbo-Frame" => "posts" }
+    assert_response :success
+    assert_includes response.body, "everyone with a key sees this"
+    assert_includes response.body, "blue key holders only"
+    assert_not_includes response.body, "red key holders only"
+  end
 end
