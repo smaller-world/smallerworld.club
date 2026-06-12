@@ -23,7 +23,9 @@ class SessionsController < ApplicationController
         else
           verification_request = PhoneNumberVerificationRequest.new
           unclaimed_world_cards = if (serial_numbers = params[:pass_serial_numbers])
-            WorldCard.kept.unclaimed.with_pass_serial_numbers(serial_numbers)
+            WorldCard.kept.unclaimed
+              .with_key_grant
+              .with_pass_serial_numbers(serial_numbers)
               .includes(:world)
           end
           render Views::Sessions::New.new(verification_request:, unclaimed_world_cards:)

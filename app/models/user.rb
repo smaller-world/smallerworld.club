@@ -20,8 +20,10 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class User < ApplicationRecord
+  extend FriendlyId
   include NormalizesPhoneNumber
   include HasTimeZone
+  include PgSearch::Model
 
   # == Constants ==
 
@@ -30,6 +32,10 @@ class User < ApplicationRecord
   # Attributes that, when changed, invalidate the on-device pass for each world
   # card.
   WORLD_CARD_ATTRIBUTES = T.let([ "name" ].freeze, T::Array[String])
+
+  # == FriendlyId ==
+
+  friendly_id :phone_number, use: :slugged, slug_column: :phone_number
 
   # == Attributes ==
 
@@ -101,6 +107,16 @@ class User < ApplicationRecord
 
   after_update_commit :touch_world_cards, if: :saved_changes_to_world_card_attributes?
 
+  # == Search ==
+
+  pg_search_scope :search,
+    against: [ :name ],
+    using: {
+      tsearch: {
+        websearch: true,
+      },
+    }
+
   # == Notifications ==
 
   sig do
@@ -161,6 +177,7 @@ class User < ApplicationRecord
     WorldCard
       .where(
         id: WorldCard.kept.unclaimed
+          .with_key_grant
           .with_pass_serial_numbers(pass_serial_numbers)
           .select("DISTINCT ON (world_cards.world_id) world_cards.id")
           .order("world_cards.world_id", created_at: :desc),

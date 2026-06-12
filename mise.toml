@@ -51,9 +51,9 @@ run = 'bin/rails test:system $usage_files ${usage_verbose:+--verbose} ${usage_in
 [tasks."test:all"]
 description = "Run all tests"
 usage = '''
-arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
 flag "-i --include <pattern>" help="Include tests matching /regexp/ or string"
 flag "-v --verbose" help="Print each test name as it runs"
+arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
 '''
 run = 'bin/rails test:all $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
 
@@ -61,17 +61,19 @@ run = 'bin/rails test:all $usage_files ${usage_verbose:+--verbose} ${usage_inclu
 description = "Fix code with hk"
 usage = '''
 flag "-a --all" help="Run on all files instead of just staged files"
+flag "-S --step <step>" help="Run only specific step(s)"
 arg "[files]..." var=#true help="Run on specific files"
 '''
-run = "hk fix ${usage_all:+--all} $@"
+run = "hk fix ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
 
 [tasks.check]
 description = "Check code with hk"
 usage = '''
 flag "-a --all" help="Run on all files instead of just staged files"
+flag "-S --step <step>" help="Run only specific step(s)"
 arg "[files]..." var=#true help="Run on specific files"
 '''
-run = "hk check ${usage_all:+--all} $@"
+run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
 
 [tasks.attach]
 description = "Attach to a running Overmind process"

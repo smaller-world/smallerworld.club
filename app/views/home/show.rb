@@ -27,9 +27,9 @@ class Views::Home::Show < Views::Base
     Components::AppLayout(display_header: true) do |layout|
       show_alert = !hotwire_native_app?
 
-      layout.page_container(class: "flex-1 max-w-lg flex flex-col gap-6") do
+      layout.page_container(class: "flex-1 max-w-lg flex flex-col") do
         if show_alert
-          Components::Alert(class: "gap-y-1") do |alert|
+          Components::Alert(class: "gap-y-1 mb-6") do |alert|
             alert.title do
               "please try our app!!"
             end
@@ -53,7 +53,7 @@ class Views::Home::Show < Views::Base
         end
 
         if show_alert
-          div(class: "flex-1 max-h-36 min-h-0 shrink")
+          div(class: "flex-1 max-h-40 min-h-0 shrink")
         end
       end
     end

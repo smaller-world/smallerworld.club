@@ -1,49 +1,8 @@
 # typed: strict
 # frozen_string_literal: true
 
-use_dummy_envvars = ENV["SECRET_KEY_BASE_DUMMY"]
-
-if use_dummy_envvars
-  ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
-  ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
-  ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
-elsif (credentials = Rails.application.credentials.passkit)
-  ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
-    .default_url_options
-    .fetch_values(:protocol, :host).join("://")
-  ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = credentials.apple_team_identifier
-  ENV["PASSKIT_PASS_TYPE_IDENTIFIER"] = credentials.pass_type_identifier
-  ENV["PASSKIT_CERTIFICATE_KEY"] = credentials.certificate_key
-  if (certificate = credentials.apple_intermediate_certificate)
-    path = Rails.root.join("tmp/passkit/apple_intermediate_certificate.cer")
-    File.binwrite(path, Base64.decode64(certificate))
-    ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = path.to_s
-  end
-  if (certificate = credentials.private_p12_certificate)
-    path = Rails.root.join("tmp/passkit/private_p12_certificate.p12")
-    File.binwrite(path, Base64.decode64(certificate))
-    ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = path.to_s
-  end
-end
-
-# Configure demo pass, dashboard auth
-unless use_dummy_envvars
-  Passkit.configure do |config|
-    config.available_passes["Passes::DemoPass"] = -> { nil }
-
-    config.authenticate_dashboard_with do
-      T.bind(self, Passkit::Dashboard::ApplicationController)
-
-      unless Rails.env.development?
-        raise ActionController::RoutingError,
-          "Dashboard is not available"
-      end
-    end
-  end
-end
-
+# Configure Passkit models
 Rails.application.configure do
-  # Modify models
   config.to_prepare do
     Passkit::Pass.has_many(
       :registrations,
@@ -65,9 +24,48 @@ Rails.application.configure do
       through: :registrations,
     )
   end
+end
+
+# Autoload passes
+Rails.autoloaders.main.push_dir(
+  Rails.root.join("app/passkit"),
+  namespace: Passkit,
+)
+
+if (credentials = Rails.application.credentials.passkit)
+  ENV["PASSKIT_WEB_SERVICE_HOST"] = Rails.configuration.action_mailer
+    .default_url_options
+    .fetch_values(:protocol, :host).join("://")
+  ENV["PASSKIT_APPLE_TEAM_IDENTIFIER"] = credentials.apple_team_identifier
+  ENV["PASSKIT_PASS_TYPE_IDENTIFIER"] = credentials.pass_type_identifier
+  ENV["PASSKIT_CERTIFICATE_KEY"] = credentials.certificate_key
+  if (certificate = credentials.apple_intermediate_certificate)
+    path = Rails.root.join("tmp/passkit/apple_intermediate_certificate.cer")
+    File.binwrite(path, Base64.decode64(certificate))
+    ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = path.to_s
+  end
+  if (certificate = credentials.private_p12_certificate)
+    path = Rails.root.join("tmp/passkit/private_p12_certificate.p12")
+    File.binwrite(path, Base64.decode64(certificate))
+    ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = path.to_s
+  end
+
+  # Configure demo pass, dashboard auth
+  Passkit.configure do |config|
+    config.available_passes["Passes::DemoPass"] = -> { nil }
+
+    config.authenticate_dashboard_with do
+      T.bind(self, Passkit::Dashboard::ApplicationController)
+
+      unless Rails.env.development?
+        raise ActionController::RoutingError,
+          "Dashboard is not available"
+      end
+    end
+  end
 
   # Add application passes
-  unless use_dummy_envvars
+  Rails.application.configure do
     config.after_initialize do
       Passkit.configure do |config|
         config.available_passes["Passes::WorldCard"] = -> {
@@ -77,9 +75,9 @@ Rails.application.configure do
       end
     end
   end
+else
+  ENV["SECRET_KEY_BASE_DUMMY"]
+  ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
+  ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
+  ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
 end
-
-Rails.autoloaders.main.push_dir(
-  Rails.root.join("app/passkit"),
-  namespace: Passkit,
-)

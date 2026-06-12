@@ -11,7 +11,7 @@ class WorldCard
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
-  sig { returns(Enumerize::Value) }
+  sig { returns(T.nilable(Enumerize::Value)) }
   def granted_key_color; end
 
   private
@@ -721,6 +721,9 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_expired_relevant_date(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_key_grant(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_pass_serial_numbers(*args, &blk); end
@@ -1475,6 +1478,9 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_expired_relevant_date(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_key_grant(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_pass_serial_numbers(*args, &blk); end

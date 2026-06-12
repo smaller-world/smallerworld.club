@@ -11,12 +11,12 @@ class WorldsCardsTest < ApplicationSystemTestCase
     visit world_card_path(card)
     click_on "add card to wallet"
 
-    pkpass_path = assert_download("*.pkpass", wait: 10)
-    Rails.logger.info("Pass downloaded successfully: #{pkpass_path}")
+    pass_path = assert_download("*.pkpass", wait: 10)
+    Rails.logger.info("Pass downloaded successfully: #{pass_path}")
 
     # This is a web tool that validates .pkpass files
     visit("https://pkpassvalidator.azurewebsites.net:443")
-    attach_file("passFile", pkpass_path)
+    attach_file("passFile", pass_path)
     click_button "Validate"
     assert_text("Validation Results:")
     assert_no_selector(".thumbs.down.icon")

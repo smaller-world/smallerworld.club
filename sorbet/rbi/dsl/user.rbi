@@ -525,6 +525,9 @@ class User
     sig { params(association: Symbol).returns(T::Array[T.untyped]) }
     def extract_associated(association); end
 
+    sig { returns(PrivateAssociationRelation) }
+    def friendly; end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def from(*args, &blk); end
 
@@ -608,6 +611,9 @@ class User
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def rewhere(*args, &blk); end
+
+    sig { params(args: T.untyped, kwargs: T.untyped).returns(PrivateAssociationRelation) }
+    def search(*args, **kwargs); end
 
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
     sig { params(blk: T.proc.params(record: ::User).returns(BasicObject)).returns(T::Array[::User]) }
@@ -1138,6 +1144,9 @@ class User
     sig { params(association: Symbol).returns(T::Array[T.untyped]) }
     def extract_associated(association); end
 
+    sig { returns(PrivateRelation) }
+    def friendly; end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def from(*args, &blk); end
 
@@ -1221,6 +1230,9 @@ class User
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def rewhere(*args, &blk); end
+
+    sig { params(args: T.untyped, kwargs: T.untyped).returns(PrivateRelation) }
+    def search(*args, **kwargs); end
 
     sig { params(args: T.untyped).returns(PrivateRelation) }
     sig { params(blk: T.proc.params(record: ::User).returns(BasicObject)).returns(T::Array[::User]) }

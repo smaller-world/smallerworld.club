@@ -19,13 +19,16 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
         current_device = Current.device!
         card = find_card
         authorize!(card)
+        key_color = card.granted_key_color or
+          raise ApplicationError, "Missing granted key color"
+
         world = card.world!
         begin
           ActiveRecord::Base.transaction do
             card.update!(cardholder: current_user, device: current_device)
             current_user.world_keys.create!(
               world:,
-              color: card.granted_key_color,
+              color: key_color,
               accepted_at: Time.current,
             )
           end

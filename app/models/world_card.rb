@@ -8,7 +8,7 @@
 #
 #  id                :uuid             not null, primary key
 #  discarded_at      :timestamptz
-#  granted_key_color :string           not null
+#  granted_key_color :string
 #  relevant_date     :timestamptz
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -89,7 +89,11 @@ class WorldCard < ApplicationRecord
 
   # == Validations ==
 
+  # A device must be set for claimed world cards
   validates :device, presence: true, if: :cardholder_id?
+
+  # Granted key color is required for unclaimed world cards
+  validates :granted_key_color, presence: true, unless: :cardholder_id?
 
   # == Scopes ==
 
@@ -102,6 +106,7 @@ class WorldCard < ApplicationRecord
   scope :with_pass_serial_numbers, ->(serial_numbers) {
     joins(:pass).where(passkit_passes: { serial_number: serial_numbers })
   }
+  scope :with_key_grant, -> { where.not(granted_key_color: nil) }
 
   # == Hooks ==
 

@@ -27,6 +27,7 @@
 class World < ApplicationRecord
   extend FriendlyId
   include NormalizesText
+  include PgSearch::Model
 
   # == Configuration ==
 
@@ -155,6 +156,16 @@ class World < ApplicationRecord
   after_initialize :set_default_name, if: :new_record?
   after_update_commit :touch_cards, if: :saved_changes_to_card_attributes?
   after_attached :icon, :touch_cards
+
+  # == Search ==
+
+  pg_search_scope :search,
+    against: [ :name ],
+    using: {
+      tsearch: {
+        websearch: true,
+      },
+    }
 
   # == Keys ==
 

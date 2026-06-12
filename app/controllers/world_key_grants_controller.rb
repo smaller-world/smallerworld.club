@@ -4,7 +4,7 @@
 class WorldKeyGrantsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access only: [ :show, :accept ]
+  allow_unauthenticated_access only: [ :show ]
   skip_verify_authorized only: [ :show, :accept ]
 
   # == Actions ==

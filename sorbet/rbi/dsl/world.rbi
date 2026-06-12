@@ -619,6 +619,9 @@ class World
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def rewhere(*args, &blk); end
 
+    sig { params(args: T.untyped, kwargs: T.untyped).returns(PrivateAssociationRelation) }
+    def search(*args, **kwargs); end
+
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
     sig { params(blk: T.proc.params(record: ::World).returns(BasicObject)).returns(T::Array[::World]) }
     def select(*args, &blk); end
@@ -1237,6 +1240,9 @@ class World
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def rewhere(*args, &blk); end
+
+    sig { params(args: T.untyped, kwargs: T.untyped).returns(PrivateRelation) }
+    def search(*args, **kwargs); end
 
     sig { params(args: T.untyped).returns(PrivateRelation) }
     sig { params(blk: T.proc.params(record: ::World).returns(BasicObject)).returns(T::Array[::World]) }
