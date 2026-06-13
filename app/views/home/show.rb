@@ -82,7 +82,7 @@ class Views::Home::Show < Views::Base
           Components::Button(
             element: :div,
             variant: :outline,
-            class: "home-world-icon border-dashed",
+            class: "world-icon border-dashed",
           ) do
             image_tag("logo.png", class: "size-12")
           end
