@@ -104,8 +104,8 @@ class Notification < ApplicationRecord
         body: message.body,
         badge: recipient.notifications_received_since_last_cleared.count,
       )
-    recipient.devices.find_each do |device|
-      device_notification.deliver_to(device)
+    recipient.devices.notifiable.find_each do |device|
+      device.push(device_notification)
     end
     update!(delivered_at: Time.current)
   end

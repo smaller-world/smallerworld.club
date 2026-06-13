@@ -27,7 +27,6 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Device < ApplicationRecord
   extend Enumerize
-  extend T::Sig
 
   include ActiveSupport::Rescuable
 
