@@ -113,7 +113,6 @@ class Views::Sessions::New < Views::Base
           action: [
             "transition-group:start->transition#enter",
             "transition:transitioned->transition-group#startNext",
-            "click->transition#toggle",
           ],
         },
       ) do |badge|

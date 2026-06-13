@@ -21,4 +21,10 @@ mise dev
 
 ## TODOs
 
-- [ ] auto-detect timezone changes on any user-authenticated page
+- [x] auto-detect timezone changes on any user-authenticated page
+
+## feedback
+
+- what happens if i add this card to my wallet? will it drain my credit card?
+- the world icon on the key grants page looks too much like a button
+- firefox focus apple wallet card DOES NOT WORK
