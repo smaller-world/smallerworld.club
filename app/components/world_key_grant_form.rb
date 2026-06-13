@@ -69,20 +69,18 @@ class Components::WorldKeyGrantForm < Components::Base
         if @key_color
           div(class: "flex flex-col gap-y-1") do
             qr_code(@key_color)
-            if Rails.env.development?
-              Components::Button(
-                variant: :link,
-                size: :sm,
-                class: "self-center text-muted-foreground text-xs",
-                data: {
-                  controller: "clipboard flash",
-                  clipboard_copy_value: world_key_grant_url(@key_color),
-                  flash_text_value: "copied!",
-                  action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
-                },
-              ) do
-                "copy url (for development)"
-              end
+            Components::Button(
+              variant: :link,
+              size: :sm,
+              class: "self-center text-muted-foreground text-xs",
+              data: {
+                controller: "clipboard flash",
+                clipboard_copy_value: world_key_grant_url(@key_color),
+                flash_text_value: "invite link copied!",
+                action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
+              },
+            ) do
+              "copy invite link"
             end
           end
 
