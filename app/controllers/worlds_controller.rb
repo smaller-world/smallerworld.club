@@ -63,7 +63,7 @@ class WorldsController < ApplicationController
         world_params = params.expect(world: [ :name, :blurb, :icon ])
         world = current_user.owned_worlds.build(**world_params)
         if world.save
-          redirect_to(world)
+          redirect_to(world, status: :see_other)
         else
           render Views::Worlds::New.new(world:), status: :unprocessable_content
         end

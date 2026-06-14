@@ -36,9 +36,13 @@ class WorldCardsController < ApplicationController
     world = card.world!
     begin
       card.update!(device: current_device, cardholder: current_user)
-      redirect_to(world, notice: "card successfully linked to your account")
+      redirect_to(
+        world,
+        notice: "card successfully linked to your account",
+        status: :see_other,
+      )
     rescue => error
-      redirect_to(world, alert: error)
+      redirect_to(world, alert: error, status: :see_other)
     end
   end
 

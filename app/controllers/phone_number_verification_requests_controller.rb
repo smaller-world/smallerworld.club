@@ -35,7 +35,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           end
           render turbo_stream: replace_login_form(verification_request:)
         elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
-          redirect_to(new_session_path, alert: message)
+          redirect_to(new_session_path, alert: message, status: :see_other)
         else
           render turbo_stream: replace_login_form(verification_request:)
         end
@@ -60,11 +60,11 @@ class PhoneNumberVerificationRequestsController < ApplicationController
               user,
               phone_number_verification_request: verification_request,
             )
-            redirect_to(after_authentication_url)
+            redirect_to(after_authentication_url, status: :see_other)
           else
             session[:phone_number_verification_token] =
               verification_request.generate_registration_token
-            redirect_to(new_account_path)
+            redirect_to(new_account_path, status: :see_other)
           end
         else
           render turbo_stream: replace_login_form(verification_request:)
@@ -102,10 +102,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           remoteip: request.remote_ip,
         )
       rescue => error
-        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}")
+        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}", status: :see_other)
       end
     else
-      redirect_to(new_session_path, alert: "please click 'verify you are human'!")
+      redirect_to(new_session_path, alert: "please click 'verify you are human'!", status: :see_other)
     end
   end
 
@@ -114,6 +114,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     redirect_to(
       new_session_path,
       alert: "you have requested a login code too many times. please try again later.",
+      status: :see_other,
     )
   end
 end

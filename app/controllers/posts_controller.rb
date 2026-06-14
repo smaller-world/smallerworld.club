@@ -109,7 +109,7 @@ class PostsController < ApplicationController
         post = find_post
         authorize!(post)
         post.destroy!
-        redirect_to(post.world!)
+        redirect_to(post.world!, status: :see_other)
       end
     end
   end

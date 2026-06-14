@@ -8,7 +8,12 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
   def show
     card = find_card
     authorize!(card)
-    render Views::WorldCards::WorldKeyGrants::Show.new(card:)
+    world = card.world!
+    if card.cardholder
+      redirect_to(world)
+    else
+      render Views::WorldCards::WorldKeyGrants::Show.new(card:)
+    end
   end
 
   # POST /world_cards/:world_card_id/key_grant/accept
@@ -32,7 +37,7 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
               accepted_at: Time.current,
             )
           end
-          redirect_to([ world, celebrate: true ])
+          redirect_to([ world, celebrate: true ], status: :see_other)
         rescue => error
           flash.now.alert = "Failed to accept key: #{error}"
           render(

@@ -56,7 +56,7 @@ class WorldKeysController < ApplicationController
         key = find_key
         authorize!(key)
         key.destroy!
-        redirect_to([ key.world!, :keys ])
+        redirect_to([ key.world!, :keys ], status: :see_other)
       end
     end
   end

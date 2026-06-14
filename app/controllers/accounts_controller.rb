@@ -51,6 +51,7 @@ class AccountsController < ApplicationController
           redirect_to(
             new_session_path,
             alert: "Missing phone number verification token",
+            status: :see_other,
           )
           return
         end
@@ -64,6 +65,7 @@ class AccountsController < ApplicationController
           redirect_to(
             new_session_path,
             alert: "Invalid phone number verification token",
+            status: :see_other,
           )
           return
         end
@@ -75,7 +77,7 @@ class AccountsController < ApplicationController
         if user.save
           session.delete(:phone_number_verification_token)
           start_new_session_for(user, phone_number_verification_request:)
-          redirect_to(after_authentication_url)
+          redirect_to(after_authentication_url, status: :see_other)
         else
           render Views::Accounts::New.new(user:), status: :unprocessable_content
         end

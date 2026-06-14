@@ -34,7 +34,7 @@ class ReactionsController < ApplicationController
           **reaction_params,
         )
         if reaction.save
-          redirect_to([ post, :reactions ])
+          redirect_to([ post, :reactions ], status: :see_other)
         else
           render Views::Reactions::Index.new(post:, new_reaction: reaction),
             status: :unprocessable_content
@@ -50,7 +50,7 @@ class ReactionsController < ApplicationController
         reaction = find_reaction
         authorize!(reaction)
         reaction.destroy!
-        redirect_to([ reaction.post!, :reactions ])
+        redirect_to([ reaction.post!, :reactions ], status: :see_other)
       rescue ActiveRecord::RecordNotFound
         head(:not_found)
       end

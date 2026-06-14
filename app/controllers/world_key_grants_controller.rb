@@ -46,7 +46,7 @@ class WorldKeyGrantsController < ApplicationController
           accepted_at: Time.current,
         )
         if key.save
-          redirect_to([ world, celebrate: true ])
+          redirect_to([ world, celebrate: true ], status: :see_other)
         else
           message = "failed to accept key"
           if (error = key.errors.full_messages.first)
