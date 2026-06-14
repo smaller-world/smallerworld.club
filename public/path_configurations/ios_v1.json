@@ -12,7 +12,7 @@
         "\/new$",
         "\/edit$",
         "^\/world_key_grants\/.+$",
-        "^\/world_cards\/[\\w+]\/key_grant$",
+        "^\/world_cards\/[\\w-]+\/key_grant$",
         "\/settings$"
       ],
       "properties": {
