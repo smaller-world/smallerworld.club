@@ -32,6 +32,8 @@ class Post < ApplicationRecord
 
   # == Attributes ==
 
+  encrypts :plain_body
+
   sig { returns(T::Boolean) }
   def selectively_shown?
     !key_colors.nil?
@@ -69,7 +71,7 @@ class Post < ApplicationRecord
 
   # == Attachments
 
-  has_rich_text :body
+  has_rich_text :body, encrypted: true
   has_many_attached :images do |attachable|
     attachable.variant(:thumbnail, resize_to_limit: [ 800, 800 ])
   end

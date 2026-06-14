@@ -164,6 +164,9 @@ gem "activerecord-typedstore", "~> 1.6"
 # Soft deletes for ActiveRecord
 gem "discard", "~> 2.0"
 
+# Protect user data, Rails console audit logs in production
+gem "console1984"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

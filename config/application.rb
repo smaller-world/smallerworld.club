@@ -72,6 +72,18 @@ module Smallerworld
     # Set a PID file
     config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")
 
+    # TODO: Remove once the `encrypt_existing_post_bodies` after_party task has
+    # run successfully in production. Required during the rollout so that rows
+    # written before encryption can still be read until backfilled.
+    # See: https://guides.rubyonrails.org/active_record_encryption.html#support-for-unencrypted-data
+    config.active_record.encryption.support_unencrypted_data = true
+
+    # Console1984 — audit + protect production console access
+    config.console1984.ask_for_username_if_empty = true
+    # Defaults below, kept here for visibility:
+    # config.console1984.protected_environments = %i[ production ]
+    # config.console1984.incinerate_after = 30.days
+
     # == Custom Helpers ==
 
     sig { returns(String) }
