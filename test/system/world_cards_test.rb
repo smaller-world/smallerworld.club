@@ -18,7 +18,7 @@ class WorldsCardsTest < ApplicationSystemTestCase
     visit("https://pkpassvalidator.azurewebsites.net:443")
     attach_file("passFile", pass_path)
     click_button "Validate"
-    assert_text("Validation Results:")
+    assert_text("Validation Results:", wait: 10)
     assert_no_selector(".thumbs.down.icon")
   end
 end
