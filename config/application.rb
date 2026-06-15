@@ -76,9 +76,7 @@ module Smallerworld
     # run successfully in production. Required during the rollout so that rows
     # written before encryption can still be read until backfilled.
     # See: https://guides.rubyonrails.org/active_record_encryption.html#support-for-unencrypted-data
-    #
-    # NOTE: Removed 2026-06-15
-    # config.active_record.encryption.support_unencrypted_data = true
+    config.active_record.encryption.support_unencrypted_data = true
 
     # Console1984 — audit + protect production console access
     config.console1984.ask_for_username_if_empty = true

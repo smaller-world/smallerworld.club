@@ -12,14 +12,12 @@ class Components::LexxyEditor < Components::Input
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    value = @attributes.delete(:value)
     attributes = mix(
       {
         class: "lexxy-content",
         data: {
           controller: "lexxy-editor",
         },
-        value:,
       },
       @attributes,
     )

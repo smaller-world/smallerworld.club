@@ -32,6 +32,8 @@ class Post < ApplicationRecord
 
   # == Attributes ==
 
+  # TODO: Add full text search over title and plain_body with fuzzy_match
+  encrypts :title
   encrypts :plain_body, deterministic: false, previous: { deterministic: true }
 
   sig { returns(T::Boolean) }
