@@ -13,7 +13,7 @@
     "build:css": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
-    "@37signals/lexxy": "^0.9.17",
+    "@37signals/lexxy": "^0.9.18",
     "@gothassos/uppy-activestorage-upload": "^2.0.2",
     "@hotwired/hotwire-native-bridge": "^1.2.2",
     "@hotwired/stimulus": "^3.2.2",
