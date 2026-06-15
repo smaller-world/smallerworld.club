@@ -32,7 +32,7 @@ class Post < ApplicationRecord
 
   # == Attributes ==
 
-  encrypts :plain_body, deterministic: true, previous: { deterministic: false }
+  encrypts :plain_body, deterministic: false, previous: { deterministic: true }
 
   sig { returns(T::Boolean) }
   def selectively_shown?
