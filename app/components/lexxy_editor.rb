@@ -4,13 +4,15 @@
 class Components::LexxyEditor < Components::Input
   extend Phlex::Rails::HelperMacros
 
+  # == Helpers ==
+
   register_output_helper def rich_textarea_tag(...) = nil
 
   # == Component ==
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    value = @attributes.delete(:value) || form_value
+    value = @attributes.delete(:value) || decrypted_form_value
     attributes = mix(
       {
         class: "lexxy-content",
@@ -34,7 +36,7 @@ class Components::LexxyEditor < Components::Input
   private
 
   sig { returns(T.nilable(String)) }
-  def form_value
+  def decrypted_form_value
     if @form && @field
       if (rich_text = @form.object.public_send(@field)) &&
           rich_text.is_a?(ActionText::EncryptedRichText)

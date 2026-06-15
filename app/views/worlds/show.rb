@@ -85,8 +85,7 @@ class Views::Worlds::Show < Views::Base
             data: {
               controller: "confetti connection",
               confetti_emoji_value: "🎉",
-              confetti_canvas_id_value:
-                Rails.configuration.x.layout.confetti_canvas_id,
+              confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
               connection_delay_value: 1000,
               action: ("connection:connect->confetti#launch" if @celebrate),
             },
@@ -129,11 +128,11 @@ class Views::Worlds::Show < Views::Base
           data: {
             turbo_permanent: true,
             controller: "frame",
-            action: "turbo:reload@document->frame#reloadAndPreserveScroll",
+            action: "turbo:load@document->frame#reloadAndPersistScroll",
           },
         ) do
           div(class: "space-y-4") do
-            10.times do
+            2.times do
               Components::Card(class: "shadow-sm") do |card|
                 card.header do
                   card.description do
