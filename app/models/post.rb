@@ -32,13 +32,17 @@ class Post < ApplicationRecord
 
   # == Attributes ==
 
-  # TODO: Add full text search over title and plain_body with fuzzy_match
   encrypts :title
-  encrypts :plain_body, deterministic: false, previous: { deterministic: true }
+  encrypts :plain_body
 
   sig { returns(T::Boolean) }
   def selectively_shown?
     !key_colors.nil?
+  end
+
+  sig { returns(String) }
+  def content
+    [ fun_title, plain_body ].compact.join("\n\n")
   end
 
   # == Associations ==
@@ -60,16 +64,6 @@ class Post < ApplicationRecord
   def author!
     author or raise ActiveRecord::RecordNotFound, "Missing author"
   end
-
-  # == Scopes ==
-
-  scope :visible_to, ->(user) {
-    owned = World.where(owner: user).where("worlds.id = posts.world_id")
-    keyed = WorldKey.accepted.where(recipient: user)
-      .where("world_keys.world_id = posts.world_id")
-      .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
-    where(owned.arel.exists.or(keyed.arel.exists))
-  }
 
   # == Attachments
 
@@ -116,6 +110,16 @@ class Post < ApplicationRecord
   before_save :set_plain_body
   after_commit :touch_world_cards, on: [ :create, :destroy ]
   after_create_commit :create_notifications_for_world_key_recipients!
+
+  # == Scopes ==
+
+  scope :visible_to, ->(user) {
+    owned = World.where(owner: user).where("worlds.id = posts.world_id")
+    keyed = WorldKey.accepted.where(recipient: user)
+      .where("world_keys.world_id = posts.world_id")
+      .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
+    where(owned.arel.exists.or(keyed.arel.exists))
+  }
 
   # == Noticeable ==
 
@@ -186,6 +190,18 @@ class Post < ApplicationRecord
   def reply_url(platform:, native: false)
     message = reply_snippet_for(platform)
     author!.dm_url(platform:, message:, native:)
+  end
+
+  # == Methods ==
+
+  sig { params(query: String).returns(T::Enumerator[Post]) }
+  def self.search_each(query)
+    pattern = /\b#{Regexp.escape(query)}/
+    Enumerator.new do |yielder|
+      find_each do |post|
+        yielder << post if pattern.match?(post.content)
+      end
+    end
   end
 
   private

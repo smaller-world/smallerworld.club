@@ -10,25 +10,48 @@ hk = { version = "1.35.0", postinstall = 'if [ -z "$CI" ]; then hk install; fi' 
 overmind = "latest"
 
 [tasks]
-# Development flow
+# == Development flow
 setup = { run = "bin/setup" }
 dev = { run = "bin/dev" }
 restart = { run = "bin/overmind restart" }
 
-# Rails shortcuts
+# == Rails shortcuts
 rc = { run = "bin/rails console" }
 rr = { run = "bin/rails restart" }
 rk = { run = "bin/rails kill" }
+db = { run = "bin/rails db"}
 
-# Development tasks
+# == Production access
+"fly:ssh" = { run = "fly ssh console" }
+"fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
+"fly:eval" = { run = "bin/fly-eval" }
+
+# == Development tasks
 annotate = { run = "bin/annotaterb models" }
 "tapioca:dsl" = { run = "bin/tapioca dsl" }
 "tapioca:generate" = { run = "bin/tapioca generate" }
 
-# Connect to production server
-"fly:ssh" = { run = "fly ssh console" }
-"fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
-"fly:eval" = { run = "bin/fly-eval" }
+# == Linting ==
+
+[tasks.fix]
+description = "Fix code with hk"
+usage = '''
+flag "-a --all" help="Run on all files instead of just staged files"
+flag "-S --step <step>" help="Run only specific step(s)"
+arg "[files]..." var=#true help="Run on specific files"
+'''
+run = "hk fix ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
+
+[tasks.check]
+description = "Check code with hk"
+usage = '''
+flag "-a --all" help="Run on all files instead of just staged files"
+flag "-S --step <step>" help="Run only specific step(s)"
+arg "[files]..." var=#true help="Run on specific files"
+'''
+run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
+
+# == Testing ==
 
 [tasks.test]
 description = "Run tests"
@@ -57,23 +80,7 @@ arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
 '''
 run = 'bin/rails test:all $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
 
-[tasks.fix]
-description = "Fix code with hk"
-usage = '''
-flag "-a --all" help="Run on all files instead of just staged files"
-flag "-S --step <step>" help="Run only specific step(s)"
-arg "[files]..." var=#true help="Run on specific files"
-'''
-run = "hk fix ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
-
-[tasks.check]
-description = "Check code with hk"
-usage = '''
-flag "-a --all" help="Run on all files instead of just staged files"
-flag "-S --step <step>" help="Run only specific step(s)"
-arg "[files]..." var=#true help="Run on specific files"
-'''
-run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
+# == Misc ==
 
 [tasks.attach]
 description = "Attach to a running Overmind process"
