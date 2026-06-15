@@ -115,6 +115,7 @@
 
       button[name="table"],
       button[name="code"],
+      lexxy-toolbar-dropdown:has(button[name="format"]),
       lexxy-highlight-dropdown {
         @apply hidden;
       }
