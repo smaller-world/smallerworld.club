@@ -45,7 +45,10 @@ class Components::PostForm < Components::Base
               action: "keydown.meta+enter->post-form#requestSubmit",
             },
           )
-          f.error
+          f.description(class: "text-center text-xs mt-px") do
+            "write freely! your posts are encrypted."
+          end
+          f.error(class: "text-center")
         end
       end
 

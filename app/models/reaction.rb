@@ -25,6 +25,9 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Reaction < ApplicationRecord
+  include Noticeable
+  include ActionView::RecordIdentifier
+
   # == Associations ==
 
   belongs_to :post
@@ -36,6 +39,28 @@ class Reaction < ApplicationRecord
     post or raise ActiveRecord::RecordNotFound, "Missing associated post"
   end
 
+  sig { returns(World) }
+  def world!
+    world or raise ActiveRecord::RecordNotFound, "Missing associated world"
+  end
+
+  sig { returns(User) }
+  def reactor!
+    reactor or raise ActiveRecord::RecordNotFound, "Missing reactor"
+  end
+
+  sig { returns(T.nilable(User)) }
+  def world_owner
+    if (post_id = self[:post_id])
+      User.joins(:posts).find_by(posts: { id: post_id })
+    end
+  end
+
+  sig { returns(User) }
+  def world_owner!
+    world_owner or raise ActiveRecord::RecordNotFound, "Missing associated world owner"
+  end
+
   # == Validations ==
 
   validates :emoji,
@@ -44,7 +69,39 @@ class Reaction < ApplicationRecord
     uniqueness: { scope: [ :post_id, :reactor_id ], message: "already added to this post" }
   validate :validate_reactor_not_post_author
 
+  # == Hooks ==
+
+  after_create_commit :create_notification_for_world_owner!,
+    unless: :reactor_has_other_post_reactions?
+
+  # == Noticeable ==
+
+  sig { override.params(recipient: User).returns(Notification::Message) }
+  def notification_message(recipient:)
+    post = post!
+    world = post.world!
+    reactor = reactor!
+    Notification::Message.new(
+      target_url: [ world, anchor: dom_id(post) ],
+      title: "#{emoji} from #{reactor.name}",
+      body: "> #{post.card_snippet}",
+      world:,
+    )
+  end
+
+  sig { void }
+  def create_notification_for_world_owner!
+    notifications.create!(recipient: world_owner!)
+  end
+
   private
+
+  # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def reactor_has_other_post_reactions?
+    Reaction.where.not(id:).exists?(post_id:, reactor_id:)
+  end
 
   # == Callbacks ==
 

@@ -388,7 +388,7 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_author(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def build_rich_text_body(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
@@ -400,10 +400,10 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_author!(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def create_rich_text_body(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::RichText) }
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def create_rich_text_body!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
@@ -471,7 +471,7 @@ class Post
     sig { returns(T.nilable(::User)) }
     def reload_author; end
 
-    sig { returns(T.nilable(::ActionText::RichText)) }
+    sig { returns(T.nilable(::ActionText::EncryptedRichText)) }
     def reload_rich_text_body; end
 
     sig { returns(T.nilable(::World)) }
@@ -500,10 +500,10 @@ class Post
     sig { void }
     def reset_world; end
 
-    sig { returns(T.nilable(::ActionText::RichText)) }
+    sig { returns(T.nilable(::ActionText::EncryptedRichText)) }
     def rich_text_body; end
 
-    sig { params(value: T.nilable(::ActionText::RichText)).void }
+    sig { params(value: T.nilable(::ActionText::EncryptedRichText)).void }
     def rich_text_body=(value); end
 
     sig { returns(T.nilable(::World)) }

@@ -9,7 +9,12 @@ class Notification::Message
   property! :target_url,
     accepts: String,
     converts: ->(url) {
-      Rails.application.routes.url_helpers.polymorphic_path(url)
+      options = if url.is_a?(Array)
+        if url.last.is_a?(Hash)
+          url.pop
+        end
+      end
+      Rails.application.routes.url_helpers.polymorphic_path(url, **options)
     }
   property! :title, accepts: String
   property :body, accepts: String

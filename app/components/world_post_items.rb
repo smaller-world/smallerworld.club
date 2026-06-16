@@ -12,12 +12,15 @@ class Components::WorldPostItems < Components::Base
   end
 
   # == Component ==
-  #
+
   sig { override.void }
   def view_template
     @posts.each do |post|
       li do
-        Components::PostCard(post:, replied_post_ids: @replied_post_ids)
+        Components::PostCard(
+          post:,
+          replied_post_ids: @replied_post_ids,
+        )
       end
     end
   end

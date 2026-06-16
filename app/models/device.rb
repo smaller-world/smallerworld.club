@@ -91,8 +91,11 @@ class Device < ApplicationRecord
 
   private
 
-  sig { void }
-  def remove_push_token!
+  sig { params(error: ActionPushNative::TokenError).void }
+  def remove_push_token!(error)
+    tag_logger do
+      Rails.logger.warn("Removing push token for device #{id}: #{error.message}")
+    end
     update!(push_token: nil)
   end
 end

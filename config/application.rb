@@ -82,9 +82,7 @@ module Smallerworld
 
     # Console1984 — audit + protect production console access
     config.console1984.ask_for_username_if_empty = true
-    # Defaults below, kept here for visibility:
-    # config.console1984.protected_environments = %i[ production ]
-    # config.console1984.incinerate_after = 30.days
+    config.console1984.incinerate_after = 1.year
 
     # == Custom Helpers ==
 

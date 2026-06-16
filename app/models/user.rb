@@ -57,7 +57,7 @@ class User < ApplicationRecord
     inverse_of: :owner,
     foreign_key: :owner_id,
     dependent: :destroy
-  has_many :posts, through: :worlds
+  has_many :posts, through: :owned_worlds
   has_many :reactions,
     inverse_of: :reactor,
     foreign_key: :reactor_id,

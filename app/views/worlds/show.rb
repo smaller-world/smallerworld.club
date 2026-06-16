@@ -125,11 +125,6 @@ class Views::Worlds::Show < Views::Base
           :posts,
           src: [ @world, :posts ],
           target: "_top",
-          data: {
-            turbo_permanent: true,
-            controller: "frame",
-            action: "turbo:load@document->frame#reloadAndPersistScroll",
-          },
         ) do
           div(class: "space-y-4") do
             2.times do

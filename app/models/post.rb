@@ -26,9 +26,14 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
-  include Noticeable
   include NormalizesText
   include NormalizesArrays
+  include Noticeable
+  include ActionView::RecordIdentifier
+
+  # == Configuration ==
+
+  NOTIFICATION_DELIVERY_DELAY = T.let(1.minute, ActiveSupport::Duration)
 
   # == Attributes ==
 
@@ -127,7 +132,7 @@ class Post < ApplicationRecord
   def notification_message(recipient:)
     world = world!
     Notification::Message.new(
-      target_url: world,
+      target_url: [ world, anchor: dom_id(self) ],
       title: world.name,
       body: snippet,
       world:,
@@ -141,7 +146,10 @@ class Post < ApplicationRecord
       keys = keys.where(color: colors)
     end
     keys.find_each do |key|
-      notifications.create!(recipient: key.recipient!)
+      notifications.create!(
+        recipient: key.recipient!,
+        delivery_delay: NOTIFICATION_DELIVERY_DELAY,
+      )
     end
   end
 
