@@ -84,13 +84,24 @@ module Components
       page_title: T.nilable(T.any(::String, T::Array[::String])),
       title: T.nilable(::String),
       body_class: T.nilable(::String),
-      display_header: T.nilable(::TrueClass),
+      force_header: T.nilable(::TrueClass),
       disable_cache: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
     ).void
   end
-  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+
+  # workspace://app/components/async_world_post_item.rb:4
+  sig do
+    params(
+      post: ::Post,
+      initially_hidden: T::Boolean,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
+    ).void
+  end
+  def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/badge.rb:4
   sig do
@@ -465,12 +476,25 @@ module Components
   sig do
     params(
       post: ::Post,
-      replied_post_ids: T::Set[::String],
+      replied: T::Boolean,
+      async_reactions: T::Boolean,
+      show_notification_prompt: T::Boolean,
+      frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostCard).void)
     ).void
   end
-  def PostCard(post:, replied_post_ids:, **attributes, &block); end
+  def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &block); end
+
+  # workspace://app/components/post_card_skeleton.rb:4
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
+    ).void
+  end
+  def PostCardSkeleton(element: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/post_form.rb:4
   sig do
@@ -487,13 +511,14 @@ module Components
     params(
       post: ::Post,
       new_reaction: ::Reaction,
+      async: T::Boolean,
       existing_reactions_form: T::Hash[::Symbol, T.untyped],
       new_reaction_form: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
     ).void
   end
-  def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+  def PostReactions(post:, new_reaction: T.unsafe(nil), async: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/radio_group.rb:4
   sig do
@@ -510,12 +535,12 @@ module Components
   sig do
     params(
       reply_initiation: ::ReplyInitiation,
-      replied_post_ids: T::Set[::String],
+      replied: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
     ).void
   end
-  def ReplyInitiationForm(reply_initiation:, replied_post_ids:, **attributes, &block); end
+  def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &block); end
 
   # workspace://app/components/separator.rb:4
   sig do
@@ -656,11 +681,12 @@ module Components
   sig do
     params(
       posts: T::Enumerable[::Post],
-      replied_post_ids: T::Set[::String],
+      replied_post_ids: T.nilable(T::Set[::String]),
+      created_post_id: T.nilable(::String),
       block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
     ).void
   end
-  def WorldPostItems(posts:, replied_post_ids:, &block); end
+  def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
 
   class << self
     # workspace://app/components/accept_world_card_key_grant_form.rb:4
@@ -741,13 +767,24 @@ module Components
         page_title: T.nilable(T.any(::String, T::Array[::String])),
         title: T.nilable(::String),
         body_class: T.nilable(::String),
-        display_header: T.nilable(::TrueClass),
+        force_header: T.nilable(::TrueClass),
         disable_cache: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
       ).void
     end
-    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), display_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+
+    # workspace://app/components/async_world_post_item.rb:4
+    sig do
+      params(
+        post: ::Post,
+        initially_hidden: T::Boolean,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
+      ).void
+    end
+    def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/badge.rb:4
     sig do
@@ -1127,12 +1164,25 @@ module Components
     sig do
       params(
         post: ::Post,
-        replied_post_ids: T::Set[::String],
+        replied: T::Boolean,
+        async_reactions: T::Boolean,
+        show_notification_prompt: T::Boolean,
+        frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostCard).void)
       ).void
     end
-    def PostCard(post:, replied_post_ids:, **attributes, &block); end
+    def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &block); end
+
+    # workspace://app/components/post_card_skeleton.rb:4
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
+      ).void
+    end
+    def PostCardSkeleton(element: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/post_form.rb:4
     sig do
@@ -1149,13 +1199,14 @@ module Components
       params(
         post: ::Post,
         new_reaction: ::Reaction,
+        async: T::Boolean,
         existing_reactions_form: T::Hash[::Symbol, T.untyped],
         new_reaction_form: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
       ).void
     end
-    def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+    def PostReactions(post:, new_reaction: T.unsafe(nil), async: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/radio_group.rb:4
     sig do
@@ -1172,12 +1223,12 @@ module Components
     sig do
       params(
         reply_initiation: ::ReplyInitiation,
-        replied_post_ids: T::Set[::String],
+        replied: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
       ).void
     end
-    def ReplyInitiationForm(reply_initiation:, replied_post_ids:, **attributes, &block); end
+    def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &block); end
 
     # workspace://app/components/separator.rb:4
     sig do
@@ -1318,10 +1369,11 @@ module Components
     sig do
       params(
         posts: T::Enumerable[::Post],
-        replied_post_ids: T::Set[::String],
+        replied_post_ids: T.nilable(T::Set[::String]),
+        created_post_id: T.nilable(::String),
         block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
       ).void
     end
-    def WorldPostItems(posts:, replied_post_ids:, &block); end
+    def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
   end
 end

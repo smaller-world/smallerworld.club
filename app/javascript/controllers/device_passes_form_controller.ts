@@ -1,3 +1,4 @@
+import { Controller } from "@hotwired/stimulus";
 import { isEmpty } from "lodash-es";
 import invariant from "tiny-invariant";
 
@@ -6,7 +7,7 @@ import { addCleanupAction } from "#helpers/stimulus_helpers";
 import FormController from "./form_controller";
 import type { PassData } from "./passes_bridge_controller";
 
-export default class DevicePassesFormController extends FormController {
+export default class DevicePassesFormController extends Controller<HTMLFormElement> {
   // == Targets ==
 
   static targets = [...FormController.targets, "inputTemplate", "input"];
@@ -38,7 +39,7 @@ export default class DevicePassesFormController extends FormController {
       input.value = pass.serialNumber;
       this.element.appendChild(input);
     }
-    this.requestSubmit();
+    this.element.requestSubmit();
   }
 
   removeInputs(): void {

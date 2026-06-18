@@ -83,95 +83,97 @@ class Views::Sessions::New < Views::Base
   def world_cards(cards)
     return if cards.empty?
 
-    div(
-      class: class_names("flex flex-col gap-3 overflow-hidden", "hidden"),
+    div(data: {
+      class: "hidden",
       data: {
         controller: "transition-group transition connection",
         transition_group_target: "item",
-        transition_enter: "transition-[max-height] duration-400 ease-in-quart",
-        transition_enter_start: "max-h-0",
-        transition_enter_end: "max-h-[1000px]",
+        transition_enter: "grid transition-[grid-template-rows] duration-400 ease-in-quart",
+        transition_enter_start: "[grid-template-rows:0fr]",
+        transition_enter_leave: "[grid-template-rows:1fr]",
         action: [
           "transition:transitioned->transition-group#startNext",
           "connection:connect->transition#enter",
         ],
       },
-    ) do
-      Components::Badge(
-        variant: :secondary,
-        size: :sm,
-        class: [
-          "flex self-center bg-background",
-          "hidden [&.hidden]:scale-95",
-        ],
-        data: {
-          hidden_inline: true,
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: "transition-[opacity,scale] ease-in duration-200",
-          transition_enter_start: "scale-95",
-          action: [
-            "transition-group:start->transition#enter",
-            "transition:transitioned->transition-group#startNext",
+    }) do
+      div(class: class_names("flex flex-col gap-3 overflow-hidden")) do
+        Components::Badge(
+          variant: :secondary,
+          size: :sm,
+          class: [
+            "flex self-center bg-background",
+            "hidden [&.hidden]:scale-95",
           ],
-        },
-      ) do |badge|
-        badge.inline_start_icon("huge/loyalty-card")
-        span { "#{pluralize(cards.count, "unlinked world card")} found" }
-      end
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-[opacity,scale] ease-in-quart duration-200",
+            transition_enter_start: "scale-95",
+            action: [
+              "transition-group:start->transition#enter",
+              "transition:transitioned->transition-group#startNext",
+            ],
+          },
+        ) do |badge|
+          badge.inline_start_icon("huge/loyalty-card")
+          span { "#{pluralize(cards.count, "unlinked world card")} found" }
+        end
 
-      Components::ItemGroup() do
-        cards.find_each do |card|
-          world = card.world!
-          Components::Item(
-            variant: :outline,
-            size: :xs,
-            class: "hidden [&.hidden]:scale-95",
-            data: {
-              hidden_inline: true,
-              transition_group_target: "item",
-              controller: "transition",
-              transition_enter: "transition-[opacity,scale] ease-in",
-              transition_enter_start: "scale-95",
-              action: [
-                "transition-group:start->transition#enter",
-                "transition:transitioned->transition-group#startNext",
-              ],
-            },
-          ) do |item|
-            item.media do
-              image_tag(
-                world.page_icon_variant,
-                class: "world-icon rounded-world-icon",
-                data: { size: "xs" },
-              )
-            end
-            item.content do
-              item.title do
-                world.name
+        Components::ItemGroup() do
+          cards.find_each do |card|
+            world = card.world!
+            Components::Item(
+              variant: :outline,
+              size: :xs,
+              class: "hidden [&.hidden]:scale-95",
+              data: {
+                hidden_inline: true,
+                transition_group_target: "item",
+                controller: "transition",
+                transition_enter: "transition-[opacity,scale] ease-in",
+                transition_enter_start: "scale-95",
+                action: [
+                  "transition-group:start->transition#enter",
+                  "transition:transitioned->transition-group#startNext",
+                ],
+              },
+            ) do |item|
+              item.media do
+                image_tag(
+                  world.page_icon_variant,
+                  class: "world-icon rounded-world-icon",
+                  data: { size: "xs" },
+                )
               end
-              if (blurb = world.blurb)
-                item.description(class: "leading-xs line-clamp-1") do
-                  blurb
+              item.content do
+                item.title do
+                  world.name
+                end
+                if (blurb = world.blurb)
+                  item.description(class: "leading-xs line-clamp-1") do
+                    blurb
+                  end
                 end
               end
             end
           end
         end
-      end
 
-      p(
-        class: "text-center text-xs text-muted-foreground text-balance hidden",
-        data: {
-          hidden_inline: true,
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: "transition-all duration-600 delay-200 ease-in",
-          transition_enter_start: "opacity-0",
-          action: "transition-group:start->transition#enter",
-        },
-      ) do
-        "these cards will be linked to your account when you sign in"
+        p(
+          class: "text-center text-xs text-muted-foreground text-balance hidden",
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-all duration-600 delay-200 ease-in",
+            transition_enter_start: "opacity-0",
+            action: "transition-group:start->transition#enter",
+          },
+        ) do
+          "these cards will be linked to your account when you sign in"
+        end
       end
     end
   end

@@ -9,16 +9,14 @@ class Views::Worlds::Show < Views::Base
       world: World,
       unclaimed_world_cards: T.nilable(WorldCard::PrivateRelation),
       celebrate: T::Boolean,
+      created_post_id: T.nilable(String),
     ).void
   end
-  def initialize(
-    world:,
-    unclaimed_world_cards:,
-    celebrate: false
-  )
+  def initialize(world:, unclaimed_world_cards:, celebrate:, created_post_id:)
     @world = world
     @unclaimed_world_cards = unclaimed_world_cards
     @celebrate = celebrate
+    @created_post_id = created_post_id
     @keys = T.let(
       if (user = Current.user)
         @world.keys.accepted.where(recipient: user).to_a
@@ -123,35 +121,15 @@ class Views::Worlds::Show < Views::Base
 
         turbo_frame_tag(
           :posts,
-          src: [ @world, :posts ],
+          src: [ @world, :posts, created_post_id: @created_post_id ],
           target: "_top",
+          data: {
+            turbo_permanent: true,
+          },
         ) do
           div(class: "space-y-4") do
-            2.times do
-              Components::Card(class: "shadow-sm") do |card|
-                card.header do
-                  card.description do
-                    span(class: "skeleton") do
-                      "timestamp"
-                    end
-                  end
-                  card.title do
-                    span(class: "skeleton") do
-                      "post title placeholder"
-                    end
-                  end
-                end
-                card.content(class: "flex flex-col gap-4") do
-                  1..2.times do
-                    p(class: "skeleton h-24")
-                  end
-                end
-                card.footer(class: "flex justify-center") do
-                  Components::Button(class: "skeleton") do
-                    "placeholder"
-                  end
-                end
-              end
+            3.times do
+              Components::PostCardSkeleton()
             end
           end
         end

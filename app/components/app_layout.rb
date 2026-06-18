@@ -19,7 +19,7 @@ class Components::AppLayout < Components::Base
       page_title: T.nilable(T.any(String, T::Array[String])),
       title: T.nilable(String),
       body_class: T.nilable(String),
-      display_header: T.nilable(TrueClass),
+      force_header: T.nilable(TrueClass),
       disable_cache: T::Boolean,
       attributes: T.untyped,
     ).void
@@ -28,7 +28,7 @@ class Components::AppLayout < Components::Base
     page_title: nil,
     title: nil,
     body_class: nil,
-    display_header: nil,
+    force_header: nil,
     disable_cache: false,
     **attributes
   )
@@ -43,7 +43,7 @@ class Components::AppLayout < Components::Base
     )
     @title = title
     @body_class = body_class
-    @display_header = display_header
+    @force_header = force_header
     @disable_cache = disable_cache
   end
 
@@ -114,7 +114,7 @@ class Components::AppLayout < Components::Base
           controller: "page-load-bridge",
         },
       ) do
-        if @display_header || !hotwire_native_app?
+        if @force_header || !hotwire_native_app?
           Components::AppHeader()
         end
         flash_section

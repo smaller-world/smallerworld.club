@@ -18,7 +18,6 @@ export default class TippyController extends Controller<HTMLElement> {
     placement: { type: String, default: "top" },
     animation: { type: String, default: "shift-away" },
     hideOnClick: { type: Boolean, default: true },
-    showOnCreate: Boolean,
     disabled: Boolean,
     flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
@@ -28,7 +27,6 @@ export default class TippyController extends Controller<HTMLElement> {
   declare readonly placementValue: Placement;
   declare readonly animationValue: string;
   declare readonly hideOnClickValue: boolean;
-  declare readonly showOnCreateValue: boolean;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
   declare readonly disabledValue: boolean;
@@ -74,19 +72,19 @@ export default class TippyController extends Controller<HTMLElement> {
 
   flash(): void {
     const tippy = this.#tippy;
-    if (!tippy || !tippy.state.isEnabled || !this.element.checkVisibility()) {
+    if (!tippy?.state.isEnabled) {
       return;
     }
     this.#showFlashTimeout = setTimeout(() => {
-      if (!tippy.state.isEnabled || !this.element.checkVisibility()) {
+      if (!tippy.state.isEnabled) {
         return;
       }
+      tippy.setProps({ trigger: "manual" });
       tippy.show();
-      if (this.flashDurationValue) {
-        this.#hideFlashTimeout = setTimeout(() => {
-          tippy.hide();
-        }, this.flashDurationValue);
-      }
+      this.#hideFlashTimeout = setTimeout(() => {
+        tippy.setProps({ trigger: this.triggerValue });
+        this.#hideIfTriggerInactive(tippy);
+      }, this.flashDurationValue);
     }, this.flashDelayValue);
   }
 
@@ -114,7 +112,6 @@ export default class TippyController extends Controller<HTMLElement> {
       placement: this.placementValue,
       trigger: this.triggerValue,
       hideOnClick: this.hideOnClickValue,
-      showOnCreate: this.showOnCreateValue,
     };
     if (this.#tippy) {
       if (!this.contentValue) {
@@ -148,5 +145,16 @@ export default class TippyController extends Controller<HTMLElement> {
       return last(duration) ?? 0;
     }
     return duration;
+  }
+
+  #hideIfTriggerInactive(tippy: Instance): void {
+    const triggers = tippy.props.trigger.split(" ");
+    if (triggers.includes("mouseenter") && this.element.matches(":hover")) {
+      return;
+    }
+    if (triggers.includes("focus") && this.element.matches(":focus")) {
+      return;
+    }
+    tippy.hide();
   }
 }

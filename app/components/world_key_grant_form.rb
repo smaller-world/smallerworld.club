@@ -103,7 +103,7 @@ class Components::WorldKeyGrantForm < Components::Base
         div(class: "bg-background flex items-center rounded-world-icon size-17 p-2.5") do
           image_tag(
             "logo.png",
-            alt: [ Rails.configuration.x.site.name, "logo" ].compact.join(" "),
+            alt: [ Smallerworld.application.site_name, "logo" ].join(" "),
             class: "flex-1",
           )
         end

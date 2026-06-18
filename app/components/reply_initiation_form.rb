@@ -7,14 +7,14 @@ class Components::ReplyInitiationForm < Components::Base
   sig do
     params(
       reply_initiation: ReplyInitiation,
-      replied_post_ids: T::Set[String],
+      replied: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(reply_initiation:, replied_post_ids:, **attributes)
+  def initialize(reply_initiation:, replied:, **attributes)
     super(**attributes)
     @reply_initiation = reply_initiation
-    @replied_post_ids = replied_post_ids
+    @replied = replied
     @post = T.let(@reply_initiation.post!, Post)
   end
 
@@ -37,7 +37,7 @@ class Components::ReplyInitiationForm < Components::Base
 
       Components::DropdownMenu() do |menu|
         menu.with_trigger_button(
-          variant: button_variant,
+          variant: @replied ? :ghost : :default,
           **compact_mix(
             {
               class: "loading-while-submitting",
@@ -101,24 +101,15 @@ class Components::ReplyInitiationForm < Components::Base
     Icon(icon)
   end
 
-  sig { returns(Symbol) }
-  def button_variant
-    if @replied_post_ids.include?(@post.id)
-      :ghost
-    else
-      :default
-    end
-  end
-
   sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
   def error_tooltip_attributes
     if (message = error_messages.first)
       {
         data: {
-          controller: "tippy",
+          controller: "tippy connection",
           tippy_content_value: message,
           tippy_placement_value: "bottom",
-          tippy_show_on_create_value: true,
+          action: "connection:connect->tippy#show",
         },
       }
     end

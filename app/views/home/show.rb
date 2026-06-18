@@ -24,7 +24,10 @@ class Views::Home::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(display_header: true) do |layout|
+    Components::AppLayout(
+      title: ("home" unless hotwire_native_app?),
+      force_header: true,
+    ) do |layout|
       show_alert = !hotwire_native_app?
 
       layout.page_container(class: "flex-1 max-w-lg flex flex-col") do
@@ -68,7 +71,7 @@ class Views::Home::Show < Views::Base
       target: "_top",
       class: "flex gap-6 flex-wrap justify-center",
     ) do
-      @current_user.owned_worlds.each do |world|
+      @current_user.owned_worlds.chronological.each do |world|
         link_to(world, class: "world-icon-container hover:underline") do
           image_tag(world.page_icon_variant, class: "world-icon")
           span(class: "world-icon-label") do

@@ -28,7 +28,13 @@ class WorldsController < ApplicationController
           world.cards.kept.unclaimed.with_pass_serial_numbers(serial_numbers)
         end
         celebrate = !!params[:celebrate]
-        render Views::Worlds::Show.new(world:, unclaimed_world_cards:, celebrate:)
+        created_post_id = flash[:created_post_id]
+        render Views::Worlds::Show.new(
+          world:,
+          unclaimed_world_cards:,
+          celebrate:,
+          created_post_id:,
+        )
       end
     end
   end

@@ -7,7 +7,7 @@
     @apply font-heading native:select-none;
 
     form[aria-busy="true"] &[type="submit"]:disabled {
-      @apply loading relative text-muted-foreground *:invisible;
+      @apply loading *:invisible;
     }
 
     &:not(button) {

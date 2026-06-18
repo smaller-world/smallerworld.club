@@ -4,6 +4,8 @@ import { Controller } from "@hotwired/stimulus";
 //
 // Disables CSS scroll anchoring (which would double-adjust), then on each
 // child-list mutation: scrollTop += (newScrollHeight - oldScrollHeight).
+//
+// NOTE: Currently unused.
 export default class MaintainScrollController extends Controller<HTMLElement> {
   // == State ==
 

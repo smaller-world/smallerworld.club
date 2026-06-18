@@ -1,9 +1,8 @@
+import { Controller } from "@hotwired/stimulus";
 import arrayToSentence from "array-to-sentence";
 import { isEmpty } from "lodash-es";
 
-import FormController from "./form_controller";
-
-export default class PostFormController extends FormController {
+export default class PostFormController extends Controller<HTMLFormElement> {
   // == Values ==
 
   static values = {

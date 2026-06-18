@@ -24,8 +24,9 @@ class Components::DevicePushTokenForm < Components::Base
         :push_token,
         data: {
           controller: "notification-token-bridge push-token-input",
+          notification_token_bridge_provisional_value: true,
           action: token_list(
-            "push-token-input:connected->notification-token-bridge#get",
+            "push-token-input:connected->notification-token-bridge#request",
             "notification-token-bridge:retrieved->push-token-input#setToken",
             "push-token-input:token-set->form#requestSubmit",
           ),

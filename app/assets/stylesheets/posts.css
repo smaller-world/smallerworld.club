@@ -1,0 +1,30 @@
+@layer components {
+  .post-card {
+    @apply overflow-visible shadow-sm;
+
+    &[data-selectively-shown] {
+      @apply border border-dashed border-foreground/10 bg-card/50 ring-0;
+    }
+
+    [data-slot="card-header"] {
+      @apply gap-1.5;
+    }
+
+    [data-slot="card-title"] {
+      @apply font-heading leading-tight font-semibold;
+      @apply text-xl md:text-lg;
+    }
+
+    [data-slot="card-description"] {
+      @apply flex items-end gap-2;
+    }
+
+    [data-slot="card-content"] {
+      @apply -mt-2 flex flex-col gap-6;
+    }
+
+    [data-slot="card-footer"] {
+      @apply flex items-end gap-6;
+    }
+  }
+}

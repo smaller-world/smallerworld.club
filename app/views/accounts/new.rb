@@ -39,7 +39,9 @@ class Views::Accounts::New < Views::Base
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do
           plain("welcome to ")
-          span(class: "font-semibold") { Rails.configuration.x.site.name }
+          span(class: "font-semibold") do
+            Smallerworld.application.site_name
+          end
         end
       end
       card.content(class: "flex flex-col items-stretch gap-y-3") do

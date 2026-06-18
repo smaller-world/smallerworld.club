@@ -19,42 +19,51 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development: &development
+default_v1: &default_v1
   <<: *default
-  database: smallerworld_development
+  url: <%= Rails.application.credentials.database&.v1_url %>
+  max_connections: 1
+  database_tasks: false
 
-  # The specified database role being used to connect to PostgreSQL.
-  # To create additional roles in PostgreSQL see `$ createuser --help`.
-  # When left blank, PostgreSQL will use the default role. This is
-  # the same name as the operating system user running Rails.
-  username: supabase_admin
+development:
+  primary: &development_primary
+    <<: *default
+    database: smallerworld_development
 
-  # The password associated with the PostgreSQL role (username).
-  password: postgres
+    # The specified database role being used to connect to PostgreSQL.
+    # To create additional roles in PostgreSQL see `$ createuser --help`.
+    # When left blank, PostgreSQL will use the default role. This is
+    # the same name as the operating system user running Rails.
+    username: supabase_admin
 
-  # Connect on a TCP socket. Omitted by default since the client uses a
-  # domain socket that doesn't need configuration. Windows does not have
-  # domain sockets, so uncomment these lines.
-  host: localhost
+    # The password associated with the PostgreSQL role (username).
+    password: postgres
 
-  # The TCP port the server listens on. Defaults to 5432.
-  # If your server runs on a different port number, change accordingly.
-  port: 5432
+    # Connect on a TCP socket. Omitted by default since the client uses a
+    # domain socket that doesn't need configuration. Windows does not have
+    # domain sockets, so uncomment these lines.
+    host: localhost
 
-  # Schema search path. The server defaults to $user,public
-  #schema_search_path: myapp,sharedapp,public
+    # The TCP port the server listens on. Defaults to 5432.
+    # If your server runs on a different port number, change accordingly.
+    port: 5432
 
-  # Minimum log levels, in increasing order:
-  #   debug5, debug4, debug3, debug2, debug1,
-  #   log, notice, warning, error, fatal, and panic
-  # Defaults to warning.
-  #min_messages: notice
+    # Schema search path. The server defaults to $user,public
+    #schema_search_path: myapp,sharedapp,public
+
+    # Minimum log levels, in increasing order:
+    #   debug5, debug4, debug3, debug2, debug1,
+    #   log, notice, warning, error, fatal, and panic
+    # Defaults to warning.
+    #min_messages: notice
+  v1:
+    <<: *default_v1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *development
+  <<: *development_primary
   database: smallerworld_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -107,6 +116,9 @@ test:
 #
 
 production:
-  <<: *default
-  database: smallerworld_production
-  url: <%= ENV["DATABASE_URL"] %>
+  primary:
+    <<: *default
+    # database: smallerworld_production
+    url: <%= Rails.application.credentials.database&.url %>
+  v1:
+    <<: *default_v1

@@ -370,9 +370,6 @@ class Reaction
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def build_world_owner(*args, &blk); end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::Post) }
     def create_post(*args, &blk); end
 
@@ -390,12 +387,6 @@ class Reaction
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def create_world_owner(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def create_world_owner!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
     def notification_ids; end
@@ -444,9 +435,6 @@ class Reaction
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
-    sig { returns(T.nilable(::User)) }
-    def reload_world_owner; end
-
     sig { void }
     def reset_post; end
 
@@ -456,20 +444,11 @@ class Reaction
     sig { void }
     def reset_world; end
 
-    sig { void }
-    def reset_world_owner; end
-
     sig { returns(T.nilable(::World)) }
     def world; end
 
     sig { params(value: T.nilable(::World)).void }
     def world=(value); end
-
-    sig { returns(T.nilable(::User)) }
-    def world_owner; end
-
-    sig { params(value: T.nilable(::User)).void }
-    def world_owner=(value); end
   end
 
   module GeneratedAssociationRelationMethods

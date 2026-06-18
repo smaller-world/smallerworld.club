@@ -94,7 +94,13 @@ module GeneratedPathHelpersModule
   def passkit_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def path_configuration_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_path(*args); end

@@ -32,6 +32,14 @@
   }
 }
 
+@utility loading-sm {
+  @apply loading;
+
+  &::after {
+    --size: 1.1em;
+  }
+}
+
 @layer utilities {
   @keyframes spinning {
     0% {

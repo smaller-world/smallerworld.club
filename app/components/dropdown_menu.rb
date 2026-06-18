@@ -30,6 +30,7 @@ class Components::DropdownMenu < Components::Base
       class: "dropdown-menu group/dropdown-menu",
       data: {
         slot: "dropdown-menu",
+        controller: "dropdown-menu",
       },
     ) do
       trigger_block.call

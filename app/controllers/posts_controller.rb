@@ -4,7 +4,7 @@
 class PostsController < ApplicationController
   # == Actions ==
 
-  # GET /world/:world_id/posts
+  # GET /world/:world_id/posts?created_post_id=...
   def index
     current_user = Current.user!
     world = find_world
@@ -14,14 +14,24 @@ class PostsController < ApplicationController
       .with_rich_text_body_and_embeds
       .with_attached_images
     pagy, posts = pagy(:countless, posts_scope, limit: 5)
-    replied_post_ids = ReplyInitiation
-      .where(post_id: posts.map(&:id), replier: current_user)
-      .pluck(:post_id)
-      .to_set
+    post_ids = posts.map(&:id)
+    replied_post_ids = if current_user != world.owner!
+      ReplyInitiation
+        .where(post_id: post_ids, replier: current_user)
+        .pluck("DISTINCT post_id")
+        .to_set
+    end
     respond_to do |format|
       if turbo_frame_request?
         format.html do
-          render Views::Posts::Index.new(world:, posts:, pagy:, replied_post_ids:)
+          created_post_id = params[:created_post_id]
+          render Views::Posts::Index.new(
+            world:,
+            posts:,
+            pagy:,
+            replied_post_ids:,
+            created_post_id:,
+          )
         end
       end
       format.turbo_stream do
@@ -76,7 +86,8 @@ class PostsController < ApplicationController
         )
         post = world.posts.build(**post_params)
         if post.save
-          refresh_or_redirect_to(world)
+          flash[:created_post_id] = post.id
+          refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else
           render Views::Posts::New.new(post:), status: :unprocessable_content
         end
@@ -94,7 +105,8 @@ class PostsController < ApplicationController
           post: [ :emoji, :title, :body, images: [], key_colors: [] ],
         )
         if post.update(post_params)
-          refresh_or_redirect_to(post.world!)
+          world = post.world!
+          refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else
           render Views::Posts::Edit.new(post:), status: :unprocessable_content
         end

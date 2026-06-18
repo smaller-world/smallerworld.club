@@ -29,14 +29,15 @@
       }
     },
     {
-      "patterns": [
-        "^\/worlds\/new$",
-        "^\/worlds\/[\\w-]+\/edit$",
-        "\/posts\/new",
-        "^\/posts\/[\\w-]+\/edit$"
-      ],
+      "patterns": ["^\/worlds\/new$", "^\/worlds\/[\\w-]+\/edit$"],
       "properties": {
         "modal_style": "full"
+      }
+    },
+    {
+      "patterns": ["\/posts\/new", "^\/posts\/[\\w-]+\/edit$"],
+      "properties": {
+        "modal_dismiss_gesture_enabled": false
       }
     },
     {

@@ -19,7 +19,7 @@ class Components::PostForm < Components::Base
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "post-form haptic-bridge",
+          controller: "form post-form haptic-bridge",
           post_form_world_key_labels_value: @world.key_labels.to_json,
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
@@ -42,7 +42,7 @@ class Components::PostForm < Components::Base
             required: true,
             class: "min-h-36",
             data: {
-              action: "keydown.meta+enter->post-form#requestSubmit",
+              action: "keydown.meta+enter->form#requestSubmit",
             },
           )
           f.description(class: "text-center text-xs mt-px") do

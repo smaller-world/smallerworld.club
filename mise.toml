@@ -29,7 +29,7 @@ db = { run = "bin/rails db"}
 # == Development tasks
 annotate = { run = "bin/annotaterb models" }
 "tapioca:dsl" = { run = "bin/tapioca dsl" }
-"tapioca:generate" = { run = "bin/tapioca generate" }
+"tapioca:gem" = { run = "bin/tapioca gem" }
 
 # == Linting ==
 

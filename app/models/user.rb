@@ -185,6 +185,11 @@ class User < ApplicationRecord
       .where.not(matching_keys.arel.exists)
   end
 
+  sig { returns(T.nilable(V1::User)) }
+  def v1_user
+    V1::User.find_by(phone_number:)
+  end
+
   private
 
   # == Helpers ==

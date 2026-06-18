@@ -94,7 +94,13 @@ module GeneratedUrlHelpersModule
   def passkit_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def path_configuration_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def phone_number_verification_requests_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_card_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_reactions_url(*args); end

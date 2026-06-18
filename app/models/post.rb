@@ -6,14 +6,15 @@
 #
 # Table name: posts
 #
-#  id         :uuid             not null, primary key
-#  emoji      :string
-#  key_colors :string           is an Array
-#  plain_body :text             not null
-#  title      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  world_id   :uuid             not null
+#  id            :uuid             not null, primary key
+#  emoji         :string
+#  key_colors    :string           is an Array
+#  plain_body    :text             not null
+#  title         :string
+#  v1_attributes :jsonb
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  world_id      :uuid             not null
 #
 # Indexes
 #
@@ -28,21 +29,36 @@
 class Post < ApplicationRecord
   include NormalizesText
   include NormalizesArrays
-  include Noticeable
-  include ActionView::RecordIdentifier
 
-  # == Configuration ==
-
-  NOTIFICATION_DELIVERY_DELAY = T.let(1.minute, ActiveSupport::Duration)
+  include ReplyUrl
+  include Notifications
+  include Broadcasting
+  include V1Importing
 
   # == Attributes ==
 
-  encrypts :title
-  encrypts :plain_body
+  typed_store(
+    :v1_attributes,
+    prefix: :v1,
+    coder: ActiveRecord::TypedStore::IdentityCoder,
+  ) do |s|
+    s.string(:type)
+    s.string(:visibility)
+    s.datetime(:pinned_until)
+    s.string(:quoted_post_id)
+    s.string(:spotify_track_id)
+  end
+
+  encrypts :title, :plain_body
 
   sig { returns(T::Boolean) }
   def selectively_shown?
     !key_colors.nil?
+  end
+
+  sig { returns(T.nilable(String)) }
+  def fun_title
+    [ emoji, title ].compact.presence&.join(" ")
   end
 
   sig { returns(String) }
@@ -94,6 +110,7 @@ class Post < ApplicationRecord
   strips_text :title
   nilify_blanks :title, :emoji
   compacts_blanks :key_colors
+  normalizes :v1_attributes, with: ->(value) { value.compact }
 
   # == Validations ==
 
@@ -111,10 +128,10 @@ class Post < ApplicationRecord
 
   # == Hooks ==
 
+  before_validation :chomp_rich_text_body!, if: :body?
   before_validation :unset_key_colors, if: :all_key_colors_set?
   before_save :set_plain_body
   after_commit :touch_world_cards, on: [ :create, :destroy ]
-  after_create_commit :create_notifications_for_world_key_recipients!
 
   # == Scopes ==
 
@@ -125,40 +142,6 @@ class Post < ApplicationRecord
       .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
     where(owned.arel.exists.or(keyed.arel.exists))
   }
-
-  # == Noticeable ==
-
-  sig { override.params(recipient: User).returns(Notification::Message) }
-  def notification_message(recipient:)
-    world = world!
-    Notification::Message.new(
-      target_url: [ world, anchor: dom_id(self) ],
-      title: world.name,
-      body: snippet,
-      world:,
-    )
-  end
-
-  sig { void }
-  def create_notifications_for_world_key_recipients!
-    keys = world!.keys.accepted
-    if (colors = key_colors)
-      keys = keys.where(color: colors)
-    end
-    keys.find_each do |key|
-      notifications.create!(
-        recipient: key.recipient!,
-        delivery_delay: NOTIFICATION_DELIVERY_DELAY,
-      )
-    end
-  end
-
-  # == Emoji ==
-
-  sig { returns(T.nilable(String)) }
-  def fun_title
-    [ emoji, title ].compact.presence&.join(" ")
-  end
 
   # == Snippets ==
 
@@ -183,21 +166,6 @@ class Post < ApplicationRecord
   def card_snippet
     text = title_snippet || T.must(body_snippet.lines.first)
     text.strip.truncate(36)
-  end
-
-  sig { params(platform: Symbol).returns(String) }
-  def reply_snippet_for(platform)
-    if platform == :whatsapp
-      "> " + snippet.gsub("\n", "\n>\u2800") + "\n\n\u2800"
-    else
-      "> " + snippet.gsub("\n", "\n> ") + "\n\n"
-    end
-  end
-
-  sig { params(platform: Symbol, native: T::Boolean).returns(String) }
-  def reply_url(platform:, native: false)
-    message = reply_snippet_for(platform)
-    author!.dm_url(platform:, message:, native:)
   end
 
   # == Methods ==
@@ -226,6 +194,19 @@ class Post < ApplicationRecord
   end
 
   # == Callbacks ==
+
+  sig { void }
+  def chomp_rich_text_body!
+    document = body.body.fragment.source
+    document.children.reverse_each do |node|
+      if node.text.strip.blank?
+        node.remove
+      else
+        break
+      end
+    end
+    self.body = document.to_html
+  end
 
   sig { void }
   def set_plain_body

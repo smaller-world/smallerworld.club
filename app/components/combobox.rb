@@ -98,7 +98,9 @@ class Components::Combobox < Components::Base
         end
       end
 
-      content_block.call
+      unless @disabled
+        content_block.call
+      end
     end
   end
 

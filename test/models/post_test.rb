@@ -6,14 +6,15 @@
 #
 # Table name: posts
 #
-#  id         :uuid             not null, primary key
-#  emoji      :string
-#  key_colors :string           is an Array
-#  plain_body :text             not null
-#  title      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  world_id   :uuid             not null
+#  id            :uuid             not null, primary key
+#  emoji         :string
+#  key_colors    :string           is an Array
+#  plain_body    :text             not null
+#  title         :string
+#  v1_attributes :jsonb
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  world_id      :uuid             not null
 #
 # Indexes
 #

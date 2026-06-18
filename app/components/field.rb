@@ -348,10 +348,10 @@ class Components::Field < Components::Base
     if (message = error_messages&.first)
       {
         data: {
-          controller: "tippy",
+          controller: "tippy connection",
           tippy_content_value: message,
           tippy_placement_value: "bottom",
-          tippy_show_on_create_value: true,
+          action: "connection:connect->tippy#show",
         },
       }
     else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_12_203720) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_050014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -137,6 +137,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_203720) do
     t.text "plain_body", null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.jsonb "v1_attributes"
     t.uuid "world_id", null: false
     t.index ["key_colors"], name: "index_posts_on_key_colors"
     t.index ["world_id"], name: "index_posts_on_world_id"
@@ -359,6 +360,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_203720) do
     t.text "blurb"
     t.datetime "created_at", null: false
     t.jsonb "key_labels"
+    t.timestamptz "last_imported_v1_post_created_at"
     t.string "name", null: false
     t.uuid "owner_id", null: false
     t.datetime "updated_at", null: false

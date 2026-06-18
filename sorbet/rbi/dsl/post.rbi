@@ -10,6 +10,8 @@ class Post
   include GeneratedAttributeMethods
   extend CommonRelationMethods
   extend GeneratedRelationMethods
+  include GeneratedStoredAttributesMethods
+  include StoreAccessors
 
   sig { returns(ActionText::RichText) }
   def body; end
@@ -1010,6 +1012,9 @@ class Post
     def restore_updated_at!; end
 
     sig { void }
+    def restore_v1_attributes!; end
+
+    sig { void }
     def restore_world_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
@@ -1059,6 +1064,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def saved_change_to_v1_attributes; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_world_id; end
@@ -1156,6 +1167,51 @@ class Post
     sig { void }
     def updated_at_will_change!; end
 
+    sig { returns(T.untyped) }
+    def v1_attributes; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_attributes=(value); end
+
+    sig { returns(T::Boolean) }
+    def v1_attributes?; end
+
+    sig { returns(T.untyped) }
+    def v1_attributes_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_attributes_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def v1_attributes_came_from_user?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def v1_attributes_change; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def v1_attributes_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def v1_attributes_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def v1_attributes_in_database; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def v1_attributes_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def v1_attributes_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def v1_attributes_previously_was; end
+
+    sig { returns(T.untyped) }
+    def v1_attributes_was; end
+
+    sig { void }
+    def v1_attributes_will_change!; end
+
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
@@ -1179,6 +1235,9 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1396,6 +1455,128 @@ class Post
     def without(*args, &blk); end
   end
 
+  module GeneratedStoredAttributesMethods
+    sig { returns(T.untyped) }
+    def saved_change_to_v1_pinned_until; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_pinned_until?; end
+
+    sig { returns(T.untyped) }
+    def saved_change_to_v1_quoted_post_id; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_quoted_post_id?; end
+
+    sig { returns(T.untyped) }
+    def saved_change_to_v1_spotify_track_id; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_spotify_track_id?; end
+
+    sig { returns(T.untyped) }
+    def saved_change_to_v1_type; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_type?; end
+
+    sig { returns(T.untyped) }
+    def saved_change_to_v1_visibility; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_visibility?; end
+
+    sig { returns(T.untyped) }
+    def v1_pinned_until; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_pinned_until=(value); end
+
+    sig { returns(T.untyped) }
+    def v1_pinned_until_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_pinned_until_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_pinned_until_changed?; end
+
+    sig { returns(T.untyped) }
+    def v1_pinned_until_was; end
+
+    sig { returns(T.untyped) }
+    def v1_quoted_post_id; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_quoted_post_id=(value); end
+
+    sig { returns(T.untyped) }
+    def v1_quoted_post_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_quoted_post_id_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_quoted_post_id_changed?; end
+
+    sig { returns(T.untyped) }
+    def v1_quoted_post_id_was; end
+
+    sig { returns(T.untyped) }
+    def v1_spotify_track_id; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_spotify_track_id=(value); end
+
+    sig { returns(T.untyped) }
+    def v1_spotify_track_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_spotify_track_id_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_spotify_track_id_changed?; end
+
+    sig { returns(T.untyped) }
+    def v1_spotify_track_id_was; end
+
+    sig { returns(T.untyped) }
+    def v1_type; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_type=(value); end
+
+    sig { returns(T.untyped) }
+    def v1_type_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_type_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_type_changed?; end
+
+    sig { returns(T.untyped) }
+    def v1_type_was; end
+
+    sig { returns(T.untyped) }
+    def v1_visibility; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def v1_visibility=(value); end
+
+    sig { returns(T.untyped) }
+    def v1_visibility_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def v1_visibility_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_visibility_changed?; end
+
+    sig { returns(T.untyped) }
+    def v1_visibility_was; end
+  end
+
   class PrivateAssociationRelation < ::ActiveRecord::AssociationRelation
     include CommonRelationMethods
     include GeneratedAssociationRelationMethods
@@ -1589,5 +1770,142 @@ class Post
 
     sig { params(opts: T.untyped, rest: T.untyped).returns(PrivateRelation) }
     def not(opts, *rest); end
+  end
+
+  module StoreAccessors
+    sig { returns(T.nilable([T.nilable(DateTime), T.nilable(DateTime)])) }
+    def saved_change_to_v1_pinned_until; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_pinned_until?; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def saved_change_to_v1_quoted_post_id; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_quoted_post_id?; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def saved_change_to_v1_spotify_track_id; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_spotify_track_id?; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def saved_change_to_v1_type; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_type?; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def saved_change_to_v1_visibility; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_v1_visibility?; end
+
+    sig { returns(T.nilable(DateTime)) }
+    def v1_pinned_until; end
+
+    sig { params(v1_pinned_until: T.nilable(DateTime)).returns(T.nilable(DateTime)) }
+    def v1_pinned_until=(v1_pinned_until); end
+
+    sig { returns(T::Boolean) }
+    def v1_pinned_until?; end
+
+    sig { returns(T.nilable(DateTime)) }
+    def v1_pinned_until_before_last_save; end
+
+    sig { returns(T.nilable([T.nilable(DateTime), T.nilable(DateTime)])) }
+    def v1_pinned_until_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_pinned_until_changed?; end
+
+    sig { returns(T.nilable(DateTime)) }
+    def v1_pinned_until_was; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_quoted_post_id; end
+
+    sig { params(v1_quoted_post_id: T.nilable(String)).returns(T.nilable(String)) }
+    def v1_quoted_post_id=(v1_quoted_post_id); end
+
+    sig { returns(T::Boolean) }
+    def v1_quoted_post_id?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_quoted_post_id_before_last_save; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def v1_quoted_post_id_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_quoted_post_id_changed?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_quoted_post_id_was; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_spotify_track_id; end
+
+    sig { params(v1_spotify_track_id: T.nilable(String)).returns(T.nilable(String)) }
+    def v1_spotify_track_id=(v1_spotify_track_id); end
+
+    sig { returns(T::Boolean) }
+    def v1_spotify_track_id?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_spotify_track_id_before_last_save; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def v1_spotify_track_id_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_spotify_track_id_changed?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_spotify_track_id_was; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_type; end
+
+    sig { params(v1_type: T.nilable(String)).returns(T.nilable(String)) }
+    def v1_type=(v1_type); end
+
+    sig { returns(T::Boolean) }
+    def v1_type?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_type_before_last_save; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def v1_type_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_type_changed?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_type_was; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_visibility; end
+
+    sig { params(v1_visibility: T.nilable(String)).returns(T.nilable(String)) }
+    def v1_visibility=(v1_visibility); end
+
+    sig { returns(T::Boolean) }
+    def v1_visibility?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_visibility_before_last_save; end
+
+    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
+    def v1_visibility_change; end
+
+    sig { returns(T::Boolean) }
+    def v1_visibility_changed?; end
+
+    sig { returns(T.nilable(String)) }
+    def v1_visibility_was; end
   end
 end

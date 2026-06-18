@@ -1,6 +1,6 @@
-import FormController from "./form_controller";
+import { Controller } from "@hotwired/stimulus";
 
-export default class ReplyInitiationFormController extends FormController {
+export default class ReplyInitiationFormController extends Controller<HTMLFormElement> {
   // == Targets ==
 
   static targets = ["platformInput"];
@@ -21,7 +21,7 @@ export default class ReplyInitiationFormController extends FormController {
       const { platform } = currentTarget.dataset;
       if (platform) {
         this.platformInputTarget.value = platform;
-        this.requestSubmit();
+        this.element.requestSubmit();
       }
     }
   }

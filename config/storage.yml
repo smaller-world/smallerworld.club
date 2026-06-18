@@ -21,6 +21,15 @@ r2:
   request_checksum_calculation: "when_required"
   response_checksum_validation: "when_required"
 
+# prettier-ignore
+tigris:
+  service: S3
+  endpoint: <%= Rails.application.credentials.tigris&.endpoint %>
+  access_key_id: <%= Rails.application.credentials.tigris&.access_key_id %>
+  secret_access_key: <%= Rails.application.credentials.tigris&.secret_access_key %>
+  bucket: <%= Rails.application.credentials.tigris&.bucket %>
+  region: auto
+
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3

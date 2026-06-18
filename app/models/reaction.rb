@@ -25,8 +25,7 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Reaction < ApplicationRecord
-  include Noticeable
-  include ActionView::RecordIdentifier
+  include Notifications
 
   # == Associations ==
 
@@ -69,39 +68,7 @@ class Reaction < ApplicationRecord
     uniqueness: { scope: [ :post_id, :reactor_id ], message: "already added to this post" }
   validate :validate_reactor_not_post_author
 
-  # == Hooks ==
-
-  after_create_commit :create_notification_for_world_owner!,
-    unless: :reactor_has_other_post_reactions?
-
-  # == Noticeable ==
-
-  sig { override.params(recipient: User).returns(Notification::Message) }
-  def notification_message(recipient:)
-    post = post!
-    world = post.world!
-    reactor = reactor!
-    Notification::Message.new(
-      target_url: [ world, anchor: dom_id(post) ],
-      title: "#{emoji} from #{reactor.name}",
-      body: "> #{post.card_snippet}",
-      world:,
-    )
-  end
-
-  sig { void }
-  def create_notification_for_world_owner!
-    notifications.create!(recipient: world_owner!)
-  end
-
   private
-
-  # == Helpers ==
-
-  sig { returns(T::Boolean) }
-  def reactor_has_other_post_reactions?
-    Reaction.where.not(id:).exists?(post_id:, reactor_id:)
-  end
 
   # == Callbacks ==
 

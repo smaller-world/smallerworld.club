@@ -5,6 +5,12 @@
   }
 }
 
+@custom-variant form-submitting {
+  form[aria-busy="true"] &:disabled {
+    @slot;
+  }
+}
+
 @utility loading-while-submitting {
   form[aria-busy="true"] &:disabled {
     @apply loading *:invisible;

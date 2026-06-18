@@ -15,16 +15,6 @@ class Views::Reactions::Index < Views::Base
 
   sig { override.void }
   def view_template
-    turbo_frame_tag(dom_id(@post, :reactions)) do
-      Components::PostReactions(
-        post: @post,
-        new_reaction: @new_reaction,
-        existing_reactions_form: {
-          data: {
-            action: "turbo:before-fetch-response->frame#reloadWhenNotFound",
-          },
-        },
-      )
-    end
+    Components::PostReactions(post: @post, new_reaction: @new_reaction)
   end
 end

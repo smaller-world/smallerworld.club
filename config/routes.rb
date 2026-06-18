@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     get "/apple-app-site-association", action: :apple_app_site_association
   end
 
+  # == Path configuration
+  resources :path_configurations, only: :show
+
   # == Pages
   scope controller: :pages do
     root action: :landing
@@ -119,6 +122,7 @@ Rails.application.routes.draw do
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do
+    resource :post_card, path: "/card", as: :card, only: :show
     resources :reactions, only: [ :index, :create ]
     resources :reply_initiations, only: :create
   end

@@ -9,14 +9,22 @@ class Views::Posts::Index < Views::Base
       world: World,
       posts: T::Enumerable[Post],
       pagy: T.nilable(Pagy),
-      replied_post_ids: T::Set[String],
+      replied_post_ids: T.nilable(T::Set[String]),
+      created_post_id: T.nilable(String),
     ).void
   end
-  def initialize(world:, posts:, pagy:, replied_post_ids:)
+  def initialize(
+    world:,
+    posts:,
+    pagy:,
+    replied_post_ids:,
+    created_post_id:
+  )
     @world = world
     @posts = posts
     @pagy = pagy
     @replied_post_ids = replied_post_ids
+    @created_post_id = created_post_id
     super()
   end
 
@@ -31,6 +39,7 @@ class Views::Posts::Index < Views::Base
             Components::WorldPostItems(
               posts: @posts,
               replied_post_ids: @replied_post_ids,
+              created_post_id: @created_post_id,
             )
           end
         else
@@ -54,6 +63,8 @@ class Views::Posts::Index < Views::Base
           end
         end
       end
+
+      turbo_stream_from(@world, :posts)
     end
   end
 end

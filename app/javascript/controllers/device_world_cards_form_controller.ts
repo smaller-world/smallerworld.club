@@ -1,20 +1,15 @@
+import { Controller } from "@hotwired/stimulus";
 import { isEmpty } from "lodash-es";
 import invariant from "tiny-invariant";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-import FormController from "./form_controller";
 import type { PassData } from "./passes_bridge_controller";
 
-export default class DeviceWorldCardsFormController extends FormController {
+export default class DeviceWorldCardsFormController extends Controller<HTMLFormElement> {
   // == Targets ==
 
-  static targets = [
-    ...FormController.targets,
-    "inputTemplate",
-    "existingInput",
-    "addedInput",
-  ];
+  static targets = ["inputTemplate", "existingInput", "addedInput"];
   declare readonly inputTemplateTarget: HTMLTemplateElement;
   declare readonly hasInputTemplateTarget: boolean;
   declare readonly existingInputTargets: HTMLCollectionOf<HTMLInputElement>;
@@ -48,7 +43,7 @@ export default class DeviceWorldCardsFormController extends FormController {
       this.element.appendChild(input);
     }
     if (!isEmpty(newSerialNumbers)) {
-      this.requestSubmit();
+      this.element.requestSubmit();
     }
   }
 

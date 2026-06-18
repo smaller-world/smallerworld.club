@@ -6,13 +6,14 @@
 #
 # Table name: worlds
 #
-#  id         :uuid             not null, primary key
-#  blurb      :text
-#  key_labels :jsonb
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  owner_id   :uuid             not null
+#  id                               :uuid             not null, primary key
+#  blurb                            :text
+#  key_labels                       :jsonb
+#  last_imported_v1_post_created_at :timestamptz
+#  name                             :string           not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  owner_id                         :uuid             not null
 #
 # Indexes
 #
