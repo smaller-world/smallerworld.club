@@ -1,28 +1,28 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "7cfbf54a5c4e7f40674f15e5fd1d9824650422cfd25879a10989bae9a51b15b0",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/events_controller.rb",
-      "line": 20,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(with_utm_source((Event.next_event_for_tag_id(params.expect(:tag_id), :only => ([:luma_url])).luma_url or Rails.configuration.x.luma_url)), :status => :found, :allow_other_host => true)",
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "3a03703fc9159aa8202d18499884db7e8aa6462de12533ca8aad4813ca7d6b22",
+      "check_name": "SendFile",
+      "message": "Parameter value used in file name",
+      "file": "app/controllers/path_configurations_controller.rb",
+      "line": 21,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(path_configurations_dir.join(\"#{params.fetch(:id)}.json\"))",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "EventsController",
-        "method": "luma_redirect"
+        "class": "PathConfigurationsController",
+        "method": "show"
       },
-      "user_input": "Event.next_event_for_tag_id(params.expect(:tag_id), :only => ([:luma_url])).luma_url",
+      "user_input": "params.fetch(:id)",
       "confidence": "Weak",
       "cwe_id": [
-        601
+        22
       ],
       "note": ""
     }
   ],
-  "brakeman_version": "8.0.4"
+  "brakeman_version": "8.0.5"
 }

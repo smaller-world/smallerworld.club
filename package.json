@@ -40,7 +40,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "requestidlecallback-polyfill": "^1.0.2",
-    "shadcn": "^4.10.0",
+    "shadcn": "^4.11.0",
     "sonner": "^2.0.7",
     "stimulus-use": "^0.52.3",
     "tailwindcss": "^4.3.0",
@@ -75,6 +75,7 @@
     "typescript-eslint": "^8.60.1"
   },
   "resolutions": {
-    "fast-uri": "3.1.2"
+    "fast-uri": "3.1.2",
+    "hono": "4.12.25"
   }
 }

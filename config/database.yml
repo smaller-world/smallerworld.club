@@ -63,8 +63,14 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *development_primary
-  database: smallerworld_test
+  primary:
+    <<: *development_primary
+    database: smallerworld_test
+  # The v1 database is used for migration purposes only and is never queried in
+  # test. We declare it so `connects_to database: { ... v1 }` resolves, but it
+  # is never actually connected to.
+  v1:
+    <<: *default_v1
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

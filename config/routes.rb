@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   # == Path configuration
-  resources :path_configurations, only: :show
+  resources :path_configurations, only: :show, constraints: { id: /[\w_]+/ }
 
   # == Pages
   scope controller: :pages do
