@@ -4,6 +4,8 @@
 require "test_helper"
 
 class PostsControllerTest < ActionDispatch::IntegrationTest
+  include ActionView::RecordIdentifier
+
   # == Configuration ==
 
   setup do
@@ -25,10 +27,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
         },
       }
     end
-    assert_redirected_to world_path(@world)
-
-    created = @world.posts.chronological.last!
-    assert_equal [ "blue" ], created.key_colors
+    post = @world.posts.chronological.last!
+    assert_redirected_to world_path(@world, anchor: dom_id(post, :card))
+    assert_equal [ "blue" ], post.key_colors
   end
 
   test "owner edits a post" do
@@ -42,7 +43,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
           body: "original",
         },
       }
-    assert_redirected_to world_path(@world)
+    assert_redirected_to world_path(@world, anchor: dom_id(post, :card))
     assert_equal "Edited", post.reload.title
   end
 

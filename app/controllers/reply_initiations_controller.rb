@@ -17,14 +17,12 @@ class ReplyInitiationsController < ApplicationController
           replier: current_user,
         )
 
-        replied_post_ids = Set.new([ post.id ])
-
         if reply_initiation.save
           render turbo_stream: turbo_stream.replace(
             helpers.dom_id(post, :reply_initiation),
             renderable: Components::ReplyInitiationForm.new(
               reply_initiation:,
-              replied_post_ids:,
+              replied: true,
             ),
           )
         else
@@ -39,7 +37,7 @@ class ReplyInitiationsController < ApplicationController
                 helpers.dom_id(post, :reply_initiation),
                 renderable: Components::ReplyInitiationForm.new(
                   reply_initiation:,
-                  replied_post_ids:,
+                  replied: true,
                 ),
               ),
               append_log_message(message, level: :error),
