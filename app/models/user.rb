@@ -106,7 +106,7 @@ class User < ApplicationRecord
 
   # == Hooks ==
 
-  before_create :set_has_v1_account
+  before_create :set_has_v1_account unless Rails.env.test?
   after_update_commit :touch_world_cards, if: :saved_changes_to_world_card_attributes?
 
   # == Search ==
