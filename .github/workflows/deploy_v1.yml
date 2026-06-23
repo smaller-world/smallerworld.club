@@ -78,13 +78,13 @@ jobs:
         env:
           MISE_VERBOSE: "1"
       - name: Cache Bundler
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-bundle-${{ hashFiles('Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-bundle-
       - name: Cache npm
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
