@@ -34,27 +34,24 @@ class Views::Posts::Index < Views::Base
   def view_template
     turbo_frame_tag(:posts) do
       div(class: "space-y-4") do
-        if @posts.any?
-          ul(id: "post_items", class: "space-y-4") do
-            Components::WorldPostItems(
-              posts: @posts,
-              replied_post_ids: @replied_post_ids,
-              created_post_id: @created_post_id,
-            )
-          end
-        else
-          Components::Empty() do |empty|
-            empty.header(class: "gap-0") do
-              empty.media(variant: :icon) do
-                Icon("huge/message-edit-01")
-              end
-              empty.title do
-                "no posts yet!"
-              end
-              # empty.description do
-              #   button_link_to("need some inspo on what to write?")
-              # end
+        ul(id: "post_items", class: "space-y-4 empty:hidden") do
+          Components::WorldPostItems(
+            posts: @posts,
+            replied_post_ids: @replied_post_ids,
+            created_post_id: @created_post_id,
+          )
+        end
+        Components::Empty(class: "hidden [ul:empty_+_&]:flex") do |empty|
+          empty.header(class: "gap-0") do
+            empty.media(variant: :icon) do
+              Icon("huge/message-edit-01")
             end
+            empty.title do
+              "no posts yet!"
+            end
+            # empty.description do
+            #   button_link_to("need some inspo on what to write?")
+            # end
           end
         end
         if @pagy.nil? || @pagy.next
