@@ -59,4 +59,12 @@ Rails.application.configure do
 
   # Allow plain text fixtures for encrypted attributes.
   config.active_record.encryption.encrypt_fixtures = true
+
+  # Use fixed, test-only Active Record encryption keys so tests don't depend on
+  # the encryption credentials (which require RAILS_MASTER_KEY, unavailable on
+  # e.g. Dependabot CI runs). These are not secret: test data is created fresh
+  # on every run.
+  config.active_record.encryption.primary_key = "test_ar_encryption_primary_key"
+  config.active_record.encryption.deterministic_key = "test_ar_encryption_deterministic_key"
+  config.active_record.encryption.key_derivation_salt = "test_ar_encryption_key_derivation_salt"
 end
