@@ -376,7 +376,7 @@ GEM
       phlex (~> 2.4.0)
       railties (>= 7.1, < 9)
       zeitwerk (~> 2.7)
-    phonelib (0.10.16)
+    phonelib (0.10.22)
     playwright-ruby-client (1.60.0)
       base64
       concurrent-ruby (>= 1.1.6)
@@ -707,7 +707,7 @@ DEPENDENCIES
   pg_search (~> 2.3)
   phlex-icons
   phlex-rails (~> 2.4)
-  phonelib (~> 0.10.16)
+  phonelib (~> 0.10.22)
   playwright-ruby-client (= 1.60.0)
   propshaft
   prosopite
@@ -894,7 +894,7 @@ CHECKSUMS
   phlex (2.4.1) sha256=e596717fbfe38b5271840266758779ebe75092e02629f0c170287e6290a70b12
   phlex-icons (2.56.0) sha256=83aa4dc223ffd3838f033cda1f67fd5c41341116d2d449865bafa24dae74f822
   phlex-rails (2.4.0) sha256=2bcddbd488681acb25753bab1887d3ac150e644244ff8ba307f2171a4d0195f5
-  phonelib (0.10.16) sha256=719c4cc099cd2f356bdadb1a3bccbadd1c67fe332e96a9b3028525e44c425fea
+  phonelib (0.10.22) sha256=072183c6b85408f43e5d0ab116ed1b2707f0a324e6efe1f3d866ff900f104daf
   playwright-ruby-client (1.60.0) sha256=942242d6130e797b21213d9c49dc09d31235cab429a9edae73401ed112c94853
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193

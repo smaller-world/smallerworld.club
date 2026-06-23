@@ -84,7 +84,7 @@ gem "pagy", "~> 43.2"
 gem "ruby_llm", "~> 1.13"
 
 # Parse and format phone numbers with phonelib
-gem "phonelib", "~> 0.10.16"
+gem "phonelib", "~> 0.10.22"
 
 # Cache-friendly, client-side local time
 gem "local_time"
