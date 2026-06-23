@@ -28,6 +28,12 @@ module ActiveSupport
     # order.
     fixtures :all
 
+    # The v1 database is never used in test (it only exists for production
+    # data imports). Skip transactional fixtures for it so Rails doesn't try
+    # to open a connection to it during test setup, which would fail when
+    # credentials are unavailable (e.g. on Dependabot CI runs).
+    skip_transactional_tests_for_database :v1
+
     # private
 
     # # == Helpers ==
