@@ -3,9 +3,11 @@ gem:
   #
   doc: true
   exclude:
-    - bundler-audit
-    - brakeman
     - annotaterb
+    - brakeman
+    - bundler-audit
+    - listen
+    - phlex-icons
     - rubocop-capybara
     - rubocop-performance
     - rubocop-rails
@@ -13,8 +15,7 @@ gem:
     - rubocop-shopify
     - rubocop-minitest
     - ruby-lsp
-    - listen
-    - phlex-icons
+    - telnyx
   # workers: 5
 
 dsl:

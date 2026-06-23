@@ -38,55 +38,70 @@ end
 
 # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:41
 class ActionCable::SubscriptionAdapter::SolidCable::Listener < ::ActionCable::SubscriptionAdapter::SubscriberMap
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:44
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:49
   def initialize(event_loop); end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:94
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:106
   def add_channel(channel, on_success); end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:78
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:90
   def interruptible; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:103
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:115
   def invoke_callback(*_arg0); end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:62
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:74
   def listen; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:99
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:111
   def remove_channel(channel); end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:85
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:97
   def shutdown; end
 
   private
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:123
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:131
   def broadcast_messages; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:119
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:127
   def channels; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:108
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:120
   def event_loop; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:111
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:121
   def last_id; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:109
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:121
   def last_id=(_arg0); end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:115
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:123
   def last_message_id; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:108
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:121
+  def reconnect_attempt; end
+
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:121
+  def reconnect_attempt=(_arg0); end
+
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:158
+  def reconnect_attempts; end
+
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:162
+  def retry_connecting?; end
+
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:120
   def thread; end
 
-  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:142
+  # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:150
   def with_polling_volume; end
 end
 
 # pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:42
+ActionCable::SubscriptionAdapter::SolidCable::Listener::CONNECTION_ERRORS = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/solid_cable#lib/action_cable/subscription_adapter/solid_cable.rb:47
 class ActionCable::SubscriptionAdapter::SolidCable::Listener::Stop < ::Exception; end
 
 # pkg:gem/solid_cable#lib/solid_cable/version.rb:3
@@ -112,6 +127,9 @@ module SolidCable
 
     # pkg:gem/solid_cable#lib/solid_cable/engine.rb:5
     def railtie_routes_url_helpers(include_path_helpers = T.unsafe(nil)); end
+
+    # pkg:gem/solid_cable#lib/solid_cable.rb:51
+    def reconnect_attempts; end
 
     # pkg:gem/solid_cable#lib/solid_cable.rb:13
     def silence_polling?; end
@@ -140,10 +158,10 @@ module SolidCable
 
     private
 
-    # pkg:gem/solid_cable#lib/solid_cable.rb:52
+    # pkg:gem/solid_cable#lib/solid_cable.rb:58
     def cable_config; end
 
-    # pkg:gem/solid_cable#lib/solid_cable.rb:56
+    # pkg:gem/solid_cable#lib/solid_cable.rb:62
     def parse_duration(duration, default:); end
   end
 end
