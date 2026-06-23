@@ -16,7 +16,9 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Deploy on Fly
     runs-on: ubuntu-latest
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    concurrency:
+      group: deploy
+      queue: max
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
