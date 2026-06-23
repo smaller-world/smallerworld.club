@@ -9,7 +9,7 @@ module Turnstile
     extend T::Sig
 
     sig { params(secret_key: String).void }
-    def initialize(secret_key: Rails.application.credentials.turnstile!.secret_key!)
+    def initialize(secret_key:)
       @secret_key = secret_key
       @session = T.let(
         HTTP.base_uri("https://challenges.cloudflare.com/turnstile/v0"),
