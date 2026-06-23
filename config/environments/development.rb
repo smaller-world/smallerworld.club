@@ -4,6 +4,11 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # == Custom Configuration ==
+
+  config.v1_posts_import_limit = 5
+
+  # == Rails Configuration ==
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.

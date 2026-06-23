@@ -75,7 +75,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
         div(class: "flex items-center justify-center") do
           Components::Badge(variant: :ghost) { "beta" }
           span(class: "text-xs text-muted-foreground text-center") do
-            "currently imports 20 posts at a time"
+            "imports #{Rails.configuration.v1_posts_import_limit} posts at a time"
           end
         end
       end

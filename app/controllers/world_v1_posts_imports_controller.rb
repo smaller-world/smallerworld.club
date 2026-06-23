@@ -13,6 +13,11 @@ class WorldV1PostsImportsController < ApplicationController
           authorize!(world)
           import_job = if (job_id = params[:import_job_id])
             SolidQueue::Job.find(job_id)
+          elsif (import_job = world.current_v1_posts_import_job)
+            redirect_to(
+              [ world, :v1_posts_import, import_job_id: import_job.id ],
+              status: :found,
+            ) and return
           end
           render Views::WorldV1PostsImport::Show.new(world:, import_job:)
         end
@@ -26,7 +31,9 @@ class WorldV1PostsImportsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        enqueued_job = world.import_v1_posts_later(limit: 20)
+        enqueued_job = world.import_v1_posts_later(
+          limit: Rails.configuration.v1_posts_import_limit,
+        )
         redirect_to(
           [ world, :v1_posts_import, import_job_id: enqueued_job.provider_job_id ],
           status: :see_other,
