@@ -84,8 +84,13 @@ USER 1000:1000
 COPY --chown=rails:rails --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --chown=rails:rails --from=build /rails /rails
 
-# Entrypoint prepares the database.
-# ENTRYPOINT [ "/rails/bin/docker-entrypoint" ]
+# Sentry release identity, so the running app associates events/sessions with
+# the release created in CI. Read automatically by the sentry-ruby SDK.
+ARG SENTRY_RELEASE
+ENV SENTRY_RELEASE=${SENTRY_RELEASE}
+
+# Entrypoint normalizes runtime env (drops a blank SENTRY_RELEASE).
+ENTRYPOINT [ "/rails/bin/docker-entrypoint" ]
 
 # Start server via Thruster by default, this can be overwritten at runtime
 EXPOSE 80

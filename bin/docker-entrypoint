@@ -1,8 +1,9 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
-fi
+# Drop a blank SENTRY_RELEASE (e.g. an image built without the SENTRY_RELEASE
+# build arg) so the Sentry SDK falls back to its own detection instead of
+# reporting an empty-string release. (DB migrations run via Fly's
+# release_command, so we don't prepare the database here.)
+[ -n "${SENTRY_RELEASE:-}" ] || unset SENTRY_RELEASE
 
 exec "${@}"
