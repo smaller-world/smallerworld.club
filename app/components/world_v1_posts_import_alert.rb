@@ -35,10 +35,10 @@ class Components::WorldV1PostsImportAlert < Components::Base
               if current_import_complete?
                 "import complete!"
               else
-                "importing posts from your old account..."
+                "importing posts..."
               end
             else
-              "import posts from your old account?"
+              "import posts from v1?"
             end
           end
           alert.description do
@@ -46,7 +46,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
               import_progress_text(import_job:)
             else
               "you have " \
-                "#{pluralize(@world.unimported_v1_posts.count, "unimported posts")} on " \
+                "#{pluralize(@world.unimported_v1_posts.count, "unimported post")} on " \
                 "smaller world v1."
             end
           end
