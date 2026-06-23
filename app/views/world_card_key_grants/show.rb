@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Views::WorldCards::WorldKeyGrants::Show < Views::Base
+class Views::WorldCardKeyGrants::Show < Views::Base
   # == Initialization ==
 
   sig { params(card: WorldCard).void }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFullNameToUsers < ActiveRecord::Migration[8.1]
   def change
     add_column :users, :apple_first_name, :string, null: false

@@ -1,10 +1,10 @@
 # typed: true
 # frozen_string_literal: true
 
-class WorldCards::WorldKeyGrantsController < ApplicationController
+class WorldCardKeyGrantsController < ApplicationController
   # == Actions ==
 
-  # GET /world_cards/:world_card_id/key_grant
+  # GET /world_cards/:card_id/key_grant
   def show
     card = find_card
     authorize!(card)
@@ -12,11 +12,11 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
     if card.cardholder
       redirect_to(world)
     else
-      render Views::WorldCards::WorldKeyGrants::Show.new(card:)
+      render Views::WorldCardKeyGrants::Show.new(card:)
     end
   end
 
-  # POST /world_cards/:world_card_id/key_grant/accept
+  # POST /world_cards/:card_id/key_grant/accept
   def accept
     respond_to do |format|
       format.html do
@@ -41,7 +41,7 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
         rescue => error
           flash.now.alert = "Failed to accept key: #{error}"
           render(
-            Views::WorldCards::WorldKeyGrants::Show.new(card:),
+            Views::WorldCardKeyGrants::Show.new(card:),
             status: :unprocessable_content,
           )
         end
@@ -55,6 +55,6 @@ class WorldCards::WorldKeyGrantsController < ApplicationController
 
   sig { returns(WorldCard) }
   def find_card
-    WorldCard.find(params.fetch(:world_card_id))
+    WorldCard.find(params.fetch(:card_id))
   end
 end

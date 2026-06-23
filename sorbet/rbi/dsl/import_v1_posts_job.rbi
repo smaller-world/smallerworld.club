@@ -10,12 +10,14 @@ class ImportV1PostsJob
     sig do
       params(
         world: ::World,
+        last_imported_post_created_at: T.nilable(::Time),
+        limit: T.nilable(::Integer),
         block: T.nilable(T.proc.params(job: ImportV1PostsJob).void)
       ).returns(T.any(ImportV1PostsJob, FalseClass))
     end
-    def perform_later(world, &block); end
+    def perform_later(world, last_imported_post_created_at: T.unsafe(nil), limit: T.unsafe(nil), &block); end
 
-    sig { params(world: ::World).void }
-    def perform_now(world); end
+    sig { params(world: ::World, last_imported_post_created_at: T.nilable(::Time), limit: T.nilable(::Integer)).void }
+    def perform_now(world, last_imported_post_created_at: T.unsafe(nil), limit: T.unsafe(nil)); end
   end
 end

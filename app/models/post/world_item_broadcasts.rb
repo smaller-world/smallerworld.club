@@ -1,15 +1,13 @@
 # typed: strict
 # frozen_string_literal: true
 
-module Post::Broadcasting
+module Post::WorldItemBroadcasts
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
-
-  abstract!
-  requires_ancestor { Post }
-
   include ActionView::RecordIdentifier
+
+  requires_ancestor { Post }
 
   # == Hooks ==
 

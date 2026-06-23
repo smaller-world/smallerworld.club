@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateWorldKeys < ActiveRecord::Migration[8.1]
   def change
     create_table :world_keys, id: :uuid do |t|

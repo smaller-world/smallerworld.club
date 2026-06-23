@@ -17,9 +17,6 @@ class Views::Admin::Dashboard::Show < Views::Base
           h2(class: "text-xl font-semibold") { "quick links" }
           ul(class: "list-disc ml-6 space-y-0.5") do
             li do
-              link_to("webhook logs", [ :admin, :webhook_messages ], class: "link")
-            end
-            li do
               link_to("background jobs", [ :mission_control, :jobs ], class: "link")
             end
           end

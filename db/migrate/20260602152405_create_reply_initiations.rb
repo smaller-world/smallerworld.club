@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateReplyInitiations < ActiveRecord::Migration[8.1]
   def change
     create_table :reply_initiations, id: :uuid do |t|

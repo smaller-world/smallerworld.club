@@ -238,6 +238,9 @@ module GeneratedUrlHelpersModule
   def world_card_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_cards_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -256,7 +259,7 @@ module GeneratedUrlHelpersModule
   def world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_world_cards_url(*args); end
+  def world_v1_posts_import_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_url(*args); end

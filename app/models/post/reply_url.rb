@@ -6,7 +6,6 @@ module Post::ReplyUrl
   extend T::Helpers
   extend ActiveSupport::Concern
 
-  abstract!
   requires_ancestor { Post }
 
   # == Methods ==

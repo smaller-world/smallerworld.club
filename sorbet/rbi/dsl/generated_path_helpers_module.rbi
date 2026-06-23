@@ -238,6 +238,9 @@ module GeneratedPathHelpersModule
   def world_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def world_cards_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -256,7 +259,7 @@ module GeneratedPathHelpersModule
   def world_settings_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_world_cards_path(*args); end
+  def world_v1_posts_import_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def worlds_path(*args); end

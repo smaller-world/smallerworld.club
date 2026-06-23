@@ -14,6 +14,7 @@ class Views::Worlds::Show < Views::Base
   end
   def initialize(world:, unclaimed_world_cards:, celebrate:, created_post_id:)
     @world = world
+    @world_owner = T.let(@world.owner!, User)
     @unclaimed_world_cards = unclaimed_world_cards
     @celebrate = celebrate
     @created_post_id = created_post_id
@@ -60,7 +61,19 @@ class Views::Worlds::Show < Views::Base
           end
         end
 
-        unless allowed_to?(:manage?, @world)
+        if allowed_to?(:manage?, @world)
+          if @world_owner.has_v1_account?
+            turbo_frame_tag(
+              :v1_posts_import,
+              src: [ @world, :v1_posts_import ],
+              class: "empty:hidden",
+              data: {
+                controller: "frame",
+              },
+            )
+            turbo_stream_from(@world, :v1_posts_import)
+          end
+        else
           turbo_frame_tag(
             :unclaimed_world_card_notice,
             target: "_top",

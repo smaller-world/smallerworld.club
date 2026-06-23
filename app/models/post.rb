@@ -32,7 +32,7 @@ class Post < ApplicationRecord
 
   include ReplyUrl
   include Notifications
-  include Broadcasting
+  include WorldItemBroadcasts
   include V1Importing
 
   # == Attributes ==
@@ -142,6 +142,7 @@ class Post < ApplicationRecord
       .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
     where(owned.arel.exists.or(keyed.arel.exists))
   }
+  scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
 
   # == Snippets ==
 

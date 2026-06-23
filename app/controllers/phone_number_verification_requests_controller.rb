@@ -37,7 +37,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
         elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
           redirect_to(new_session_path, alert: message, status: :see_other)
         else
-          render turbo_stream: replace_login_form(verification_request:)
+          render(
+            turbo_stream: replace_login_form(verification_request:),
+            status: :unprocessable_content,
+          )
         end
       end
     end
@@ -67,7 +70,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
             redirect_to(new_account_path, status: :see_other)
           end
         else
-          render turbo_stream: replace_login_form(verification_request:)
+          render(
+            turbo_stream: replace_login_form(verification_request:),
+            status: :unprocessable_content,
+          )
         end
       end
     end

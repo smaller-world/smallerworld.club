@@ -7,6 +7,7 @@
 # Table name: users
 #
 #  id                            :uuid             not null, primary key
+#  has_v1_account                :boolean          default(FALSE), not null
 #  name                          :string           not null
 #  notifications_last_cleared_at :timestamptz
 #  phone_number                  :string           not null
@@ -105,6 +106,7 @@ class User < ApplicationRecord
 
   # == Hooks ==
 
+  before_create :set_has_v1_account
   after_update_commit :touch_world_cards, if: :saved_changes_to_world_card_attributes?
 
   # == Search ==
@@ -200,6 +202,13 @@ class User < ApplicationRecord
   end
 
   # == Callbacks ==
+
+  sig { void }
+  def set_has_v1_account
+    if V1::User.exists?(phone_number:)
+      self.has_v1_account = true
+    end
+  end
 
   sig { void }
   def touch_world_cards

@@ -35,22 +35,15 @@ Rails.application.routes.draw do
   end
 
   # == Account
-  resource :account, only: [ :new, :create ] do
-    scope module: :accounts  do
-      resource :time_zone, only: [ :update ]
-    end
-  end
+  resource :account, only: [ :new, :create ]
+  resource :account_time_zone, path: "/account/time_zone", only: [ :update ]
 
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id
 
   # == Devices
-  resource :device, only: [] do
-    scope module: :devices do
-      resource :push_token, only: [ :update ] do
-        post :test
-      end
-    end
+  resource :device_push_token, path: "/device/push_token", only: [ :update ] do
+    post :test
   end
 
   # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
@@ -69,24 +62,17 @@ Rails.application.routes.draw do
     member do
       post :leave
     end
-
     resources :posts, only: [ :index, :new, :create ]
-    resource :world_keys,
-      path: "/keys",
-      as: :keys,
-      only: [ :show, :edit, :update ]
-    resources :world_cards,
-      path: "/cards",
-      only: [ :create ]
-    resources :world_key_grants,
-      path: "/key_grants",
-      as: :key_grants,
-      only: :new
-    resource :world_settings,
-      path: "/settings",
-      as: :settings,
-      only: :show
   end
+  resource :world_settings, path: "/world/:world_id/settings", only: :show
+  resource :world_keys, path: "/world/:world_id/keys", only: [ :show, :edit, :update ]
+  resource(
+    :world_v1_posts_import,
+    path: "/world/:world_id/v1_posts_import",
+    only: [ :show, :create ],
+  )
+  resources :world_cards, path: "world/:world_id/cards", only: :create
+  resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
 
   # == World Keys
   resources :world_keys, only: [ :destroy ] do
@@ -101,20 +87,13 @@ Rails.application.routes.draw do
       get :download
       post :claim
     end
-    scope module: :world_cards do
-      resource(
-        :world_key_grant,
-        path: "/key_grant",
-        as: :key_grant,
-        only: :show,
-      ) do
-        post :accept
-      end
-    end
+  end
+  resource :world_card_key_grant, path: "/world_cards/:card_id/key_grant", only: :show do
+    post :accept
   end
 
   # == World Key Grants
-  resources(:world_key_grants, only: [ :show ], param: :grant) do
+  resources :world_key_grants, only: [ :show ], param: :grant do
     member do
       post :accept
     end
@@ -122,10 +101,10 @@ Rails.application.routes.draw do
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do
-    resource :post_card, path: "/card", as: :card, only: :show
     resources :reactions, only: [ :index, :create ]
     resources :reply_initiations, only: :create
   end
+  resource :post_card, path: "posts/:post_id/card", only: :show
 
   # == Reactions
   resources :reactions, only: :destroy

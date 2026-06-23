@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddKeyColorsToPosts < ActiveRecord::Migration[8.1]
   def change
     add_column :posts, :key_colors, :string, array: true

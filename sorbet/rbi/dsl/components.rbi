@@ -688,6 +688,17 @@ module Components
   end
   def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
 
+  # workspace://app/components/world_v1_posts_import_alert.rb:4
+  sig do
+    params(
+      world: ::World,
+      import_job: T.nilable(::SolidQueue::Job),
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
+    ).void
+  end
+  def WorldV1PostsImportAlert(world:, import_job:, **attributes, &block); end
+
   class << self
     # workspace://app/components/accept_world_card_key_grant_form.rb:4
     sig do
@@ -1375,5 +1386,16 @@ module Components
       ).void
     end
     def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
+
+    # workspace://app/components/world_v1_posts_import_alert.rb:4
+    sig do
+      params(
+        world: ::World,
+        import_job: T.nilable(::SolidQueue::Job),
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
+      ).void
+    end
+    def WorldV1PostsImportAlert(world:, import_job:, **attributes, &block); end
   end
 end

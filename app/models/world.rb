@@ -30,6 +30,8 @@ class World < ApplicationRecord
   include NormalizesText
   include PgSearch::Model
 
+  include V1Importing
+
   # == Configuration ==
 
   NAME_MAX_LENGTH = 30
@@ -181,54 +183,6 @@ class World < ApplicationRecord
     color = color.to_s
     descriptor = key_labels[color] || color.humanize(capitalize: false)
     "#{descriptor} key"
-  end
-
-  # == V1 Posts ==
-
-  sig { returns(T::Boolean) }
-  def pending_v1_posts_import?
-    eldest_world? && unimported_v1_posts.any?
-  end
-
-  sig { params(limit: T.nilable(Integer)).void }
-  def import_v1_posts!(limit: nil)
-    scope = unimported_v1_posts
-    if limit
-      scope.limit!(limit)
-    end
-    scope.find_each do |post|
-      post.import_to!(self)
-    end
-  end
-
-  sig { params(options: T.untyped).void }
-  def import_v1_posts_later(**options)
-    ImportV1PostsJob.set(**options).perform_later(self)
-  end
-
-  sig { returns(V1::Post::PrivateRelation) }
-  def v1_posts
-    V1::Post.joins(:author)
-      .where(author: { phone_number: owner_phone_number })
-      .where.not(world_id: nil)
-      .chronological
-  end
-
-  sig { returns(V1::Post::PrivateRelation) }
-  def unimported_v1_posts
-    scope = v1_posts
-    if (created_at = last_imported_v1_post_created_at)
-      scope.where!("created_at > ?", created_at)
-    end
-    scope
-  end
-
-  # == Methods ==
-
-  sig { returns(T::Boolean) }
-  def eldest_world?
-    user = owner!
-    user.owned_worlds.chronological.pick(:id) == id
   end
 
   private

@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class Accounts::TimeZonesController < ApplicationController
+class AccountTimeZonesController < ApplicationController
   # == Configuration ==
 
   skip_verify_authorized

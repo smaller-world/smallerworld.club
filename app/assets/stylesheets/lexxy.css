@@ -4,7 +4,7 @@
   .lexxy-content {
     @apply text-base leading-relaxed md:text-sm;
 
-    p:not(:last-of-type):has(br) {
+    p:not(:last-of-type):has(> br:only-child) {
       @apply leading-2;
     }
 

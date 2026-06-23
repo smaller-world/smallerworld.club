@@ -1,4 +1,5 @@
 # typed: true
+# frozen_string_literal: true
 
 class AddCardholderToWorldCards < ActiveRecord::Migration[8.1]
   def change

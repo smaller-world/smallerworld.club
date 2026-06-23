@@ -91,9 +91,15 @@ module V1
     def import_to!(world)
       post = ::Post.find_or_initialize_by(id:)
       post.world = world
-      post.transaction do
-        post.update_from_v1_post!(self)
-        world.update!(last_imported_v1_post_created_at: created_at)
+
+      # Keep the downloaded image files open across the transaction commit:
+      # ActiveStorage defers blob uploads to an `after_commit` callback, so the
+      # files must still exist when the transaction commits.
+      open_ordered_images do |images|
+        post.transaction do
+          post.update_from_v1_post!(self, images:)
+          world.update!(last_imported_v1_post_created_at: created_at)
+        end
       end
     end
 
@@ -127,7 +133,7 @@ module V1
     sig { override.returns(String) }
     def body_html
       if (rich_text_body = public_send(:rich_text_body))
-        rich_text_body.body
+        rich_text_body.body.to_html
       else
         tiptap_html = T.must(super)
         convert_tiptap_html(tiptap_html)

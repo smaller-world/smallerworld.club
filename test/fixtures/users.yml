@@ -4,6 +4,7 @@
 # Table name: users
 #
 #  id                            :uuid             not null, primary key
+#  has_v1_account                :boolean          default(FALSE), not null
 #  name                          :string           not null
 #  notifications_last_cleared_at :timestamptz
 #  phone_number                  :string           not null

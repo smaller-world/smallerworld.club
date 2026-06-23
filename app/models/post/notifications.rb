@@ -5,12 +5,10 @@ module Post::Notifications
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
-
-  abstract!
-  requires_ancestor { Post }
-
   include ActionView::RecordIdentifier
   include Noticeable
+
+  requires_ancestor { Post }
 
   # == Configuration ==
 
