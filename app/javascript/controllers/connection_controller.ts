@@ -8,15 +8,23 @@ export default class ConnectionController extends Controller {
   };
   declare readonly delayValue: number;
 
+  // == Properties ==
+
+  #delayTimeout?: number | null;
+
   // == Lifecycle ==
 
   connect(): void {
-    setTimeout(() => {
+    this.#delayTimeout = setTimeout(() => {
       this.dispatch("connect", { bubbles: false });
     }, this.delayValue);
   }
 
   disconnect(): void {
+    if (this.#delayTimeout) {
+      clearTimeout(this.#delayTimeout);
+      this.#delayTimeout = null;
+    }
     this.dispatch("disconnect", { bubbles: false });
   }
 }

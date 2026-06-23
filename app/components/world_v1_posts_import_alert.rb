@@ -25,9 +25,10 @@ class Components::WorldV1PostsImportAlert < Components::Base
   def view_template
     if has_importable_posts? || @import_job
       div(class: "flex flex-col gap-1.5") do
-        Components::Alert(**mix(
+        Components::Alert(**compact_mix(
           { class: current_import_complete? ? "pr-30" : "pr-28" },
-          **@attributes,
+          reset_frame_after_import_attributes,
+          @attributes,
         )) do |alert|
           alert.title do
             if currently_importing?
@@ -154,5 +155,18 @@ class Components::WorldV1PostsImportAlert < Components::Base
   def import_job_options(job)
     _world_args, options = job.arguments.fetch("arguments")
     ActiveJob::Arguments.deserialize([ options ]).first
+  end
+
+  sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
+  def reset_frame_after_import_attributes
+    if current_import_complete?
+      {
+        data: {
+          controller: "connection",
+          connection_delay_value: 4000,
+          action: "connection:connect->v1-posts-import-frame#reset",
+        },
+      }
+    end
   end
 end

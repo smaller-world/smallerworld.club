@@ -64,7 +64,7 @@ class Views::Posts::Index < Views::Base
         end
       end
 
-      turbo_stream_from(@world, :posts)
+      turbo_stream_from(@world, :posts, hidden: true)
     end
   end
 end

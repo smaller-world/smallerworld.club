@@ -68,10 +68,10 @@ class Views::Worlds::Show < Views::Base
               src: [ @world, :v1_posts_import ],
               class: "empty:hidden",
               data: {
-                controller: "frame",
+                controller: "frame v1-posts-import-frame",
               },
             )
-            turbo_stream_from(@world, :v1_posts_import)
+            turbo_stream_from(@world, :v1_posts_import, hidden: true)
           end
         else
           turbo_frame_tag(

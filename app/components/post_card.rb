@@ -91,7 +91,7 @@ class Components::PostCard < Components::Base
         end
       end
 
-      turbo_stream_from(@post)
+      turbo_stream_from(@post, hidden: true)
     end
   end
 

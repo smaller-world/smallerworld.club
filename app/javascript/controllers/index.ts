@@ -50,6 +50,7 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
+import V1PostsImportFrameController from "./v1_posts_import_frame_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -117,5 +118,6 @@ application.register("emoji-mart", EmojiMartController);
 application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
+application.register("v1-posts-import-frame", V1PostsImportFrameController);
 
 // application.register("maintain-scroll", MaintainScrollController);
