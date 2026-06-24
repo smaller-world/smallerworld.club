@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_24_140544) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_24_141500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -205,7 +205,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_140544) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "solid_cable_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "solid_cable_messages", force: :cascade do |t|
     t.binary "channel", null: false
     t.bigint "channel_hash", null: false
     t.datetime "created_at", null: false
