@@ -53,15 +53,17 @@ class Components::PostReactions < Components::Base
       ),
     ) do
       if @async
-        # Render placeholder
-        Components::Button(
-          element: :div,
-          variant: :ghost,
-          size: :icon,
-          class: "rounded-full skeleton",
-        ) do
-          span(class: "font-emoji text-lg") do
-            "🤣"
+        if allowed_to?(:react?, @post)
+          # Render placeholder
+          Components::Button(
+            element: :div,
+            variant: :ghost,
+            size: :icon,
+            class: "rounded-full skeleton",
+          ) do
+            span(class: "font-emoji text-lg") do
+              "🤣"
+            end
           end
         end
       else
