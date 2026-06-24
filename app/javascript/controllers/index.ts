@@ -4,6 +4,7 @@ import {
   HapticBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
+import { UserFocusController } from "stimulus-library";
 
 import { application } from "./application";
 import AsyncItemController from "./async_item_controller";
@@ -29,7 +30,6 @@ import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
-import MaintainScrollController from "./maintain_scroll_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
@@ -90,6 +90,7 @@ application.register("confetti", ConfettiController);
 application.register("transition-group", TransitionGroupController);
 application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
 application.register("async-item", AsyncItemController);
+application.register("user-focus", UserFocusController);
 
 // == Inputs
 application.register("clearable-file-input", ClearableFileInputController);

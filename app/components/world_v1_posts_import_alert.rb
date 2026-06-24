@@ -26,7 +26,14 @@ class Components::WorldV1PostsImportAlert < Components::Base
     if has_importable_posts? || @import_job
       div(class: "flex flex-col gap-1.5") do
         Components::Alert(**compact_mix(
-          { class: current_import_complete? ? "pr-30" : "pr-28" },
+          {
+            class: current_import_complete? ? "pr-30" : "pr-28",
+            data: {
+              action: token_list(
+                "user-focus:active@document->frame#reload" => @import_job.present?,
+              ),
+            },
+          },
           reset_frame_after_import_attributes,
           @attributes,
         )) do |alert|

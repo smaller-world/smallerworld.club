@@ -68,7 +68,7 @@ class Views::Worlds::Show < Views::Base
               src: [ @world, :v1_posts_import ],
               class: "empty:hidden",
               data: {
-                controller: "frame v1-posts-import-frame",
+                controller: "frame v1-posts-import-frame user-focus",
               },
             )
             turbo_stream_from(@world, :v1_posts_import, hidden: true)
