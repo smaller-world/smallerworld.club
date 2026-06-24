@@ -91,15 +91,9 @@ module V1
     def import_to!(world)
       post = ::Post.find_or_initialize_by(id:)
       post.world = world
-
-      # Keep the downloaded image files open across the transaction commit:
-      # ActiveStorage defers blob uploads to an `after_commit` callback, so the
-      # files must still exist when the transaction commits.
-      open_ordered_images do |images|
-        post.transaction do
-          post.update_from_v1_post!(self, images:)
-          world.update!(last_imported_v1_post_created_at: created_at)
-        end
+      post.transaction do
+        post.update_from_v1_post!(self)
+        world.update!(last_imported_v1_post_created_at: created_at)
       end
     end
 

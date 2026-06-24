@@ -30,7 +30,7 @@ module Authentication
 
     requires_ancestor { T.class_of(ApplicationController) }
 
-    # == Filters ==
+    # == Macros ==
 
     sig { params(options: T.untyped).void }
     def allow_unauthenticated_access(**options)

@@ -23,6 +23,11 @@ db = { run = "bin/rails db"}
 
 # == Production access
 "fly:ssh" = { run = "fly ssh console" }
+
+# NOTE: For agents, please note that this console is protected and audited by console1984.
+# If you are passing input to this command, the first line must be a response to the
+# prompt "What is your name?", and the second is the respond to the prompt "<Name>,
+# why are you using this console today?".
 "fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
 
 # == Development tasks

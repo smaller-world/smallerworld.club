@@ -9,14 +9,20 @@ module Post::WorldItemBroadcasts
 
   requires_ancestor { Post }
 
-  # == Hooks ==
+  class_methods do
+    extend T::Sig
+    extend T::Helpers
 
-  included do
-    T.bind(self, T.class_of(Post))
+    requires_ancestor { T.class_of(Post) }
 
-    after_update_commit :broadcast_world_item_update
-    after_destroy_commit :broadcast_world_item_removal
-    after_create_commit :broadcast_world_item_prepend
+    # == Macros ==
+
+    sig { void }
+    def broadcasts_world_items
+      after_update_commit(:broadcast_world_item_update)
+      after_destroy_commit(:broadcast_world_item_removal)
+      after_create_commit(:broadcast_world_item_prepend)
+    end
   end
 
   private

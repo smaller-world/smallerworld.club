@@ -140,6 +140,7 @@ class Post < ApplicationRecord
     if: :should_touch_world_cards?
   after_create_commit :create_notifications_for_world_key_recipients!,
     unless: :v1_attributes?
+  broadcasts_world_items
 
   # == Scopes ==
 

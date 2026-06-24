@@ -42,7 +42,7 @@ module HasTimeZone
 
     requires_ancestor { T.class_of(ActiveRecord::Base) }
 
-    # == Helpers ==
+    # == Macros ==
 
     sig { void }
     def validates_time_zone_name

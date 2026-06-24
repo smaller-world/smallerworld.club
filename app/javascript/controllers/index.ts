@@ -4,7 +4,7 @@ import {
   HapticBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
-import { UserFocusController } from "stimulus-library";
+import { IntersectionController, UserFocusController } from "stimulus-library";
 
 import { application } from "./application";
 import AsyncItemController from "./async_item_controller";
@@ -28,7 +28,6 @@ import FormController from "./form_controller";
 import FrameController from "./frame_controller";
 import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
-import IntersectionController from "./intersection_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
@@ -39,7 +38,6 @@ import PostFormController from "./post_form_controller";
 import PushTokenInputController from "./push_token_input";
 import RadioController from "./radio_controller";
 import ReplyInitiationFormController from "./reply_initiation_form_controller";
-import ScrollToBottomController from "./scroll_to_bottom_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
 import TippyController from "./tippy_controller";
@@ -78,7 +76,6 @@ application.register("toaster", ToasterController);
 // == Helpers
 application.register("connection", ConnectionController);
 application.register("autoclick", AutoclickController);
-application.register("scroll-to-bottom", ScrollToBottomController);
 application.register("frame", FrameController);
 application.register("form", FormController);
 application.register("intersection", IntersectionController);

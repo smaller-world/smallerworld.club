@@ -14,7 +14,7 @@ module NormalizesText
 
     requires_ancestor { T.class_of(ActiveRecord::Base) }
 
-    # == Methods ==
+    # == Macros ==
 
     sig { params(attributes: T.any(Symbol, String)).void }
     def nilify_blanks(*attributes)
