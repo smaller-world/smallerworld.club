@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_24_140544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -205,7 +205,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "solid_cable_messages", force: :cascade do |t|
+  create_table "solid_cable_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.binary "channel", null: false
     t.bigint "channel_hash", null: false
     t.datetime "created_at", null: false
@@ -215,7 +215,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
-  create_table "solid_cache_entries", force: :cascade do |t|
+  create_table "solid_cache_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "byte_size", null: false
     t.datetime "created_at", null: false
     t.binary "key", null: false
@@ -226,11 +226,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
   end
 
-  create_table "solid_queue_blocked_executions", force: :cascade do |t|
+  create_table "solid_queue_blocked_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "concurrency_key", null: false
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
-    t.bigint "job_id", null: false
+    t.uuid "job_id", null: false
     t.integer "priority", default: 0, null: false
     t.string "queue_name", null: false
     t.index ["concurrency_key", "priority", "job_id"], name: "index_solid_queue_blocked_executions_for_release"
@@ -238,22 +238,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["job_id"], name: "index_solid_queue_blocked_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_claimed_executions", force: :cascade do |t|
+  create_table "solid_queue_claimed_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "job_id", null: false
-    t.bigint "process_id"
+    t.uuid "job_id", null: false
+    t.uuid "process_id"
     t.index ["job_id"], name: "index_solid_queue_claimed_executions_on_job_id", unique: true
     t.index ["process_id", "job_id"], name: "index_solid_queue_claimed_executions_on_process_id_and_job_id"
   end
 
-  create_table "solid_queue_failed_executions", force: :cascade do |t|
+  create_table "solid_queue_failed_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "error"
-    t.bigint "job_id", null: false
+    t.uuid "job_id", null: false
     t.index ["job_id"], name: "index_solid_queue_failed_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_jobs", force: :cascade do |t|
+  create_table "solid_queue_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "active_job_id"
     t.text "arguments"
     t.string "class_name", null: false
@@ -271,13 +271,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["scheduled_at", "finished_at"], name: "index_solid_queue_jobs_for_alerting"
   end
 
-  create_table "solid_queue_pauses", force: :cascade do |t|
+  create_table "solid_queue_pauses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "queue_name", null: false
     t.index ["queue_name"], name: "index_solid_queue_pauses_on_queue_name", unique: true
   end
 
-  create_table "solid_queue_processes", force: :cascade do |t|
+  create_table "solid_queue_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "hostname"
     t.string "kind", null: false
@@ -285,15 +285,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.text "metadata"
     t.string "name", null: false
     t.integer "pid", null: false
-    t.bigint "supervisor_id"
+    t.uuid "supervisor_id"
     t.index ["last_heartbeat_at"], name: "index_solid_queue_processes_on_last_heartbeat_at"
     t.index ["name", "supervisor_id"], name: "index_solid_queue_processes_on_name_and_supervisor_id", unique: true
     t.index ["supervisor_id"], name: "index_solid_queue_processes_on_supervisor_id"
   end
 
-  create_table "solid_queue_ready_executions", force: :cascade do |t|
+  create_table "solid_queue_ready_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "job_id", null: false
+    t.uuid "job_id", null: false
     t.integer "priority", default: 0, null: false
     t.string "queue_name", null: false
     t.index ["job_id"], name: "index_solid_queue_ready_executions_on_job_id", unique: true
@@ -301,16 +301,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["queue_name", "priority", "job_id"], name: "index_solid_queue_poll_by_queue"
   end
 
-  create_table "solid_queue_recurring_executions", force: :cascade do |t|
+  create_table "solid_queue_recurring_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "job_id", null: false
+    t.uuid "job_id", null: false
     t.datetime "run_at", null: false
     t.string "task_key", null: false
     t.index ["job_id"], name: "index_solid_queue_recurring_executions_on_job_id", unique: true
     t.index ["task_key", "run_at"], name: "index_solid_queue_recurring_executions_on_task_key_and_run_at", unique: true
   end
 
-  create_table "solid_queue_recurring_tasks", force: :cascade do |t|
+  create_table "solid_queue_recurring_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "arguments"
     t.string "class_name"
     t.string "command", limit: 2048
@@ -326,9 +326,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["static"], name: "index_solid_queue_recurring_tasks_on_static"
   end
 
-  create_table "solid_queue_scheduled_executions", force: :cascade do |t|
+  create_table "solid_queue_scheduled_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "job_id", null: false
+    t.uuid "job_id", null: false
     t.integer "priority", default: 0, null: false
     t.string "queue_name", null: false
     t.datetime "scheduled_at", null: false
@@ -336,7 +336,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_134322) do
     t.index ["scheduled_at", "priority", "job_id"], name: "index_solid_queue_dispatch_all"
   end
 
-  create_table "solid_queue_semaphores", force: :cascade do |t|
+  create_table "solid_queue_semaphores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
     t.string "key", null: false
