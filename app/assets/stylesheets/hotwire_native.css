@@ -10,14 +10,20 @@
   }
 }
 
-@custom-variant with-button-bridge {
+/*@custom-variant with-button-bridge {
   html[data-bridge-components~="button"] & {
+    @slot;
+  }
+  }*/
+
+@custom-variant with-notification-token-bridge {
+  html[data-bridge-components~="notification-token"] & {
     @slot;
   }
 }
 
-@custom-variant with-notification-token-bridge {
-  html[data-bridge-components~="notification-token"] & {
+@custom-variant with-pass-bridge {
+  html[data-bridge-components~="pass"] & {
     @slot;
   }
 }

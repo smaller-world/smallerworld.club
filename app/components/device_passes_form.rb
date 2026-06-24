@@ -20,8 +20,11 @@ class Components::DevicePassesForm < Components::Base
       **normalize_mix(
         {
           data: {
-            controller: "device-passes-form passes-bridge",
-            action: "passes-bridge:received->device-passes-form#submitPasses",
+            controller: "passes-bridge connection device-passes-form",
+            action: [
+              "connection:connect->passes-bridge#get",
+              "passes-bridge:retrieved->device-passes-form#submitPasses",
+            ],
           },
           html: {
             hidden: true,

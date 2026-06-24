@@ -18,12 +18,15 @@ class WorldsController < ApplicationController
     # end
   end
 
-  # GET /worlds/:id?pass_serial_numbers[]=...&celebrate=...
+  # GET /worlds/:id?card_id=...&pass_serial_numbers[]=...&celebrate=...
   def show
     respond_to do |format|
       format.html do
         world = find_world
         authorize!(world)
+        card = if (card_id = params[:card_id])
+          WorldCard.active.find_by(id: card_id)
+        end
         unclaimed_world_cards = if (serial_numbers = params[:pass_serial_numbers])
           world.cards.kept.unclaimed.with_pass_serial_numbers(serial_numbers)
         end
@@ -31,6 +34,7 @@ class WorldsController < ApplicationController
         created_post_id = flash[:created_post_id]
         render Views::Worlds::Show.new(
           world:,
+          card:,
           unclaimed_world_cards:,
           celebrate:,
           created_post_id:,

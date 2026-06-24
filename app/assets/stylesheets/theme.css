@@ -262,6 +262,10 @@
   }
 }
 
+@utility revert-display-layer {
+  display: revert-layer;
+}
+
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
     :where(body:not(.no-dark)) & {

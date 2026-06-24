@@ -14,10 +14,6 @@ class Views::Home::Show < Views::Base
     super()
     @current_user = current_user
     @world_cards_pending_key_creation = world_cards_pending_key_creation
-    @accessible_worlds = T.let(
-      @current_user.accessible_worlds.with_attached_icon,
-      World::PrivateAssociationRelation,
-    )
   end
 
   # == View ==
@@ -104,9 +100,10 @@ class Views::Home::Show < Views::Base
       class: "flex gap-4 flex-wrap justify-center",
       target: "_top",
     ) do
-      @accessible_worlds.each do |world|
+      accessible_worlds.each do |world|
+        card_id = active_card_id_for(world)
         link_to(
-          world,
+          [ world, card_id: ],
           class: "world-icon-container hover:underline",
         ) do
           div(class: "relative") do
@@ -115,7 +112,7 @@ class Views::Home::Show < Views::Base
               class: "world-icon",
               data: { size: "sm" },
             )
-            if @current_user.world_cards.active.exists?(world:)
+            if card_id
               Components::Button(
                 element: :div,
                 variant: :outline,
@@ -187,5 +184,26 @@ class Views::Home::Show < Views::Base
         )
       end
     end
+  end
+
+  sig { returns(World::PrivateAssociationRelation) }
+  def accessible_worlds
+    @accessible_worlds ||= T.let(
+      @current_user.accessible_worlds.with_attached_icon,
+      T.nilable(World::PrivateAssociationRelation),
+    )
+  end
+
+  sig { params(world: World).returns(T.nilable(String)) }
+  def active_card_id_for(world)
+    @active_card_ids_by_world_id ||= T.let(
+      WorldCard.active
+        .where(cardholder: @current_user, world: accessible_worlds)
+        .order(:world_id, created_at: :desc)
+        .pluck(Arel.sql("DISTINCT ON (world_id) world_id"), :id)
+        .to_h,
+      T.nilable(T::Hash[String, String]),
+    )
+    @active_card_ids_by_world_id[world.id]
   end
 end

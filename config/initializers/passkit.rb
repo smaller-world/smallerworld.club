@@ -1,6 +1,13 @@
 # typed: strict
 # frozen_string_literal: true
 
+class Smallerworld::Application
+  sig { returns(String) }
+  def passkit_pass_type_identifier
+    credentials.passkit!.pass_type_identifier!
+  end
+end
+
 # Configure Passkit models
 Rails.application.configure do
   config.to_prepare do

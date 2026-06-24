@@ -7,26 +7,19 @@ class Views::Worlds::Show < Views::Base
   sig do
     params(
       world: World,
+      card: T.nilable(WorldCard),
       unclaimed_world_cards: T.nilable(WorldCard::PrivateRelation),
       celebrate: T::Boolean,
       created_post_id: T.nilable(String),
     ).void
   end
-  def initialize(world:, unclaimed_world_cards:, celebrate:, created_post_id:)
+  def initialize(world:, card:, unclaimed_world_cards:, celebrate:, created_post_id:)
+    super()
     @world = world
-    @world_owner = T.let(@world.owner!, User)
+    @card = card
     @unclaimed_world_cards = unclaimed_world_cards
     @celebrate = celebrate
     @created_post_id = created_post_id
-    @keys = T.let(
-      if (user = Current.user)
-        @world.keys.accepted.where(recipient: user).to_a
-      else
-        []
-      end,
-      T::Array[WorldKey],
-    )
-    super()
   end
 
   # == View ==
@@ -48,7 +41,7 @@ class Views::Worlds::Show < Views::Base
                 controller: "button-bridge",
               },
             )
-          elsif @keys.any? # TODO: Represent on mobile
+          elsif owned_keys.any? # TODO: Represent on mobile
             button_link_to(
               "settings",
               [ @world, :settings ],
@@ -62,7 +55,7 @@ class Views::Worlds::Show < Views::Base
         end
 
         if allowed_to?(:manage?, @world)
-          if @world_owner.has_v1_account?
+          if @world.owner!.has_v1_account?
             turbo_frame_tag(
               :v1_posts_import,
               src: [ @world, :v1_posts_import ],
@@ -90,17 +83,41 @@ class Views::Worlds::Show < Views::Base
         end
 
         section(class: "flex flex-col items-center gap-2") do
-          image_tag(
-            @world.page_icon_variant,
-            class: "world-icon size-32",
-            data: {
-              controller: "confetti connection",
-              confetti_emoji_value: "🎉",
-              confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
-              connection_delay_value: 1000,
-              action: ("connection:connect->confetti#launch" if @celebrate),
-            },
-          )
+          div(class: "relative") do
+            image_tag(
+              @world.page_icon_variant,
+              class: "world-icon size-32",
+              data: {
+                controller: "confetti connection",
+                confetti_emoji_value: "🎉",
+                confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
+                connection_delay_value: 1000,
+                action: ("connection:connect->confetti#launch" if @celebrate),
+              },
+            )
+            if @card
+              Components::Button(
+                variant: :outline,
+                size: :icon_sm,
+                class: [
+                  "bg-muted rounded-full absolute -right-2.5 -top-2.5",
+                  "hidden with-pass-bridge:revert-display-layer",
+                ],
+                data: {
+                  controller: "pass-bridge",
+                  pass_bridge_pass_type_identifier_value:
+                    Smallerworld.application.passkit_pass_type_identifier,
+                  pass_bridge_serial_number_value: @card.pass!.serial_number,
+                  action: "pass-bridge#open",
+                },
+              ) do
+                Icon(
+                  "huge/loyalty-card",
+                  class: "text-muted-foreground",
+                )
+              end
+            end
+          end
           h1(class: "text-2xl text-center") do
             @world.name
           end
@@ -153,6 +170,18 @@ class Views::Worlds::Show < Views::Base
   private
 
   # == Helpers ==
+
+  sig { returns(T::Array[WorldKey]) }
+  def owned_keys
+    @owned_keys ||= T.let(
+      if (user = Current.user)
+        @world.keys.accepted.where(recipient: user).to_a
+      else
+        []
+      end,
+      T.nilable(T::Array[WorldKey]),
+    )
+  end
 
   sig { params(key: WorldKey).returns(String) }
   def key_descriptor(key)

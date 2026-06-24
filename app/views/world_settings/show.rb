@@ -18,7 +18,10 @@ class Views::WorldSettings::Show < Views::Base
       layout.page_container(class: "max-w-lg space-y-6") do
         button_back_to("world", @world) unless hotwire_native_app?
 
-        Components::Card(size: :sm) do |card|
+        Components::Card(
+          size: :sm,
+          class: "hidden with-notification-token-bridge:revert-display-layer",
+        ) do |card|
           card.header do
             card.title(class: "text-center") { "notification settings" }
           end

@@ -41,7 +41,7 @@ class Views::Posts::Index < Views::Base
             created_post_id: @created_post_id,
           )
         end
-        Components::Empty(class: "hidden [ul:empty_+_&]:flex") do |empty|
+        Components::Empty(class: "hidden [ul:empty_+_&]:revert-display-layer") do |empty|
           empty.header(class: "gap-0") do
             empty.media(variant: :icon) do
               Icon("huge/message-edit-01")

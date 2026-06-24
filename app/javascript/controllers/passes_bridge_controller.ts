@@ -9,7 +9,9 @@ export interface PassData {
 export default class PassesBridgeController extends BridgeComponent {
   static component = "passes";
 
-  connect() {
+  // == Lifecycle ==
+
+  connect(): void {
     super.connect();
     this.send<{ passes: PassData[] }>("connect", {}, (message) => {
       const { passes } = message.data;

@@ -261,7 +261,7 @@ class Post < ApplicationRecord
 
   sig { void }
   def touch_world_cards
-    world_cards.find_each(&:touch)
+    world_cards.active.find_each(&:touch)
   end
 
   sig { void }

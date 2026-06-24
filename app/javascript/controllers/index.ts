@@ -32,6 +32,7 @@ import LexxyEditorController from "./lexxy_editor_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
+import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import PostFormController from "./post_form_controller";
@@ -62,6 +63,7 @@ application.register(
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 application.register("passes-bridge", PassesBridgeController);
+application.register("pass-bridge", PassBridgeController);
 application.register("page-load-bridge", PageLoadBridgeController);
 application.register(
   "notification-permission-bridge",
