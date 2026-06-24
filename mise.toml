@@ -24,7 +24,6 @@ db = { run = "bin/rails db"}
 # == Production access
 "fly:ssh" = { run = "fly ssh console" }
 "fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
-"fly:eval" = { run = "bin/fly-eval" }
 
 # == Development tasks
 annotate = { run = "bin/annotaterb models" }
