@@ -12,6 +12,7 @@
 # here.
 
 class ActiveSupport::TestCase
+  include WorldCardTestHelper
   include WorldTestHelper
 end
 
@@ -29,7 +30,7 @@ end
 class ActionDispatch::IntegrationTest
   include PhoneNumberVerificationRequestTestHelper
   include SessionTestHelper
-  include TurnstileTestHelper
+  include WorldCardTestHelper
   include WorldTestHelper
 end
 

@@ -6,7 +6,11 @@
 module WorldTestHelper
   extend T::Sig
 
+  # == Configuration ==
+
   WORLD_ICON_PATH = T.let(Rails.root.join("test/fixtures/files/world_icon.png"), Pathname)
+
+  # == Methods ==
 
   # Creates a world owned by `owner` with the canonical icon attached
   # (icon is a required attachment).

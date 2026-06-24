@@ -65,7 +65,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "creating the latest post touches the world's cards" do
-    card = @world.cards.create!(granted_key_color: :blue)
+    card = create_registered_card(world: @world)
 
     assert_card_touched(card) do
       create_post(world: @world)
@@ -73,7 +73,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "creating a post that is not the latest leaves the world's cards untouched" do
-    card = @world.cards.create!(granted_key_color: :blue)
+    card = create_registered_card(world: @world)
     create_post(world: @world) # the latest post
 
     assert_card_untouched(card) do
@@ -82,7 +82,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "destroying the latest post touches the world's cards" do
-    card = @world.cards.create!(granted_key_color: :blue)
+    card = create_registered_card(world: @world)
     create_post(world: @world, created_at: 2.days.ago)
     latest = create_post(world: @world, created_at: 1.day.ago)
 
@@ -92,7 +92,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "destroying a post that is not the latest leaves the world's cards untouched" do
-    card = @world.cards.create!(granted_key_color: :blue)
+    card = create_registered_card(world: @world)
     older = create_post(world: @world, created_at: 2.days.ago)
     create_post(world: @world, created_at: 1.day.ago) # the latest post
 

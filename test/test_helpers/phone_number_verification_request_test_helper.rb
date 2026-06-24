@@ -17,17 +17,17 @@ module PhoneNumberVerificationRequestTestHelper
 
   requires_ancestor { ActionDispatch::IntegrationTest }
 
+  # == Methods ==
+
   sig { params(phone_number: String).returns(PhoneNumberVerificationRequest) }
   def complete_phone_verification_for(phone_number:)
-    with_turnstile(behavior: :always_passes) do
-      post phone_number_verification_requests_path,
-        params: {
-          phone_number_verification_request: { phone_number: },
-          "cf-turnstile-response": "dummy",
-        },
-        headers: { "User-Agent" => "test" },
-        as: :turbo_stream
-    end
+    post phone_number_verification_requests_path,
+      params: {
+        phone_number_verification_request: { phone_number: },
+        "cf-turnstile-response": "dummy",
+      },
+      headers: { "User-Agent" => "test" },
+      as: :turbo_stream
 
     request = PhoneNumberVerificationRequest.chronological.last!
     post verify_phone_number_verification_request_path(request),

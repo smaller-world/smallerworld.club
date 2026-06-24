@@ -14,6 +14,8 @@ module DownloadsTestHelper
 
   requires_ancestor { ActionDispatch::SystemTestCase }
 
+  # == Methods ==
+
   # Asserts that a file matching `pattern` (a glob, e.g. "*.pkpass") was
   # downloaded within `wait` seconds. Returns the Pathname of the file.
   sig { params(pattern: String, wait: T.any(Float, Integer)).returns(Pathname) }

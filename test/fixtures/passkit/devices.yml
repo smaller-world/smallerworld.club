@@ -1,0 +1,21 @@
+# rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
+# == Schema Information
+#
+# Table name: passkit_devices
+#
+#  id         :uuid             not null, primary key
+#  identifier :string           not null
+#  push_token :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_passkit_devices_on_identifier  (identifier) UNIQUE
+#
+# rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
+
+# The shared device that world cards register to (see `create_registered_card`).
+default:
+  identifier: passkit-device
+  push_token: passkit-push-token

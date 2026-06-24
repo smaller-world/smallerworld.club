@@ -6,17 +6,15 @@ require "test_helper"
 class PhoneNumberVerificationRequestsControllerTest < ActionDispatch::IntegrationTest
   test "start new verification request" do
     assert_difference -> { PhoneNumberVerificationRequest.count }, 1 do
-      with_turnstile(behavior: :always_passes) do
-        post phone_number_verification_requests_path,
-          headers: {
-            "User-Agent" => "test",
-          },
-          params: {
-            phone_number_verification_request: { phone_number: "+14165550000" },
-            "cf-turnstile-response" => "dummy",
-          },
-          as: :turbo_stream
-      end
+      post phone_number_verification_requests_path,
+        headers: {
+          "User-Agent" => "test",
+        },
+        params: {
+          phone_number_verification_request: { phone_number: "+14165550000" },
+          "cf-turnstile-response" => "dummy",
+        },
+        as: :turbo_stream
     end
     assert_response :success
   end

@@ -14,6 +14,8 @@ module SystemSessionTestHelper
 
   requires_ancestor { ActionDispatch::SystemTestCase }
 
+  # == Methods ==
+
   sig { params(user: User).void }
   def sign_in_as(user)
     visit test_sign_in_path(user.id)
