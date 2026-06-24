@@ -180,7 +180,7 @@ module Passkit
       @card.discarded?
     end
 
-    sig { override.returns(T::Array[String]) }
+    sig { override.returns(T::Array[Integer]) }
     def associated_store_identifiers
       [ Smallerworld.application.ios_store_identifier ]
     end

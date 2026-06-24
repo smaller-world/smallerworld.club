@@ -7,5 +7,7 @@ class Passkit::ApplicationPass < Passkit::BasePass
   # == Configuration ==
 
   sig { returns(Pathname) }
-  def pass_path = Rails.root.join("app/assets/passkit/#{folder_name}")
+  def pass_path
+    Rails.root.join("app/assets/passkit/#{folder_name}")
+  end
 end
