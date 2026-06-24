@@ -114,9 +114,13 @@ class Components::WorldV1PostsImportAlert < Components::Base
 
   sig { params(import_job: SolidQueue::Job).returns(String) }
   def import_progress_text(import_job:)
-    imported_count = import_job_imported_posts_count(import_job)
-    total_count = import_job_total_posts_count(import_job)
-    "imported #{imported_count} of #{total_count} posts"
+    if import_job.claimed?
+      imported_count = import_job_imported_posts_count(import_job)
+      total_count = import_job_total_posts_count(import_job)
+      "imported #{imported_count} of #{total_count} posts"
+    else
+      "waiting for import to start..."
+    end
   end
 
   sig { params(import_job: SolidQueue::Job).returns(Integer) }

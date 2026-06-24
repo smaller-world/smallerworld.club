@@ -126,7 +126,8 @@ class Post < ApplicationRecord
       with: %r{\A(image|video)/[a-z]+\z},
       spoofing_protection: true,
     },
-    size: { less_than: 64.megabytes }
+    size: { less_than: 64.megabytes },
+    unless: :v1_attributes?
   validates :key_colors, inclusion: { in: WorldKey.color.values }, allow_nil: true
 
   # == Hooks ==
