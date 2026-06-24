@@ -91,18 +91,17 @@ module V1
     def import_to!(world)
       post = ::Post.find_or_initialize_by(id:)
       post.world = world
+      images = import_ordered_images
       post.transaction do
-        post.update_from_v1_post!(self)
+        post.update_from_v1_post!(self, images:)
         world.update!(last_imported_v1_post_created_at: created_at)
       end
     end
 
     sig do
-      type_parameters(:U)
-        .params(
-          block: T.proc.params(files: T::Array[File]).returns(T.type_parameter(:U)),
-        )
-        .returns(T.type_parameter(:U))
+      type_parameters(:U).params(
+        block: T.proc.params(files: T::Array[File]).returns(T.type_parameter(:U)),
+      ).returns(T.type_parameter(:U))
     end
     def open_ordered_images(&block)
       Dir.mktmpdir("v1-images-") do |tmpdir|
@@ -121,6 +120,21 @@ module V1
         ensure
           files.each(&:close)
         end
+      end
+    end
+
+    sig { returns(T::Array[::ActiveStorage::Blob]) }
+    def import_ordered_images
+      open_ordered_images do |files|
+        promises = files.map do |file|
+          Concurrent::Promises.future do
+            ::ActiveStorage::Blob.create_and_upload!(
+              io: file,
+              filename: File.basename(file.to_path),
+            )
+          end
+        end
+        Concurrent::Promises.zip(*T.unsafe(promises)).value!
       end
     end
 
