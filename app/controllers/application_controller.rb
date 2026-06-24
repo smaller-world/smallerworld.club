@@ -10,9 +10,11 @@ class ApplicationController < ActionController::Base
 
   include Authentication
   include DeviceTracking
+  include SentryIdentification
+
+  include DeviceDetection
   include LogStreaming
   include ToastStreaming
-  include DeviceDetection
 
   # == Configuration ==
 

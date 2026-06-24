@@ -10,14 +10,30 @@ module DeviceTracking
   requires_ancestor { ActionController::Base }
 
   included do
-    extend T::Sig
-
     T.bind(self, T.class_of(ActionController::Base))
+
+    # == Filters ==
 
     before_action :set_device
   end
 
   private
+
+  # == Helpers ==
+
+  sig { returns(Symbol) }
+  def parse_device_platform
+    case request.user_agent
+    when /Hotwire Native Android/
+      :google
+    when /Hotwire Native iOS/
+      :apple
+    else
+      raise ArgumentError, "Missing Hotwire Native platform marker"
+    end
+  end
+
+  # == Callbacks ==
 
   sig { void }
   def set_device
@@ -31,18 +47,6 @@ module DeviceTracking
       end
       device.save!
       Current.device = device
-    end
-  end
-
-  sig { returns(Symbol) }
-  def parse_device_platform
-    case request.user_agent
-    when /Hotwire Native Android/
-      :google
-    when /Hotwire Native iOS/
-      :apple
-    else
-      raise ArgumentError, "Missing Hotwire Native platform marker"
     end
   end
 end

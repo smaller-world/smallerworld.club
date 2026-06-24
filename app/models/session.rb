@@ -29,6 +29,17 @@ class Session < ApplicationRecord
   belongs_to :user
   belongs_to :phone_number_verification_request
 
+  sig { returns(User) }
+  def user!
+    user or raise "Missing user"
+  end
+
+  sig { returns(PhoneNumberVerificationRequest) }
+  def phone_number_verification_request!
+    phone_number_verification_request or
+      raise "Missing associated phone number verification request"
+  end
+
   # == Validations ==
 
   validate :validate_verified_phone_number_verification_request

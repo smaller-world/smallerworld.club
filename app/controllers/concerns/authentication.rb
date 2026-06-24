@@ -14,9 +14,14 @@ module Authentication
 
     T.bind(self, T.class_of(ApplicationController))
 
+    # == Configuration ==
+
+    helper_method :authenticated?
+
+    # == Filters ==
+
     before_action :resume_session
     before_action :require_authentication
-    helper_method :authenticated?
   end
 
   class_methods do
@@ -24,6 +29,8 @@ module Authentication
     extend T::Helpers
 
     requires_ancestor { T.class_of(ApplicationController) }
+
+    # == Filters ==
 
     sig { params(options: T.untyped).void }
     def allow_unauthenticated_access(**options)
@@ -33,19 +40,11 @@ module Authentication
 
   private
 
+  # == Methods ==
+
   sig { returns(T::Boolean) }
   def authenticated?
     !!resume_session
-  end
-
-  sig { void }
-  def require_authentication
-    request_authentication unless Current.session
-  end
-
-  sig { returns(T.nilable(Session)) }
-  def resume_session
-    Current.session ||= find_session_by_cookie
   end
 
   sig { returns(T.nilable(Session)) }
@@ -96,5 +95,17 @@ module Authentication
   def terminate_session
     Current.session&.destroy
     cookies.delete(:session_id)
+  end
+
+  # == Callbacks ==
+
+  sig { returns(T.nilable(Session)) }
+  def resume_session
+    Current.session ||= find_session_by_cookie
+  end
+
+  sig { void }
+  def require_authentication
+    request_authentication unless Current.session
   end
 end

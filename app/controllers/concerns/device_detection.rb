@@ -13,6 +13,8 @@ module DeviceDetection
 
     T.bind(self, T.class_of(ActionController::Base))
 
+    # == Configuration ==
+
     helper_method :ios_browser?
   end
 
