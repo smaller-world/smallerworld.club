@@ -131,7 +131,9 @@ class Post < ApplicationRecord
   before_validation :chomp_rich_text_body!, if: :body?
   before_validation :unset_key_colors, if: :all_key_colors_set?
   before_save :set_plain_body
-  after_commit :touch_world_cards, on: [ :create, :destroy ]
+  after_commit :touch_world_cards,
+    on: [ :create, :destroy ],
+    if: :should_touch_world_cards?
 
   # == Scopes ==
 
@@ -184,6 +186,29 @@ class Post < ApplicationRecord
   private
 
   # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def should_touch_world_cards?
+    if previously_new_record? && v1_attributes?
+      return false
+    end
+
+    previously_latest_post?
+  end
+
+  sig { returns(T::Boolean) }
+  def previously_latest_post?
+    world = world!
+    if (latest_post_created_at = world.posts.maximum(:created_at))
+      if destroyed?
+        created_at > latest_post_created_at
+      else
+        created_at == latest_post_created_at
+      end
+    else
+      true
+    end
+  end
 
   sig { returns(T::Boolean) }
   def all_key_colors_set?

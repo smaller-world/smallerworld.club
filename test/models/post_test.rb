@@ -63,4 +63,66 @@ class PostTest < ActiveSupport::TestCase
 
     assert_not_includes Post.visible_to(@friend), post
   end
+
+  test "creating the latest post touches the world's cards" do
+    card = @world.cards.create!(granted_key_color: :blue)
+
+    assert_card_touched(card) do
+      create_post(world: @world)
+    end
+  end
+
+  test "creating a post that is not the latest leaves the world's cards untouched" do
+    card = @world.cards.create!(granted_key_color: :blue)
+    create_post(world: @world) # the latest post
+
+    assert_card_untouched(card) do
+      create_post(world: @world, created_at: 1.day.ago)
+    end
+  end
+
+  test "destroying the latest post touches the world's cards" do
+    card = @world.cards.create!(granted_key_color: :blue)
+    create_post(world: @world, created_at: 2.days.ago)
+    latest = create_post(world: @world, created_at: 1.day.ago)
+
+    assert_card_touched(card) do
+      latest.destroy!
+    end
+  end
+
+  test "destroying a post that is not the latest leaves the world's cards untouched" do
+    card = @world.cards.create!(granted_key_color: :blue)
+    older = create_post(world: @world, created_at: 2.days.ago)
+    create_post(world: @world, created_at: 1.day.ago) # the latest post
+
+    assert_card_untouched(card) do
+      older.destroy!
+    end
+  end
+
+  private
+
+  # Asserts the block touches `card` (advances `updated_at`). Time is advanced
+  # so the touch writes a strictly later timestamp than the one captured before.
+  def assert_card_touched(card, &block)
+    before = card.reload.updated_at
+    travel(1.minute, &block)
+    assert_operator(
+      card.reload.updated_at,
+      :>,
+      before,
+      "expected the card to be touched",
+    )
+  end
+
+  def assert_card_untouched(card, &block)
+    before = card.reload.updated_at
+    travel(1.minute, &block)
+    assert_equal(
+      before,
+      card.reload.updated_at,
+      "expected the card to be left untouched",
+    )
+  end
 end
