@@ -27,7 +27,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
       div(class: "flex flex-col gap-1.5") do
         Components::Alert(**compact_mix(
           {
-            class: current_import_complete? ? "pr-30" : "pr-28",
+            class: current_import_finished? ? "pr-30" : "pr-28",
             data: {
               action: token_list(
                 "user-focus:active@document->frame#reload" => @import_job.present?,
@@ -39,7 +39,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
         )) do |alert|
           alert.title do
             if currently_importing?
-              if current_import_complete?
+              if current_import_finished?
                 "import complete!"
               else
                 "importing posts..."
@@ -62,13 +62,13 @@ class Components::WorldV1PostsImportAlert < Components::Base
               submit_button_for(
                 form,
                 size: :sm,
-                disabled: currently_importing? || current_import_complete?,
+                disabled: currently_importing? || current_import_finished?,
                 class: class_names(
                   "loading *:invisible" =>
-                    currently_importing? && !current_import_complete?,
+                    currently_importing? && !current_import_finished?,
                 ),
               ) do |button|
-                if current_import_complete?
+                if current_import_finished?
                   button.inline_start_icon("huge/checkmark-circle-01")
                   span { "imported" }
                 else
@@ -107,11 +107,10 @@ class Components::WorldV1PostsImportAlert < Components::Base
   end
 
   sig { returns(T.untyped) }
-  def current_import_complete?
+  def current_import_finished?
     T.let(
       if (import_job = @import_job)
-        imported_count, total_count = import_job_progress(import_job)
-        imported_count == total_count
+        import_job.finished?
       else
         false
       end,
@@ -170,7 +169,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
 
   sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
   def reset_frame_after_import_attributes
-    if current_import_complete?
+    if current_import_finished?
       {
         data: {
           controller: "connection",
