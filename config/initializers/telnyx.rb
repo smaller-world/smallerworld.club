@@ -6,7 +6,7 @@ class Smallerworld::Application
   def telnyx_client
     @telnyx_client ||= T.let(
       Telnyx::Client.new(
-        api_key: Rails.application.credentials.telnyx!.api_key!,
+        api_key: credentials.telnyx!.api_key!,
       ),
       T.nilable(Telnyx::Client),
     )
@@ -14,6 +14,6 @@ class Smallerworld::Application
 
   sig { returns(String) }
   def telnyx_phone_number
-    Rails.application.credentials.telnyx!.phone_number!
+    credentials.telnyx!.phone_number!
   end
 end

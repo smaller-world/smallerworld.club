@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 module Passkit
@@ -33,14 +33,28 @@ module Passkit
 
     # == Attributes ==
 
+    sig { override.returns(Symbol) }
     def pass_type = :eventTicket
+
+    sig { override.returns(String) }
     def background_color = "rgb(255, 255, 255)"
+
+    sig { override.returns(String) }
     def foreground_color = "rgb(12, 12, 9)"
+
+    sig { override.returns(String) }
     def label_color = "rgb(124, 124, 103)"
+
+    sig { override.returns(String) }
     def organization_name = @world.name
+
+    sig { override.returns(String) }
     def logo_text = @world.name
+
+    sig { override.returns(T::Boolean) }
     def suppress_strip_shine = false # rubocop:disable Naming/PredicateMethod
 
+    sig { override.returns(String) }
     def description
       if @cardholder
         "you're a part of #{@world.name}"
@@ -49,6 +63,7 @@ module Passkit
       end
     end
 
+    sig { override.returns(T::Array[T::Hash[Symbol, String]]) }
     def header_fields
       fields = []
       if (value = @world.posts.order(created_at: :desc).pick(:created_at))
@@ -64,6 +79,7 @@ module Passkit
       fields
     end
 
+    sig { override.returns(T::Array[T::Hash[Symbol, String]]) }
     def secondary_fields
       field = if @cardholder
         {
@@ -81,6 +97,7 @@ module Passkit
       [ field ]
     end
 
+    sig { override.returns(T::Array[T::Hash[Symbol, String]]) }
     def auxiliary_fields
       fields = []
       fields << {
@@ -97,10 +114,11 @@ module Passkit
           value: post.card_snippet,
         }
       end
+      fields
     end
 
+    sig { override.returns(T::Array[T::Hash[Symbol, String]]) }
     def back_fields
-      receives_app_notifications = @card.device&.push_token?
       fields = []
       if (post = @world.posts.chronological.last)
         field = {
@@ -108,7 +126,7 @@ module Passkit
           label: "✍️ last post in #{@world.name}",
           value: post.snippet,
         }
-        if !receives_app_notifications && !@card.discarded?
+        if @card.device&.push_token? && !@card.discarded?
           field["changeMessage"] = "%@"
         end
         fields << field
@@ -118,14 +136,14 @@ module Passkit
         label: "🛟 contact smaller world",
         value: "team@smallerworld.club",
       }
-      if receives_app_notifications
+      if @card.device
         world_url = shortlinked_url_helpers.world_url(@world)
         fields << {
           key: "world_link",
           label: "🔗 world link",
           value: world_url,
           "attributedValue" => tag.a(
-            "open #{@world.name} in the app",
+            "open #{@world.name} in the app".html_safe, # rubocop:disable Rails/OutputSafety
             href: world_url,
           ),
           "dataDetectorTypes" => [ "PKDataDetectorTypeLink" ],
@@ -139,6 +157,7 @@ module Passkit
       fields
     end
 
+    sig { override.returns(T::Array[T::Hash[Symbol, String]]) }
     def barcodes
       card_id = @card.short_id
       [
@@ -151,12 +170,24 @@ module Passkit
       ]
     end
 
+    sig { override.returns(T.nilable(String)) }
     def relevant_date
-      @card.relevant_date
+      @card.relevant_date&.iso8601
     end
 
+    sig { override.returns(T::Boolean) }
     def voided # rubocop:disable Naming/PredicateMethod
       @card.discarded?
+    end
+
+    sig { override.returns(T::Array[String]) }
+    def associated_store_identifiers
+      [ Smallerworld.application.ios_store_identifier ]
+    end
+
+    sig { override.returns(T.nilable(String)) }
+    def app_launch_url
+      shortlinked_url_helpers.world_url(@world)
     end
 
     private
@@ -170,10 +201,13 @@ module Passkit
 
     sig { returns(String) }
     def app_hostname
-      @app_hostname ||= begin
-        uri = Addressable::URI.parse(shortlinked_url_helpers.root_url)
-        uri.hostname
-      end
+      @app_hostname ||= T.let(
+        begin
+          uri = Addressable::URI.parse(shortlinked_url_helpers.root_url)
+          uri.hostname
+        end,
+        T.nilable(String),
+      )
     end
   end
 end

@@ -5,18 +5,18 @@ class Smallerworld::Application
   sig { returns(String) }
   def turnstile_site_key
     if Rails.env.production?
-      Rails.application.credentials.turnstile!.site_key!
+      credentials.turnstile!.site_key!
     else
-      Rails.configuration.x.turnstile_test_site_keys.always_passes_key
+      config.x.turnstile_test_site_keys.always_passes_key
     end
   end
 
   sig { returns(String) }
   def turnstile_secret_key
     if Rails.env.production?
-      Rails.application.credentials.turnstile!.secret_key!
+      credentials.turnstile!.secret_key!
     else
-      Rails.configuration.x.turnstile_test_secret_keys.always_passes_key
+      config.x.turnstile_test_secret_keys.always_passes_key
     end
   end
 
