@@ -29,11 +29,14 @@
 class Post < ApplicationRecord
   include NormalizesText
   include NormalizesArrays
-
+  include Noticeable
   include ReplyUrl
-  include Notifications
   include WorldItemBroadcasts
   include V1Importing
+
+  # == Configuration ==
+
+  NOTIFICATION_DELIVERY_DELAY = T.let(1.minute, ActiveSupport::Duration)
 
   # == Attributes ==
 
@@ -134,6 +137,8 @@ class Post < ApplicationRecord
   after_commit :touch_world_cards,
     on: [ :create, :destroy ],
     if: :should_touch_world_cards?
+  after_create_commit :create_notifications_for_world_key_recipients!,
+    unless: :v1_attributes?
 
   # == Scopes ==
 
@@ -145,6 +150,19 @@ class Post < ApplicationRecord
     where(owned.arel.exists.or(keyed.arel.exists))
   }
   scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
+
+  # == Notifications ==
+
+  sig { override.params(recipient: User).returns(Notification::Message) }
+  def notification_message(recipient:)
+    world = world!
+    Notification::Message.new(
+      target_url: [ world, anchor: dom_id(self) ],
+      title: world.name,
+      body: snippet,
+      world:,
+    )
+  end
 
   # == Snippets ==
 
@@ -247,5 +265,21 @@ class Post < ApplicationRecord
   sig { void }
   def unset_key_colors
     self.key_colors = nil
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def create_notifications_for_world_key_recipients!
+    keys = world!.keys.accepted
+    if (colors = key_colors)
+      keys = keys.where(color: colors)
+    end
+    keys.find_each do |key|
+      notifications.create!(
+        recipient: key.recipient!,
+        delivery_delay: NOTIFICATION_DELIVERY_DELAY,
+      )
+    end
   end
 end
