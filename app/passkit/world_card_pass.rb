@@ -180,15 +180,15 @@ module Passkit
       @card.discarded?
     end
 
-    sig { override.returns(T::Array[Integer]) }
-    def associated_store_identifiers
-      [ Smallerworld.application.ios_store_identifier ]
-    end
-
-    sig { override.returns(T.nilable(String)) }
-    def app_launch_url
-      shortlinked_url_helpers.world_url(@world)
-    end
+    # TODO: Enable these card attributes when the app is live on the store.
+    # sig { override.returns(T::Array[Integer]) }
+    # def associated_store_identifiers
+    #   [ Smallerworld.application.ios_store_identifier ]
+    # end
+    # sig { override.returns(T.nilable(String)) }
+    # def app_launch_url
+    #   shortlinked_url_helpers.world_url(@world)
+    # end
 
     private
 
