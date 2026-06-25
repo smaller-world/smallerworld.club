@@ -21,10 +21,7 @@ class Components::DevicePassesForm < Components::Base
         {
           data: {
             controller: "passes-bridge connection device-passes-form",
-            action: [
-              "connection:connect->passes-bridge#get",
-              "passes-bridge:retrieved->device-passes-form#submitPasses",
-            ],
+            action: "passes-bridge:received->device-passes-form#submitPasses",
           },
           html: {
             hidden: true,

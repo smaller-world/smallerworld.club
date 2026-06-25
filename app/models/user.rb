@@ -184,6 +184,7 @@ class User < ApplicationRecord
           .select("DISTINCT ON (world_cards.world_id) world_cards.id")
           .order("world_cards.world_id", created_at: :desc),
       )
+      .where.not(id: owned_worlds.select(:id))
       .where.not(matching_keys.arel.exists)
   end
 

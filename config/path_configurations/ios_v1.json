@@ -37,6 +37,7 @@
     {
       "patterns": ["\/posts\/new", "^\/posts\/[\\w-]+\/edit$"],
       "properties": {
+        "modal_style": "page_sheet",
         "modal_dismiss_gesture_enabled": false
       }
     },

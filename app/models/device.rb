@@ -32,7 +32,7 @@ class Device < ApplicationRecord
 
   # == Attributes ==
 
-  enumerize :platform, in: [ :apple, :google ]
+  enumerize :platform, in: DeviceDetection::HOTWIRE_NATIVE_PLATFORMS
 
   sig { returns(String) }
   def push_token!

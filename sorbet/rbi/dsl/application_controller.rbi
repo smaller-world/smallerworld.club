@@ -34,7 +34,13 @@ class ApplicationController
     def authenticated?; end
 
     sig { returns(T::Boolean) }
-    def ios_browser?; end
+    def hotwire_native_android?; end
+
+    sig { returns(T::Boolean) }
+    def hotwire_native_ios?; end
+
+    sig { returns(T::Boolean) }
+    def hotwire_native_ios_app_on_mac?; end
   end
 
   class HelperProxy < ::ActionView::Base

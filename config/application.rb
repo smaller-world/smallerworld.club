@@ -47,7 +47,7 @@ module Smallerworld
     config.x.turnstile_test_secret_keys.always_passes_key = "1x0000000000000000000000000000000AA"
     config.x.turnstile_test_secret_keys.always_fails_key  = "2x0000000000000000000000000000000AA"
     config.x.turnstile_test_secret_keys.already_spent_key = "3x0000000000000000000000000000000AA"
-    config.x.turnstile_test_site_keys.always_passes_key = "1x0000000000000000000000000000000AA"
+    config.x.turnstile_test_site_keys.always_passes_key = "1x00000000000000000000AA"
 
     # config.x.instagram_url = "https://instagram.com/smallerworld"
     # config.x.appleid.signin_scope = "email name"

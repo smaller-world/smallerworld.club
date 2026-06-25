@@ -38,8 +38,8 @@ class Components::WorldV1PostsImportAlert < Components::Base
           @attributes,
         )) do |alert|
           alert.title do
-            if currently_importing?
-              if current_import_finished?
+            if @import_job
+              if @import_job.finished?
                 "import complete!"
               else
                 "importing posts..."
@@ -64,8 +64,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
                 size: :sm,
                 disabled: currently_importing? || current_import_finished?,
                 class: class_names(
-                  "loading *:invisible" =>
-                    currently_importing? && !current_import_finished?,
+                  "loading *:invisible" => @import_job && !@import_job.finished?,
                 ),
               ) do |button|
                 if current_import_finished?

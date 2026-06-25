@@ -34,7 +34,7 @@ class ActionDispatch::IntegrationTest
   include WorldTestHelper
 end
 
-# == Application ==
+# == Application Shims ==
 
 class ActionDispatch::Routing::RouteSet
   sig do
@@ -74,8 +74,17 @@ class Components::Base
   sig { returns(T::Boolean) }
   def authenticated?; end
 
+  sig { returns(Symbol) }
+  def hotwire_native_platform; end
+
   sig { returns(T::Boolean) }
   def hotwire_native_app?; end
+
+  sig { returns(T::Boolean) }
+  def hotwire_native_ios?; end
+
+  sig { returns(T::Boolean) }
+  def hotwire_native_ios_app_on_mac?; end
 
   sig { returns(T::Boolean) }
   def ios_browser?; end

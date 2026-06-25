@@ -55,7 +55,7 @@ class Components::AppLayout < Components::Base
 
     doctype
 
-    root_element(:html) do
+    root_element(:html, data: { hotwire_native_platform: hotwire_native_platform }) do
       head do
         if (site_title = self.site_title)
           title { site_title }

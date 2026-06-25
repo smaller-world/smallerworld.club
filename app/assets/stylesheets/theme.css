@@ -214,7 +214,12 @@
 }
 
 @layer base {
+  html[data-hotwire-native-platform="ios-app-on-mac"] {
+    font-size: var(--text-xl);
+  }
+
   body {
+    /*@apply ios-app-on-mac:text-xl;*/
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
   }

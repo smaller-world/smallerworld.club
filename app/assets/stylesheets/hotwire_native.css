@@ -1,11 +1,23 @@
 @custom-variant native {
-  html[data-hotwire-native] & {
+  html[data-hotwire-native-platform] & {
     @slot;
   }
 }
 
 @custom-variant not-native {
-  html:not([data-hotwire-native]) & {
+  html:not([data-hotwire-native-platform]) & {
+    @slot;
+  }
+}
+
+@custom-variant ios {
+  html[data-hotwire-native-platform="ios"] & {
+    @slot;
+  }
+}
+
+@custom-variant ios-app-on-mac {
+  html[data-hotwire-native-platform="ios-app-on-mac"] & {
     @slot;
   }
 }

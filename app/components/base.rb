@@ -33,7 +33,10 @@ class Components::Base < Phlex::HTML
   register_value_helper :auto_link
   register_value_helper :authenticated?
   register_value_helper :allowed_to?
+  register_value_helper :hotwire_native_platform
   register_value_helper :hotwire_native_app?
+  register_value_helper :hotwire_native_ios?
+  register_value_helper :hotwire_native_ios_app_on_mac?
   register_value_helper :ios_browser?
 
   # == Errors ==
