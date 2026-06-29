@@ -31,7 +31,7 @@ class Components::DevicePushTokenForm < Components::Base
           notification_token_bridge_provisional_value: true,
           action: token_list(
             "connection:connect->notification-token-bridge#request",
-            "notification-token-bridge:retrieved->push-token-input#setToken",
+            "notification-token-bridge:retrieved->push-token-input#setValue",
             "push-token-input:changed->submit#request",
           ),
         },

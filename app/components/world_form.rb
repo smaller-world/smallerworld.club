@@ -18,7 +18,7 @@ class Components::WorldForm < Components::Base
       {
         class: "flex flex-col gap-4",
         data: {
-          controller: "world-form haptic-bridge",
+          controller: "create-world-button haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
@@ -31,8 +31,8 @@ class Components::WorldForm < Components::Base
           placeholder: @world.owner!.default_world_name,
           maxlength: World::NAME_MAX_LENGTH,
           data: {
-            world_form_target: "nameInput",
-            action: "world-form#updateSubmitButtonLabel",
+            create_world_button_target: "nameInput",
+            action: "create-world-button#updateLabel",
           },
         )
         f.error
@@ -112,7 +112,7 @@ class Components::WorldForm < Components::Base
       submit_button_for(form, size: :lg) do |button|
         if @world.new_record?
           button.inline_start_icon("huge/plus-sign-square")
-          span(data: { world_form_target: "submitButtonLabel" }) do
+          span(data: { create_world_button_target: "label" }) do
             "create world"
           end
         else

@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 export default class PushTokenInputController extends Controller<HTMLInputElement> {
   // == Actions ==
 
-  setToken({ detail }: CustomEvent<{ token: string }>): void {
+  setValue({ detail }: CustomEvent<{ token: string }>): void {
     const { value: initialValue } = this.element;
     const { token } = detail;
     this.element.value = token;

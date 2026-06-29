@@ -26,13 +26,13 @@ class Components::ReplyInitiationForm < Components::Base
       url: [ @post, :reply_initiations ],
       method: :post,
       data: {
-        controller: "reply-initiation-form haptic-bridge",
+        controller: "platform-dropdown haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",
       },
       **@attributes,
     ) do |form|
       form.hidden_field(:platform, required: true, data: {
-        reply_initiation_form_target: "platformInput",
+        platform_dropdown_target: "input",
       })
 
       Components::DropdownMenu() do |menu|
@@ -58,7 +58,7 @@ class Components::ReplyInitiationForm < Components::Base
         menu.with_content(anchor: [ :bottom ]) do |menu_content|
           ReplyInitiation.platform.values.each do |platform|
             menu_content.button_item(data: {
-              action: "reply-initiation-form#setPlatformValue",
+              action: "platform-dropdown#setInputValue",
               platform:,
             }) do
               platform_icon(platform)

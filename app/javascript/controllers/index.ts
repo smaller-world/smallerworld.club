@@ -16,8 +16,8 @@ import ClipboardController from "./clipboard_controller";
 import ComboboxController from "./combobox_controller";
 import ConfettiController from "./confetti_controller";
 import ConnectionController from "./connection_controller";
+import CreateWorldButtonController from "./create_world_button_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
-import DevicePassesFormController from "./device_passes_form_controller";
 import DialogController from "./dialog_controller";
 import DisableWhileSubmittingController from "./disable_while_submitting_controller";
 import DisabledController from "./disabled_controller";
@@ -36,9 +36,10 @@ import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
+import PlatformDropdownController from "./platform_dropdown_controller";
+import PostDraftController from "./post_draft_controller";
 import PushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
-import ReplyInitiationFormController from "./reply_initiation_form_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
@@ -51,7 +52,6 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
-import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -112,11 +112,6 @@ application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
 application.register("select", SelectController);
 
-// == Forms
-application.register("device-passes-form", DevicePassesFormController);
-application.register("world-form", WorldFormController);
-application.register("reply-initiation-form", ReplyInitiationFormController);
-
 // == Components
 application.register("dropdown-menu", DropdownMenuController);
 application.register("dialog", DialogController);
@@ -125,4 +120,6 @@ application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
 
-// application.register("maintain-scroll", MaintainScrollController);
+application.register("post-draft", PostDraftController);
+application.register("platform-dropdown", PlatformDropdownController);
+application.register("create-world-button", CreateWorldButtonController);

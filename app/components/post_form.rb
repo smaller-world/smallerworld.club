@@ -14,12 +14,20 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
+    world = @post.world!
     form_with(model:, **mix(
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "submit haptic-bridge",
-          action: "turbo:submit-end->haptic-bridge#vibrate",
+          controller: token_list(
+            "submit haptic-bridge",
+            # "post-draft" => @post.new_record?,
+          ),
+          action: [
+            "turbo:submit-end->haptic-bridge#vibrate",
+            "turbo:submit-end->post-draft#clear",
+          ],
+          post_draft_world_id_value: world.id,
         },
       },
       @attributes,
@@ -52,10 +60,22 @@ class Components::PostForm < Components::Base
 
         Components::FieldGroup(class: "flex-row gap-3") do
           field_for(form, :emoji, class: "flex-0") do |f|
-            f.emoji_input(**f.error_tooltip_attributes)
+            f.emoji_input(**compact_mix(
+              {
+                data: {
+                  action: "change->post-draft#save",
+                },
+              },
+              error_tooltip_attributes_for(form, :emoji),
+            ))
           end
           field_for(form, :title, class: "flex-1") do |f|
-            f.text_input(placeholder: "a title!")
+            f.text_input(
+              placeholder: "a title!",
+              data: {
+                action: "change->post-draft#save",
+              },
+            )
             f.error
           end
         end
@@ -65,7 +85,11 @@ class Components::PostForm < Components::Base
             required: true,
             class: "min-h-36",
             data: {
-              action: "keydown.meta+enter->submit#request",
+              action: [
+                "lexxy:initialize->post-draft#restore",
+                "lexxy:change->post-draft#save",
+                "keydown.meta+enter->submit#request",
+              ],
             },
           )
           f.description(class: "text-center text-xs mt-px") do
@@ -120,13 +144,16 @@ class Components::PostForm < Components::Base
             class: "grid grid-cols-2 mt-1",
             dropzone_class: "aspect-square",
             preview_fit: :contain,
+            data: {
+              action: "change->post-draft#save",
+            },
           )
           f.error
         end
       end
 
       div(class: "flex flex-col items-stretch gap-3") do
-        Components::FieldSet() do
+        Components::FieldSet(data: { action: "change->post-draft#save" }) do
           radio_group_for(form, :quiet, class: "grid-cols-2") do |radio_group|
             quiet_choice_card_for(:off, radio_group:) do |field|
               div(class: "flex items-center gap-1.5") do
@@ -172,6 +199,23 @@ class Components::PostForm < Components::Base
       [ world, @post ]
     else
       @post
+    end
+  end
+
+  sig do
+    params(form: PhlexRailsFormBuilder, field: Symbol)
+      .returns(T.nilable(T::Hash[Symbol, T.untyped]))
+  end
+  def error_tooltip_attributes_for(form, field)
+    if (messages = full_error_messages_for(form, field)) && (message = messages.first)
+      {
+        data: {
+          controller: "tippy connection",
+          tippy_content_value: message,
+          tippy_placement_value: "bottom",
+          action: "connection:connect->tippy#show",
+        },
+      }
     end
   end
 

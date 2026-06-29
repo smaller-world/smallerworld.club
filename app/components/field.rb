@@ -327,24 +327,6 @@ class Components::Field < Components::Base
     render Components::Select.new(form: @form, field: @field, **attributes, &content)
   end
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def error_tooltip_attributes
-    if @form && @field &&
-        (messages = full_error_messages_for(@form, @field)) &&
-        (message = messages.first)
-      {
-        data: {
-          controller: "tippy connection",
-          tippy_content_value: message,
-          tippy_placement_value: "bottom",
-          action: "connection:connect->tippy#show",
-        },
-      }
-    else
-      {}
-    end
-  end
-
   private
 
   # == Helpers ==

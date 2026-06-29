@@ -1,50 +1,42 @@
-import { Controller } from "@hotwired/stimulus";
-import { isEmpty } from "lodash-es";
-import invariant from "tiny-invariant";
+// NOTE: Currently unused.
+// export default class DevicePassesFormController extends Controller<HTMLFormElement> {
+//   // == Targets ==
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+//   static targets = [...SubmitController.targets, "inputTemplate", "input"];
+//   declare readonly inputTemplateTarget: HTMLTemplateElement;
+//   declare readonly hasInputTemplateTarget: boolean;
+//   declare readonly inputTargets: HTMLCollectionOf<HTMLInputElement>;
 
-import type { PassData } from "./passes_bridge_controller";
-import SubmitController from "./submit_controller";
+//   // == Lifecycle ==
 
-export default class DevicePassesFormController extends Controller<HTMLFormElement> {
-  // == Targets ==
+//   connect(): void {
+//     super.connect();
+//     if (!this.hasInputTemplateTarget) {
+//       throw new Error("Missing inputTemplate target");
+//     }
+//     addCleanupAction(this, "removeInputs");
+//   }
 
-  static targets = [...SubmitController.targets, "inputTemplate", "input"];
-  declare readonly inputTemplateTarget: HTMLTemplateElement;
-  declare readonly hasInputTemplateTarget: boolean;
-  declare readonly inputTargets: HTMLCollectionOf<HTMLInputElement>;
+//   // == Actions ==
 
-  // == Lifecycle ==
+//   submitPasses(event: CustomEvent<{ passes: PassData[] }>): void {
+//     const { passes } = event.detail;
+//     if (isEmpty(passes)) {
+//       return;
+//     }
+//     for (const pass of passes) {
+//       const { firstChild } = this.inputTemplateTarget.content;
+//       invariant(firstChild instanceof HTMLInputElement);
+//       const input = firstChild.cloneNode() as HTMLInputElement;
+//       input.value = pass.serialNumber;
+//       this.element.appendChild(input);
+//     }
+//     this.element.requestSubmit();
+//   }
 
-  connect(): void {
-    super.connect();
-    if (!this.hasInputTemplateTarget) {
-      throw new Error("Missing inputTemplate target");
-    }
-    addCleanupAction(this, "removeInputs");
-  }
-
-  // == Actions ==
-
-  submitPasses(event: CustomEvent<{ passes: PassData[] }>): void {
-    const { passes } = event.detail;
-    if (isEmpty(passes)) {
-      return;
-    }
-    for (const pass of passes) {
-      const { firstChild } = this.inputTemplateTarget.content;
-      invariant(firstChild instanceof HTMLInputElement);
-      const input = firstChild.cloneNode() as HTMLInputElement;
-      input.value = pass.serialNumber;
-      this.element.appendChild(input);
-    }
-    this.element.requestSubmit();
-  }
-
-  removeInputs(): void {
-    for (const input of this.inputTargets) {
-      input.remove();
-    }
-  }
-}
+//   removeInputs(): void {
+//     for (const input of this.inputTargets) {
+//       input.remove();
+//     }
+//   }
+// }
