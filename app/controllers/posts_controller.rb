@@ -100,7 +100,7 @@ class PostsController < ApplicationController
         post_type_id = params.require(:post).fetch(:type_id)
         post_type = world.post_types.find(post_type_id)
         post_params = params.expect(
-          post: [ :emoji, :title, :body, images: [] ],
+          post: [ :emoji, :title, :body, :quiet, images: [] ],
         )
         post = post_type.posts.build(**post_params)
         if post.save
@@ -124,7 +124,7 @@ class PostsController < ApplicationController
         post = find_post
         authorize!(post)
         post_params = params.expect(
-          post: [ :type_id, :emoji, :title, :body, images: [] ],
+          post: [ :type_id, :emoji, :title, :body, :quiet, images: [] ],
         )
         if post.update(post_params)
           world = post.world!
