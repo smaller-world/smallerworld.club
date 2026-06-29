@@ -28,6 +28,7 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class WorldInvitation < ApplicationRecord
   include NormalizesPhoneNumber
+  include Noticeable
 
   # == Associations ==
 
@@ -78,6 +79,21 @@ class WorldInvitation < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_recipient_phone_number, unless: :recipient_phone_number?
+  after_create_commit :create_notifications_for_recipient!, if: :recipient_id?
+
+  # == Notifications ==
+
+  sig { override.params(recipient: User).returns(Notification::Message) }
+  def notification_message(recipient:)
+    world = world!
+    world_owner = world_owner!
+    Notification::Message.new(
+      target_url: :home,
+      title: "you're invited to #{world.name}!",
+      body: "#{world_owner.name} invited you to join their world",
+      world:,
+    )
+  end
 
   # == World Keys ==
 
@@ -99,6 +115,13 @@ class WorldInvitation < ApplicationRecord
   private
 
   # == Callbacks ==
+
+  sig { void }
+  def create_notifications_for_recipient!
+    if (recipient = self.recipient)
+      notifications.create!(recipient:)
+    end
+  end
 
   sig { void }
   def set_recipient_phone_number

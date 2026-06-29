@@ -452,6 +452,20 @@ class WorldInvitation
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_world_owner!(*args, &blk); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def notification_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def notification_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldInvitation` class because it declared `has_many :notifications`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Notification::PrivateCollectionProxy) }
+    def notifications; end
+
+    sig { params(value: T::Enumerable[::Notification]).void }
+    def notifications=(value); end
+
     sig { returns(T.nilable(::User)) }
     def recipient; end
 
