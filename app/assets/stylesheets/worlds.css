@@ -11,30 +11,27 @@
     @apply border border-accent-foreground/80 dark:border-muted-foreground/80 dark:shadow-muted-foreground/80;
     @apply size-32 [--shadow-spread:18px];
 
-    &[data-size="sm"],
     &[data-world-icon-size="sm"],
-    &[data-size="xs"],
     &[data-world-icon-size="xs"] {
       @apply shadow-black/20 dark:border-muted-foreground/50 dark:shadow-muted-foreground/50;
     }
 
-    &[data-size="sm"],
     &[data-world-icon-size="sm"] {
       @apply size-20 [--shadow-spread:14px];
     }
 
-    &[data-size="xs"],
     &[data-world-icon-size="xs"] {
       @apply size-12 [--shadow-spread:10px];
     }
   }
 
   .world-icon-label {
-    @apply text-sm font-semibold;
+    @apply w-full text-center text-sm font-semibold text-balance wrap-break-word;
   }
 
   .world-icon-container {
-    @apply flex flex-col items-center gap-2;
+    @apply flex w-32 flex-col items-center gap-2;
+    @apply has-data-[world-icon-size=sm]:w-20 has-data-[world-icon-size=xs]:w-12;
   }
 
   .world-post-type-field-label {

@@ -102,7 +102,7 @@ class Views::Home::Show < Views::Base
             image_tag(
               world.page_icon_variant,
               class: "world-icon",
-              data: { size: "sm" },
+              data: { world_icon_size: "sm" },
             )
           end
           span(class: "world-icon-label text-xs") do
@@ -120,7 +120,7 @@ class Views::Home::Show < Views::Base
             image_tag(
               world.page_icon_variant,
               class: "world-icon opacity-50",
-              data: { size: "sm" },
+              data: { world_icon_size: "sm" },
             )
             div(class: "absolute inset-0 flex items-center justify-center") do
               Icon("huge/key-01", class: "size-8 text-white")
@@ -143,7 +143,7 @@ class Views::Home::Show < Views::Base
             Icon("huge/qr-code", class: "size-7 text-muted-foreground")
           end
           span(class: "world-icon-label text-xs text-muted-foreground") do
-            "scan to add friend"
+            "join friend's world"
           end
         end
       end
