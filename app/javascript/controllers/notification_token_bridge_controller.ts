@@ -29,7 +29,7 @@ export default class NotificationTokenBridgeController extends BridgeComponent {
       { provisional: this.provisionalValue },
       ({ data }) => {
         const { token } = data;
-        this.dispatch("retrieved", { detail: token });
+        this.dispatch("retrieved", { detail: { token } });
       },
     );
   }

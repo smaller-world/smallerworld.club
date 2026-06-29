@@ -15,7 +15,6 @@ shared:
       encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :encryption_key)&.dump %>
       team_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :team_id) %>
 
-
       # Set this to the number of threads used to process notifications (default: 5).
       # When the pool size is too small a ConnectionPoolTimeoutError will be raised.
       # connection_pool_size: 5
@@ -64,11 +63,3 @@ development: &development
     passkit:
       key_id: <%= Rails.application.credentials.dig(:action_push_native, :apns, :production_key_id) %>
       encryption_key: <%= Rails.application.credentials.dig(:action_push_native, :apns, :production_encryption_key)&.dump %>
-
-test:
-  <<: *development
-
-production:
-  apple:
-    application:
-      connect_to_development_server: false

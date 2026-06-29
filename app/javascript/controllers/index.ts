@@ -36,7 +36,7 @@ import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
-import PushTokenInputController from "./push_token_input";
+import PushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
 import ReplyInitiationFormController from "./reply_initiation_form_controller";
 import SelectController from "./select_controller";
