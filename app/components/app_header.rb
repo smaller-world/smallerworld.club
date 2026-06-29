@@ -40,7 +40,7 @@ class Components::AppHeader < Components::Base
         controller: "haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",
       }) do
-        content.button_item(type: :submit) do
+        content.button_item(type: :submit, disabled: !@current_device.push_token?) do
           Icon("huge/notification-01")
           span { "send test notification" }
         end

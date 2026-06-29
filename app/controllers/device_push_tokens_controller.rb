@@ -27,10 +27,10 @@ class DevicePushTokensController < ApplicationController
         current_device = Current.device!
         device_params = params.expect(device: [ :push_token ])
         if current_device.update(device_params)
-          render turbo_stream: append_log_message(
-            "Device push token updated",
-            level: :info,
-          )
+          render turbo_stream: [
+            append_log_message("Device push token updated", level: :info),
+            turbo_stream.refresh,
+          ]
         else
           message = "Failed to update device push token"
           if (error = current_device.errors.full_messages.first)
