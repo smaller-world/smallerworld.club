@@ -134,7 +134,7 @@ gem "rqrcode", "~> 3.2"
 gem "unicode-emoji", "~> 4.2", require: "unicode/emoji"
 
 # Telnyx client
-gem "telnyx", "~> 5.147"
+gem "telnyx", "~> 5.149"
 gem "standardwebhooks", "~> 1.1"
 
 # Push notification with Action Push Native
