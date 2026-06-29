@@ -6,7 +6,7 @@ require "test_helper"
 class WorldsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @owner = T.let(users(:bob), User)
-    @world = T.let(worlds(:bobs_world_one), World)
+    @world = T.let(create_world(owner: @owner, name: "Bob's World"), World)
   end
 
   test "owner creates a world" do
@@ -57,7 +57,7 @@ class WorldsControllerTest < ActionDispatch::IntegrationTest
 
   test "a friend leaves a world" do
     friend = users(:sue)
-    grant_key(world: @world, recipient: friend, color: :blue)
+    @world.keys.create!(recipient: friend)
 
     sign_in_as(friend)
 

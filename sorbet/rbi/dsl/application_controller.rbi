@@ -41,6 +41,9 @@ class ApplicationController
 
     sig { returns(T::Boolean) }
     def hotwire_native_ios_app_on_mac?; end
+
+    sig { returns(T.nilable(::Symbol)) }
+    def hotwire_native_platform; end
   end
 
   class HelperProxy < ::ActionView::Base

@@ -4,10 +4,11 @@
 class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
-  sig { params(world: World, grant: String).void }
-  def initialize(world:, grant:)
+  sig { params(world: World, grant: String, invitation: WorldInvitation).void }
+  def initialize(world:, grant:, invitation: world.invitations.build)
     @world = world
     @grant = grant
+    @invitation = invitation
     super()
   end
 
@@ -15,26 +16,25 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "you got a key!") do |layout|
+    Components::AppLayout(page_title: "you're invited!") do |layout|
       layout.page_container(
         class: "flex-1 max-w-lg flex flex-col items-center justify-center gap-8",
       ) do
         span(class: "text-lg font-semibold") do
-          "you've been given a key to:"
+          "you've been invited to:"
         end
         div(class: "world-icon-container") do
-          div(class: "relative") do
-            image_tag(@world.page_icon_variant, class: "world-icon")
-            div(class: "absolute inset-0 flex items-center justify-center") do
-              Icon("huge/key-02", class: "size-14 text-white")
-            end
-          end
+          image_tag(@world.page_icon_variant, class: "world-icon")
           span(class: "world-icon-label") do
             @world.name
           end
         end
 
-        Components::AcceptWorldKeyGrantForm(world: @world, grant: @grant)
+        Components::AcceptWorldKeyGrantForm(
+          world: @world,
+          grant: @grant,
+          invitation: @invitation,
+        )
       end
     end
   end

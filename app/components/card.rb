@@ -75,6 +75,7 @@ class Components::Card < Components::Base
   private
 
   # == Helpers ==
+
   sig do
     params(
       name: String,

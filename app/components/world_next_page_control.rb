@@ -4,10 +4,18 @@
 class Components::WorldNextPageControl < Components::Base
   # == Initialization ==
 
-  sig { params(world: World, pagy: T.nilable(Pagy), attributes: T.untyped).void }
-  def initialize(world:, pagy:, **attributes)
+  sig do
+    params(
+      world: World,
+      post_type: T.nilable(PostType),
+      pagy: T.nilable(Pagy),
+      attributes: T.untyped,
+    ).void
+  end
+  def initialize(world:, post_type:, pagy:, **attributes)
     super(**attributes)
     @world = world
+    @post_type = post_type
     @pagy = pagy
   end
 
@@ -19,7 +27,14 @@ class Components::WorldNextPageControl < Components::Base
       target: [ @world, :posts ],
       pagy: @pagy,
       autoclick: true,
-      **@attributes,
+      **mix(
+        {
+          params: {
+            type_id: @post_type&.id,
+          }.compact,
+        },
+        @attributes,
+      ),
     ) do
       Icon("huge/loading-03", data: { icon: "inline-start" })
       span { "load more" }

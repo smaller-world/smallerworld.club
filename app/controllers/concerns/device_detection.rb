@@ -66,7 +66,7 @@ module DeviceDetection
       when /Hotwire Native iOS/
         if user_agent.include?("SmallerWorldIosAppOnMac")
           :ios_app_on_mac
-        elsif user_agent.include?("SmallerWorldIos")
+        else
           :ios
         end
       end,

@@ -8,11 +8,10 @@ class Components::Combobox < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       clear_on_expand: T.nilable(T::Boolean),
       disabled: T::Boolean,
-      default_value: T.nilable(String),
       input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
@@ -22,7 +21,6 @@ class Components::Combobox < Components::Base
     field: nil,
     clear_on_expand: nil,
     disabled: false,
-    default_value: nil,
     input: {},
     **attributes
   )
@@ -37,7 +35,6 @@ class Components::Combobox < Components::Base
       T.nilable(T.proc.params(group: Components::InputGroup).void),
     )
     @content_block = T.let(nil, T.nilable(T.proc.void))
-    @default_value = default_value
   end
 
   # == Component ==
@@ -65,9 +62,9 @@ class Components::Combobox < Components::Base
           },
           @attributes,
         ),
-      ) do |group|
-        @inline_start_addon_block&.call(group)
-        group.input(
+      ) do |input_group|
+        @inline_start_addon_block&.call(input_group)
+        input_group.input(
           disabled: @disabled,
           **mix(
             {
@@ -82,7 +79,7 @@ class Components::Combobox < Components::Base
             @input_options,
           ),
         )
-        group.addon(align: :inline_end) do |addon|
+        input_group.addon(align: :inline_end) do |addon|
           addon.button(
             type: :button,
             size: :icon_xs,
@@ -115,7 +112,7 @@ class Components::Combobox < Components::Base
       content: T.proc.params(content: Components::Combobox::Content).void,
     ).void
   end
-  def with_content(anchor:, anchor_strategy: nil, popover: true, **attributes, &content)
+  def with_content(anchor: [ :bottom, :start ], anchor_strategy: nil, popover: true, **attributes, &content)
     @content_block = ->() {
       render Components::Combobox::Content.new(
         anchor:,

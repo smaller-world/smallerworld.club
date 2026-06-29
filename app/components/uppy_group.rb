@@ -6,7 +6,7 @@ class Components::UppyGroup < Components::Input
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       value: T.nilable(T::Enumerable[ActiveStorage::Blob]),
       required: T::Boolean,

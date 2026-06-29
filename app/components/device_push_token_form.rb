@@ -17,7 +17,7 @@ class Components::DevicePushTokenForm < Components::Base
     form_with(
       model: @current_device,
       url: device_push_token_path,
-      data: { controller: "form" },
+      data: { controller: "submit" },
       html: { hidden: true },
     ) do |form|
       form.hidden_field(
@@ -28,7 +28,7 @@ class Components::DevicePushTokenForm < Components::Base
           action: token_list(
             "push-token-input:connected->notification-token-bridge#request",
             "notification-token-bridge:retrieved->push-token-input#setToken",
-            "push-token-input:token-set->form#requestSubmit",
+            "push-token-input:token-set->submit#request",
           ),
         },
       )

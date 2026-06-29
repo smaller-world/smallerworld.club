@@ -20,15 +20,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html do
         if (current_user = Current.user)
-          world_cards_pending_key_creation = if (pass_serial_numbers = params[:pass_serial_numbers])
-            current_user
-              .world_cards_pending_key_creation(pass_serial_numbers:)
-              .includes(:world)
-          end
-          render Views::Home::Show.new(
-            current_user:,
-            world_cards_pending_key_creation:,
-          )
+          render Views::Home::Show.new(current_user:)
         else
           redirect_to(new_session_path)
         end

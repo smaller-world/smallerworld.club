@@ -7,6 +7,7 @@ class Components::DropdownMenu::Content < Components::Base
   # == Configuration ==
 
   ITEM_VARIANTS = [ :default, :destructive ]
+  ANCHOR_VALUES = [ :top, :right, :bottom, :left, :start, :end ].freeze
 
   # == Initialization ==
 
@@ -20,12 +21,16 @@ class Components::DropdownMenu::Content < Components::Base
     ).void
   end
   def initialize(
-    anchor:,
+    anchor: [ :bottom, :start ],
     anchor_strategy: nil,
     popover: true,
     open: false,
     **attributes
   )
+    if (Array.wrap(anchor) - ANCHOR_VALUES).any?
+      raise InvalidParameter.new(parameter: :anchor, value: anchor)
+    end
+
     super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy

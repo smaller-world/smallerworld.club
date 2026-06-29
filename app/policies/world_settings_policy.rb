@@ -8,6 +8,6 @@ class WorldSettingsPolicy < ApplicationPolicy
   def manage?
     world = T.let(record, World)
     user = user!
-    world.keys.accepted.exists?(recipient: user)
+    world.keys.exists?(recipient: user)
   end
 end

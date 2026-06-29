@@ -6,7 +6,7 @@ class Components::CheckboxGroup < Components::FieldGroup
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       attributes: T.untyped,
     ).void
@@ -25,6 +25,7 @@ class Components::CheckboxGroup < Components::FieldGroup
     ).void
   end
   def field_label_for(value, **attributes, &content)
+    value = value.to_s
     namespace = @field || self.namespace
     if @form
       input_id = @form.field_id(namespace, value)

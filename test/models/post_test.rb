@@ -8,22 +8,22 @@
 #
 #  id            :uuid             not null, primary key
 #  emoji         :string
-#  key_colors    :string           is an Array
 #  plain_body    :text             not null
+#  quiet         :boolean          default(FALSE), not null
 #  title         :string
 #  v1_attributes :jsonb
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  world_id      :uuid             not null
+#  type_id       :uuid             not null
 #
 # Indexes
 #
-#  index_posts_on_key_colors  (key_colors)
-#  index_posts_on_world_id    (world_id)
+#  index_posts_on_quiet    (quiet)
+#  index_posts_on_type_id  (type_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (world_id => worlds.id)
+#  fk_rails_...  (type_id => post_types.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 require "test_helper"
@@ -33,72 +33,44 @@ class PostTest < ActiveSupport::TestCase
     @owner = users(:bob)
     @friend = users(:sue)
     @world = create_world(owner: @owner, name: "Visibility World")
+    @secret_type = @world.post_types.create!(label: "secret diary", secret: true)
   end
 
-  test "the owner sees all posts in their world" do
-    post = create_post(world: @world, key_colors: [ :red ])
+  test "the owner sees posts of every type in their world" do
+    public_post = create_post(world: @world)
+    secret_post = create_post(world: @world, type_label: "secret diary")
 
-    assert_includes Post.visible_to(@owner), post
+    scope = Post.visible_to(@owner)
+    assert_includes scope, public_post
+    assert_includes scope, secret_post
   end
 
-  test "a key holder sees posts scoped to their key color" do
-    grant_key(world: @world, recipient: @friend, color: :blue)
-    visible = create_post(world: @world, key_colors: [ :blue ])
-    hidden = create_post(world: @world, key_colors: [ :red ])
-
-    scope = Post.visible_to(@friend)
-    assert_includes scope, visible
-    assert_not_includes scope, hidden
-  end
-
-  test "a key holder sees posts with no color restriction" do
-    grant_key(world: @world, recipient: @friend, color: :blue)
-    post = create_post(world: @world, key_colors: nil)
+  test "a key holder sees posts of all non-secret types" do
+    @world.keys.create!(recipient: @friend)
+    post = create_post(world: @world)
 
     assert_includes Post.visible_to(@friend), post
   end
 
+  test "a key holder does not see secret posts their key does not grant" do
+    @world.keys.create!(recipient: @friend)
+    secret_post = create_post(world: @world, type_label: "secret diary")
+
+    assert_not_includes Post.visible_to(@friend), secret_post
+  end
+
+  test "a key holder sees secret posts their key grants" do
+    key = @world.keys.create!(recipient: @friend)
+    key.granted_post_types << @secret_type
+    secret_post = create_post(world: @world, type_label: "secret diary")
+
+    assert_includes Post.visible_to(@friend), secret_post
+  end
+
   test "a non-member sees nothing" do
-    post = create_post(world: @world, key_colors: nil)
+    post = create_post(world: @world)
 
     assert_not_includes Post.visible_to(@friend), post
-  end
-
-  test "creating the latest post touches the world's cards" do
-    card = create_registered_card(world: @world)
-
-    assert_card_touched(card) do
-      create_post(world: @world)
-    end
-  end
-
-  test "creating a post that is not the latest leaves the world's cards untouched" do
-    card = create_registered_card(world: @world)
-    create_post(world: @world) # the latest post
-
-    assert_card_untouched(card) do
-      create_post(world: @world, created_at: 1.day.ago)
-    end
-  end
-
-  test "destroying the latest post touches the world's cards" do
-    card = create_registered_card(world: @world)
-    create_post(world: @world, created_at: 2.days.ago)
-    latest = create_post(world: @world, created_at: 1.day.ago)
-
-    assert_card_touched(card) do
-      latest.destroy!
-    end
-  end
-
-  test "destroying a post that is not the latest leaves the world's cards untouched" do
-    card = create_registered_card(world: @world)
-    older = create_post(world: @world, created_at: 2.days.ago)
-    create_post(world: @world, created_at: 1.day.ago) # the latest post
-
-    assert_card_untouched(card) do
-      older.destroy!
-    end
   end
 
   private

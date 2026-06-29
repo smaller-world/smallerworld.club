@@ -1,0 +1,3 @@
+@layer theme, base, base-components, components, utilities;
+
+@import url("application.css") layer(base-components);

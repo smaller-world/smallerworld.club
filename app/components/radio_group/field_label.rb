@@ -7,7 +7,7 @@ class Components::RadioGroup::FieldLabel < Components::FieldLabel
   sig do
     params(
       radio_group: Components::RadioGroup,
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       attributes: T.untyped,

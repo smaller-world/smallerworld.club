@@ -48,6 +48,12 @@
       }
     },
     {
+      "patterns": ["^\/world_keys\/[\\w-]+\/edit$"],
+      "properties": {
+        "modal_style": "medium"
+      }
+    },
+    {
       "patterns": ["^\/scan_qr_code$"],
       "properties": {
         "view_controller": "qr_code_scanner",

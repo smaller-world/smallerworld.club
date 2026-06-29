@@ -11,18 +11,12 @@ class WorldKey
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
-  sig { returns(Enumerize::Value) }
-  def color; end
-
   private
 
   sig { returns(NilClass) }
   def to_ary; end
 
   class << self
-    sig { returns(Enumerize::Attribute) }
-    def color; end
-
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::WorldKey).void)).returns(::WorldKey) }
     def new(attributes = nil, &block); end
   end
@@ -367,6 +361,9 @@ class WorldKey
   end
 
   module GeneratedAssociationMethods
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldInvitation) }
+    def build_invitation(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_recipient(*args, &blk); end
 
@@ -375,6 +372,12 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_world_owner(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldInvitation) }
+    def create_invitation(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldInvitation) }
+    def create_invitation!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_recipient(*args, &blk); end
@@ -395,6 +398,32 @@ class WorldKey
     def create_world_owner!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
+    def granted_post_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def granted_post_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :granted_post_types, through: :post_type_grants`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::PostType::PrivateCollectionProxy) }
+    def granted_post_types; end
+
+    sig { params(value: T::Enumerable[::PostType]).void }
+    def granted_post_types=(value); end
+
+    sig { returns(T.nilable(::WorldInvitation)) }
+    def invitation; end
+
+    sig { params(value: T.nilable(::WorldInvitation)).void }
+    def invitation=(value); end
+
+    sig { returns(T::Boolean) }
+    def invitation_changed?; end
+
+    sig { returns(T::Boolean) }
+    def invitation_previously_changed?; end
+
+    sig { returns(T::Array[T.untyped]) }
     def notification_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
@@ -408,6 +437,20 @@ class WorldKey
     sig { params(value: T::Enumerable[::Notification]).void }
     def notifications=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def post_type_grant_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def post_type_grant_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :post_type_grants`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::PostTypeGrant::PrivateCollectionProxy) }
+    def post_type_grants; end
+
+    sig { params(value: T::Enumerable[::PostTypeGrant]).void }
+    def post_type_grants=(value); end
+
     sig { returns(T.nilable(::User)) }
     def recipient; end
 
@@ -420,6 +463,9 @@ class WorldKey
     sig { returns(T::Boolean) }
     def recipient_previously_changed?; end
 
+    sig { returns(T.nilable(::WorldInvitation)) }
+    def reload_invitation; end
+
     sig { returns(T.nilable(::User)) }
     def reload_recipient; end
 
@@ -428,6 +474,9 @@ class WorldKey
 
     sig { returns(T.nilable(::User)) }
     def reload_world_owner; end
+
+    sig { void }
+    def reset_invitation; end
 
     sig { void }
     def reset_recipient; end
@@ -447,20 +496,45 @@ class WorldKey
     sig { returns(T::Boolean) }
     def world_changed?; end
 
+    sig { returns(T::Array[T.untyped]) }
+    def world_invitation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_invitation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :world_invitations, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldInvitation::PrivateCollectionProxy) }
+    def world_invitations; end
+
+    sig { params(value: T::Enumerable[::WorldInvitation]).void }
+    def world_invitations=(value); end
+
     sig { returns(T.nilable(::User)) }
     def world_owner; end
 
     sig { params(value: T.nilable(::User)).void }
     def world_owner=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def world_post_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_post_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :world_post_types, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::PostType::PrivateCollectionProxy) }
+    def world_post_types; end
+
+    sig { params(value: T::Enumerable[::PostType]).void }
+    def world_post_types=(value); end
+
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
   end
 
   module GeneratedAssociationRelationMethods
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def accepted(*args, &blk); end
-
     sig { returns(PrivateAssociationRelation) }
     def all; end
 
@@ -555,9 +629,6 @@ class WorldKey
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def pending_acceptance(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -619,96 +690,6 @@ class WorldKey
   end
 
   module GeneratedAttributeMethods
-    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at; end
-
-    sig { params(value: T.nilable(::ActiveSupport::TimeWithZone)).returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at=(value); end
-
-    sig { returns(T::Boolean) }
-    def accepted_at?; end
-
-    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def accepted_at_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def accepted_at_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
-    def accepted_at_change; end
-
-    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
-    def accepted_at_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def accepted_at_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
-    def accepted_at_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def accepted_at_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at_previously_was; end
-
-    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
-    def accepted_at_was; end
-
-    sig { void }
-    def accepted_at_will_change!; end
-
-    sig { returns(T.untyped) }
-    def color; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def color=(value); end
-
-    sig { returns(T::Boolean) }
-    def color?; end
-
-    sig { returns(T.untyped) }
-    def color_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def color_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def color_came_from_user?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def color_change; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def color_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def color_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def color_in_database; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def color_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def color_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def color_previously_was; end
-
-    sig { returns(T.untyped) }
-    def color_was; end
-
-    sig { void }
-    def color_will_change!; end
-
     sig { returns(::ActiveSupport::TimeWithZone) }
     def created_at; end
 
@@ -844,6 +825,51 @@ class WorldKey
     sig { void }
     def id_will_change!; end
 
+    sig { returns(T.nilable(::String)) }
+    def invitation_id; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def invitation_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def invitation_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def invitation_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def invitation_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def invitation_id_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def invitation_id_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def invitation_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def invitation_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def invitation_id_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def invitation_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def invitation_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def invitation_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def invitation_id_was; end
+
+    sig { void }
+    def invitation_id_will_change!; end
+
     sig { returns(::String) }
     def recipient_id; end
 
@@ -890,12 +916,6 @@ class WorldKey
     def recipient_id_will_change!; end
 
     sig { void }
-    def restore_accepted_at!; end
-
-    sig { void }
-    def restore_color!; end
-
-    sig { void }
     def restore_created_at!; end
 
     sig { void }
@@ -905,6 +925,9 @@ class WorldKey
     def restore_id_value!; end
 
     sig { void }
+    def restore_invitation_id!; end
+
+    sig { void }
     def restore_recipient_id!; end
 
     sig { void }
@@ -912,18 +935,6 @@ class WorldKey
 
     sig { void }
     def restore_world_id!; end
-
-    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
-    def saved_change_to_accepted_at; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_accepted_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def saved_change_to_color; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_color?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_created_at; end
@@ -942,6 +953,12 @@ class WorldKey
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_invitation_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_invitation_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_recipient_id; end
@@ -1007,12 +1024,6 @@ class WorldKey
     def updated_at_will_change!; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_accepted_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_color?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1020,6 +1031,9 @@ class WorldKey
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_invitation_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_recipient_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1077,9 +1091,6 @@ class WorldKey
   end
 
   module GeneratedRelationMethods
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def accepted(*args, &blk); end
-
     sig { returns(PrivateRelation) }
     def all; end
 
@@ -1172,9 +1183,6 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def order(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def pending_acceptance(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end

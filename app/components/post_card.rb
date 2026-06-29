@@ -28,8 +28,6 @@ class Components::PostCard < Components::Base
     @async_reactions = async_reactions
     @show_notification_prompt = show_notification_prompt
     @frame_options = frame
-    @author = T.let(post.author!, User)
-    @world = T.let(post.world!, World)
   end
 
   # == Component ==
@@ -41,25 +39,35 @@ class Components::PostCard < Components::Base
         {
           class: "post-card",
           data: {
-            selectively_shown: @post.selectively_shown?,
+            quiet: @post.quiet?,
           },
         },
         @attributes,
       )) do |card|
         card.header do
           card.description do
-            div(class: "flex-1 flex gap-2 items-center") do
-              if (emoji = @post.emoji)
-                div(class: "font-emoji text-sm") do
-                  emoji
+            div(class: "flex-1 flex items-center gap-2") do
+              Components::Badge(variant: :secondary) do |badge|
+                post_type = @post.type!
+                if (emoji = @post.emoji)
+                  div(
+                    class: "font-emoji text-md mr-0.5 align-baseline leading-none",
+                    data: { icon: :inline_start },
+                  ) do
+                    emoji
+                  end
+                elsif (icon = post_type.icon)
+                  badge.inline_start_icon(icon)
                 end
+                span(class: "font-normal") { post_type.label }
               end
+
               local_time(@post.created_at, class: "lowercase text-xs block")
             end
 
             if allowed_to?(:manage?, @post)
               div(class: "flex gap-1.5 items-center -my-1") do
-                world_key_badges
+                # world_key_badges
                 edit_menu(card:)
               end
             end
@@ -111,8 +119,8 @@ class Components::PostCard < Components::Base
         span { "edit" }
       end
 
-      menu.with_content(anchor: [ :bottom, :end ]) do |content|
-        content.link_item_to([ :edit, @post ]) do
+      menu.with_content(anchor: [ :bottom, :end ]) do |menu_content|
+        menu_content.link_item_to([ :edit, @post ]) do
           Icon("huge/pencil-edit-01")
           span { "edit" }
         end
@@ -124,7 +132,7 @@ class Components::PostCard < Components::Base
             action: "turbo:submit-end->haptic-bridge#vibrate",
           },
         ) do
-          content.button_item(
+          menu_content.button_item(
             type: :submit,
             variant: :destructive,
             data: {
@@ -133,27 +141,6 @@ class Components::PostCard < Components::Base
           ) do
             Icon("huge/delete-01")
             span { "delete" }
-          end
-        end
-      end
-    end
-  end
-
-  sig { void }
-  def world_key_badges
-    div(class: "flex gap-1 items-center") do
-      if (colors = @post.key_colors)
-        colors.each do |color|
-          Components::Badge(variant: :secondary, class: "px-1.5") do
-            Icon("huge/key-02", style: "color: var(--world-key-color-#{color})")
-          end
-        end
-        if colors.empty?
-          Components::Badge(
-            variant: :secondary,
-            class: "px-1.5 text-muted-foreground",
-          ) do
-            Icon("huge/square-lock-01")
           end
         end
       end

@@ -19,6 +19,7 @@ export default class TippyController extends Controller<HTMLElement> {
     animation: { type: String, default: "shift-away" },
     hideOnClick: { type: Boolean, default: true },
     disabled: Boolean,
+    maxWidth: { type: String, default: "350px" },
     flashDuration: { type: Number, default: 2000 },
     flashDelay: Number,
   };
@@ -27,9 +28,10 @@ export default class TippyController extends Controller<HTMLElement> {
   declare readonly placementValue: Placement;
   declare readonly animationValue: string;
   declare readonly hideOnClickValue: boolean;
+  declare readonly disabledValue: boolean;
+  declare readonly maxWidthValue: number;
   declare readonly flashDurationValue: number;
   declare readonly flashDelayValue: number;
-  declare readonly disabledValue: boolean;
 
   // == State ==
 
@@ -112,6 +114,7 @@ export default class TippyController extends Controller<HTMLElement> {
       placement: this.placementValue,
       trigger: this.triggerValue,
       hideOnClick: this.hideOnClickValue,
+      maxWidth: this.maxWidthValue,
     };
     if (this.#tippy) {
       if (!this.contentValue) {

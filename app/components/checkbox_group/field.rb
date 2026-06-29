@@ -7,7 +7,7 @@ class Components::CheckboxGroup::Field < Components::Field
   sig do
     params(
       checkbox_group: Components::CheckboxGroup,
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       orientation: Symbol,
@@ -33,19 +33,30 @@ class Components::CheckboxGroup::Field < Components::Field
   sig do
     params(
       value: T.any(Symbol, String, Enumerize::Value),
-      input: T::Hash[Symbol, T.untyped],
+      multiple: T::Boolean,
       checked: T.nilable(T::Boolean),
+      disabled: T::Boolean,
+      input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
   end
-  def checkbox_group_item_for(value, input: {}, checked: nil, **attributes)
+  def checkbox_group_item_for(
+    value,
+    multiple: true,
+    checked: nil,
+    disabled: false,
+    input: {},
+    **attributes
+  )
     render Components::CheckboxGroup::Item.new(
       form: @form,
       field: @field,
       checkbox_group: @checkbox_group,
-      value:,
-      input:,
+      value: value.to_s,
+      multiple:,
       checked:,
+      disabled:,
+      input:,
       **attributes,
     )
   end

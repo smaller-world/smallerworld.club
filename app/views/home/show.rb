@@ -4,16 +4,10 @@
 class Views::Home::Show < Views::Base
   # == Initialization ==
 
-  sig do
-    params(
-      current_user: User,
-      world_cards_pending_key_creation: T.nilable(WorldCard::PrivateRelation),
-    ).void
-  end
-  def initialize(current_user:, world_cards_pending_key_creation:)
+  sig { params(current_user: User).void }
+  def initialize(current_user:)
     super()
     @current_user = current_user
-    @world_cards_pending_key_creation = world_cards_pending_key_creation
   end
 
   # == View ==
@@ -60,6 +54,8 @@ class Views::Home::Show < Views::Base
 
   private
 
+  # == Helpers ==
+
   sig { void }
   def your_worlds
     turbo_frame_tag(
@@ -100,36 +96,14 @@ class Views::Home::Show < Views::Base
       class: "flex gap-4 flex-wrap justify-center",
       target: "_top",
     ) do
-      accessible_worlds.each do |world|
-        card_id = active_card_id_for(world)
-        link_to(
-          [ world, card_id: ],
-          class: "world-icon-container hover:underline",
-        ) do
+      @current_user.accessible_worlds.with_attached_icon.each do |world|
+        link_to(world, class: "world-icon-container hover:underline") do
           div(class: "relative") do
             image_tag(
               world.page_icon_variant,
               class: "world-icon",
               data: { size: "sm" },
             )
-            if card_id
-              Components::Button(
-                element: :div,
-                variant: :outline,
-                size: :icon_xs,
-                class: "bg-muted rounded-full absolute -right-2 -top-2",
-                data: {
-                  controller: "tippy",
-                  tippy_content_value: "you have a wallet card for #{world.name}!",
-                  action: "click->tippy#show:prevent:stop",
-                },
-              ) do
-                Icon(
-                  "huge/loyalty-card",
-                  class: "text-muted-foreground size-4",
-                )
-              end
-            end
           end
           span(class: "world-icon-label text-xs") do
             world.name
@@ -137,12 +111,11 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      @world_cards_pending_key_creation&.each do |card|
-        world = card.world!
-        link_to(
-          [ card, :key_grant ],
-          class: "world-icon-container hover:underline",
-        ) do
+      @current_user.world_invitations.pending_acceptance
+        .joins(world: [ icon_attachment: :blob ])
+        .find_each do |invitation|
+        world = invitation.world!
+        link_to(invitation, class: "world-icon-container hover:underline") do
           div(class: "relative") do
             image_tag(
               world.page_icon_variant,
@@ -150,7 +123,7 @@ class Views::Home::Show < Views::Base
               data: { size: "sm" },
             )
             div(class: "absolute inset-0 flex items-center justify-center") do
-              Icon("huge/loyalty-card", class: "size-8 text-white")
+              Icon("huge/key-01", class: "size-8 text-white")
             end
           end
           span(class: "world-icon-label text-xs text-muted-foreground") do
@@ -174,36 +147,64 @@ class Views::Home::Show < Views::Base
           end
         end
       end
-
-      unless @world_cards_pending_key_creation
-        Components::DevicePassesForm(
-          url: home_path,
-          data: {
-            turbo_frame: :other_worlds,
-          },
-        )
-      end
     end
   end
 
-  sig { returns(World::PrivateAssociationRelation) }
-  def accessible_worlds
-    @accessible_worlds ||= T.let(
-      @current_user.accessible_worlds.with_attached_icon,
-      T.nilable(World::PrivateAssociationRelation),
-    )
-  end
+  # sig { params(world: World).returns(T.nilable(String)) }
+  # def active_card_id_for(world)
+  #   @active_card_ids_by_world_id ||= T.let(
+  #     WorldCard.active
+  #       .where(cardholder: @current_user, world: accessible_worlds)
+  #       .order(:world_id, created_at: :desc)
+  #       .pluck(Arel.sql("DISTINCT ON (world_id) world_id"), :id)
+  #       .to_h,
+  #     T.nilable(T::Hash[String, String]),
+  #   )
+  #   @active_card_ids_by_world_id[world.id]
+  # end
 
-  sig { params(world: World).returns(T.nilable(String)) }
-  def active_card_id_for(world)
-    @active_card_ids_by_world_id ||= T.let(
-      WorldCard.active
-        .where(cardholder: @current_user, world: accessible_worlds)
-        .order(:world_id, created_at: :desc)
-        .pluck(Arel.sql("DISTINCT ON (world_id) world_id"), :id)
-        .to_h,
-      T.nilable(T::Hash[String, String]),
-    )
-    @active_card_ids_by_world_id[world.id]
-  end
+  # sig { params(world: World, card_id: String).void }
+  # def card_icon_button(world:, card_id:)
+  #   Components::Button(
+  #     element: :div,
+  #     variant: :outline,
+  #     size: :icon_xs,
+  #     class: "bg-muted rounded-full absolute -right-2 -top-2",
+  #     data: {
+  #       controller: "tippy",
+  #       tippy_content_value: "you have a wallet card for #{world.name}!",
+  #       action: "click->tippy#show:prevent:stop",
+  #     },
+  #   ) do
+  #     Icon(
+  #       "huge/loyalty-card",
+  #       class: "text-muted-foreground size-4",
+  #     )
+  #   end
+  # end
+
+  # sig { returns(T.nilable(WorldCard::PrivateRelation)) }
+  # def world_cards_pending_key_creation
+  #   @world_cards_pending_key_creation&.each do |card|
+  #     world = card.world!
+  #     link_to(
+  #       [ card, :key_grant ],
+  #       class: "world-icon-container hover:underline",
+  #     ) do
+  #       div(class: "relative") do
+  #         image_tag(
+  #           world.page_icon_variant,
+  #           class: "world-icon opacity-50",
+  #           data: { size: "sm" },
+  #         )
+  #         div(class: "absolute inset-0 flex items-center justify-center") do
+  #           Icon("huge/loyalty-card", class: "size-8 text-white")
+  #         end
+  #       end
+  #       span(class: "world-icon-label text-xs text-muted-foreground") do
+  #         world.name
+  #       end
+  #     end
+  #   end
+  # end
 end

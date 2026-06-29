@@ -8,7 +8,6 @@
 #
 #  id                               :uuid             not null, primary key
 #  blurb                            :text
-#  key_labels                       :jsonb
 #  last_imported_v1_post_created_at :timestamptz
 #  name                             :string           not null
 #  created_at                       :datetime         not null
@@ -47,13 +46,5 @@ class WorldTest < ActiveSupport::TestCase
 
     assert_not_predicate duplicate, :valid?
     assert_includes duplicate.errors.full_messages.to_sentence, "Duplicate World"
-  end
-
-  test "key_label uses a custom label when present, else humanizes the color" do
-    world = create_world(owner: users(:bob), name: "Label World")
-    world.update!(blue_key_label: "besties")
-
-    assert_equal "besties key", world.key_label(color: :blue)
-    assert_equal "red key", world.key_label(color: :red)
   end
 end

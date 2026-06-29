@@ -94,7 +94,8 @@ class Components::AppLayout < Components::Base
         )
 
         # == Assets
-        stylesheet_link_tag("application", "data-turbo-track": "reload")
+        stylesheet_link_tag("application.base", "data-turbo-track": "reload")
+        stylesheet_link_tag("application.tailwind", "data-turbo-track": "reload")
         javascript_include_tag("application", "data-turbo-track": "reload", type: "module")
 
         # == Meta & OpenGraphh
@@ -204,7 +205,7 @@ class Components::AppLayout < Components::Base
 
   sig { void }
   def flash_section
-    section(id: "flash", class: "max-w-lg p-4 self-center w-full empty:hidden") do
+    section(id: :flash, class: "max-w-lg p-4 self-center w-full empty:hidden") do
       if (message = flash[:notice] || flash[:alert])
         type = flash.key?(:alert) ? :alert : :notice
         Components::AppFlashAlert(message:, type:)

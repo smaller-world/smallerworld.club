@@ -8,22 +8,22 @@
 #
 #  id            :uuid             not null, primary key
 #  emoji         :string
-#  key_colors    :string           is an Array
 #  plain_body    :text             not null
+#  quiet         :boolean          default(FALSE), not null
 #  title         :string
 #  v1_attributes :jsonb
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  world_id      :uuid             not null
+#  type_id       :uuid             not null
 #
 # Indexes
 #
-#  index_posts_on_key_colors  (key_colors)
-#  index_posts_on_world_id    (world_id)
+#  index_posts_on_quiet    (quiet)
+#  index_posts_on_type_id  (type_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (world_id => worlds.id)
+#  fk_rails_...  (type_id => post_types.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
@@ -55,9 +55,7 @@ class Post < ApplicationRecord
   encrypts :title, :plain_body
 
   sig { returns(T::Boolean) }
-  def selectively_shown?
-    !key_colors.nil?
-  end
+  def loud? = !quiet?
 
   sig { returns(T.nilable(String)) }
   def fun_title
@@ -71,13 +69,22 @@ class Post < ApplicationRecord
 
   # == Associations ==
 
-  belongs_to :world
+  belongs_to :type, class_name: "PostType"
+  delegate :recipients, to: :type
+
+  has_one :world, through: :type
   has_many :world_cards, through: :world, source: :cards
-  has_one :author, through: :world, source: :owner
-  has_many :world_key_recipients, through: :world, source: :key_recipients
+  has_many :world_keys, through: :world, source: :keys
+  has_many :world_post_types, through: :world, source: :post_types
+  has_one :world_owner, through: :world, source: :owner
 
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
+
+  sig { returns(PostType) }
+  def type!
+    type or raise ActiveRecord::RecordNotFound, "Missing type"
+  end
 
   sig { returns(World) }
   def world!
@@ -85,8 +92,8 @@ class Post < ApplicationRecord
   end
 
   sig { returns(User) }
-  def author!
-    author or raise ActiveRecord::RecordNotFound, "Missing author"
+  def world_owner!
+    world_owner or raise ActiveRecord::RecordNotFound, "Missing world owner"
   end
 
   # == Attachments
@@ -112,7 +119,6 @@ class Post < ApplicationRecord
 
   strips_text :title
   nilify_blanks :title, :emoji
-  compacts_blanks :key_colors
   normalizes :v1_attributes, with: ->(value) { value.compact }
 
   # == Validations ==
@@ -128,28 +134,31 @@ class Post < ApplicationRecord
     },
     size: { less_than: 64.megabytes },
     unless: :v1_attributes?
-  validates :key_colors, inclusion: { in: WorldKey.color.values }, allow_nil: true
 
   # == Hooks ==
 
   before_validation :chomp_rich_text_body!, if: :body?
-  before_validation :unset_key_colors, if: :all_key_colors_set?
   before_save :set_plain_body
-  after_commit :touch_world_cards,
-    on: [ :create, :destroy ],
-    if: :should_touch_world_cards?
-  after_create_commit :create_notifications_for_world_key_recipients!,
-    unless: :v1_attributes?
+  # after_commit :touch_world_cards,
+  #   on: [ :create, :destroy ],
+  #   if: :should_touch_world_cards?
+  after_create_commit :create_notifications_for_recipients!,
+    if: :should_create_notifications?
   broadcasts_world_items
 
   # == Scopes ==
 
+  scope :loud, -> { where(quiet: false) }
+  scope :quiet, -> { where(quiet: true) }
   scope :visible_to, ->(user) {
-    owned = World.where(owner: user).where("worlds.id = posts.world_id")
-    keyed = WorldKey.accepted.where(recipient: user)
-      .where("world_keys.world_id = posts.world_id")
-      .where("posts.key_colors IS NULL OR world_keys.color = ANY (posts.key_colors)")
-    where(owned.arel.exists.or(keyed.arel.exists))
+    owned = PostType.where(world: World.where(owner: user))
+    granted = PostTypeGrant
+      .where("post_type_grants.world_key_id = world_keys.id")
+      .where("post_type_grants.post_type_id = post_types.id")
+    received = PostType.joins(:world_keys)
+      .where(world_keys: { recipient: user })
+      .where(PostType.arel_table[:secret].eq(false).or(granted.arel.exists))
+    where(type: owned).or(where(type: received))
   }
   scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
 
@@ -203,17 +212,18 @@ class Post < ApplicationRecord
     end
   end
 
+  sig { params(user: User).returns(T::Boolean) }
+  def visible_to?(user)
+    user == world_owner! || recipients.include?(user)
+  end
+
   private
 
   # == Helpers ==
 
   sig { returns(T::Boolean) }
-  def should_touch_world_cards?
-    if previously_new_record? && v1_attributes?
-      return false
-    end
-
-    previously_latest_post?
+  def should_create_notifications?
+    !v1_attributes? && loud?
   end
 
   sig { returns(T::Boolean) }
@@ -227,15 +237,6 @@ class Post < ApplicationRecord
       end
     else
       true
-    end
-  end
-
-  sig { returns(T::Boolean) }
-  def all_key_colors_set?
-    if (colors = key_colors)
-      colors.to_set == WorldKey.color.values.to_set
-    else
-      false
     end
   end
 
@@ -259,27 +260,16 @@ class Post < ApplicationRecord
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
   end
 
-  sig { void }
-  def touch_world_cards
-    world_cards.active.find_each(&:touch)
-  end
+  # sig { void }
+  # def touch_world_cards
+  #   world_cards.active.find_each(&:touch)
+  # end
 
   sig { void }
-  def unset_key_colors
-    self.key_colors = nil
-  end
-
-  # == Callbacks ==
-
-  sig { void }
-  def create_notifications_for_world_key_recipients!
-    keys = world!.keys.accepted
-    if (colors = key_colors)
-      keys = keys.where(color: colors)
-    end
-    keys.find_each do |key|
+  def create_notifications_for_recipients!
+    recipients.find_each do |subscriber|
       notifications.create!(
-        recipient: key.recipient!,
+        recipient: subscriber,
         delivery_delay: NOTIFICATION_DELIVERY_DELAY,
       )
     end

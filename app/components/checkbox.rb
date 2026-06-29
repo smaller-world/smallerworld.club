@@ -8,17 +8,19 @@ class Components::Checkbox < Components::Input
 
   sig do
     params(
-      value: T.any(Symbol, String, Enumerize::Value),
+      value: String,
       checked: T.nilable(T::Boolean),
       multiple: T::Boolean,
+      disabled: T::Boolean,
       input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    value: "1",
+    value: "on",
     checked: nil,
     multiple: false,
+    disabled: false,
     input: {},
     **attributes
   )
@@ -26,6 +28,7 @@ class Components::Checkbox < Components::Input
     @value = value
     @checked = checked
     @multiple = multiple
+    @disabled = disabled
     @input_options = input
   end
 
@@ -59,9 +62,9 @@ class Components::Checkbox < Components::Input
       end
     end
     if @form
-      @form.checkbox(@field, input_options, @value, @multiple ? nil : "0")
+      @form.checkbox(@field, input_options, @value, @multiple ? nil : "off")
     else
-      checkbox_tag(@field, input_options, @value, @multiple ? nil : "0")
+      checkbox_tag(@field, input_options, @value, @multiple ? nil : "off")
     end
   end
 
@@ -71,14 +74,18 @@ class Components::Checkbox < Components::Input
 
   sig { returns(T::Boolean) }
   def checked?
-    if @checked.nil?
-      if (object = @form&.object) && @field
-        !!object.public_send(@field)
-      else
-        false
-      end
+    return @checked unless @checked.nil?
+    return false unless (object = @form&.object) && @field
+
+    case (value = object.try(@field))
+    when true, false
+      value
+    when nil
+      false
+    when Array
+      value.map(&:to_s).include?(@value.to_s)
     else
-      @checked
+      value.to_s == @value.to_s
     end
   end
 
@@ -89,6 +96,7 @@ class Components::Checkbox < Components::Input
         checked: checked?,
         tabindex: -1,
         multiple: @multiple,
+        disabled: @disabled,
         aria: {
           hidden: true,
         },

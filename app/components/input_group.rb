@@ -6,7 +6,7 @@ class Components::InputGroup < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       attributes: T.untyped,
     ).void

@@ -21,7 +21,7 @@ class Components::OtpInput < Components::Input
     params(
       max_length: Integer,
       pattern: T.any(Symbol, String),
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,

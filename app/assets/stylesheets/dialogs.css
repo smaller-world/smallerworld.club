@@ -1,4 +1,4 @@
-@layer base {
+@layer base-components {
   .dialog-overlay {
     @apply fixed inset-0 isolate z-50 bg-black/30 duration-100 supports-backdrop-filter:backdrop-blur-sm; /* data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0; */
     @apply supports-backdrop-filter:backdrop-blur-xs;
@@ -12,15 +12,15 @@
   }
 
   .dialog-close {
-    @apply absolute top-4 right-4;
+    @apply absolute top-4 right-4 bg-secondary;
   }
 
   .dialog-header {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-1.5;
   }
 
   .dialog-title {
-    @apply leading-none font-medium;
+    @apply text-base leading-none font-medium;
   }
 
   .dialog-description {

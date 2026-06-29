@@ -28,7 +28,7 @@ class Components::InputGroup::Addon < Components::Base
       class: "input-group-addon",
       data: {
         slot: "input-group-addon",
-        align: @align.to_s.tr("_", "-"),
+        align: @align,
         controller: "input-group-addon",
         action: "click->input-group-addon#focus",
       },

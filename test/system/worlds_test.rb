@@ -8,7 +8,7 @@ class WorldsTest < ApplicationSystemTestCase
     owner = users(:bob)
     world = create_world(owner:, name: "Scroll World")
     7.times do |i|
-      create_post(world:, key_colors: nil, body: "post number #{i}")
+      create_post(world:, body: "post number #{i}")
     end
 
     sign_in_as(owner)

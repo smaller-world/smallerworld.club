@@ -7,6 +7,7 @@ class Views::Posts::Index < Views::Base
   sig do
     params(
       world: World,
+      post_type: T.nilable(PostType),
       posts: T::Enumerable[Post],
       pagy: T.nilable(Pagy),
       replied_post_ids: T.nilable(T::Set[String]),
@@ -15,12 +16,14 @@ class Views::Posts::Index < Views::Base
   end
   def initialize(
     world:,
+    post_type:,
     posts:,
     pagy:,
     replied_post_ids:,
     created_post_id:
   )
     @world = world
+    @post_type = post_type
     @posts = posts
     @pagy = pagy
     @replied_post_ids = replied_post_ids
@@ -56,7 +59,11 @@ class Views::Posts::Index < Views::Base
         end
         if @pagy.nil? || @pagy.next
           div(class: "flex flex-col items-center") do
-            Components::WorldNextPageControl(world: @world, pagy: @pagy)
+            Components::WorldNextPageControl(
+              world: @world,
+              post_type: @post_type,
+              pagy: @pagy,
+            )
           end
         end
       end

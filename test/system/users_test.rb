@@ -9,10 +9,7 @@ class UsersTest < ApplicationSystemTestCase
 
     visit new_session_path
 
-    fill_in :phone_number_verification_request_phone_number_country_code,
-      with: phone.country_code
-    fill_in :phone_number_verification_request_phone_number_national,
-      with: phone.national
+    fill_in :phone_number_verification_request_phone_number, with: phone.national
     find('input[name="cf-turnstile-response"]', visible: false, wait: 10)
       .execute_script('this.value = "XXXX.DUMMY.TOKEN.XXXX"')
     click_button "send verification code"

@@ -11,7 +11,7 @@ module FormHelpers
 
   sig do
     params(
-      form: PhlexFormBuilder,
+      form: PhlexRailsFormBuilder,
       variant: Symbol,
       size: Symbol,
       attributes: T.untyped,
@@ -35,7 +35,33 @@ module FormHelpers
 
   sig do
     params(
-      form: PhlexFormBuilder,
+      form: PhlexRailsFormBuilder,
+      method: Symbol,
+    ).returns(T.nilable(T::Array[String]))
+  end
+  def full_error_messages_for(form, method)
+    if (object = form.object) &&
+        object.is_a?(ActiveModel::Validations) &&
+        (messages = object.errors.messages_for(method))
+      messages
+    end
+  end
+
+  sig do
+    params(
+      form: PhlexRailsFormBuilder,
+      method: Symbol,
+      messages: T.nilable(T::Array[String]),
+      attributes: T.untyped,
+    ).returns(T.untyped)
+  end
+  def field_error_for(form, method, messages: nil, **attributes)
+    Components::FieldError(form:, field: method, messages:, **attributes)
+  end
+
+  sig do
+    params(
+      form: PhlexRailsFormBuilder,
       method: Symbol,
       orientation: Symbol,
       invalid: T::Boolean,
@@ -56,7 +82,7 @@ module FormHelpers
 
   sig do
     params(
-      form: PhlexFormBuilder,
+      form: PhlexRailsFormBuilder,
       method: Symbol,
       attributes: T.untyped,
       content: T.proc.params(field: Components::CheckboxGroup).void,
@@ -68,13 +94,20 @@ module FormHelpers
 
   sig do
     params(
-      form: PhlexFormBuilder,
+      form: PhlexRailsFormBuilder,
       method: Symbol,
+      toggleable: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(field: Components::RadioGroup).void,
     ).void
   end
-  def radio_group_for(form, method, **attributes, &content)
-    Components::RadioGroup(form:, field: method, **attributes, &content)
+  def radio_group_for(form, method, toggleable: false, **attributes, &content)
+    render Components::RadioGroup.new(
+      form:,
+      field: method,
+      toggleable:,
+      **attributes,
+      &content
+    )
   end
 end

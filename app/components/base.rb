@@ -17,6 +17,7 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
   include Phlex::Rails::Helpers::FieldID
+  include Phlex::Rails::Helpers::FieldName
   include Phlex::Rails::Helpers::DOMID
 
   include PhlexIcons
@@ -33,6 +34,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :auto_link
   register_value_helper :authenticated?
   register_value_helper :allowed_to?
+  register_value_helper :authorized_scope
   register_value_helper :hotwire_native_platform
   register_value_helper :hotwire_native_app?
   register_value_helper :hotwire_native_ios?

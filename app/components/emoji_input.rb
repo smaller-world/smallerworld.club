@@ -6,7 +6,7 @@ class Components::EmojiInput < Components::Input
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       required: T::Boolean,
       attributes: T.untyped,

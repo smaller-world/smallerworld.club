@@ -22,7 +22,7 @@ class Components::Combobox::List < Components::Base
 
   sig do
     params(
-      value: T.any(Symbol, String),
+      value: String,
       attributes: T.untyped,
       content: T.proc.void,
     ).void

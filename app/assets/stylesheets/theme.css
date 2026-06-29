@@ -153,13 +153,6 @@
   );
   /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
 
-  /* World keys */
-  --world-key-color-green: #70b200;
-  --world-key-color-orange: #d55b31;
-  --world-key-color-red: #92224c;
-  --world-key-color-blue: #404299;
-  --world-key-color-pink: #cc5555;
-
   @media (prefers-color-scheme: dark) {
     /* Lexxy */
     --lexxy-color-ink: var(--color-olive-50);
@@ -254,7 +247,7 @@
   }
 }
 
-@layer components {
+@layer base {
   .link {
     @apply text-muted-foreground underline-offset-4 hover:underline;
   }
@@ -269,6 +262,12 @@
 
 @utility revert-display-layer {
   display: revert-layer;
+}
+
+@utility visually-hidden {
+  @apply fixed top-0 left-0 -m-px size-px overflow-hidden border-0 p-0 whitespace-nowrap;
+
+  clip-path: inset(50%);
 }
 
 @custom-variant dark {

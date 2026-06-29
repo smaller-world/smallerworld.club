@@ -75,15 +75,6 @@ class Components::Item < Components::Base
     slot("item-footer", **attributes, &content)
   end
 
-  sig { params(attributes: T.untyped).void }
-  def separator(**attributes)
-    Components::Separator(
-      orientation: :horizontal,
-      class: "item-separator",
-      data: { slot!: "item-separator" },
-    )
-  end
-
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def title(**attributes, &content)
     slot("item-title", **attributes, &content)

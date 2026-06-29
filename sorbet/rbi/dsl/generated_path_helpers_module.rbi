@@ -10,9 +10,6 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
-  def accept_world_card_key_grant_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def accept_world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -31,19 +28,16 @@ module GeneratedPathHelpersModule
   def appstore_listing_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def claim_world_card_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def download_world_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_world_keys_path(*args); end
+  def edit_post_type_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def edit_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
@@ -91,6 +85,9 @@ module GeneratedPathHelpersModule
   def new_world_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_post_type_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def passkit_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -110,6 +107,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def post_reply_initiations_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_type_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_path(*args); end
@@ -232,13 +232,7 @@ module GeneratedPathHelpersModule
   def verify_phone_number_verification_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_card_key_grant_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_card_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_cards_path(*args); end
+  def world_invitation_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_grant_path(*args); end
@@ -251,6 +245,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_post_types_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_path(*args); end

@@ -5,6 +5,10 @@ class Components::Combobox::Content < Components::Base
   register_element :el_options
   register_element :el_option
 
+  # == Configuration ==
+
+  ANCHOR_VALUES = [ :top, :right, :bottom, :left, :start, :end ].freeze
+
   # == Initialization ==
 
   sig do
@@ -15,7 +19,16 @@ class Components::Combobox::Content < Components::Base
       attributes: T.untyped,
     ).void
   end
-  def initialize(anchor:, anchor_strategy: nil, popover: true, **attributes)
+  def initialize(
+    anchor: [ :bottom, :start ],
+    anchor_strategy: nil,
+    popover: true,
+    **attributes
+  )
+    if (Array.wrap(anchor) - ANCHOR_VALUES).any?
+      raise InvalidParameter.new(parameter: :anchor, value: anchor)
+    end
+
     super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy

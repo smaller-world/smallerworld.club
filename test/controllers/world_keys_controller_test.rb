@@ -8,7 +8,7 @@ class WorldKeysControllerTest < ActionDispatch::IntegrationTest
     world = worlds(:bobs_world_two)
     owner = world.owner!
     friend = users(:sue)
-    key = grant_key(world:, recipient: friend, color: :blue)
+    key = world.keys.create!(recipient: friend)
 
     sign_in_as(owner)
 

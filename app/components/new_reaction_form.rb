@@ -18,9 +18,9 @@ class Components::NewReactionForm < Components::Base
     form_with(model: [ @post, @reaction ], **normalize_mix(
       {
         data: {
-          controller: "form emoji-input confetti haptic-bridge",
+          controller: "submit emoji-input confetti haptic-bridge",
           action: [
-            "emoji-input:emoji-set->form#requestSubmit",
+            "emoji-input:emoji-set->submit#request",
             "turbo:submit-end->confetti#launch",
             "turbo:submit-end->haptic-bridge#vibrate",
           ],
@@ -42,9 +42,9 @@ class Components::NewReactionForm < Components::Base
             {
               class: "rounded-full loading-while-submitting",
               data: {
+                controller: "disable-while-submitting",
                 testid: "new_reaction_dialog_trigger",
                 confetti_target: "position",
-                form_target: "disableWhileSubmitting",
               },
               aria: {
                 invalid: ("true" if error_messages.any?),

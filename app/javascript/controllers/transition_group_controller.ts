@@ -5,13 +5,6 @@ export default class TransitionGroupController extends Controller {
   static targets = ["item"];
   declare readonly itemTargets: HTMLCollectionOf<HTMLElement>;
 
-  // == Lifecycle ==
-
-  connect(): void {
-    super.connect();
-    console.debug("transition-group connected, items:", this.itemTargets);
-  }
-
   // == Actions ==
 
   start(): void {

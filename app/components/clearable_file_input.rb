@@ -4,7 +4,7 @@
 class Components::ClearableFileInput < Components::Input
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       direct_upload: T::Boolean,
@@ -58,17 +58,17 @@ class Components::ClearableFileInput < Components::Input
         },
         @attributes,
       ),
-    ) do |group|
+    ) do |input_group|
       template(data: { clearable_file_input_target: "inputTemplate" }) do
-        empty_inputs(group:)
+        empty_inputs(input_group:)
       end
       if @blob
         if @form && @field
           html = @form.hidden_field(@field, id: nil, value: @blob.signed_id)
           raw(html) # rubocop:disable Rails/OutputSafety
         end
-        group.input(value: @blob.filename, name: nil, readonly: true)
-        group.addon(align: :inline_end) do |addon|
+        input_group.input(value: @blob.filename, name: nil, readonly: true)
+        input_group.addon(align: :inline_end) do |addon|
           addon.button(
             type: :button,
             variant: :destructive,
@@ -82,7 +82,7 @@ class Components::ClearableFileInput < Components::Input
           end
         end
       else
-        empty_inputs(group:)
+        empty_inputs(input_group:)
       end
     end
   end
@@ -91,14 +91,14 @@ class Components::ClearableFileInput < Components::Input
 
   # == Helpers ==
 
-  sig { params(group: Components::InputGroup).void }
-  def empty_inputs(group:)
+  sig { params(input_group: Components::InputGroup).void }
+  def empty_inputs(input_group:)
     if @form && @field
       html = @form.hidden_field(@field, value: nil)
       raw(html) # rubocop:disable Rails/OutputSafety
     end
-    group.file_input(direct_upload: @direct_upload, required: @required)
-    group.addon(
+    input_group.file_input(direct_upload: @direct_upload, required: @required)
+    input_group.addon(
       align: :inline_end,
       data: { clearable_file_input_target: "spinner" },
       class: "hidden",

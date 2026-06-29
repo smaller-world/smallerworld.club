@@ -6,6 +6,6 @@ class AppstoreListingsController < PublicController
 
   # GET /appstore
   def show
-    redirect_to(Rails.configuration.testflight_url, allow_other_host: true)
+    redirect_to(Smallerworld.application.testflight_url, allow_other_host: true)
   end
 end

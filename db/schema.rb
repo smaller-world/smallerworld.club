@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_25_021143) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_27_195140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -164,17 +164,37 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_25_021143) do
     t.timestamptz "verified_at"
   end
 
+  create_table "post_type_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "created_at", null: false
+    t.uuid "post_type_id", null: false
+    t.uuid "world_key_id", null: false
+    t.index ["post_type_id"], name: "index_post_type_grants_on_post_type_id"
+    t.index ["world_key_id", "post_type_id"], name: "index_post_type_grants_uniqueness", unique: true
+    t.index ["world_key_id"], name: "index_post_type_grants_on_world_key_id"
+  end
+
+  create_table "post_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "icon"
+    t.string "label", null: false
+    t.boolean "secret", default: false, null: false
+    t.datetime "updated_at", null: false
+    t.uuid "world_id", null: false
+    t.index ["world_id", "label"], name: "index_post_types_uniqueness", unique: true
+    t.index ["world_id"], name: "index_post_types_on_world_id"
+  end
+
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "emoji"
-    t.string "key_colors", array: true
     t.text "plain_body", null: false
+    t.boolean "quiet", default: false, null: false
     t.string "title"
+    t.uuid "type_id", null: false
     t.datetime "updated_at", null: false
     t.jsonb "v1_attributes"
-    t.uuid "world_id", null: false
-    t.index ["key_colors"], name: "index_posts_on_key_colors"
-    t.index ["world_id"], name: "index_posts_on_world_id"
+    t.index ["quiet"], name: "index_posts_on_quiet"
+    t.index ["type_id"], name: "index_posts_on_type_id"
   end
 
   create_table "reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -368,34 +388,45 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_25_021143) do
     t.datetime "created_at", null: false
     t.uuid "device_id"
     t.timestamptz "discarded_at"
-    t.string "granted_key_color"
     t.timestamptz "relevant_date", default: -> { "now()" }
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.uuid "world_key_id"
     t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
     t.index ["device_id"], name: "index_world_cards_on_device_id"
     t.index ["discarded_at"], name: "index_world_cards_on_discarded_at"
     t.index ["relevant_date"], name: "index_world_cards_on_relevant_date"
     t.index ["world_id"], name: "index_world_cards_on_world_id"
+    t.index ["world_key_id"], name: "index_world_cards_on_world_key_id"
+  end
+
+  create_table "world_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.uuid "granted_post_type_ids", null: false, array: true
+    t.uuid "recipient_id"
+    t.string "recipient_phone_number", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "world_id", null: false
+    t.index ["recipient_id"], name: "index_world_invitations_on_recipient_id"
+    t.index ["world_id", "recipient_phone_number"], name: "index_world_invitations_uniqueness", unique: true
+    t.index ["world_id"], name: "index_world_invitations_on_world_id"
   end
 
   create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.timestamptz "accepted_at"
-    t.string "color", null: false
     t.datetime "created_at", null: false
+    t.uuid "invitation_id"
     t.uuid "recipient_id", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
-    t.index ["accepted_at"], name: "index_world_keys_on_accepted_at"
+    t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
     t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
-    t.index ["world_id", "recipient_id", "color"], name: "index_world_keys_uniqueness", unique: true
+    t.index ["world_id", "recipient_id"], name: "index_world_keys_uniqueness", unique: true
     t.index ["world_id"], name: "index_world_keys_on_world_id"
   end
 
   create_table "worlds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "blurb"
     t.datetime "created_at", null: false
-    t.jsonb "key_labels"
     t.timestamptz "last_imported_v1_post_created_at"
     t.string "name", null: false
     t.uuid "owner_id", null: false
@@ -410,7 +441,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_25_021143) do
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "passkit_registrations", "passkit_devices"
   add_foreign_key "passkit_registrations", "passkit_passes"
-  add_foreign_key "posts", "worlds"
+  add_foreign_key "post_type_grants", "post_types"
+  add_foreign_key "post_type_grants", "world_keys"
+  add_foreign_key "post_types", "worlds"
+  add_foreign_key "posts", "post_types", column: "type_id"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
   add_foreign_key "reply_initiations", "posts"
@@ -425,8 +459,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_25_021143) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "world_cards", "devices"
   add_foreign_key "world_cards", "users", column: "cardholder_id"
+  add_foreign_key "world_cards", "world_keys"
   add_foreign_key "world_cards", "worlds"
+  add_foreign_key "world_invitations", "users", column: "recipient_id"
+  add_foreign_key "world_invitations", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"
+  add_foreign_key "world_keys", "world_invitations", column: "invitation_id"
   add_foreign_key "world_keys", "worlds"
   add_foreign_key "worlds", "users", column: "owner_id"
 end

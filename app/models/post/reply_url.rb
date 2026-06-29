@@ -12,8 +12,9 @@ module Post::ReplyUrl
 
   sig { params(platform: Symbol, native: T::Boolean).returns(String) }
   def reply_url(platform:, native: false)
+    world_owner = world_owner!
     message = reply_snippet_for(platform)
-    author!.dm_url(platform:, message:, native:)
+    world_owner.dm_url(platform:, message:, native:)
   end
 
   private

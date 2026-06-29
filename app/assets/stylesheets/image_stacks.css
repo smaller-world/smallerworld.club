@@ -1,4 +1,4 @@
-@layer base {
+@layer base-components {
   .image-stack {
     @apply relative flex w-full items-center justify-center perspective-[1000px];
   }

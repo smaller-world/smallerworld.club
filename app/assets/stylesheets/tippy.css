@@ -1,6 +1,6 @@
 @import "tippy.js/dist/tippy.css" layer(base);
 @import "tippy.js/dist/svg-arrow.css" layer(base);
-/*@import "tippy.js/animations/scale.css" layer(components);*/
+/*@import "tippy.js/animations/scale.css" layer(base);*/
 @import "tippy.js/animations/shift-away.css" layer(base);
 
 @layer base {

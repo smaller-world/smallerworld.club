@@ -8,7 +8,6 @@ class Components::PostForm < Components::Base
   def initialize(post:, **attributes)
     super(**attributes)
     @post = post
-    @world = T.let(post.world!, World)
   end
 
   # == Component ==
@@ -19,14 +18,38 @@ class Components::PostForm < Components::Base
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "form post-form haptic-bridge",
-          post_form_world_key_labels_value: @world.key_labels.to_json,
+          controller: "submit haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
       @attributes,
     )) do |form|
       div(class: "flex flex-col gap-4") do
+        field_for(form, :type_id) do |f|
+          f.select(class: "flex flex-col items-start") do |select|
+            select.with_trigger(
+              class: "border border-border bg-background hover:bg-muted hover:text-foreground dark:bg-transparent dark:hover:bg-input/30",
+            ) do
+              "post type"
+            end
+            select.with_content do |select_content|
+              select_content.group do
+                @post.world_post_types.each do |post_type|
+                  select_content.item(value: post_type.id) do
+                    div(class: "flex items-center gap-2") do
+                      if (icon = post_type.icon)
+                        Icon(icon)
+                      end
+                      span { post_type.label }
+                    end
+                  end
+                end
+              end
+            end
+          end
+          f.error(class: "text-center")
+        end
+
         Components::FieldGroup(class: "flex-row gap-3") do
           field_for(form, :emoji, class: "flex-0") do |f|
             f.emoji_input(**f.error_tooltip_attributes)
@@ -42,7 +65,7 @@ class Components::PostForm < Components::Base
             required: true,
             class: "min-h-36",
             data: {
-              action: "keydown.meta+enter->form#requestSubmit",
+              action: "keydown.meta+enter->submit#request",
             },
           )
           f.description(class: "text-center text-xs mt-px") do
@@ -102,26 +125,36 @@ class Components::PostForm < Components::Base
         end
       end
 
-      show_key_colors_field = @world.keys.any?
-      Components::Card(
-        size: :sm,
-        class: class_names("contents" => !show_key_colors_field),
-      ) do |card|
-        card.content(
-          class: show_key_colors_field ? "flex flex-col items-stretch gap-4" : "contents",
-        ) do
-          if show_key_colors_field
-            key_colors_field_for(form)
-          end
-
-          submit_button_for(form, size: :lg) do |button|
-            if @post.new_record?
-              button.inline_start_icon("huge/mail-send-01")
-              span { "submit post" }
-            else
-              button.inline_start_icon("huge/floppy-disk")
-              span { "save changes" }
+      div(class: "flex flex-col items-stretch gap-3") do
+        Components::FieldSet() do
+          radio_group_for(form, :quiet, class: "grid-cols-2") do |radio_group|
+            quiet_choice_card_for(:off, radio_group:) do |field|
+              div(class: "flex items-center gap-1.5") do
+                Icon("huge/notification-01", class: "size-3")
+                field.title(class: "text-xs") { "post loudly" }
+              end
+              field.description(class: "text-xs leading-tight") do
+                "send notifications"
+              end
             end
+            quiet_choice_card_for(:on, radio_group:, class: "border-dashed") do |field|
+              div(class: "flex items-center gap-1.5") do
+                Icon("huge/notification-snooze-01", class: "size-3")
+                field.title(class: "text-xs") { "post quietly" }
+              end
+              field.description(class: "text-xs leading-tight ") do
+                "no notifs + hide in tab"
+              end
+            end
+          end
+        end
+        submit_button_for(form, size: :lg) do |button|
+          if @post.new_record?
+            button.inline_start_icon("huge/mail-send-01")
+            span { "submit post" }
+          else
+            button.inline_start_icon("huge/floppy-disk")
+            span { "save changes" }
           end
         end
       end
@@ -135,62 +168,76 @@ class Components::PostForm < Components::Base
   sig { returns(Object) }
   def model
     if @post.new_record?
-      [ @world, @post ]
+      world = @post.world!
+      [ world, @post ]
     else
       @post
     end
   end
 
-  sig { params(form: PhlexFormBuilder).void }
-  def key_colors_field_for(form)
-    field_for(form, :key_colors, class: "items-center") do |field|
-      form.hidden_field(:key_colors, multiple: true, value: nil)
-
-      field.checkbox_group(class: "flex-row justify-center") do |group|
-        WorldKey.color.values.each do |color|
-          group.field_label_for(
-            color,
-            class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
-          ) do |label|
-            label.field(class: "p-2") do |field|
-              field.content(class: "items-center") do
-                Icon(
-                  "huge/key-02",
-                  class: "size-4.5",
-                  style: "color: var(--world-key-color-#{color})",
-                )
-              end
-              field.checkbox_group_item_for(
-                color,
-                hidden: true,
-                checked: checkbox_group_item_checked?(world_key_color: color),
-                input: {
-                  data: {
-                    post_form_target: "worldKeyColorsInput",
-                    action: "change->post-form#updateWorldKeyColorsDescription",
-                  },
-                },
-              )
-            end
-          end
+  sig do
+    params(
+      value: Symbol,
+      radio_group: Components::RadioGroup,
+      attributes: T.untyped,
+      content: T.proc.params(field: Components::Field).void,
+    ).returns(T.untyped)
+  end
+  def quiet_choice_card_for(value, radio_group:, **attributes, &content)
+    radio_group.field_label_for(
+      value,
+      **mix({ class: "cursor-pointer" }, attributes),
+    ) do |field_label|
+      field_label.field(orientation: :horizontal, class: "px-3 py-2") do |field|
+        field.content(class: "flex flex-col gap-0.5") do
+          yield(field)
         end
+        field.radio_group_item_for(value, class: "visually-hidden")
       end
-      field.description(
-        class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
-        data: {
-          post_form_target: "worldKeyColorsDescription",
-        },
-      )
-      field.error(class: "text-center text-xs")
     end
   end
 
-  sig { params(world_key_color: Enumerize::Value).returns(T::Boolean) }
-  def checkbox_group_item_checked?(world_key_color:)
-    if (colors = @post.key_colors)
-      colors.include?(world_key_color)
-    else
-      true
-    end
-  end
+  # sig { params(form: PhlexRailsFormBuilder).void }
+  # def key_colors_field_for(form)
+  #   field_for(form, :key_colors, class: "items-center") do |field|
+  #     form.hidden_field(:key_colors, multiple: true, value: nil)
+
+  #     field.checkbox_group(class: "flex-row justify-center") do |group|
+  #       WorldKey.color.values.each do |color|
+  #         group.field_label_for(
+  #           color,
+  #           class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
+  #         ) do |label|
+  #           label.field(class: "p-2") do |field|
+  #             field.content(class: "items-center") do
+  #               Icon(
+  #                 "huge/key-02",
+  #                 class: "size-4.5",
+  #                 style: "color: var(--world-key-color-#{color})",
+  #               )
+  #             end
+  #             field.checkbox_group_item_for(
+  #               color,
+  #               hidden: true,
+  #               checked: checkbox_group_item_checked?(world_key_color: color),
+  #               input: {
+  #                 data: {
+  #                   post_form_target: "worldKeyColorsInput",
+  #                   action: "change->post-form#updateWorldKeyColorsDescription",
+  #                 },
+  #               },
+  #             )
+  #           end
+  #         end
+  #       end
+  #     end
+  #     field.description(
+  #       class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
+  #       data: {
+  #         post_form_target: "worldKeyColorsDescription",
+  #       },
+  #     )
+  #     field.error(class: "text-center text-xs")
+  #   end
+  # end
 end

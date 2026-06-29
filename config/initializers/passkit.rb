@@ -72,16 +72,16 @@ if (credentials = Rails.application.credentials.passkit)
   end
 
   # Add application passes
-  Rails.application.configure do
-    config.after_initialize do
-      Passkit.configure do |config|
-        config.available_passes["Passes::WorldCard"] = -> {
-          world = World.new(name: "testy's world")
-          WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
-        }
-      end
-    end
-  end
+  # Rails.application.configure do
+  #   config.after_initialize do
+  #     Passkit.configure do |config|
+  #       config.available_passes["Passes::WorldCard"] = -> {
+  #         world = World.new(name: "testy's world")
+  #         WorldCard.new(world:, granted_key_color: WorldKey.color.values.first)
+  #       }
+  #     end
+  #   end
+  # end
 else
   ENV["SECRET_KEY_BASE_DUMMY"]
   ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"

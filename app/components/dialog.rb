@@ -9,12 +9,14 @@ class Components::Dialog < Components::Base
   sig do
     params(
       id: String,
+      open: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(id: "dialog_#{SecureRandom.uuid}", **attributes)
+  def initialize(id: "dialog_#{SecureRandom.uuid}", open: false, **attributes)
     super(**attributes)
     @id = id
+    @open = open
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
   end
@@ -26,7 +28,7 @@ class Components::Dialog < Components::Base
     vanish(&content)
     content_block = @content_block or raise "Missing content"
 
-    el_dialog(**mix(
+    el_dialog(open: @open, **mix(
       {
         data: {
           controller: "dialog",

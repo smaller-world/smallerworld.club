@@ -16,12 +16,12 @@ module NormalizesText
 
     # == Macros ==
 
-    sig { params(attributes: T.any(Symbol, String)).void }
+    sig { params(attributes: Symbol).void }
     def nilify_blanks(*attributes)
       normalizes(*T.unsafe(attributes), with: ->(value) { value.presence })
     end
 
-    sig { params(attributes: T.any(Symbol, String)).void }
+    sig { params(attributes: Symbol).void }
     def strips_text(*attributes)
       normalizes(*T.unsafe(attributes), with: ->(value) {
         if value.is_a?(String)

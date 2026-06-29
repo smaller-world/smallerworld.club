@@ -8,7 +8,6 @@
 #
 #  id                               :uuid             not null, primary key
 #  blurb                            :text
-#  key_labels                       :jsonb
 #  last_imported_v1_post_created_at :timestamptz
 #  name                             :string           not null
 #  created_at                       :datetime         not null
@@ -45,25 +44,17 @@ class World < ApplicationRecord
 
   friendly_id :name, use: FriendlyId::DynamicSlugged
 
-  # == Attributes ==
-
-  typed_store(
-    :key_labels,
-    suffix: :key_label,
-    coder: ActiveRecord::TypedStore::IdentityCoder,
-  ) do |s|
-    WorldKey.color.values.each do |color|
-      s.string(color.to_s, blank: false)
-    end
-  end
-
   # == Associations ==
 
   belongs_to :owner, class_name: "User"
-  has_many :posts, dependent: :destroy
+  has_many :post_types, dependent: :destroy
+  has_many :posts, through: :post_types
+  # has_many :cards, class_name: "WorldCard", dependent: :destroy
+
   has_many :keys, class_name: "WorldKey", dependent: :destroy
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
-  has_many :cards, class_name: "WorldCard", dependent: :destroy
+
+  has_many :invitations, class_name: "WorldInvitation", dependent: :destroy
 
   sig { returns(User) }
   def owner!
@@ -129,9 +120,6 @@ class World < ApplicationRecord
 
   strips_text :name, :blurb
   nilify_blanks :blurb
-  normalizes :key_labels, with: ->(value) {
-    value.transform_values { |value| value&.strip }.compact_blank
-  }
 
   # == Validations ==
 
@@ -157,8 +145,6 @@ class World < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_default_name, if: :new_record?
-  after_update_commit :touch_cards, if: :saved_changes_to_card_attributes?
-  after_attached :icon, :touch_cards
 
   # == Search ==
 
@@ -170,36 +156,30 @@ class World < ApplicationRecord
       },
     }
 
-  # == Keys ==
-
-  sig { params(color: T.any(Symbol, String, Enumerize::Value)).returns(String) }
-  def key_grant(color:)
-    id = self[:id] or raise "Missing world ID"
-    WorldKey.grant_verifier.generate({ world_id: id, color: color.to_s })
+  # == Post Types ==
+  sig { returns(T::Array[PostType]) }
+  def self.default_post_types
+    [
+      PostType.new(label: "journal entry", icon: "huge/book-edit"),
+      PostType.new(label: "poem", icon: "huge/quill-write-01"),
+      PostType.new(label: "invitation", icon: "huge/mail-open-love"),
+      PostType.new(label: "ask", icon: "huge/waving-hand-02"),
+    ]
   end
 
-  sig { params(color: T.any(Symbol, Enumerize::Value)).returns(String) }
-  def key_label(color:)
-    color = color.to_s
-    descriptor = key_labels[color] || color.humanize(capitalize: false)
-    "#{descriptor} key"
+  # == Keys ==
+
+  sig { params(post_types: T::Array[PostType]).returns(String) }
+  def key_grant(post_types: [])
+    WorldKey.grant_verifier.generate({
+      world_id: id,
+      post_type_ids: post_types.map(&:id),
+    })
   end
 
   private
 
   # == Helpers ==
-
-  sig { void }
-  def set_default_name
-    if (owner = self.owner)
-      self[:name] ||= owner.default_world_name
-    end
-  end
-
-  sig { returns(T::Boolean) }
-  def saved_changes_to_card_attributes?
-    saved_changes.keys.intersect?(CARD_ATTRIBUTES)
-  end
 
   sig { returns(String) }
   def owner_phone_number
@@ -212,8 +192,15 @@ class World < ApplicationRecord
 
   # == Callbacks ==
 
-  sig { params(args: T.untyped).void }
-  def touch_cards(*args)
-    cards.find_each(&:touch)
+  sig { void }
+  def set_default_name
+    if (owner = self.owner)
+      self[:name] ||= owner.default_world_name
+    end
+  end
+
+  sig { void }
+  def set_default_post_types
+    self.post_types = self.class.default_post_types
   end
 end

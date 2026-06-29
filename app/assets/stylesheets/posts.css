@@ -2,8 +2,8 @@
   .post-card {
     @apply overflow-visible shadow-sm;
 
-    &[data-selectively-shown] {
-      @apply border border-dashed border-foreground/10 bg-card/50 ring-0;
+    &[data-quiet] {
+      @apply border border-dashed border-foreground/10 bg-card/50 shadow-none ring-0;
     }
 
     [data-slot="card-header"] {
@@ -11,7 +11,7 @@
     }
 
     [data-slot="card-title"] {
-      @apply font-heading leading-tight font-semibold;
+      @apply mt-1 font-heading leading-tight font-semibold;
       @apply text-xl md:text-lg;
     }
 

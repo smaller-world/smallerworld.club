@@ -1,4 +1,4 @@
-@layer base {
+@layer base-components {
   .otp-input {
     @apply flex items-center has-disabled:opacity-50;
 

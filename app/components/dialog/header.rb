@@ -8,7 +8,7 @@ class Components::Dialog::Header < Components::Base
   def view_template(&content)
     root_element(
       :div,
-      class: "dialog_header",
+      class: "dialog-header",
       data: {
         slot: "dialog-header",
       },
@@ -23,7 +23,7 @@ class Components::Dialog::Header < Components::Base
     h2(
       **mix(
         {
-          class: "dialog_title",
+          class: "dialog-title",
           data: {
             slot: "dialog-title",
           },
@@ -39,7 +39,7 @@ class Components::Dialog::Header < Components::Base
     p(
       **mix(
         {
-          class: "dialog_description",
+          class: "dialog-description",
           data: {
             slot: "dialog-description",
           },

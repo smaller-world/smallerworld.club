@@ -15,21 +15,22 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   # == Tests ==
 
-  test "owner creates a key-scoped post" do
+  test "owner creates a post of a given type" do
     sign_in_as(@owner)
+    post_type = @world.post_types.find_by!(label: "journal entry")
 
     assert_difference -> { @world.posts.count }, 1 do
       post world_posts_path(@world), params: {
         post: {
+          type_id: post_type.id,
           title: "Hello",
           body: "body text",
-          key_colors: [ "blue" ],
         },
       }
     end
     post = @world.posts.chronological.last!
+    assert_equal post_type, post.type
     assert_redirected_to world_path(@world, anchor: dom_id(post, :card))
-    assert_equal [ "blue" ], post.key_colors
   end
 
   test "owner edits a post" do
@@ -52,9 +53,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     sign_in_as(@owner)
     assert_difference -> { @world.posts.count }, -1 do
-      delete post_path(post)
+      delete post_path(post), as: :turbo_stream
     end
-    assert_redirected_to world_path(@world)
+    assert_response :success
   end
 
   test "owner views the world feed via turbo frame" do
@@ -67,20 +68,23 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "visible post"
   end
 
-  test "a friend only sees posts their key grants access to" do
+  test "a friend sees non-secret posts and only the secret posts their key grants" do
     friend = users(:sue)
-    grant_key(world: @world, recipient: friend, color: :blue)
+    granted_type = @world.post_types.create!(label: "secret diary", secret: true)
+    @world.post_types.create!(label: "hidden notes", secret: true)
+    key = @world.keys.create!(recipient: friend)
+    key.granted_post_types << granted_type
 
     create_post(world: @world, body: "everyone with a key sees this")
-    create_post(world: @world, key_colors: [ :blue ], body: "blue key holders only")
-    create_post(world: @world, key_colors: [ :red ], body: "red key holders only")
+    create_post(world: @world, type_label: "secret diary", body: "granted secret post")
+    create_post(world: @world, type_label: "hidden notes", body: "ungranted secret post")
 
     sign_in_as(friend)
     get world_posts_path(@world),
       headers: { "Turbo-Frame" => "posts" }
     assert_response :success
     assert_includes response.body, "everyone with a key sees this"
-    assert_includes response.body, "blue key holders only"
-    assert_not_includes response.body, "red key holders only"
+    assert_includes response.body, "granted secret post"
+    assert_not_includes response.body, "ungranted secret post"
   end
 end

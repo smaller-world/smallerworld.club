@@ -1,8 +1,8 @@
-@import "@uppy/core/css/style.min.css" layer(base);
-@import "@uppy/drag-drop/css/style.min.css" layer(base);
-@import "@uppy/image-editor/css/style.min.css" layer(base);
+@import "@uppy/core/css/style.min.css" layer(base-components);
+@import "@uppy/drag-drop/css/style.min.css" layer(base-components);
+@import "@uppy/image-editor/css/style.min.css" layer(base-components);
 
-@layer base {
+@layer base-components {
   .uppy-dnd-dropzone {
     @apply flex flex-col rounded-xl;
 

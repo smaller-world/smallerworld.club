@@ -4,10 +4,10 @@
 class Views::WorldKeyGrants::New < Views::Base
   # == Initialization ==
 
-  sig { params(world: World, key_color: T.nilable(Symbol)).void }
-  def initialize(world:, key_color:)
+  sig { params(world: World, granted_post_types: T::Array[PostType]).void }
+  def initialize(world:, granted_post_types:)
     @world = world
-    @key_color = key_color
+    @granted_post_types = granted_post_types
     super()
   end
 
@@ -18,15 +18,13 @@ class Views::WorldKeyGrants::New < Views::Base
     Components::AppLayout(page_title: "share a key to your world") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          button_back_to(@world.name, @world, variant: :secondary)
+          button_back_to("your friends", [ @world, :keys ], variant: :secondary)
         end
 
-        Components::HintAlert(
-          message: "choose wisely! your friends will be grouped by their key color.",
+        Components::WorldKeyGrantForm(
+          world: @world,
+          granted_post_types: @granted_post_types,
         )
-        turbo_frame_tag(:form) do
-          Components::WorldKeyGrantForm(world: @world, key_color: @key_color)
-        end
       end
     end
   end

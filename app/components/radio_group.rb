@@ -6,13 +6,15 @@ class Components::RadioGroup < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
+      toggleable: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(form: nil, field: nil, **attributes)
+  def initialize(form: nil, field: nil, toggleable: false, **attributes)
     super(**attributes)
+    @toggleable = toggleable
     @form = form
     @field = field
   end
@@ -26,7 +28,6 @@ class Components::RadioGroup < Components::Base
       class: "radio-group",
       data: {
         slot: "radio-group",
-        controller: "radio-group",
       },
       &block
     )
@@ -91,17 +92,24 @@ class Components::RadioGroup < Components::Base
     )
   end
 
+  # == Helpers ==
+
   sig { returns(String) }
   def namespace
     @namespace ||= T.let(
       if @form && @field
         @form.field_id(@field)
       elsif @field
-        @field.to_s
+        field_id(@field)
       else
         SecureRandom.uuid
       end,
       T.nilable(String),
     )
+  end
+
+  sig { returns(T::Boolean) }
+  def toggleable?
+    @toggleable
   end
 end

@@ -6,15 +6,15 @@
 #
 # Table name: world_cards
 #
-#  id                :uuid             not null, primary key
-#  discarded_at      :timestamptz
-#  granted_key_color :string
-#  relevant_date     :timestamptz
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  cardholder_id     :uuid
-#  device_id         :uuid
-#  world_id          :uuid             not null
+#  id            :uuid             not null, primary key
+#  discarded_at  :timestamptz
+#  relevant_date :timestamptz
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  cardholder_id :uuid
+#  device_id     :uuid
+#  world_id      :uuid             not null
+#  world_key_id  :uuid
 #
 # Indexes
 #
@@ -23,12 +23,14 @@
 #  index_world_cards_on_discarded_at   (discarded_at)
 #  index_world_cards_on_relevant_date  (relevant_date)
 #  index_world_cards_on_world_id       (world_id)
+#  index_world_cards_on_world_key_id   (world_key_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (cardholder_id => users.id)
 #  fk_rails_...  (device_id => devices.id)
 #  fk_rails_...  (world_id => worlds.id)
+#  fk_rails_...  (world_key_id => world_keys.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class WorldCard < ApplicationRecord
@@ -41,7 +43,6 @@ class WorldCard < ApplicationRecord
   # == Attributes ==
 
   attribute :relevant_date, default: -> { Time.current }
-  enumerize :granted_key_color, in: WorldKey.color.values
 
   sig { returns(T::Boolean) }
   def active?
@@ -92,9 +93,6 @@ class WorldCard < ApplicationRecord
   # A device must be set for claimed world cards
   validates :device, presence: true, if: :cardholder_id?
 
-  # Granted key color is required for unclaimed world cards
-  validates :granted_key_color, presence: true, unless: :cardholder_id?
-
   # == Scopes ==
 
   scope :active, -> { kept.where.associated(:pass_registrations) }
@@ -106,7 +104,7 @@ class WorldCard < ApplicationRecord
   scope :with_pass_serial_numbers, ->(serial_numbers) {
     joins(:pass).where(passkit_passes: { serial_number: serial_numbers })
   }
-  scope :with_key_grant, -> { where.not(granted_key_color: nil) }
+  scope :without_world_key, -> { where(world_key_id: nil) }
 
   # == Hooks ==
 

@@ -18,6 +18,7 @@ module WorldTestHelper
   def create_world(owner:, name: nil)
     world = owner.owned_worlds.build
     world.name = name if name
+    world.post_types = World.default_post_types
     world.icon.attach(
       io: File.open(WORLD_ICON_PATH),
       filename: "world_icon.png",
@@ -27,34 +28,25 @@ module WorldTestHelper
     world
   end
 
-  # Grants `recipient` a key to `world`. The "join" primitive.
-  # `accepted: false` models the future return-key (pending) invite.
-  sig do
-    params(world: World, recipient: User, color: Symbol, accepted: T::Boolean)
-      .returns(WorldKey)
-  end
-  def grant_key(world:, recipient:, color:, accepted: true)
-    world.keys.create!(
-      recipient:,
-      color:,
-      accepted_at: accepted ? Time.current : nil,
-    )
-  end
-
-  # Creates a key-scoped post. `key_colors: nil` means visible to all keys.
   sig do
     params(
       world: World,
-      key_colors: T.nilable(T::Array[Symbol]),
+      type_label: String,
       body: String,
-      attrs: T.untyped,
+      attributes: T.untyped,
     ).returns(Post)
   end
-  def create_post(world:, key_colors: nil, body: "hello world", **attrs)
-    if key_colors
-      key_colors = key_colors.map(&:to_s)
-    end
-    world.posts.create!(body:, key_colors:, **attrs)
+  def create_post(world:, type_label: "journal entry", body: "hello world", **attributes)
+    post_type_for(world, type_label).posts.create!(body:, **attributes)
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(world: World, label: String).returns(PostType) }
+  def post_type_for(world, label)
+    world.post_types.find_by!(label:)
   end
 end
 

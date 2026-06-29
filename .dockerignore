@@ -56,4 +56,3 @@
 
 # Ignore vendored packages
 /vendor/
-!/vendor/stylesheets/

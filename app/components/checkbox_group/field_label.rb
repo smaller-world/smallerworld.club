@@ -7,7 +7,7 @@ class Components::CheckboxGroup::FieldLabel < Components::FieldLabel
   sig do
     params(
       checkbox_group: Components::CheckboxGroup,
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       attributes: T.untyped,

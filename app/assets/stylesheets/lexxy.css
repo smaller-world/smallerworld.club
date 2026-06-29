@@ -1,6 +1,4 @@
-@import "../../../vendor/stylesheets/lexxy/lexxy.css" layer(base);
-
-@layer base {
+@layer base-components {
   .lexxy-content {
     @apply text-base leading-relaxed md:text-sm;
 
@@ -9,7 +7,7 @@
     }
 
     hr {
-      @apply w-full text-ring/50;
+      @apply my-6 w-full text-ring/50;
     }
 
     ol,
@@ -20,6 +18,7 @@
 
   lexxy-editor {
     @apply w-full rounded-2xl border border-transparent bg-input/50 shadow-xs transition-[color,box-shadow,background-color] outline-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+    @apply dark:bg-input/50;
 
     --lexxy-toolbar-gap: var(--spacing);
 
@@ -39,6 +38,18 @@
       &::before {
         @apply text-muted-foreground;
       }
+
+      .horizontal-divider {
+        @apply my-2 py-px;
+
+        > hr {
+          @apply my-4;
+        }
+      }
+
+      .node--selected {
+        @apply rounded-sm border-ring ring-3 ring-ring/50 transition-shadow;
+      }
     }
 
     /*&:has(.lexxy-editor__content:focus-visible) {
@@ -52,11 +63,9 @@
       @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
     }
 
-    .node--selected {
-      @apply rounded-sm border-ring ring-3 ring-ring/50 transition-shadow;
-    }
-
     :where(lexxy-toolbar) {
+      @apply border-b-border;
+
       > .lexxy-editor__toolbar-button,
       > .lexxy-editor__toolbar-dropdown
         > :is(

@@ -45,11 +45,11 @@ export default class ConfettiController extends Controller<HTMLElement> {
       ),
       angle: 180,
       spread: 200,
-      ticks: 60,
+      ticks: 400,
       gravity: 1,
       startVelocity: 18,
-      count: 12,
-      scalar: 2,
+      count: 40,
+      scalar: 2.2,
       shapes: ["emoji"],
       shapeOptions: {
         emoji: {

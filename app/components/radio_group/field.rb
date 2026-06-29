@@ -7,7 +7,7 @@ class Components::RadioGroup::Field < Components::Field
   sig do
     params(
       radio_group: Components::RadioGroup,
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       orientation: Symbol,
@@ -32,18 +32,23 @@ class Components::RadioGroup::Field < Components::Field
 
   sig do
     params(
-      value: T.any(Symbol, String, Enumerize::Value),
+      value: T.any(Symbol, String),
       input: T::Hash[Symbol, T.untyped],
       checked: T.nilable(T::Boolean),
       attributes: T.untyped,
     ).void
   end
-  def radio_group_item_for(value, input: {}, checked: nil, **attributes)
+  def radio_group_item_for(
+    value,
+    input: {},
+    checked: nil,
+    **attributes
+  )
     render Components::RadioGroup::Item.new(
+      radio_group: @radio_group,
       form: @form,
       field: @field,
-      radio_group: @radio_group,
-      value:,
+      value: value.to_s,
       input:,
       checked:,
       **attributes,

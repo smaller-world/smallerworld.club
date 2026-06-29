@@ -4,24 +4,36 @@
 class Views::WorldKeys::Edit < Views::Base
   # == Initialization ==
 
-  sig { params(world: World).void }
-  def initialize(world:)
-    @world = world
+  sig { params(world_key: WorldKey).void }
+  def initialize(world_key:)
     super()
+    @world_key = world_key
   end
 
   # == View ==
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "customize world keys") do |layout|
+    Components::AppLayout(
+      page_title: "edit #{world_key_recipient.name}'s key",
+    ) do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          button_back_to("your friends", [ @world, :keys ], variant: :secondary)
+          world = @world_key.world!
+          button_back_to("your friends", [ world, :keys ], variant: :secondary)
         end
 
-        Components::WorldKeysForm(world: @world)
+        Components::WorldKeyForm(world_key: @world_key)
       end
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(User) }
+  def world_key_recipient
+    @world_key.recipient!
   end
 end

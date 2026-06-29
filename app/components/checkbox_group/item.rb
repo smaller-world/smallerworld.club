@@ -7,9 +7,10 @@ class Components::CheckboxGroup::Item < Components::Checkbox
   sig do
     params(
       checkbox_group: Components::CheckboxGroup,
-      value: T.any(Symbol, String, Enumerize::Value),
-      checked: T.nilable(T::Boolean),
+      value: String,
       multiple: T::Boolean,
+      checked: T.nilable(T::Boolean),
+      disabled: T::Boolean,
       input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
@@ -17,12 +18,13 @@ class Components::CheckboxGroup::Item < Components::Checkbox
   def initialize(
     checkbox_group:,
     value:,
-    checked: nil,
     multiple: true,
+    checked: nil,
+    disabled: false,
     input: {},
     **attributes
   )
-    super(value:, checked:, input:, multiple:, **attributes)
+    super(value:, multiple:, checked:, disabled:, input:, **attributes)
     @checkbox_group = checkbox_group
   end
 
@@ -34,7 +36,12 @@ class Components::CheckboxGroup::Item < Components::Checkbox
   def checked?
     if @checked.nil?
       if (object = @form&.object) && @field
-        object.public_send(@field) == @value
+        current_value = object.try(@field)
+        if current_value.is_a?(Enumerable)
+          current_value.include?(@value)
+        else
+          current_value == @value
+        end
       else
         false
       end

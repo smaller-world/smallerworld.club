@@ -11,11 +11,14 @@ export default class ReplyInitiationFormController extends Controller<HTMLFormEl
 
   connect(): void {
     super.connect();
+    if (!this.hasPlatformInputTarget) {
+      throw new Error("Missing platformInput target");
+    }
   }
 
   // == Actions ==
 
-  setPlatformValue(event: MouseEvent): void {
+  setPlatformValue(event: PointerEvent): void {
     const { currentTarget } = event;
     if (currentTarget instanceof HTMLButtonElement) {
       const { platform } = currentTarget.dataset;

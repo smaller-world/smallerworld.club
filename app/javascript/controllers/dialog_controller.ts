@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
+import { addCleanupAction } from "#helpers/stimulus_helpers";
+
 export default class DialogController extends Controller<HTMLElement> {
   // == Targets ==
 
@@ -14,8 +16,9 @@ export default class DialogController extends Controller<HTMLElement> {
     if (!this.hasContentTarget) {
       throw new Error("Missing content target");
     }
-  }
 
+    addCleanupAction(this, "close");
+  }
   // == Actions ==
 
   open(): void {
@@ -23,6 +26,6 @@ export default class DialogController extends Controller<HTMLElement> {
   }
 
   close(): void {
-    this.contentTarget.close();
+    this.contentTarget.requestClose();
   }
 }

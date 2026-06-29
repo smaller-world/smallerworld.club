@@ -6,9 +6,9 @@ class WorldKeyPolicy < ApplicationPolicy
 
   # World owner can manage keys
   def manage?
-    key = T.let(record, WorldKey)
+    world_key = T.let(record, WorldKey)
     user = user!
-    key.world_owner! == user
+    world_key.world_owner! == user
   end
 
   # # Key recipient can also destroy keys

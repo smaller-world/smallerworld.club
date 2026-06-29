@@ -63,34 +63,35 @@ Rails.application.routes.draw do
       post :leave
     end
     resources :posts, only: [ :index, :new, :create ]
+    resources :post_types, only: [ :new, :create ]
   end
   resource :world_settings, path: "/world/:world_id/settings", only: :show
-  resource :world_keys, path: "/world/:world_id/keys", only: [ :show, :edit, :update ]
+  resources :world_keys, path: "/world/:world_id/keys", only: :index
   resource(
     :world_v1_posts_import,
     path: "/world/:world_id/v1_posts_import",
     only: [ :show, :create ],
   )
-  resources :world_cards, path: "world/:world_id/cards", only: :create
+  # resources :world_cards, path: "world/:world_id/cards", only: :create
   resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
 
+  # == World Invitations
+  resources :world_invitations, only: :show
+
   # == World Keys
-  resources :world_keys, only: [ :destroy ] do
+  resources :world_keys, only: [ :edit, :update, :destroy ] do
     collection do
       post :accept
     end
   end
 
   # == World Cards
-  resources :world_cards, only: [ :show ] do
-    member do
-      get :download
-      post :claim
-    end
-  end
-  resource :world_card_key_grant, path: "/world_cards/:card_id/key_grant", only: :show do
-    post :accept
-  end
+  # resources :world_cards, only: [ :show ] do
+  #   member do
+  #     get :download
+  #     post :claim
+  #   end
+  # end
 
   # == World Key Grants
   resources :world_key_grants, only: [ :show ], param: :grant do
@@ -98,6 +99,9 @@ Rails.application.routes.draw do
       post :accept
     end
   end
+
+  # == Post Types
+  resources :post_types, only: [ :edit, :update, :destroy ]
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do

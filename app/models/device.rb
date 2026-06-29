@@ -65,10 +65,22 @@ class Device < ApplicationRecord
 
   # == Methods ==
 
+  sig { returns(Symbol) }
+  def action_push_native_platform
+    case platform
+    when "ios", "ios_app_on_mac"
+      :apple
+    else
+      platform.to_sym
+    end
+  end
+
   sig { params(notification: DevicePushNotification).void }
   def push(notification)
     notification.token = push_token!
-    ActionPushNative.service_for(platform, notification).push(notification)
+    ActionPushNative
+      .service_for(action_push_native_platform, notification)
+      .push(notification)
     tag_logger do
       Rails.logger.info("Pushed notification to device #{id}")
     end

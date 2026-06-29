@@ -71,10 +71,12 @@ class User < ApplicationRecord
     inverse_of: :owner,
     foreign_key: :owner_id,
     dependent: :destroy
-  has_many :world_cards,
-    inverse_of: :cardholder,
-    foreign_key: :cardholder_id,
-    dependent: :destroy
+
+  # has_many :world_cards,
+  #   inverse_of: :cardholder,
+  #   foreign_key: :cardholder_id,
+  #   dependent: :destroy
+
   has_many :received_notifications,
     class_name: "Notification",
     inverse_of: :recipient,
@@ -107,7 +109,6 @@ class User < ApplicationRecord
   # == Hooks ==
 
   before_create :set_has_v1_account unless Rails.env.test?
-  after_update_commit :touch_world_cards, if: :saved_changes_to_world_card_attributes?
 
   # == Search ==
 
@@ -167,40 +168,28 @@ class User < ApplicationRecord
     end
   end
 
-  sig do
-    params(pass_serial_numbers: T::Array[String])
-      .returns(WorldCard::PrivateRelation)
-  end
-  def world_cards_pending_key_creation(pass_serial_numbers:)
-    matching_keys = WorldKey
-      .where("world_keys.world_id = world_cards.world_id")
-      .where("world_keys.color = world_cards.granted_key_color")
-      .where(recipient_id: id)
-    WorldCard
-      .where(
-        id: WorldCard.kept.unclaimed
-          .with_key_grant
-          .with_pass_serial_numbers(pass_serial_numbers)
-          .select("DISTINCT ON (world_cards.world_id) world_cards.id")
-          .order("world_cards.world_id", created_at: :desc),
-      )
-      .where.not(id: owned_worlds.select(:id))
-      .where.not(matching_keys.arel.exists)
-  end
-
   sig { returns(T.nilable(V1::User)) }
   def v1_user
     V1::User.find_by(phone_number:)
   end
 
-  private
-
-  # == Helpers ==
-
-  sig { returns(T::Boolean) }
-  def saved_changes_to_world_card_attributes?
-    saved_changes.keys.intersect?(WORLD_CARD_ATTRIBUTES)
+  sig { returns(WorldInvitation::PrivateRelation) }
+  def world_invitations
+    WorldInvitation.where(recipient_id: id)
+      .or(WorldInvitation.where(recipient_phone_number: phone_number))
   end
+
+  sig { returns(T.nilable(World)) }
+  def primary_world
+    owned_worlds.chronological.first
+  end
+
+  sig { returns(T.nilable(String)) }
+  def primary_world_id
+    owned_worlds.chronological.pick(:id)
+  end
+
+  private
 
   # == Callbacks ==
 
@@ -211,8 +200,8 @@ class User < ApplicationRecord
     end
   end
 
-  sig { void }
-  def touch_world_cards
-    world_cards.find_each(&:touch)
-  end
+  # sig { void }
+  # def touch_world_cards
+  #   world_cards.find_each(&:touch)
+  # end
 end

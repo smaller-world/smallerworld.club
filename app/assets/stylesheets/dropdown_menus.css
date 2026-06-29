@@ -1,11 +1,9 @@
-@layer base {
+@layer base-components {
   .dropdown-menu {
     @apply flex flex-col items-stretch;
   }
 
   .dropdown-menu-content {
-    --anchor-gap: var(--spacing); /* Controls gap between button and dropdown */
-
     /* TODO: Implement --available-height */
     /* Base styles */
     @apply relative z-50;
@@ -22,7 +20,9 @@
     /*@apply data-closed:fade-out-0 data-closed:zoom-out-95;*/
 
     /* Customizations */
-    @apply transition-[scale,opacity,visibility,display,before]! transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
+    --anchor-gap: var(--spacing); /* Controls gap between button and dropdown */
+
+    @apply transition-[scale,opacity,display]! transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
   }
 
   .dropdown-menu-item {

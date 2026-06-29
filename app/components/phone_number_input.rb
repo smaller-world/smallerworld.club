@@ -8,120 +8,52 @@ class Components::PhoneNumberInput < Components::Input
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
-      default_country_code: String,
-      disabled: T::Boolean,
-      required: T::Boolean,
-      value: T.nilable(T.any(String, Phonelib::Phone)),
+      name: T.nilable(String),
+      id: T.nilable(String),
       attributes: T.untyped,
     ).void
   end
-  def initialize(
-    form: nil,
-    field: nil,
-    default_country_code: "CA",
-    disabled: false,
-    required: false,
-    value: nil,
-    **attributes
-  )
+  def initialize(form: nil, field: nil, name: nil, id: nil, **attributes)
     super(form:, field:, **attributes)
-    @default_country_code = default_country_code
-    @disabled = disabled
-    @required = required
-    @value = value
+    @name = name
+    @id = id
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    div(class: "flex gap-2", data: { controller: "phone-number-input" }) do
-      Components::Combobox(
-        input: {
-          id: input_id(:country_code),
-          type: "tel",
-          value: country_value(country),
-          required: true,
-          class: "field-sizing-content px-2",
+    div(
+      class: "phone-number-input-container",
+      data: {
+        controller: "phone-number-input",
+      },
+    ) do
+      Components::Input(form: @form, field: @field, name: nil, id: field_id, **mix(
+        {
           data: {
-            phone_number_input_target: "countryCodeInput",
+            phone_number_input_target: "input",
             action: [
-              "keydown.enter->phone-number-input#normalizeCountryCode:capture",
-              "change->phone-number-input#guessCountryCodeIfNeeded",
+              "change->phone-number-input#updateHiddenInput",
+              "countrychange->phone-number-input#updateHiddenInput",
             ],
-            country_code: country.alpha2,
           },
         },
-        disabled: @disabled,
-      ) do |combobox|
-        combobox.with_inline_start_addon(
-          data: {
-            phone_number_input_target: "countryFlagAddon",
-          },
-        ) do
-          country_flag(country)
-        end
-        combobox.with_content(
-          anchor: [ :bottom, :start ],
-          class: "phone-number-input-options",
-        ) do |content|
-          content.with_list do |list|
-            ISO3166::Country.all.each do |country| # rubocop:disable Rails/FindEach
-              value = country_value(country)
-              list.item(
-                value:,
-                data: {
-                  phone_number_input_target: "countryCodeOption",
-                  country_code: country.alpha2,
-                  action: "pointerdown->phone-number-input#setCountryCode",
-                },
-              ) do
-                country_flag(country, class: "mt-0.5")
-                div do
-                  plain(country.iso_short_name)
-                  whitespace
-                  plain("(#{value})")
-                end
+        @attributes,
+      ))
 
-                template(data: { template: "flag" }) do
-                  country_flag(country)
-                end
-              end
-            end
-          end
-        end
-      end
-
-      Components::Input(
-        form: @form,
-        field: @field,
-        id: input_id(:national),
-        type: "tel",
-        name: nil,
-        value: phone_number&.national_number,
-        autocomplete: "tel-national",
-        disabled: @disabled,
-        required: @required,
-        **mix(
-          {
-            data: {
-              phone_number_input_target: "nationalNumberInput",
-              action: [
-                "phone-number-input#normalizeNationalNumber",
-                "change->phone-number-input#updateHiddenInput",
-              ],
-            },
-          },
-          @attributes,
-        ),
-      )
-
+      hidden_input_options = {
+        name: field_name,
+        data: {
+          phone_number_input_target: "hiddenInput",
+        },
+      }
       if @form
-        @form.hidden_field(@field, **hidden_field_options)
+        @form.hidden_field(@field, id: nil, **hidden_input_options)
       else
-        hidden_field_tag(@field, **hidden_field_options)
+        hidden_field_tag(@field, **hidden_input_options)
       end
     end
   end
@@ -130,66 +62,25 @@ class Components::PhoneNumberInput < Components::Input
 
   # == Helpers ==
 
-  sig { params(country: ISO3166::Country).returns(String) }
-  def country_value(country)
-    "+#{country.country_code}"
-  end
-
-  sig { params(country: ISO3166::Country, options: T.untyped).void }
-  def country_flag(country, **options)
-    Icon("flag/#{country.alpha2}", **options)
-  end
-
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def hidden_field_options
-    {
-      data: {
-        phone_number_input_target: "hiddenInput",
-      },
-    }
-  end
-
-  sig { returns(T.nilable(Phonelib::Phone)) }
-  def phone_number
-    return @phone_number if defined?(@phone_number)
-
-    @phone_number = T.let(
-      if @value
-        normalize_phone_number(@value)
-      elsif (object = @form&.object) && @field && (value = object.public_send(@field))
-        normalize_phone_number(value)
-      end,
-      T.nilable(Phonelib::Phone),
-    )
-  end
-
-  sig { params(value: T.any(String, Phonelib::Phone)).returns(Phonelib::Phone) }
-  def normalize_phone_number(value)
-    case value
-    when String
-      Phonelib.parse(value)
-    when Phonelib::Phone
-      value
+  sig { returns(T.nilable(String)) }
+  def field_name
+    if @name
+      @name
+    elsif @form && @field
+      @form.field_name(@field)
+    elsif @field
+      super(@field)
     end
   end
 
-  sig { returns(ISO3166::Country) }
-  def country
-    @country ||= T.let(
-      begin
-        country_code = phone_number&.country || @default_country_code
-        ISO3166::Country[country_code]
-      end,
-      T.nilable(ISO3166::Country),
-    )
-  end
-
-  sig { params(suffix: T.untyped).returns(T.nilable(String)) }
-  def input_id(suffix)
-    if @form
-      @form.field_id(@field, suffix)
+  sig { returns(T.nilable(String)) }
+  def field_id
+    if @id
+      @id
+    elsif @form && @field
+      @form.field_id(@field)
     elsif @field
-      field_id(@field, suffix)
+      super(@field)
     end
   end
 end

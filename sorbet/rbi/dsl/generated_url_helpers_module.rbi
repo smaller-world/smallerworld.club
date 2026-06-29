@@ -10,9 +10,6 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
-  def accept_world_card_key_grant_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def accept_world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -31,19 +28,16 @@ module GeneratedUrlHelpersModule
   def appstore_listing_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def claim_world_card_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def download_world_card_url(*args); end
+  def edit_post_type_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def edit_world_keys_url(*args); end
+  def edit_world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def edit_world_url(*args); end
@@ -85,6 +79,9 @@ module GeneratedUrlHelpersModule
   def new_world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_post_type_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -107,6 +104,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def post_reply_initiations_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_type_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_url(*args); end
@@ -232,13 +232,7 @@ module GeneratedUrlHelpersModule
   def verify_phone_number_verification_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_card_key_grant_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_card_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def world_cards_url(*args); end
+  def world_invitation_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_grant_url(*args); end
@@ -248,6 +242,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_keys_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_post_types_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_posts_url(*args); end

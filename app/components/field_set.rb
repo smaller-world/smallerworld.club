@@ -67,7 +67,7 @@ class Components::FieldSet < Components::Base
       content: T.nilable(T.proc.params(group: Components::FieldGroup).void),
     ).void
   end
-  def group(form: nil, field: nil, **attributes, &content)
+  def field_group(form: nil, field: nil, **attributes, &content)
     render Components::FieldGroup.new(form:, field:, **attributes, &content)
   end
 end

@@ -6,9 +6,8 @@ class Views::Posts::New < Views::Base
 
   sig { params(post: Post).void }
   def initialize(post:)
-    @post = post
-    @world = T.let(post.world!, World)
     super()
+    @post = post
   end
 
   # == View ==
@@ -18,7 +17,8 @@ class Views::Posts::New < Views::Base
     Components::AppLayout(page_title: "new post") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          button_back_to(@world.name, @world, variant: :secondary)
+          world = @post.world!
+          button_back_to(world.name, world, variant: :secondary)
         end
 
         Components::HintAlert(

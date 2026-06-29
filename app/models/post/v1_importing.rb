@@ -8,6 +8,19 @@ module Post::V1Importing
 
   requires_ancestor { Post }
 
+  # == Configuration ==
+
+  V1_POST_TYPE_TO_TYPE_LABEL = T.let(
+    {
+      "journal_entry" => "journal entry",
+      "poem" => "poem",
+      "invitation" => "invitation",
+      "question" => "ask",
+      "follow_up" => "journal entry",
+    }.freeze,
+    T::Hash[String, String],
+  )
+
   # == Methods ==
 
   sig { returns(T.nilable(V1::Post)) }
@@ -23,7 +36,7 @@ module Post::V1Importing
       **v1_post.attributes.slice("created_at", "updated_at", "title", "emoji"),
       body: v1_post.body_html,
       images:,
-      key_colors: v1_post.visibility == "private" ? [] : nil,
+      # tag_ids: v1_post.visibility == "private" ? [] : nil,
       v1_type: v1_post.type,
       v1_visibility: v1_post.visibility,
       v1_pinned_until: v1_post.pinned_until,
@@ -38,5 +51,15 @@ module Post::V1Importing
     else
       false
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(v1_type: String).returns(T.nilable(PostType)) }
+  def type_from_v1_post_type(v1_type)
+    label = V1_POST_TYPE_TO_TYPE_LABEL[v1_type]
+    world_post_types.find_by(label:)
   end
 end

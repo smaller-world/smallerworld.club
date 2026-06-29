@@ -71,7 +71,7 @@ module Authentication
 
   sig { returns(String) }
   def after_authentication_url
-    session.delete(:return_to_after_authenticating) || home_url
+    session.delete(:return_to_after_authenticating) || home_path
   end
 
   sig do

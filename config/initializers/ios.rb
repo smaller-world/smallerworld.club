@@ -2,6 +2,11 @@
 # frozen_string_literal: true
 
 class Smallerworld::Application
+  sig { returns(String) }
+  def testflight_url
+    config.testflight_url
+  end
+
   sig { returns(Integer) }
   def ios_store_identifier
     credentials.ios!.store_identifier!

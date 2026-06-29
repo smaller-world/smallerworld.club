@@ -381,26 +381,17 @@ class Post
   end
 
   module GeneratedAssociationMethods
-    sig { returns(T.nilable(::User)) }
-    def author; end
-
-    sig { params(value: T.nilable(::User)).void }
-    def author=(value); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def build_author(*args, &blk); end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def build_rich_text_body(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PostType) }
+    def build_type(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def create_author(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
-    def create_author!(*args, &blk); end
+    def build_world_owner(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def create_rich_text_body(*args, &blk); end
@@ -408,11 +399,23 @@ class Post
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActionText::EncryptedRichText) }
     def create_rich_text_body!(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PostType) }
+    def create_type(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::PostType) }
+    def create_type!(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_world_owner(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_world_owner!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
     def images_attachment_ids; end
@@ -470,14 +473,17 @@ class Post
     sig { params(value: T::Enumerable[::Reaction]).void }
     def reactions=(value); end
 
-    sig { returns(T.nilable(::User)) }
-    def reload_author; end
-
     sig { returns(T.nilable(::ActionText::EncryptedRichText)) }
     def reload_rich_text_body; end
 
+    sig { returns(T.nilable(::PostType)) }
+    def reload_type; end
+
     sig { returns(T.nilable(::World)) }
     def reload_world; end
+
+    sig { returns(T.nilable(::User)) }
+    def reload_world_owner; end
 
     sig { returns(T::Array[T.untyped]) }
     def reply_initiation_ids; end
@@ -494,19 +500,34 @@ class Post
     def reply_initiations=(value); end
 
     sig { void }
-    def reset_author; end
-
-    sig { void }
     def reset_rich_text_body; end
 
     sig { void }
+    def reset_type; end
+
+    sig { void }
     def reset_world; end
+
+    sig { void }
+    def reset_world_owner; end
 
     sig { returns(T.nilable(::ActionText::EncryptedRichText)) }
     def rich_text_body; end
 
     sig { params(value: T.nilable(::ActionText::EncryptedRichText)).void }
     def rich_text_body=(value); end
+
+    sig { returns(T.nilable(::PostType)) }
+    def type; end
+
+    sig { params(value: T.nilable(::PostType)).void }
+    def type=(value); end
+
+    sig { returns(T::Boolean) }
+    def type_changed?; end
+
+    sig { returns(T::Boolean) }
+    def type_previously_changed?; end
 
     sig { returns(T.nilable(::World)) }
     def world; end
@@ -515,38 +536,38 @@ class Post
     def world=(value); end
 
     sig { returns(T::Array[T.untyped]) }
-    def world_card_ids; end
+    def world_key_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_card_ids=(ids); end
+    def world_key_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_cards, through: :world`.
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_keys, through: :world`.
     # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::WorldCard::PrivateCollectionProxy) }
-    def world_cards; end
+    sig { returns(::WorldKey::PrivateCollectionProxy) }
+    def world_keys; end
 
-    sig { params(value: T::Enumerable[::WorldCard]).void }
-    def world_cards=(value); end
+    sig { params(value: T::Enumerable[::WorldKey]).void }
+    def world_keys=(value); end
 
-    sig { returns(T::Boolean) }
-    def world_changed?; end
+    sig { returns(T.nilable(::User)) }
+    def world_owner; end
+
+    sig { params(value: T.nilable(::User)).void }
+    def world_owner=(value); end
 
     sig { returns(T::Array[T.untyped]) }
-    def world_key_recipient_ids; end
+    def world_post_type_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_key_recipient_ids=(ids); end
+    def world_post_type_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_key_recipients, through: :world`.
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_post_types, through: :world`.
     # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def world_key_recipients; end
+    sig { returns(::PostType::PrivateCollectionProxy) }
+    def world_post_types; end
 
-    sig { params(value: T::Enumerable[::User]).void }
-    def world_key_recipients=(value); end
-
-    sig { returns(T::Boolean) }
-    def world_previously_changed?; end
+    sig { params(value: T::Enumerable[::PostType]).void }
+    def world_post_types=(value); end
   end
 
   module GeneratedAssociationRelationMethods
@@ -620,6 +641,9 @@ class Post
     def lock(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def loud(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def merge(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -645,6 +669,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def quiet(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def readonly(*args, &blk); end
@@ -900,51 +927,6 @@ class Post
     sig { void }
     def id_will_change!; end
 
-    sig { returns(T.nilable(T::Array[::String])) }
-    def key_colors; end
-
-    sig { params(value: T.nilable(T::Array[::String])).returns(T.nilable(T::Array[::String])) }
-    def key_colors=(value); end
-
-    sig { returns(T::Boolean) }
-    def key_colors?; end
-
-    sig { returns(T.nilable(T::Array[::String])) }
-    def key_colors_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def key_colors_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def key_colors_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
-    def key_colors_change; end
-
-    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
-    def key_colors_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def key_colors_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(T::Array[::String])) }
-    def key_colors_in_database; end
-
-    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
-    def key_colors_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def key_colors_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(T::Array[::String])) }
-    def key_colors_previously_was; end
-
-    sig { returns(T.nilable(T::Array[::String])) }
-    def key_colors_was; end
-
-    sig { void }
-    def key_colors_will_change!; end
-
     sig { returns(::String) }
     def plain_body; end
 
@@ -990,6 +972,51 @@ class Post
     sig { void }
     def plain_body_will_change!; end
 
+    sig { returns(T::Boolean) }
+    def quiet; end
+
+    sig { params(value: T::Boolean).returns(T::Boolean) }
+    def quiet=(value); end
+
+    sig { returns(T::Boolean) }
+    def quiet?; end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def quiet_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def quiet_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def quiet_came_from_user?; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def quiet_change; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def quiet_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def quiet_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def quiet_in_database; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def quiet_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def quiet_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def quiet_previously_was; end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def quiet_was; end
+
+    sig { void }
+    def quiet_will_change!; end
+
     sig { void }
     def restore_created_at!; end
 
@@ -1003,22 +1030,22 @@ class Post
     def restore_id_value!; end
 
     sig { void }
-    def restore_key_colors!; end
-
-    sig { void }
     def restore_plain_body!; end
 
     sig { void }
+    def restore_quiet!; end
+
+    sig { void }
     def restore_title!; end
+
+    sig { void }
+    def restore_type_id!; end
 
     sig { void }
     def restore_updated_at!; end
 
     sig { void }
     def restore_v1_attributes!; end
-
-    sig { void }
-    def restore_world_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_created_at; end
@@ -1044,23 +1071,29 @@ class Post
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T.nilable(T::Array[::String]), T.nilable(T::Array[::String])])) }
-    def saved_change_to_key_colors; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_key_colors?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_plain_body; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_plain_body?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def saved_change_to_quiet; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_quiet?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_title; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_title?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_type_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
@@ -1073,12 +1106,6 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_world_id; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
     def title; end
@@ -1124,6 +1151,51 @@ class Post
 
     sig { void }
     def title_will_change!; end
+
+    sig { returns(::String) }
+    def type_id; end
+
+    sig { params(value: ::String).returns(::String) }
+    def type_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def type_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def type_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def type_id_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def type_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def type_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_was; end
+
+    sig { void }
+    def type_id_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -1228,67 +1300,22 @@ class Post
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_key_colors?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_plain_body?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_quiet?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_title?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(::String) }
-    def world_id; end
-
-    sig { params(value: ::String).returns(::String) }
-    def world_id=(value); end
-
-    sig { returns(T::Boolean) }
-    def world_id?; end
-
-    sig { returns(T.nilable(::String)) }
-    def world_id_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def world_id_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def world_id_came_from_user?; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def world_id_change; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def world_id_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def world_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def world_id_in_database; end
-
-    sig { returns(T.nilable([::String, ::String])) }
-    def world_id_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def world_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def world_id_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def world_id_was; end
-
-    sig { void }
-    def world_id_will_change!; end
   end
 
   module GeneratedRelationMethods
@@ -1362,6 +1389,9 @@ class Post
     def lock(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def loud(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def merge(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1387,6 +1417,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def quiet(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def readonly(*args, &blk); end

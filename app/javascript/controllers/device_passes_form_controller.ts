@@ -4,13 +4,13 @@ import invariant from "tiny-invariant";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-import FormController from "./form_controller";
 import type { PassData } from "./passes_bridge_controller";
+import SubmitController from "./submit_controller";
 
 export default class DevicePassesFormController extends Controller<HTMLFormElement> {
   // == Targets ==
 
-  static targets = [...FormController.targets, "inputTemplate", "input"];
+  static targets = [...SubmitController.targets, "inputTemplate", "input"];
   declare readonly inputTemplateTarget: HTMLTemplateElement;
   declare readonly hasInputTemplateTarget: boolean;
   declare readonly inputTargets: HTMLCollectionOf<HTMLInputElement>;

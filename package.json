@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "bun bun.config.js",
-    "build:css": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
+    "build:css": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.tailwind.css --minify"
   },
   "dependencies": {
     "@37signals/lexxy": "^0.9.18",
@@ -23,7 +23,7 @@
     "@rails/activestorage": "^8.1.300",
     "@sentry/browser": "^10.57.0",
     "@tailwindplus/elements": "^1.0.22",
-    "@tsparticles/confetti": "^4.1.2",
+    "@tsparticles/confetti": "^4.2.1",
     "@uppy/core": "^5.2.0",
     "@uppy/drag-drop": "^5.1.0",
     "@uppy/image-editor": "^4.2.0",
@@ -32,7 +32,7 @@
     "emoji-mart": "^5.6.0",
     "inflection": "^3.0.2",
     "input-otp": "^1.4.2",
-    "libphonenumber-js": "^1.13.4",
+    "intl-tel-input": "^29.1.0",
     "local-time": "^3.0.3",
     "lodash-es": "^4.18.1",
     "motion": "^12.40.0",
@@ -57,6 +57,7 @@
     "@types/array-to-sentence": "^2.0.0",
     "@types/hotwired__turbo": "^8.0.10",
     "@types/hotwired__turbo-rails": "^8.0.0",
+    "@types/intl-tel-input": "^18.1.4",
     "@types/lodash-es": "^4.17.12",
     "@types/rails__activestorage": "^8.0.1",
     "@types/rails__request.js": "^0.0.1",

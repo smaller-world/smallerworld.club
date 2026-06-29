@@ -42,7 +42,7 @@ class Components::ReplyInitiationForm < Components::Base
             {
               class: "loading-while-submitting",
               data: {
-                reply_initiation_form_target: "disableWhileSubmitting",
+                controller: "disable-while-submitting",
               },
               aria: {
                 invalid: ("true" if error_messages.any?),
@@ -55,9 +55,9 @@ class Components::ReplyInitiationForm < Components::Base
           span { "reply via" }
         end
 
-        menu.with_content(anchor: [ :bottom ]) do |content|
+        menu.with_content(anchor: [ :bottom ]) do |menu_content|
           ReplyInitiation.platform.values.each do |platform|
-            content.button_item(data: {
+            menu_content.button_item(data: {
               action: "reply-initiation-form#setPlatformValue",
               platform:,
             }) do

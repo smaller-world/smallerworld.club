@@ -40,9 +40,9 @@ class Views::WorldSettings::Show < Views::Base
                 button.inline_start_icon("huge/logout-02")
                 span { "leave #{@world.name}" }
               end
-              menu.with_content(anchor: :bottom) do |content|
+              menu.with_content(anchor: :bottom) do |menu_content|
                 form_with(url: [ :leave, @world ]) do
-                  content.button_item(type: :submit, variant: :destructive) do
+                  menu_content.button_item(type: :submit, variant: :destructive) do
                     Icon("huge/heartbreak")
                     span { "really leave" }
                   end

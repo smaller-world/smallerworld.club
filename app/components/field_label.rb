@@ -8,7 +8,7 @@ class Components::FieldLabel < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       attributes: T.untyped,
@@ -41,13 +41,13 @@ class Components::FieldLabel < Components::Base
 
     if @form && @field
       @form.label(@field, **attributes) do
-        if content_html
+        if content_html.present?
           raw(content_html) # rubocop:disable Rails/OutputSafety
         elsif (object_class = @form.object&.class) &&
             object_class.is_a?(ActiveModel::Translation)
-          object_class.human_attribute_name(@field)
+          object_class.human_attribute_name(@field).humanize(capitalize: false)
         else
-          @field.to_s.humanize
+          @field.to_s.humanize(capitalize: false)
         end
       end
     else

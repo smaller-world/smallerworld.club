@@ -15,15 +15,15 @@ class Components::AppHeader < Components::Base
             alt: [ site_name, "logo" ].join(" "),
             class: "size-6",
             data: {
-              icon: "inline-start",
+              icon: :inline_start,
             },
           )
           span(class: "font-heading font-semibold text-lg") do
             site_name
           end
         end
-        menu.with_content(anchor: :bottom) do |content|
-          menu_content(content)
+        menu.with_content(anchor: :bottom) do |menu_content|
+          menu_content(menu_content)
         end
       end
     end

@@ -7,27 +7,20 @@ class PostPolicy < ApplicationPolicy
   def show?
     user = user!
     post = T.let(record, Post)
-    post.author! == user || (
-      if (key_colors = post.key_colors)
-        WorldKey.exists?(world_id: post.world_id, recipient: user, color: key_colors)
-      else
-        WorldKey.exists?(world_id: post.world_id, recipient: user)
-      end
-    )
+    post.visible_to?(user)
   end
 
   # World owner can manage post
   def manage?
     post = T.let(record, Post)
     user = user!
-    post.author! == user
+    post.world_owner! == user
   end
 
   def react?
     post = T.let(record, Post)
     user = user!
-    post.author! != user &&
-      WorldKey.exists?(world_id: post.world_id, recipient: user)
+    post.world_owner! != user && allowed_to?(:show?, post)
   end
 
   def reply?

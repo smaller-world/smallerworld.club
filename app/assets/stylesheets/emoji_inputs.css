@@ -1,0 +1,21 @@
+@layer base-components {
+  .emoji-input {
+    @apply w-9 cursor-pointer px-0 text-center text-xl;
+
+    &:not(:placeholder-shown) {
+      @apply cursor-pointer;
+    }
+  }
+
+  .emoji-input-placeholder {
+    @apply pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity;
+
+    > svg {
+      @apply size-5 text-muted-foreground;
+    }
+
+    input:placeholder-shown + & {
+      @apply opacity-100;
+    }
+  }
+}

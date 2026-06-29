@@ -6,7 +6,7 @@ class Components::FieldGroup < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       attributes: T.untyped,
     ).void
@@ -69,6 +69,7 @@ class Components::FieldGroup < Components::Base
   end
   def field_label_for(value, **attributes, &content)
     namespace = @field || self.namespace
+    value = value.to_s
     if @form
       input_id = @form.field_id(namespace, value)
       label_id = @form.field_id(namespace, value, :label)
@@ -95,7 +96,7 @@ class Components::FieldGroup < Components::Base
       if @form && @field
         @form.field_id(@field)
       elsif @field
-        @field.to_s
+        field_id(@field)
       else
         SecureRandom.uuid
       end,

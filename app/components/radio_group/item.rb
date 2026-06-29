@@ -9,7 +9,9 @@ class Components::RadioGroup::Item < Components::Input
   sig do
     params(
       radio_group: Components::RadioGroup,
-      value: T.any(Symbol, String, Enumerize::Value),
+      value: String,
+      form: T.nilable(PhlexRailsFormBuilder),
+      field: T.nilable(Symbol),
       checked: T.nilable(T::Boolean),
       input: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
@@ -18,15 +20,17 @@ class Components::RadioGroup::Item < Components::Input
   def initialize(
     radio_group:,
     value:,
+    form: nil,
+    field: nil,
     checked: nil,
     input: {},
     **attributes
   )
-    super(**attributes)
+    super(form:, field:, **attributes)
     @radio_group = radio_group
     @value = T.let(value.to_s, String)
-    @input_options = input
     @checked = checked
+    @input_options = input
   end
 
   # == Component ==
@@ -40,10 +44,13 @@ class Components::RadioGroup::Item < Components::Input
       tabindex: 0,
       data: {
         controller: "radio",
+        radio_toggleable_value: @radio_group.toggleable?,
         slot: "radio-group-item",
         checked: ("" if checked?),
         unchecked: ("" unless checked?),
-        action: "click->radio#forwardItemClick",
+        action: token_list(
+          "click->radio#forwardItemClick",
+        ),
       },
       aria: {
         checked: !!checked?,
@@ -59,7 +66,7 @@ class Components::RadioGroup::Item < Components::Input
       end
     end
     if @form
-      @form.radio_button(@field, @value, **input_options)
+      @form.radio_button(@field, @value, checked: checked?, **input_options)
     else
       radio_button_tag(@field, @value, checked?, **input_options)
     end
@@ -71,14 +78,14 @@ class Components::RadioGroup::Item < Components::Input
 
   sig { returns(T::Boolean) }
   def checked?
-    if @checked.nil?
-      if (object = @form&.object) && @field
-        object.public_send(@field) == @value
-      else
-        false
-      end
+    return @checked unless @checked.nil?
+    return false unless (object = @form&.object) && @field
+
+    if object.respond_to?(:type_for_attribute) &&
+        (type = object.type_for_attribute(@field.to_s))
+      type.cast(@value) == type.cast(object.try(@field))
     else
-      @checked
+      object.try(@field).to_s == @value
     end
   end
 

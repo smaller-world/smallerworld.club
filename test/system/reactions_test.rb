@@ -8,8 +8,8 @@ class ReactionsTest < ApplicationSystemTestCase
     owner = users(:bob)
     friend = users(:sue)
     world = create_world(owner:, name: "Live React World")
-    grant_key(world:, recipient: friend, color: :blue)
-    create_post(world:, key_colors: nil, body: "react to me")
+    world.keys.create!(recipient: friend)
+    create_post(world:, body: "react to me")
 
     sign_in_as(friend)
 

@@ -10,7 +10,7 @@ class Components::Field < Components::Base
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       id: T.nilable(String),
       orientation: Symbol,
@@ -42,7 +42,7 @@ class Components::Field < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    captured_content = capture(&content)
+    content_html = capture(&content)
 
     root_element(
       :div,
@@ -55,7 +55,7 @@ class Components::Field < Components::Base
         invalid: ("true" if invalid?),
       },
     ) do
-      raw(captured_content) # rubocop:disable Rails/OutputSafety
+      raw(content_html) # rubocop:disable Rails/OutputSafety
     end
   end
 
@@ -155,49 +155,28 @@ class Components::Field < Components::Base
     end
   end
 
-  sig do
-    params(
-      errors: T.nilable(T::Array[String]),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.void),
-    ).void
-  end
-  def error(errors: error_messages, **attributes, &content)
-    div(**mix(
-      {
-        class: "field-error",
-        role: "alert",
-        data: {
-          slot: "field-error",
-        },
-      },
-      attributes,
-    )) do
-      if block_given?
-        yield
-      elsif (errors = errors.presence)
-        if errors.length == 1
-          errors.first
-        else
-          ul do
-            errors.each do |msg|
-              li { msg }
-            end
-          end
-        end
-      end
-    end
+  sig { params(messages: T.nilable(T::Array[String]), attributes: T.untyped).void }
+  def error(messages: nil, **attributes)
+    render Components::FieldError.new(
+      form: @form,
+      field: @field,
+      messages:,
+      **attributes,
+    )
   end
 
   sig { returns(String) }
   def id
-    @id ||= if @form && @field
-      @form.field_id(@field)
-    elsif @field
-      @field.to_s
-    else
-      SecureRandom.uuid
-    end
+    @id ||= T.let(
+      if @form && @field
+        @form.field_id(@field)
+      elsif @field
+        field_id(@field)
+      else
+        SecureRandom.uuid
+      end,
+      T.nilable(String),
+    )
   end
 
   sig do
@@ -338,14 +317,21 @@ class Components::Field < Components::Base
     render Components::RadioGroup.new(form: @form, field: @field, **attributes, &content)
   end
 
-  # sig { params(attributes: T.untyped).void }
-  # def otp_input(**attributes)
-  #   Components::OtpInput(form: @form, field: @field, **attributes)
-  # end
+  sig do
+    params(
+      attributes: T.untyped,
+      content: T.proc.params(group: Components::Select).void,
+    ).void
+  end
+  def select(**attributes, &content)
+    render Components::Select.new(form: @form, field: @field, **attributes, &content)
+  end
 
   sig { returns(T::Hash[Symbol, T.untyped]) }
   def error_tooltip_attributes
-    if (message = error_messages&.first)
+    if @form && @field &&
+        (messages = full_error_messages_for(@form, @field)) &&
+        (message = messages.first)
       {
         data: {
           controller: "tippy connection",
@@ -363,35 +349,17 @@ class Components::Field < Components::Base
 
   # == Helpers ==
 
-  sig { returns(T.nilable(T::Array[String])) }
-  def error_messages
-    if (object = @form&.object) &&
-        object.is_a?(ActiveModel::Validations) &&
-        (field = @field)
-      object.errors.messages_for(field)
+  sig { returns(T::Boolean) }
+  def has_errors?
+    if @form && @field
+      full_error_messages_for(@form, @field).present?
+    else
+      false
     end
   end
 
   sig { returns(T::Boolean) }
   def invalid?
-    @force_invalid || error_messages.present?
+    @force_invalid || has_errors?
   end
-
-  # sig { returns(T.nilable(Symbol)) }
-  # def type
-  #   if (object_class = @form&.object&.class) &&
-  #       object_class.is_a?(ActiveModel::AttributeRegistration::ClassMethods) &&
-  #       (field = @field)
-  #     case object_class.type_for_attribute(field)
-  #     when :string
-  #       :text
-  #     when :text
-  #       :textarea
-  #     when :integer, :float, :decimal
-  #       :number
-  #     when :boolean
-  #       :checkbox
-  #     end
-  #   end
-  # end
 end

@@ -1,4 +1,4 @@
-@layer base {
+@layer base-components {
   nav.pagy.series-nav {
     @apply flex items-center gap-x-2;
 

@@ -1,9 +1,45 @@
-@layer base {
-  .phone-number-input-options {
-    @apply w-fit max-w-72;
+@layer base-components {
+  .phone-number-input-container {
+    --iti-hover-color: var(--color-muted);
 
-    el-option {
-      @apply flex items-start gap-3;
+    @apply contents;
+
+    .iti__selected-country-primary {
+      @apply rounded-l-3xl;
+
+      @apply dark:[--iti-hover-color:color-mix(in_oklab,var(--color-background)_20%,transparent)];
+    }
+
+    .iti__selected-dial-code {
+      @apply text-base md:text-sm;
+    }
+
+    .iti__selected-country:disabled {
+      .iti__selected-dial-code {
+        @apply opacity-50;
+      }
+    }
+
+    .iti__country-selector {
+      /* Mirrors dropdown menu */
+      @apply z-50;
+      @apply rounded-3xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none;
+
+      /* Overrides */
+      @apply border-none;
+    }
+
+    .iti__search-input {
+      /* Mirrors input */
+      @apply h-9 w-full min-w-0 rounded-3xl border border-transparent bg-input/50 py-1 pr-3 text-base transition-[color,box-shadow,background-color] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+    }
+
+    .iti__search-input-wrapper {
+      @apply border-none;
+    }
+
+    .iti__country-list {
+      @apply py-1;
     }
   }
 }

@@ -1,0 +1,77 @@
+@layer base-components {
+  .select {
+    @apply flex w-fit flex-col;
+  }
+
+  .select-content {
+    /* Base styles */
+    @apply relative isolate z-50;
+    /*@apply max-h-(--available-height) w-(--anchor-width);*/
+    @apply min-w-36;
+    /*@apply origin-(--transform-origin);*/
+    @apply overflow-x-hidden overflow-y-auto rounded-3xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100;
+    /*@apply data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;*/
+    @apply dark:ring-foreground/10;
+    /*@apply data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;*/
+
+    /* Customizations */
+    --anchor-gap: var(--spacing); /* Controls gap between button and dropdown */
+
+    @apply transition-[scale,opacity,display]! transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
+  }
+
+  .select-trigger {
+    @apply flex;
+    /*@apply w-fit;*/
+    @apply items-center justify-between gap-1.5 rounded-3xl border border-transparent bg-input/50 px-3 py-2 text-sm whitespace-nowrap transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+
+    > span:last-of-type > svg {
+      @apply size-4 text-muted-foreground;
+    }
+  }
+
+  .select-value {
+    /* Base styles */
+    @apply flex flex-1 text-left;
+
+    /* Customizations */
+    @apply **:[svg]:pointer-events-none;
+  }
+
+  .select-item {
+    /* Base styles */
+    @apply relative flex w-full cursor-default items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3 text-sm font-medium outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2;
+
+    /* Customizations */
+    @apply hover:bg-accent hover:text-accent-foreground not-data-[variant=destructive]:hover:**:text-accent-foreground;
+    @apply cursor-pointer;
+
+    &:not(:has([aria-selected="true"])) {
+      @apply *:[span]:last:hidden;
+    }
+  }
+
+  .select-item-text {
+    @apply flex flex-1 shrink-0 gap-2 whitespace-nowrap;
+  }
+
+  .select-item-indicator {
+    /* Base styles */
+    @apply pointer-events-none absolute right-2 flex size-4 items-center justify-center;
+
+    /* Customizations */
+    @apply *:[svg]:pointer-events-none;
+  }
+
+  .select-group {
+    @apply scroll-my-1.5 p-1.5;
+  }
+
+  .select-label {
+    @apply px-3 py-2.5 text-xs text-muted-foreground;
+  }
+
+  .select-separator {
+    @apply pointer-events-none -mx-1.5 my-1.5 h-px bg-border;
+  }
+}

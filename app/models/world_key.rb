@@ -1,33 +1,28 @@
 # typed: strict
 # frozen_string_literal: true
 
-# NOTE: `accepted_at` can be null in the future when a user creates a key to
-# invite another user to their world directly from the app. i.e. Bob invites
-# Alice to his world, she accepts his key via QR code, and then she sends a
-# return-key to Bob from within the app from a CTA.
-#
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
 # == Schema Information
 #
 # Table name: world_keys
 #
-#  id           :uuid             not null, primary key
-#  accepted_at  :timestamptz
-#  color        :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  recipient_id :uuid             not null
-#  world_id     :uuid             not null
+#  id            :uuid             not null, primary key
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  invitation_id :uuid
+#  recipient_id  :uuid             not null
+#  world_id      :uuid             not null
 #
 # Indexes
 #
-#  index_world_keys_on_accepted_at   (accepted_at)
-#  index_world_keys_on_recipient_id  (recipient_id)
-#  index_world_keys_on_world_id      (world_id)
-#  index_world_keys_uniqueness       (world_id,recipient_id,color) UNIQUE
+#  index_world_keys_on_invitation_id  (invitation_id)
+#  index_world_keys_on_recipient_id   (recipient_id)
+#  index_world_keys_on_world_id       (world_id)
+#  index_world_keys_uniqueness        (world_id,recipient_id) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (invitation_id => world_invitations.id)
 #  fk_rails_...  (recipient_id => users.id)
 #  fk_rails_...  (world_id => worlds.id)
 #
@@ -35,15 +30,18 @@
 class WorldKey < ApplicationRecord
   include Noticeable
 
-  # == Attributes ==
-
-  enumerize :color, in: [ :green, :orange, :pink, :blue, :red ]
-
   # == Associations ==
 
   belongs_to :world, inverse_of: :keys
+  has_many :world_invitations, through: :world, source: :invitations
   has_one :world_owner, through: :world, source: :owner
+  has_many :world_post_types, through: :world, source: :post_types
+
+  has_many :post_type_grants, dependent: :destroy
+  has_many :granted_post_types, through: :post_type_grants, source: :post_type
+
   belongs_to :recipient, class_name: "User"
+  belongs_to :invitation, class_name: "WorldInvitation", optional: true
 
   sig { returns(World) }
   def world!
@@ -52,7 +50,7 @@ class WorldKey < ApplicationRecord
 
   sig { returns(User) }
   def world_owner!
-    world_owner or raise ActiveRecord::RecordNotFound, "Missing associated world owner"
+    world_owner or raise ActiveRecord::RecordNotFound, "Missing world owner"
   end
 
   sig { returns(User) }
@@ -62,31 +60,24 @@ class WorldKey < ApplicationRecord
 
   # == Validations ==
 
-  validates :color, presence: true
   validates :recipient, uniqueness: {
-    scope: [ :world, :color ],
+    scope: :world,
     message: ->(object, _data) {
-      color = object.color
-      article = color.start_with?("a", "e", "i", "o", "u") ? "an" : "a"
-      "already has #{article} #{color} key to #{object.world!.name}"
+      world = object.world!
+      "already has a key to #{world.name}"
     },
   }
   validate :validate_recipient_not_world_owner, on: :create
 
   # == Hooks ==
 
-  after_destroy :discard_recipient_world_cards!,
-    unless: :recipient_has_other_keys?
-  after_commit :create_notification_for_world_owner!,
-    on: [ :create, :update ],
-    if: [ :accepted_at?, :saved_change_to_accepted_at? ]
+  after_initialize :set_invitation, unless: :invitation_id?
 
-  # == Scopes ==
+  # after_destroy :discard_recipient_world_cards!,
+  #   unless: :recipient_has_other_keys?
+  after_create_commit :create_notification_for_world_owner!
 
-  scope :accepted, -> { where.not(accepted_at: nil) }
-  scope :pending_acceptance, -> { where(accepted_at: nil) }
-
-  # == Noticeable ==
+  # == Notifications ==
 
   sig { override.params(recipient: User).returns(Notification::Message) }
   def notification_message(recipient:)
@@ -110,32 +101,32 @@ class WorldKey < ApplicationRecord
     Rails.application.message_verifier(:world_key_grant)
   end
 
-  sig { params(grant: String).returns({ world_id: String, color: String }) }
+  sig { params(grant: String).returns(GrantMessage) }
   def self.verify_grant(grant)
-    grant_verifier.verify(grant).symbolize_keys
-  end
-
-  # == Methods ==
-
-  sig { returns(String) }
-  def label
-    if (world = self.world)
-      world.key_label(color:)
-    else
-      "#{color.humanize(capitalize: false)} key"
-    end
+    GrantMessage.new(grant_verifier.verify(grant))
   end
 
   private
 
   # == Helpers ==
 
-  sig { returns(T::Boolean) }
-  def recipient_has_other_keys?
-    WorldKey.where.not(id:).exists?(world_id:, recipient_id:)
+  sig { returns(T.nilable(WorldInvitation)) }
+  def recipient_invitation_pending_acceptance
+    recipient_phone_number = User.where(id: recipient_id).select(:phone_number)
+    world_invitations.pending_acceptance
+      .where(recipient_id:)
+      .or(world_invitations.where(recipient_phone_number:))
+      .first
   end
 
   # == Callbacks ==
+
+  sig { void }
+  def set_invitation
+    if (invitation = recipient_invitation_pending_acceptance)
+      self.invitation = invitation
+    end
+  end
 
   sig { void }
   def validate_recipient_not_world_owner
@@ -144,10 +135,10 @@ class WorldKey < ApplicationRecord
     end
   end
 
-  sig { void }
-  def discard_recipient_world_cards!
-    world = world!
-    recipient = recipient!
-    world.cards.kept.where(cardholder: recipient).discard_all!
-  end
+  # sig { void }
+  # def discard_recipient_world_cards!
+  #   world = world!
+  #   recipient = recipient!
+  #   world.cards.kept.where(cardholder: recipient).discard_all!
+  # end
 end

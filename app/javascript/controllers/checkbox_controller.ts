@@ -2,30 +2,35 @@ import { Controller } from "@hotwired/stimulus";
 import invariant from "tiny-invariant";
 
 export default class CheckboxController extends Controller<HTMLSpanElement> {
-  // == Lifecycle ==
+  // == Listeners ==
 
-  #changeListener = this.handleInputChange.bind(this);
+  #changeListener = this._handleInputChange.bind(this);
+  #focusListener = this._handleInputFocus.bind(this);
+
+  // == Lifecycle ==
 
   connect(): void {
     super.connect();
-    const input = this.#locateInput();
+    const input = this._locateInput();
     input.addEventListener("change", this.#changeListener);
+    input.addEventListener("focus", this.#focusListener);
   }
 
   disconnect(): void {
     super.disconnect();
-    const input = this.#locateInput();
+    const input = this._locateInput();
     input.removeEventListener("change", this.#changeListener);
+    input.removeEventListener("focus", this.#focusListener);
   }
 
   // == Actions ==
 
   forwardItemClick(event: PointerEvent): void {
-    const input = this.#locateInput();
+    const input = this._locateInput();
     const { shiftKey, ctrlKey, altKey, metaKey } = event;
     input.dispatchEvent(
       new PointerEvent("click", {
-        bubbles: true,
+        bubbles: false,
         shiftKey,
         ctrlKey,
         altKey,
@@ -36,7 +41,7 @@ export default class CheckboxController extends Controller<HTMLSpanElement> {
 
   // == Helpers ==
 
-  #locateInput(): HTMLInputElement {
+  _locateInput(): HTMLInputElement {
     let { nextElementSibling } = this.element;
     invariant(nextElementSibling instanceof HTMLInputElement, "Missing input");
     if (nextElementSibling.type === "hidden") {
@@ -46,11 +51,18 @@ export default class CheckboxController extends Controller<HTMLSpanElement> {
         "Missing input",
       );
     }
-    invariant(nextElementSibling.type === "checkbox", "Invalid input");
     return nextElementSibling;
   }
 
-  handleInputChange(event: Event) {
+  _handleInputFocus() {
+    // The native input is `aria-hidden` and only exists for form
+    // participation; redirect focus to the visible `[role]` element so that
+    // focus never lands on (and is retained by) an aria-hidden element.
+    // Mirrors Base UI's RadioRoot input `onFocus` behavior.
+    this.element.focus();
+  }
+
+  _handleInputChange(event: Event) {
     const { target } = event;
     invariant(target instanceof HTMLInputElement, "Invalid target");
 

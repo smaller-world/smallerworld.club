@@ -46,7 +46,7 @@ class Components::PostReactions < Components::Base
         {
           class: "flex-1 flex justify-end flex-wrap gap-1",
           data: {
-            controller: "frame",
+            controller: "frame-reload",
           },
         },
         @attributes,
@@ -75,7 +75,7 @@ class Components::PostReactions < Components::Base
             **mix(
               {
                 data: {
-                  action: "turbo:before-fetch-response->frame#reloadWhenNotFound",
+                  action: "turbo:before-fetch-response->frame-reload#reloadWhenNotFound",
                 },
               },
               @existing_reactions_form_options,

@@ -16,7 +16,7 @@ module NormalizesArrays
 
     # == Macros ==
 
-    sig { params(attributes: T.any(Symbol, String)).void }
+    sig { params(attributes: Symbol).void }
     def compacts_blanks(*attributes)
       normalizes(*T.unsafe(attributes), with: ->(value) { value&.compact_blank })
     end

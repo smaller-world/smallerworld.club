@@ -8,7 +8,7 @@ class Components::UppyDnd < Components::Input
 
   sig do
     params(
-      form: T.nilable(PhlexFormBuilder),
+      form: T.nilable(PhlexRailsFormBuilder),
       field: T.nilable(Symbol),
       value: T.nilable(T.any(ActiveStorage::Blob, ActiveStorage::Attachment)),
       required: T::Boolean,
@@ -130,7 +130,7 @@ class Components::UppyDnd < Components::Input
             ],
           },
         ) do |dialog|
-          dialog.with_content(show_close_button: false) do |content|
+          dialog.with_content(show_close_button: false) do |dialog_content|
             div(
               class: "uppy-dnd-cropper",
               data: {
@@ -138,7 +138,7 @@ class Components::UppyDnd < Components::Input
               },
             )
             div(class: "border-t-border flex justify-center gap-2 p-4") do
-              content.close_button(
+              dialog_content.close_button(
                 variant: :default,
                 size: :sm,
                 data: {
@@ -148,7 +148,7 @@ class Components::UppyDnd < Components::Input
                 button.inline_start_icon("huge/image-crop")
                 span { "crop and continue" }
               end
-              content.close_button(
+              dialog_content.close_button(
                 size: :sm,
                 data: {
                   action: "uppy-dnd#cancelImageEdit",

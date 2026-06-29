@@ -40,12 +40,12 @@ class Components::Button < Components::Base
 
   sig { params(name: String, attributes: T.untyped).void }
   def inline_start_icon(name, **attributes)
-    Icon(name, **mix({ data: { icon: "inline-start" } }, attributes))
+    Icon(name, **mix({ data: { icon: :inline_start } }, attributes))
   end
 
   sig { params(name: String, attributes: T.untyped).void }
   def inline_end_icon(name, **attributes)
-    Icon(name, **mix({ data: { icon: "inline-end" } }, attributes))
+    Icon(name, **mix({ data: { icon: :inline_end } }, attributes))
   end
 
   # == Helpers ==
@@ -60,7 +60,7 @@ class Components::Button < Components::Base
       class: "button group/button",
       data: {
         variant: variant.to_s,
-        size: size.to_s.tr("_", "-"),
+        size:,
       },
     }
   end

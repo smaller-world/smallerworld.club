@@ -127,7 +127,7 @@ class Components::WorldForm < Components::Base
 
   # == Helpers ==
 
-  # sig { params(form: PhlexFormBuilder).void }
+  # sig { params(form: PhlexRailsFormBuilder).void }
   # def key_label_fields(form:)
   #   Components::FieldSet() do |set|
   #     div do

@@ -19,13 +19,14 @@ import ConnectionController from "./connection_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DevicePassesFormController from "./device_passes_form_controller";
 import DialogController from "./dialog_controller";
+import DisableWhileSubmittingController from "./disable_while_submitting_controller";
 import DisabledController from "./disabled_controller";
 import DropdownMenuController from "./dropdown_menu_controller";
 import EmojiInputController from "./emoji_input_controller";
 import EmojiMartController from "./emoji_mart_controller";
 import FlashController from "./flash_controller";
-import FormController from "./form_controller";
-import FrameController from "./frame_controller";
+import FrameReloadController from "./frame_reload_controller";
+import FrameResetController from "./frame_reset_controller";
 import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
@@ -35,12 +36,13 @@ import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
-import PostFormController from "./post_form_controller";
 import PushTokenInputController from "./push_token_input";
 import RadioController from "./radio_controller";
 import ReplyInitiationFormController from "./reply_initiation_form_controller";
+import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
+import SubmitController from "./submit_controller";
 import TippyController from "./tippy_controller";
 import ToasterController from "./toaster_controller";
 // @ts-expect-error - Untyped package
@@ -49,7 +51,6 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
-import V1PostsImportFrameController from "./v1_posts_import_frame_controller";
 import WorldFormController from "./world_form_controller";
 
 // == Bridge Components
@@ -78,8 +79,13 @@ application.register("toaster", ToasterController);
 // == Helpers
 application.register("connection", ConnectionController);
 application.register("autoclick", AutoclickController);
-application.register("frame", FrameController);
-application.register("form", FormController);
+application.register("frame-reload", FrameReloadController);
+application.register("frame-reset", FrameResetController);
+application.register("submit", SubmitController);
+application.register(
+  "disable-while-submitting",
+  DisableWhileSubmittingController,
+);
 application.register("intersection", IntersectionController);
 application.register("click", ClickController);
 application.register("flash", FlashController);
@@ -104,11 +110,11 @@ application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
 application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
+application.register("select", SelectController);
 
 // == Forms
 application.register("device-passes-form", DevicePassesFormController);
 application.register("world-form", WorldFormController);
-application.register("post-form", PostFormController);
 application.register("reply-initiation-form", ReplyInitiationFormController);
 
 // == Components
@@ -118,6 +124,5 @@ application.register("emoji-mart", EmojiMartController);
 application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
-application.register("v1-posts-import-frame", V1PostsImportFrameController);
 
 // application.register("maintain-scroll", MaintainScrollController);

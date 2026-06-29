@@ -7,7 +7,7 @@ class WorldSettingsController < ApplicationController
   # GET /worlds/:id/settings
   def show
     world = find_world
-    authorize!(world, with: WorldSettingsPolicy, to: :show?)
+    authorize!(world, to: :show?, with: WorldSettingsPolicy)
     render Views::WorldSettings::Show.new(world:)
   end
 

@@ -12,14 +12,14 @@ class Components::DropdownMenu < Components::Base
 
   sig { params(attributes: T.untyped).void }
   def initialize(**attributes)
+    super(**attributes)
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
-    super(**attributes)
   end
 
   # == Component ==
 
-  sig { override.params(content: T.proc.bind(T.self_type).void).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     vanish(&content)
     trigger_block = @trigger_block or raise "Missing trigger"
@@ -83,7 +83,7 @@ class Components::DropdownMenu < Components::Base
     ).void
   end
   def with_content(
-    anchor:,
+    anchor: [ :bottom, :start ],
     anchor_strategy: nil,
     popover: true,
     open: false,

@@ -10,8 +10,6 @@ class World
   include GeneratedAttributeMethods
   extend CommonRelationMethods
   extend GeneratedRelationMethods
-  include GeneratedStoredAttributesMethods
-  include StoreAccessors
 
   sig { returns(ActiveStorage::Attached::One) }
   def icon; end
@@ -378,20 +376,6 @@ class World
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_owner(*args, &blk); end
 
-    sig { returns(T::Array[T.untyped]) }
-    def card_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def card_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `World` class because it declared `has_many :cards`.
-    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::WorldCard::PrivateCollectionProxy) }
-    def cards; end
-
-    sig { params(value: T::Enumerable[::WorldCard]).void }
-    def cards=(value); end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Attachment) }
     def create_icon_attachment(*args, &blk); end
 
@@ -421,6 +405,20 @@ class World
 
     sig { params(value: T.nilable(::ActiveStorage::Blob)).void }
     def icon_blob=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def invitation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def invitation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `World` class because it declared `has_many :invitations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldInvitation::PrivateCollectionProxy) }
+    def invitations; end
+
+    sig { params(value: T::Enumerable[::WorldInvitation]).void }
+    def invitations=(value); end
 
     sig { returns(T::Array[T.untyped]) }
     def key_ids; end
@@ -468,8 +466,22 @@ class World
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
     def post_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `World` class because it declared `has_many :posts`.
+    sig { returns(T::Array[T.untyped]) }
+    def post_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def post_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `World` class because it declared `has_many :post_types`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::PostType::PrivateCollectionProxy) }
+    def post_types; end
+
+    sig { params(value: T::Enumerable[::PostType]).void }
+    def post_types=(value); end
+
+    # This method is created by ActiveRecord on the `World` class because it declared `has_many :posts, through: :post_types`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
     sig { returns(::Post::PrivateCollectionProxy) }
     def posts; end
 
@@ -840,51 +852,6 @@ class World
     sig { void }
     def id_will_change!; end
 
-    sig { returns(T.untyped) }
-    def key_labels; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def key_labels=(value); end
-
-    sig { returns(T::Boolean) }
-    def key_labels?; end
-
-    sig { returns(T.untyped) }
-    def key_labels_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def key_labels_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def key_labels_came_from_user?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def key_labels_change; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def key_labels_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def key_labels_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def key_labels_in_database; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def key_labels_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def key_labels_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def key_labels_previously_was; end
-
-    sig { returns(T.untyped) }
-    def key_labels_was; end
-
-    sig { void }
-    def key_labels_will_change!; end
-
     sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
     def last_imported_v1_post_created_at; end
 
@@ -1033,9 +1000,6 @@ class World
     def restore_id_value!; end
 
     sig { void }
-    def restore_key_labels!; end
-
-    sig { void }
     def restore_last_imported_v1_post_created_at!; end
 
     sig { void }
@@ -1070,12 +1034,6 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def saved_change_to_key_labels; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_key_labels?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
     def saved_change_to_last_imported_v1_post_created_at; end
@@ -1157,9 +1115,6 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_key_labels?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_last_imported_v1_post_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1336,128 +1291,6 @@ class World
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def without(*args, &blk); end
-  end
-
-  module GeneratedStoredAttributesMethods
-    sig { returns(T.untyped) }
-    def blue_key_label; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def blue_key_label=(value); end
-
-    sig { returns(T.untyped) }
-    def blue_key_label_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def blue_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def blue_key_label_changed?; end
-
-    sig { returns(T.untyped) }
-    def blue_key_label_was; end
-
-    sig { returns(T.untyped) }
-    def green_key_label; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def green_key_label=(value); end
-
-    sig { returns(T.untyped) }
-    def green_key_label_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def green_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def green_key_label_changed?; end
-
-    sig { returns(T.untyped) }
-    def green_key_label_was; end
-
-    sig { returns(T.untyped) }
-    def orange_key_label; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def orange_key_label=(value); end
-
-    sig { returns(T.untyped) }
-    def orange_key_label_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def orange_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def orange_key_label_changed?; end
-
-    sig { returns(T.untyped) }
-    def orange_key_label_was; end
-
-    sig { returns(T.untyped) }
-    def pink_key_label; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def pink_key_label=(value); end
-
-    sig { returns(T.untyped) }
-    def pink_key_label_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def pink_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def pink_key_label_changed?; end
-
-    sig { returns(T.untyped) }
-    def pink_key_label_was; end
-
-    sig { returns(T.untyped) }
-    def red_key_label; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def red_key_label=(value); end
-
-    sig { returns(T.untyped) }
-    def red_key_label_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def red_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def red_key_label_changed?; end
-
-    sig { returns(T.untyped) }
-    def red_key_label_was; end
-
-    sig { returns(T.untyped) }
-    def saved_change_to_blue_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_blue_key_label?; end
-
-    sig { returns(T.untyped) }
-    def saved_change_to_green_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_green_key_label?; end
-
-    sig { returns(T.untyped) }
-    def saved_change_to_orange_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_orange_key_label?; end
-
-    sig { returns(T.untyped) }
-    def saved_change_to_pink_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_pink_key_label?; end
-
-    sig { returns(T.untyped) }
-    def saved_change_to_red_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_red_key_label?; end
   end
 
   class PrivateAssociationRelation < ::ActiveRecord::AssociationRelation
@@ -1653,142 +1486,5 @@ class World
 
     sig { params(opts: T.untyped, rest: T.untyped).returns(PrivateRelation) }
     def not(opts, *rest); end
-  end
-
-  module StoreAccessors
-    sig { returns(T.nilable(String)) }
-    def blue_key_label; end
-
-    sig { params(blue_key_label: T.nilable(String)).returns(T.nilable(String)) }
-    def blue_key_label=(blue_key_label); end
-
-    sig { returns(T::Boolean) }
-    def blue_key_label?; end
-
-    sig { returns(T.nilable(String)) }
-    def blue_key_label_before_last_save; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def blue_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def blue_key_label_changed?; end
-
-    sig { returns(T.nilable(String)) }
-    def blue_key_label_was; end
-
-    sig { returns(T.nilable(String)) }
-    def green_key_label; end
-
-    sig { params(green_key_label: T.nilable(String)).returns(T.nilable(String)) }
-    def green_key_label=(green_key_label); end
-
-    sig { returns(T::Boolean) }
-    def green_key_label?; end
-
-    sig { returns(T.nilable(String)) }
-    def green_key_label_before_last_save; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def green_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def green_key_label_changed?; end
-
-    sig { returns(T.nilable(String)) }
-    def green_key_label_was; end
-
-    sig { returns(T.nilable(String)) }
-    def orange_key_label; end
-
-    sig { params(orange_key_label: T.nilable(String)).returns(T.nilable(String)) }
-    def orange_key_label=(orange_key_label); end
-
-    sig { returns(T::Boolean) }
-    def orange_key_label?; end
-
-    sig { returns(T.nilable(String)) }
-    def orange_key_label_before_last_save; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def orange_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def orange_key_label_changed?; end
-
-    sig { returns(T.nilable(String)) }
-    def orange_key_label_was; end
-
-    sig { returns(T.nilable(String)) }
-    def pink_key_label; end
-
-    sig { params(pink_key_label: T.nilable(String)).returns(T.nilable(String)) }
-    def pink_key_label=(pink_key_label); end
-
-    sig { returns(T::Boolean) }
-    def pink_key_label?; end
-
-    sig { returns(T.nilable(String)) }
-    def pink_key_label_before_last_save; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def pink_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def pink_key_label_changed?; end
-
-    sig { returns(T.nilable(String)) }
-    def pink_key_label_was; end
-
-    sig { returns(T.nilable(String)) }
-    def red_key_label; end
-
-    sig { params(red_key_label: T.nilable(String)).returns(T.nilable(String)) }
-    def red_key_label=(red_key_label); end
-
-    sig { returns(T::Boolean) }
-    def red_key_label?; end
-
-    sig { returns(T.nilable(String)) }
-    def red_key_label_before_last_save; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def red_key_label_change; end
-
-    sig { returns(T::Boolean) }
-    def red_key_label_changed?; end
-
-    sig { returns(T.nilable(String)) }
-    def red_key_label_was; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def saved_change_to_blue_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_blue_key_label?; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def saved_change_to_green_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_green_key_label?; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def saved_change_to_orange_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_orange_key_label?; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def saved_change_to_pink_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_pink_key_label?; end
-
-    sig { returns(T.nilable([T.nilable(String), T.nilable(String)])) }
-    def saved_change_to_red_key_label; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_red_key_label?; end
   end
 end

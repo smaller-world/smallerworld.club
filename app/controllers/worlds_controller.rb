@@ -8,35 +8,25 @@ class WorldsController < ApplicationController
 
   # == Actions ==
 
-  # GET /worlds
-  def index
-    # respond_to do |format|
-    #   format.html do
-    #     current_user = current_user!
-    #     render Views::Worlds::Index.new(current_user:)
-    #   end
-    # end
-  end
-
-  # GET /worlds/:id?card_id=...&pass_serial_numbers[]=...&celebrate=...
+  # GET /worlds/:id?post_type_id=...&celebrate=...
   def show
     respond_to do |format|
       format.html do
+        current_user = Current.user!
         world = find_world
         authorize!(world)
-        card = if (card_id = params[:card_id])
-          WorldCard.active.find_by(id: card_id)
-        end
-        unclaimed_world_cards = if (serial_numbers = params[:pass_serial_numbers])
-          world.cards.kept.unclaimed.with_pass_serial_numbers(serial_numbers)
-        end
+        new_post_modal_open = !!params[:new_post]
         celebrate = !!params[:celebrate]
+        post_type = if (type_id = params[:post_type_id])
+          world.post_types.find(type_id)
+        end
         created_post_id = flash[:created_post_id]
         render Views::Worlds::Show.new(
+          current_user:,
           world:,
-          card:,
-          unclaimed_world_cards:,
+          new_post_modal_open:,
           celebrate:,
+          post_type:,
           created_post_id:,
         )
       end
@@ -102,7 +92,7 @@ class WorldsController < ApplicationController
     current_user = Current.user!
     world = find_world
     authorize!(world)
-    world.keys.accepted.where(recipient: current_user).destroy_all
+    world.keys.where(recipient: current_user).destroy_all
     recede_or_redirect_to(home_path)
   end
 

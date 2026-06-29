@@ -13,7 +13,7 @@ module World::V1Importing
   sig { returns(V1::Post::PrivateRelation) }
   def v1_posts
     V1::Post.joins(:author)
-      .where(author: { phone_number: owner_phone_number })
+      .where(prompt_id: nil, author: { phone_number: owner_phone_number })
       .where.not(world_id: nil)
       .distinct
       .chronological
@@ -30,7 +30,7 @@ module World::V1Importing
 
   sig { returns(T::Boolean) }
   def has_importable_v1_posts?
-    eldest_world? && unimported_v1_posts.any?
+    primary_world? && unimported_v1_posts.any?
   end
 
   sig { returns(T.nilable(SolidQueue::Job)) }
@@ -99,9 +99,9 @@ module World::V1Importing
   # == Helpers ==
 
   sig { returns(T::Boolean) }
-  def eldest_world?
-    user = owner!
-    user.owned_worlds.chronological.pick(:id) == id
+  def primary_world?
+    owner = owner!
+    owner.primary_world_id == id
   end
 
   sig { void }

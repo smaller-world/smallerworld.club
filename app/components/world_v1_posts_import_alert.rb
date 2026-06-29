@@ -30,7 +30,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
             class: current_import_finished? ? "pr-30" : "pr-28",
             data: {
               action: token_list(
-                "user-focus:active@document->frame#reload" => @import_job.present?,
+                "user-focus:active@document->frame-reload#reload" => @import_job.present?,
               ),
             },
           },
@@ -173,7 +173,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
         data: {
           controller: "connection",
           connection_delay_value: 4000,
-          action: "connection:connect->v1-posts-import-frame#reset",
+          action: "connection:connect->frame-reset#reset",
         },
       }
     end
