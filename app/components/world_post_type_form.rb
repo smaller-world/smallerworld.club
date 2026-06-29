@@ -66,7 +66,7 @@ class Components::WorldPostTypeForm < Components::Base
           class: "visually-hidden",
           input: {
             data: {
-              action: "change->submit#request",
+              action: "submit#request",
             },
           },
         )

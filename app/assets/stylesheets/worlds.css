@@ -46,4 +46,21 @@
       @apply border-dashed border-secondary;
     }*/
   }
+
+  .world-posts-frame {
+    form[aria-busy="true"] + & {
+      @apply loading rounded-xl;
+
+      &::before {
+        @apply absolute -inset-px z-10 bg-background/20 backdrop-blur-[2px];
+
+        border-radius: inherit;
+        content: "";
+      }
+
+      &::after {
+        @apply top-20 z-20;
+      }
+    }
+  }
 }

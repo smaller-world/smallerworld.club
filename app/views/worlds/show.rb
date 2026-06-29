@@ -146,7 +146,7 @@ class Views::Worlds::Show < Views::Base
               created_post_id: @created_post_id,
             ],
             target: "_top",
-            class: "flex flex-col gap-y-3.5",
+            class: "world-posts-frame",
             data: {
               turbo_permanent: (true if hotwire_native_app?),
             },

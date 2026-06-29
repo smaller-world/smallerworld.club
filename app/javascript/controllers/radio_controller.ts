@@ -36,16 +36,6 @@ export default class RadioController extends CheckboxController {
     }
   }
 
-  // == Actions ==
-
-  toggleItem() {
-    const input = this._locateInput();
-    if (input.checked) {
-      input.checked = false;
-    }
-    input.dispatchEvent(new Event("change"));
-  }
-
   // == Helpers ==
 
   _locateLabels(): NodeListOf<HTMLLabelElement> | null {
@@ -82,6 +72,7 @@ export default class RadioController extends CheckboxController {
       event.preventDefault();
       input.checked = false;
       input.dispatchEvent(new Event("change"));
+      input.dispatchEvent(new Event("input"));
     }
   }
 }

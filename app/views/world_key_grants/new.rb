@@ -21,10 +21,12 @@ class Views::WorldKeyGrants::New < Views::Base
           button_back_to("your friends", [ @world, :keys ], variant: :secondary)
         end
 
-        Components::WorldKeyGrantForm(
-          world: @world,
-          granted_post_types: @granted_post_types,
-        )
+        turbo_frame_tag(:world_key_grant_form) do
+          Components::WorldKeyGrantForm(
+            world: @world,
+            granted_post_types: @granted_post_types,
+          )
+        end
       end
     end
   end

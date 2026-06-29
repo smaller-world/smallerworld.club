@@ -18,12 +18,12 @@
 @utility loading {
   @apply relative;
 
-  &::before {
-    @apply absolute inset-0 bg-background opacity-50;
+  /*&::before {
+    @apply absolute inset-0 bg-background opacity-50 z-10;
 
     content: "";
     border-radius: inherit;
-  }
+  }*/
 
   &::after {
     @apply absolute spinner;

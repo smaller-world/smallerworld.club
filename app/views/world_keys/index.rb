@@ -23,6 +23,12 @@ class Views::WorldKeys::Index < Views::Base
           button_back_to(@world.name, @world, variant: :secondary)
         end
 
+        if (users = @current_user
+            .accessible_world_owners_without_key_for(@world)
+            .presence)
+          invitations_items_for(users)
+        end
+
         div(class: "flex flex-col gap-4 has-[[role=list]:empty]:hidden") do
           Components::ItemGroup(class: "gap-2") do
             @world.keys.each do |world_key|
@@ -59,60 +65,6 @@ class Views::WorldKeys::Index < Views::Base
               variant: :default,
               icon: "huge/user-add-01",
             )
-          end
-        end
-
-        if (users = @current_user.accessible_world_owners_without_key_for(@world).presence)
-          invitations_by_recipient_id = pending_invitations_by_recipient_id_for(users)
-          Components::Item(variant: :muted, class: "gap-2") do |item|
-            item.content do
-              item.title do
-                "these friends don't have access to your world: "
-              end
-            end
-            item.footer(class: "justify-start gap-1.5") do
-              users.find_each do |user|
-                if (invitation = invitations_by_recipient_id[user.id])
-                  Components::DropdownMenu() do |menu|
-                    menu.with_trigger_button(variant: :outline, anchor: :bottom) do |button|
-                      button.inline_start_icon("huge/tick-01")
-                      span { user.name }
-                    end
-                    menu.with_content(class: "min-w-auto") do |content|
-                      content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
-                      form_with(model: invitation, method: :delete) do
-                        content.button_item(type: :submit, variant: :destructive) do
-                          Icon("huge/mail-block-01")
-                          span { "cancel invitation" }
-                        end
-                      end
-                    end
-                  end
-                elsif @world.post_types.secret.any?
-                  button_link_to(
-                    user.name,
-                    [ :new, @world, :invitation, recipient_id: user.id ],
-                    variant: :outline,
-                  )
-                else
-                  Components::DropdownMenu() do |menu|
-                    menu.with_trigger_button(variant: :outline, anchor: :bottom) do
-                      user.name
-                    end
-                    menu.with_content(class: "min-w-auto") do |content; invitation|
-                      invitation = @world.invitations.build(recipient: user)
-                      form_with(model: invitation) do |form|
-                        form.hidden_field(:recipient_id)
-                        content.button_item(type: :submit) do
-                          Icon("huge/mail-send-01")
-                          span { "send invitation" }
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
           end
         end
       end
@@ -157,24 +109,79 @@ class Views::WorldKeys::Index < Views::Base
               size: :xs,
               icon: "huge/key-02",
             )
-          end
-
-          Components::DropdownMenu() do |menu|
-            menu.with_trigger_button(
-              variant: :ghost,
-              size: :icon_xs,
-              class: "text-muted-foreground",
-            ) do
-              Icon("huge/delete-01")
+          else
+            Components::DropdownMenu() do |menu|
+              menu.with_trigger_button(
+                variant: :ghost,
+                size: :icon_xs,
+                class: "text-muted-foreground",
+              ) do
+                Icon("huge/delete-01")
+              end
+              menu.with_content(
+                anchor: [ :bottom, :end ],
+                class: "min-w-auto",
+              ) do |menu_content|
+                form_with(url: world_key, method: :delete) do
+                  menu_content.button_item(type: :submit, variant: :destructive) do
+                    Icon("huge/delete-01")
+                    span { "destroy key" }
+                  end
+                end
+              end
             end
-            menu.with_content(
-              anchor: [ :bottom, :end ],
-              class: "min-w-auto",
-            ) do |menu_content|
-              form_with(url: world_key, method: :delete) do
-                menu_content.button_item(type: :submit, variant: :destructive) do
-                  Icon("huge/delete-01")
-                  span { "destroy key" }
+          end
+        end
+      end
+    end
+  end
+
+  sig { params(users: User::PrivateAssociationRelation).void }
+  def invitations_items_for(users)
+    invitations_by_recipient_id = pending_invitations_by_recipient_id_for(users)
+    Components::Item(variant: :muted, class: "gap-2") do |item|
+      item.content do
+        item.title do
+          "these friends don't have access to your world: "
+        end
+      end
+      item.footer(class: "justify-start gap-1.5") do
+        users.find_each do |user|
+          if (invitation = invitations_by_recipient_id[user.id])
+            Components::DropdownMenu() do |menu|
+              menu.with_trigger_button(variant: :outline, anchor: :bottom) do |button|
+                button.inline_start_icon("huge/tick-01")
+                span { user.name }
+              end
+              menu.with_content(class: "min-w-auto") do |content|
+                content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
+                form_with(model: invitation, method: :delete) do
+                  content.button_item(type: :submit, variant: :destructive) do
+                    Icon("huge/mail-block-01")
+                    span { "cancel invitation" }
+                  end
+                end
+              end
+            end
+          elsif @world.post_types.secret.any?
+            button_link_to(
+              user.name,
+              [ :new, @world, :invitation, recipient_id: user.id ],
+              variant: :outline,
+            )
+          else
+            Components::DropdownMenu() do |menu|
+              menu.with_trigger_button(variant: :outline, anchor: :bottom) do
+                user.name
+              end
+              menu.with_content(class: "min-w-auto") do |content; invitation|
+                invitation = @world.invitations.build(recipient: user)
+                form_with(model: invitation) do |form|
+                  form.hidden_field(:recipient_id)
+                  content.button_item(type: :submit) do
+                    Icon("huge/mail-send-01")
+                    span { "send invitation" }
+                  end
                 end
               end
             end
