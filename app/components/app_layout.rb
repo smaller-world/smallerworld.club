@@ -128,7 +128,7 @@ class Components::AppLayout < Components::Base
           # Auto-update user time zone
           Components::AccountTimeZoneForm(current_user:)
         end
-        if (current_device = @current_device) && !current_device.push_token?
+        if (current_device = @current_device)
           # Auto-register device push token
           Components::DevicePushTokenForm(current_device:)
         end

@@ -88,12 +88,13 @@ class Components::DropdownMenu::Content < Components::Base
     params(
       variant: Symbol,
       inset: T::Boolean,
+      disabled: T::Boolean,
       attributes: T.untyped,
       content: T.proc.void,
     ).void
   end
-  def link_item(variant: :default, inset: false, **attributes, &content)
-    item(:a, variant:, inset:, **attributes, &content)
+  def link_item(variant: :default, inset: false, disabled: false, **attributes, &content)
+    item(:a, variant:, inset:, disabled:, **attributes, &content)
   end
 
   sig do
@@ -101,24 +102,26 @@ class Components::DropdownMenu::Content < Components::Base
       target: Object,
       variant: Symbol,
       inset: T::Boolean,
+      disabled: T::Boolean,
       attributes: T.untyped,
       content: T.proc.void,
     ).void
   end
-  def link_item_to(target, variant: :default, inset: false, **attributes, &content)
-    item(:a, variant:, inset:, href: url_for(target), **attributes, &content)
+  def link_item_to(target, variant: :default, inset: false, disabled: false, **attributes, &content)
+    item(:a, variant:, inset:, href: url_for(target), disabled:, **attributes, &content)
   end
 
   sig do
     params(
       variant: Symbol,
       inset: T::Boolean,
+      disabled: T::Boolean,
       attributes: T.untyped,
       content: T.proc.void,
     ).void
   end
-  def button_item(variant: :default, inset: false, **attributes, &content)
-    item(:button, variant:, inset:, **mix({ type: :button }, attributes), &content)
+  def button_item(variant: :default, inset: false, disabled: false, **attributes, &content)
+    item(:button, variant:, inset:, disabled:, **mix({ type: :button }, attributes), &content)
   end
 
   sig { params(attributes: T.untyped).void }
@@ -148,11 +151,18 @@ class Components::DropdownMenu::Content < Components::Base
       element: Symbol,
       variant: Symbol,
       inset: T::Boolean,
+      disabled: T::Boolean,
       attributes: T.untyped,
       content: T.proc.void,
     ).void
   end
-  def item(element, variant: :default, inset: false, **attributes, &content)
+  def item(
+    element,
+    variant: :default,
+    inset: false,
+    disabled: false,
+    **attributes, &content
+  )
     unless variant.in?(ITEM_VARIANTS)
       raise InvalidParameter.new(parameter: :variant, value: variant)
     end
@@ -162,10 +172,12 @@ class Components::DropdownMenu::Content < Components::Base
       **mix(
         {
           class: "dropdown-menu-item group/dropdown-menu-item",
+          disabled: (true if disabled && element == :button),
           data: {
             slot: "dropdown-menu-item",
             variant: variant,
             inset: (true if inset),
+            disabled: (true if disabled),
           },
         },
         attributes,

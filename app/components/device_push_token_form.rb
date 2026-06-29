@@ -32,7 +32,7 @@ class Components::DevicePushTokenForm < Components::Base
           action: token_list(
             "connection:connect->notification-token-bridge#request",
             "notification-token-bridge:retrieved->push-token-input#setToken",
-            "push-token-input:token-set->submit#request",
+            "push-token-input:changed->submit#request",
           ),
         },
       )

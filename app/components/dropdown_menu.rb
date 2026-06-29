@@ -48,12 +48,17 @@ class Components::DropdownMenu < Components::Base
       content: T.proc.params(button: Components::Button).void,
     ).void
   end
-  def with_trigger_button(variant: :default, size: :default, **attributes, &content)
+  def with_trigger_button(
+    variant: :default,
+    size: :default,
+    **attributes,
+    &content
+  )
     @trigger_block = ->() {
       render Components::Button.new(
         variant:,
         size:,
-        **attributes,
+        ** attributes,
         &content
       )
     }
