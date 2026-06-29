@@ -10,7 +10,7 @@ class AddTypeToPosts < ActiveRecord::Migration[8.1]
       :type,
       foreign_key: { to_table: "post_types" },
       type: :uuid
-    when_clauses = Post::V1Importing::V1_POST_TYPE_TO_TYPE_LABEL
+    when_clauses = V1::Post::V1_POST_TYPE_TO_TYPE_LABEL
       .map do |v1_type, label|
         "WHEN #{connection.quote(v1_type)} THEN #{connection.quote(label)}"
       end

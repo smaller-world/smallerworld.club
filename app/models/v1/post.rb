@@ -56,6 +56,17 @@ module V1
   class Post < ApplicationRecord
     # == Configuration ==
 
+    V1_POST_TYPE_TO_TYPE_LABEL = T.let(
+      {
+        "journal_entry" => "journal entry",
+        "poem" => "poem",
+        "invitation" => "invitation",
+        "question" => "ask",
+        "follow_up" => "journal entry",
+      }.freeze,
+      T::Hash[String, String],
+    )
+
     self.table_name = "posts"
     self.inheritance_column = nil
 
@@ -89,8 +100,8 @@ module V1
 
     sig { params(world: ::World).returns(TrueClass) }
     def import_to!(world)
-      post = ::Post.find_or_initialize_by(id:)
-      post.world = world
+      post_type = post_type_on!(world)
+      post = ::Post.find_or_initialize_by(id:, type: post_type)
       images = import_ordered_images
       post.transaction do
         post.update_from_v1_post!(self, images:)
@@ -194,6 +205,12 @@ module V1
       end
       file.flush
       file.rewind
+    end
+
+    sig { params(world: World).returns(PostType) }
+    def post_type_on!(world)
+      label = V1_POST_TYPE_TO_TYPE_LABEL.fetch(type)
+      world.post_types.find_by!(label:)
     end
   end
 end
