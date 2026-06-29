@@ -59,6 +59,8 @@ module World::V1Importing
       post.import_to!(self)
       broadcast_v1_posts_import_progress
     end
+  ensure
+    broadcast_v1_posts_import_progress
   end
 
   sig { params(limit: T.nilable(Integer), options: T.untyped).returns(ImportV1PostsJob) }

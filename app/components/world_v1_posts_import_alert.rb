@@ -29,6 +29,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
           {
             class: current_import_finished? ? "pr-30" : "pr-28",
             data: {
+              variant!: (:destructive if @import_job&.failed?),
               action: token_list(
                 "user-focus:active@document->frame-reload#reload" => @import_job.present?,
               ),
@@ -62,14 +63,15 @@ class Components::WorldV1PostsImportAlert < Components::Base
               submit_button_for(
                 form,
                 size: :sm,
-                disabled: currently_importing? || current_import_finished?,
-                class: class_names(
-                  "loading *:invisible" => @import_job && !@import_job.finished?,
-                ),
+                disabled: !!@import_job,
+                class: class_names("loading *:invisible" => @import_job&.claimed?),
               ) do |button|
-                if current_import_finished?
+                if @import_job&.finished?
                   button.inline_start_icon("huge/checkmark-circle-01")
                   span { "imported" }
+                elsif @import_job&.failed?
+                  button.inline_start_icon("huge/alert-01")
+                  span { "failed" }
                 else
                   button.inline_start_icon("huge/delivery-truck-01")
                   span { "import" }
@@ -123,6 +125,16 @@ class Components::WorldV1PostsImportAlert < Components::Base
       imported_count = import_job_imported_posts_count(import_job)
       total_count = import_job_total_posts_count(import_job)
       "imported #{imported_count} of #{total_count} posts"
+    elsif (failed_execution = import_job.failed_execution)
+      if (error = failed_execution.error) &&
+          error.is_a?(Hash) &&
+          (message = error.fetch("message"))
+        lines = message.lines
+        message = "import failed with error: #{lines.first}"
+        lines.many? ? message + "..." : message
+      else
+        "import failed"
+      end
     else
       "waiting for import to start..."
     end
@@ -168,7 +180,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
 
   sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
   def reset_frame_after_import_attributes
-    if current_import_finished?
+    if @import_job && (@import_job.finished? || @import_job.failed?)
       {
         data: {
           controller: "connection",
