@@ -2,12 +2,15 @@
 # frozen_string_literal: true
 
 class Views::WorldKeys::Index < Views::Base
+  include Phlex::Rails::Helpers::Pluralize
+
   # == Initialization ==
 
-  sig { params(world: World).void }
-  def initialize(world:)
-    @world = world
+  sig { params(current_user: User, world: World).void }
+  def initialize(current_user:, world:)
     super()
+    @current_user = current_user
+    @world = world
   end
 
   # == View ==
@@ -20,43 +23,97 @@ class Views::WorldKeys::Index < Views::Base
           button_back_to(@world.name, @world, variant: :secondary)
         end
 
-        if @world.keys.any?
-          div(class: "flex flex-col gap-4") do
-            Components::ItemGroup(class: "gap-2") do
-              @world.keys.each do |world_key|
-                world_key_item(world_key)
-              end
+        div(class: "flex flex-col gap-4 has-[[role=list]:empty]:hidden") do
+          Components::ItemGroup(class: "gap-2") do
+            @world.keys.each do |world_key|
+              world_key_item(world_key)
             end
+          end
 
+          button_link_to(
+            "give a key to a new friend",
+            [ :new, @world, :key_grant ],
+            variant: :default,
+            size: :lg,
+            icon: "huge/user-add-01",
+            class: "self-center",
+          )
+        end
+
+        Components::Empty(
+          class: "hidden [:has([role=list]:empty)_+_&]:revert-display-layer",
+        ) do |empty|
+          empty.header do
+            span(class: "font-emoji text-xl leading-none") { "😪" }
+            empty.title do
+              "nobody has access to your world!"
+            end
+            empty.description do
+              "you haven't shared any world keys with anyone yet"
+            end
+          end
+          empty.content do
             button_link_to(
-              "give a key to a new friend",
+              "give a friend a key to your world",
               [ :new, @world, :key_grant ],
               variant: :default,
-              size: :lg,
               icon: "huge/user-add-01",
-              class: "self-center",
             )
           end
-        else
-          Components::Empty() do |empty|
-            empty.header do
-              empty.title do
-                "nobody has access to your world!"
-              end
-              empty.description do
-                "you haven't shared any world keys with anyone yet"
+        end
+
+        if (users = @current_user.accessible_world_owners_without_key_for(@world).presence)
+          invitations_by_recipient_id = pending_invitations_by_recipient_id_for(users)
+          Components::Item(variant: :muted, class: "gap-2") do |item|
+            item.content do
+              item.title do
+                "these friends don't have access to your world: "
               end
             end
-            empty.content do
-              button_link_to(
-                "invite a friend to your world",
-                [ :new, @world, :key_grant ],
-                variant: :default,
-                icon: "huge/user-add-01",
-              )
+            item.footer(class: "justify-start gap-1.5") do
+              users.find_each do |user|
+                if (invitation = invitations_by_recipient_id[user.id])
+                  Components::DropdownMenu() do |menu|
+                    menu.with_trigger_button(variant: :outline, anchor: :bottom) do |button|
+                      button.inline_start_icon("huge/tick-01")
+                      span { user.name }
+                    end
+                    menu.with_content(class: "min-w-auto") do |content|
+                      content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
+                      form_with(model: invitation, method: :delete) do
+                        content.button_item(type: :submit, variant: :destructive) do
+                          Icon("huge/mail-block-01")
+                          span { "cancel invitation" }
+                        end
+                      end
+                    end
+                  end
+                elsif @world.post_types.secret.any?
+                  button_link_to(
+                    user.name,
+                    [ :new, @world, :invitation, recipient_id: user.id ],
+                    variant: :outline,
+                  )
+                else
+                  Components::DropdownMenu() do |menu|
+                    menu.with_trigger_button(variant: :outline, anchor: :bottom) do
+                      user.name
+                    end
+                    menu.with_content(class: "min-w-auto") do |content; invitation|
+                      invitation = @world.invitations.build(recipient: user)
+                      form_with(model: invitation) do |form|
+                        form.hidden_field(:recipient_id)
+                        content.button_item(type: :submit) do
+                          Icon("huge/mail-send-01")
+                          span { "send invitation" }
+                        end
+                      end
+                    end
+                  end
+                end
+              end
             end
           end
-
         end
       end
     end
@@ -124,6 +181,16 @@ class Views::WorldKeys::Index < Views::Base
           end
         end
       end
+    end
+  end
+
+  sig do
+    params(users: User::PrivateAssociationRelation)
+      .returns(T::Hash[String, WorldInvitation])
+  end
+  def pending_invitations_by_recipient_id_for(users)
+    @world.invitations.pending_acceptance.where(recipient: users).index_by do |invitation|
+      T.must(invitation.recipient_id)
     end
   end
 end

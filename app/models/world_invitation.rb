@@ -7,7 +7,7 @@
 # Table name: world_invitations
 #
 #  id                     :uuid             not null, primary key
-#  granted_post_type_ids  :uuid             not null, is an Array
+#  granted_post_type_ids  :uuid             default([]), not null, is an Array
 #  recipient_phone_number :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -50,6 +50,11 @@ class WorldInvitation < ApplicationRecord
   sig { returns(User) }
   def world_owner!
     world_owner or raise ActiveRecord::RecordNotFound, "Missing world owner"
+  end
+
+  sig { returns(User) }
+  def recipient!
+    recipient or raise ActiveRecord::RecordNotFound, "Missing recipient"
   end
 
   # == Normalizations ==

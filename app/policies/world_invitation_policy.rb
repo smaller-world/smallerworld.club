@@ -13,4 +13,10 @@ class WorldInvitationPolicy < ApplicationPolicy
       invitation.recipient_phone_number == user.phone_number
     end
   end
+
+  def manage?
+    invitation = T.let(record, WorldInvitation)
+    user = user!
+    invitation.world_owner! == user
+  end
 end

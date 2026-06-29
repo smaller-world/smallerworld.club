@@ -22,6 +22,10 @@
       border-radius: inherit;
       color: unset;
 
+      .uppy-dnd-dropzone[aria-invalid="true"] & {
+        @apply border-destructive dark:border-destructive/50;
+      }
+
       &::before {
         @apply absolute inset-px bg-cover bg-center bg-no-repeat;
 

@@ -76,6 +76,9 @@ module GeneratedUrlHelpersModule
   def new_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_invitation_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_key_grant_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -233,6 +236,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_invitation_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_invitations_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_grant_url(*args); end

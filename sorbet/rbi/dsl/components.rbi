@@ -681,6 +681,16 @@ module Components
   end
   def WorldForm(world:, **attributes, &block); end
 
+  # workspace://app/components/world_invitation_form.rb:4
+  sig do
+    params(
+      invitation: ::WorldInvitation,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
+    ).void
+  end
+  def WorldInvitationForm(invitation:, **attributes, &block); end
+
   # workspace://app/components/world_key_form.rb:4
   sig do
     params(
@@ -1426,6 +1436,16 @@ module Components
       ).void
     end
     def WorldForm(world:, **attributes, &block); end
+
+    # workspace://app/components/world_invitation_form.rb:4
+    sig do
+      params(
+        invitation: ::WorldInvitation,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
+      ).void
+    end
+    def WorldInvitationForm(invitation:, **attributes, &block); end
 
     # workspace://app/components/world_key_form.rb:4
     sig do

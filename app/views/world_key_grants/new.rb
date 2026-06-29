@@ -6,9 +6,9 @@ class Views::WorldKeyGrants::New < Views::Base
 
   sig { params(world: World, granted_post_types: T::Array[PostType]).void }
   def initialize(world:, granted_post_types:)
+    super()
     @world = world
     @granted_post_types = granted_post_types
-    super()
   end
 
   # == View ==

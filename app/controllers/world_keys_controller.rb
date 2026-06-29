@@ -8,9 +8,10 @@ class WorldKeysController < ApplicationController
   def index
     respond_to do |format|
       format.html do
+        current_user = Current.user!
         world = find_world
         authorize!(world, to: :manage?)
-        render Views::WorldKeys::Index.new(world:)
+        render Views::WorldKeys::Index.new(current_user:, world:)
       end
     end
   end

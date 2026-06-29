@@ -367,6 +367,20 @@ class User
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
     def accessible_world_ids=(ids); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def accessible_world_owner_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def accessible_world_owner_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :accessible_world_owners, through: :world_keys`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def accessible_world_owners; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def accessible_world_owners=(value); end
+
     # This method is created by ActiveRecord on the `User` class because it declared `has_many :accessible_worlds, through: :world_keys`.
     # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
     sig { returns(::World::PrivateCollectionProxy) }

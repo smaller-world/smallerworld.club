@@ -6,9 +6,9 @@ class Views::PostCards::Show < Views::Base
 
   sig { params(post: Post, replied: T::Boolean).void }
   def initialize(post:, replied:)
+    super()
     @post = post
     @replied = replied
-    super()
   end
 
   # == View ==

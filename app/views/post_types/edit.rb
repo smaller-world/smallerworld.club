@@ -27,15 +27,15 @@ class Views::PostTypes::Edit < Views::Base
             menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
               "delete post type"
             end
-            menu.with_content(anchor: :bottom) do |menu_content|
-              menu_content.label(class: "pt-2 pb-1.5 max-w-52 text-center") do
+            menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
+              menu_content.label(class: "pt-1.5 pb-0.5 max-w-52 text-center") do
                 "are you sure? all posts of this type will be deleted."
               end
               form_with(url: @post_type, method: :delete) do
                 menu_content.button_item(
                   type: :submit,
                   variant: :destructive,
-                  class: "w-auto mx-auto py-1.5",
+                  class: "justify-center",
                 ) do
                   Icon("huge/delete-01")
                   span { "really delete" }

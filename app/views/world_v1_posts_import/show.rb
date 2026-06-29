@@ -6,9 +6,9 @@ class Views::WorldV1PostsImport::Show < Views::Base
 
   sig { params(world: World, import_job: T.nilable(SolidQueue::Job)).void }
   def initialize(world:, import_job:)
+    super()
     @world = world
     @import_job = import_job
-    super()
   end
 
   # == View ==

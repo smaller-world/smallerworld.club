@@ -67,16 +67,16 @@ Rails.application.routes.draw do
   end
   resource :world_settings, path: "/world/:world_id/settings", only: :show
   resources :world_keys, path: "/world/:world_id/keys", only: :index
-  resource(
-    :world_v1_posts_import,
-    path: "/world/:world_id/v1_posts_import",
-    only: [ :show, :create ],
-  )
-  # resources :world_cards, path: "world/:world_id/cards", only: :create
   resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
+  resources :world_invitations,
+    path: "/world/:world_id/invitations",
+    only: [ :new, :create ]
+  resource :world_v1_posts_import,
+    path: "/world/:world_id/v1_posts_import",
+    only: [ :show, :create ]
 
   # == World Invitations
-  resources :world_invitations, only: :show
+  resources :world_invitations, only: [ :show, :destroy ]
 
   # == World Keys
   resources :world_keys, only: [ :edit, :update, :destroy ] do

@@ -6,9 +6,9 @@ class Views::Reactions::Index < Views::Base
 
   sig { params(post: Post, new_reaction: Reaction).void }
   def initialize(post:, new_reaction: post.reactions.build)
+    super()
     @post = post
     @new_reaction = new_reaction
-    super()
   end
 
   # == View ==

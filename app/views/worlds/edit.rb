@@ -6,8 +6,8 @@ class Views::Worlds::Edit < Views::Base
 
   sig { params(world: World).void }
   def initialize(world:)
-    @world = world
     super()
+    @world = world
   end
 
   # == View ==
@@ -20,7 +20,25 @@ class Views::Worlds::Edit < Views::Base
           button_back_to("world", @world, variant: :secondary)
         end
 
-        Components::WorldForm(world: @world)
+        div(class: "flex flex-col gap-1") do
+          Components::WorldForm(world: @world)
+          Components::DropdownMenu() do |menu|
+            menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
+              "delete world"
+            end
+            menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
+              menu_content.label(class: "pt-1.5 pb-0.5 text-center") do
+                "are you sure?"
+              end
+              form_with(url: @world, method: :delete) do
+                menu_content.button_item(type: :submit, variant: :destructive) do
+                  Icon("huge/delete-01")
+                  span { "really delete" }
+                end
+              end
+            end
+          end
+        end
       end
     end
   end

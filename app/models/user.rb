@@ -89,9 +89,28 @@ class User < ApplicationRecord
     foreign_key: :recipient_id
   has_many :accessible_worlds,
     -> { distinct },
-    class_name: "World",
     through: :world_keys,
     source: :world
+  has_many :accessible_world_owners,
+    -> { distinct },
+    through: :world_keys,
+    source: :world_owner
+
+  sig { returns(WorldInvitation::PrivateRelation) }
+  def world_invitations
+    WorldInvitation.where(recipient_id: id)
+      .or(WorldInvitation.where(recipient_phone_number: phone_number))
+  end
+
+  sig { returns(T.nilable(String)) }
+  def primary_world_id
+    owned_worlds.chronological.pick(:id)
+  end
+
+  sig { params(world: World).returns(User::PrivateAssociationRelation) }
+  def accessible_world_owners_without_key_for(world)
+    accessible_world_owners.where.not(id: world.keys.select(:recipient_id))
+  end
 
   # == Normalizations ==
 
@@ -171,22 +190,6 @@ class User < ApplicationRecord
   sig { returns(T.nilable(V1::User)) }
   def v1_user
     V1::User.find_by(phone_number:)
-  end
-
-  sig { returns(WorldInvitation::PrivateRelation) }
-  def world_invitations
-    WorldInvitation.where(recipient_id: id)
-      .or(WorldInvitation.where(recipient_phone_number: phone_number))
-  end
-
-  sig { returns(T.nilable(World)) }
-  def primary_world
-    owned_worlds.chronological.first
-  end
-
-  sig { returns(T.nilable(String)) }
-  def primary_world_id
-    owned_worlds.chronological.pick(:id)
   end
 
   private

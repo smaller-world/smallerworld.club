@@ -6,8 +6,8 @@ class Views::WorldSettings::Show < Views::Base
 
   sig { params(world: World).void }
   def initialize(world:)
-    @world = world
     super()
+    @world = world
   end
 
   # == View ==

@@ -22,13 +22,13 @@ class Views::Posts::Index < Views::Base
     replied_post_ids:,
     created_post_id:
   )
+    super()
     @world = world
     @post_type = post_type
     @posts = posts
     @pagy = pagy
     @replied_post_ids = replied_post_ids
     @created_post_id = created_post_id
-    super()
   end
 
   # == View ==

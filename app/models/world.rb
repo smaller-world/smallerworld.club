@@ -64,9 +64,8 @@ class World < ApplicationRecord
   # == Attachments ==
 
   has_one_attached :icon do |attachable|
-    # attachable.variant(:favicon, resize_to_fill: [ 144, 144 ])
     attachable.variant(:page_icon, resize_to_fill: [ 255, 256 ])
-    attachable.variant(:notification_icon, resize_to_fill: [ 192, 192 ])
+    attachable.variant(:notification_icon, resize_to_fill: [ 192, 192 ], format: :png)
 
     attachable.variant(
       :passkit_logo,
@@ -94,11 +93,6 @@ class World < ApplicationRecord
       format: :png,
     )
   end
-
-  # sig { returns(T.nilable(ActiveStorage::VariantWithRecord)) }
-  # def favicon_variant
-  #   icon_attachment&.variant(:favicon)
-  # end
 
   sig { returns(T.nilable(T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob))) }
   def page_icon_variant
@@ -145,6 +139,7 @@ class World < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_default_name, if: :new_record?
+  after_initialize :set_default_post_types, if: :new_record?
 
   # == Search ==
 

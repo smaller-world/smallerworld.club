@@ -8,8 +8,8 @@ class Views::Sessions::New < Views::Base
 
   sig { params(verification_request: PhoneNumberVerificationRequest).void }
   def initialize(verification_request:)
-    @verification_request = verification_request
     super()
+    @verification_request = verification_request
   end
 
   # == View ==

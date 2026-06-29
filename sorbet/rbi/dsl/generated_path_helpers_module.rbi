@@ -76,6 +76,9 @@ module GeneratedPathHelpersModule
   def new_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_world_invitation_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_world_key_grant_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -233,6 +236,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_invitation_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_invitations_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_grant_path(*args); end

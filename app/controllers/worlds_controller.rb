@@ -98,7 +98,10 @@ class WorldsController < ApplicationController
 
   # DELETE /worlds/:id
   def destroy
-    raise NotImplementedError
+    world = find_world
+    authorize!(world)
+    world.destroy
+    recede_or_redirect_to(home_path)
   end
 
   private

@@ -1,27 +1,27 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::WorldKeyGrantForm < Components::Base
+class Components::WorldInvitationForm < Components::Base
   # == Initialization ==
 
   sig do
     params(
-      world: World,
-      granted_post_types: T::Array[PostType],
+      invitation: WorldInvitation,
       attributes: T.untyped,
     ).void
   end
-  def initialize(world:, granted_post_types:, **attributes)
+  def initialize(invitation:, **attributes)
     super(**attributes)
-    @world = world
-    @granted_post_types = granted_post_types
+    @invitation = invitation
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(url: [ :new, @world, :key_grant ], method: :get, **normalize_mix(
+    recipient = @invitation.recipient!
+
+    form_with(model: @invitation, **normalize_mix(
       {
         class: "flex flex-col gap-6",
         data: {
@@ -30,50 +30,30 @@ class Components::WorldKeyGrantForm < Components::Base
       },
       @attributes,
     )) do |form|
-      post_types = @world.post_types
-      if post_types.secret.any?
-        Components::Card(size: :sm) do |card|
-          card.content do
-            Components::FieldSet(class: "gap-2") do |field_set|
-              field_set.legend(class: "mb-0 text-center") do
-                "this key shares access to:"
-              end
-              checkbox_group_for(
-                form,
-                :granted_post_type_ids,
-                class: "flex-row justify-center gap-2 flex-wrap",
-              ) do |checkbox_group|
-                post_types.each do |post_type|
-                  granted_post_type_choice_card_for(post_type, checkbox_group:)
-                end
+      form.hidden_field(:recipient_id)
+
+      Components::Card(size: :sm) do |card|
+        card.content do
+          Components::FieldSet(class: "gap-2") do |field_set|
+            field_set.legend(class: "mb-0 text-center") do
+              "invite #{recipient.name} to see:"
+            end
+            checkbox_group_for(
+              form,
+              :granted_post_type_ids,
+              class: "flex-row justify-center gap-2 flex-wrap",
+            ) do |checkbox_group|
+              @invitation.world_post_types.each do |post_type|
+                granted_post_type_choice_card_for(post_type, checkbox_group:)
               end
             end
           end
         end
       end
 
-      div(class: "flex flex-col gap-3") do
-        span(class: "text-xs text-center text-muted-foreground italic") do
-          "get your friend to scan this qr code:"
-        end
-
-        div(class: "flex flex-col gap-y-1") do
-          grant_qr_code
-
-          Components::Button(
-            variant: :link,
-            size: :sm,
-            class: "self-center text-muted-foreground text-xs",
-            data: {
-              controller: "clipboard flash",
-              clipboard_copy_value: grant_url,
-              flash_text_value: "invite link copied!",
-              action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
-            },
-          ) do
-            "copy invite link"
-          end
-        end
+      submit_button_for(form, size: :lg) do |button|
+        button.inline_start_icon("huge/mail-send-01")
+        span { "send invite" }
       end
     end
   end
@@ -120,7 +100,6 @@ class Components::WorldKeyGrantForm < Components::Base
         field.checkbox_group_item_for(
           post_type.id,
           multiple: true,
-          checked: @granted_post_types.include?(post_type),
           **compact_mix(
             {
               class: "rounded-full",
@@ -163,29 +142,5 @@ class Components::WorldKeyGrantForm < Components::Base
         },
       }
     end
-  end
-
-  sig { void }
-  def grant_qr_code
-    qr_code = RQRCode::QRCode.new(grant_url)
-    svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
-    div(class: "relative") do
-      raw(safe(svg)) # rubocop:disable Rails/OutputSafety
-      div(class: "absolute inset-0 flex items-center justify-center") do
-        div(class: "bg-background flex items-center rounded-world-icon size-17 p-2.5") do
-          image_tag(
-            "logo.png",
-            alt: [ Smallerworld.application.site_name, "logo" ].join(" "),
-            class: "flex-1",
-          )
-        end
-      end
-    end
-  end
-
-  sig { returns(String) }
-  def grant_url
-    grant = @world.key_grant(post_types: @granted_post_types)
-    shortlinked_url_helpers.world_key_grant_url(grant:)
   end
 end

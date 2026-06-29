@@ -41,7 +41,10 @@ class WorldKey < ApplicationRecord
   has_many :granted_post_types, through: :post_type_grants, source: :post_type
 
   belongs_to :recipient, class_name: "User"
-  belongs_to :invitation, class_name: "WorldInvitation", optional: true
+  belongs_to :invitation,
+    class_name: "WorldInvitation",
+    optional: true,
+    dependent: :destroy
 
   sig { returns(World) }
   def world!

@@ -6,10 +6,10 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { params(world: World, grant: String, invitation: WorldInvitation).void }
   def initialize(world:, grant:, invitation: world.invitations.build)
+    super()
     @world = world
     @grant = grant
     @invitation = invitation
-    super()
   end
 
   # == View ==

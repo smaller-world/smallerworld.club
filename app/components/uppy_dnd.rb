@@ -97,7 +97,10 @@ class Components::UppyDnd < Components::Input
         data: {
           uppy_dnd_target: "dropzone",
         },
-        style: ("--preview-fit: #{@preview_fit};" if @preview_fit),
+        aria: {
+          invalid: ("true" if field_has_errors?),
+        },
+        style: ("--preview-fit: #{@preview_fit}" if @preview_fit),
       )
 
       if @form
