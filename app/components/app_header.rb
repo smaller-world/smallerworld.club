@@ -4,9 +4,9 @@
 class Components::AppHeader < Components::Base
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
-  def view_template(&content)
-    root_element(:header, class: "flex justify-center py-2") do
+  sig { override.void }
+  def view_template
+    root_element(:header, id: :app_header, class: "flex justify-center py-2") do
       Components::DropdownMenu() do |menu|
         menu.with_trigger_button(variant: :ghost, class: "gap-x-1.5") do
           site_name = Smallerworld.application.site_name
