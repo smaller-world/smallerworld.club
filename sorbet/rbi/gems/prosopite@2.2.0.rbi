@@ -23,7 +23,7 @@ module Prosopite
     # pkg:gem/prosopite#lib/prosopite.rb:10
     def backtrace_cleaner=(_arg0); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:132
+    # pkg:gem/prosopite#lib/prosopite.rb:134
     def create_notifications; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:10
@@ -38,10 +38,10 @@ module Prosopite
     # pkg:gem/prosopite#lib/prosopite.rb:33
     def enabled?; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:162
+    # pkg:gem/prosopite#lib/prosopite.rb:165
     def fingerprint(query); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:103
+    # pkg:gem/prosopite#lib/prosopite.rb:104
     def finish; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:10
@@ -53,10 +53,10 @@ module Prosopite
     # pkg:gem/prosopite#lib/prosopite.rb:19
     def ignore_queries=(_arg0); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:266
+    # pkg:gem/prosopite#lib/prosopite.rb:273
     def ignore_query?(sql); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:124
+    # pkg:gem/prosopite#lib/prosopite.rb:126
     def local_raise?; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:19
@@ -67,10 +67,10 @@ module Prosopite
 
     # Many thanks to https://github.com/genkami/fluent-plugin-query-fingerprint/
     #
-    # pkg:gem/prosopite#lib/prosopite.rb:178
+    # pkg:gem/prosopite#lib/prosopite.rb:181
     def mysql_fingerprint(query); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:76
+    # pkg:gem/prosopite#lib/prosopite.rb:77
     def pause; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:10
@@ -82,37 +82,37 @@ module Prosopite
     # pkg:gem/prosopite#lib/prosopite.rb:10
     def raise=(_arg0); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:128
+    # pkg:gem/prosopite#lib/prosopite.rb:130
     def raise?; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:262
+    # pkg:gem/prosopite#lib/prosopite.rb:269
     def red(str); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:94
+    # pkg:gem/prosopite#lib/prosopite.rb:95
     def resume; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:43
     def scan; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:98
+    # pkg:gem/prosopite#lib/prosopite.rb:99
     def scan?; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:226
+    # pkg:gem/prosopite#lib/prosopite.rb:229
     def send_notifications; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:116
+    # pkg:gem/prosopite#lib/prosopite.rb:118
     def start_raise; end
 
     # pkg:gem/prosopite#lib/prosopite.rb:10
     def stderr_logger=(_arg0); end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:120
+    # pkg:gem/prosopite#lib/prosopite.rb:122
     def stop_raise; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:271
+    # pkg:gem/prosopite#lib/prosopite.rb:278
     def subscribe; end
 
-    # pkg:gem/prosopite#lib/prosopite.rb:72
+    # pkg:gem/prosopite#lib/prosopite.rb:73
     def tc; end
   end
 end
