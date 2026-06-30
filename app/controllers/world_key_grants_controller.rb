@@ -64,7 +64,7 @@ class WorldKeyGrantsController < ApplicationController
       world: World,
       grant: String,
       grant_message: WorldKey::GrantMessage,
-    ).returns(T.untyped)
+    ).void
   end
   def accept_world_key(current_user:, world:, grant:, grant_message:)
     world_key = current_user.world_keys.build(
@@ -93,7 +93,7 @@ class WorldKeyGrantsController < ApplicationController
       world: World,
       grant: String,
       grant_message: WorldKey::GrantMessage,
-    ).returns(T.untyped)
+    ).void
   end
   def accept_world_invitation(world:, grant:, grant_message:)
     world_invitation_params = params.expect(
@@ -107,7 +107,10 @@ class WorldKeyGrantsController < ApplicationController
       .find_or_initialize_by(recipient_phone_number:)
     world_invitation.update(granted_post_type_ids: grant_message.post_type_ids)
     if world_invitation.valid? && hotwire_native_app?
-      resume_or_redirect_to(home_path, status: :see_other)
+      resume_or_redirect_to(
+        new_session_path(phone_number: recipient_phone_number),
+        status: :see_other,
+      )
     else
       render(
         turbo_stream: turbo_stream.replace(

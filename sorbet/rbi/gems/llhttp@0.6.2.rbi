@@ -5,12 +5,12 @@
 # Please instead update this file by running `bin/tapioca gem llhttp`.
 
 
-# source://llhttp//lib/llhttp.rb#3
+# pkg:gem/llhttp#lib/llhttp.rb:3
 module LLHttp
   class << self
     # [public] LLHttp's current version.
     #
-    # source://llhttp//lib/llhttp/version.rb#8
+    # pkg:gem/llhttp#lib/llhttp/version.rb:8
     def version; end
   end
 end
@@ -75,26 +75,26 @@ end
 #     end
 #   end
 #
-# source://llhttp//lib/llhttp/delegate.rb#64
+# pkg:gem/llhttp#lib/llhttp/delegate.rb:64
 class LLHttp::Delegate
   private
 
-  # source://llhttp//lib/llhttp/delegate.rb#89
+  # pkg:gem/llhttp#lib/llhttp/delegate.rb:89
   def internal_on_chunk_header; end
 
-  # source://llhttp//lib/llhttp/delegate.rb#73
+  # pkg:gem/llhttp#lib/llhttp/delegate.rb:73
   def internal_on_headers_complete; end
 
-  # source://llhttp//lib/llhttp/delegate.rb#65
+  # pkg:gem/llhttp#lib/llhttp/delegate.rb:65
   def internal_on_message_begin; end
 
-  # source://llhttp//lib/llhttp/delegate.rb#81
+  # pkg:gem/llhttp#lib/llhttp/delegate.rb:81
   def internal_on_message_complete; end
 end
 
 # [public] LLHttp's standard error object.
 #
-# source://llhttp//lib/llhttp/error.rb#6
+# pkg:gem/llhttp#lib/llhttp/error.rb:6
 class LLHttp::Error < ::StandardError; end
 
 # [public] Wraps an llhttp context for parsing http requests and responses.
@@ -130,56 +130,54 @@ class LLHttp::Error < ::StandardError; end
 #
 #   Call `LLHttp::Parser#reset` to reset the parser for the next request or response.
 #
-# source://llhttp//lib/llhttp/parser.rb#37
+# pkg:gem/llhttp#lib/llhttp/parser.rb:37
 class LLHttp::Parser
-  # @return [Parser] a new instance of Parser
-  #
-  # source://llhttp//lib/llhttp/parser.rb#44
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:44
   def initialize(delegate, type: T.unsafe(nil)); end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def <<(_arg0); end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def content_length; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def finish; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def http_major; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def http_minor; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def keep_alive?; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def method_name; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def parse(_arg0); end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def reset; end
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def status_code; end
 
   # [public] The parser type; one of: `both`, `request`, or `response`.
   #
-  # source://llhttp//lib/llhttp/parser.rb#42
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:42
   def type; end
 
   private
 
-  # source://llhttp//lib/llhttp/parser.rb#52
+  # pkg:gem/llhttp#lib/llhttp/parser.rb:52
   def llhttp_init(_arg0); end
 end
 
-# source://llhttp//lib/llhttp/parser.rb#38
+# pkg:gem/llhttp#lib/llhttp/parser.rb:38
 LLHttp::Parser::LLHTTP_TYPES = T.let(T.unsafe(nil), Hash)
 
-# source://llhttp//lib/llhttp/version.rb#4
+# pkg:gem/llhttp#lib/llhttp/version.rb:4
 LLHttp::VERSION = T.let(T.unsafe(nil), String)

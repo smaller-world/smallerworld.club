@@ -560,7 +560,7 @@ class Google::Auth::ClientId
     # @return [Google::Auth::ClientID]
     # @raise [Google::Auth::InitializationError] If config is nil or missing required elements
     #
-    # pkg:gem/googleauth#lib/googleauth/client_id.rb:102
+    # pkg:gem/googleauth#lib/googleauth/client_id.rb:106
     def from_hash(config); end
   end
 end
@@ -640,7 +640,7 @@ Google::Auth::ClientId::WEB_APP = T.let(T.unsafe(nil), String)
 #     creds2 = SubCredentials.default
 #     creds2.scope  # => ["http://example.com/sub_scope"]
 #
-# pkg:gem/googleauth#lib/googleauth/credentials.rb:74
+# pkg:gem/googleauth#lib/googleauth/credentials.rb:73
 class Google::Auth::Credentials
   extend ::Forwardable
 
@@ -685,29 +685,29 @@ class Google::Auth::Credentials
   # @raise [Google::Auth::InitializationError] If source_creds is nil
   # @raise [ArgumentError] If both scope and target_audience are specified
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:401
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:400
   def initialize(source_creds, options = T.unsafe(nil)); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def audience(*_arg0, **_arg1, &_arg2); end
 
   # The Signet::OAuth2::Client object the Credentials instance is using.
   #
   # @return [Signet::OAuth2::Client]
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:297
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:296
   def client; end
 
   # The Signet::OAuth2::Client object the Credentials instance is using.
   #
   # @return [Signet::OAuth2::Client]
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:297
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:296
   def client=(_arg0); end
 
   # @private Temporary; remove when universe domain metadata endpoint is stable (see b/349488459).
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:314
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:313
   def disable_universe_domain_check; end
 
   # Creates a duplicate of these credentials. This method tries to create the duplicate of the
@@ -735,78 +735,78 @@ class Google::Auth::Credentials
   #
   # @return [Credentials]
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:591
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:590
   def duplicate(options = T.unsafe(nil)); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def issuer(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def logger(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def logger=(*_arg0, **_arg1, &_arg2); end
 
   # Identifier for the project the client is authenticating with.
   #
   # @return [String]
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:304
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:303
   def project_id; end
 
   # Identifier for a separate project used for billing/quota, if any.
   #
   # @return [String,nil]
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:311
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:310
   def quota_project_id; end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def scope(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def signing_key(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def target_audience(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def token_credential_uri(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def universe_domain(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def universe_domain=(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:353
   def updater_proc(*_arg0, **_arg1, &_arg2); end
 
   protected
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:655
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:654
   def setup_logging(logger: T.unsafe(nil)); end
 
   # returns a new Hash with string keys instead of symbol keys.
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:620
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:619
   def stringify_hash_keys(hash); end
 
   # returns a new Hash with symbol keys instead of string keys.
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:625
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:624
   def symbolize_hash_keys(hash); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:629
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:628
   def update_from_client(client); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:645
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:644
   def update_from_filepath(path, options); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:636
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:635
   def update_from_hash(hash, options); end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:634
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:633
   def update_from_signet(client); end
 
   # Verify that the keyfile argument is a file.
@@ -814,17 +814,17 @@ class Google::Auth::Credentials
   # @param [String] keyfile Path to the keyfile
   # @raise [Google::Auth::InitializationError] If the keyfile does not exist
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:614
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:613
   def verify_keyfile_exists!(keyfile); end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:683
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:682
   def deep_hash_normalize(old_hash); end
 
   # Convert all keys in this hash (nested) to symbols for uniform retrieval
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials.rb:675
+  # pkg:gem/googleauth#lib/googleauth/credentials.rb:674
   def recursive_hash_normalize_keys(val); end
 
   class << self
@@ -833,14 +833,14 @@ class Google::Auth::Credentials
     #
     # @return [String]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:113
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:112
     def audience; end
 
     # Sets the default target audience ID to be used when none is provided during initialization.
     #
     # @param [String] new_audience
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:124
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:123
     def audience=(new_audience); end
 
     # Creates a new Credentials instance with auth credentials acquired by searching the
@@ -863,7 +863,7 @@ class Google::Auth::Credentials
     #
     # @return [Credentials]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:446
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:445
     def default(options = T.unsafe(nil)); end
 
     # The environment variables to search for credentials. Values can either be a file path to the
@@ -872,7 +872,7 @@ class Google::Auth::Credentials
     #
     # @return [Array<String>]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:195
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:194
     def env_vars; end
 
     # Sets the environment variables to search for credentials.
@@ -881,19 +881,19 @@ class Google::Auth::Credentials
     #
     # @param [String, Array<String>, nil] new_env_vars
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:219
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:218
     def env_vars=(new_env_vars); end
 
     # @private
     # Internal recursive lookup for env_vars.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:203
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:202
     def env_vars_internal; end
 
     # @private
     # Initializes the Signet client.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:526
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:525
     def init_client(hash, options = T.unsafe(nil)); end
 
     # @private
@@ -909,7 +909,7 @@ class Google::Auth::Credentials
     # @param method_name [Symbol] The lookup method name, if different
     # @return [Object] The value
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:272
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:271
     def lookup_auth_param(name, method_name = T.unsafe(nil)); end
 
     # @private
@@ -919,7 +919,7 @@ class Google::Auth::Credentials
     # @param [Symbol] Name of the constant
     # @return [Object] The value
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:288
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:287
     def lookup_local_constant(name); end
 
     # The file paths to search for credentials files.
@@ -927,7 +927,7 @@ class Google::Auth::Credentials
     #
     # @return [Array<String>]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:230
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:229
     def paths; end
 
     # Set the file paths to search for credentials files.
@@ -936,13 +936,13 @@ class Google::Auth::Credentials
     #
     # @param [String, Array<String>, nil] new_paths
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:253
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:252
     def paths=(new_paths); end
 
     # @private
     # Internal recursive lookup for paths.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:238
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:237
     def paths_internal; end
 
     # The default scope to be used when none is provided during initialization.
@@ -955,7 +955,7 @@ class Google::Auth::Credentials
     #
     # @return [String, Array<String>, nil]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:139
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:138
     def scope; end
 
     # Sets the default scope to be used when none is provided during initialization.
@@ -966,7 +966,7 @@ class Google::Auth::Credentials
     #
     # @param [String, Array<String>, nil] new_scope
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:155
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:154
     def scope=(new_scope); end
 
     # The default final target audience for ID tokens, to be used when none
@@ -978,7 +978,7 @@ class Google::Auth::Credentials
     #
     # @return [String, nil]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:170
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:169
     def target_audience; end
 
     # Sets the default final target audience for ID tokens, to be used when none
@@ -990,7 +990,7 @@ class Google::Auth::Credentials
     #
     # @param [String, nil] new_target_audience
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:184
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:183
     def target_audience=(new_target_audience); end
 
     # The default token credential URI to be used when none is provided during initialization.
@@ -999,14 +999,14 @@ class Google::Auth::Credentials
     #
     # @return [String]
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:92
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:91
     def token_credential_uri; end
 
     # Set the default token credential URI to be used when none is provided during initialization.
     #
     # @param [String] new_token_credential_uri
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:103
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:102
     def token_credential_uri=(new_token_credential_uri); end
 
     # @private
@@ -1016,41 +1016,41 @@ class Google::Auth::Credentials
     # @return [Hash] Updated options hash
     # @raise [ArgumentError] If both scope and target_audience are specified
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:545
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:544
     def update_client_options(options); end
 
     private
 
     # @private Lookup Credentials using Google::Auth.get_application_default.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:490
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:489
     def from_application_default(options); end
 
     # @private Lookup Credentials from default file paths.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:479
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:478
     def from_default_paths(options); end
 
     # @private Lookup Credentials from environment variables.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:460
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:459
     def from_env_vars(options); end
 
     # @private Read credentials from a JSON stream.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials.rb:503
+    # pkg:gem/googleauth#lib/googleauth/credentials.rb:502
     def from_io(io, options); end
   end
 end
 
 # The default target audience ID to be used when none is provided during initialization.
 #
-# pkg:gem/googleauth#lib/googleauth/credentials.rb:81
+# pkg:gem/googleauth#lib/googleauth/credentials.rb:80
 Google::Auth::Credentials::AUDIENCE = T.let(T.unsafe(nil), String)
 
 # The default token credential URI to be used when none is provided during initialization.
 #
-# pkg:gem/googleauth#lib/googleauth/credentials.rb:77
+# pkg:gem/googleauth#lib/googleauth/credentials.rb:76
 Google::Auth::Credentials::TOKEN_CREDENTIAL_URI = T.let(T.unsafe(nil), String)
 
 # Generic error raised during operation of Credentials
@@ -1066,7 +1066,7 @@ end
 # CredentialsLoader contains the behaviour used to locate and find default
 # credentials files on the file system.
 #
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:26
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:27
 module Google::Auth::CredentialsLoader
   # Creates an instance from the path specified in an environment
   # variable.
@@ -1082,7 +1082,7 @@ module Google::Auth::CredentialsLoader
   #     * `:connection_builder` A `Proc` that returns a connection.
   # @raise [Google::Auth::InitializationError] If the credentials file cannot be read
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:77
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:78
   def from_env(scope = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates an instance from the system default path
@@ -1098,7 +1098,7 @@ module Google::Auth::CredentialsLoader
   #     * `:connection_builder` A `Proc` that returns a connection.
   # @raise [Google::Auth::InitializationError] If the credentials file cannot be read or is invalid
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:131
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:132
   def from_system_default_path(scope = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates an instance from a well known path.
@@ -1114,7 +1114,7 @@ module Google::Auth::CredentialsLoader
   #     * `:connection_builder` A `Proc` that returns a connection.
   # @raise [Google::Auth::InitializationError] If the credentials file cannot be read
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:104
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:105
   def from_well_known_path(scope = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # make_creds proxies the construction of a credentials instance
@@ -1122,15 +1122,15 @@ module Google::Auth::CredentialsLoader
   # By default, it calls #new on the current class, but this behaviour can
   # be modified, allowing different instances to be created.
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:58
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:59
   def make_creds(*args); end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:192
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:197
   def authorized_user_env_vars?; end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:178
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:183
   def interpret_options(scope, options); end
 
   # @private
@@ -1140,15 +1140,15 @@ module Google::Auth::CredentialsLoader
   # @param expected_type [String] The expected credential type name.
   # @raise [Google::Auth::InitializationError] If the JSON key type does not match the expected type.
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:167
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:168
   def load_and_verify_json_key_type(json_key_io, expected_type); end
 
   # Finds project_id from gcloud CLI configuration
   #
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:151
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:152
   def load_gcloud_project_id; end
 
-  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:187
+  # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:192
   def service_account_env_vars?; end
 
   class << self
@@ -1159,80 +1159,80 @@ module Google::Auth::CredentialsLoader
     # @param expected_type [String] The expected credential type name.
     # @raise [Google::Auth::InitializationError] If the JSON key type does not match the expected type.
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:167
+    # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:168
     def load_and_verify_json_key_type(json_key_io, expected_type); end
 
     # Finds project_id from gcloud CLI configuration
     #
-    # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:151
+    # pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:152
     def load_gcloud_project_id; end
   end
 end
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:33
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:34
 Google::Auth::CredentialsLoader::ACCOUNT_TYPE_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:37
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:38
 Google::Auth::CredentialsLoader::AWS_ACCESS_KEY_ID_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:36
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:37
 Google::Auth::CredentialsLoader::AWS_DEFAULT_REGION_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:35
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:36
 Google::Auth::CredentialsLoader::AWS_REGION_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:38
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:39
 Google::Auth::CredentialsLoader::AWS_SECRET_ACCESS_KEY_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:39
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:40
 Google::Auth::CredentialsLoader::AWS_SESSION_TOKEN_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:29
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:30
 Google::Auth::CredentialsLoader::CLIENT_EMAIL_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:30
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:31
 Google::Auth::CredentialsLoader::CLIENT_ID_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:31
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:32
 Google::Auth::CredentialsLoader::CLIENT_SECRET_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:51
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:52
 Google::Auth::CredentialsLoader::CLOUD_SDK_CLIENT_ID = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:44
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:45
 Google::Auth::CredentialsLoader::CREDENTIALS_FILE_NAME = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:27
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:28
 Google::Auth::CredentialsLoader::ENV_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:42
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:43
 Google::Auth::CredentialsLoader::GCLOUD_CONFIG_COMMAND = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:40
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:41
 Google::Auth::CredentialsLoader::GCLOUD_POSIX_COMMAND = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:41
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:42
 Google::Auth::CredentialsLoader::GCLOUD_WINDOWS_COMMAND = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:45
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:46
 Google::Auth::CredentialsLoader::NOT_FOUND_ERROR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:28
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:29
 Google::Auth::CredentialsLoader::PRIVATE_KEY_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:34
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:35
 Google::Auth::CredentialsLoader::PROJECT_ID_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:32
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:33
 Google::Auth::CredentialsLoader::REFRESH_TOKEN_VAR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:49
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:50
 Google::Auth::CredentialsLoader::SYSTEM_DEFAULT_ERROR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:47
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:48
 Google::Auth::CredentialsLoader::WELL_KNOWN_ERROR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:46
+# pkg:gem/googleauth#lib/googleauth/credentials_loader.rb:47
 Google::Auth::CredentialsLoader::WELL_KNOWN_PATH = T.let(T.unsafe(nil), String)
 
 # DefaultCredentials is used to preload the credentials file, to determine
@@ -1364,13 +1364,13 @@ module Google::Auth::Error; end
 # as those provided by the AWS provider.
 # Authenticates requests using External Account credentials, such as those provided by the AWS provider.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:24
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:25
 module Google::Auth::ExternalAccount; end
 
 # This module handles the retrieval of credentials from Google Cloud by utilizing the AWS EC2 metadata service and
 # then exchanging the credentials for a short-lived Google Cloud access token.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:27
+# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:28
 class Google::Auth::ExternalAccount::AwsCredentials
   include ::Google::Auth::BaseClient
   include ::Google::Auth::Helpers::Connection
@@ -1378,12 +1378,12 @@ class Google::Auth::ExternalAccount::AwsCredentials
   include ::Google::Auth::ExternalAccount::ExternalAccountUtils
   extend ::Google::Auth::CredentialsLoader
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:38
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:39
   def initialize(options = T.unsafe(nil)); end
 
   # Will always be nil, but method still gets used.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:36
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:37
   def client_id; end
 
   # Retrieves the subject token using the credential_source object.
@@ -1409,7 +1409,7 @@ class Google::Auth::ExternalAccount::AwsCredentials
   #
   # @return [string] The retrieved subject token.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:79
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:80
   def retrieve_subject_token!; end
 
   private
@@ -1421,18 +1421,18 @@ class Google::Auth::ExternalAccount::AwsCredentials
   # @return [String] The AWS role name
   # @raise [Google::Auth::CredentialsError] If the credential verification URL is not set or if the request fails
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:214
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:215
   def fetch_metadata_role_name; end
 
   # Retrieves the AWS security credentials required for signing AWS requests from the AWS metadata server.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:227
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:228
   def fetch_metadata_security_credentials(role_name); end
 
   # Retrieves the AWS security credentials required for signing AWS requests from either the AWS security
   # credentials environment variables or from the AWS metadata server.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:184
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:185
   def fetch_security_credentials; end
 
   # Makes a request to an AWS resource endpoint
@@ -1444,7 +1444,7 @@ class Google::Auth::ExternalAccount::AwsCredentials
   # @return [Faraday::Response] The successful response
   # @raise [Google::Auth::CredentialsError] If the request fails
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:154
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:155
   def get_aws_resource(url, name, data: T.unsafe(nil), headers: T.unsafe(nil)); end
 
   # Retrieves an IMDSv2 session token or returns a cached token if valid
@@ -1452,10 +1452,10 @@ class Google::Auth::ExternalAccount::AwsCredentials
   # @return [String] The IMDSv2 session token
   # @raise [Google::Auth::CredentialsError] If the token URL is missing or there's an error retrieving the token
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:114
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:115
   def imdsv2_session_token; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:141
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:142
   def imdsv2_session_token_invalid?; end
 
   # Reads the name of the AWS region from the environment
@@ -1464,22 +1464,22 @@ class Google::Auth::ExternalAccount::AwsCredentials
   # @raise [Google::Auth::CredentialsError] If the region is not set in the environment
   #   and the region_url was not set in credentials source
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:237
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:238
   def region; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:174
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:175
   def uri_escape(string); end
 end
 
 # Constant for imdsv2 session token expiration in seconds
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:29
+# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:30
 Google::Auth::ExternalAccount::AwsCredentials::IMDSV2_TOKEN_EXPIRATION_IN_SECONDS = T.let(T.unsafe(nil), Integer)
 
 # Implements an AWS request signer based on the AWS Signature Version 4 signing process.
 # https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:258
+# pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:259
 class Google::Auth::ExternalAccount::AwsRequestSigner
   # Instantiates an AWS request signer used to compute authenticated signed requests to AWS APIs based on the AWS
   # Signature Version 4 signing process.
@@ -1487,7 +1487,7 @@ class Google::Auth::ExternalAccount::AwsRequestSigner
   # @param [string] region_name
   #     The AWS region to use.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:264
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:265
   def initialize(region_name); end
 
   # Generates an AWS signature version 4 signed request.
@@ -1518,15 +1518,15 @@ class Google::Auth::ExternalAccount::AwsRequestSigner
   #
   # @raise [Google::Auth::CredentialsError] If the AWS service URL is invalid
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:296
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:297
   def generate_signed_request(aws_credentials, original_request); end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:334
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:335
   def aws_headers(aws_credentials, original_request, datetime); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:345
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:346
   def build_authorization_header(headers, sts, aws_credentials, service_name, date); end
 
   # Generates the canonical query string given a raw query string.
@@ -1535,61 +1535,61 @@ class Google::Auth::ExternalAccount::AwsRequestSigner
   # Code is from the AWS SDK for Ruby
   # https://github.com/aws/aws-sdk-ruby/blob/0ac3d0a393ed216290bfb5f0383380376f6fb1f1/gems/aws-sigv4/lib/aws-sigv4/signer.rb#L532
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:424
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:425
   def build_canonical_querystring(query); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:402
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:403
   def canonical_request(http_method, uri, headers, content_sha256); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:371
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:372
   def credential(access_key_id, date, service); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:375
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:376
   def credential_scope(date, service); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:367
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:368
   def hexhmac(key, value); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:363
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:364
   def hmac(key, value); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:393
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:394
   def host(uri); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:415
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:416
   def sha256_hexdigest(string); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:354
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:355
   def signature(secret_access_key, date, string_to_sign, service); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:384
+  # pkg:gem/googleauth#lib/googleauth/external_account/aws_credentials.rb:385
   def string_to_sign(datetime, canonical_request, service); end
 end
 
 # Authenticates requests using External Account credentials, such
 # as those provided by the AWS provider or OIDC provider like Azure, etc.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:27
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:28
 module Google::Auth::ExternalAccount::BaseCredentials
   include ::Google::Auth::BaseClient
   include ::Google::Auth::Helpers::Connection
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:45
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:46
   def access_token; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:45
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:46
   def access_token=(_arg0); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:44
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:45
   def expires_at; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:53
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:54
   def expires_at=(new_expires_at); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:48
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:49
   def expires_within?(seconds); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:57
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:58
   def fetch_access_token!(_options = T.unsafe(nil)); end
 
   # Returns whether the credentials represent a workforce pool (True) or
@@ -1599,7 +1599,7 @@ module Google::Auth::ExternalAccount::BaseCredentials
   #     true if the credentials represent a workforce pool.
   #     false if they represent a workload.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:89
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:90
   def is_workforce_pool?; end
 
   # For external account credentials, the principal is
@@ -1607,20 +1607,20 @@ module Google::Auth::ExternalAccount::BaseCredentials
   # @private
   # @return [String] the GCP principal, e.g. a workforce pool
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:97
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:98
   def principal; end
 
   # Retrieves the subject token using the credential_source object.
   # @return [string]
   #     The retrieved subject token.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:79
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:80
   def retrieve_subject_token!; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:46
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:47
   def universe_domain; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:46
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:47
   def universe_domain=(_arg0); end
 
   private
@@ -1628,13 +1628,13 @@ module Google::Auth::ExternalAccount::BaseCredentials
   # A common method for Other credentials to call during initialization
   # @raise [Google::Auth::InitializationError] If workforce_pool_user_project is incorrectly set
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:110
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:111
   def base_setup(options); end
 
   # Exchange tokens at STS endpoint
   # @raise [Google::Auth::AuthorizationError] If the token exchange request fails
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:140
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:141
   def exchange_token; end
 
   # Exchanges a token for an impersonated service account access token
@@ -1644,42 +1644,42 @@ module Google::Auth::ExternalAccount::BaseCredentials
   # @return [Hash] The response containing the impersonated access token
   # @raise [Google::Auth::CredentialsError] If the impersonation request fails
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:188
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:189
   def get_impersonated_access_token(token, _options = T.unsafe(nil)); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:207
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:208
   def log_impersonated_token_request(original_token); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:164
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:165
   def log_token_request(token_request); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:103
+  # pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:104
   def token_type; end
 end
 
 # External account JSON type identifier.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:33
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:34
 Google::Auth::ExternalAccount::BaseCredentials::EXTERNAL_ACCOUNT_JSON_TYPE = T.let(T.unsafe(nil), String)
 
 # Default IAM_SCOPE
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:39
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:40
 Google::Auth::ExternalAccount::BaseCredentials::IAM_SCOPE = T.let(T.unsafe(nil), Array)
 
 # The token exchange grant_type used for exchanging credentials.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:35
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:36
 Google::Auth::ExternalAccount::BaseCredentials::STS_GRANT_TYPE = T.let(T.unsafe(nil), String)
 
 # The token exchange requested_token_type. This is always an access_token.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:37
+# pkg:gem/googleauth#lib/googleauth/external_account/base_credentials.rb:38
 Google::Auth::ExternalAccount::BaseCredentials::STS_REQUESTED_TOKEN_TYPE = T.let(T.unsafe(nil), String)
 
 # Provides an entrypoint for all Exernal Account credential classes.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account.rb:31
+# pkg:gem/googleauth#lib/googleauth/external_account.rb:32
 class Google::Auth::ExternalAccount::Credentials
   class << self
     # Create a ExternalAccount::Credentials
@@ -1703,7 +1703,7 @@ class Google::Auth::ExternalAccount::Credentials
     # @raise [Google::Auth::InitializationError] If the json file is missing, lacks required fields,
     #   or does not contain a supported credential source
     #
-    # pkg:gem/googleauth#lib/googleauth/external_account.rb:61
+    # pkg:gem/googleauth#lib/googleauth/external_account.rb:62
     def make_creds(options = T.unsafe(nil)); end
 
     # Reads the required fields from the JSON.
@@ -1712,7 +1712,7 @@ class Google::Auth::ExternalAccount::Credentials
     # @return [Hash] The parsed JSON key
     # @raise [Google::Auth::InitializationError] If the JSON is missing required fields
     #
-    # pkg:gem/googleauth#lib/googleauth/external_account.rb:88
+    # pkg:gem/googleauth#lib/googleauth/external_account.rb:89
     def read_json_key(json_key_io); end
 
     private
@@ -1723,7 +1723,7 @@ class Google::Auth::ExternalAccount::Credentials
     # @param scope [String,Array,nil] The scope(s) to access
     # @return [Google::Auth::ExternalAccount::AwsCredentials] The AWS credentials
     #
-    # pkg:gem/googleauth#lib/googleauth/external_account.rb:107
+    # pkg:gem/googleauth#lib/googleauth/external_account.rb:108
     def make_aws_credentials(user_creds, scope); end
 
     # Creates the appropriate external account credentials based on the credential source type
@@ -1734,32 +1734,32 @@ class Google::Auth::ExternalAccount::Credentials
     #   The appropriate external account credentials
     # @raise [Google::Auth::InitializationError] If the credential source is not a supported type
     #
-    # pkg:gem/googleauth#lib/googleauth/external_account.rb:126
+    # pkg:gem/googleauth#lib/googleauth/external_account.rb:127
     def make_external_account_credentials(user_creds); end
   end
 end
 
 # The subject token type used for AWS external_account credentials.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account.rb:33
+# pkg:gem/googleauth#lib/googleauth/external_account.rb:34
 Google::Auth::ExternalAccount::Credentials::AWS_SUBJECT_TOKEN_TYPE = T.let(T.unsafe(nil), String)
 
 # @private
 # @type [::String] The type name for this credential.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account.rb:39
+# pkg:gem/googleauth#lib/googleauth/external_account.rb:40
 Google::Auth::ExternalAccount::Credentials::CREDENTIAL_TYPE_NAME = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/external_account.rb:35
+# pkg:gem/googleauth#lib/googleauth/external_account.rb:36
 Google::Auth::ExternalAccount::Credentials::INVALID_EXTERNAL_ACCOUNT_TYPE = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/external_account.rb:34
+# pkg:gem/googleauth#lib/googleauth/external_account.rb:35
 Google::Auth::ExternalAccount::Credentials::MISSING_CREDENTIAL_SOURCE = T.let(T.unsafe(nil), String)
 
 # Authenticates requests using External Account credentials, such
 # as those provided by the AWS provider or OIDC provider like Azure, etc.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:27
+# pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:28
 module Google::Auth::ExternalAccount::ExternalAccountUtils
   # Normalizes a timestamp value to a Time object
   #
@@ -1767,7 +1767,7 @@ module Google::Auth::ExternalAccount::ExternalAccountUtils
   # @return [Time, nil] The normalized timestamp or nil if input is nil
   # @raise [Google::Auth::CredentialsError] If the time value is not nil, Time, or String
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:84
+  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:85
   def normalize_timestamp(time); end
 
   # Retrieves the project ID corresponding to the workload identity or workforce pool.
@@ -1781,7 +1781,7 @@ module Google::Auth::ExternalAccount::ExternalAccountUtils
   # @return [String, nil] The project ID corresponding to the workload identity
   #   pool or workforce pool if determinable
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:43
+  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:44
   def project_id; end
 
   # Retrieve the project number corresponding to workload identity pool
@@ -1791,7 +1791,7 @@ module Google::Auth::ExternalAccount::ExternalAccountUtils
   # @return [String, nil] The project number extracted from the audience string,
   #   or nil if it cannot be determined
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:72
+  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:73
   def project_number; end
 
   # Extracts the service account email from the impersonation URL
@@ -1799,19 +1799,19 @@ module Google::Auth::ExternalAccount::ExternalAccountUtils
   # @return [String, nil] The service account email extracted from the
   #   service_account_impersonation_url, or nil if it cannot be determined
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:101
+  # pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:102
   def service_account_email; end
 end
 
 # Cloud resource manager URL used to retrieve project information.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:29
+# pkg:gem/googleauth#lib/googleauth/external_account/external_account_utils.rb:30
 Google::Auth::ExternalAccount::ExternalAccountUtils::CLOUD_RESOURCE_MANAGER = T.let(T.unsafe(nil), String)
 
 # This module handles the retrieval of credentials from Google Cloud by utilizing the any 3PI
 # provider then exchanging the credentials for a short-lived Google Cloud access token.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:26
+# pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:27
 class Google::Auth::ExternalAccount::IdentityPoolCredentials
   include ::Google::Auth::BaseClient
   include ::Google::Auth::Helpers::Connection
@@ -1828,12 +1828,12 @@ class Google::Auth::ExternalAccount::IdentityPoolCredentials
   # @raise [Google::Auth::InitializationError] If credential_source format is invalid, field_name is missing,
   #     contains ambiguous sources, or is missing required fields
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:43
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:44
   def initialize(options = T.unsafe(nil)); end
 
   # Will always be nil, but method still gets used.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:32
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:33
   def client_id; end
 
   # Implementation of BaseCredentials retrieve_subject_token!
@@ -1841,7 +1841,7 @@ class Google::Auth::ExternalAccount::IdentityPoolCredentials
   # @return [String] The subject token
   # @raise [Google::Auth::CredentialsError] If the token can't be parsed from JSON or is missing
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:60
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:61
   def retrieve_subject_token!; end
 
   private
@@ -1851,10 +1851,10 @@ class Google::Auth::ExternalAccount::IdentityPoolCredentials
   # @return [Array(String, String)] The file content and file path
   # @raise [Google::Auth::CredentialsError] If the source file doesn't exist
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:112
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:113
   def file_data; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:104
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:105
   def token_data; end
 
   # Fetches data from a URL source
@@ -1863,7 +1863,7 @@ class Google::Auth::ExternalAccount::IdentityPoolCredentials
   # @raise [Google::Auth::CredentialsError] If there's an error retrieving data from the URL
   #   or if the response is not successful
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:126
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:127
   def url_data; end
 
   # Validates input
@@ -1871,14 +1871,14 @@ class Google::Auth::ExternalAccount::IdentityPoolCredentials
   # @raise [Google::Auth::InitializationError] If credential_source format is invalid, field_name is missing,
   #     contains ambiguous sources, or is missing required fields
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:83
+  # pkg:gem/googleauth#lib/googleauth/external_account/identity_pool_credentials.rb:84
   def validate_credential_source; end
 end
 
 # This module handles the retrieval of credentials from Google Cloud by utilizing the any 3PI
 # provider then exchanging the credentials for a short-lived Google Cloud access token.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:27
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:28
 class Google::Auth::ExternalAccount::PluggableAuthCredentials
   include ::Google::Auth::BaseClient
   include ::Google::Auth::Helpers::Connection
@@ -1894,12 +1894,12 @@ class Google::Auth::ExternalAccount::PluggableAuthCredentials
   #   configuration
   # @raise [Google::Auth::InitializationError] If executable source, command is missing, or timeout is invalid
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:50
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:51
   def initialize(options = T.unsafe(nil)); end
 
   # Will always be nil, but method still gets used.
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:41
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:42
   def client_id; end
 
   # Retrieves the subject token using the credential_source object.
@@ -1908,45 +1908,45 @@ class Google::Auth::ExternalAccount::PluggableAuthCredentials
   # @raise [Google::Auth::CredentialsError] If executables are not allowed, if token retrieval fails,
   #   or if the token is invalid
   #
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:78
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:79
   def retrieve_subject_token!; end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:144
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:145
   def inject_environment_variables; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:97
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:98
   def load_subject_token_from_output_file; end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:115
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:116
   def parse_subject_token(response); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:158
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:159
   def subprocess_with_timeout(environment_vars, command, timeout_seconds); end
 
-  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:136
+  # pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:137
   def validate_response_schema(response); end
 end
 
 # constant for pluggable auth enablement in environment variable.
 #
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:29
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:30
 Google::Auth::ExternalAccount::PluggableAuthCredentials::ENABLE_PLUGGABLE_ENV = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:30
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:31
 Google::Auth::ExternalAccount::PluggableAuthCredentials::EXECUTABLE_SUPPORTED_MAX_VERSION = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:31
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:32
 Google::Auth::ExternalAccount::PluggableAuthCredentials::EXECUTABLE_TIMEOUT_MILLIS_DEFAULT = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:32
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:33
 Google::Auth::ExternalAccount::PluggableAuthCredentials::EXECUTABLE_TIMEOUT_MILLIS_LOWER_BOUND = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:33
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:34
 Google::Auth::ExternalAccount::PluggableAuthCredentials::EXECUTABLE_TIMEOUT_MILLIS_UPPER_BOUND = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:34
+# pkg:gem/googleauth#lib/googleauth/external_account/pluggable_credentials.rb:35
 Google::Auth::ExternalAccount::PluggableAuthCredentials::ID_TOKEN_TYPE = T.let(T.unsafe(nil), Array)
 
 # Extends Signet::OAuth2::Client so that the auth token is obtained from
@@ -2678,7 +2678,7 @@ end
 # and then that claim is exchanged for a short-lived token at an IAMCredentials endpoint.
 # The short-lived token and its expiration time are cached.
 #
-# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:25
+# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:26
 class Google::Auth::ImpersonatedServiceAccountCredentials
   include ::Google::Auth::BaseClient
   include ::Google::Auth::Helpers::Connection
@@ -2708,18 +2708,18 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @return [Google::Auth::ImpersonatedServiceAccountCredentials]
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:168
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:169
   def initialize(options = T.unsafe(nil)); end
 
   # @return [String, nil] The short-lived impersonation access token, retrieved and cached
   #   after making the impersonation request
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:63
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:64
   def access_token; end
 
   # @return [Object] The original authenticated credentials used to fetch short-lived impersonation access tokens
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:47
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:48
   def base_credentials; end
 
   # Creates a duplicate of these credentials without transient token state
@@ -2734,13 +2734,13 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @return [Google::Auth::ImpersonatedServiceAccountCredentials]
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:233
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:234
   def duplicate(options = T.unsafe(nil)); end
 
   # @return [Time, nil] The expiration time of the current access token, used to determine
   #   if the token is still valid
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:67
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:68
   def expires_at; end
 
   # Determines whether the current access token expires within the specified number of seconds.
@@ -2749,18 +2749,18 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @return [Boolean] Whether the access token expires within the given time frame
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:204
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:205
   def expires_within?(seconds); end
 
   # @return [String] The URL endpoint used to generate an impersonation token. This URL should follow a specific
   #   format to specify the impersonated service account.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:55
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:56
   def impersonation_url; end
 
   # @return [Logger, nil] The logger of the credentials.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:218
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:219
   def logger; end
 
   # The principal behind the credentials. This class allows custom source credentials type
@@ -2770,19 +2770,19 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   # @return [String, Symbol] The string representation of the principal,
   #     the token type in lieu of the principal, or :unknown if source principal is unknown.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:252
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:253
   def principal; end
 
   # @return [Array<String>, String] The scope(s) required for the impersonated access token,
   #   indicating the permissions needed for the short-lived token
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:59
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:60
   def scope; end
 
   # @return [Object] The modified version of base credentials, tailored for impersonation purposes
   #   with necessary scope adjustments
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:51
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:52
   def source_credentials; end
 
   # The universe domain of the impersonated credentials.
@@ -2790,18 +2790,18 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @return [String] The universe domain of the credentials.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:213
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:214
   def universe_domain; end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:374
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:375
   def deep_hash_normalize(old_hash); end
 
   # Setter for the expires_at value that makes sure it is converted
   # to Time object.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:334
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:335
   def expires_at=(new_expires_at); end
 
   # Generates a new impersonation access token by exchanging the source credentials' token
@@ -2819,7 +2819,7 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @return [String] The newly generated impersonation access token.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:276
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:277
   def fetch_access_token!(_options = T.unsafe(nil)); end
 
   # Creates and raises an appropriate error based on the response.
@@ -2829,7 +2829,7 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   # @param [Class] error_class The error class to instantiate
   # @raise [StandardError] The appropriate error with details
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:323
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:324
   def handle_error_response(resp, error_class); end
 
   # Makes the HTTP request to the impersonation endpoint.
@@ -2838,7 +2838,7 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   # @param [Hash] auth_header The authorization header containing the source token
   # @return [Faraday::Response] The HTTP response from the impersonation endpoint
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:309
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:310
   def make_impersonation_request(auth_header); end
 
   # Normalizes a timestamp to a Time object.
@@ -2849,7 +2849,7 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   #
   # @raise [Google::Auth::CredentialsError] If the input is not a Time, String, or nil.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:351
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:352
   def normalize_timestamp(time); end
 
   # Prepares the authorization header for the impersonation request
@@ -2858,18 +2858,18 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
   # @private
   # @return [Hash] The authorization header with the source credentials' token
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:298
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:299
   def prepare_auth_header; end
 
   # Convert all keys in this hash (nested) to symbols for uniform retrieval
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:366
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:367
   def recursive_hash_normalize_keys(val); end
 
   # Returns the type of token (access_token).
   # This method is needed for BaseClient.
   #
-  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:340
+  # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:341
   def token_type; end
 
   class << self
@@ -2908,31 +2908,31 @@ class Google::Auth::ImpersonatedServiceAccountCredentials
     #
     # @return [Google::Auth::ImpersonatedServiceAccountCredentials]
     #
-    # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:103
+    # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:104
     def make_creds(options = T.unsafe(nil)); end
 
     private
 
     # @private
     #
-    # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:112
+    # pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:113
     def make_creds_from_json(options); end
   end
 end
 
 # @private
 #
-# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:27
+# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:28
 Google::Auth::ImpersonatedServiceAccountCredentials::CREDENTIAL_TYPE_NAME = T.let(T.unsafe(nil), String)
 
 # @private
 #
-# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:30
+# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:31
 Google::Auth::ImpersonatedServiceAccountCredentials::ERROR_SUFFIX = T.let(T.unsafe(nil), String)
 
 # @private
 #
-# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:36
+# pkg:gem/googleauth#lib/googleauth/impersonated_service_account.rb:37
 Google::Auth::ImpersonatedServiceAccountCredentials::IAM_SCOPE = T.let(T.unsafe(nil), Array)
 
 # Error raised during Credentials initialization.
@@ -2946,7 +2946,7 @@ end
 # JsonKeyReader contains the behaviour used to read private key and
 # client email fields from the service account
 #
-# pkg:gem/googleauth#lib/googleauth/json_key_reader.rb:23
+# pkg:gem/googleauth#lib/googleauth/json_key_reader.rb:24
 module Google::Auth::JsonKeyReader
   # Reads a JSON key from an IO object and extracts common fields.
   #
@@ -2956,7 +2956,7 @@ module Google::Auth::JsonKeyReader
   # @raise [Google::Auth::InitializationError] If client_email or private_key
   #   fields are missing from the JSON
   #
-  # pkg:gem/googleauth#lib/googleauth/json_key_reader.rb:31
+  # pkg:gem/googleauth#lib/googleauth/json_key_reader.rb:32
   def read_json_key(json_key_io); end
 end
 
@@ -2966,7 +2966,7 @@ Google::Auth::NOT_FOUND_ERROR = T.let(T.unsafe(nil), String)
 # pkg:gem/googleauth#lib/googleauth/compute_engine.rb:23
 Google::Auth::NO_METADATA_SERVER_ERROR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:20
+# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:21
 module Google::Auth::OAuth2; end
 
 # OAuth 2.0 Token Exchange Spec.
@@ -2981,7 +2981,7 @@ module Google::Auth::OAuth2; end
 # The returned dictionary response will be based on the [rfc8693 section 2.2.1]
 # (https://tools.ietf.org/html/rfc8693#section-2.2.1) spec JSON response.
 #
-# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:33
+# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:34
 class Google::Auth::OAuth2::STSClient
   include ::Google::Auth::Helpers::Connection
 
@@ -2992,7 +2992,7 @@ class Google::Auth::OAuth2::STSClient
   # @option options [Faraday::Connection] :connection The Faraday connection to use
   # @raise [Google::Auth::InitializationError] If token_exchange_endpoint is nil
   #
-  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:44
+  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:45
   def initialize(options = T.unsafe(nil)); end
 
   # Exchanges the provided token for another type of token based on the
@@ -3021,16 +3021,16 @@ class Google::Auth::OAuth2::STSClient
   # @raise [ArgumentError] If required options are missing
   # @raise [Google::Auth::AuthorizationError] If the token exchange request fails
   #
-  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:75
+  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:76
   def exchange_token(options = T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:97
+  # pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:98
   def make_request(options = T.unsafe(nil)); end
 end
 
-# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:36
+# pkg:gem/googleauth#lib/googleauth/oauth2/sts_client.rb:37
 Google::Auth::OAuth2::STSClient::URLENCODED_HEADERS = T.let(T.unsafe(nil), Hash)
 
 # An error indicating the client failed to parse a value.

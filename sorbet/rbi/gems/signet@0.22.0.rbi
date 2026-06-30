@@ -104,7 +104,7 @@ module Signet::OAuth2
     #
     # @return [String] The authorization URI to redirect the user to.
     #
-    # pkg:gem/signet#lib/signet/oauth_2.rb:135
+    # pkg:gem/signet#lib/signet/oauth_2.rb:139
     def generate_authorization_uri(authorization_uri, parameters = T.unsafe(nil)); end
 
     # Generates a Basic Authorization header from a client identifier and a
@@ -118,7 +118,7 @@ module Signet::OAuth2
     # @return [String]
     #   The value for the HTTP Basic Authorization header.
     #
-    # pkg:gem/signet#lib/signet/oauth_2.rb:98
+    # pkg:gem/signet#lib/signet/oauth_2.rb:102
     def generate_basic_authorization_header(client_id, client_password); end
 
     # Generates an authorization header for an access token
@@ -131,7 +131,7 @@ module Signet::OAuth2
     # @return [String]
     #   The value for the HTTP Basic Authorization header.
     #
-    # pkg:gem/signet#lib/signet/oauth_2.rb:117
+    # pkg:gem/signet#lib/signet/oauth_2.rb:121
     def generate_bearer_authorization_header(access_token, auth_params = T.unsafe(nil)); end
 
     # pkg:gem/signet#lib/signet/oauth_2.rb:26
@@ -154,7 +154,7 @@ module Signet::OAuth2
   end
 end
 
-# pkg:gem/signet#lib/signet/oauth_2/client.rb:27
+# pkg:gem/signet#lib/signet/oauth_2/client.rb:28
 class Signet::OAuth2::Client
   # Creates an OAuth 2.0 client.
   #
@@ -223,14 +223,14 @@ class Signet::OAuth2::Client
   #
   # @see Signet::OAuth2::Client#update!
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:97
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:98
   def initialize(options = T.unsafe(nil)); end
 
   # Returns the access token associated with this client.
   #
   # @return [String] The access token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:715
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:716
   def access_token; end
 
   # Sets the access token associated with this client.
@@ -238,14 +238,14 @@ class Signet::OAuth2::Client
   # @param [String] new_access_token
   #   The access token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:724
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:725
   def access_token=(new_access_token); end
 
   # Returns the current access type parameter for #authorization_uri.
   #
   # @return [String, Symbol] The current access type.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:342
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:343
   def access_type; end
 
   # Sets the current access type parameter for #authorization_uri.
@@ -253,14 +253,14 @@ class Signet::OAuth2::Client
   # @param [String, Symbol] new_access_type
   #   The current access type.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:351
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:352
   def access_type=(new_access_type); end
 
   # Returns the set of additional (non standard) parameters to be used by the client.
   #
   # @return [Hash] The pass through parameters.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:676
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:677
   def additional_parameters; end
 
   # Sets additional (non standard) parameters to be used by the client.
@@ -268,7 +268,7 @@ class Signet::OAuth2::Client
   # @param [Hash] new_additional_parameters
   #   The parameters.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:685
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:686
   def additional_parameters=(new_additional_parameters); end
 
   # Returns the target audience ID when issuing assertions.
@@ -276,7 +276,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] Target audience ID.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:561
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:562
   def audience; end
 
   # Sets the target audience ID when issuing assertions.
@@ -285,7 +285,7 @@ class Signet::OAuth2::Client
   # @param [String] new_audience
   #   Target audience ID
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:571
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:572
   def audience=(new_audience); end
 
   # Returns the authorization URI that the user should be redirected to.
@@ -294,7 +294,7 @@ class Signet::OAuth2::Client
   #
   # @see Signet::OAuth2.generate_authorization_uri
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:271
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:272
   def authorization_uri(options = T.unsafe(nil)); end
 
   # Sets the authorization URI for this client.
@@ -302,19 +302,19 @@ class Signet::OAuth2::Client
   # @param [Addressable::URI, Hash, String, #to_str] new_authorization_uri
   #   The authorization URI.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:307
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:308
   def authorization_uri=(new_authorization_uri); end
 
   # Removes all credentials from the client.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:883
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:884
   def clear_credentials!; end
 
   # Returns the client identifier for this client.
   #
   # @return [String] The client identifier.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:359
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:360
   def client_id; end
 
   # Sets the client identifier for this client.
@@ -322,14 +322,14 @@ class Signet::OAuth2::Client
   # @param [String] new_client_id
   #   The client identifier.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:368
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:369
   def client_id=(new_client_id); end
 
   # Returns the client secret for this client.
   #
   # @return [String] The client secret.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:376
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:377
   def client_secret; end
 
   # Sets the client secret for this client.
@@ -337,7 +337,7 @@ class Signet::OAuth2::Client
   # @param [String] new_client_secret
   #   The client secret.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:385
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:386
   def client_secret=(new_client_secret); end
 
   # Returns the authorization code issued to this client.
@@ -345,7 +345,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] The authorization code.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:462
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:463
   def code; end
 
   # Sets the authorization code issued to this client.
@@ -354,13 +354,13 @@ class Signet::OAuth2::Client
   # @param [String] new_code
   #   The authorization code.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:472
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:473
   def code=(new_code); end
 
   # Addressable expects URIs formatted as hashes to come in with symbols as keys.
   # Returns nil implicitly for the nil case.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:330
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:331
   def coerce_uri(incoming_uri); end
 
   # Returns the decoded ID token associated with this client.
@@ -371,7 +371,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] The decoded ID token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:753
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:754
   def decoded_id_token(public_key = T.unsafe(nil), options = T.unsafe(nil), &_arg2); end
 
   # Returns true if the access token has expired.
@@ -380,7 +380,7 @@ class Signet::OAuth2::Client
   # @return [TrueClass, FalseClass]
   #   The expiration state of the access token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:864
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:865
   def expired?; end
 
   # Returns the timestamp the access token will expire at.
@@ -388,7 +388,7 @@ class Signet::OAuth2::Client
   #
   # @return [Time, nil] The access token lifetime.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:817
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:818
   def expires_at; end
 
   # Limits the lifetime of the access token as number of seconds since
@@ -397,7 +397,7 @@ class Signet::OAuth2::Client
   # @param [String,Integer,Time, nil] new_expires_at
   #    The access token expiration time.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:827
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:828
   def expires_at=(new_expires_at); end
 
   # Returns the lifetime of the access token in seconds.
@@ -405,7 +405,7 @@ class Signet::OAuth2::Client
   #
   # @return [Integer, nil] The access token lifetime.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:770
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:771
   def expires_in; end
 
   # Sets the lifetime of the access token in seconds.  Resets the issued_at
@@ -415,7 +415,7 @@ class Signet::OAuth2::Client
   # @param [String, Integer, nil] new_expires_in
   #   The access token lifetime.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:785
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:786
   def expires_in=(new_expires_in); end
 
   # Returns true if the access token has expired or expires within
@@ -427,7 +427,7 @@ class Signet::OAuth2::Client
   # @return [TrueClass, FalseClass]
   #   The expiration state of the access token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:877
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:878
   def expires_within?(sec); end
 
   # Returns the number of seconds assertions are valid for
@@ -435,7 +435,7 @@ class Signet::OAuth2::Client
   #
   # @return [Integer] Assertion expiry, in seconds
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:608
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:609
   def expiry; end
 
   # Sets the number of seconds assertions are valid for
@@ -444,7 +444,7 @@ class Signet::OAuth2::Client
   # @param [Integer, String] new_expiry
   #   Assertion expiry, in seconds
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:618
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:619
   def expiry=(new_expiry); end
 
   # Returns the set of extension parameters used by the client.
@@ -452,7 +452,7 @@ class Signet::OAuth2::Client
   #
   # @return [Hash] The extension parameters.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:653
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:654
   def extension_parameters; end
 
   # Sets extension parameters used by the client.
@@ -461,13 +461,13 @@ class Signet::OAuth2::Client
   # @param [Hash] new_extension_parameters
   #   The parameters.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:663
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:664
   def extension_parameters=(new_extension_parameters); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1022
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1023
   def fetch_access_token(options = T.unsafe(nil)); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1075
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1076
   def fetch_access_token!(options = T.unsafe(nil)); end
 
   # Transmits a request for a protected resource.
@@ -500,7 +500,7 @@ class Signet::OAuth2::Client
   #
   # @return [Array] The response object.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1190
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1191
   def fetch_protected_resource(options = T.unsafe(nil)); end
 
   # Generates a request for token credentials.
@@ -513,7 +513,7 @@ class Signet::OAuth2::Client
   # @private
   # @return [Array] The request object.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:987
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:988
   def generate_access_token_request(options = T.unsafe(nil)); end
 
   # Generates an authenticated request for protected resources.
@@ -536,7 +536,7 @@ class Signet::OAuth2::Client
   #     The Authorization realm.  See RFC 2617.
   # @return [Faraday::Request] The request object.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1114
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1115
   def generate_authenticated_request(options = T.unsafe(nil)); end
 
   # Returns the inferred grant type, based on the current state of the
@@ -546,17 +546,17 @@ class Signet::OAuth2::Client
   # @return [String]
   #   The inferred grant type.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:902
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:903
   def grant_type; end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:916
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:917
   def grant_type=(new_grant_type); end
 
   # Returns the scopes granted by the authorization server.
   #
   # @return [Array, nil] The scope of access returned by the authorization server.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:835
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:836
   def granted_scopes; end
 
   # Sets the scopes returned by authorization server for this client.
@@ -565,14 +565,14 @@ class Signet::OAuth2::Client
   #   The scope of access returned by authorization server. This will
   #   ideally be expressed as space-delimited String.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:845
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:846
   def granted_scopes=(new_granted_scopes); end
 
   # Returns the ID token associated with this client.
   #
   # @return [String] The ID token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:732
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:733
   def id_token; end
 
   # Sets the ID token associated with this client.
@@ -580,14 +580,14 @@ class Signet::OAuth2::Client
   # @param [String] new_id_token
   #   The ID token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:741
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:742
   def id_token=(new_id_token); end
 
   # Returns the timestamp the access token was issued at.
   #
   # @return [Time, nil] The access token issuance time.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:799
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:800
   def issued_at; end
 
   # Sets the timestamp the access token was issued at.
@@ -595,7 +595,7 @@ class Signet::OAuth2::Client
   # @param [String,Integer,Time] new_issued_at
   #    The access token issuance time.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:808
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:809
   def issued_at=(new_issued_at); end
 
   # Returns the issuer ID associated with this client.
@@ -603,7 +603,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] Issuer id.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:542
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:543
   def issuer; end
 
   # Sets the issuer ID associated with this client.
@@ -612,7 +612,7 @@ class Signet::OAuth2::Client
   # @param [String] new_issuer
   #   Issuer ID (typical in email adddress form).
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:552
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:553
   def issuer=(new_issuer); end
 
   # Returns the password associated with this client.
@@ -620,7 +620,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] The password.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:523
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:524
   def password; end
 
   # Sets the password associated with this client.
@@ -629,13 +629,13 @@ class Signet::OAuth2::Client
   # @param [String] new_password
   #   The password.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:533
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:534
   def password=(new_password); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:594
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:595
   def person; end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:595
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:596
   def person=(new_person); end
 
   # Returns the target resource owner for impersonation.
@@ -643,7 +643,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] Target user for impersonation.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:580
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:581
   def principal; end
 
   # Sets the target resource owner for impersonation.
@@ -652,14 +652,14 @@ class Signet::OAuth2::Client
   # @param [String] new_person
   #   Target user for impersonation
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:590
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:591
   def principal=(new_person); end
 
   # Returns the redirect URI for this client.
   #
   # @return [String] The redirect URI.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:480
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:481
   def redirect_uri; end
 
   # Sets the redirect URI for this client.
@@ -667,19 +667,19 @@ class Signet::OAuth2::Client
   # @param [String] new_redirect_uri
   #   The redirect URI.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:489
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:490
   def redirect_uri=(new_redirect_uri); end
 
   # Refresh the access token, if possible
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1090
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1091
   def refresh!(options = T.unsafe(nil)); end
 
   # Returns the refresh token associated with this client.
   #
   # @return [String] The refresh token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:698
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:699
   def refresh_token; end
 
   # Sets the refresh token associated with this client.
@@ -687,7 +687,7 @@ class Signet::OAuth2::Client
   # @param [String] new_refresh_token
   #   The refresh token.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:707
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:708
   def refresh_token=(new_refresh_token); end
 
   # Returns the scope for this client.  Scope is a list of access ranges
@@ -695,7 +695,7 @@ class Signet::OAuth2::Client
   #
   # @return [Array] The scope of access the client is requesting.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:394
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:395
   def scope; end
 
   # Sets the scope for this client.
@@ -705,13 +705,13 @@ class Signet::OAuth2::Client
   #   expressed as either an Array of String objects or as a
   #   space-delimited String.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:405
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:406
   def scope=(new_scope); end
 
   # Algorithm used for signing JWTs
   # @return [String] Signing algorithm
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:644
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:645
   def signing_algorithm; end
 
   # Returns the signing key associated with this client.
@@ -719,7 +719,7 @@ class Signet::OAuth2::Client
   #
   # @return [String,OpenSSL::PKey] Signing key
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:627
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:628
   def signing_key; end
 
   # Sets the signing key when issuing assertions.
@@ -728,14 +728,14 @@ class Signet::OAuth2::Client
   # @param [String, OpenSSL::Pkey] new_key
   #   Signing key. Either private key for RSA or string for HMAC algorithm
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:637
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:638
   def signing_key=(new_key); end
 
   # Returns the client's current state value.
   #
   # @return [String] The state value.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:444
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:445
   def state; end
 
   # Sets the client's current state value.
@@ -743,33 +743,33 @@ class Signet::OAuth2::Client
   # @param [String] new_state
   #   The state value.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:453
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:454
   def state=(new_state); end
 
   # The target "sub" when issuing assertions.
   # Used in some Admin SDK APIs.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:601
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:602
   def sub; end
 
   # The target "sub" when issuing assertions.
   # Used in some Admin SDK APIs.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:601
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:602
   def sub=(_arg0); end
 
   # Returns the final target audience for ID tokens fetched by this client.
   #
   # @return [String] The target audience.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:428
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:429
   def target_audience; end
 
   # Sets the final target audience for ID tokens fetched by this client.
   #
   # @param [String] new_target_audience The new target audience.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:436
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:437
   def target_audience=(new_target_audience); end
 
   # Serialize the client object to JSON.
@@ -778,17 +778,17 @@ class Signet::OAuth2::Client
   #
   # @return [String] A serialized JSON representation of the client.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:950
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:951
   def to_json(*_args); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:926
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:927
   def to_jwt(options = T.unsafe(nil)); end
 
   # Returns the token credential URI for this client.
   #
   # @return [Addressable::URI] The token credential URI.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:315
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:316
   def token_credential_uri; end
 
   # Sets the token credential URI for this client.
@@ -796,7 +796,7 @@ class Signet::OAuth2::Client
   # @param [Addressable::URI, Hash, String, #to_str] new_token_credential_uri
   #   The token credential URI.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:324
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:325
   def token_credential_uri=(new_token_credential_uri); end
 
   # Updates an OAuth 2.0 client.
@@ -866,7 +866,7 @@ class Signet::OAuth2::Client
   # @see Signet::OAuth2::Client#initialize
   # @see Signet::OAuth2::Client#update_token!
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:185
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:186
   def update!(options = T.unsafe(nil)); end
 
   # Updates an OAuth 2.0 client.
@@ -897,7 +897,7 @@ class Signet::OAuth2::Client
   # @see Signet::OAuth2::Client#initialize
   # @see Signet::OAuth2::Client#update!
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:241
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:242
   def update_token!(options = T.unsafe(nil)); end
 
   # Returns the username associated with this client.
@@ -905,7 +905,7 @@ class Signet::OAuth2::Client
   #
   # @return [String] The username.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:504
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:505
   def username; end
 
   # Sets the username associated with this client.
@@ -914,39 +914,39 @@ class Signet::OAuth2::Client
   # @param [String] new_username
   #   The username.
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:514
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:515
   def username=(new_username); end
 
   private
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1233
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1234
   def deep_hash_normalize(old_hash); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1239
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1240
   def normalize_timestamp(time); end
 
   # Convert all keys in this hash (nested) to symbols for uniform retrieval
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1225
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1226
   def recursive_hash_normalize_keys(val); end
 
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1256
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1257
   def set_relative_expires_at(issued_at, expires_in); end
 
   # Check if the URI is a out-of-band
   # @private
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1220
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1221
   def uri_is_oob?(uri); end
 
   # Check if URI is Google's postmessage flow (not a valid redirect_uri by spec, but allowed)
   # @private
   #
-  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1213
+  # pkg:gem/signet#lib/signet/oauth_2/client.rb:1214
   def uri_is_postmessage?(uri); end
 end
 
-# pkg:gem/signet#lib/signet/oauth_2/client.rb:28
+# pkg:gem/signet#lib/signet/oauth_2/client.rb:29
 Signet::OAuth2::Client::OOB_MODES = T.let(T.unsafe(nil), Array)
 
 # An error indicating the client failed to parse a value.
