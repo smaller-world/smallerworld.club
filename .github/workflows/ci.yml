@@ -29,7 +29,10 @@ jobs:
       - name: Install Ruby gems
         run: bundle install
       - name: Scan for known security vulnerabilities in gems used
-        run: bin/bundler-audit
+        # NOTE: Temporarily ignore CVE-2026-53727, we don't have a dependency solution
+        # that allows us to still use roadie, wait until roadie is updated to support
+        # css_parser 3.0
+        run: bin/bundler-audit --ignore CVE-2026-53727
       - name:
           Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
