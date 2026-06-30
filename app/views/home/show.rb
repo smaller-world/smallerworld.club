@@ -64,10 +64,21 @@ class Views::Home::Show < Views::Base
       class: "flex gap-6 flex-wrap justify-center",
     ) do
       @current_user.owned_worlds.chronological.each do |world|
-        link_to(world, class: "world-icon-container hover:underline") do
-          image_tag(world.page_icon_variant, class: "world-icon")
-          span(class: "world-icon-label") do
-            world.name
+        div(class: "relative") do
+          link_to(world, class: "world-icon-container hover:underline") do
+            image_tag(world.page_icon_variant, class: "world-icon")
+            span(class: "world-icon-label") do
+              world.name
+            end
+          end
+          Components::Button(
+            element: :a,
+            href: url_for([ :new, world, :key_grant ]),
+            variant: :secondary,
+            size: :icon_sm,
+            class: "absolute -top-2.5 -right-2.5",
+          ) do
+            Icon("huge/qr-code")
           end
         end
       end
