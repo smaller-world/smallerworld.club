@@ -106,16 +106,20 @@ class WorldKeyGrantsController < ApplicationController
     world_invitation = world.invitations
       .find_or_initialize_by(recipient_phone_number:)
     world_invitation.update(granted_post_type_ids: grant_message.post_type_ids)
-    render(
-      turbo_stream: turbo_stream.replace(
-        :accept_world_key_grant_form,
-        renderable: Components::AcceptWorldKeyGrantForm.new(
-          world:,
-          grant:,
-          invitation: world_invitation,
+    if world_invitation.valid? && hotwire_native_app?
+      resume_or_redirect_to(home_path, status: :see_other)
+    else
+      render(
+        turbo_stream: turbo_stream.replace(
+          :accept_world_key_grant_form,
+          renderable: Components::AcceptWorldKeyGrantForm.new(
+            world:,
+            grant:,
+            invitation: world_invitation,
+          ),
         ),
-      ),
-      status: world_invitation.valid? ? :ok : :unprocessable_content,
-    )
+        status: world_invitation.valid? ? :ok : :unprocessable_content,
+      )
+    end
   end
 end
