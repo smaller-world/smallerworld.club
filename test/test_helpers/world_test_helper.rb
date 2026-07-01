@@ -40,6 +40,15 @@ module WorldTestHelper
     post_type_for(world, type_label).posts.create!(body:, **attributes)
   end
 
+  # Creates a world key for `recipient`, granting access to all of `world`'s
+  # current post types (a "full" member who can see and react to every post).
+  sig { params(world: World, recipient: User).returns(WorldKey) }
+  def create_member_key(world:, recipient:)
+    key = world.keys.create!(recipient:)
+    key.granted_post_types = world.post_types
+    key
+  end
+
   private
 
   # == Helpers ==

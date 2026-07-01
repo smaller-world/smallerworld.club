@@ -8,7 +8,7 @@ class ReactionsControllerTest < ActionDispatch::IntegrationTest
     @owner = T.let(users(:bob), User)
     @friend = T.let(users(:sue), User)
     @world = T.let(create_world(owner: @owner, name: "Reacting World"), World)
-    @world.keys.create!(recipient: @friend)
+    create_member_key(world: @world, recipient: @friend)
     @post = T.let(create_post(world: @world), Post)
   end
 
