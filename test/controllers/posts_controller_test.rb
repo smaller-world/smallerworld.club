@@ -55,7 +55,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { @world.posts.count }, -1 do
       delete post_path(post), as: :turbo_stream
     end
-    assert_response :success
+    assert_redirected_to world_path(@world)
   end
 
   test "owner views the world feed via turbo frame" do
