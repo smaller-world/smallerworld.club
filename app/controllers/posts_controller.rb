@@ -143,6 +143,7 @@ class PostsController < ApplicationController
       format.html do
         post = find_post
         authorize!(post)
+        world = post.world!
         post.destroy!
         refresh_or_redirect_to(world, status: :see_other)
       end
