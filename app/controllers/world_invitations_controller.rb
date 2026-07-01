@@ -46,11 +46,6 @@ class WorldInvitationsController < ApplicationController
         invitation = world.invitations.build(**invitation_params)
         if invitation.save
           refresh_or_redirect_to([ world, :keys ], status: :see_other)
-        elsif world.post_types.secret.any?
-          render(
-            Views::WorldInvitations::New.new(invitation:),
-            status: :unprocessable_content,
-          )
         else
           redirect_to(
             [ world, :keys ],

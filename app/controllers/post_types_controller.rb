@@ -34,7 +34,7 @@ class PostTypesController < ApplicationController
         world = find_world
         authorize!(world, to: :manage?)
         post_type_params = params.expect(
-          post_type: [ :label, :icon, :secret, granted_world_key_ids: [] ],
+          post_type: [ :label, :icon, granted_world_key_ids: [] ],
         )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
@@ -53,7 +53,7 @@ class PostTypesController < ApplicationController
         post_type = find_post_type
         authorize!(post_type)
         post_type_params = params.expect(
-          post_type: [ :label, :icon, :secret, granted_world_key_ids: [] ],
+          post_type: [ :label, :icon, granted_world_key_ids: [] ],
         )
         if post_type.update(**post_type_params)
           refresh_or_redirect_to(

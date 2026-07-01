@@ -203,9 +203,7 @@ class Views::Worlds::Show < Views::Base
                   end
                 end
               end
-              if post_type.custom?
-                button_link_to("edit", [ :edit, post_type ], size: :sm)
-              end
+              button_link_to("edit", [ :edit, post_type ], size: :sm)
             end
           end
 

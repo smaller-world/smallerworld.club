@@ -68,23 +68,20 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "visible post"
   end
 
-  test "a friend sees non-secret posts and only the secret posts their key grants" do
+  test "a friend sees only the posts of the types their key grants" do
     friend = users(:sue)
-    granted_type = @world.post_types.create!(label: "secret diary", secret: true)
-    @world.post_types.create!(label: "hidden notes", secret: true)
+    @world.post_types.create!(label: "diary")
     key = @world.keys.create!(recipient: friend)
-    key.granted_post_types << granted_type
+    key.granted_post_types << @world.post_types.find_by!(label: "journal entry")
 
-    create_post(world: @world, body: "everyone with a key sees this")
-    create_post(world: @world, type_label: "secret diary", body: "granted secret post")
-    create_post(world: @world, type_label: "hidden notes", body: "ungranted secret post")
+    create_post(world: @world, body: "granted post")
+    create_post(world: @world, type_label: "diary", body: "ungranted post")
 
     sign_in_as(friend)
     get world_posts_path(@world),
       headers: { "Turbo-Frame" => "posts" }
     assert_response :success
-    assert_includes response.body, "everyone with a key sees this"
-    assert_includes response.body, "granted secret post"
-    assert_not_includes response.body, "ungranted secret post"
+    assert_includes response.body, "granted post"
+    assert_not_includes response.body, "ungranted post"
   end
 end

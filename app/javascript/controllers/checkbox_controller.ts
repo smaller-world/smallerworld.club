@@ -25,7 +25,7 @@ export default class CheckboxController extends Controller<HTMLSpanElement> {
 
   // == Actions ==
 
-  forwardItemClick(event: PointerEvent): void {
+  forwardClick(event: PointerEvent): void {
     const input = this._locateInput();
     const { shiftKey, ctrlKey, altKey, metaKey } = event;
     input.dispatchEvent(

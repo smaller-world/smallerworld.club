@@ -60,34 +60,14 @@ class Components::WorldKeyForm < Components::Base
 
   sig { params(post_type: PostType, checkbox_group: Components::CheckboxGroup).void }
   def granted_post_type_choice_card_for(post_type, checkbox_group:)
-    checkbox_group.field_label_for(
-      post_type.id,
-      **compact_mix(
-        {
-          class: class_names(
-            "cursor-pointer w-fit",
-            "border-none bg-transparent" => !post_type.secret?,
-          ),
-        },
-        nonsecret_post_type_label_attributes(post_type),
-      ),
-    ) do |field_label|
+    checkbox_group.field_label_for(post_type.id, class: "cursor-pointer w-fit") do |field_label|
       field_label.field(
         orientation: :horizontal,
-        class: class_names(
-          "w-auto py-1 items-center",
-          post_type.icon? ? "pl-2" : "pl-3",
-          post_type.secret? ? "pr-2" : "pr-3",
-        ),
-        data: {
-          disabled: ("true" unless post_type.secret?),
-        },
+        class: "w-auto py-1 pl-2 pr-2 items-center",
       ) do |field|
         field.content do
           field.title(class: "flex items-center gap-1.5") do
-            if (icon = post_type.icon)
-              Icon(icon, class: "size-4")
-            end
+            Icon(post_type.icon, class: "size-4")
             span do
               post_type.label
             end
@@ -96,40 +76,9 @@ class Components::WorldKeyForm < Components::Base
         field.checkbox_group_item_for(
           post_type.id,
           multiple: true,
-          **compact_mix(
-            { class: "rounded-full " },
-            nonsecret_post_type_checkbox_attributes(post_type),
-          ),
+          class: "rounded-full ",
         )
       end
-    end
-  end
-
-  sig { params(post_type: PostType).returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def nonsecret_post_type_label_attributes(post_type)
-    unless post_type.secret?
-      {
-        data: {
-          disabled: "true",
-          controller: "tippy",
-          tippy_content_value:
-            "only secret post types can be selectively shown to friends!",
-          tippy_max_width_value: "calc(60 * var(--spacing))",
-        },
-      }
-    end
-  end
-
-  sig { params(post_type: PostType).returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def nonsecret_post_type_checkbox_attributes(post_type)
-    unless post_type.secret?
-      {
-        disabled: true,
-        checked: true,
-        input: {
-          name: nil,
-        },
-      }
     end
   end
 end

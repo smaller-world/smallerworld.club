@@ -31,23 +31,20 @@ class Components::WorldKeyGrantForm < Components::Base
       @attributes,
     )) do |form|
       post_types = @world.post_types
-      if post_types.secret.any?
-        Components::Card(size: :sm) do |card|
-          card.content do
-            Components::FieldSet(class: "gap-2") do |field_set|
-              field_set.legend(class: "mb-0 text-center") do
-                "this key shares access to:"
-              end
-              checkbox_group_for(
-                form,
-                :granted_post_type_ids,
-                class: "flex-row justify-center gap-2 flex-wrap",
-              ) do |checkbox_group|
-                post_types.each do |post_type|
-                  granted_post_type_choice_card_for(post_type, checkbox_group:)
-                end
-              end
-            end
+      Components::FieldSet(class: "gap-0") do |field_set|
+        field_set.legend(class: "flex flex-col items-center gap-1 text-center") do
+          Icon("huge/key-01", class: "size-7")
+          span do
+            "this key shares access to:"
+          end
+        end
+        checkbox_group_for(
+          form,
+          :granted_post_type_ids,
+          class: "flex-row justify-center gap-2 flex-wrap",
+        ) do |checkbox_group|
+          post_types.each do |post_type|
+            granted_post_type_choice_card_for(post_type, checkbox_group:)
           end
         end
       end
@@ -84,34 +81,14 @@ class Components::WorldKeyGrantForm < Components::Base
 
   sig { params(post_type: PostType, checkbox_group: Components::CheckboxGroup).void }
   def granted_post_type_choice_card_for(post_type, checkbox_group:)
-    checkbox_group.field_label_for(
-      post_type.id,
-      **compact_mix(
-        {
-          class: class_names(
-            "cursor-pointer w-fit",
-            "border-none bg-transparent" => !post_type.secret?,
-          ),
-        },
-        nonsecret_post_type_label_attributes(post_type),
-      ),
-    ) do |field_label|
+    checkbox_group.field_label_for(post_type.id, class: "cursor-pointer w-fit") do |field_label|
       field_label.field(
         orientation: :horizontal,
-        class: class_names(
-          "w-auto py-1 items-center",
-          post_type.icon? ? "pl-2" : "pl-3",
-          post_type.secret? ? "pr-2" : "pr-3",
-        ),
-        data: {
-          disabled: ("true" unless post_type.secret?),
-        },
+        class: "w-auto py-1 pl-2 pr-2 items-center",
       ) do |field|
         field.content do
           field.title(class: "flex items-center gap-1.5") do
-            if (icon = post_type.icon)
-              Icon(icon, class: "size-4")
-            end
+            Icon(post_type.icon, class: "size-4")
             span do
               post_type.label
             end
@@ -121,47 +98,14 @@ class Components::WorldKeyGrantForm < Components::Base
           post_type.id,
           multiple: true,
           checked: @granted_post_types.include?(post_type),
-          **compact_mix(
-            {
-              class: "rounded-full",
-              input: {
-                data: {
-                  action: "change->submit#request",
-                },
-              },
+          class: "rounded-full",
+          input: {
+            data: {
+              action: "change->submit#request",
             },
-            nonsecret_post_type_checkbox_attributes(post_type),
-          ),
+          },
         )
       end
-    end
-  end
-
-  sig { params(post_type: PostType).returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def nonsecret_post_type_label_attributes(post_type)
-    unless post_type.secret?
-      {
-        data: {
-          disabled: "true",
-          controller: "tippy",
-          tippy_content_value:
-            "only secret post types can be selectively shown to friends!",
-          tippy_max_width_value: "calc(60 * var(--spacing))",
-        },
-      }
-    end
-  end
-
-  sig { params(post_type: PostType).returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def nonsecret_post_type_checkbox_attributes(post_type)
-    unless post_type.secret?
-      {
-        disabled: true,
-        checked: true,
-        input: {
-          name: nil,
-        },
-      }
     end
   end
 

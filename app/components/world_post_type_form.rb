@@ -52,7 +52,6 @@ class Components::WorldPostTypeForm < Components::Base
         class: "badge world-post-type-choice-badge",
         data: {
           variant: "ghost",
-          # secret: post_type.secret,
         },
       ) do |field|
         if (icon = post_type.icon)

@@ -36,47 +36,20 @@ class Components::PostTypeForm < Components::Base
         f.error
       end
 
-      Components::FieldSet(class: "gap-1") do |field_set|
+      world_keys = @post_type.world_keys.includes(:recipient)
+      Components::FieldSet(
+        class: class_names("gap-1", "hidden" => world_keys.none?),
+      ) do |field_set|
         field_set.legend(class: "mb-0") do
-          "is this an open or secret post type?"
+          "who can see this post type?"
         end
-        radio_group_for(form, :secret, class: "mt-2") do |radio_group|
-          secret_choice_card_for(:off, radio_group:) do |field|
-            Icon("huge/tag-01", class: "size-4 mt-0.5")
-            div(class: "flex-1 flex flex-col gap-0.5") do
-              field.title do
-                "open"
-              end
-              field.description do
-                "anyone in your world can see posts of this type"
-              end
-            end
-          end
-          div(class: "flex flex-col gap-2") do
-            secret_choice_card_for(
-              :on,
-              radio_group:,
-              class: "[&+*]:hidden has-checked:[&+*]:revert-display-layer",
-            ) do |field|
-              Icon("huge/square-lock-01", class: "size-4 mt-0.5")
-              div(class: "flex-1 flex flex-col gap-0.5") do
-                field.title do
-                  "secret"
-                end
-                field.description do
-                  "only people you specify can see posts of this type"
-                end
-              end
-            end
-            checkbox_group_for(
-              form,
-              :granted_world_key_ids,
-              class: "flex-row gap-1.5 flex-wrap",
-            ) do |checkbox_group|
-              @post_type.world_keys.includes(:recipient).find_each do |world_key|
-                granted_world_key_choice_card_for(world_key, checkbox_group:)
-              end
-            end
+        checkbox_group_for(
+          form,
+          :granted_world_key_ids,
+          class: "flex-row gap-1.5 flex-wrap",
+        ) do |checkbox_group|
+          world_keys.find_each do |world_key|
+            granted_world_key_choice_card_for(world_key, checkbox_group:)
           end
         end
       end
@@ -140,28 +113,6 @@ class Components::PostTypeForm < Components::Base
       [ world, @post_type ]
     else
       @post_type
-    end
-  end
-
-  sig do
-    params(
-      value: T.any(Symbol, String),
-      radio_group: Components::RadioGroup,
-      attributes: T.untyped,
-      content: T.proc.params(field: Components::Field).void,
-    ).returns(T.untyped)
-  end
-  def secret_choice_card_for(value, radio_group:, **attributes, &content)
-    radio_group.field_label_for(
-      value,
-      **mix({ class: "cursor-pointer" }, attributes),
-    ) do |field_label|
-      field_label.field(orientation: :horizontal) do |field|
-        field.content(class: "flex-row gap-3") do
-          yield(field)
-        end
-        field.radio_group_item_for(value)
-      end
     end
   end
 

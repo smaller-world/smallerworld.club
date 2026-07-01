@@ -78,16 +78,16 @@ class Views::WorldKeys::Index < Views::Base
   sig { params(world_key: WorldKey).void }
   def world_key_item(world_key)
     recipient = world_key.recipient!
-    Components::Item(variant: :muted, class: "flex-nowrap items-start") do |item|
-      item.content do
+    Components::Item(
+      variant: :muted,
+      class: "flex-nowrap items-start gap-2",
+    ) do |item|
+      item.content(class: "flex-row items-start") do
         item.title do
           recipient.name
         end
-      end
-
-      item.actions(class: "items-start gap-2") do
-        div(class: "flex items-center justify-end gap-0 flex-wrap ") do
-          world_key.granted_post_types.secret.each do |post_type|
+        item.description(class: "flex-1 flex items-center justify-end gap-0.5 flex-wrap") do
+          world_key.granted_post_types.each do |post_type|
             Components::Badge(
               variant: :ghost,
               class: "text-muted-foreground",
@@ -99,39 +99,16 @@ class Views::WorldKeys::Index < Views::Base
             end
           end
         end
+      end
 
-        div(class: "flex items-center gap-1") do
-          if @world.post_types.secret.any?
-            button_link_to(
-              "edit key",
-              [ :edit, world_key ],
-              variant: :secondary,
-              size: :xs,
-              icon: "huge/key-02",
-            )
-          else
-            Components::DropdownMenu() do |menu|
-              menu.with_trigger_button(
-                variant: :ghost,
-                size: :icon_xs,
-                class: "text-muted-foreground",
-              ) do
-                Icon("huge/delete-01")
-              end
-              menu.with_content(
-                anchor: [ :bottom, :end ],
-                class: "min-w-none",
-              ) do |menu_content|
-                form_with(url: world_key, method: :delete) do
-                  menu_content.button_item(type: :submit, variant: :destructive) do
-                    Icon("huge/delete-01")
-                    span { "destroy key" }
-                  end
-                end
-              end
-            end
-          end
-        end
+      item.actions do
+        button_link_to(
+          "edit key",
+          [ :edit, world_key ],
+          variant: :secondary,
+          size: :xs,
+          icon: "huge/key-02",
+        )
       end
     end
   end
@@ -153,7 +130,7 @@ class Views::WorldKeys::Index < Views::Base
                 button.inline_start_icon("huge/tick-01")
                 span { user.name }
               end
-              menu.with_content(class: "min-w-none") do |content|
+              menu.with_content(class: "min-w-auto") do |content|
                 content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
                 form_with(model: invitation, method: :delete) do
                   content.button_item(type: :submit, variant: :destructive) do
@@ -163,28 +140,12 @@ class Views::WorldKeys::Index < Views::Base
                 end
               end
             end
-          elsif @world.post_types.secret.any?
+          else
             button_link_to(
               user.name,
               [ :new, @world, :invitation, recipient_id: user.id ],
               variant: :outline,
             )
-          else
-            Components::DropdownMenu() do |menu|
-              menu.with_trigger_button(variant: :outline, anchor: :bottom) do
-                user.name
-              end
-              menu.with_content(class: "min-w-none") do |content; invitation|
-                invitation = @world.invitations.build(recipient: user)
-                form_with(model: invitation) do |form|
-                  form.hidden_field(:recipient_id)
-                  content.button_item(type: :submit) do
-                    Icon("huge/mail-send-01")
-                    span { "send invitation" }
-                  end
-                end
-              end
-            end
           end
         end
       end

@@ -33,38 +33,43 @@ class PostTest < ActiveSupport::TestCase
     @owner = users(:bob)
     @friend = users(:sue)
     @world = create_world(owner: @owner, name: "Visibility World")
-    @secret_type = @world.post_types.create!(label: "secret diary", secret: true)
+    @diary_type = @world.post_types.create!(label: "diary")
   end
 
   test "the owner sees posts of every type in their world" do
-    public_post = create_post(world: @world)
-    secret_post = create_post(world: @world, type_label: "secret diary")
+    journal_post = create_post(world: @world)
+    diary_post = create_post(world: @world, type_label: "diary")
 
     scope = Post.visible_to(@owner)
-    assert_includes scope, public_post
-    assert_includes scope, secret_post
+    assert_includes scope, journal_post
+    assert_includes scope, diary_post
   end
 
-  test "a key holder sees posts of all non-secret types" do
-    @world.keys.create!(recipient: @friend)
+  test "a key holder sees posts of the types their key grants" do
+    key = @world.keys.create!(recipient: @friend)
+    key.granted_post_types << post_type_for(@world, "journal entry")
     post = create_post(world: @world)
 
     assert_includes Post.visible_to(@friend), post
   end
 
-  test "a key holder does not see secret posts their key does not grant" do
+  test "a key holder does not see posts of types their key does not grant" do
     @world.keys.create!(recipient: @friend)
-    secret_post = create_post(world: @world, type_label: "secret diary")
+    diary_post = create_post(world: @world, type_label: "diary")
 
-    assert_not_includes Post.visible_to(@friend), secret_post
+    assert_not_includes Post.visible_to(@friend), diary_post
   end
 
-  test "a key holder sees secret posts their key grants" do
+  test "a key holder sees only the types their key grants" do
     key = @world.keys.create!(recipient: @friend)
-    key.granted_post_types << @secret_type
-    secret_post = create_post(world: @world, type_label: "secret diary")
+    key.granted_post_types << post_type_for(@world, "journal entry")
 
-    assert_includes Post.visible_to(@friend), secret_post
+    granted_post = create_post(world: @world)
+    ungranted_post = create_post(world: @world, type_label: "diary")
+
+    scope = Post.visible_to(@friend)
+    assert_includes scope, granted_post
+    assert_not_includes scope, ungranted_post
   end
 
   test "a non-member sees nothing" do

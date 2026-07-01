@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_29_210552) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_01_044647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -177,7 +177,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_29_210552) do
     t.datetime "created_at", null: false
     t.string "icon"
     t.string "label", null: false
-    t.boolean "secret", default: false, null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.index ["world_id", "label"], name: "index_post_types_uniqueness", unique: true

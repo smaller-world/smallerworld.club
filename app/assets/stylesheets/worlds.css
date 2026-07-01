@@ -41,10 +41,6 @@
   .world-post-type-choice-badge {
     @apply px-2 py-0.5 text-muted-foreground has-data-[icon=inline-start]:pl-1.5;
     @apply has-data-checked:bg-secondary has-data-checked:text-foreground;
-
-    /*&[data-secret] {
-      @apply border-dashed border-secondary;
-    }*/
   }
 
   .world-posts-frame {

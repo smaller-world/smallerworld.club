@@ -48,9 +48,7 @@ class Components::RadioGroup::Item < Components::Input
         slot: "radio-group-item",
         checked: ("" if checked?),
         unchecked: ("" unless checked?),
-        action: token_list(
-          "click->radio#forwardItemClick",
-        ),
+        action: "click->radio#forwardClick:prevent",
       },
       aria: {
         checked: !!checked?,

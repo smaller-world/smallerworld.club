@@ -46,7 +46,7 @@ class Components::Checkbox < Components::Input
         slot: "checkbox",
         checked: ("" if checked?),
         unchecked: ("" unless checked?),
-        action: "click->checkbox#forwardClick",
+        action: "click->checkbox#forwardClick:prevent",
       },
       aria: {
         checked: !!checked?,

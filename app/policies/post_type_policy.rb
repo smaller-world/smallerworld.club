@@ -15,8 +15,7 @@ class PostTypePolicy < ApplicationPolicy
   scope_for :active_record_relation do |relation|
     relation = T.let(relation, PostType::PrivateRelation)
     if (user = self.user)
-      relation.open
-        .or(relation.where(world_id: user.owned_worlds.select(:id)))
+      relation.where(world_id: user.owned_worlds.select(:id))
         .or(relation.where(
           id: PostTypeGrant
             .where(world_key: WorldKey.where(recipient: user))

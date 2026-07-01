@@ -106,11 +106,7 @@ class PostsController < ApplicationController
         post = post_type.posts.build(**post_params)
         if post.save
           flash[:created_post_id] = post.id
-          refresh_or_redirect_to([
-            world,
-            post_type_id: post_type.secret? ? post_type.id : nil,
-            anchor: helpers.dom_id(post, :card),
-          ])
+          refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else
           render Views::Posts::New.new(post:), status: :unprocessable_content
         end

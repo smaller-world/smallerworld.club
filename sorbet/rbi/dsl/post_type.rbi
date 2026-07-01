@@ -573,9 +573,6 @@ class PostType
     def only(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def open(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def optimizer_hints(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -610,9 +607,6 @@ class PostType
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def rewhere(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def secret(*args, &blk); end
 
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
     sig { params(blk: T.proc.params(record: ::PostType).returns(BasicObject)).returns(T::Array[::PostType]) }
@@ -890,9 +884,6 @@ class PostType
     def restore_label!; end
 
     sig { void }
-    def restore_secret!; end
-
-    sig { void }
     def restore_updated_at!; end
 
     sig { void }
@@ -928,12 +919,6 @@ class PostType
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_label?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
-    def saved_change_to_secret; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_secret?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
 
@@ -945,51 +930,6 @@ class PostType
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T::Boolean) }
-    def secret; end
-
-    sig { params(value: T::Boolean).returns(T::Boolean) }
-    def secret=(value); end
-
-    sig { returns(T::Boolean) }
-    def secret?; end
-
-    sig { returns(T.nilable(T::Boolean)) }
-    def secret_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def secret_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def secret_came_from_user?; end
-
-    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
-    def secret_change; end
-
-    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
-    def secret_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def secret_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(T::Boolean)) }
-    def secret_in_database; end
-
-    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
-    def secret_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def secret_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(T::Boolean)) }
-    def secret_previously_was; end
-
-    sig { returns(T.nilable(T::Boolean)) }
-    def secret_was; end
-
-    sig { void }
-    def secret_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -1050,9 +990,6 @@ class PostType
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_label?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_secret?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1192,9 +1129,6 @@ class PostType
     def only(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def open(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def optimizer_hints(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1229,9 +1163,6 @@ class PostType
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def rewhere(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def secret(*args, &blk); end
 
     sig { params(args: T.untyped).returns(PrivateRelation) }
     sig { params(blk: T.proc.params(record: ::PostType).returns(BasicObject)).returns(T::Array[::PostType]) }

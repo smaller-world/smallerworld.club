@@ -32,7 +32,7 @@ class Components::CheckboxGroup::Item < Components::Checkbox
 
   # == Helpers ==
 
-  sig { returns(T::Boolean) }
+  sig { override.returns(T::Boolean) }
   def checked?
     if @checked.nil?
       if (object = @form&.object) && @field
@@ -50,7 +50,7 @@ class Components::CheckboxGroup::Item < Components::Checkbox
     end
   end
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
+  sig { override.returns(T::Hash[Symbol, T.untyped]) }
   def input_options
     options = super
     options[:id] ||= field_id(@checkbox_group.namespace, @value)

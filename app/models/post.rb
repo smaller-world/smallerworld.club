@@ -158,7 +158,7 @@ class Post < ApplicationRecord
       .where("post_type_grants.post_type_id = post_types.id")
     received = PostType.joins(:world_keys)
       .where(world_keys: { recipient: user })
-      .where(PostType.arel_table[:secret].eq(false).or(granted.arel.exists))
+      .where(granted.arel.exists)
     where(type: owned).or(where(type: received))
   }
   scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }

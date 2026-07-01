@@ -9,7 +9,6 @@
 #  id         :uuid             not null, primary key
 #  icon       :string
 #  label      :string           not null
-#  secret     :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  world_id   :uuid             not null
@@ -49,11 +48,7 @@ class PostType < ApplicationRecord
 
   sig { returns(String) }
   def default_icon
-    if secret?
-      "huge/square-lock-01"
-    else
-      "huge/tag-01"
-    end
+    "huge/tag-01"
   end
 
   # == Associations ==
@@ -66,9 +61,7 @@ class PostType < ApplicationRecord
   has_many :world_key_recipients, through: :world_keys, source: :recipient
   has_many :recipients,
     ->(post_type) {
-      if post_type.secret?
-        where(world_keys: { id: post_type.grants.select(:world_key_id) })
-      end
+      where(world_keys: { id: post_type.grants.select(:world_key_id) })
     },
     through: :world_keys,
     source: :recipient
@@ -89,9 +82,4 @@ class PostType < ApplicationRecord
   # == Validations ==
 
   validates :label, presence: true, uniqueness: { scope: :world }
-
-  # == Scopes ==
-
-  scope :open, -> { where(secret: false) }
-  scope :secret, -> { where(secret: true) }
 end
