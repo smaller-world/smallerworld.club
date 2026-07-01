@@ -8,6 +8,7 @@ class Components::PostForm < Components::Base
   def initialize(post:, **attributes)
     super(**attributes)
     @post = post
+    @post_type = T.let(@post.type!, PostType)
     @world = T.let(@post.world!, World)
   end
 
@@ -153,28 +154,43 @@ class Components::PostForm < Components::Base
       end
 
       div(class: "flex flex-col items-stretch gap-3") do
-        Components::FieldSet(data: { action: "change->post-draft#save" }) do
-          radio_group_for(form, :quiet, class: "grid-cols-2") do |radio_group|
-            quiet_choice_card_for(:off, radio_group:) do |field|
-              div(class: "flex items-center gap-1.5") do
-                Icon("huge/notification-01", class: "size-3")
-                field.title(class: "text-xs") { "post loudly" }
+        if @post.new_record?
+          Components::FieldSet(data: { action: "change->post-draft#save" }) do
+            radio_group_for(form, :quiet, class: "grid-cols-2") do |radio_group|
+              quiet_choice_card_for(:off, radio_group:) do |field|
+                div(class: "flex items-center gap-1.5") do
+                  Icon("huge/notification-01", class: "size-3")
+                  field.title(class: "text-xs") { "post loudly" }
+                end
+                field.description(class: "text-xs leading-tight") do
+                  "send notifications"
+                end
               end
-              field.description(class: "text-xs leading-tight") do
-                "send notifications"
-              end
-            end
-            quiet_choice_card_for(:on, radio_group:, class: "border-dashed") do |field|
-              div(class: "flex items-center gap-1.5") do
-                Icon("huge/notification-snooze-01", class: "size-3")
-                field.title(class: "text-xs") { "post quietly" }
-              end
-              field.description(class: "text-xs leading-tight ") do
-                "no notifs + hide in tab"
+              quiet_choice_card_for(:on, radio_group:, class: "border-dashed") do |field|
+                div(class: "flex items-center gap-1.5") do
+                  Icon("huge/notification-snooze-01", class: "size-3")
+                  field.title(class: "text-xs") { "post quietly" }
+                end
+                field.description(class: "text-xs leading-tight ") do
+                  "no notifs + hide in tab"
+                end
               end
             end
           end
+        else
+          field_for(
+            form,
+            :quiet,
+            orientation: :horizontal,
+            class: "self-center w-auto",
+          ) do |field|
+            field.checkbox
+            field.label(class: "text-sm font-normal grow-0 text-muted-foreground") do
+              "hide post in #{@post_type.label} tab"
+            end
+          end
         end
+
         submit_button_for(form, size: :lg) do |button|
           if @post.new_record?
             button.inline_start_icon("huge/mail-send-01")
