@@ -35,7 +35,7 @@ class Views::Posts::Edit < Views::Base
               menu_content.label(class: "pt-1.5 pb-0 text-center") do
                 "are you sure?"
               end
-              form_with(url: @world, method: :delete) do
+              form_with(url: @post, method: :delete) do
                 menu_content.button_item(
                   type: :submit,
                   variant: :destructive,
