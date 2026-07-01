@@ -16,13 +16,15 @@ module FormWith
     params(
       args: T.untyped,
       kwargs: T.untyped,
-      block: T.proc.params(form: PhlexRailsFormBuilder).void,
+      block: T.nilable(T.proc.params(form: PhlexRailsFormBuilder).void),
     ).void
   end
   def form_with(*args, **kwargs, &block)
     super(*T.unsafe(args), **kwargs) do |form|
       builder = PhlexRailsFormBuilder.from(form, component: self)
-      yield(builder)
+      if block
+        yield(builder)
+      end
     end
   end
 end

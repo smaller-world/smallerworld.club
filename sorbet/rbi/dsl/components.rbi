@@ -170,6 +170,16 @@ module Components
   end
   def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
 
+  # workspace://app/components/clear_account_notification_count_form.rb:4
+  sig do
+    params(
+      current_user: ::User,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
+    ).void
+  end
+  def ClearAccountNotificationCountForm(current_user:, **attributes, &block); end
+
   # workspace://app/components/clearable_file_input.rb:4
   sig do
     params(
@@ -940,6 +950,16 @@ module Components
       ).void
     end
     def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+
+    # workspace://app/components/clear_account_notification_count_form.rb:4
+    sig do
+      params(
+        current_user: ::User,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
+      ).void
+    end
+    def ClearAccountNotificationCountForm(current_user:, **attributes, &block); end
 
     # workspace://app/components/clearable_file_input.rb:4
     sig do

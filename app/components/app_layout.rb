@@ -127,6 +127,9 @@ class Components::AppLayout < Components::Base
         if (current_user = @current_user)
           # Auto-update user time zone
           Components::AccountTimeZoneForm(current_user:)
+
+          # Auto-clear notification count
+          Components::ClearAccountNotificationCountForm(current_user:)
         end
         if (current_device = @current_device)
           # Auto-register device push token

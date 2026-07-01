@@ -28,6 +28,9 @@ module GeneratedPathHelpersModule
   def appstore_listing_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def clear_account_notification_count_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

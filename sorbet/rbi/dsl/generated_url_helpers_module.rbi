@@ -28,6 +28,9 @@ module GeneratedUrlHelpersModule
   def appstore_listing_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def clear_account_notification_count_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

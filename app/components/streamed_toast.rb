@@ -22,7 +22,7 @@ class Components::StreamedToast < Components::Base
     type: nil,
     **attributes
   )
-    unless type.in?(TYPES)
+    if type && !type.in?(TYPES)
       raise InvalidParameter.new(parameter: :type, value: type)
     end
 

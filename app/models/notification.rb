@@ -92,9 +92,8 @@ class Notification < ApplicationRecord
     if (target_url = message.target_url)
       apple_data["target_url"] = target_url
     end
-    if (world = message.world) && (variant = world.notification_icon_variant)
-      apple_data["icon_url"] = Rails.application.routes.url_helpers
-        .rails_representation_path(variant, only_path: true)
+    if (world = message.world)
+      apple_data["icon_url"] = world_icon_url(world)
     end
     device_notification = DevicePushNotification
       .with_apple(apple_data)
@@ -125,5 +124,16 @@ class Notification < ApplicationRecord
   sig { void }
   def mark_as_received!
     update!(received_at: Time.current)
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(world: World).returns(T.nilable(String)) }
+  def world_icon_url(world)
+    variant = world.notification_icon_variant
+    Rails.application.routes.url_helpers
+      .rails_representation_path(variant, only_path: true)
   end
 end

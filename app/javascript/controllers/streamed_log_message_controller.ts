@@ -14,8 +14,14 @@ export default class StreamedLogMessageController extends Controller<HTMLTemplat
 
   // == Lifecycle ==
 
-  connnect(): void {
+  connect(): void {
     super.connect();
+    this.#log();
+  }
+
+  // == Helpers ==
+
+  #log(): void {
     const { textContent } = this.element.content;
     const args = [
       `%c${this.controllerNameValue}#${this.actionNameValue}%c ${textContent}`,

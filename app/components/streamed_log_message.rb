@@ -36,9 +36,9 @@ class Components::StreamedLogMessage < Components::Base
     template(
       data: {
         controller: "streamed-log-message",
-        streamed_log_message_log_level: @log_level,
-        streamed_log_message_controller_name: @controller_name,
-        streamed_log_message_action_name: @action_name,
+        streamed_log_message_log_level_value: @log_level,
+        streamed_log_message_controller_name_value: @controller_name,
+        streamed_log_message_action_name_value: @action_name,
       },
     ) do
       @message

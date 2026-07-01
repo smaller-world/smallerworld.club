@@ -155,6 +155,16 @@ class User < ApplicationRecord
     end
   end
 
+  sig { returns(T::Boolean) }
+  def clear_notifications
+    update(notifications_last_cleared_at: Time.current)
+  end
+
+  sig { returns(T::Boolean) }
+  def has_uncleared_notifications?
+    notifications_received_since_last_cleared.any?
+  end
+
   # == Methods ==
 
   sig { params(phone_number: String).returns(T.nilable(User)) }

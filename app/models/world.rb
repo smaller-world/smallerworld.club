@@ -94,10 +94,15 @@ class World < ApplicationRecord
     )
   end
 
-  sig { returns(T.nilable(T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob))) }
+  sig { returns(ActiveStorage::Attachment) }
+  def icon_attachment!
+    icon_attachment or raise ActiveRecord::RecordNotFound, "Missing icon attachment"
+  end
+
+  sig { returns(T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)) }
   def page_icon_variant
-    attachment = icon_attachment or return
-    blob = attachment.blob or return
+    attachment = icon_attachment!
+    blob = T.must(attachment.blob)
     if blob.content_type == "image/gif"
       blob
     else
@@ -105,9 +110,10 @@ class World < ApplicationRecord
     end
   end
 
-  sig { returns(T.nilable(ActiveStorage::VariantWithRecord)) }
+  sig { returns(ActiveStorage::VariantWithRecord) }
   def notification_icon_variant
-    icon_attachment&.variant(:notification_icon)
+    attachment = icon_attachment!
+    attachment.variant(:notification_icon)
   end
 
   # == Normalizations ==

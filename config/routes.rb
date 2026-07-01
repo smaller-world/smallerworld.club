@@ -37,6 +37,9 @@ Rails.application.routes.draw do
   # == Account
   resource :account, only: [ :new, :create ]
   resource :account_time_zone, path: "/account/time_zone", only: [ :update ]
+  resource :account_notification_count, path: "/account/notification_count", only: [] do
+    post :clear
+  end
 
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id
