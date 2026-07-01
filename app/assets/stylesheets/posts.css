@@ -47,7 +47,7 @@
     &:not([data-collapsed]),
     &[data-collapsed="false"] {
       [data-slot="expand-control"] {
-        @apply pointer-events-none opacity-0;
+        @apply hidden;
       }
     }
 

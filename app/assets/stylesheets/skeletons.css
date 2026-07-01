@@ -1,3 +1,5 @@
 @utility skeleton {
-  @apply pointer-events-none animate-pulse rounded-2xl bg-muted text-transparent *:invisible;
+  @apply pointer-events-none;
+  @apply rounded-2xl bg-muted text-transparent *:invisible;
+  @apply animate-pulse;
 }

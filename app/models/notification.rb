@@ -86,16 +86,16 @@ class Notification < ApplicationRecord
   def deliver
     recipient = recipient!
     message = self.message
-    apple_data = {
-      aps: { "mutable-content" => 1 },
-    }
+    data = T.let({}, T::Hash[String, T.untyped])
+    apple_data = T.let({ "aps" => { "mutable-content" => 1 } }, T::Hash[String, T.untyped])
     if (target_url = message.target_url)
-      apple_data["target_url"] = target_url
+      data["target_url"] = target_url
     end
     if (world = message.world)
       apple_data["icon_url"] = world_icon_url(world)
     end
     device_notification = DevicePushNotification
+      .with_data(data)
       .with_apple(apple_data)
       .new(
         thread_id: message.world&.id,

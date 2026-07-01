@@ -165,6 +165,22 @@ class User < ApplicationRecord
     notifications_received_since_last_cleared.any?
   end
 
+  sig { void }
+  def send_badge_count_notifications
+    notification = DevicePushNotification.new(
+      badge: notifications_received_since_last_cleared.count,
+      high_priority: false,
+    )
+    devices.find_each do |device|
+      device.push(notification)
+    end
+  end
+
+  sig { returns(T::Boolean) }
+  def send_badge_count_notifications_later
+    SendUserBadgeCountNotificationsJob.perform_later(self)
+  end
+
   # == Methods ==
 
   sig { params(phone_number: String).returns(T.nilable(User)) }

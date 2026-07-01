@@ -17,8 +17,13 @@ class Components::AccountTimeZoneForm < Components::Base
     form_with(
       model: @current_user,
       url: account_time_zone_path,
-      data: { controller: "submit" },
-      html: { hidden: true },
+      data: {
+        controller: "submit",
+        submit_require_page_visible_value: true,
+      },
+      html: {
+        hidden: true,
+      },
     ) do |form|
       form.hidden_field(
         :time_zone_name,

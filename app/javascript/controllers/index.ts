@@ -34,6 +34,7 @@ import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import LightboxController from "./lightbox_controller";
+import NotificationBadgeCountBridgeController from "./notification_badge_count_bridge_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
@@ -75,6 +76,10 @@ application.register("page-load-bridge", PageLoadBridgeController);
 application.register(
   "notification-permission-bridge",
   NotificationPermissionBridgeController,
+);
+application.register(
+  "notification-badge-count-bridge",
+  NotificationBadgeCountBridgeController,
 );
 
 // == Libraries

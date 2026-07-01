@@ -194,10 +194,8 @@ class Views::Worlds::Show < Views::Base
                   action: "dialog#close",
                 },
               ) do |item|
-                if (icon = post_type.icon)
-                  item.media(variant: :icon) do
-                    Icon(icon)
-                  end
+                item.media(variant: :icon) do
+                  Icon(post_type.icon)
                 end
                 item.content do
                   item.title do
@@ -205,7 +203,12 @@ class Views::Worlds::Show < Views::Base
                   end
                 end
               end
-              button_link_to("edit", [ :edit, post_type ], size: :sm)
+              button_link_to(
+                "edit",
+                [ :edit, post_type ],
+                size: :sm,
+                class: "text-muted-foreground",
+              )
             end
           end
 

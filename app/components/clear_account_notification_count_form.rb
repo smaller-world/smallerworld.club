@@ -14,17 +14,20 @@ class Components::ClearAccountNotificationCountForm < Components::Base
 
   sig { override.void }
   def view_template
-    if @current_user.has_uncleared_notifications?
-      form_with(
-        url: clear_account_notification_count_path,
-        data: {
-          controller: "submit connection",
-          action: "connection:connect->submit#request",
-        },
-        html: {
-          hidden: true,
-        },
-      )
-    end
+    form_with(
+      url: clear_account_notification_count_path,
+      data: {
+        controller: "submit connection notification-badge-count-bridge",
+        submit_require_page_visible_value: true,
+        action: token_list(
+          "turbo:submit-end->notification-badge-count-bridge#clear",
+          "connection:connect->submit#request" =>
+            @current_user.has_uncleared_notifications?,
+        ),
+      },
+      html: {
+        hidden: true,
+      },
+    )
   end
 end

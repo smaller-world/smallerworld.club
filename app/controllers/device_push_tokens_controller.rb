@@ -14,8 +14,15 @@ class DevicePushTokensController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         current_device = Current.device!
-        current_device.send_test_notification
-        render turbo_stream: append_toast("test notification sent!", type: :success)
+        begin
+          current_device.send_test_notification
+          render turbo_stream: append_toast("test notification sent!", type: :success)
+        rescue => error
+          render turbo_stream: append_toast(
+            "failed to send notification: #{error.message}",
+            type: :error,
+          )
+        end
       end
     end
   end

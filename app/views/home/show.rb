@@ -71,9 +71,9 @@ class Views::Home::Show < Views::Base
 
   sig { void }
   def owned_worlds
-    div(class: "flex gap-6 flex-wrap justify-center") do
+    ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
       @owned_worlds.each do |world|
-        div(class: "relative") do
+        li(class: "relative") do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
             span(class: "world-icon-label") do
@@ -83,38 +83,44 @@ class Views::Home::Show < Views::Base
           Components::WorldKeyGrantIconButton(world:)
         end
       end
+    end
 
-      if @owned_worlds.empty?
-        link_to(new_world_path, class: "world-icon-container hover:underline") do
-          Components::Button(
-            element: :div,
-            variant: :outline,
-            class: "world-icon border-dashed",
-          ) do
-            image_tag("logo.png", class: "size-12")
-          end
-          span(class: "world-icon-label") do
-            "create your world"
-          end
-        end
+    link_to(
+      new_world_path,
+      class: [
+        "mx-auto world-icon-container hover:underline",
+        "hidden [ul:empty_+_&]:revert-display-layer",
+      ],
+    ) do
+      Components::Button(
+        element: :div,
+        variant: :outline,
+        class: "world-icon border-dashed",
+      ) do
+        image_tag("logo.png", class: "size-12")
+      end
+      span(class: "world-icon-label shimmer shimmer-repeat-delay-2000") do
+        "create your world"
       end
     end
   end
 
   sig { void }
   def accessible_worlds
-    div(class: "flex gap-4 flex-wrap justify-center") do
+    ul(class: "flex gap-4 flex-wrap justify-center") do
       @accessible_worlds.each do |world|
-        link_to(world, class: "world-icon-container hover:underline") do
-          div(class: "relative") do
-            image_tag(
-              world.page_icon_variant,
-              class: "world-icon",
-              data: { world_icon_size: "sm" },
-            )
-          end
-          span(class: "world-icon-label text-xs") do
-            world.name
+        li do
+          link_to(world, class: "world-icon-container hover:underline") do
+            div(class: "relative") do
+              image_tag(
+                world.page_icon_variant,
+                class: "world-icon",
+                data: { world_icon_size: "sm" },
+              )
+            end
+            span(class: "world-icon-label text-xs") do
+              world.name
+            end
           end
         end
       end
