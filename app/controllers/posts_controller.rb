@@ -140,10 +140,11 @@ class PostsController < ApplicationController
   # DELETE /posts/:id
   def destroy
     respond_to do |format|
-      format.turbo_stream do
+      format.html do
         post = find_post
         authorize!(post)
         post.destroy!
+        refresh_or_redirect_to(world, status: :see_other)
       end
     end
   end
