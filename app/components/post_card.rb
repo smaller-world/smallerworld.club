@@ -47,8 +47,8 @@ class Components::PostCard < Components::Base
       )) do |card|
         card.header do
           card.description do
-            div(class: "flex-1 flex items-center gap-2") do
-              Components::Badge(variant: :secondary) do |badge|
+            div(class: "flex-1 flex items-center gap-x-2 gap-y-1 flex-wrap") do
+              Components::Badge(variant: :outline, class: "text-muted-foreground") do |badge|
                 if (emoji = @post.emoji)
                   div(
                     class: "font-emoji text-md mr-0.5 align-baseline leading-none",
@@ -62,14 +62,23 @@ class Components::PostCard < Components::Base
                 span(class: "font-normal") { @post_type.label }
               end
 
-              local_time(@post.created_at, class: "lowercase text-xs block")
+              time(
+                class: "lowercase text-xs block",
+                data: {
+                  controller: "post-timestamp",
+                  post_timestamp_datetime_value: @post.created_at.iso8601,
+                },
+              )
             end
 
             if allowed_to?(:manage?, @post)
-              div(class: "flex gap-1.5 items-center -my-1") do
-                # world_key_badges
-                edit_menu(card:)
-              end
+              button_link_to(
+                "edit",
+                [ :edit, @post ],
+                variant: :secondary,
+                size: :xs,
+                icon: "huge/pencil-edit-01",
+              )
             end
           end
           if (title = @post.title)
@@ -134,45 +143,45 @@ class Components::PostCard < Components::Base
 
   # == Helpers ==
 
-  sig { params(card: Components::Card).void }
-  def edit_menu(card:)
-    Components::DropdownMenu() do |menu|
-      menu.with_trigger_button(variant: :outline, size: :xs) do
-        div(class: "relative h-full w-1.5") do
-          div(class: "absolute bottom-0 top-0 -left-1.25 flex items-center") do
-            Icon("huge/more-vertical", class: "size-3.5")
-          end
-        end
-        span { "edit" }
-      end
+  # sig { params(card: Components::Card).void }
+  # def edit_menu(card:)
+  #   Components::DropdownMenu() do |menu|
+  #     menu.with_trigger_button(variant: :outline, size: :xs) do
+  #       div(class: "relative h-full w-1.5") do
+  #         div(class: "absolute bottom-0 top-0 -left-1.25 flex items-center") do
+  #           Icon("huge/more-vertical", class: "size-3.5")
+  #         end
+  #       end
+  #       span { "edit" }
+  #     end
 
-      menu.with_content(anchor: [ :bottom, :end ]) do |menu_content|
-        menu_content.link_item_to([ :edit, @post ]) do
-          Icon("huge/pencil-edit-01")
-          span { "edit" }
-        end
-        form_with(
-          url: @post,
-          method: :delete,
-          data: {
-            controller: "haptic-bridge",
-            action: "turbo:submit-end->haptic-bridge#vibrate",
-          },
-        ) do
-          menu_content.button_item(
-            type: :submit,
-            variant: :destructive,
-            data: {
-              action: "dropdown-menu#preventAutoClose",
-            },
-          ) do
-            Icon("huge/delete-01")
-            span { "delete" }
-          end
-        end
-      end
-    end
-  end
+  #     menu.with_content(anchor: [ :bottom, :end ]) do |menu_content|
+  #       menu_content.link_item_to([ :edit, @post ]) do
+  #         Icon("huge/pencil-edit-01")
+  #         span { "edit" }
+  #       end
+  #       form_with(
+  #         url: @post,
+  #         method: :delete,
+  #         data: {
+  #           controller: "haptic-bridge",
+  #           action: "turbo:submit-end->haptic-bridge#vibrate",
+  #         },
+  #       ) do
+  #         menu_content.button_item(
+  #           type: :submit,
+  #           variant: :destructive,
+  #           data: {
+  #             action: "dropdown-menu#preventAutoClose",
+  #           },
+  #         ) do
+  #           Icon("huge/delete-01")
+  #           span { "delete" }
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   sig { void }
   def notification_prompt_button

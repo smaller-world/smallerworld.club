@@ -32,14 +32,16 @@ class Components::AsyncPostReactions < Components::Base
       ),
     ) do
       # Placeholder
-      Components::Button(
-        element: :div,
-        variant: :ghost,
-        size: :icon,
-        class: "rounded-full skeleton",
-      ) do
-        span(class: "font-emoji text-lg") do
-          "🤣"
+      if allowed_to?(:react?, @post)
+        Components::Button(
+          element: :div,
+          variant: :ghost,
+          size: :icon,
+          class: "rounded-full skeleton",
+        ) do
+          span(class: "font-emoji text-lg") do
+            "🤣"
+          end
         end
       end
     end

@@ -55,6 +55,7 @@ class Views::Worlds::Show < Views::Base
             button_link_to(
               "settings",
               [ @world, :settings ],
+              variant: :secondary,
               icon: "huge/settings-01",
               data: {
                 controller: "button-bridge",

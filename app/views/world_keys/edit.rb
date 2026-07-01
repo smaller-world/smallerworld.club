@@ -34,14 +34,19 @@ class Views::WorldKeys::Edit < Views::Base
             ) do
               "destroy key"
             end
-            menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
-              menu_content.label(class: "pt-1.5 pb-0.5 text-center") do
+            menu.with_content(anchor: :bottom) do |menu_content|
+              menu_content.label(class: "pt-1.5 pb-0 text-center") do
                 "are you sure?"
               end
               form_with(url: @world_key, method: :delete) do
-                menu_content.button_item(type: :submit, variant: :destructive) do
+                menu_content.button_item(
+                  type: :submit,
+                  variant: :destructive,
+                  class: "justify-center",
+                ) do
                   Icon("huge/delete-01")
                   span { "really destroy" }
+                  div(class: "w-1")
                 end
               end
             end

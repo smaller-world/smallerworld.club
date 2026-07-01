@@ -21,7 +21,34 @@ class Views::Posts::Edit < Views::Base
           button_back_to(@world.name, @world, variant: :secondary)
         end
 
-        Components::PostForm(post: @post)
+        div(class: "flex flex-col gap-0.5") do
+          Components::PostForm(post: @post)
+          Components::DropdownMenu() do |dropdown_menu|
+            dropdown_menu.with_trigger_button(
+              variant: :link,
+              size: :sm,
+              class: "text-muted-foreground",
+            ) do
+              "delete post"
+            end
+            dropdown_menu.with_content(anchor: :bottom) do |menu_content|
+              menu_content.label(class: "pt-1.5 pb-0 text-center") do
+                "are you sure?"
+              end
+              form_with(url: @world, method: :delete) do
+                menu_content.button_item(
+                  type: :submit,
+                  variant: :destructive,
+                  class: "justify-center",
+                ) do
+                  Icon("huge/delete-01")
+                  span { "really delete" }
+                  div(class: "w-1")
+                end
+              end
+            end
+          end
+        end
       end
     end
   end

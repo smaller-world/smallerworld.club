@@ -28,7 +28,7 @@ class Components::WorldPostTypeForm < Components::Base
           form,
           :type_id,
           toggleable: true,
-          class: "flex justify-center gap-1 flex-wrap",
+          class: "flex justify-center gap-0.5 flex-wrap",
         ) do |radio_group|
           authorized_scope(@world.post_types).chronological.each do |post_type|
             choice_badge_for(post_type, radio_group:)

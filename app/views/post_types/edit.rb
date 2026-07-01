@@ -25,16 +25,16 @@ class Views::PostTypes::Edit < Views::Base
           Components::PostTypeForm(post_type: @post_type)
           Components::DropdownMenu(
             class: class_names("hidden" => @post_type.default?),
-          ) do |menu|
-            menu.with_trigger_button(
+          ) do |dropdown_menu|
+            dropdown_menu.with_trigger_button(
               variant: :link,
               size: :sm,
               class: "text-muted-foreground",
             ) do
               "delete post type"
             end
-            menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
-              menu_content.label(class: "pt-1.5 pb-0.5 max-w-52 text-center") do
+            dropdown_menu.with_content(anchor: :bottom) do |menu_content|
+              menu_content.label(class: "pt-1.5 pb-0 max-w-52 text-center") do
                 "are you sure? all posts of this type will be deleted."
               end
               form_with(url: @post_type, method: :delete) do
@@ -45,6 +45,7 @@ class Views::PostTypes::Edit < Views::Base
                 ) do
                   Icon("huge/delete-01")
                   span { "really delete" }
+                  div(class: "w-1")
                 end
               end
             end

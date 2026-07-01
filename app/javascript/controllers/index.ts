@@ -42,6 +42,7 @@ import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import MessagingPlatformDropdownController from "./platform_dropdown_controller";
 import PostDraftController from "./post_draft_controller";
+import PostTimestampController from "./post_timestamp_controller";
 import PushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
 import SelectController from "./select_controller";
@@ -106,6 +107,7 @@ application.register("collapse", CollapseController);
 application.register("event", EventController);
 application.register("lightbox", LightboxController);
 application.register("world-post-type-input", WorldPostTypeInputController);
+application.register("post-timestamp", PostTimestampController);
 application.register(
   "create-world-button-label",
   CreateWorldButtonLabelController,

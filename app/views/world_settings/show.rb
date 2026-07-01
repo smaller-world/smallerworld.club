@@ -35,16 +35,24 @@ class Views::WorldSettings::Show < Views::Base
             card.title(class: "text-center") { "break-up zone" }
           end
           card.footer(class: "flex flex-col items-stretch") do
-            Components::DropdownMenu() do |menu|
-              menu.with_trigger_button(variant: :outline) do |button|
+            Components::DropdownMenu() do |dropdown_menu|
+              dropdown_menu.with_trigger_button(variant: :outline) do |button|
                 button.inline_start_icon("huge/logout-02")
                 span { "leave #{@world.name}" }
               end
-              menu.with_content(anchor: :bottom) do |menu_content|
+              dropdown_menu.with_content(anchor: :bottom) do |menu_content|
+                menu_content.label(class: "pt-1.5 pb-0 text-center") do
+                  "are you sure?"
+                end
                 form_with(url: [ :leave, @world ]) do
-                  menu_content.button_item(type: :submit, variant: :destructive) do
+                  menu_content.button_item(
+                    type: :submit,
+                    variant: :destructive,
+                    class: "justify-center",
+                  ) do
                     Icon("huge/heartbreak")
                     span { "really leave" }
+                    div(class: "w-1")
                   end
                 end
               end

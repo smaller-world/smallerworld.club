@@ -16,7 +16,7 @@
     }
 
     [data-slot="card-description"] {
-      @apply flex items-end gap-2;
+      @apply flex items-stretch gap-2;
     }
 
     [data-slot="card-content"] {
