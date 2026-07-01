@@ -1,7 +1,9 @@
 @source not "../../../sorbet/";
 
 @import "tailwindcss";
+@import "tw-fade";
 @import "tw-animate-css";
+@import "tw-shimmer";
 @import "shadcn/tailwind.css";
 
 @import "./hotwire_native.css";

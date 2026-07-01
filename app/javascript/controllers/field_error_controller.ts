@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class FieldController extends Controller<HTMLElement> {
+export default class FieldErrorController extends Controller<HTMLElement> {
   static targets = ["error"];
   declare readonly errorTarget: HTMLElement;
   declare readonly hasErrorTarget: boolean;
@@ -16,7 +16,7 @@ export default class FieldController extends Controller<HTMLElement> {
 
   // == Actions ==
 
-  showError(event: CustomEvent<{ message?: string }>): void {
+  show(event: CustomEvent<{ message?: string }>): void {
     const { message } = event.detail;
     if (message) {
       this.errorTarget.textContent = message;

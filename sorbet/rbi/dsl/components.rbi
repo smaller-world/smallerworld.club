@@ -712,6 +712,16 @@ module Components
   end
   def WorldKeyGrantForm(world:, granted_post_types:, **attributes, &block); end
 
+  # workspace://app/components/world_key_grant_icon_button.rb:4
+  sig do
+    params(
+      world: ::World,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
+    ).void
+  end
+  def WorldKeyGrantIconButton(world:, **attributes, &block); end
+
   # workspace://app/components/world_next_page_control.rb:4
   sig do
     params(
@@ -1467,6 +1477,16 @@ module Components
       ).void
     end
     def WorldKeyGrantForm(world:, granted_post_types:, **attributes, &block); end
+
+    # workspace://app/components/world_key_grant_icon_button.rb:4
+    sig do
+      params(
+        world: ::World,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
+      ).void
+    end
+    def WorldKeyGrantIconButton(world:, **attributes, &block); end
 
     # workspace://app/components/world_next_page_control.rb:4
     sig do

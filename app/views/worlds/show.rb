@@ -68,7 +68,7 @@ class Views::Worlds::Show < Views::Base
             turbo_frame_tag(
               :v1_posts_import,
               src: [ @world, :v1_posts_import ],
-              class: "empty:hidden pb-1.5",
+              class: "empty:hidden pb-2",
               data: {
                 controller: "frame-reload frame-reset user-focus",
               },
@@ -105,9 +105,7 @@ class Views::Worlds::Show < Views::Base
                   action: ("connection:connect->confetti#launch" if @celebrate),
                 },
               )
-              # if @card
-              #   card_icon_button(@card)
-              # end
+              Components::WorldKeyGrantIconButton(world: @world)
             end
             h1(class: "text-2xl text-center") do
               @world.name

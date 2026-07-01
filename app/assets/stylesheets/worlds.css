@@ -52,14 +52,11 @@
       @apply loading rounded-xl;
 
       &::before {
-        @apply absolute -inset-px z-10 bg-background/20 backdrop-blur-[2px];
-
-        border-radius: inherit;
-        content: "";
+        @apply -inset-px bg-background/20 backdrop-blur-[2px];
       }
 
       &::after {
-        @apply top-20 z-20;
+        @apply top-20;
       }
     }
   }

@@ -65,10 +65,10 @@ class Components::WorldKeyGrantForm < Components::Base
             size: :sm,
             class: "self-center text-muted-foreground text-xs",
             data: {
-              controller: "clipboard flash",
+              controller: "clipboard flash-text",
               clipboard_copy_value: grant_url,
-              flash_text_value: "invite link copied!",
-              action: [ "clipboard#copy", "clipboard:copied->flash#show" ],
+              flash_text_content_value: "invite link copied!",
+              action: [ "clipboard#copy", "clipboard:copied->flash-text#show" ],
             },
           ) do
             "copy invite link"

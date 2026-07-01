@@ -120,7 +120,7 @@ class Views::WorldKeys::Index < Views::Base
               end
               menu.with_content(
                 anchor: [ :bottom, :end ],
-                class: "min-w-auto",
+                class: "min-w-none",
               ) do |menu_content|
                 form_with(url: world_key, method: :delete) do
                   menu_content.button_item(type: :submit, variant: :destructive) do
@@ -153,7 +153,7 @@ class Views::WorldKeys::Index < Views::Base
                 button.inline_start_icon("huge/tick-01")
                 span { user.name }
               end
-              menu.with_content(class: "min-w-auto") do |content|
+              menu.with_content(class: "min-w-none") do |content|
                 content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
                 form_with(model: invitation, method: :delete) do
                   content.button_item(type: :submit, variant: :destructive) do
@@ -174,7 +174,7 @@ class Views::WorldKeys::Index < Views::Base
               menu.with_trigger_button(variant: :outline, anchor: :bottom) do
                 user.name
               end
-              menu.with_content(class: "min-w-auto") do |content; invitation|
+              menu.with_content(class: "min-w-none") do |content; invitation|
                 invitation = @world.invitations.build(recipient: user)
                 form_with(model: invitation) do |form|
                   form.hidden_field(:recipient_id)

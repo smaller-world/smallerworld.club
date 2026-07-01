@@ -77,7 +77,7 @@ class Components::WorldForm < Components::Base
         end
       end
 
-      field_for(form, :icon, data: { controller: "field" }) do |f|
+      field_for(form, :icon, data: { controller: "field-error" }) do |f|
         f.label { "icon" }
         div(class: "flex flex-col items-center") do
           f.uppy_dnd(
@@ -94,11 +94,11 @@ class Components::WorldForm < Components::Base
             crop_to_aspect_ratio: 1,
             dropzone_class: "size-40 rounded-world-icon",
             data: {
-              action: "uppy:error->field#showError",
+              action: "uppy:error->field-error#show",
             },
           )
         end
-        f.error(data: { field_target: "error" })
+        f.error(data: { field_error_target: "error" })
       end
 
       # if @world.persisted?

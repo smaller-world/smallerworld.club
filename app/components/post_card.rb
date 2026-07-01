@@ -77,8 +77,31 @@ class Components::PostCard < Components::Base
           end
         end
         card.content do
-          div(class: "text-sm") do
-            @post.body.to_s
+          div(
+            class: "post-body",
+            data: {
+              controller: "collapse",
+            },
+          ) do
+            div(data: {
+              collapse_target: "content",
+              slot: "expand-content",
+            }) do
+              @post.body.to_s
+            end
+            div(data: { slot: "expand-control" }) do
+              Components::Button(
+                variant: :ghost,
+                size: :sm,
+                data: {
+                  collapse_target: "control",
+                  action: "collapse#trigger",
+                },
+              ) do |button|
+                button.inline_start_icon("huge/unfold-more")
+                span { "show more" }
+              end
+            end
           end
           if (images = @post.image_thumbnails.presence)
             Components::ImageStack(images:)

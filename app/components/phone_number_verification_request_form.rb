@@ -72,7 +72,7 @@ class Components::PhoneNumberVerificationRequestForm < Components::Base
           )
           if Rails.env.development?
             field.description(class: "text-xs text-center") do
-              "code auto-filled for development"
+              "code auto-filled in development"
             end
           end
           field.error

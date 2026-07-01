@@ -27,4 +27,45 @@
       @apply flex items-end gap-6;
     }
   }
+
+  .post-body {
+    @apply relative;
+
+    [data-slot="expand-content"] {
+      @apply max-h-80 overflow-y-hidden transition-[max-height] duration-200 ease-in;
+    }
+
+    [data-slot="expand-control"] {
+      @apply pointer-events-none absolute right-0 bottom-0 left-0 z-10;
+      @apply flex flex-col items-center;
+
+      > button {
+        @apply pointer-events-auto;
+      }
+    }
+
+    &:not([data-expanded]),
+    &[data-expanded="true"] {
+      [data-slot="expand-control"] {
+        @apply pointer-events-none opacity-0;
+      }
+    }
+
+    &[data-expanded="false"] {
+      @apply pb-5;
+
+      &::after {
+        content: "";
+
+        @apply absolute right-0 bottom-5 left-0 h-20;
+        @apply bg-linear-to-t from-card from-10% to-transparent;
+      }
+    }
+
+    &[data-expanded="true"] {
+      [data-slot="expand-content"] {
+        @apply max-h-(--content-height);
+      }
+    }
+  }
 }

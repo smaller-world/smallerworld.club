@@ -71,15 +71,7 @@ class Views::Home::Show < Views::Base
               world.name
             end
           end
-          Components::Button(
-            element: :a,
-            href: url_for([ :new, world, :key_grant ]),
-            variant: :secondary,
-            size: :icon_sm,
-            class: "absolute -top-2.5 -right-2.5",
-          ) do
-            Icon("huge/qr-code")
-          end
+          Components::WorldKeyGrantIconButton(world:)
         end
       end
 

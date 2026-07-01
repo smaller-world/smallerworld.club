@@ -27,7 +27,7 @@ class Views::PostTypes::Edit < Views::Base
             menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
               "delete post type"
             end
-            menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
+            menu.with_content(anchor: :bottom, class: "min-w-none") do |menu_content|
               menu_content.label(class: "pt-1.5 pb-0.5 max-w-52 text-center") do
                 "are you sure? all posts of this type will be deleted."
               end

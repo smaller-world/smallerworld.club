@@ -13,6 +13,7 @@ import CheckboxController from "./checkbox_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
 import ClipboardController from "./clipboard_controller";
+import CollapseController from "./collapse_controller";
 import ComboboxController from "./combobox_controller";
 import ConfettiController from "./confetti_controller";
 import ConnectionController from "./connection_controller";
@@ -24,7 +25,8 @@ import DisabledController from "./disabled_controller";
 import DropdownMenuController from "./dropdown_menu_controller";
 import EmojiInputController from "./emoji_input_controller";
 import EmojiMartController from "./emoji_mart_controller";
-import FlashController from "./flash_controller";
+import FieldErrorController from "./field_error_controller";
+import FlashTextController from "./flash_text_controller";
 import FrameReloadController from "./frame_reload_controller";
 import FrameResetController from "./frame_reset_controller";
 import ImageStackController from "./image_stack_controller";
@@ -88,7 +90,7 @@ application.register(
 );
 application.register("intersection", IntersectionController);
 application.register("click", ClickController);
-application.register("flash", FlashController);
+application.register("flash-text", FlashTextController);
 application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);
 application.register("confetti", ConfettiController);
@@ -96,30 +98,29 @@ application.register("transition-group", TransitionGroupController);
 application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
 application.register("async-item", AsyncItemController);
 application.register("user-focus", UserFocusController);
+application.register("field-error", FieldErrorController);
+application.register("collapse", CollapseController);
 
-// == Inputs
+// == Components
 application.register("clearable-file-input", ClearableFileInputController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
 application.register("emoji-input", EmojiInputController);
 application.register("phone-number-input", PhoneNumberInputController);
 application.register("push-token-input", PushTokenInputController);
 application.register("combobox", ComboboxController);
-application.register("radio", RadioController);
-application.register("checkbox", CheckboxController);
 application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
 application.register("uppy-dnd", UppyDndController);
 application.register("uppy-group", UppyGroupController);
 application.register("select", SelectController);
-
-// == Components
+application.register("radio", RadioController);
+application.register("checkbox", CheckboxController);
 application.register("dropdown-menu", DropdownMenuController);
 application.register("dialog", DialogController);
 application.register("emoji-mart", EmojiMartController);
 application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
-
 application.register("post-draft", PostDraftController);
 application.register("platform-dropdown", PlatformDropdownController);
 application.register("create-world-button", CreateWorldButtonController);

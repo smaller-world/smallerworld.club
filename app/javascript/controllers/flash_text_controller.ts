@@ -3,22 +3,22 @@ import invariant from "tiny-invariant";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class FlashController extends Controller<HTMLElement> {
+export default class FlashTextController extends Controller<HTMLElement> {
   // == Targets ==
 
-  static targets = ["textContainer"];
-  declare readonly textContainerTarget: HTMLElement;
-  declare readonly hasTextContainerTarget: boolean;
+  static targets = ["container"];
+  declare readonly containerTarget: HTMLElement;
+  declare readonly hasContainerTarget: boolean;
 
   // == Values ==
   static values = {
-    text: String,
+    content: String,
     duration: {
       type: Number,
       default: 2000,
     },
   };
-  declare readonly textValue: string;
+  declare readonly contentValue: string;
   declare readonly durationValue: number;
 
   originalText?: string | null;
@@ -28,7 +28,7 @@ export default class FlashController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
-    invariant(this.textValue, "Missing textValue");
+    invariant(this.contentValue, "Missing contentValue");
     addCleanupAction(this, "restore");
   }
 
@@ -44,7 +44,7 @@ export default class FlashController extends Controller<HTMLElement> {
       return;
     }
     this.originalText = this.#textContainer.textContent;
-    this.#textContainer.textContent = this.textValue;
+    this.#textContainer.textContent = this.contentValue;
     this.timeout = setTimeout(() => {
       this.restore();
     }, this.durationValue);
@@ -64,8 +64,6 @@ export default class FlashController extends Controller<HTMLElement> {
   // == Helpers ==
 
   get #textContainer(): HTMLElement {
-    return this.hasTextContainerTarget
-      ? this.textContainerTarget
-      : this.element;
+    return this.hasContainerTarget ? this.containerTarget : this.element;
   }
 }
