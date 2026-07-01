@@ -20,10 +20,14 @@ class Views::Worlds::Edit < Views::Base
           button_back_to("world", @world, variant: :secondary)
         end
 
-        div(class: "flex flex-col gap-1") do
+        div(class: "flex flex-col gap-0.5") do
           Components::WorldForm(world: @world)
           Components::DropdownMenu() do |menu|
-            menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
+            menu.with_trigger_button(
+              variant: :link,
+              size: :sm,
+              class: "text-muted-foreground",
+            ) do
               "delete world"
             end
             menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|

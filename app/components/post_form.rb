@@ -8,13 +8,13 @@ class Components::PostForm < Components::Base
   def initialize(post:, **attributes)
     super(**attributes)
     @post = post
+    @world = T.let(@post.world!, World)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    world = @post.world!
     form_with(model:, **mix(
       {
         class: "flex flex-col gap-6",
@@ -27,7 +27,7 @@ class Components::PostForm < Components::Base
             "turbo:submit-end->haptic-bridge#vibrate",
             "turbo:submit-end->post-draft#clear",
           ],
-          post_draft_world_id_value: world.id,
+          post_draft_world_id_value: @world.id,
         },
       },
       @attributes,
@@ -195,8 +195,7 @@ class Components::PostForm < Components::Base
   sig { returns(Object) }
   def model
     if @post.new_record?
-      world = @post.world!
-      [ world, @post ]
+      [ @world, @post ]
     else
       @post
     end

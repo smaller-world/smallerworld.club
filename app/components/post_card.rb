@@ -28,6 +28,7 @@ class Components::PostCard < Components::Base
     @async_reactions = async_reactions
     @show_notification_prompt = show_notification_prompt
     @frame_options = frame
+    @post_type = T.let(@post.type!, PostType)
   end
 
   # == Component ==
@@ -48,7 +49,6 @@ class Components::PostCard < Components::Base
           card.description do
             div(class: "flex-1 flex items-center gap-2") do
               Components::Badge(variant: :secondary) do |badge|
-                post_type = @post.type!
                 if (emoji = @post.emoji)
                   div(
                     class: "font-emoji text-md mr-0.5 align-baseline leading-none",
@@ -56,10 +56,10 @@ class Components::PostCard < Components::Base
                   ) do
                     emoji
                   end
-                elsif (icon = post_type.icon)
+                elsif (icon = @post_type.icon)
                   badge.inline_start_icon(icon)
                 end
-                span(class: "font-normal") { post_type.label }
+                span(class: "font-normal") { @post_type.label }
               end
 
               local_time(@post.created_at, class: "lowercase text-xs block")
@@ -118,7 +118,11 @@ class Components::PostCard < Components::Base
             notification_prompt_button
           end
 
-          Components::PostReactions(post: @post, async: @async_reactions)
+          if @async_reactions
+            Components::AsyncPostReactions(post: @post)
+          else
+            Components::PostReactions(post: @post)
+          end
         end
       end
 

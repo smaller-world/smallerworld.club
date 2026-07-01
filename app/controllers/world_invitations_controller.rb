@@ -34,6 +34,17 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
+  # GET /invitations/:id/edit
+  def edit
+    respond_to do |format|
+      format.html do
+        invitation = find_invitation
+        authorize!(invitation)
+        render Views::WorldInvitations::Edit.new(invitation:)
+      end
+    end
+  end
+
   # POST /world/:world_id/invitations
   def create
     respond_to do |format|
@@ -47,10 +58,28 @@ class WorldInvitationsController < ApplicationController
         if invitation.save
           refresh_or_redirect_to([ world, :keys ], status: :see_other)
         else
-          redirect_to(
-            [ world, :keys ],
-            alert: "failed to send invitation",
-            status: :see_other,
+          render(
+            Views::WorldInvitations::New.new(invitation:),
+            status: :unprocessable_content,
+          )
+        end
+      end
+    end
+  end
+
+  # PUT/PATCH /world/:world_id/invitations
+  def update
+    respond_to do |format|
+      format.html do
+        invitation = find_invitation
+        authorize!(invitation)
+        invitation_params = params.expect(world_invitation: [ granted_post_type_ids: [] ])
+        if invitation.update(**invitation_params)
+          refresh_or_redirect_to([ invitation.world, :keys ], status: :see_other)
+        else
+          render(
+            Views::WorldInvitations::Edit.new(invitation:),
+            status: :unprocessable_content,
           )
         end
       end

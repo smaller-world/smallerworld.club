@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Views::WorldInvitations::New < Views::Base
+class Views::WorldInvitations::Edit < Views::Base
   # == Initialization ==
 
   sig { params(invitation: WorldInvitation).void }
@@ -9,16 +9,13 @@ class Views::WorldInvitations::New < Views::Base
     super()
     @invitation = invitation
     @world = T.let(invitation.world!, World)
-    @recipient = T.let(invitation.recipient!, User)
   end
 
   # == View ==
 
   sig { override.void }
   def view_template
-    Components::AppLayout(
-      page_title: "invite #{@recipient.name} to your world",
-    ) do |layout|
+    Components::AppLayout(page_title: "edit invitation") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
           button_back_to("your friends", [ @world, :keys ], variant: :secondary)

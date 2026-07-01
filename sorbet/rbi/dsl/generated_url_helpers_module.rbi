@@ -37,6 +37,9 @@ module GeneratedUrlHelpersModule
   def edit_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_world_invitation_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_key_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -92,6 +92,19 @@ module Components
   end
   def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
 
+  # workspace://app/components/async_post_reactions.rb:4
+  sig do
+    params(
+      post: ::Post,
+      new_reaction: ::Reaction,
+      existing_reactions_form: T::Hash[::Symbol, T.untyped],
+      new_reaction_form: T::Hash[::Symbol, T.untyped],
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
+    ).void
+  end
+  def AsyncPostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+
   # workspace://app/components/async_world_post_item.rb:4
   sig do
     params(
@@ -522,14 +535,13 @@ module Components
     params(
       post: ::Post,
       new_reaction: ::Reaction,
-      async: T::Boolean,
       existing_reactions_form: T::Hash[::Symbol, T.untyped],
       new_reaction_form: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostReactions).void),
     ).void
   end
-  def PostReactions(post:, new_reaction: T.unsafe(nil), async: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+  def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/post_type_form.rb:4
   sig do
@@ -852,6 +864,19 @@ module Components
       ).void
     end
     def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+
+    # workspace://app/components/async_post_reactions.rb:4
+    sig do
+      params(
+        post: ::Post,
+        new_reaction: ::Reaction,
+        existing_reactions_form: T::Hash[::Symbol, T.untyped],
+        new_reaction_form: T::Hash[::Symbol, T.untyped],
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
+      ).void
+    end
+    def AsyncPostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/async_world_post_item.rb:4
     sig do
@@ -1288,14 +1313,13 @@ module Components
       params(
         post: ::Post,
         new_reaction: ::Reaction,
-        async: T::Boolean,
         existing_reactions_form: T::Hash[::Symbol, T.untyped],
         new_reaction_form: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostReactions).void),
       ).void
     end
-    def PostReactions(post:, new_reaction: T.unsafe(nil), async: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+    def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/post_type_form.rb:4
     sig do

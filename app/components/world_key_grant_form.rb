@@ -30,13 +30,21 @@ class Components::WorldKeyGrantForm < Components::Base
       },
       @attributes,
     )) do |form|
+      div(class: "relative self-center") do
+        image_tag(
+          @world.page_icon_variant,
+          class: "world-icon opacity-50",
+          data: { world_icon_size: "sm" },
+        )
+        div(class: "absolute inset-0 flex items-center justify-center") do
+          Icon("huge/key-01", class: "size-8 text-white")
+        end
+      end
+
       post_types = @world.post_types
       Components::FieldSet(class: "gap-0") do |field_set|
-        field_set.legend(class: "flex flex-col items-center gap-1 text-center") do
-          Icon("huge/key-01", class: "size-7")
-          span do
-            "this key shares access to:"
-          end
+        field_set.legend(class: "text-center") do
+          "this key shares access to:"
         end
         checkbox_group_for(
           form,

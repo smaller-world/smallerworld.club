@@ -8,6 +8,7 @@ class Views::PostTypes::New < Views::Base
   def initialize(post_type:)
     super()
     @post_type = post_type
+    @world = T.let(@post_type.world!, World)
   end
 
   # == View ==
@@ -17,8 +18,7 @@ class Views::PostTypes::New < Views::Base
     Components::AppLayout(page_title: "new post type") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          world = @post_type.world!
-          button_back_to(world.name, world, variant: :secondary)
+          button_back_to(@world.name, @world, variant: :secondary)
         end
 
         Components::PostTypeForm(post_type: @post_type)

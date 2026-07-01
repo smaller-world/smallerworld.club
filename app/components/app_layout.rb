@@ -90,7 +90,7 @@ class Components::AppLayout < Components::Base
         link(rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true)
         link(
           rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Manrope:wght@200..800&family=Single+Day&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..600;1,400..700&family=Manrope:wght@400..700&family=Single+Day&display=swap",
         )
 
         # == Assets

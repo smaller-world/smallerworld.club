@@ -8,6 +8,7 @@ class Views::PostTypes::Edit < Views::Base
   def initialize(post_type:)
     super()
     @post_type = post_type
+    @world = T.let(@post_type.world!, World)
   end
 
   # == View ==
@@ -17,16 +18,19 @@ class Views::PostTypes::Edit < Views::Base
     Components::AppLayout(page_title: "edit post type") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          world = @post_type.world!
-          button_back_to(world.name, world, variant: :secondary)
+          button_back_to(@world.name, @world, variant: :secondary)
         end
 
-        div(class: "flex flex-col gap-1") do
+        div(class: "flex flex-col gap-0.5") do
           Components::PostTypeForm(post_type: @post_type)
           Components::DropdownMenu(
             class: class_names("hidden" => @post_type.default?),
           ) do |menu|
-            menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
+            menu.with_trigger_button(
+              variant: :link,
+              size: :sm,
+              class: "text-muted-foreground",
+            ) do
               "delete post type"
             end
             menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|

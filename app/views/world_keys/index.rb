@@ -11,6 +11,21 @@ class Views::WorldKeys::Index < Views::Base
     super()
     @current_user = current_user
     @world = world
+    @world_keys = T.let(
+      @world.keys.includes(:recipient, :granted_post_types),
+      WorldKey::PrivateAssociationRelation,
+    )
+    @invitable_users = T.let(
+      @current_user.accessible_world_owners_without_key_for(@world),
+      User::PrivateAssociationRelation,
+    )
+    @pending_invitations_by_recipient_id = T.let(
+      @world.invitations.pending_acceptance.where(recipient: @invitable_users)
+        .index_by do |invitation|
+          T.must(invitation.recipient_id)
+        end,
+      T::Hash[String, WorldInvitation],
+    )
   end
 
   # == View ==
@@ -23,15 +38,13 @@ class Views::WorldKeys::Index < Views::Base
           button_back_to(@world.name, @world, variant: :secondary)
         end
 
-        if (users = @current_user
-            .accessible_world_owners_without_key_for(@world)
-            .presence)
-          invitations_items_for(users)
+        if @invitable_users.any?
+          invitations_item
         end
 
         div(class: "flex flex-col gap-4 has-[[role=list]:empty]:hidden") do
           Components::ItemGroup(class: "gap-2") do
-            @world.keys.each do |world_key|
+            @world_keys.each do |world_key|
               world_key_item(world_key)
             end
           end
@@ -49,10 +62,12 @@ class Views::WorldKeys::Index < Views::Base
         Components::Empty(
           class: "hidden [:has([role=list]:empty)_+_&]:revert-display-layer",
         ) do |empty|
-          empty.header do
-            span(class: "font-emoji text-xl leading-none") { "😪" }
-            empty.title do
-              "nobody has access to your world!"
+          empty.header(class: "gap-0") do
+            empty.media do
+              span(class: "font-emoji text-xl leading-none") { "😪" }
+            end
+            empty.title(class: "flex flex-col gap-2") do
+              span { "nobody has access to your world!" }
             end
             empty.description do
               "you haven't shared any world keys with anyone yet"
@@ -86,7 +101,9 @@ class Views::WorldKeys::Index < Views::Base
         item.title do
           recipient.name
         end
-        item.description(class: "flex-1 flex items-center justify-end gap-0.5 flex-wrap") do
+        item.description(
+          class: "flex-1 flex items-center justify-end gap-0.5 flex-wrap",
+        ) do
           world_key.granted_post_types.each do |post_type|
             Components::Badge(
               variant: :ghost,
@@ -113,9 +130,8 @@ class Views::WorldKeys::Index < Views::Base
     end
   end
 
-  sig { params(users: User::PrivateAssociationRelation).void }
-  def invitations_items_for(users)
-    invitations_by_recipient_id = pending_invitations_by_recipient_id_for(users)
+  sig { void }
+  def invitations_item
     Components::Item(variant: :muted, class: "gap-2") do |item|
       item.content do
         item.title do
@@ -123,18 +139,26 @@ class Views::WorldKeys::Index < Views::Base
         end
       end
       item.footer(class: "justify-start gap-1.5") do
-        users.find_each do |user|
-          if (invitation = invitations_by_recipient_id[user.id])
+        @invitable_users.partition { |user| pending_invitation_for(user).nil? }
+          .flatten.each do |user|
+          if (invitation = pending_invitation_for(user))
             Components::DropdownMenu() do |menu|
-              menu.with_trigger_button(variant: :outline, anchor: :bottom) do |button|
+              menu.with_trigger_button(
+                variant: :ghost,
+                anchor: :bottom,
+                class: "font-normal",
+              ) do |button|
                 button.inline_start_icon("huge/tick-01")
                 span { user.name }
               end
-              menu.with_content(class: "min-w-auto") do |content|
-                content.label(class: "pt-1.5 pb-0.5 text-center") { "invitation sent!" }
+              menu.with_content do |menu_content|
+                menu_content.link_item_to([ :edit, invitation ]) do
+                  Icon("huge/pencil-edit-01")
+                  span { "edit invitation" }
+                end
                 form_with(model: invitation, method: :delete) do
-                  content.button_item(type: :submit, variant: :destructive) do
-                    Icon("huge/mail-block-01")
+                  menu_content.button_item(type: :submit, variant: :destructive) do
+                    Icon("huge/delete-01")
                     span { "cancel invitation" }
                   end
                 end
@@ -145,6 +169,7 @@ class Views::WorldKeys::Index < Views::Base
               user.name,
               [ :new, @world, :invitation, recipient_id: user.id ],
               variant: :outline,
+              class: "font-normal",
             )
           end
         end
@@ -152,13 +177,8 @@ class Views::WorldKeys::Index < Views::Base
     end
   end
 
-  sig do
-    params(users: User::PrivateAssociationRelation)
-      .returns(T::Hash[String, WorldInvitation])
-  end
-  def pending_invitations_by_recipient_id_for(users)
-    @world.invitations.pending_acceptance.where(recipient: users).index_by do |invitation|
-      T.must(invitation.recipient_id)
-    end
+  sig { params(user: User).returns(T.nilable(WorldInvitation)) }
+  def pending_invitation_for(user)
+    @pending_invitations_by_recipient_id[user.id]
   end
 end

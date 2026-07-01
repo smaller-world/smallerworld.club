@@ -13,14 +13,14 @@ class Components::WorldInvitationForm < Components::Base
   def initialize(invitation:, **attributes)
     super(**attributes)
     @invitation = invitation
+    @world = T.let(@invitation.world!, World)
+    @recipient = T.let(@invitation.recipient!, User)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    recipient = @invitation.recipient!
-
     form_with(model: @invitation, **normalize_mix(
       {
         class: "flex flex-col gap-6",
@@ -30,11 +30,24 @@ class Components::WorldInvitationForm < Components::Base
       },
       @attributes,
     )) do |form|
-      form.hidden_field(:recipient_id)
+      if @invitation.new_record?
+        form.hidden_field(:recipient_id)
+      end
+
+      div(class: "relative self-center") do
+        image_tag(
+          @world.page_icon_variant,
+          class: "world-icon opacity-50",
+          data: { world_icon_size: "sm" },
+        )
+        div(class: "absolute inset-0 flex items-center justify-center") do
+          Icon("huge/key-01", class: "size-8 text-white")
+        end
+      end
 
       Components::FieldSet(class: "gap-0") do |field_set|
         field_set.legend(class: "text-center") do
-          "invite #{recipient.name} to see:"
+          "invite #{@recipient.name} to see:"
         end
         checkbox_group_for(
           form,
@@ -47,9 +60,15 @@ class Components::WorldInvitationForm < Components::Base
         end
       end
 
-      submit_button_for(form, size: :lg, class: "self-center") do |button|
-        button.inline_start_icon("huge/mail-send-01")
-        span { "send invite" }
+      submit_button_for(form, size: :lg) do |button|
+        if @invitation.new_record?
+          button.inline_start_icon("huge/mail-send-01")
+          span { "send invite" }
+        else
+          button.inline_start_icon("huge/floppy-disk")
+          span { "save changes" }
+
+        end
       end
     end
   end
@@ -77,11 +96,6 @@ class Components::WorldInvitationForm < Components::Base
           post_type.id,
           multiple: true,
           class: "rounded-full",
-          input: {
-            data: {
-              action: "change->submit#request",
-            },
-          },
         )
       end
     end

@@ -8,6 +8,19 @@ class Views::Home::Show < Views::Base
   def initialize(current_user:)
     super()
     @current_user = current_user
+    @owned_worlds = T.let(
+      @current_user.owned_worlds.chronological.with_attached_icon,
+      World::PrivateAssociationRelation,
+    )
+    @accessible_worlds = T.let(
+      @current_user.accessible_worlds.with_attached_icon,
+      World::PrivateAssociationRelation,
+    )
+    @pending_world_invitations = T.let(
+      @current_user.world_invitations.pending_acceptance
+        .joins(world: [ icon_attachment: :blob ]),
+      WorldInvitation::PrivateRelation,
+    )
   end
 
   # == View ==
@@ -41,8 +54,8 @@ class Views::Home::Show < Views::Base
         end
 
         div(class: "flex-1 flex flex-col gap-8 justify-center") do
-          your_worlds
-          other_worlds
+          owned_worlds
+          accessible_worlds
         end
 
         if show_alert
@@ -57,14 +70,9 @@ class Views::Home::Show < Views::Base
   # == Helpers ==
 
   sig { void }
-  def your_worlds
-    worlds = @current_user.owned_worlds.chronological.with_attached_icon
-    turbo_frame_tag(
-      :your_worlds,
-      target: "_top",
-      class: "flex gap-6 flex-wrap justify-center",
-    ) do
-      worlds.each do |world|
+  def owned_worlds
+    div(class: "flex gap-6 flex-wrap justify-center") do
+      @owned_worlds.each do |world|
         div(class: "relative") do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
@@ -76,7 +84,7 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      if @current_user.owned_worlds.empty?
+      if @owned_worlds.empty?
         link_to(new_world_path, class: "world-icon-container hover:underline") do
           Components::Button(
             element: :div,
@@ -94,14 +102,9 @@ class Views::Home::Show < Views::Base
   end
 
   sig { void }
-  def other_worlds
-    worlds = @current_user.accessible_worlds.with_attached_icon
-    turbo_frame_tag(
-      :other_worlds,
-      class: "flex gap-4 flex-wrap justify-center",
-      target: "_top",
-    ) do
-      worlds.each do |world|
+  def accessible_worlds
+    div(class: "flex gap-4 flex-wrap justify-center") do
+      @accessible_worlds.each do |world|
         link_to(world, class: "world-icon-container hover:underline") do
           div(class: "relative") do
             image_tag(
@@ -116,9 +119,7 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      @current_user.world_invitations.pending_acceptance
-        .joins(world: [ icon_attachment: :blob ])
-        .find_each do |invitation|
+      @pending_world_invitations.find_each do |invitation|
         world = invitation.world!
         link_to(invitation, class: "world-icon-container hover:underline") do
           div(class: "relative") do

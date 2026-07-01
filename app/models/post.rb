@@ -80,7 +80,6 @@ class Post < ApplicationRecord
 
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
-  scope :with_type, -> { includes(:type) }
 
   sig { returns(PostType) }
   def type!
@@ -161,6 +160,9 @@ class Post < ApplicationRecord
       .where(granted.arel.exists)
     where(type: owned).or(where(type: received))
   }
+
+  # scope :with_type, -> { includes(:type) }
+  # scope :with_world_owner, -> { includes(:world_owner) }
   scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
 
   # == Notifications ==

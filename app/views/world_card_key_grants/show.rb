@@ -6,9 +6,9 @@ class Views::WorldCardKeyGrants::Show < Views::Base
 
   sig { params(card: WorldCard).void }
   def initialize(card:)
+    super()
     @card = card
     @world = T.let(card.world!, World)
-    super()
   end
 
   # == View ==

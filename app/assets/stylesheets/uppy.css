@@ -89,6 +89,10 @@
   }
 
   .uppy-dnd-cropper {
+    .uppy-ImageCropper .cropper-modal {
+      @apply bg-popover;
+    }
+
     .uppy-ImageCropper-controls {
       @apply p-0;
     }

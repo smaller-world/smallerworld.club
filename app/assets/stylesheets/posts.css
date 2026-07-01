@@ -68,4 +68,8 @@
       }
     }
   }
+
+  .post-reactions {
+    @apply flex flex-1 flex-wrap justify-end gap-1;
+  }
 }

@@ -37,6 +37,9 @@ module GeneratedPathHelpersModule
   def edit_post_type_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_world_invitation_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

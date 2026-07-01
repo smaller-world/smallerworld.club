@@ -29,6 +29,7 @@ class Views::Worlds::Show < Views::Base
     @celebrate = celebrate
     @post_type = post_type
     @created_post_id = created_post_id
+    @owner = T.let(@world.owner!, User)
   end
 
   # == View ==
@@ -64,7 +65,7 @@ class Views::Worlds::Show < Views::Base
         end
 
         if allowed_to?(:manage?, @world)
-          if @world.owner!.has_v1_account?
+          if @owner.has_v1_account?
             turbo_frame_tag(
               :v1_posts_import,
               src: [ @world, :v1_posts_import ],

@@ -8,6 +8,8 @@ class Views::WorldKeys::Edit < Views::Base
   def initialize(world_key:)
     super()
     @world_key = world_key
+    @world = T.let(@world_key.world!, World)
+    @recipient = T.let(@world_key.recipient!, User)
   end
 
   # == View ==
@@ -15,18 +17,21 @@ class Views::WorldKeys::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(
-      page_title: "edit #{world_key_recipient.name}'s key",
+      page_title: "edit #{@recipient.name}'s key",
     ) do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          world = @world_key.world!
-          button_back_to("your friends", [ world, :keys ], variant: :secondary)
+          button_back_to("your friends", [ @world, :keys ], variant: :secondary)
         end
 
-        div(class: "flex flex-col gap-1") do
+        div(class: "flex flex-col gap-0.5") do
           Components::WorldKeyForm(world_key: @world_key)
           Components::DropdownMenu() do |menu|
-            menu.with_trigger_button(variant: :link, class: "text-muted-foreground") do
+            menu.with_trigger_button(
+              variant: :link,
+              size: :sm,
+              class: "text-muted-foreground",
+            ) do
               "destroy key"
             end
             menu.with_content(anchor: :bottom, class: "min-w-auto") do |menu_content|
@@ -44,14 +49,5 @@ class Views::WorldKeys::Edit < Views::Base
         end
       end
     end
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(User) }
-  def world_key_recipient
-    @world_key.recipient!
   end
 end

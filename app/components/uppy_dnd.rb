@@ -140,7 +140,7 @@ class Components::UppyDnd < Components::Input
                 uppy_dnd_target: "imageEditor",
               },
             )
-            div(class: "border-t-border flex justify-center gap-2 p-4") do
+            dialog_content.footer(class: "flex-row justify-center") do
               dialog_content.close_button(
                 variant: :default,
                 size: :sm,

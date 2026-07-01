@@ -8,6 +8,7 @@ class Components::PostTypeForm < Components::Base
   def initialize(post_type:, **attributes)
     super(**attributes)
     @post_type = post_type
+    @world = T.let(@post_type.world!, World)
   end
 
   # == Component ==
@@ -109,8 +110,7 @@ class Components::PostTypeForm < Components::Base
   sig { returns(Object) }
   def model
     if @post_type.new_record?
-      world = @post_type.world!
-      [ world, @post_type ]
+      [ @world, @post_type ]
     else
       @post_type
     end

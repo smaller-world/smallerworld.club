@@ -76,7 +76,7 @@ Rails.application.routes.draw do
     only: [ :show, :create ]
 
   # == World Invitations
-  resources :world_invitations, only: [ :show, :destroy ]
+  resources :world_invitations, only: [ :show, :edit, :update, :destroy ]
 
   # == World Keys
   resources :world_keys, only: [ :edit, :update, :destroy ] do

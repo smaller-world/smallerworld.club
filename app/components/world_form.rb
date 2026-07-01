@@ -8,6 +8,7 @@ class Components::WorldForm < Components::Base
   def initialize(world:, **attributes)
     super(**attributes)
     @world = world
+    @world_owner = T.let(@world.owner!, User)
   end
 
   # == Component ==
@@ -28,7 +29,7 @@ class Components::WorldForm < Components::Base
         f.label { "name" }
         f.text_input(
           required: true,
-          placeholder: @world.owner!.default_world_name,
+          placeholder: @world_owner.default_world_name,
           maxlength: World::NAME_MAX_LENGTH,
           data: {
             create_world_button_target: "nameInput",

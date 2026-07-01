@@ -8,6 +8,8 @@ class Components::WorldKeyForm < Components::Base
   def initialize(world_key:, **attributes)
     super(**attributes)
     @world_key = world_key
+    @world = T.let(@world_key.world!, World)
+    @recipient = T.let(@world_key.recipient!, User)
   end
 
   # == Component ==
@@ -24,10 +26,34 @@ class Components::WorldKeyForm < Components::Base
       },
       @attributes,
     )) do |form|
+      Components::Item(
+        variant: :muted,
+        size: :xs,
+        class: "self-center w-auto gap-3 pr-3.5",
+      ) do |item|
+        item.media do
+          div(class: "relative") do
+            image_tag(
+              @world.page_icon_variant,
+              class: "world-icon opacity-50",
+              data: { world_icon_size: "xs" },
+            )
+            div(class: "absolute inset-0 flex items-center justify-center") do
+              Icon("huge/key-01", class: "size-6 text-white")
+            end
+          end
+        end
+        item.content do
+          item.title do
+            "#{@recipient.name}'s key"
+          end
+        end
+      end
+
       Components::FieldSet(class: "gap-0") do |field_set|
         form.hidden_field(:granted_post_type_ids, value: nil, multiple: true)
         field_set.legend(class: "text-center") do
-          "which post types can #{world_key_recipient.name} see?"
+          "which post types can #{@recipient.name} see?"
         end
         checkbox_group_for(
           form,
@@ -40,11 +66,9 @@ class Components::WorldKeyForm < Components::Base
         end
       end
 
-      div(class: "flex flex-col gap-1 items-center") do
-        submit_button_for(form) do |button|
-          button.inline_start_icon("huge/floppy-disk")
-          span { "save changes" }
-        end
+      submit_button_for(form) do |button|
+        button.inline_start_icon("huge/floppy-disk")
+        span { "save changes" }
       end
     end
   end
@@ -52,11 +76,6 @@ class Components::WorldKeyForm < Components::Base
   private
 
   # == Helpers ==
-
-  sig { returns(User) }
-  def world_key_recipient
-    @world_key.recipient!
-  end
 
   sig { params(post_type: PostType, checkbox_group: Components::CheckboxGroup).void }
   def granted_post_type_choice_card_for(post_type, checkbox_group:)
