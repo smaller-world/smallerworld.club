@@ -31,7 +31,7 @@ class Components::ImageStack < Components::Base
       :div,
       class: "image-stack",
       data: {
-        controller: "image-stack",
+        controller: "image-stack lightbox",
         image_stack_max_height_value: @max_height,
         image_stack_flip_boundary_value: @flip_boundary,
       },
@@ -49,11 +49,13 @@ class Components::ImageStack < Components::Base
             "touch-none" => @images.size > 1,
           ),
           data: {
+            # lightbox_src: rails_representation_path(blob),
             image_stack_target: "image",
+            lightbox_target: "image",
             action: token_list(
               "load->image-stack#relayout:once",
+              "image-stack:click->lightbox#open",
               "pointerdown->image-stack#startDrag:prevent",
-              "pointermove->image-stack#moveDrag",
               "pointerup->image-stack#endDrag",
               "pointercancel->image-stack#endDrag",
             ),

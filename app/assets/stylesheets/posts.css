@@ -44,14 +44,14 @@
       }
     }
 
-    &:not([data-expanded]),
-    &[data-expanded="true"] {
+    &:not([data-collapsed]),
+    &[data-collapsed="false"] {
       [data-slot="expand-control"] {
         @apply pointer-events-none opacity-0;
       }
     }
 
-    &[data-expanded="false"] {
+    &[data-collapsed="true"] {
       @apply pb-5;
 
       &::after {
@@ -62,7 +62,7 @@
       }
     }
 
-    &[data-expanded="true"] {
+    &[data-collapsed="false"] {
       [data-slot="expand-content"] {
         @apply max-h-(--content-height);
       }

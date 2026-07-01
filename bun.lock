@@ -21,6 +21,7 @@
         "array-to-sentence": "^2.0.0",
         "el-transition": "^0.0.7",
         "emoji-mart": "^5.6.0",
+        "fslightbox": "^3.7.5",
         "inflection": "^3.0.2",
         "input-otp": "^1.4.2",
         "intl-tel-input": "^29.1.0",
@@ -757,6 +758,8 @@
     "fs-extra": ["fs-extra@11.3.4", "", { "dependencies": { "graceful-fs": "^4.2.0", "jsonfile": "^6.0.1", "universalify": "^2.0.0" } }, "sha512-CTXd6rk/M3/ULNQj8FBqBWHYBVYybQ3VPBw0xGKFe3tuH7ytT6ACnvzpIQ3UZtB8yvUKC2cXn1a+x+5EVQLovA=="],
 
     "fsevents": ["fsevents@2.3.2", "", { "os": "darwin" }, "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="],
+
+    "fslightbox": ["fslightbox@3.7.5", "", {}, "sha512-swEUrwMOyiBhdkPf3GXj4nxARX5d8/9yfVCdxgPLl9+ZMiacUTub9O2wxLI0Y2G2jI85Qxfqpv2I24vlbx0zfg=="],
 
     "function-bind": ["function-bind@1.1.2", "", {}, "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="],
 

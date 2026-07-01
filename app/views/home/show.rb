@@ -58,12 +58,13 @@ class Views::Home::Show < Views::Base
 
   sig { void }
   def your_worlds
+    worlds = @current_user.owned_worlds.chronological.with_attached_icon
     turbo_frame_tag(
       :your_worlds,
       target: "_top",
       class: "flex gap-6 flex-wrap justify-center",
     ) do
-      @current_user.owned_worlds.chronological.each do |world|
+      worlds.each do |world|
         div(class: "relative") do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
@@ -94,12 +95,13 @@ class Views::Home::Show < Views::Base
 
   sig { void }
   def other_worlds
+    worlds = @current_user.accessible_worlds.with_attached_icon
     turbo_frame_tag(
       :other_worlds,
       class: "flex gap-4 flex-wrap justify-center",
       target: "_top",
     ) do
-      @current_user.accessible_worlds.with_attached_icon.each do |world|
+      worlds.each do |world|
         link_to(world, class: "world-icon-container hover:underline") do
           div(class: "relative") do
             image_tag(

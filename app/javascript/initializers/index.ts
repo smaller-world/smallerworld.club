@@ -6,3 +6,4 @@ import "./active_storage";
 import "./lexxy";
 import "./sentry";
 import "./emoji_mart";
+import "./fslightbox";

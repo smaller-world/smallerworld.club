@@ -80,6 +80,7 @@ class Post < ApplicationRecord
 
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
+  scope :with_type, -> { includes(:type) }
 
   sig { returns(PostType) }
   def type!

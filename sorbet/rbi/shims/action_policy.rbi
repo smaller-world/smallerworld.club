@@ -4,6 +4,15 @@ class ActionController::Base
   include ActionPolicy::Controller
 end
 
+module ActionPolicy::Controller
+  sig do
+    type_parameters(:U)
+      .params(target: T.type_parameter(:U), options: T.untyped)
+      .returns(T.type_parameter(:U))
+  end
+  def authorized_scope(target, **options); end
+end
+
 module ActionPolicy::Policy::Reasons
   sig { params(reason: T.untyped).returns(T.noreturn) }
   def deny!(reason = T.unsafe(nil)); end

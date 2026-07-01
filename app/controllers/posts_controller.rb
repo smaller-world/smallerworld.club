@@ -23,6 +23,7 @@ class PostsController < ApplicationController
       end
       authorized_scope(scope)
         .reverse_chronological
+        .with_type
         .with_rich_text_body_and_embeds
         .with_attached_images
     end

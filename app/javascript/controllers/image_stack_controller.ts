@@ -44,9 +44,11 @@ export default class ImageStackController extends Controller<HTMLElement> {
 
   static values = {
     flipBoundary: { type: Number, default: 100 },
+    clickBoundary: { type: Number, default: 2 },
     maxHeight: { type: Number, default: 360 },
   };
   declare readonly flipBoundaryValue: number;
+  declare readonly clickBoundaryValue: number;
   declare readonly maxHeightValue: number;
 
   // == State ==
@@ -130,29 +132,35 @@ export default class ImageStackController extends Controller<HTMLElement> {
       dy: 0,
       pointerId: event.pointerId,
     };
-  }
-
-  moveDrag(event: PointerEvent): void {
-    const drag = this.#drag;
-    if (event.pointerId !== drag?.pointerId) {
-      return;
-    }
-    drag.dx = event.clientX - drag.startX;
-    drag.dy = event.clientY - drag.startY;
-    this.#scheduleDragRender();
+    currentTarget.addEventListener("pointermove", this.#moveDrag);
   }
 
   endDrag(event: PointerEvent): void {
+    const { currentTarget } = event;
+    if (!(currentTarget instanceof HTMLImageElement)) {
+      return;
+    }
     const drag = this.#drag;
     if (event.pointerId !== drag?.pointerId) {
       return;
     }
+    currentTarget.removeEventListener("pointermove", this.#moveDrag);
     this.#stopDrag(drag);
-    const boundary = this.flipBoundaryValue;
-    if (Math.abs(drag.dx) > boundary || Math.abs(drag.dy) > boundary) {
+    currentTarget.removeEventListener("pointermove", this.#moveDrag);
+    const { flipBoundaryValue, clickBoundaryValue } = this;
+    if (
+      Math.abs(drag.dx) > flipBoundaryValue ||
+      Math.abs(drag.dy) > flipBoundaryValue
+    ) {
       this.#currentIndex = (this.#currentIndex + 1) % this.imageTargets.length;
       this.#restack({ animated: true });
     } else {
+      if (
+        Math.abs(drag.dx) <= clickBoundaryValue &&
+        Math.abs(drag.dy) <= clickBoundaryValue
+      ) {
+        this.dispatch("click", { target: currentTarget });
+      }
       const transform = this.#transformFor(this.imageTargets.indexOf(drag.img));
       this.#animate(
         drag.img,
@@ -173,6 +181,16 @@ export default class ImageStackController extends Controller<HTMLElement> {
   }
 
   // == Helpers ==
+
+  #moveDrag = (event: PointerEvent): void => {
+    const drag = this.#drag;
+    if (event.pointerId !== drag?.pointerId) {
+      return;
+    }
+    drag.dx = event.clientX - drag.startX;
+    drag.dy = event.clientY - drag.startY;
+    this.#scheduleDragRender();
+  };
 
   #naturalDimensions(img: HTMLImageElement): ImageDimensions {
     const w = img.naturalWidth || Number(img.getAttribute("width")) || 0;
