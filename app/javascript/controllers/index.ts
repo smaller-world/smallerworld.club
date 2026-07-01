@@ -43,6 +43,7 @@ import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
 import MessagingPlatformDropdownController from "./platform_dropdown_controller";
 import PostDraftController from "./post_draft_controller";
+import PostDraftInfoController from "./post_draft_info_controller";
 import PostTimestampController from "./post_timestamp_controller";
 import PushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
@@ -118,6 +119,7 @@ application.register(
   CreateWorldButtonLabelController,
 );
 application.register("post-draft", PostDraftController);
+application.register("post-draft-info", PostDraftInfoController);
 application.register(
   "messaging-platform-dropdown",
   MessagingPlatformDropdownController,

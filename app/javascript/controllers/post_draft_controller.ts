@@ -1,10 +1,16 @@
 import { Controller } from "@hotwired/stimulus";
 import { useDebounce } from "stimulus-use";
-import invariant from "tiny-invariant";
 
 import { hasValueSetter } from "#helpers/form_helpers";
+import { addCleanupAction } from "#helpers/stimulus_helpers";
 
 export default class PostDraftController extends Controller<HTMLFormElement> {
+  // == Targets ==
+
+  static targets = ["savedTimestampLabel"];
+  declare readonly savedTimestampLabelTarget: HTMLElement;
+  declare readonly hasSavedTimestampLabelTarget: boolean;
+
   // == Configuration ==
 
   static debounces = ["save"];
@@ -16,6 +22,10 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
   };
   declare readonly worldIdValue: string;
 
+  // == Properties ==
+
+  #savedTimestampFlashTimeout?: number | null;
+
   // == Lifecycle ==
 
   initialize(): void {
@@ -25,15 +35,31 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
 
   connect(): void {
     super.connect();
-    invariant(this.worldIdValue, "Missing worldId value");
-    // this.restore();
+    if (!this.hasSavedTimestampLabelTarget) {
+      throw new Error("Missing savedTimestampLabel target");
+    }
+    if (!this.worldIdValue) {
+      throw new Error("Missing worldId value");
+    }
+    addCleanupAction(this, "restoreSavedTimestampLabel");
+  }
+
+  disconnect(): void {
+    super.disconnect();
+    if (this.#savedTimestampFlashTimeout) {
+      clearTimeout(this.#savedTimestampFlashTimeout);
+      this.#savedTimestampFlashTimeout = null;
+    }
   }
 
   // == Actions ==
 
   save(): void {
-    const value = this.#serializeFormData();
-    localStorage.setItem(this.#localStorageKey, value);
+    requestIdleCallback(() => {
+      const value = this.#serializeFormData();
+      localStorage.setItem(this.#localStorageKey, value);
+      this.#flashSavedTimestamp();
+    });
   }
 
   restore(): void {
@@ -43,19 +69,22 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
         return;
       }
       const input = this.element.elements.namedItem(key);
-      if (input instanceof HTMLElement && input.dataset.postDraftIgnore) {
-        return;
-      }
-      if (
-        input instanceof HTMLInputElement ||
-        input instanceof HTMLSelectElement ||
-        hasValueSetter(input)
-      ) {
+      if (hasValueSetter(input)) {
         input.value = value;
-      } else {
-        console.warn(`Couldn't restore ${key}`, { value, input });
+        formData.delete(key);
       }
     });
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        return;
+      }
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = value;
+      this.element.appendChild(input);
+    });
+    this.element.requestSubmit();
   }
 
   clear(): void {
@@ -72,15 +101,6 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
     const formData = new FormData(this.element);
     formData.delete("authenticity_token");
     formData.delete("_method");
-    for (const el of this.element.elements) {
-      if (
-        el instanceof HTMLInputElement &&
-        el.dataset.postDraftIgnore &&
-        el.name
-      ) {
-        formData.delete(el.name);
-      }
-    }
     const searchParams = new URLSearchParams();
     formData.forEach((value, key) => {
       if (typeof value === "string") {
@@ -100,5 +120,25 @@ export default class PostDraftController extends Controller<HTMLFormElement> {
       });
     }
     return formData;
+  }
+
+  #flashSavedTimestamp(): void {
+    delete this.savedTimestampLabelTarget.dataset.fade;
+    this.savedTimestampLabelTarget.textContent =
+      this.#formatSavedTimestampLabel();
+    if (this.#savedTimestampFlashTimeout) {
+      clearTimeout(this.#savedTimestampFlashTimeout);
+    }
+    this.#savedTimestampFlashTimeout = setTimeout(() => {
+      this.savedTimestampLabelTarget.dataset.fade = "true";
+    }, 2000);
+  }
+
+  #formatSavedTimestampLabel(): string {
+    const time = new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    return `draft saved at ${time}`;
   }
 }

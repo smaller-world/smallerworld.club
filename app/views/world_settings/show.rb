@@ -49,6 +49,9 @@ class Views::WorldSettings::Show < Views::Base
                     type: :submit,
                     variant: :destructive,
                     class: "justify-center",
+                    data: {
+                      action: "dropdown-menu#preventAutoClose",
+                    },
                   ) do
                     Icon("huge/heartbreak")
                     span { "really leave" }

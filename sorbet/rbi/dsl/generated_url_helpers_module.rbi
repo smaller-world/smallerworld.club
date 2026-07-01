@@ -205,6 +205,9 @@ module GeneratedUrlHelpersModule
   def reaction_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def restore_post_draft_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

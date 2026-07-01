@@ -5,6 +5,7 @@ module DeviceDetection
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
+  include BooleanParams
 
   requires_ancestor { ActionController::Base }
 
@@ -44,11 +45,7 @@ module DeviceDetection
 
   sig { returns(T::Boolean) }
   def emulate_ios_browser?
-    if (param = params[:emulate_ios_browser])
-      ActiveModel::Type::Boolean.new.cast(param)
-    else
-      false
-    end
+    cast_boolean(params[:emulate_ios_browser])
   end
 
   sig { returns(T.nilable(String)) }

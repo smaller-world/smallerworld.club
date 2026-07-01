@@ -67,16 +67,20 @@ class PostsController < ApplicationController
     end
   end
 
-  # GET /world/:world_id/posts/new?type_id=...
+  # GET /world/:world_id/posts/new[?type_id=...]
   def new
     respond_to do |format|
       format.html do
         world = find_world
         authorize!(world, to: :post?)
-        post_type_id = params.require(:type_id)
-        post_type = world.post_types.find(post_type_id)
-        post = post_type.posts.build
-        render Views::Posts::New.new(post:)
+        post = if (type_id = params[:type_id])
+          post_type = world.post_types.find(type_id)
+          post_type.posts.build
+        else
+          Post.new
+        end
+        restore_draft = cast_boolean(params[:restore_draft])
+        render Views::Posts::New.new(post:, restore_draft:)
       end
     end
   end
@@ -98,11 +102,11 @@ class PostsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :post?)
-        post_type_id = params.require(:post).fetch(:type_id)
-        post_type = world.post_types.find(post_type_id)
         post_params = params.expect(
-          post: [ :emoji, :title, :body, :quiet, images: [] ],
+          post: [ :type_id, :emoji, :title, :body, :quiet, images: [] ],
         )
+        post_type_id = post_params.delete(:type_id)
+        post_type = world.post_types.find(post_type_id)
         post = post_type.posts.build(**post_params)
         if post.save
           flash[:created_post_id] = post.id

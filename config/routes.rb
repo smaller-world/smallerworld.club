@@ -112,6 +112,9 @@ Rails.application.routes.draw do
     resources :reply_initiations, only: :create
   end
   resource :post_card, path: "posts/:post_id/card", only: :show
+  resource :post_draft, only: [] do
+    post :restore
+  end
 
   # == Reactions
   resources :reactions, only: :destroy

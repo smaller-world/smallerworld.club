@@ -12,7 +12,7 @@ class Components::LexxyEditor < Components::Input
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    attributes = mix(
+    attributes = normalize_mix(
       {
         class: "lexxy-content",
         data: {

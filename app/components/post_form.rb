@@ -4,10 +4,11 @@
 class Components::PostForm < Components::Base
   # == Initialization ==
 
-  sig { params(post: Post, attributes: T.untyped).void }
-  def initialize(post:, **attributes)
+  sig { params(post: Post, restore_draft: T::Boolean, attributes: T.untyped).void }
+  def initialize(post:, restore_draft: false, **attributes)
     super(**attributes)
     @post = post
+    @restore_draft = restore_draft
     @post_type = T.let(@post.type!, PostType)
     @world = T.let(@post.world!, World)
   end
@@ -16,23 +17,29 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model:, **mix(
-      {
-        class: "flex flex-col gap-6",
-        data: {
-          controller: token_list(
-            "submit haptic-bridge",
-            # "post-draft" => @post.new_record?,
-          ),
-          action: [
-            "turbo:submit-end->haptic-bridge#vibrate",
-            "turbo:submit-end->post-draft#clear",
-          ],
-          post_draft_world_id_value: @world.id,
+    form_with(
+      id: :post_form,
+      model:,
+      url: (restore_post_draft_path if @restore_draft),
+      **mix(
+        {
+          class: class_names("flex flex-col gap-6", "loading" => @restore_draft),
+          data: {
+            controller: token_list(
+              "submit haptic-bridge",
+              "post-draft connection" => @post.new_record?,
+            ),
+            action: token_list(
+              "turbo:submit-end->haptic-bridge#vibrate" => !@restore_draft,
+              "turbo:submit-end->post-draft#clear" => @post.new_record? && !@restore_draft,
+              "connection:connect->post-draft#restore" => @post.new_record? && @restore_draft,
+            ),
+            post_draft_world_id_value: @world.id,
+          },
         },
-      },
-      @attributes,
-    )) do |form|
+        @attributes,
+      ),
+    ) do |form|
       div(class: "flex flex-col gap-4") do
         field_for(form, :type_id) do |f|
           f.select(class: "flex flex-col items-start") do |select|
@@ -64,7 +71,7 @@ class Components::PostForm < Components::Base
             f.emoji_input(**compact_mix(
               {
                 data: {
-                  action: "change->post-draft#save",
+                  action: ("change->post-draft#save" if can_save_draft?),
                 },
               },
               error_tooltip_attributes_for(form, :emoji),
@@ -74,7 +81,7 @@ class Components::PostForm < Components::Base
             f.text_input(
               placeholder: "a title!",
               data: {
-                action: "change->post-draft#save",
+                action: ("change->post-draft#save" if can_save_draft?),
               },
             )
             f.error
@@ -86,14 +93,18 @@ class Components::PostForm < Components::Base
             required: true,
             class: "min-h-36",
             data: {
-              action: [
-                "lexxy:initialize->post-draft#restore",
-                "lexxy:change->post-draft#save",
+              action: token_list(
                 "keydown.meta+enter->submit#request",
-              ],
+                "lexxy:change->post-draft#save" => can_save_draft?,
+              ),
             },
           )
-          f.description(class: "text-center text-xs mt-px") do
+          f.description(
+            class: "text-center text-xs mt-px data-fade:opacity-50 transition-opacity data-fade:duration-400 ease",
+            data: {
+              post_draft_target: "savedTimestampLabel",
+            },
+          ) do
             "write freely! your posts are encrypted."
           end
           f.error(class: "text-center")
@@ -146,7 +157,10 @@ class Components::PostForm < Components::Base
             dropzone_class: "aspect-square",
             preview_fit: :contain,
             data: {
-              action: "change->post-draft#save",
+              action: token_list(
+                "uppy-dnd:uploaded->post-draft#save" => can_save_draft?,
+                "uppy-group:removed->post-draft#save" => can_save_draft?,
+              ),
             },
           )
           f.error
@@ -251,9 +265,18 @@ class Components::PostForm < Components::Base
         field.content(class: "flex flex-col gap-0.5") do
           yield(field)
         end
-        field.radio_group_item_for(value, class: "visually-hidden")
+        field.radio_group_item_for(value, class: "visually-hidden", input: {
+          data: {
+            action: ("post-draft#save" if can_save_draft?),
+          },
+        })
       end
     end
+  end
+
+  sig { returns(T::Boolean) }
+  def can_save_draft?
+    @post.new_record? && !@restore_draft
   end
 
   # sig { params(form: PhlexRailsFormBuilder).void }

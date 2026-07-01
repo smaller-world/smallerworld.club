@@ -532,11 +532,12 @@ module Components
   sig do
     params(
       post: ::Post,
+      restore_draft: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::PostForm).void)
     ).void
   end
-  def PostForm(post:, **attributes, &block); end
+  def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/post_reactions.rb:4
   sig do
@@ -1318,11 +1319,12 @@ module Components
     sig do
       params(
         post: ::Post,
+        restore_draft: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::PostForm).void)
       ).void
     end
-    def PostForm(post:, **attributes, &block); end
+    def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/post_reactions.rb:4
     sig do

@@ -205,6 +205,9 @@ module GeneratedPathHelpersModule
   def reaction_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def restore_post_draft_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def root_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

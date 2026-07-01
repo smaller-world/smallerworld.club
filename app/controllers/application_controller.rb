@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Method
   include TaggedLogging
+  include BooleanParams
 
   include Authentication
   include DeviceTracking

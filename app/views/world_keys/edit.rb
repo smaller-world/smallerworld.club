@@ -43,6 +43,9 @@ class Views::WorldKeys::Edit < Views::Base
                   type: :submit,
                   variant: :destructive,
                   class: "justify-center",
+                  data: {
+                    action: "dropdown-menu#preventAutoClose",
+                  },
                 ) do
                   Icon("huge/delete-01")
                   span { "really destroy" }

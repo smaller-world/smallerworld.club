@@ -50,6 +50,7 @@ export default class UppyGroupController extends Controller<HTMLElement> {
     for (const dnd of this.dndTargets) {
       if (dnd.contains(target)) {
         dnd.remove();
+        this.dispatch("removed");
       }
     }
     this.update();

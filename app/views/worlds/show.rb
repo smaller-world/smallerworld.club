@@ -171,9 +171,21 @@ class Views::Worlds::Show < Views::Base
     Components::Dialog(open: @new_post_modal_open) do |dialog|
       dialog.with_trigger_button(
         size: :lg,
-        class: "world-action-button",
+        class: "world-action-button group/new-post-button relative",
+        data: {
+          controller: "post-draft-info",
+          post_draft_info_world_id_value: @world.id,
+          action: "user-focus:active@document->post-draft-info#update",
+        },
       ) do |button|
-        button.inline_start_icon("huge/quill-write-02")
+        button.inline_start_icon(
+          "huge/quill-write-02",
+          class: "group-data-draft-available/new-post-button:hidden",
+        )
+        button.inline_start_icon(
+          "huge/more-horizontal-circle-02",
+          class: "hidden group-data-draft-available/new-post-button:revert-display-layer",
+        )
         span { "new post" }
       end
       dialog.with_content do |dialog_content|
@@ -182,7 +194,48 @@ class Views::Worlds::Show < Views::Base
             "what do you want to make?"
           end
         end
+
         Components::ItemGroup() do |item_group|
+          form_with(
+            url: [ :new, @world, :post ],
+            method: :get,
+            class: "hidden data-draft-available:revert-display-layer",
+            data: {
+              controller: "post-draft-info intersection submit",
+              post_draft_info_world_id_value: @world.id,
+              action: "intersection:appear->post-draft-info#update",
+            },
+          ) do |form|
+            form.hidden_field(:type_id, data: {
+              post_draft_info_target: "typeIdInput",
+            })
+            form.hidden_field(:restore_draft, value: true)
+            item_group.item(
+              element: :button,
+              type: :submit,
+              size: :sm,
+              class: "bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
+              data: {
+                action: "submit#request dialog#close",
+              },
+            ) do |item|
+              item.content do
+                item.title do
+                  "continue from draft?"
+                end
+                item.description(
+                  class: "empty:hidden text-primary-foreground/80 border-l-2 border-border/50 pl-3 italic",
+                  data: {
+                    post_draft_info_target: "descriptionLabel",
+                  },
+                )
+              end
+            end
+          end
+          item_group.separator(
+            class: "hidden [form[data-draft-available]_+_&]:revert-display-layer",
+          )
+
           @world.post_types.each do |post_type|
             div(class: "flex items-center gap-1") do
               item_group.item(

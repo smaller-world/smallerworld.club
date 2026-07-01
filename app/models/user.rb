@@ -176,7 +176,7 @@ class User < ApplicationRecord
     end
   end
 
-  sig { returns(T::Boolean) }
+  sig { returns(T.any(SendUserBadgeCountNotificationsJob, FalseClass)) }
   def send_badge_count_notifications_later
     SendUserBadgeCountNotificationsJob.perform_later(self)
   end
