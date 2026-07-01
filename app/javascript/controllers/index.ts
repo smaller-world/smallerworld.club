@@ -17,7 +17,7 @@ import CollapseController from "./collapse_controller";
 import ComboboxController from "./combobox_controller";
 import ConfettiController from "./confetti_controller";
 import ConnectionController from "./connection_controller";
-import CreateWorldButtonController from "./create_world_button_controller";
+import CreateWorldButtonLabelController from "./create_world_button_label_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
 import DialogController from "./dialog_controller";
 import DisableWhileSubmittingController from "./disable_while_submitting_controller";
@@ -25,6 +25,7 @@ import DisabledController from "./disabled_controller";
 import DropdownMenuController from "./dropdown_menu_controller";
 import EmojiInputController from "./emoji_input_controller";
 import EmojiMartController from "./emoji_mart_controller";
+import EventController from "./event_controller";
 import FieldErrorController from "./field_error_controller";
 import FlashTextController from "./flash_text_controller";
 import FrameReloadController from "./frame_reload_controller";
@@ -39,7 +40,7 @@ import PageLoadBridgeController from "./page_load_bridge_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
-import PlatformDropdownController from "./platform_dropdown_controller";
+import MessagingPlatformDropdownController from "./platform_dropdown_controller";
 import PostDraftController from "./post_draft_controller";
 import PushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
@@ -55,6 +56,7 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
+import WorldPostTypeInputController from "./world_post_type_input_controller";
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -101,7 +103,18 @@ application.register("async-item", AsyncItemController);
 application.register("user-focus", UserFocusController);
 application.register("field-error", FieldErrorController);
 application.register("collapse", CollapseController);
+application.register("event", EventController);
 application.register("lightbox", LightboxController);
+application.register("world-post-type-input", WorldPostTypeInputController);
+application.register(
+  "create-world-button-label",
+  CreateWorldButtonLabelController,
+);
+application.register("post-draft", PostDraftController);
+application.register(
+  "messaging-platform-dropdown",
+  MessagingPlatformDropdownController,
+);
 
 // == Components
 application.register("clearable-file-input", ClearableFileInputController);
@@ -123,6 +136,3 @@ application.register("emoji-mart", EmojiMartController);
 application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
-application.register("post-draft", PostDraftController);
-application.register("platform-dropdown", PlatformDropdownController);
-application.register("create-world-button", CreateWorldButtonController);

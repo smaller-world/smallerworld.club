@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class PlatformDropdownController extends Controller<HTMLFormElement> {
+export default class MessagingPlatformDropdownController extends Controller<HTMLFormElement> {
   // == Targets ==
 
   static targets = ["input"];

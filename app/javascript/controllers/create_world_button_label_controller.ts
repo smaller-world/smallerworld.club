@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class CreateWorldButtonController extends Controller {
+export default class CreateWorldButtonLabelController extends Controller {
   // == Targets ==
 
   static targets = ["nameInput", "label"];
@@ -16,12 +16,12 @@ export default class CreateWorldButtonController extends Controller {
     if (!this.hasNameInputTarget) {
       throw new Error("Missing nameInput target");
     }
-    this.updateLabel();
+    this.update();
   }
 
   // == Actions ==
 
-  updateLabel(): void {
+  update(): void {
     if (!this.hasLabelTarget) {
       return;
     }

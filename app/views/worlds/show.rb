@@ -134,7 +134,7 @@ class Views::Worlds::Show < Views::Base
         end
 
         div(class: "flex flex-col gap-4") do
-          Components::WorldPostTypeForm(world: @world)
+          Components::WorldPostTypeForm(world: @world, post_type: @post_type)
 
           turbo_frame_tag(
             :posts,

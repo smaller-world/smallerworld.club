@@ -28,7 +28,7 @@ class Components::PostTypeForm < Components::Base
       field_for(form, :label) do |f|
         f.label { "what's this post type called?" }
         f.input(
-          placeholder: "journal entry",
+          placeholder: @post_type.label.presence || "journal entry",
           required: true,
           data: {
             action: "keydown->submit#preventSubmitOnEnter",
