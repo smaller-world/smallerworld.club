@@ -48,7 +48,11 @@
       }
     },
     {
-      "patterns": ["^\/world_keys\/[\\w-]+\/edit$"],
+      "patterns": [
+        "^\/world_keys\/[\\w-]+\/edit$",
+        "^\/worlds\/[\\w-]+\/post_types/new$",
+        "^\/post_types\/[\\w-]+\/edit$"
+      ],
       "properties": {
         "modal_style": "medium"
       }

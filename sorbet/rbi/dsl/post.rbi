@@ -837,6 +837,51 @@ class Post
     sig { void }
     def emoji_will_change!; end
 
+    sig { returns(T::Array[::String]) }
+    def hidden_from_ids; end
+
+    sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
+    def hidden_from_ids=(value); end
+
+    sig { returns(T::Boolean) }
+    def hidden_from_ids?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def hidden_from_ids_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def hidden_from_ids_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def hidden_from_ids_came_from_user?; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def hidden_from_ids_change; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def hidden_from_ids_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def hidden_from_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def hidden_from_ids_in_database; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def hidden_from_ids_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def hidden_from_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def hidden_from_ids_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def hidden_from_ids_was; end
+
+    sig { void }
+    def hidden_from_ids_will_change!; end
+
     sig { returns(::String) }
     def id; end
 
@@ -1024,6 +1069,9 @@ class Post
     def restore_emoji!; end
 
     sig { void }
+    def restore_hidden_from_ids!; end
+
+    sig { void }
     def restore_id!; end
 
     sig { void }
@@ -1058,6 +1106,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_emoji?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def saved_change_to_hidden_from_ids; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_hidden_from_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -1292,6 +1346,9 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_emoji?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_hidden_from_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

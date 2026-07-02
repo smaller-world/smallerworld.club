@@ -2,9 +2,6 @@ import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 import { useDebounce } from "stimulus-use";
 
-import { hasValueSetter } from "#helpers/form_helpers";
-import { addCleanupAction } from "#helpers/stimulus_helpers";
-
 const targets = {
   savedTimestampLabel: HTMLElement,
 };
@@ -38,7 +35,6 @@ export default class PostDraftController extends Typed(
     if (!this.worldIdValue) {
       throw new Error("Missing worldId value");
     }
-    addCleanupAction(this, "restoreSavedTimestampLabel");
   }
 
   disconnect(): void {
@@ -66,22 +62,27 @@ export default class PostDraftController extends Typed(
         return;
       }
       const input = this.element.elements.namedItem(key);
-      if (hasValueSetter(input)) {
+      if (!key.endsWith("[]") && input) {
+        if (
+          input instanceof HTMLInputElement ||
+          input instanceof RadioNodeList
+        ) {
+          input.value = value;
+        } else if (input.tagName === "LEXXY-EDITOR") {
+          // @ts-expect-error Untyped property
+          input.value = value;
+        }
+      } else {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
         input.value = value;
-        formData.delete(key);
+        this.element.appendChild(input);
       }
     });
-    formData.forEach((value, key) => {
-      if (value instanceof File) {
-        return;
-      }
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = key;
-      input.value = value;
-      this.element.appendChild(input);
+    requestAnimationFrame(() => {
+      this.element.requestSubmit();
     });
-    this.element.requestSubmit();
   }
 
   clear(): void {
@@ -96,10 +97,11 @@ export default class PostDraftController extends Typed(
 
   #serializeFormData(): string {
     const formData = new FormData(this.element);
-    formData.delete("authenticity_token");
-    formData.delete("_method");
     const searchParams = new URLSearchParams();
     formData.forEach((value, key) => {
+      if (!key.startsWith("post")) {
+        return;
+      }
       if (typeof value === "string") {
         searchParams.append(key, value);
       }

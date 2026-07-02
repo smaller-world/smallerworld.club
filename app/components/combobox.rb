@@ -107,17 +107,15 @@ class Components::Combobox < Components::Base
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(content: Components::Combobox::Content).void,
     ).void
   end
-  def with_content(anchor: [ :bottom, :start ], anchor_strategy: nil, popover: true, **attributes, &content)
+  def with_content(anchor: [ :bottom, :start ], anchor_strategy: nil, **attributes, &content)
     @content_block = ->() {
       render Components::Combobox::Content.new(
         anchor:,
         anchor_strategy:,
-        popover:,
         **attributes,
         &content
       )

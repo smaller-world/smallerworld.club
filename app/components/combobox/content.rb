@@ -15,14 +15,12 @@ class Components::Combobox::Content < Components::Base
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       attributes: T.untyped,
     ).void
   end
   def initialize(
     anchor: [ :bottom, :start ],
     anchor_strategy: nil,
-    popover: true,
     **attributes
   )
     if (Array.wrap(anchor) - ANCHOR_VALUES).any?
@@ -32,7 +30,6 @@ class Components::Combobox::Content < Components::Base
     super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy
-    @popover = popover
     @empty_block = T.let(nil, T.nilable(T.proc.void))
     @list_block = T.let(nil, T.nilable(T.proc.void))
   end
@@ -47,9 +44,9 @@ class Components::Combobox::Content < Components::Base
     el_options(
       **mix(
         {
-          popover: (true if @popover),
+          popover: true,
           anchor: anchor_property,
-          "anchor-strategy" => @anchor_strategy,
+          anchor_strategy: @anchor_strategy,
           class: "combobox-content group/combobox-content",
           data: {
             slot: "combobox-content",

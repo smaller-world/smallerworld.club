@@ -15,7 +15,6 @@ class WorldsController < ApplicationController
         current_user = Current.user!
         world = find_world
         authorize!(world)
-        new_post_modal_open = !!params[:new_post]
         celebrate = !!params[:celebrate]
         post_type = if (type_id = params[:post_type_id])
           world.post_types.find(type_id)
@@ -24,7 +23,6 @@ class WorldsController < ApplicationController
         render Views::Worlds::Show.new(
           current_user:,
           world:,
-          new_post_modal_open:,
           celebrate:,
           post_type:,
           created_post_id:,
@@ -85,15 +83,6 @@ class WorldsController < ApplicationController
         end
       end
     end
-  end
-
-  # POST /worlds/:id/leave
-  def leave
-    current_user = Current.user!
-    world = find_world
-    authorize!(world)
-    world.keys.where(recipient: current_user).destroy_all
-    recede_or_redirect_to(home_path)
   end
 
   # DELETE /worlds/:id

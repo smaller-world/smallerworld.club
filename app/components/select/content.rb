@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::Select::Content < Components::Base
+  include Slot
+
   register_element :el_options
   register_element :el_option
 
@@ -17,7 +19,6 @@ class Components::Select::Content < Components::Base
       register_selected_item_block: T.proc.params(selected_item_block: T.proc.void).void,
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       attributes: T.untyped,
     ).void
   end
@@ -26,7 +27,6 @@ class Components::Select::Content < Components::Base
     register_selected_item_block:,
     anchor: :bottom,
     anchor_strategy: nil,
-    popover: true,
     **attributes
   )
     if (Array.wrap(anchor) - ANCHOR_VALUES).any?
@@ -38,7 +38,6 @@ class Components::Select::Content < Components::Base
     @register_selected_item_block = register_selected_item_block
     @anchor = anchor
     @anchor_strategy = anchor_strategy
-    @popover = popover
   end
 
   # == Component ==
@@ -46,9 +45,9 @@ class Components::Select::Content < Components::Base
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     el_options(
-      popover: (true if @popover),
+      popover: true,
       anchor: anchor_property,
-      "anchor-strategy" => @anchor_strategy,
+      anchor_strategy: @anchor_strategy,
       **mix(
         {
           class: "select-content",
@@ -120,29 +119,5 @@ class Components::Select::Content < Components::Base
     if (values = Array.wrap(@anchor).presence)
       values.join(" ")
     end
-  end
-
-  sig do
-    params(
-      name: String,
-      element: Symbol,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.void),
-    ).void
-  end
-  def slot(name, element: :div, **attributes, &content)
-    public_send(
-      element,
-      **mix(
-        {
-          class: name,
-          data: {
-            slot: name,
-          },
-        },
-        attributes,
-      ),
-      &content
-    )
   end
 end

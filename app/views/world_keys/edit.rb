@@ -54,33 +54,13 @@ class Views::WorldKeys::Edit < Views::Base
 
         div(class: "flex flex-col gap-0.5") do
           Components::WorldKeyForm(world_key: @world_key)
-          Components::DropdownMenu() do |menu|
-            menu.with_trigger_button(
-              variant: :link,
-              size: :sm,
-              class: "text-muted-foreground",
-            ) do
-              "destroy key"
-            end
-            menu.with_content(anchor: :bottom) do |menu_content|
-              menu_content.label(class: "pt-1.5 pb-0 text-center") do
-                "are you sure?"
-              end
-              form_with(url: @world_key, method: :delete) do
-                menu_content.button_item(
-                  type: :submit,
-                  variant: :destructive,
-                  class: "justify-center",
-                  data: {
-                    action: "dropdown-menu#preventAutoClose",
-                  },
-                ) do
-                  Icon("huge/delete-01")
-                  span { "really destroy" }
-                  div(class: "w-1")
-                end
-              end
-            end
+          Components::ConfirmDeleteButton(
+            target: @world_key,
+            variant: :link,
+            confirm_label: "really destroy",
+            class: "self-center text-muted-foreground",
+          ) do
+            "destroy key"
           end
         end
       end

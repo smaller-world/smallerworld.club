@@ -8,6 +8,8 @@ module AttributeHelpers
 
   requires_ancestor { Phlex::HTML }
 
+  private
+
   # == Methods ==
 
   sig do

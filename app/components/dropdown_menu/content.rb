@@ -15,7 +15,6 @@ class Components::DropdownMenu::Content < Components::Base
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       open: T::Boolean,
       attributes: T.untyped,
     ).void
@@ -23,7 +22,6 @@ class Components::DropdownMenu::Content < Components::Base
   def initialize(
     anchor: [ :bottom, :start ],
     anchor_strategy: nil,
-    popover: true,
     open: false,
     **attributes
   )
@@ -34,7 +32,6 @@ class Components::DropdownMenu::Content < Components::Base
     super(**attributes)
     @anchor = anchor
     @anchor_strategy = anchor_strategy
-    @popover = popover
     @open = open
   end
 
@@ -45,11 +42,12 @@ class Components::DropdownMenu::Content < Components::Base
     el_menu(
       **mix(
         {
-          class: "dropdown-menu-content",
+          popover: true,
           anchor: anchor_property,
           anchor_strategy: @anchor_strategy,
-          popover: @popover,
+          class: "dropdown-menu-content",
           data: {
+            dropdown_menu_target: "menu",
             slot: "dropdown-menu-content",
           },
         },

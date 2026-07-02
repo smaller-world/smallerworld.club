@@ -1,13 +1,14 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Views::WorldSettings::Show < Views::Base
+class Views::WorldKeys::Show < Views::Base
   # == Initialization ==
 
-  sig { params(world: World).void }
-  def initialize(world:)
+  sig { params(world_key: WorldKey).void }
+  def initialize(world_key:)
     super()
-    @world = world
+    @world_key = world_key
+    @world = T.let(world_key.world!, World)
   end
 
   # == View ==
@@ -16,7 +17,7 @@ class Views::WorldSettings::Show < Views::Base
   def view_template
     Components::AppLayout(page_title: "world settings") do |layout|
       layout.page_container(class: "max-w-lg space-y-6") do
-        button_back_to("world", @world) unless hotwire_native_app?
+        button_back_to("world", @world, variant: :secondary) unless hotwire_native_app?
 
         Components::Card(
           size: :sm,
@@ -35,27 +36,26 @@ class Views::WorldSettings::Show < Views::Base
             card.title(class: "text-center") { "break-up zone" }
           end
           card.footer(class: "flex flex-col items-stretch") do
-            Components::DropdownMenu() do |dropdown_menu|
-              dropdown_menu.with_trigger_button(variant: :outline) do |button|
+            Components::Popover() do |popover|
+              popover.with_trigger_button(variant: :outline) do |button|
                 button.inline_start_icon("huge/logout-02")
                 span { "leave #{@world.name}" }
               end
-              dropdown_menu.with_content(anchor: :bottom) do |menu_content|
-                menu_content.label(class: "pt-1.5 pb-0 text-center") do
-                  "are you sure?"
+              popover.with_content(class: "max-w-60") do |popover_content|
+                popover_content.header(class: "text-center") do |popover_header|
+                  popover_header.title { "are you sure?" }
+                  popover_header.description do
+                    "this action is permanent and cannot be undone"
+                  end
                 end
-                form_with(url: [ :leave, @world ]) do
-                  menu_content.button_item(
+                form_with(model: @world_key, method: :delete) do
+                  Components::Button(
                     type: :submit,
                     variant: :destructive,
-                    class: "justify-center",
-                    data: {
-                      action: "dropdown-menu#preventAutoClose",
-                    },
-                  ) do
-                    Icon("huge/heartbreak")
+                    class: "w-full",
+                  ) do |button|
+                    button.inline_start_icon("huge/heartbreak")
                     span { "really leave" }
-                    div(class: "w-1")
                   end
                 end
               end

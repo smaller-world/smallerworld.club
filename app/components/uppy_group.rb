@@ -54,15 +54,15 @@ class Components::UppyGroup < Components::Input
 
   sig { override.void }
   def view_template
-    controller_id = SecureRandom.uuid
+    id = SecureRandom.uuid
     root_element(
       :div,
+      id:,
       class: "uppy-group",
       data: {
         controller: "uppy-group",
-        controller_id:,
         uppy_group_max_files_value: @max_files,
-        uppy_group_dnd_outlet: "[data-controller-id='#{controller_id}'] > [data-controller=uppy-dnd]",
+        uppy_group_uppy_dnd_outlet: "[id='#{id}'] [data-controller=uppy-dnd]",
       },
     ) do
       template(data: { uppy_group_target: "dndTemplate" }) do

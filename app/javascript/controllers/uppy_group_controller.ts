@@ -9,7 +9,7 @@ const targets = {
 };
 
 const outlets = {
-  dnd: UppyDndController,
+  "uppy-dnd": UppyDndController,
 };
 
 const values = {
@@ -43,15 +43,12 @@ export default class UppyGroupController extends Typed(
   }
 
   removeDnd({ target }: PointerEvent): void {
-    if (this.dndOutlets.length <= 1) {
-      return;
-    }
     if (!(target instanceof HTMLElement)) {
       return;
     }
-    for (const dndElement of this.dndOutletElements) {
-      if (dndElement.contains(target)) {
-        dndElement.remove();
+    for (const uppyDndElement of this.uppyDndOutletElements) {
+      if (uppyDndElement.contains(target)) {
+        uppyDndElement.remove();
         this.dispatch("removed");
         break;
       }
@@ -78,7 +75,10 @@ export default class UppyGroupController extends Typed(
   // == Helpers ==
 
   #addDndTargets(): void {
-    if (this.maxFilesValue && this.dndOutlets.length >= this.maxFilesValue) {
+    if (
+      this.maxFilesValue &&
+      this.uppyDndOutlets.length >= this.maxFilesValue
+    ) {
       return;
     }
     const dndTree = this.dndTemplateTarget.content.cloneNode(true);
@@ -86,9 +86,9 @@ export default class UppyGroupController extends Typed(
   }
 
   #removeEmptyDndTargets(): void {
-    for (const dnd of this.dndOutlets) {
-      if (dnd.isEmpty) {
-        dnd.element.remove();
+    for (const uppyDnd of this.uppyDndOutlets) {
+      if (uppyDnd.isEmpty) {
+        uppyDnd.element.remove();
       }
     }
   }
@@ -97,19 +97,19 @@ export default class UppyGroupController extends Typed(
     const canUploadMore =
       this.maxFilesValue &&
       this.#countNonEmptyDndTargets() < this.maxFilesValue;
-    for (const dnd of this.dndOutlets) {
+    for (const uppyDnd of this.uppyDndOutlets) {
       if (canUploadMore) {
-        dnd.multipleValue = true;
+        uppyDnd.multipleValue = true;
       } else {
-        dnd.multipleValue = false;
+        uppyDnd.multipleValue = false;
       }
     }
   }
 
   #countNonEmptyDndTargets(): number {
     let count = 0;
-    for (const dnd of this.dndOutlets) {
-      if (!dnd.isEmpty) {
+    for (const uppyDnd of this.uppyDndOutlets) {
+      if (!uppyDnd.isEmpty) {
         count++;
       }
     }

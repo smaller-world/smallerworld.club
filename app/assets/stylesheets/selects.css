@@ -17,7 +17,7 @@
     /* Customizations */
     --anchor-gap: var(--spacing); /* Controls gap between button and dropdown */
 
-    @apply transition-[scale,opacity,display]! transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
+    @apply transition-[scale,opacity,display] transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
   }
 
   .select-trigger {

@@ -16,6 +16,17 @@ class WorldKeysController < ApplicationController
     end
   end
 
+  # GET /world_keys/:id
+  def show
+    respond_to do |format|
+      format.html do
+        world_key = find_world_key
+        authorize!(world_key)
+        render Views::WorldKeys::Show.new(world_key:)
+      end
+    end
+  end
+
   # GET /world_keys/:id/edit
   def edit
     respond_to do |format|

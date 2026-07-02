@@ -208,6 +208,18 @@ module Components
   end
   def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+  # workspace://app/components/confirm_delete_button.rb:4
+  sig do
+    params(
+      target: ::Object,
+      description: ::String,
+      confirm_label: ::String,
+      attributes: T.untyped,
+      block: T.nilable(T.proc.params(instance: Components::ConfirmDeleteButton).void)
+    ).void
+  end
+  def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &block); end
+
   # workspace://app/components/device_passes_form.rb:4
   sig do
     params(
@@ -231,13 +243,13 @@ module Components
   # workspace://app/components/dialog.rb:4
   sig do
     params(
-      id: ::String,
+      dialog_id: ::String,
       open: T::Boolean,
       attributes: T.untyped,
       block: T.nilable(T.proc.params(instance: Components::Dialog).void)
     ).void
   end
-  def Dialog(id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
+  def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
 
   # workspace://app/components/dropdown_menu.rb:4
   sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
@@ -503,6 +515,10 @@ module Components
     ).void
   end
   def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
+
+  # workspace://app/components/popover.rb:4
+  sig { params(popover_id: ::String, block: T.nilable(T.proc.params(instance: Components::Popover).void)).void }
+  def Popover(popover_id: T.unsafe(nil), &block); end
 
   # workspace://app/components/post_card.rb:4
   sig do
@@ -990,6 +1006,18 @@ module Components
     end
     def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
 
+    # workspace://app/components/confirm_delete_button.rb:4
+    sig do
+      params(
+        target: ::Object,
+        description: ::String,
+        confirm_label: ::String,
+        attributes: T.untyped,
+        block: T.nilable(T.proc.params(instance: Components::ConfirmDeleteButton).void)
+      ).void
+    end
+    def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &block); end
+
     # workspace://app/components/device_passes_form.rb:4
     sig do
       params(
@@ -1013,13 +1041,13 @@ module Components
     # workspace://app/components/dialog.rb:4
     sig do
       params(
-        id: ::String,
+        dialog_id: ::String,
         open: T::Boolean,
         attributes: T.untyped,
         block: T.nilable(T.proc.params(instance: Components::Dialog).void)
       ).void
     end
-    def Dialog(id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
+    def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
 
     # workspace://app/components/dropdown_menu.rb:4
     sig do
@@ -1290,6 +1318,10 @@ module Components
       ).void
     end
     def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
+
+    # workspace://app/components/popover.rb:4
+    sig { params(popover_id: ::String, block: T.nilable(T.proc.params(instance: Components::Popover).void)).void }
+    def Popover(popover_id: T.unsafe(nil), &block); end
 
     # workspace://app/components/post_card.rb:4
     sig do

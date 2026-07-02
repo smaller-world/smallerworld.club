@@ -6,20 +6,22 @@
 #
 # Table name: posts
 #
-#  id            :uuid             not null, primary key
-#  emoji         :string
-#  plain_body    :text             not null
-#  quiet         :boolean          default(FALSE), not null
-#  title         :string
-#  v1_attributes :jsonb
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  type_id       :uuid             not null
+#  id              :uuid             not null, primary key
+#  emoji           :string
+#  hidden_from_ids :uuid             default([]), not null, is an Array
+#  plain_body      :text             not null
+#  quiet           :boolean          default(FALSE), not null
+#  title           :string
+#  v1_attributes   :jsonb
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  type_id         :uuid             not null
 #
 # Indexes
 #
-#  index_posts_on_quiet    (quiet)
-#  index_posts_on_type_id  (type_id)
+#  index_posts_on_hidden_from_ids  (hidden_from_ids) USING gin
+#  index_posts_on_quiet            (quiet)
+#  index_posts_on_type_id          (type_id)
 #
 # Foreign Keys
 #

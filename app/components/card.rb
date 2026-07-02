@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::Card < Components::Base
+  include Slot
+
   # == Configuration ==
 
   SIZES = [ :default, :sm ]
@@ -70,33 +72,5 @@ class Components::Card < Components::Base
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def footer(**attributes, &content)
     slot("card-footer", **attributes, &content)
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig do
-    params(
-      name: String,
-      element: Symbol,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.void),
-    ).void
-  end
-  def slot(name, element: :div, **attributes, &content)
-    public_send(
-      element,
-      **mix(
-        {
-          class: name,
-          data: {
-            slot: name,
-          },
-        },
-        attributes,
-      ),
-      &content
-    )
   end
 end

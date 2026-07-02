@@ -37,6 +37,7 @@ class Components::StreamedToast < Components::Base
   def view_template
     template(
       data: {
+        turbo_temporary: true,
         controller: "streamed-toast",
         streamed_toast_type_value: @type,
       },

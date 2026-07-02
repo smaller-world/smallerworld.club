@@ -56,10 +56,7 @@ class PostTypesController < ApplicationController
           post_type: [ :label, :icon, granted_world_key_ids: [] ],
         )
         if post_type.update(**post_type_params)
-          refresh_or_redirect_to(
-            [ post_type.world, new_post: 1 ],
-            status: :see_other,
-          )
+          refresh_or_redirect_to(post_type.world, status: :see_other)
         else
           render Views::PostTypes::Edit.new(post_type:), status: :unprocessable_content
         end

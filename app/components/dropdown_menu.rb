@@ -81,7 +81,6 @@ class Components::DropdownMenu < Components::Base
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       open: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(content: Components::DropdownMenu::Content).void,
@@ -90,7 +89,6 @@ class Components::DropdownMenu < Components::Base
   def with_content(
     anchor: [ :bottom, :start ],
     anchor_strategy: nil,
-    popover: true,
     open: false,
     **attributes,
     &content
@@ -99,7 +97,6 @@ class Components::DropdownMenu < Components::Base
       render Components::DropdownMenu::Content.new(
         anchor:,
         anchor_strategy:,
-        popover:,
         open:,
         **attributes,
         &content

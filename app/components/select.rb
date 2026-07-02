@@ -84,7 +84,6 @@ class Components::Select < Components::Input
     params(
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
-      popover: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(options: Components::Select::Content).void,
     ).void
@@ -92,7 +91,6 @@ class Components::Select < Components::Input
   def with_content(
     anchor: :bottom,
     anchor_strategy: nil,
-    popover: true,
     **attributes,
     &content
   )
@@ -104,7 +102,6 @@ class Components::Select < Components::Input
         },
         anchor:,
         anchor_strategy:,
-        popover:,
         **attributes,
         &content
       )

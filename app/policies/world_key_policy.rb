@@ -4,6 +4,13 @@
 class WorldKeyPolicy < ApplicationPolicy
   # == Rules ==
 
+  # Key recipient can view thier own key
+  def show?
+    world_key = T.let(record, WorldKey)
+    user = user!
+    world_key.recipient! == user
+  end
+
   # World owner can manage keys
   def manage?
     world_key = T.let(record, WorldKey)
@@ -11,13 +18,13 @@ class WorldKeyPolicy < ApplicationPolicy
     world_key.world_owner! == user
   end
 
-  # # Key recipient can also destroy keys
-  # def destroy?
-  #   key = T.let(record, WorldKey)
-  #   user = user!
-  #   user.in?([ key.world_owner!, key.recipient! ])
-  # end
-  #
+  # Owners and recipients can both destroy keys
+  def destroy?
+    world_key = T.let(record, WorldKey)
+    user = user!
+    user.in?([ world_key.world_owner!, world_key.recipient! ])
+  end
+
   # == Scopes ==
 
   scope_for :active_record_relation do |relation|

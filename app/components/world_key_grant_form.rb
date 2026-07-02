@@ -21,15 +21,20 @@ class Components::WorldKeyGrantForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(url: [ :new, @world, :key_grant ], method: :get, **normalize_mix(
-      {
-        class: "flex flex-col gap-6",
-        data: {
-          controller: "submit",
+    form_with(
+      url: [ :new, @world, :key_grant ],
+      method: :get,
+      **normalize_mix(
+        {
+          class: "flex flex-col gap-6",
+          data: {
+            controller: "submit",
+            turbo_frame: :world_key_grant_form_qr_code,
+          },
         },
-      },
-      @attributes,
-    )) do |form|
+        @attributes,
+      ),
+    ) do |form|
       post_types = @world.post_types
       Components::FieldSet(class: "gap-0") do |field_set|
         field_set.legend(class: "text-center") do
@@ -46,8 +51,8 @@ class Components::WorldKeyGrantForm < Components::Base
         end
       end
 
-      if @granted_post_types.any?
-        div(class: "flex flex-col gap-3") do
+      turbo_frame_tag(:world_key_grant_form_qr_code) do
+        div(class: class_names("flex flex-col gap-3", "hidden" => @granted_post_types.none?)) do
           span(class: "text-xs text-center text-muted-foreground italic") do
             "get your friend to scan this qr code:"
           end

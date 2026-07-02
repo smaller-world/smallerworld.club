@@ -69,6 +69,30 @@
     }
   }
 
+  .post-form {
+    @apply flex flex-col gap-6;
+    @apply data-restoring-draft:loading;
+
+    [name="post[type_id]"] {
+      [data-slot="select-trigger"] {
+        @apply border border-border bg-background dark:bg-transparent;
+        @apply hover:bg-muted hover:text-foreground dark:hover:bg-input/30;
+      }
+    }
+
+    [name="post[body]"] + [data-slot="field-description"] {
+      @apply mt-px text-center text-xs transition-opacity;
+
+      &[data-fade] {
+        @apply opacity-50 duration-400;
+      }
+    }
+  }
+
+  .post-form-checkbox-label {
+    @apply grow-0 text-sm font-normal text-muted-foreground;
+  }
+
   .post-reactions {
     @apply flex flex-1 flex-wrap justify-end gap-1;
   }

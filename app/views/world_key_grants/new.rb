@@ -39,12 +39,10 @@ class Views::WorldKeyGrants::New < Views::Base
           end
         end
 
-        turbo_frame_tag(:world_key_grant_form) do
-          Components::WorldKeyGrantForm(
-            world: @world,
-            granted_post_types: @granted_post_types,
-          )
-        end
+        Components::WorldKeyGrantForm(
+          world: @world,
+          granted_post_types: @granted_post_types,
+        )
       end
     end
   end

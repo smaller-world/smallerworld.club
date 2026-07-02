@@ -8,7 +8,6 @@ class Views::Worlds::Show < Views::Base
     params(
       current_user: User,
       world: World,
-      new_post_modal_open: T::Boolean,
       celebrate: T::Boolean,
       post_type: T.nilable(PostType),
       created_post_id: T.nilable(String),
@@ -17,7 +16,6 @@ class Views::Worlds::Show < Views::Base
   def initialize(
     current_user:,
     world:,
-    new_post_modal_open:,
     celebrate:,
     post_type:,
     created_post_id:
@@ -25,11 +23,11 @@ class Views::Worlds::Show < Views::Base
     super()
     @current_user = current_user
     @world = world
-    @new_post_modal_open = new_post_modal_open
     @celebrate = celebrate
     @post_type = post_type
     @created_post_id = created_post_id
     @owner = T.let(@world.owner!, User)
+    @world_key = T.let(@world.keys.find_by(recipient: @current_user), T.nilable(WorldKey))
   end
 
   # == View ==
@@ -51,10 +49,10 @@ class Views::Worlds::Show < Views::Base
                 controller: "button-bridge",
               },
             )
-          elsif allowed_to?(:show?, @world, with: WorldSettingsPolicy)
+          elsif @world_key
             button_link_to(
               "settings",
-              [ @world, :settings ],
+              @world_key,
               variant: :secondary,
               icon: "huge/settings-01",
               data: {
@@ -104,7 +102,7 @@ class Views::Worlds::Show < Views::Base
                   confetti_emoji_value: "🎉",
                   confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
                   connection_delay_value: 1000,
-                  action: ("connection:connect->confetti#launch" if @celebrate),
+                  action: ("turbo:load@document->confetti#launch" if @celebrate),
                 },
               )
               Components::WorldKeyGrantIconButton(world: @world)
@@ -168,7 +166,7 @@ class Views::Worlds::Show < Views::Base
 
   sig { void }
   def new_post_button
-    Components::Dialog(open: @new_post_modal_open) do |dialog|
+    Components::Dialog() do |dialog|
       dialog.with_trigger_button(
         size: :lg,
         class: "world-action-button group/new-post-button relative",
@@ -195,16 +193,17 @@ class Views::Worlds::Show < Views::Base
           end
         end
 
-        Components::ItemGroup() do |item_group|
+        Components::ItemGroup(
+          data: {
+            controller: "post-draft-info intersection",
+            post_draft_info_world_id_value: @world.id,
+            action: "intersection:appear->post-draft-info#update",
+          },
+        ) do |item_group|
           form_with(
             url: [ :new, @world, :post ],
             method: :get,
-            class: "hidden data-draft-available:revert-display-layer",
-            data: {
-              controller: "post-draft-info intersection submit",
-              post_draft_info_world_id_value: @world.id,
-              action: "intersection:appear->post-draft-info#update",
-            },
+            class: "hidden group-data-[draft-available]/item-group:revert-display-layer",
           ) do |form|
             form.hidden_field(:type_id, data: {
               post_draft_info_target: "typeIdInput",
@@ -216,7 +215,7 @@ class Views::Worlds::Show < Views::Base
               size: :sm,
               class: "bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
               data: {
-                action: "submit#request dialog#close",
+                action: "dialog#close",
               },
             ) do |item|
               item.content do

@@ -1,22 +1,13 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::Dialog < Components::Base
-  register_element :el_dialog
-
+class Components::Popover < Components::Base
   # == Initialization ==
 
-  sig do
-    params(
-      dialog_id: String,
-      open: T::Boolean,
-      attributes: T.untyped,
-    ).void
-  end
-  def initialize(dialog_id: random_dialog_id, open: false, **attributes)
-    super(**attributes)
-    @dialog_id = dialog_id
-    @open = open
+  sig { params(popover_id: String).void }
+  def initialize(popover_id: random_popover_id)
+    super()
+    @popover_id = popover_id
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
   end
@@ -26,27 +17,14 @@ class Components::Dialog < Components::Base
   sig { override.params(content: T.proc.bind(T.self_type).void).void }
   def view_template(&content)
     vanish(&content)
+    trigger_block = @trigger_block or raise "Missing trigger"
     content_block = @content_block or raise "Missing content"
 
-    el_dialog(open: @open, **mix(
-      {
-        data: {
-          controller: "dialog",
-        },
-      },
-      @attributes,
-    )) do
-      @trigger_block&.call
-      content_block.call
-    end
+    trigger_block.call
+    content_block.call
   end
 
   # == Interface ==
-
-  sig { returns(String) }
-  def random_dialog_id
-    "dialog_#{SecureRandom.uuid}"
-  end
 
   sig do
     params(
@@ -61,7 +39,7 @@ class Components::Dialog < Components::Base
       render Components::Button.new(
         variant:,
         size:,
-        **mix({ command: "show-modal", commandfor: @dialog_id }, attributes),
+        **mix({ popovertarget: @popover_id }, attributes),
         &content
       )
     }
@@ -74,19 +52,30 @@ class Components::Dialog < Components::Base
 
   sig do
     params(
-      show_close_button: T::Boolean,
+      anchor: T.any(Symbol, T::Array[Symbol]),
+      anchor_strategy: T.nilable(Symbol),
       attributes: T.untyped,
-      content: T.proc.params(content: Components::Dialog::Content).void,
+      content: T.proc.params(content: Components::Popover::Content).void,
     ).void
   end
-  def with_content(show_close_button: true, **attributes, &content)
+  def with_content(anchor: [ :bottom ], anchor_strategy: nil, **attributes, &content)
     @content_block = ->() {
-      render Components::Dialog::Content.new(
-        dialog_id: @dialog_id,
-        show_close_button:,
-        **attributes,
+      render Components::Popover::Content.new(
+        id: @popover_id,
+        anchor:,
+        anchor_strategy:,
+        **mix(@attributes, attributes),
         &content
       )
     }
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def random_popover_id
+    "popover_#{SecureRandom.uuid}"
   end
 end

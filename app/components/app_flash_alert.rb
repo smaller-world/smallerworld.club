@@ -17,7 +17,15 @@ class Components::AppFlashAlert < Components::Base
   def view_template
     Components::Alert(
       variant: @type == :alert ? :destructive : :default,
-      **mix({ class: "overflow-x-auto" }, @attributes),
+      **mix(
+        {
+          class: "overflow-x-auto",
+          data: {
+            turbo_temporary: true,
+          },
+        },
+        @attributes,
+      ),
     ) do |alert|
       Icon(@type == :alert ? "huge/alert-01" : "huge/information-circle")
       alert.description do

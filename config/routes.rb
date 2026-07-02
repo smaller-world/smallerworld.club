@@ -68,7 +68,6 @@ Rails.application.routes.draw do
     resources :posts, only: [ :index, :new, :create ]
     resources :post_types, only: [ :new, :create ]
   end
-  resource :world_settings, path: "/world/:world_id/settings", only: :show
   resources :world_keys, path: "/world/:world_id/keys", only: :index
   resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
   resources :world_invitations,
@@ -82,7 +81,7 @@ Rails.application.routes.draw do
   resources :world_invitations, only: [ :show, :edit, :update, :destroy ]
 
   # == World Keys
-  resources :world_keys, only: [ :edit, :update, :destroy ] do
+  resources :world_keys, only: [ :show, :edit, :update, :destroy ] do
     collection do
       post :accept
     end

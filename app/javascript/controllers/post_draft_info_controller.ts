@@ -27,6 +27,7 @@ export default class PostDraftInfoController extends Typed(
   }
 
   // == Actions ==
+
   update(): void {
     const formData = this.#reconstructFormData();
     const typeId = formData.get("post[type_id]");

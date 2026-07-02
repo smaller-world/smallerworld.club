@@ -23,16 +23,17 @@ class Components::PostForm < Components::Base
       url: (restore_post_draft_path if @restore_draft),
       **mix(
         {
-          class: class_names("flex flex-col gap-6", "loading" => @restore_draft),
+          class: "post-form",
           data: {
+            restoring_draft: (true if @restore_draft),
             controller: token_list(
               "submit haptic-bridge",
-              "post-draft connection" => @post.new_record?,
+              "post-draft" => @post.new_record?,
             ),
             action: token_list(
               "turbo:submit-end->haptic-bridge#vibrate" => !@restore_draft,
               "turbo:submit-end->post-draft#clear" => @post.new_record? && !@restore_draft,
-              "connection:connect->post-draft#restore" => @post.new_record? && @restore_draft,
+              "turbo:load@document->post-draft#restore" => @post.new_record? && @restore_draft,
             ),
             post_draft_world_id_value: @world.id,
           },
@@ -42,34 +43,42 @@ class Components::PostForm < Components::Base
     ) do |form|
       div(class: "flex flex-col gap-4") do
         field_for(form, :type_id) do |f|
-          f.select(
-            class: "flex flex-col items-start",
-            data: {
-              controller: "post-type-select",
-              action: "change->post-type-select#updateSearchParams",
-            },
-          ) do |select|
-            select.with_trigger(
-              class: "border border-border bg-background hover:bg-muted hover:text-foreground dark:bg-transparent dark:hover:bg-input/30",
-            ) do
-              "post type"
-            end
-            select.with_content do |select_content|
-              select_content.group do
-                @post.world_post_types.each do |post_type|
-                  select_content.item(value: post_type.id) do
-                    div(class: "flex items-center gap-2") do
-                      if (icon = post_type.icon)
-                        Icon(icon)
+          div(class: "flex gap-4 justify-between") do
+            div(class: "flex gap-0.5") do
+              f.select(
+                data: {
+                  controller: "post-type-select",
+                  action: "change->post-type-select#updateSearchParams",
+                },
+              ) do |select|
+                select.with_trigger do
+                  "post type"
+                end
+                select.with_content do |select_content|
+                  select_content.group do
+                    @post.world_post_types.each do |post_type|
+                      select_content.item(value: post_type.id) do
+                        div(class: "flex items-center gap-2") do
+                          if (icon = post_type.icon)
+                            Icon(icon)
+                          end
+                          span { post_type.label }
+                        end
                       end
-                      span { post_type.label }
                     end
                   end
                 end
               end
+
+              button_link_to(
+                "edit",
+                [ :edit, @post_type ],
+                size: :sm,
+                class: "text-muted-foreground font-normal px-2 mt-0.5",
+              )
             end
           end
-          f.error(class: "text-center")
+          f.error
         end
 
         Components::FieldGroup(class: "flex-row gap-3") do
@@ -106,7 +115,6 @@ class Components::PostForm < Components::Base
             },
           )
           f.description(
-            class: "text-center text-xs mt-px data-fade:opacity-50 transition-opacity data-fade:duration-400 ease",
             data: {
               post_draft_target: "savedTimestampLabel",
             },
@@ -205,7 +213,7 @@ class Components::PostForm < Components::Base
             class: "self-center w-auto",
           ) do |field|
             field.checkbox
-            field.label(class: "text-sm font-normal grow-0 text-muted-foreground") do
+            field.label(class: "post-form-checkbox-label") do
               "hide post in #{@post_type.label} tab"
             end
           end
@@ -234,6 +242,38 @@ class Components::PostForm < Components::Base
       [ @world, @post ]
     else
       @post
+    end
+  end
+
+  sig { returns(T::Boolean) }
+  def can_save_draft?
+    @post.new_record? && !@restore_draft
+  end
+
+  sig { returns(User::PrivateAssociationRelation) }
+  def recipients
+    @post_type.recipients.where.not(id: @post.hidden_from_ids)
+  end
+
+  sig { params(recipient: User, checkbox_group: Components::CheckboxGroup).void }
+  def recipient_choice_card_for(recipient, checkbox_group:)
+    checkbox_group.field_label_for(recipient.id, class: "cursor-pointer w-fit") do |field_label|
+      field_label.field(
+        orientation: :horizontal,
+        class: "w-auto py-1 pl-2 pr-2 items-center",
+      ) do |field|
+        field.content do
+          field.title(class: "flex items-center gap-1.5") do
+            recipient.name
+          end
+        end
+        field.checkbox_group_item_for(
+          recipient.id,
+          multiple: true,
+          checked: true,
+          class: "rounded-full",
+        )
+      end
     end
   end
 
@@ -278,11 +318,6 @@ class Components::PostForm < Components::Base
         })
       end
     end
-  end
-
-  sig { returns(T::Boolean) }
-  def can_save_draft?
-    @post.new_record? && !@restore_draft
   end
 
   # sig { params(form: PhlexRailsFormBuilder).void }

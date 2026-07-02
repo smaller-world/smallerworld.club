@@ -21,7 +21,7 @@
     /*@apply data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;*/
 
     /* Customizations */
-    @apply transition-[scale,opacity,display]! transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
+    @apply transition-[scale,opacity,display] transition-discrete data-transition:duration-150 data-closed:scale-95 data-closed:opacity-0;
 
     --anchor-gap: var(--spacing);
   }

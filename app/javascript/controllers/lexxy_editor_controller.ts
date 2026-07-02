@@ -1,9 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
-import { Typed } from "stimulus-typescript";
 
 import { addAction } from "#helpers/stimulus_helpers";
 
-export default class extends Typed(Controller<HTMLElement>, {}) {
+export default class extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect() {
@@ -19,5 +18,13 @@ export default class extends Typed(Controller<HTMLElement>, {}) {
 
   removeFocusMarker() {
     delete this.element.dataset.focused;
+  }
+
+  // == Helpers ==
+
+  get isEmpty(): boolean {
+    // @ts-expect-error Untyped property
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this.element.isEmpty;
   }
 }

@@ -1,23 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
-import { Typed } from "stimulus-typescript";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-const targets = {
-  menu: HTMLElement,
-};
-
-export default class DropdownMenuController extends Typed(
-  Controller<HTMLElement>,
-  { targets },
-) {
+export default class PopoverController extends Controller<HTMLElement> {
   // == Lifecycle ==
 
   connect(): void {
     super.connect();
-    if (!this.hasMenuTarget) {
-      throw new Error("Missing menu target");
-    }
     addCleanupAction(this, "close");
   }
 
@@ -28,6 +17,6 @@ export default class DropdownMenuController extends Typed(
   }
 
   close(): void {
-    this.menuTarget.removeAttribute("open");
+    this.element.hidePopover();
   }
 }

@@ -35,6 +35,7 @@ class Components::StreamedLogMessage < Components::Base
   def view_template
     template(
       data: {
+        turbo_temporary: true,
         controller: "streamed-log-message",
         streamed_log_message_log_level_value: @log_level,
         streamed_log_message_controller_name_value: @controller_name,
