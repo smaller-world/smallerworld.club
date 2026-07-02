@@ -57,26 +57,28 @@ class Components::WorldKeyGrantForm < Components::Base
         end
       end
 
-      div(class: "flex flex-col gap-3") do
-        span(class: "text-xs text-center text-muted-foreground italic") do
-          "get your friend to scan this qr code:"
-        end
+      if @granted_post_types.any?
+        div(class: "flex flex-col gap-3") do
+          span(class: "text-xs text-center text-muted-foreground italic") do
+            "get your friend to scan this qr code:"
+          end
 
-        div(class: "flex flex-col gap-y-1") do
-          grant_qr_code
+          div(class: "flex flex-col gap-y-1") do
+            grant_qr_code
 
-          Components::Button(
-            variant: :link,
-            size: :sm,
-            class: "self-center text-muted-foreground text-xs",
-            data: {
-              controller: "clipboard flash-text",
-              clipboard_copy_value: grant_url,
-              flash_text_content_value: "invite link copied!",
-              action: [ "clipboard#copy", "clipboard:copied->flash-text#show" ],
-            },
-          ) do
-            "copy invite link"
+            Components::Button(
+              variant: :link,
+              size: :sm,
+              class: "self-center text-muted-foreground text-xs",
+              data: {
+                controller: "clipboard flash-text",
+                clipboard_copy_value: grant_url,
+                flash_text_content_value: "invite link copied!",
+                action: [ "clipboard#copy", "clipboard:copied->flash-text#show" ],
+              },
+            ) do
+              "copy invite link"
+            end
           end
         end
       end

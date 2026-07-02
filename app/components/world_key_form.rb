@@ -51,10 +51,10 @@ class Components::WorldKeyForm < Components::Base
       end
 
       Components::FieldSet(class: "gap-0") do |field_set|
-        form.hidden_field(:granted_post_type_ids, value: nil, multiple: true)
         field_set.legend(class: "text-center") do
           "which post types can #{@recipient.name} see?"
         end
+        form.hidden_field(:granted_post_type_ids, multiple: true, value: nil)
         checkbox_group_for(
           form,
           :granted_post_type_ids,

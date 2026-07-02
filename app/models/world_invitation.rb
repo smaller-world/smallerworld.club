@@ -61,6 +61,7 @@ class WorldInvitation < ApplicationRecord
   # == Normalizations ==
 
   normalizes_phone_number :recipient_phone_number
+  normalizes :granted_post_type_ids, with: ->(ids) { ids.compact }
 
   # == Validations ==
 
@@ -68,6 +69,7 @@ class WorldInvitation < ApplicationRecord
     presence: true,
     uniqueness: { scope: :world, message: "already invited" },
     phone: { possible: true, types: :mobile, extensions: false }
+  validates :granted_post_type_ids, presence: { message: "select at least one" }
   validate :validate_recipient_not_world_owner
   validate :validate_recipient_not_world_key_recipient
 

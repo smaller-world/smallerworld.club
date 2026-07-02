@@ -49,6 +49,7 @@ class Components::WorldInvitationForm < Components::Base
         field_set.legend(class: "text-center") do
           "invite #{@recipient.name} to see:"
         end
+        form.hidden_field(:granted_post_type_ids, multiple: true, value: nil)
         checkbox_group_for(
           form,
           :granted_post_type_ids,
@@ -58,6 +59,7 @@ class Components::WorldInvitationForm < Components::Base
             granted_post_type_choice_card_for(post_type, checkbox_group:)
           end
         end
+        field_error_for(form, :granted_post_type_ids, class: "text-center mt-1.5")
       end
 
       submit_button_for(form, size: :lg) do |button|
