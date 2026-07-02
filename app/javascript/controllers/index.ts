@@ -28,6 +28,7 @@ import EmojiMartController from "./emoji_mart_controller";
 import EventController from "./event_controller";
 import FieldErrorController from "./field_error_controller";
 import FlashTextController from "./flash_text_controller";
+import ForwardClickController from "./forward_click_controller";
 import FrameReloadController from "./frame_reload_controller";
 import FrameResetController from "./frame_reset_controller";
 import ImageStackController from "./image_stack_controller";
@@ -45,7 +46,8 @@ import MessagingPlatformDropdownController from "./platform_dropdown_controller"
 import PostDraftController from "./post_draft_controller";
 import PostDraftInfoController from "./post_draft_info_controller";
 import PostTimestampController from "./post_timestamp_controller";
-import PushTokenInputController from "./push_token_input_controller";
+import PostTypeSelectController from "./post_type_select_controller";
+import DevicePushTokenInputController from "./push_token_input_controller";
 import RadioController from "./radio_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
@@ -61,34 +63,12 @@ import UppyDndController from "./uppy_dnd_controller";
 import UppyGroupController from "./uppy_group_controller";
 import WorldPostTypeInputController from "./world_post_type_input_controller";
 
-// == Bridge Components
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-application.register("alert-bridge", AlertBridgeController);
-application.register("button-bridge", ButtonBridgeController);
-application.register("haptic-bridge", HapticBridgeController);
-application.register(
-  "notification-token-bridge",
-  NotificationTokenBridgeController,
-);
-/* eslint-enable @typescript-eslint/no-unsafe-argument */
-application.register("passes-bridge", PassesBridgeController);
-application.register("pass-bridge", PassBridgeController);
-application.register("page-load-bridge", PageLoadBridgeController);
-application.register(
-  "notification-permission-bridge",
-  NotificationPermissionBridgeController,
-);
-application.register(
-  "notification-badge-count-bridge",
-  NotificationBadgeCountBridgeController,
-);
-
-// == Libraries
+// == Library helpers
 application.register("turnstile", TurnstileController);
 application.register("tippy", TippyController);
 application.register("toaster", ToasterController);
 
-// == Helpers
+// == General helpers
 application.register("connection", ConnectionController);
 application.register("autoclick", AutoclickController);
 application.register("frame-reload", FrameReloadController);
@@ -112,25 +92,35 @@ application.register("field-error", FieldErrorController);
 application.register("collapse", CollapseController);
 application.register("event", EventController);
 application.register("lightbox", LightboxController);
-application.register("world-post-type-input", WorldPostTypeInputController);
-application.register("post-timestamp", PostTimestampController);
+application.register("forward-click", ForwardClickController);
+
+// == Bridge Components
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+application.register("alert-bridge", AlertBridgeController);
+application.register("button-bridge", ButtonBridgeController);
+application.register("haptic-bridge", HapticBridgeController);
 application.register(
-  "create-world-button-label",
-  CreateWorldButtonLabelController,
+  "notification-token-bridge",
+  NotificationTokenBridgeController,
 );
-application.register("post-draft", PostDraftController);
-application.register("post-draft-info", PostDraftInfoController);
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
+application.register("passes-bridge", PassesBridgeController);
+application.register("pass-bridge", PassBridgeController);
+application.register("page-load-bridge", PageLoadBridgeController);
 application.register(
-  "messaging-platform-dropdown",
-  MessagingPlatformDropdownController,
+  "notification-permission-bridge",
+  NotificationPermissionBridgeController,
+);
+application.register(
+  "notification-badge-count-bridge",
+  NotificationBadgeCountBridgeController,
 );
 
-// == Components
+// == General components
 application.register("clearable-file-input", ClearableFileInputController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
 application.register("emoji-input", EmojiInputController);
 application.register("phone-number-input", PhoneNumberInputController);
-application.register("push-token-input", PushTokenInputController);
 application.register("combobox", ComboboxController);
 application.register("input-group-addon", InputGroupAddonController);
 application.register("lexxy-editor", LexxyEditorController);
@@ -145,3 +135,19 @@ application.register("emoji-mart", EmojiMartController);
 application.register("image-stack", ImageStackController);
 application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
+
+// == Specific components
+application.register("device-push-token-input", DevicePushTokenInputController);
+application.register("world-post-type-input", WorldPostTypeInputController);
+application.register(
+  "create-world-button-label",
+  CreateWorldButtonLabelController,
+);
+application.register("post-timestamp", PostTimestampController);
+application.register("post-draft", PostDraftController);
+application.register("post-draft-info", PostDraftInfoController);
+application.register("post-type-select", PostTypeSelectController);
+application.register(
+  "messaging-platform-dropdown",
+  MessagingPlatformDropdownController,
+);

@@ -1,24 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class OtpInputController extends Controller {
-  // == Targets ==
+const targets = {
+  input: HTMLInputElement,
+  slot: HTMLElement,
+  caretTemplate: HTMLTemplateElement,
+};
 
-  static targets = ["input", "slot", "caretTemplate"];
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly slotTargets: HTMLElement[];
-  declare readonly caretTemplateTarget: HTMLTemplateElement;
-  declare readonly hasInputTarget: boolean;
-  declare readonly hasCaretTemplateTarget: boolean;
+const values = {
+  maxLength: { type: Number },
+  pattern: { type: String },
+};
 
-  // == Values ==
-
-  static values = {
-    maxLength: { type: Number },
-    pattern: { type: String },
-  };
-  declare readonly maxLengthValue: number;
-  declare readonly patternValue: string;
-
+export default class OtpInputController extends Typed(Controller, {
+  targets,
+  values,
+}) {
   // == Lifecycle ==
 
   connect(): void {

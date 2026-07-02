@@ -1,12 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class CollapseController extends Controller<HTMLElement> {
-  static targets = ["control", "content"];
-  declare readonly controlTarget: HTMLElement;
-  declare readonly contentTarget: HTMLElement;
-  declare readonly hasControlTarget: boolean;
-  declare readonly hasContentTarget: boolean;
+const targets = {
+  control: HTMLElement,
+  content: HTMLElement,
+};
 
+export default class CollapseController extends Typed(Controller<HTMLElement>, {
+  targets,
+}) {
   // == Lifecycle ==
 
   connect(): void {

@@ -66,19 +66,33 @@ class Components::Select::Content < Components::Base
 
   sig { params(value: String, attributes: T.untyped, content: T.proc.void).void }
   def item(value:, **attributes, &content)
+    render_item = ->() {
+      el_option(
+        value:,
+        class: "select-item-text",
+        data: {
+          forward_click_target: "clickable",
+        },
+        &content
+      )
+    }
     div(**mix(
       {
         class: "select-item",
         data: {
+          controller: "forward-click",
           slot: "select-item",
         },
       },
       attributes,
     )) do
-      el_option(value:, class: "select-item-text", &content)
+      render_item.call
       span(class: "select-item-indicator") do
         Icon("huge/tick-02")
       end
+    end
+    if value == @value
+      @register_selected_item_block.call(render_item)
     end
   end
 

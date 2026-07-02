@@ -1,14 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class CreateWorldButtonLabelController extends Controller {
-  // == Targets ==
+const targets = {
+  nameInput: HTMLInputElement,
+  label: HTMLSpanElement,
+};
 
-  static targets = ["nameInput", "label"];
-  declare readonly nameInputTarget: HTMLInputElement;
-  declare readonly labelTarget: HTMLSpanElement;
-  declare readonly hasNameInputTarget: boolean;
-  declare readonly hasLabelTarget: boolean;
-
+export default class CreateWorldButtonLabelController extends Typed(
+  Controller,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

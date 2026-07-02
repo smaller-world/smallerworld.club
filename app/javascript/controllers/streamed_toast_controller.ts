@@ -1,13 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class StreamedToastController extends Controller<HTMLTemplateElement> {
-  // == Values ==
+const values = {
+  type: String,
+};
 
-  static values = {
-    type: String,
-  };
-  declare readonly typeValue: string;
-
+export default class StreamedToastController extends Typed(
+  Controller<HTMLTemplateElement>,
+  { values },
+) {
   // == Lifecycle ==
 
   connect(): void {

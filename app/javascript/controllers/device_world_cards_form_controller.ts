@@ -1,20 +1,22 @@
 import { Controller } from "@hotwired/stimulus";
 import { isEmpty } from "lodash-es";
+import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
 import type { PassData } from "./passes_bridge_controller";
 
-export default class DeviceWorldCardsFormController extends Controller<HTMLFormElement> {
-  // == Targets ==
+const targets = {
+  inputTemplate: HTMLTemplateElement,
+  existingInput: HTMLInputElement,
+  addedInput: HTMLInputElement,
+};
 
-  static targets = ["inputTemplate", "existingInput", "addedInput"];
-  declare readonly inputTemplateTarget: HTMLTemplateElement;
-  declare readonly hasInputTemplateTarget: boolean;
-  declare readonly existingInputTargets: HTMLCollectionOf<HTMLInputElement>;
-  declare readonly addedInputTargets: HTMLCollectionOf<HTMLInputElement>;
-
+export default class DeviceWorldCardsFormController extends Typed(
+  Controller<HTMLFormElement>,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

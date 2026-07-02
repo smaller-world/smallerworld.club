@@ -1,10 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
 import { first } from "lodash-es";
+import { Typed } from "stimulus-typescript";
 
-export default class TransitionGroupController extends Controller {
-  static targets = ["item"];
-  declare readonly itemTargets: HTMLCollectionOf<HTMLElement>;
+const targets = {
+  item: HTMLElement,
+};
 
+export default class TransitionGroupController extends Typed(Controller, {
+  targets,
+}) {
   // == Actions ==
 
   start(): void {

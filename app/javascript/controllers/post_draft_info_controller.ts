@@ -1,21 +1,19 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class PostDraftInfoController extends Controller<HTMLFormElement> {
-  // == Targets ==
+const targets = {
+  typeIdInput: HTMLInputElement,
+  descriptionLabel: HTMLElement,
+};
 
-  static targets = ["typeIdInput", "descriptionLabel"];
-  declare readonly typeIdInputTarget: HTMLInputElement;
-  declare readonly hasTypeIdInputTarget: boolean;
-  declare readonly descriptionLabelTarget: HTMLElement;
-  declare readonly hasDescriptionLabelTarget: boolean;
+const values = {
+  worldId: String,
+};
 
-  // == Values ==
-
-  static values = {
-    worldId: String,
-  };
-  declare readonly worldIdValue: string;
-
+export default class PostDraftInfoController extends Typed(
+  Controller<HTMLFormElement>,
+  { targets, values },
+) {
   // == Lifecycle ==
 
   connect(): void {

@@ -75,10 +75,10 @@ class WorldKey < ApplicationRecord
   # == Hooks ==
 
   after_initialize :set_invitation, unless: :invitation_id?
+  after_create_commit :create_notification_for_world_owner!
 
   # after_destroy :discard_recipient_world_cards!,
   #   unless: :recipient_has_other_keys?
-  after_create_commit :create_notification_for_world_owner!
 
   # == Notifications ==
 

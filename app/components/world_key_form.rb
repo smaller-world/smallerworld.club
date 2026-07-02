@@ -26,30 +26,6 @@ class Components::WorldKeyForm < Components::Base
       },
       @attributes,
     )) do |form|
-      Components::Item(
-        variant: :muted,
-        size: :xs,
-        class: "self-center w-auto gap-3 pr-3.5",
-      ) do |item|
-        item.media do
-          div(class: "relative") do
-            image_tag(
-              @world.page_icon_variant,
-              class: "world-icon opacity-50",
-              data: { world_icon_size: "xs" },
-            )
-            div(class: "absolute inset-0 flex items-center justify-center") do
-              Icon("huge/key-01", class: "size-6 text-white")
-            end
-          end
-        end
-        item.content do
-          item.title do
-            "#{@recipient.name}'s key"
-          end
-        end
-      end
-
       Components::FieldSet(class: "gap-0") do |field_set|
         field_set.legend(class: "text-center") do
           "which post types can #{@recipient.name} see?"

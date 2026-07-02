@@ -1,26 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class DisabledController extends Controller<HTMLElement> {
-  // == Values ==
+const targets = {
+  message: HTMLElement,
+};
 
-  static values = {
-    enableAfter: {
-      type: Number,
-      default: null,
-    },
-    message: String,
-  };
-  declare readonly enableAfterValue: number | null;
-  declare readonly messageValue: string;
+const values = {
+  enableAfter: Number,
+  message: String,
+};
 
-  // == Targets ==
-
-  static targets = ["message"];
-  declare readonly messageTarget: HTMLElement;
-  declare readonly hasMessageTarget: boolean;
-
+export default class DisabledController extends Typed(Controller<HTMLElement>, {
+  targets,
+  values,
+}) {
   // == Properties ==
 
   #timeout?: number | null;
@@ -30,7 +25,7 @@ export default class DisabledController extends Controller<HTMLElement> {
 
   connect(): void {
     super.connect();
-    if (typeof this.enableAfterValue === "number") {
+    if (this.enableAfterValue) {
       this.#timeout = setTimeout(() => {
         this.enable();
       }, this.enableAfterValue);

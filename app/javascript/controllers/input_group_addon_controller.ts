@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class InputGroupAddonController extends Controller {
+export default class InputGroupAddonController extends Typed(Controller, {}) {
   // == Actions ==
 
   focus(event: MouseEvent): void {

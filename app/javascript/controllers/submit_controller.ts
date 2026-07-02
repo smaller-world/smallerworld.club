@@ -1,13 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class SubmitController extends Controller<HTMLFormElement> {
-  // == Values ==
+const values = {
+  requirePageVisible: Boolean,
+};
 
-  static values = {
-    requirePageVisible: Boolean,
-  };
-  declare requirePageVisibleValue: boolean;
-
+export default class SubmitController extends Typed(
+  Controller<HTMLFormElement>,
+  { values },
+) {
   // == Actions ==
 
   request(): void {

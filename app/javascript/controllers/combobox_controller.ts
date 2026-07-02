@@ -1,26 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 import {} from "@tailwindplus/elements";
+import { Typed } from "stimulus-typescript";
 
-export default class ComboboxController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  input: HTMLInputElement,
+  inlineStartAddon: HTMLElement,
+};
 
-  static targets = ["input", "inlineStartAddon"];
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly hasInputTarget: boolean;
-  declare readonly inlineStartAddon: HTMLElement;
+const values = {
+  clearOnExpand: {
+    type: Boolean,
+    default: true,
+  },
+};
 
-  // == Values ==
-
-  static values = {
-    clearOnExpand: {
-      type: Boolean,
-      default: true,
-    },
-  };
-  declare readonly clearOnExpandValue: boolean;
-
-  // == Properties ==
-
+export default class ComboboxController extends Typed(Controller<HTMLElement>, {
+  targets,
+  values,
+}) {
   #validValues = new Set<string>();
   #lastSelectedValue = "";
   #inputMutationObserver = new MutationObserver(() => {

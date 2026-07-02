@@ -3,6 +3,10 @@
 @import "@uppy/image-editor/css/style.min.css" layer(base-components);
 
 @layer base-components {
+  .uppy-dnd {
+    @apply flex flex-col;
+  }
+
   .uppy-dnd-dropzone {
     @apply flex flex-col rounded-xl;
 

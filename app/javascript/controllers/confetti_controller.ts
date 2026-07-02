@@ -1,26 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 import { confetti } from "@tsparticles/confetti/lazy";
+import { Typed } from "stimulus-typescript";
 
 import { particlePositionFor } from "#helpers/particles_helpers";
 
-export default class ConfettiController extends Controller<HTMLElement> {
-  // == Values ==
+const targets = {
+  position: HTMLElement,
+  input: HTMLInputElement,
+};
 
-  static values = {
-    emoji: String,
-    canvasId: String,
-  };
-  declare readonly emojiValue: string;
-  declare readonly canvasIdValue: string;
+const values = {
+  emoji: String,
+  canvasId: String,
+};
 
-  // == Targets ==
-
-  static targets = ["position", "input"];
-  declare readonly positionTarget: HTMLElement;
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly hasPositionTarget: boolean;
-  declare readonly hasInputTarget: boolean;
-
+export default class ConfettiController extends Typed(Controller<HTMLElement>, {
+  targets,
+  values,
+}) {
   // == Lifecycle ==
 
   connect(): void {

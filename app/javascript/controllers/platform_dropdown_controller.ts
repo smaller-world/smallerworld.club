@@ -1,12 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class MessagingPlatformDropdownController extends Controller<HTMLFormElement> {
-  // == Targets ==
+const targets = {
+  input: HTMLInputElement,
+};
 
-  static targets = ["input"];
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly hasInputTarget: boolean;
-
+export default class MessagingPlatformDropdownController extends Typed(
+  Controller<HTMLFormElement>,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

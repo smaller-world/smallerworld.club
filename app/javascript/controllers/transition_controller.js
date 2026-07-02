@@ -1,13 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
 import { enter, leave } from "el-transition";
+import { Typed } from "stimulus-typescript";
 
-export default class TransitionController extends Controller {
-  // == Values ==
+const values = {
+  delay: Number,
+};
 
-  static values = {
-    delay: Number,
-  };
-
+export default class TransitionController extends Typed(Controller, {
+  values,
+}) {
   // == Actions ==
 
   enter() {

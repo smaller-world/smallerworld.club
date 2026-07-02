@@ -1,16 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
 import { type Root } from "react-dom/client";
+import { Typed } from "stimulus-typescript";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 import type { ToastEvent } from "#helpers/toaster_helpers";
 
-export default class ToasterController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  listener: HTMLElement,
+};
 
-  static targets = ["listener"];
-  declare readonly listenerTarget: HTMLElement;
-  declare readonly hasListenerTarget: boolean;
-
+export default class ToasterController extends Typed(Controller<HTMLElement>, {
+  targets,
+}) {
   // == Properties ==
 
   #pendingToastEvents: ToastEvent[] = [];

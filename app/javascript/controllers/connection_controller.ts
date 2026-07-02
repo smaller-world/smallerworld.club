@@ -1,15 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class ConnectionController extends Controller {
-  // == Values ==
+const values = {
+  delay: { type: Number, default: 0 },
+};
 
-  static values = {
-    delay: { type: Number, default: 0 },
-  };
-  declare readonly delayValue: number;
-
-  // == Properties ==
-
+export default class ConnectionController extends Typed(Controller, {
+  values,
+}) {
   #delayTimeout?: number | null;
 
   // == Lifecycle ==

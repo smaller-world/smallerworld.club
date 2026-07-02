@@ -1,17 +1,16 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class StreamedLogMessageController extends Controller<HTMLTemplateElement> {
-  // == Values ==
+const values = {
+  logLevel: String,
+  controllerName: String,
+  actionName: String,
+};
 
-  static values = {
-    logLevel: String,
-    controllerName: String,
-    actionName: String,
-  };
-  declare readonly logLevelValue: string;
-  declare readonly controllerNameValue: string;
-  declare readonly actionNameValue: string;
-
+export default class StreamedLogMessageController extends Typed(
+  Controller<HTMLTemplateElement>,
+  { values },
+) {
   // == Lifecycle ==
 
   connect(): void {

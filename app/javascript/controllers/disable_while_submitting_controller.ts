@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 export default class DisableWhileSubmittingController extends Controller<
   HTMLInputElement | HTMLButtonElement

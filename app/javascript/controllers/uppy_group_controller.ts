@@ -1,23 +1,25 @@
 import { Controller } from "@hotwired/stimulus";
 import type { Meta, MinimalRequiredUppyFile } from "@uppy/core";
+import { Typed } from "stimulus-typescript";
 
-export default class UppyGroupController extends Controller<HTMLElement> {
-  // == Targets ==
+import UppyDndController from "./uppy_dnd_controller";
 
-  static targets = ["dndTemplate", "dnd"];
-  declare readonly dndTemplateTarget: HTMLTemplateElement;
-  declare readonly dndTargets: HTMLCollectionOf<HTMLDivElement>;
-  declare readonly hasDndTemplateTarget: boolean;
+const targets = {
+  dndTemplate: HTMLTemplateElement,
+};
 
-  // == Values ==
+const outlets = {
+  dnd: UppyDndController,
+};
 
-  static values = {
-    maxFiles: Number,
-  };
-  declare readonly maxFilesValue: number;
+const values = {
+  maxFiles: Number,
+};
 
-  // == Properties ==
-
+export default class UppyGroupController extends Typed(
+  Controller<HTMLElement>,
+  { targets, outlets, values },
+) {
   #filesToUpload: MinimalRequiredUppyFile<Meta, { signed_id: string }>[] = [];
 
   // == Lifecycle ==
@@ -41,16 +43,17 @@ export default class UppyGroupController extends Controller<HTMLElement> {
   }
 
   removeDnd({ target }: PointerEvent): void {
-    if (this.dndTargets.length <= 1) {
+    if (this.dndOutlets.length <= 1) {
       return;
     }
     if (!(target instanceof HTMLElement)) {
       return;
     }
-    for (const dnd of this.dndTargets) {
-      if (dnd.contains(target)) {
-        dnd.remove();
+    for (const dndElement of this.dndOutletElements) {
+      if (dndElement.contains(target)) {
+        dndElement.remove();
         this.dispatch("removed");
+        break;
       }
     }
     this.update();
@@ -75,22 +78,17 @@ export default class UppyGroupController extends Controller<HTMLElement> {
   // == Helpers ==
 
   #addDndTargets(): void {
-    if (this.maxFilesValue && this.dndTargets.length >= this.maxFilesValue) {
+    if (this.maxFilesValue && this.dndOutlets.length >= this.maxFilesValue) {
       return;
-    }
-    for (const dnd of this.dndTargets) {
-      if (dndIsEmpty(dnd)) {
-        return;
-      }
     }
     const dndTree = this.dndTemplateTarget.content.cloneNode(true);
     this.element.appendChild(dndTree);
   }
 
   #removeEmptyDndTargets(): void {
-    for (const dnd of this.dndTargets) {
-      if (dndIsEmpty(dnd)) {
-        dnd.remove();
+    for (const dnd of this.dndOutlets) {
+      if (dnd.isEmpty) {
+        dnd.element.remove();
       }
     }
   }
@@ -99,25 +97,22 @@ export default class UppyGroupController extends Controller<HTMLElement> {
     const canUploadMore =
       this.maxFilesValue &&
       this.#countNonEmptyDndTargets() < this.maxFilesValue;
-    for (const dnd of this.dndTargets) {
+    for (const dnd of this.dndOutlets) {
       if (canUploadMore) {
-        dnd.dataset.uppyDndMultipleValue = "true";
+        dnd.multipleValue = true;
       } else {
-        delete dnd.dataset.uppyDndMultipleValue;
+        dnd.multipleValue = false;
       }
     }
   }
 
   #countNonEmptyDndTargets(): number {
     let count = 0;
-    for (const dnd of this.dndTargets) {
-      if (!dndIsEmpty(dnd)) {
+    for (const dnd of this.dndOutlets) {
+      if (!dnd.isEmpty) {
         count++;
       }
     }
     return count;
   }
 }
-
-const dndIsEmpty = (dnd: HTMLElement): boolean =>
-  !dnd.dataset.uppyDndPreviewSignedIdValue && dnd.ariaBusy !== "true";

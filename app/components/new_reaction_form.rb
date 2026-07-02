@@ -15,12 +15,12 @@ class Components::NewReactionForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model: [ @post, @reaction ], **normalize_mix(
+    id = SecureRandom.uuid
+    form_with(model: [ @post, @reaction ], id:, **normalize_mix(
       {
         data: {
-          controller: "submit emoji-input confetti haptic-bridge",
+          controller: "submit confetti haptic-bridge",
           action: [
-            "emoji-input:emoji-set->submit#request",
             "turbo:submit-end->confetti#launch",
             "turbo:submit-end->haptic-bridge#vibrate",
           ],
@@ -31,7 +31,9 @@ class Components::NewReactionForm < Components::Base
     )) do |form|
       form.hidden_field(:emoji, data: {
         confetti_target: "input",
-        emoji_input_target: "input",
+        controller: "emoji-input",
+        emoji_input_dialog_outlet: "[id='#{id}'] [data-controller~=dialog]",
+        action: "change->submit#request",
       })
 
       Components::Dialog() do |dialog|
@@ -61,10 +63,8 @@ class Components::NewReactionForm < Components::Base
         ) do
           div(data: {
             controller: "emoji-mart",
-            action: [
-              "emoji-mart:select->emoji-input#setEmoji",
-              "emoji-mart:select->dialog#close",
-            ],
+            emoji_mart_dialog_outlet: "[id='#{id}'] [data-controller~=dialog]",
+            emoji_mart_emoji_input_outlet: "[id='#{id}'] [data-controller~=emoji-input]",
           })
         end
       end

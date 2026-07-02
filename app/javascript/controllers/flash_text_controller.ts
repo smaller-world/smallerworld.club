@@ -1,26 +1,25 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class FlashTextController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  container: HTMLElement,
+};
 
-  static targets = ["container"];
-  declare readonly containerTarget: HTMLElement;
-  declare readonly hasContainerTarget: boolean;
+const values = {
+  content: String,
+  duration: {
+    type: Number,
+    default: 2000,
+  },
+};
 
-  // == Values ==
-  static values = {
-    content: String,
-    duration: {
-      type: Number,
-      default: 2000,
-    },
-  };
-  declare readonly contentValue: string;
-  declare readonly durationValue: number;
-
+export default class FlashTextController extends Typed(
+  Controller<HTMLElement>,
+  { targets, values },
+) {
   originalText?: string | null;
   timeout?: number | null;
 

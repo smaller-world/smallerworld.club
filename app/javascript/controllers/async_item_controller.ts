@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import type { TurboBeforeFetchResponseEvent } from "@hotwired/turbo";
+import { Typed } from "stimulus-typescript";
 
 export default class AsyncItemController extends Controller<HTMLElement> {
   // == Actions ==

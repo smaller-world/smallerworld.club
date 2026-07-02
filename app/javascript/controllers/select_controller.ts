@@ -1,12 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class SelectController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  trigger: HTMLElement,
+};
 
-  static targets = ["trigger"];
-  declare readonly triggerTarget: HTMLElement;
-  declare readonly hasTriggerTarget: boolean;
-
+export default class SelectController extends Typed(Controller<HTMLElement>, {
+  targets,
+}) {
   // == Lifecycle ==
 
   connect(): void {
@@ -18,13 +19,18 @@ export default class SelectController extends Controller<HTMLElement> {
 
   // == Actions ==
 
-  updatePlaceholder() {
+  update() {
     const selected = this.element.querySelector<HTMLElement>(
       "el-option[aria-selected=true]",
     );
     if (selected) {
+      const value = selected.getAttribute("value");
+      if (value) {
+        this.element.setAttribute("value", value);
+      }
       delete this.triggerTarget.dataset.placeholder;
     } else {
+      this.element.removeAttribute("value");
       this.triggerTarget.dataset.placeholder = "true";
     }
   }

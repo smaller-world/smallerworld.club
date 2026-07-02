@@ -79,7 +79,7 @@ class Components::UppyDnd < Components::Input
 
     root_element(
       :div,
-      class: "flex flex-col",
+      class: "uppy-dnd",
       data: {
         controller: "uppy-dnd",
         uppy_dnd_direct_upload_url_value: rails_direct_uploads_path,

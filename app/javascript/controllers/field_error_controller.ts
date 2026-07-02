@@ -1,10 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class FieldErrorController extends Controller<HTMLElement> {
-  static targets = ["error"];
-  declare readonly errorTarget: HTMLElement;
-  declare readonly hasErrorTarget: boolean;
+const targets = {
+  error: HTMLElement,
+};
 
+export default class FieldErrorController extends Typed(
+  Controller<HTMLElement>,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

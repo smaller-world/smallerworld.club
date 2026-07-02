@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class PushTokenInputController extends Controller<HTMLInputElement> {
+export default class DevicePushTokenInputController extends Controller<HTMLInputElement> {
   // == Actions ==
 
   setValue({ detail }: CustomEvent<{ token: string }>): void {

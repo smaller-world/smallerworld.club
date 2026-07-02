@@ -30,17 +30,6 @@ class Components::WorldKeyGrantForm < Components::Base
       },
       @attributes,
     )) do |form|
-      div(class: "relative self-center") do
-        image_tag(
-          @world.page_icon_variant,
-          class: "world-icon opacity-50",
-          data: { world_icon_size: "sm" },
-        )
-        div(class: "absolute inset-0 flex items-center justify-center") do
-          Icon("huge/key-01", class: "size-8 text-white")
-        end
-      end
-
       post_types = @world.post_types
       Components::FieldSet(class: "gap-0") do |field_set|
         field_set.legend(class: "text-center") do
@@ -66,18 +55,24 @@ class Components::WorldKeyGrantForm < Components::Base
           div(class: "flex flex-col gap-y-1") do
             grant_qr_code
 
-            Components::Button(
-              variant: :link,
-              size: :sm,
-              class: "self-center text-muted-foreground text-xs",
-              data: {
-                controller: "clipboard flash-text",
-                clipboard_copy_value: grant_url,
-                flash_text_content_value: "invite link copied!",
-                action: [ "clipboard#copy", "clipboard:copied->flash-text#show" ],
-              },
-            ) do
-              "copy invite link"
+            div do
+              Components::Button(
+                variant: :link,
+                size: :sm,
+                class: "self-center text-muted-foreground text-xs",
+                data: {
+                  controller: "clipboard flash-text",
+                  clipboard_copy_value: grant_url,
+                  flash_text_content_value: "invite link copied!",
+                  action: [ "clipboard#copy", "clipboard:copied->flash-text#show" ],
+                },
+              ) do
+                "copy invite link"
+              end
+              p(class: "text-xs text-muted-foreground") do
+                "anyone with the link will be able to see your " \
+                  "#{@granted_post_types.map(&:label).to_sentence} posts"
+              end
             end
           end
         end

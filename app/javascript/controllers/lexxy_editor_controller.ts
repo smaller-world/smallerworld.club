@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 import { addAction } from "#helpers/stimulus_helpers";
 
-export default class extends Controller<HTMLElement> {
+export default class extends Typed(Controller<HTMLElement>, {}) {
   // == Lifecycle ==
 
   connect() {

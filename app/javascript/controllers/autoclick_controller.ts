@@ -1,13 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class AutoclickController extends Controller<HTMLElement> {
-  // == Values ==
+const values = {
+  once: Boolean,
+};
 
-  static values = {
-    once: Boolean,
-  };
-  declare readonly onceValue: boolean;
-
+export default class AutoclickController extends Typed(
+  Controller<HTMLElement>,
+  { values },
+) {
   // == Lifecycle ==
 
   connect(): void {

@@ -1,14 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class DialogController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  content: HTMLDialogElement,
+};
 
-  static targets = ["content"];
-  declare readonly contentTarget: HTMLDialogElement;
-  declare readonly hasContentTarget: boolean;
-
+export default class DialogController extends Typed(Controller<HTMLElement>, {
+  targets,
+}) {
   // == Lifecycle ==
 
   connect(): void {

@@ -1,43 +1,56 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
+import invariant from "tiny-invariant";
 
-export default class EmojiInputController extends Controller<HTMLElement> {
-  // == Targets ==
+import DialogController from "./dialog_controller";
+import TippyController from "./tippy_controller";
 
-  static targets = ["input"];
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly hasInputTarget: boolean;
+const outlets = {
+  dialog: DialogController,
+};
 
+export default class EmojiInputController extends Typed(
+  Controller<HTMLInputElement>,
+  { outlets },
+) {
   // == Lifecycle ==
 
   connect(): void {
     super.connect();
-    if (!this.hasInputTarget) {
-      throw new Error("Missing input target");
+    if (!this.hasDialogOutlet) {
+      throw new Error("Missing dialog outlet");
     }
   }
 
   // == Actions ==
 
-  setEmoji(event: CustomEvent<{ native: string }>): void {
-    this.inputTarget.value = event.detail.native;
-    this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }));
-    this.dispatch("emoji-set");
+  setValue(emoji: string): void {
+    this.element.value = emoji;
+    this.element.dispatchEvent(new Event("input", { bubbles: true }));
+    this.element.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   clearOrOpenDialog(): void {
-    if (this.inputTarget.value) {
-      this.inputTarget.value = "";
-      this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }));
+    if (this.element.value) {
+      this.element.value = "";
+      this.element.dispatchEvent(new Event("change", { bubbles: true }));
     } else {
-      this.dispatch("open-dialog");
+      this.dialogOutlet.open();
     }
   }
 
-  toggleInputTooltip(): void {
-    if (this.inputTarget.value) {
-      delete this.inputTarget.dataset.tippyDisabledValue;
-    } else {
-      this.inputTarget.dataset.tippyDisabledValue = "true";
-    }
+  updateTooltip(): void {
+    this.#inputTippy.disabledValue = !this.element.value;
+  }
+
+  // == Helpers ==
+
+  get #inputTippy(): TippyController {
+    const controller = this.application.getControllerForElementAndIdentifier(
+      this.element,
+      "tippy",
+    );
+    invariant(controller instanceof TippyController);
+    return controller;
   }
 }

@@ -1,14 +1,15 @@
 import { BridgeComponent } from "@hotwired/hotwire-native-bridge";
+import { Typed } from "stimulus-typescript";
 
-export default class NotificationTokenBridgeController extends BridgeComponent {
+const values = {
+  provisional: Boolean,
+};
+
+export default class NotificationTokenBridgeController extends Typed(
+  BridgeComponent,
+  { values },
+) {
   static component = "notification-token";
-
-  // == Values ==
-
-  static values = {
-    provisional: Boolean,
-  };
-  declare readonly provisionalValue: boolean;
 
   // == Lifecycle ==
 

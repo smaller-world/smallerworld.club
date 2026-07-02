@@ -39,12 +39,11 @@ class Components::ExistingReactionForm < Components::Base
         {
           data: {
             controller: token_list(
-              "form haptic-bridge",
+              "haptic-bridge",
               "confetti" => @current_user && !@current_user_reaction,
             ),
             action: token_list(
               "turbo:submit-end->confetti#launch",
-              "turbo:before-fetch-response->form#reloadFrameIfNotFound",
               "turbo:submit-end->haptic-bridge#vibrate" => !@current_user_reaction,
             ),
             confetti_emoji_value: @emoji,
@@ -70,7 +69,7 @@ class Components::ExistingReactionForm < Components::Base
       ) do
         span(class: class_names(
           "font-emoji align-middle",
-          @reactions_count > 1 ? "text-base" : "text-xl",
+          @reactions_count > 1 ? "text-base" : "text-lg",
         )) do
           @emoji
         end

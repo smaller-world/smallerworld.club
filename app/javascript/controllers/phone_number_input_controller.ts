@@ -1,17 +1,18 @@
 import { Controller } from "@hotwired/stimulus";
 import intlTelInput, { type Iso2 } from "intl-tel-input";
+import { Typed } from "stimulus-typescript";
 
 import "intl-tel-input/styles";
 
-export default class PhoneNumberInputController extends Controller<HTMLInputElement> {
-  // == Targets ==
+const targets = {
+  input: HTMLInputElement,
+  hiddenInput: HTMLInputElement,
+};
 
-  static targets = ["input", "hiddenInput"];
-  declare readonly inputTarget: HTMLInputElement;
-  declare readonly hiddenInputTarget: HTMLInputElement;
-  declare readonly hasInputTarget: boolean;
-  declare readonly hasHiddenInputTarget: boolean;
-
+export default class PhoneNumberInputController extends Typed(
+  Controller<HTMLInputElement>,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

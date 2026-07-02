@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class EventController extends Controller {
+export default class EventController extends Typed(Controller, {}) {
   // == Actions ==
 
   preventDefault(event: Event): void {

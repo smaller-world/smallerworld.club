@@ -1,16 +1,15 @@
 import { BridgeComponent } from "@hotwired/hotwire-native-bridge";
+import { Typed } from "stimulus-typescript";
 
-export default class PassBridgeController extends BridgeComponent {
+const values = {
+  passTypeIdentifier: String,
+  serialNumber: String,
+};
+
+export default class PassBridgeController extends Typed(BridgeComponent, {
+  values,
+}) {
   static component = "pass";
-
-  // == Values ==
-
-  static values = {
-    passTypeIdentifier: String,
-    serialNumber: String,
-  };
-  declare readonly passTypeIdentifierValue: string;
-  declare readonly serialNumberValue: string;
 
   // == Actions ==
 

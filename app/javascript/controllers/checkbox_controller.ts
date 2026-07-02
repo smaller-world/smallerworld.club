@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
 export default class CheckboxController extends Controller<HTMLSpanElement> {

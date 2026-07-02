@@ -1,15 +1,15 @@
+import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
 import CheckboxController from "./checkbox_controller";
 
-export default class RadioController extends CheckboxController {
-  // == Values ==
+const values = {
+  toggleable: Boolean,
+};
 
-  static values = {
-    toggleable: Boolean,
-  };
-  declare readonly toggleableValue: boolean;
-
+export default class RadioController extends Typed(CheckboxController, {
+  values,
+}) {
   // == Listeners ==
 
   #labelClickListener = this._handleLabelClick.bind(this);

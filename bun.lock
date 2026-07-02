@@ -35,6 +35,7 @@
         "shadcn": "^4.11.0",
         "sonner": "^2.0.7",
         "stimulus-library": "^1.7.0",
+        "stimulus-typescript": "^0.1.3",
         "stimulus-use": "^0.52.3",
         "tailwindcss": "^4.3.0",
         "tiny-invariant": "^1.3.3",
@@ -1142,6 +1143,8 @@
     "stdin-discarder": ["stdin-discarder@0.2.2", "", {}, "sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ=="],
 
     "stimulus-library": ["stimulus-library@1.7.0", "", { "dependencies": { "@hotwired/stimulus": "^3.2.1", "@stimulus-library/controllers": "^1.7.0", "@stimulus-library/mixins": "^1.7.0", "@stimulus-library/utilities": "^1.7.0" } }, "sha512-FdzPEwrxvqoHr8z7UJSg6T4t9LwxSfEo8sFi52+IDoGmce6AuhB5vSQLrs2eo8pbJWBDSEzp2UDdWdOOGhH+0g=="],
+
+    "stimulus-typescript": ["stimulus-typescript@0.1.3", "", { "peerDependencies": { "@hotwired/stimulus": "^3.0.0" } }, "sha512-dK10LQw1X+dTjxZGgYxidfq1G8egcw9Zua/swA6wPX9T7saSudKlg2nwTotFULs8qXqO8j4B/4ppR+gEnl92QA=="],
 
     "stimulus-use": ["stimulus-use@0.52.3", "", { "peerDependencies": { "@hotwired/stimulus": ">= 3", "hotkeys-js": ">= 3" } }, "sha512-stZ5dID6FUrGCR/ChWUa0FT5Z8iqkzT6lputOAb50eF+Ayg7RzJj4U/HoRlp2NV333QfvoRidru9HLbom4hZVw=="],
 

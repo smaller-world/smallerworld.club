@@ -27,12 +27,8 @@ class Components::EmojiInput < Components::Input
 
   sig { override.void }
   def view_template
-    Components::Dialog(
-      data: {
-        controller: "emoji-input",
-        action: "emoji-input:open-dialog->dialog#open",
-      },
-    ) do |dialog|
+    id = SecureRandom.uuid
+    Components::Dialog(id:, class: "emoji-input") do |dialog|
       dialog.with_trigger do
         div(class: "relative w-min") do
           Components::Input(
@@ -43,23 +39,22 @@ class Components::EmojiInput < Components::Input
             placeholder: " ",
             **mix(
               {
-                class: "emoji-input",
                 data: {
-                  emoji_input_target: "input",
-                  controller: "tippy",
+                  controller: "emoji-input tippy",
+                  emoji_input_dialog_outlet: "[id='#{id}']",
                   tippy_trigger_value: "mouseenter",
                   tippy_content_value: "click to clear",
                   tippy_disabled_value: !has_value?,
                   action: [
                     "click->emoji-input#clearOrOpenDialog",
-                    "change->emoji-input#toggleInputTooltip",
+                    "change->emoji-input#updateTooltip",
                   ],
                 },
               },
               @attributes,
             ),
           )
-          div(class: "emoji-input-placeholder") do
+          div(data: { slot: "emoji-input-placeholder" }) do
             Icon("huge/smile")
           end
         end
@@ -70,10 +65,8 @@ class Components::EmojiInput < Components::Input
       ) do
         div(data: {
           controller: "emoji-mart",
-          action: [
-            "emoji-mart:select->emoji-input#setEmoji",
-            "emoji-mart:select->dialog#close",
-          ],
+          emoji_mart_dialog_outlet: "[id='#{id}']",
+          emoji_mart_emoji_input_outlet: "[id='#{id}'] [data-controller~=emoji-input]",
         })
       end
     end

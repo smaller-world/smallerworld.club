@@ -1,30 +1,27 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 import { useDebounce } from "stimulus-use";
 
 import { hasValueSetter } from "#helpers/form_helpers";
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class PostDraftController extends Controller<HTMLFormElement> {
-  // == Targets ==
+const targets = {
+  savedTimestampLabel: HTMLElement,
+};
 
-  static targets = ["savedTimestampLabel"];
-  declare readonly savedTimestampLabelTarget: HTMLElement;
-  declare readonly hasSavedTimestampLabelTarget: boolean;
+const values = {
+  worldId: String,
+};
+
+export default class PostDraftController extends Typed(
+  Controller<HTMLFormElement>,
+  { targets, values },
+) {
+  #savedTimestampFlashTimeout?: number | null;
 
   // == Configuration ==
 
   static debounces = ["save"];
-
-  // == Values ==
-
-  static values = {
-    worldId: String,
-  };
-  declare readonly worldIdValue: string;
-
-  // == Properties ==
-
-  #savedTimestampFlashTimeout?: number | null;
 
   // == Lifecycle ==
 

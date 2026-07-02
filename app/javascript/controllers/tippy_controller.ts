@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
+import { placements } from "@popperjs/core";
 import { last } from "lodash-es";
+import { Typed } from "stimulus-typescript";
 import tippy, {
   type Instance,
   type Placement,
@@ -9,32 +11,21 @@ import tippy, {
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class TippyController extends Controller<HTMLElement> {
-  // == Values ==
+const values = {
+  content: String,
+  trigger: { type: String, default: "mouseenter focus" },
+  placement: { type: String, default: "top" },
+  animation: { type: String, default: "shift-away" },
+  hideOnClick: { type: Boolean, default: true },
+  disabled: Boolean,
+  maxWidth: { type: String, default: "350px" },
+  flashDuration: { type: Number, default: 2000 },
+  flashDelay: Number,
+};
 
-  static values = {
-    content: String,
-    trigger: { type: String, default: "mouseenter focus" },
-    placement: { type: String, default: "top" },
-    animation: { type: String, default: "shift-away" },
-    hideOnClick: { type: Boolean, default: true },
-    disabled: Boolean,
-    maxWidth: { type: String, default: "350px" },
-    flashDuration: { type: Number, default: 2000 },
-    flashDelay: Number,
-  };
-  declare readonly contentValue: string;
-  declare readonly triggerValue: string;
-  declare readonly placementValue: Placement;
-  declare readonly animationValue: string;
-  declare readonly hideOnClickValue: boolean;
-  declare readonly disabledValue: boolean;
-  declare readonly maxWidthValue: number;
-  declare readonly flashDurationValue: number;
-  declare readonly flashDelayValue: number;
-
-  // == State ==
-
+export default class TippyController extends Typed(Controller<HTMLElement>, {
+  values,
+}) {
   #tippy?: Instance | null;
   #showFlashTimeout?: number | null;
   #hideFlashTimeout?: number | null;
@@ -111,11 +102,14 @@ export default class TippyController extends Controller<HTMLElement> {
     const props: Partial<Props> = {
       content: this.contentValue,
       animation: this.animationValue,
-      placement: this.placementValue,
+
       trigger: this.triggerValue,
       hideOnClick: this.hideOnClickValue,
       maxWidth: this.maxWidthValue,
     };
+    if (isPlacement(this.placementValue)) {
+      props.placement = this.placementValue;
+    }
     if (this.#tippy) {
       if (!this.contentValue) {
         const tippy = this.#tippy;
@@ -161,3 +155,7 @@ export default class TippyController extends Controller<HTMLElement> {
     tippy.hide();
   }
 }
+
+const isPlacement = (value: string): value is Placement => {
+  return value in placements;
+};

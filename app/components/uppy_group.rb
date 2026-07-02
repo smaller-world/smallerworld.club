@@ -54,12 +54,15 @@ class Components::UppyGroup < Components::Input
 
   sig { override.void }
   def view_template
+    controller_id = SecureRandom.uuid
     root_element(
       :div,
       class: "uppy-group",
       data: {
         controller: "uppy-group",
+        controller_id:,
         uppy_group_max_files_value: @max_files,
+        uppy_group_dnd_outlet: "[data-controller-id='#{controller_id}'] > [data-controller=uppy-dnd]",
       },
     ) do
       template(data: { uppy_group_target: "dndTemplate" }) do
@@ -97,7 +100,6 @@ class Components::UppyGroup < Components::Input
       **mix(
         {
           data: {
-            uppy_group_target: "dnd",
             action: [
               "uppy-dnd:uploaded->uppy-group#update",
               "uppy-dnd:multiple-upload->uppy-group#addUploads",

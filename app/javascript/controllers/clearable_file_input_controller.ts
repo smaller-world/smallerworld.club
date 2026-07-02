@@ -1,16 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 import { addAction } from "#helpers/stimulus_helpers";
 
-export default class ClearableFileInputController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  inputTemplate: HTMLTemplateElement,
+  spinner: HTMLElement,
+};
 
-  static targets = ["inputTemplate", "spinner"];
-  declare readonly inputTemplateTarget: HTMLTemplateElement;
-  declare readonly spinnerTarget: HTMLElement;
-  declare readonly hasInputTemplateTarget: boolean;
-  declare readonly hasSpinnerTarget: boolean;
-
+export default class ClearableFileInputController extends Typed(
+  Controller<HTMLElement>,
+  { targets },
+) {
   // == Lifecycle ==
 
   connect(): void {

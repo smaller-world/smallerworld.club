@@ -1,14 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
-export default class ClipboardController extends Controller {
-  // == Values ==
+const values = {
+  copy: String,
+};
 
-  static values = {
-    copy: String,
-  };
-  declare readonly copyValue: string;
-
+export default class ClipboardController extends Typed(Controller, { values }) {
   // == Actions ==
 
   copy() {

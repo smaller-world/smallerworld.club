@@ -44,7 +44,7 @@ class Components::Select < Components::Input
           class: "select",
           data: {
             controller: "select",
-            action: "change->select#updatePlaceholder",
+            action: "change->select#update",
             placeholder: (true unless field_value),
           },
           aria: {
@@ -158,6 +158,7 @@ class Components::Select < Components::Input
     end
 
     button(
+      type: "button",
       disabled: @disabled,
       **mix(
         {

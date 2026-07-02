@@ -1,11 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class LightboxController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  image: HTMLImageElement,
+};
 
-  static targets = ["image"];
-  declare readonly imageTargets: HTMLCollectionOf<HTMLImageElement>;
-
+export default class LightboxController extends Typed(Controller<HTMLElement>, {
+  targets,
+}) {
   // == Actions ==
 
   open(event: PointerEvent): void {

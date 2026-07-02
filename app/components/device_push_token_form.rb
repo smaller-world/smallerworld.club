@@ -27,12 +27,12 @@ class Components::DevicePushTokenForm < Components::Base
       form.hidden_field(
         :push_token,
         data: {
-          controller: "connection notification-token-bridge push-token-input",
+          controller: "connection notification-token-bridge device-push-token-input",
           notification_token_bridge_provisional_value: true,
           action: token_list(
             "connection:connect->notification-token-bridge#request",
-            "notification-token-bridge:retrieved->push-token-input#setValue",
-            "push-token-input:changed->submit#request",
+            "notification-token-bridge:retrieved->device-push-token-input#setValue",
+            "device-push-token-input:changed->submit#request",
           ),
         },
       )

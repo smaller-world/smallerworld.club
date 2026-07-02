@@ -4,6 +4,7 @@ import {
   type AnimationOptions,
   type AnimationPlaybackControls,
 } from "motion";
+import { Typed } from "stimulus-typescript";
 import { useResize } from "stimulus-use";
 
 import { addCleanupAction } from "#helpers/stimulus_helpers";
@@ -34,25 +35,20 @@ interface DragState {
   pointerId: number;
 }
 
-export default class ImageStackController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  image: HTMLImageElement,
+};
 
-  static targets = ["image"];
-  declare readonly imageTargets: HTMLImageElement[];
+const values = {
+  flipBoundary: { type: Number, default: 100 },
+  clickBoundary: { type: Number, default: 2 },
+  maxHeight: { type: Number, default: 360 },
+};
 
-  // == Values ==
-
-  static values = {
-    flipBoundary: { type: Number, default: 100 },
-    clickBoundary: { type: Number, default: 2 },
-    maxHeight: { type: Number, default: 360 },
-  };
-  declare readonly flipBoundaryValue: number;
-  declare readonly clickBoundaryValue: number;
-  declare readonly maxHeightValue: number;
-
-  // == State ==
-
+export default class ImageStackController extends Typed(
+  Controller<HTMLElement>,
+  { targets, values },
+) {
   #currentIndex = 0;
   #containerWidth = 0;
   #drag: DragState | null = null;

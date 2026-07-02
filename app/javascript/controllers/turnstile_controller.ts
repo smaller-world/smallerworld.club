@@ -1,19 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
 import { addAction, addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class TurnstileController extends Controller<HTMLElement> {
-  // == Values ==
+const values = {
+  sitekey: String,
+  action: String,
+};
 
-  static values = {
-    sitekey: String,
-    action: String,
-  };
-  declare readonly sitekeyValue: string;
-  declare readonly actionValue: string;
-
-  // == Properties ==
-
+export default class TurnstileController extends Typed(
+  Controller<HTMLElement>,
+  { values },
+) {
   #widgetId?: string | null;
 
   // == Lifecycle ==

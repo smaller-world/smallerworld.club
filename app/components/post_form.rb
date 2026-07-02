@@ -42,7 +42,13 @@ class Components::PostForm < Components::Base
     ) do |form|
       div(class: "flex flex-col gap-4") do
         field_for(form, :type_id) do |f|
-          f.select(class: "flex flex-col items-start") do |select|
+          f.select(
+            class: "flex flex-col items-start",
+            data: {
+              controller: "post-type-select",
+              action: "change->post-type-select#updateSearchParams",
+            },
+          ) do |select|
             select.with_trigger(
               class: "border border-border bg-background hover:bg-muted hover:text-foreground dark:bg-transparent dark:hover:bg-input/30",
             ) do

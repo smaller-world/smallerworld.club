@@ -9,53 +9,34 @@ import Uppy, {
 import DragDrop from "@uppy/drag-drop";
 import ImageEditor from "@uppy/image-editor";
 import { isEmpty, map } from "lodash-es";
+import { Typed } from "stimulus-typescript";
 
 import { isDevelopment } from "#helpers/env_helpers";
 import { addCleanupAction } from "#helpers/stimulus_helpers";
 
-export default class UppyDndController extends Controller<HTMLElement> {
-  // == Targets ==
+const targets = {
+  dropzone: HTMLElement,
+  imageEditorDialog: HTMLElement,
+  imageEditor: HTMLElement,
+  hiddenInput: HTMLInputElement,
+};
 
-  static targets = [
-    "dropzone",
-    "imageEditorDialog",
-    "imageEditor",
-    "hiddenInput",
-  ];
-  declare readonly dropzoneTarget: HTMLElement;
-  declare readonly imageEditorDialogTarget: HTMLElement;
-  declare readonly imageEditorTarget: HTMLElement;
-  declare readonly hiddenInputTarget: HTMLInputElement;
-  declare readonly hasDropzoneTarget: boolean;
-  declare readonly hasImageEditorDialogTarget: boolean;
-  declare readonly hasImageEditorTarget: boolean;
-  declare readonly hasHiddenInputTarget: boolean;
+const values = {
+  directUploadUrl: String,
+  previewUrlTemplate: String,
+  previewSignedId: String,
+  inputId: String,
+  imageEditorDialogId: String,
+  multiple: Boolean,
+  required: Boolean,
+  allowedFileTypes: String,
+  cropToAspectRatio: Number,
+};
 
-  // == Values ==
-
-  static values = {
-    directUploadUrl: String,
-    previewUrlTemplate: String,
-    previewSignedId: String,
-    inputId: String,
-    imageEditorDialogId: String,
-    multiple: Boolean,
-    required: Boolean,
-    allowedFileTypes: String,
-    cropToAspectRatio: Number,
-  };
-  declare readonly directUploadUrlValue: string;
-  declare readonly previewUrlTemplateValue: string;
-  declare previewSignedIdValue: string | undefined;
-  declare readonly inputIdValue: string;
-  declare readonly imageEditorDialogIdValue: string;
-  declare readonly multipleValue: boolean;
-  declare readonly requiredValue: boolean;
-  declare readonly allowedFileTypesValue: string;
-  declare readonly cropToAspectRatioValue: number;
-
-  // == Properties ==
-
+export default class UppyDndController extends Typed(Controller<HTMLElement>, {
+  targets,
+  values,
+}) {
   #uppy?: Uppy<Meta, { signed_id: string }> | null;
 
   // == Lifecycle ==
@@ -237,7 +218,7 @@ export default class UppyDndController extends Controller<HTMLElement> {
   }
 
   clear(): void {
-    this.previewSignedIdValue = undefined;
+    this.previewSignedIdValue = "";
     this.hiddenInputTarget.value = "";
   }
 
@@ -278,6 +259,10 @@ export default class UppyDndController extends Controller<HTMLElement> {
   }
 
   // == Helpers ==
+
+  get isEmpty(): boolean {
+    return !this.previewSignedIdValue && this.element.ariaBusy !== "true";
+  }
 
   #customizeUI(): void {
     const input = this.dropzoneTarget.querySelector<HTMLInputElement>(

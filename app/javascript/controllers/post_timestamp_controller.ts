@@ -1,12 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
+import { Typed } from "stimulus-typescript";
 
-export default class PostTimestampController extends Controller<HTMLTimeElement> {
-  // == Values ==
-  static values = {
-    datetime: String,
-  };
-  declare readonly datetimeValue: string;
+const values = {
+  datetime: String,
+};
 
+export default class PostTimestampController extends Typed(
+  Controller<HTMLTimeElement>,
+  { values },
+) {
   // == Lifecycle ==
 
   connect(): void {
