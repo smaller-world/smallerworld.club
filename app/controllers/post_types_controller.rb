@@ -38,7 +38,7 @@ class PostTypesController < ApplicationController
         )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
-          refresh_or_redirect_to([ world, new_post: 1 ], status: :see_other)
+          refresh_or_redirect_to(world, status: :see_other)
         else
           render Views::PostTypes::New.new(post_type:), status: :unprocessable_content
         end

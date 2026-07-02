@@ -105,7 +105,9 @@ class Views::Worlds::Show < Views::Base
                   action: ("turbo:load@document->confetti#launch" if @celebrate),
                 },
               )
-              Components::WorldKeyGrantIconButton(world: @world)
+              if allowed_to?(:manage?, @world)
+                Components::WorldKeyGrantIconButton(world: @world)
+              end
             end
             h1(class: "text-2xl text-center") do
               @world.name

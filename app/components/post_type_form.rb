@@ -19,7 +19,7 @@ class Components::PostTypeForm < Components::Base
       {
         class: "flex flex-col gap-6",
         data: {
-          controller: "submit haptic-bridge",
+          controller: "haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
@@ -31,7 +31,7 @@ class Components::PostTypeForm < Components::Base
           placeholder: @post_type.label.presence || "journal entry",
           required: true,
           data: {
-            action: "keydown->submit#preventSubmitOnEnter",
+            controller: "prevent-enter-submit",
           },
         )
         f.error
