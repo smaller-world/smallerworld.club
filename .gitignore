@@ -28,6 +28,11 @@ sorbet/rbi/hidden-definitions/errors.txt
 !/tmp/passkit/
 !/tmp/passkit/.keep
 
+# Ignore sockets, but keep the directory.
+/tmp/sockets/*
+!/tmp/sockets/
+!/tmp/sockets/.keep
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
