@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_02_144837) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_05_211003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,8 +25,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_144837) do
   end
 
   create_table "active_record_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
-    t.timestamptz "created_at", precision: 6, null: false
-    t.timestamptz "updated_at", precision: 6, null: false
+    t.timestamptz "created_at", null: false
+    t.timestamptz "updated_at", null: false
     t.string "value"
   end
 
@@ -105,6 +105,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_144837) do
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_devices_on_identifier", unique: true
     t.index ["owner_id"], name: "index_devices_on_owner_id"
+    t.index ["push_token"], name: "index_devices_on_push_token", unique: true
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

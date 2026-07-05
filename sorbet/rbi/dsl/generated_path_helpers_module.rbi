@@ -55,9 +55,6 @@ module GeneratedPathHelpersModule
   def home_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def leave_world_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def logs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

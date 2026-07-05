@@ -155,7 +155,7 @@ class Views::Home::Show < Views::Base
             Icon("huge/qr-code", class: "size-7 text-muted-foreground")
           end
           span(class: "world-icon-label text-xs text-muted-foreground") do
-            "join friend's world"
+            "join a friend's world"
           end
         end
       end

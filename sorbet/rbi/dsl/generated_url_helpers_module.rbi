@@ -55,9 +55,6 @@ module GeneratedUrlHelpersModule
   def home_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def leave_world_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def logs_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

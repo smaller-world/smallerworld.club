@@ -19,6 +19,7 @@
 #
 #  index_devices_on_identifier  (identifier) UNIQUE
 #  index_devices_on_owner_id    (owner_id)
+#  index_devices_on_push_token  (push_token) UNIQUE
 #
 # Foreign Keys
 #
