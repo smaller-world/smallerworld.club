@@ -10,7 +10,6 @@ class Components::Base < Phlex::HTML
   # == Helpers ==
 
   include Phlex::Rails::Helpers::ClassNames
-  include Phlex::Rails::Helpers::TokenList
   include Phlex::Rails::Helpers::ImageTag
   include Phlex::Rails::Helpers::LinkTo
   include Phlex::Rails::Helpers::Routes
@@ -22,6 +21,7 @@ class Components::Base < Phlex::HTML
 
   include PhlexIcons
 
+  include TokenList
   include ButtonBackTo
   include ButtonLinkTo
   include AttributeHelpers
