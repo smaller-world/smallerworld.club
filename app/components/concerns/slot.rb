@@ -23,7 +23,12 @@ module Slot
     public_send(
       element,
       **mix(
-        { class: name, data: { slot: name } },
+        {
+          class: name,
+          data: {
+            slot: name,
+          },
+        },
         attributes,
       ),
       &content

@@ -24,6 +24,11 @@ default_v1: &default_v1
   url: <%= Rails.application.credentials.database&.v1_url %>
   max_connections: 1
   database_tasks: false
+  # The v1 database is reached through Supabase's connection pooler (PgBouncer in
+  # transaction mode), which does not keep server-side prepared statements stable
+  # across the shared connection. Disabling prepared statements avoids
+  # "prepared statement \"a1\" already exists" errors during imports.
+  prepared_statements: false
 
 development:
   primary: &development_primary
