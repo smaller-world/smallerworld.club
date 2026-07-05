@@ -46,12 +46,12 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Validations ==
 
-  validates :ip_address,
-    presence: true,
-    exclusion: {
-      in: proc { ip_addresses_exceeding_daily_rate_limit },
-      message: "exceeds daily rate limit",
-    } if Rails.env.production?
+  # validates :ip_address,
+  #   presence: true,
+  #   exclusion: {
+  #     in: proc { ip_addresses_exceeding_daily_rate_limit },
+  #     message: "exceeds daily rate limit",
+  #   } if Rails.env.production?
   validates :phone_number,
     presence: true,
     phone: { possible: true, types: :mobile, extensions: false, allow_blank: true }

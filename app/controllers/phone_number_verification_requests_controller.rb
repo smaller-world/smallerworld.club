@@ -6,10 +6,10 @@ class PhoneNumberVerificationRequestsController < ApplicationController
 
   allow_unauthenticated_access
   skip_verify_authorized
-  rate_limit to: 3,
-    within: 3.minutes,
-    only: :create,
-    with: :handle_rate_limit_exceeded if Rails.env.production?
+  # rate_limit to: 3,
+  #   within: 3.minutes,
+  #   only: :create,
+  #   with: :handle_rate_limit_exceeded if Rails.env.production?
   before_action :verify_turnstile_request, only: :create
 
   # == Actions ==
