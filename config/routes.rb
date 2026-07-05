@@ -62,9 +62,6 @@ Rails.application.routes.draw do
 
   # == Worlds
   resources :worlds, except: :index do
-    member do
-      post :leave
-    end
     resources :posts, only: [ :index, :new, :create ]
     resources :post_types, only: [ :new, :create ]
   end

@@ -59,7 +59,11 @@ class WorldKeysController < ApplicationController
         world = world_key.world!
         authorize!(world_key)
         world_key.destroy!
-        redirect_to([ world, :keys ], status: :see_other)
+        if allowed_to?(:manage?, world)
+          refresh_or_redirect_to([ world, :keys ], status: :see_other)
+        else
+          recede_or_redirect_to(home_path, status: :see_other)
+        end
       end
     end
   end

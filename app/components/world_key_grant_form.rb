@@ -60,11 +60,11 @@ class Components::WorldKeyGrantForm < Components::Base
           div(class: "flex flex-col gap-y-1") do
             grant_qr_code
 
-            div do
+            div(class: "flex flex-col items-center") do
               Components::Button(
                 variant: :link,
                 size: :sm,
-                class: "self-center text-muted-foreground text-xs",
+                class: "text-muted-foreground text-xs",
                 data: {
                   controller: "clipboard flash-text",
                   clipboard_copy_value: grant_url,
@@ -74,7 +74,7 @@ class Components::WorldKeyGrantForm < Components::Base
               ) do
                 "copy invite link"
               end
-              p(class: "text-xs text-muted-foreground") do
+              p(class: "text-xs text-center text-muted-foreground max-w-52 italic") do
                 "anyone with the link will be able to see your " \
                   "#{@granted_post_types.map(&:label).to_sentence} posts"
               end

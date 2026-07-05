@@ -54,16 +54,4 @@ class WorldsControllerTest < ActionDispatch::IntegrationTest
     get world_path(@world)
     assert_redirected_to new_session_path
   end
-
-  test "a friend leaves a world" do
-    friend = users(:sue)
-    @world.keys.create!(recipient: friend)
-
-    sign_in_as(friend)
-
-    assert_difference -> { @world.keys.where(recipient: friend).count }, -1 do
-      post leave_world_path(@world)
-    end
-    assert_redirected_to home_path
-  end
 end
