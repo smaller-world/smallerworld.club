@@ -49,7 +49,7 @@ class Components::ImageStack < Components::Base
             "touch-none" => @images.size > 1,
           ),
           data: {
-            # lightbox_src: rails_representation_path(blob),
+            lightbox_src: rails_representation_path(blob),
             image_stack_target: "image",
             lightbox_target: "image",
             action: token_list(

@@ -1,0 +1,5 @@
+@layer base-components {
+  .fslightbox-nav {
+    @apply native:hidden;
+  }
+}
