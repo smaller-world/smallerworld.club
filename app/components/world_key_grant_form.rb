@@ -29,6 +29,7 @@ class Components::WorldKeyGrantForm < Components::Base
       method: :get,
       **mix(
         {
+          class: "world-key-grant-form",
           data: {
             controller: "submit",
             turbo_frame: "world_key_grant_form_qr_code",
@@ -37,8 +38,8 @@ class Components::WorldKeyGrantForm < Components::Base
         @attributes,
       ),
     ) do |form|
-      Components::FieldSet(class: "gap-0") do |field_set|
-        field_set.legend(class: "text-center") do
+      Components::FieldSet() do |field_set|
+        field_set.legend(class: "text-center mb-0") do
           "this key shares access to:"
         end
         form.Field(:granted_post_type_ids).checkboxes(
@@ -72,34 +73,35 @@ class Components::WorldKeyGrantForm < Components::Base
         end
       end
 
-      turbo_frame_tag("world_key_grant_form_qr_code", class: "empty:hidden") do
+      turbo_frame_tag("world_key_grant_form_qr_code", data: {
+        slot: "qr-code-frame",
+      }) do
         if @grant.granted_post_types.any?
-          div(class: "flex flex-col gap-3") do
-            span(class: "text-xs text-center text-muted-foreground italic") do
-              "get your friend to scan this qr code:"
-            end
-            div(class: "flex flex-col gap-y-1") do
-              grant_qr_code
-              div(class: "flex flex-col items-center") do
-                Components::Button(
-                  type: :button,
-                  variant: :link,
-                  size: :sm,
-                  class: "text-muted-foreground text-xs",
-                  data: {
-                    controller: "clipboard flash-text",
-                    clipboard_copy_value: grant_url,
-                    flash_text_content_value: "invite link copied!",
-                    action: "clipboard#copy clipboard:copied->flash-text#flash",
-                  },
-                ) do
-                  "copy invite link"
-                end
-                p(class: "text-xs text-muted-foreground text-center text-balance italic") do
-                  "anyone with the link will be able to see your " \
-                    "#{granted_post_types_descriptor} posts"
-                end
+          Components::Badge(class: "self-center") do
+            "now, get your friend to scan this qr code:"
+          end
+          grant_qr_code
+          div(class: "flex flex-col items-center gap-2") do
+            Components::Button(
+              type: :button,
+              variant: :secondary,
+              size: :xs,
+              data: {
+                slot: "copy-invite-link-button",
+                controller: "clipboard flash-text",
+                clipboard_copy_value: grant_url,
+                flash_text_content_value: "invite link copied!",
+                action: "clipboard#copy clipboard:copied->flash-text#flash",
+              },
+            ) do |button|
+              button.inline_start_icon("huge/link-01")
+              span(data: { flash_text_target: "container" }) do
+                "copy invite link"
               end
+            end
+            p(data: { slot: "copy-invite-link-description" }) do
+              "anyone with the link will be able to see your " \
+                "#{granted_post_types_descriptor} posts"
             end
           end
         end

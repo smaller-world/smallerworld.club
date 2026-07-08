@@ -1,0 +1,21 @@
+@layer components {
+  .world-key-grant-form {
+    [data-slot="qr-code-frame"] {
+      @apply flex flex-col gap-4 empty:hidden;
+    }
+
+    [data-slot="copy-invite-link-button"] {
+      &[data-copied] {
+        @apply bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground dark:hover:bg-muted/50;
+      }
+    }
+
+    [data-slot="copy-invite-link-description"] {
+      @apply max-w-60 text-center text-xs text-balance text-muted-foreground italic;
+
+      [data-copied] + & {
+        @apply font-medium text-foreground;
+      }
+    }
+  }
+}

@@ -6,13 +6,23 @@ const values = {
   copy: String,
 };
 
-export default class ClipboardController extends Typed(Controller, { values }) {
+export default class ClipboardController extends Typed(
+  Controller<HTMLElement>,
+  { values },
+) {
   // == Actions ==
 
   copy() {
     invariant(this.copyValue, "No text to copy");
     void navigator.clipboard.writeText(this.copyValue).then(() => {
+      this.#updateAttributes();
       this.dispatch("copied");
     });
+  }
+
+  // == Helpers ==
+
+  #updateAttributes(): void {
+    this.element.dataset.copied = "";
   }
 }
