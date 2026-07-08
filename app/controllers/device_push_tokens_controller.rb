@@ -9,14 +9,14 @@ class DevicePushTokensController < ApplicationController
 
   # == Actions ==
 
-  # POST /device/push_tokens/test?world_id=:world_id
+  # POST /device/push_tokens/test
   def test
     respond_to do |format|
       format.turbo_stream do
         current_device = Current.device!
         world = if (world_id = params[:world_id])
           world = World.find(world_id)
-          world if allowed_to?(:show, world)
+          world if allowed_to?(:show?, world)
         end
         begin
           current_device.send_test_notification(world:)

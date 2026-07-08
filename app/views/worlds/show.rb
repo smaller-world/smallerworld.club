@@ -98,8 +98,10 @@ class Views::Worlds::Show < Views::Base
             div(class: "relative") do
               image_tag(
                 @world.page_icon_variant,
+                id: dom_id(@world, :page_icon),
                 class: "world-icon size-32",
                 data: {
+                  turbo_permanent: true,
                   controller: "confetti connection",
                   confetti_emoji_value: "🎉",
                   confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,

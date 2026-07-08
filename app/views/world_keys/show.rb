@@ -30,9 +30,10 @@ class Views::WorldKeys::Show < Views::Base
           end
           card.content do
             form_with(
-              url: test_device_push_token_path(world_id: @world.id),
+              url: test_device_push_token_path,
               class: "flex flex-col",
-            ) do
+            ) do |form|
+              form.hidden_field(:world_id, value: @world.id)
               Components::Button(type: :submit, variant: :secondary) do |button|
                 button.inline_start_icon("huge/notification-01")
                 span { "send test notification" }
