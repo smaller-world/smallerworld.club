@@ -37,7 +37,7 @@ module Smallerworld
     config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
     config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
     config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
-    config.testflight_invitation_code = "n6v7J3Nd"
+    config.testflight_url = "https://testflight.apple.com/join/n6v7J3Nd"
 
     config.v1_posts_import_limit = 20
     config.confetti_canvas_id = "confetti_canvas"

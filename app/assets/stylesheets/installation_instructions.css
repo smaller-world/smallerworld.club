@@ -1,0 +1,9 @@
+@layer components {
+  .installation-instructions-testflight-button[data-variant="default"] {
+    @apply self-center;
+
+    &[data-clicked] {
+      @apply bg-muted text-muted-foreground dark:bg-muted/50;
+    }
+  }
+}

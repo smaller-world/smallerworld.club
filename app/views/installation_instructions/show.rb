@@ -24,7 +24,7 @@ class Views::InstallationInstructions::Show < Views::Base
 
         Components::FieldSet() do
           Components::Card() do |card|
-            card.header(class: "flex flex-col items-center") do
+            card.header(class: "flex flex-col items-center gap-2") do
               image_tag("testflight_logo.png", class: "size-16")
               card.title do
                 "do you have the testflight app installed?"
@@ -87,38 +87,28 @@ class Views::InstallationInstructions::Show < Views::Base
                     end
                     p(class: [
                       "text-xs text-center text-balance transition-opacity",
-                      "has-[+_*_[data-copied]]:opacity-50",
+                      "has-[+_[data-clicked]]:opacity-50",
                     ]) do
-                      plain("to continue, please copy this ")
+                      plain("first, please install testflight.")
+                      br
                       span(class: "font-semibold") do
-                        "testflight invitation code:"
+                        "come back to this page when you're done!"
                       end
                     end
-                    Components::InputGroup(class: "self-center w-48") do |input_group|
-                      invitation_code = Smallerworld.application.testflight_invitation_code
-                      input_group.input(
-                        id: "testflight_invitation_code",
-                        type: :text,
-                        value: invitation_code,
-                        readonly: true,
-                      )
-                      input_group.addon(align: :inline_end) do |input_group_addon|
-                        input_group_addon.button(data: {
-                          controller: "clipboard flash-text",
-                          clipboard_copy_value: invitation_code,
-                          flash_text_content_value: "copied!",
-                          action: [
-                            "clipboard#copy",
-                            "clipboard:copied->flash-text#flash clipboard:copied->transition-group#start",
-                          ],
-                        }) do |addon_button|
-                          addon_button.inline_start_icon("huge/copy-01")
-                          span(data: { flash_text_target: "container" }) do
-                            "copy"
-                          end
-                        end
-                      end
-                    end
+
+                    button_link_to(
+                      "get testflight on the app store",
+                      TESTFLIGHT_APPSTORE_URL,
+                      variant: :default,
+                      icon: "huge/app-store",
+                      target: "_blank",
+                      class:  "installation-instructions-testflight-button",
+                      data: {
+                        controller: "click-tracking alert",
+                        alert_message_value: "come back to this page after you install testflight!",
+                        action: "transition-group#start click-tracking#track alert#alert",
+                      },
+                    )
 
                     div(class: "flex flex-col gap-4 hidden starting:opacity-0", data: {
                       transition_group_target: "item",
@@ -131,10 +121,10 @@ class Views::InstallationInstructions::Show < Views::Base
                           "invitation code, just press paste!"
                       end
                       button_link_to(
-                        "get testflight on the app store",
-                        TESTFLIGHT_APPSTORE_URL,
+                        "open smaller world on testflight",
+                        Smallerworld.application.testflight_url,
                         variant: :default,
-                        icon: "huge/app-store",
+                        icon: "huge/link-square-01",
                         class: "self-center",
                       )
                     end

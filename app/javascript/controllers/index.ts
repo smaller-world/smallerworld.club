@@ -4,7 +4,11 @@ import {
   HapticBridgeController,
   // @ts-expect-error - Untyped package
 } from "@joemasilotti/bridge-components";
-import { IntersectionController, UserFocusController } from "stimulus-library";
+import {
+  AlertController,
+  IntersectionController,
+  UserFocusController,
+} from "stimulus-library";
 
 import { application } from "./application";
 import AsyncItemController from "./async_item_controller";
@@ -12,6 +16,7 @@ import AutoclickController from "./autoclick_controller";
 import CheckboxProxyController from "./checkbox_proxy_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
 import ClickController from "./click_controller";
+import ClickTrackingController from "./click_tracking_controller";
 import ClipboardController from "./clipboard_controller";
 import CollapseController from "./collapse_controller";
 import ComboboxController from "./combobox_controller";
@@ -71,6 +76,7 @@ application.register("tooltip", TooltipController);
 application.register("toaster", ToasterController);
 
 // == General helpers
+application.register("alert", AlertController);
 application.register("connection", ConnectionController);
 application.register("autoclick", AutoclickController);
 application.register("frame-reload", FrameReloadController);
@@ -82,6 +88,7 @@ application.register(
 );
 application.register("intersection", IntersectionController);
 application.register("click", ClickController);
+application.register("click-tracking", ClickTrackingController);
 application.register("flash-text", FlashTextController);
 application.register("disabled", DisabledController);
 application.register("clipboard", ClipboardController);

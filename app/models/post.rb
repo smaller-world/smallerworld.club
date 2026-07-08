@@ -106,23 +106,6 @@ class Post < ApplicationRecord
     attachable.variant(:thumbnail, resize_to_limit: [ 800, 800 ])
   end
 
-  sig { returns(T::Array[T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)]) }
-  def ordered_images_thumbnails
-    ordered_images_attachments.map do |attachment|
-      blob = attachment.blob or next
-      if blob.content_type == "image/gif"
-        blob
-      else
-        attachment.variant(:thumbnail)
-      end
-    end
-  end
-
-  sig { returns(T::Array[ActiveStorage::Blob]) }
-  def ordered_images_blobs
-    ordered_images_attachments.filter_map(&:blob)
-  end
-
   # == Normalizations
 
   strips_text :title
@@ -233,10 +216,31 @@ class Post < ApplicationRecord
 
   sig { returns(T::Array[ActiveStorage::Attachment]) }
   def ordered_images_attachments
-    images_attachments
-      .index_by(&:id)
-      .values_at(*T.unsafe(ordered_images_attachment_ids))
-      .compact
+    if new_record?
+      images.attachments.to_a
+    else
+      images.attachments
+        .index_by(&:id)
+        .values_at(*T.unsafe(ordered_images_attachment_ids))
+        .compact
+    end
+  end
+
+  sig { returns(T::Array[T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)]) }
+  def ordered_images_thumbnails
+    ordered_images_attachments.map do |attachment|
+      blob = attachment.blob or next
+      if blob.content_type == "image/gif"
+        blob
+      else
+        attachment.variant(:thumbnail)
+      end
+    end
+  end
+
+  sig { returns(T::Array[ActiveStorage::Blob]) }
+  def ordered_images_blobs
+    ordered_images_attachments.filter_map(&:blob)
   end
 
   # == Visibility ==

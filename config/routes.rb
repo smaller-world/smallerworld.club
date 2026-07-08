@@ -118,7 +118,7 @@ Rails.application.routes.draw do
   resources :reactions, only: :destroy
 
   # == Install
-  resource :installation_instructions, only: :show
+  resource :installation_instructions, path: "/install", only: :show
 
   # == Passkit
   mount Passkit::Engine => "/passkit", as: "passkit"
