@@ -12,7 +12,7 @@
 
     ol,
     ul:not(.lexxy-prompt-menu) {
-      @apply ml-6;
+      @apply ml-8 md:ml-6;
     }
   }
 
