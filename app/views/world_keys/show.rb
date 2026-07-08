@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Views::WorldKeys::Show < Views::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig { params(world_key: WorldKey).void }
@@ -26,8 +28,16 @@ class Views::WorldKeys::Show < Views::Base
           card.header do
             card.title(class: "text-center") { "notification settings" }
           end
-          card.content(class: "text-center text-muted-foreground") do
-            "will be available in a future update ;)"
+          card.content do
+            form_with(
+              url: test_device_push_token_path(world_id: @world.id),
+              class: "flex flex-col",
+            ) do
+              Components::Button(type: :submit, variant: :secondary) do |button|
+                button.inline_start_icon("huge/notification-01")
+                span { "send test notification" }
+              end
+            end
           end
         end
 

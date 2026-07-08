@@ -9,13 +9,17 @@ class DevicePushTokensController < ApplicationController
 
   # == Actions ==
 
-  # POST /device/push_tokens/test
+  # POST /device/push_tokens/test?world_id=:world_id
   def test
     respond_to do |format|
       format.turbo_stream do
         current_device = Current.device!
+        world = if (world_id = params[:world_id])
+          world = World.find(world_id)
+          world if allowed_to?(:show, world)
+        end
         begin
-          current_device.send_test_notification
+          current_device.send_test_notification(world:)
           render turbo_stream: append_toast("test notification sent!", type: :success)
         rescue => error
           render turbo_stream: append_toast(

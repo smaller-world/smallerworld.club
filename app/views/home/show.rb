@@ -53,7 +53,10 @@ class Views::Home::Show < Views::Base
           end
         end
 
-        div(class: "flex-1 flex flex-col gap-8 justify-center") do
+        div(class: class_names(
+          "flex-1 flex flex-col gap-8 justify-center",
+          "mt-4" => !show_alert,
+        )) do
           owned_worlds
           accessible_worlds
         end

@@ -56,7 +56,7 @@ class Device < ApplicationRecord
   # == Validations ==
 
   validates :identifier, presence: true, uniqueness: true
-  validates :push_token, uniqueness: true
+  validates :push_token, uniqueness: true, allow_nil: true
 
   # Remove push token if token is invalid
   rescue_from ActionPushNative::TokenError, with: :remove_push_token!
@@ -95,15 +95,26 @@ class Device < ApplicationRecord
     rescue_with_handler(error) || raise
   end
 
-  sig { void }
-  def send_test_notification
+  sig { params(world: T.nilable(World)).void }
+  def send_test_notification(world: nil)
     url_helpers = Rails.application.routes.url_helpers
+    apple_data = T.let({}, T::Hash[T.untyped, T.untyped])
+    if world
+      apple_data.deep_merge!({ aps: { "mutable-content" => 1 } })
+      apple_data["icon_url"] =
+        Rails.application.routes.url_helpers.rails_representation_path(
+          world.notification_icon_variant,
+          only_path: true,
+        )
+    end
     notification = DevicePushNotification
       .with_data(target_url: url_helpers.home_path)
+      .with_apple(apple_data)
       .new(
         title: "test notification",
         body: "this is a test notification. if you are seeing this, then " \
           "your push notifications are working!",
+        thread_id: world&.id,
       )
     notification.deliver_to(self)
   end

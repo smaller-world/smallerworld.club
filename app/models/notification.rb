@@ -86,19 +86,18 @@ class Notification < ApplicationRecord
   def deliver
     recipient = recipient!
     message = self.message
-    data = T.let({}, T::Hash[String, T.untyped])
-    apple_data = T.let({ "aps" => { "mutable-content" => 1 } }, T::Hash[String, T.untyped])
-    if (target_url = message.target_url)
-      data["target_url"] = target_url
-    end
-    if (world = message.world)
+    data = T.let({ "target_url" => message.target_url }, T::Hash[String, T.untyped])
+    apple_data = T.let({}, T::Hash[T.untyped, T.untyped])
+    world = message.world
+    if world
+      apple_data.deep_merge!({ aps: { "mutable-content" => 1 } })
       apple_data["icon_url"] = world_icon_url(world)
     end
     device_notification = DevicePushNotification
       .with_data(data)
       .with_apple(apple_data)
       .new(
-        thread_id: message.world&.id,
+        thread_id: world&.id,
         title: message.title,
         body: message.body,
         badge: recipient.notifications_received_since_last_cleared.count,
