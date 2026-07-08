@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
+import invariant from "tiny-invariant";
 
 const targets = {
   control: HTMLElement,
@@ -9,6 +10,10 @@ const targets = {
 export default class CollapseController extends Typed(Controller<HTMLElement>, {
   targets,
 }) {
+  #resizeObserver = new ResizeObserver(() => {
+    this.#updateContentStyle();
+  });
+
   // == Lifecycle ==
 
   connect(): void {
@@ -19,24 +24,38 @@ export default class CollapseController extends Typed(Controller<HTMLElement>, {
     if (!this.hasContentTarget) {
       throw new Error("Missing content target");
     }
-    this.#updateAttributes();
+    const { firstElementChild } = this.contentTarget;
+    invariant(firstElementChild instanceof HTMLElement, `Invalid content`);
+    this.#resizeObserver.observe(firstElementChild);
+  }
+
+  disconnect(): void {
+    this.#resizeObserver.disconnect();
   }
 
   // == Actions ==
 
   trigger(): void {
+    const markExpanded = () => {
+      this.element.dataset.userExpanded = "";
+      this.element.removeEventListener("transitionend", markExpanded);
+    };
+    this.element.addEventListener("transitionend", markExpanded);
     this.element.dataset.collapsed = "false";
     this.controlTarget.ariaExpanded = "true";
   }
 
   // == Helpers ==
 
-  #updateAttributes(): void {
+  #updateContentStyle(): void {
     const { scrollHeight } = this.contentTarget;
     this.contentTarget.style.setProperty(
       "--content-height",
       `${scrollHeight}px`,
     );
+    if ("userExpanded" in this.element.dataset) {
+      return;
+    }
     if (scrollHeight > this.contentTarget.clientHeight) {
       this.element.dataset.collapsed = "true";
       this.controlTarget.ariaExpanded = "false";

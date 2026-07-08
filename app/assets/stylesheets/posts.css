@@ -67,6 +67,12 @@
         @apply max-h-(--content-height);
       }
     }
+
+    &[data-user-expanded] {
+      [data-slot="expand-content"] {
+        @apply transition-none;
+      }
+    }
   }
 
   .post-form {
