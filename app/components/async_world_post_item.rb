@@ -27,6 +27,7 @@ class Components::AsyncWorldPostItem < Components::Base
       turbo_frame_tag(
         @post,
         :card,
+        target: "_top",
         src: [ @post, :card ],
         data: {
           action: token_list(
