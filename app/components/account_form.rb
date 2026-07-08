@@ -19,7 +19,6 @@ class Components::AccountForm < Components::Base
     Components::Form(
       @user,
       action: account_path,
-      class: "gap-2",
       **@attributes,
     ) do |form|
       form.Field(:time_zone_name).hidden(data: { controller: "current-time-zone-input" })
@@ -30,7 +29,7 @@ class Components::AccountForm < Components::Base
           autocomplete: "given-name",
           maxlength: User::NAME_MAX_LENGTH,
         ),
-        label: false,
+        label: "let's create your account!",
       )
 
       form.submit do |button|

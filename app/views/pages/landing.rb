@@ -6,9 +6,9 @@ class Views::Pages::Landing < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(title:) do |layout|
+    Components::AppLayout(title:) do |app_layout|
       main(class: "flex-1 flex flex-col justify-center") do
-        layout.page_container(class: "flex flex-col items-center gap-6") do
+        app_layout.page_container(class: "flex flex-col items-center gap-6") do
           div(class: "flex flex-col items-center gap-4") do
             image_tag(
               "logo.png",

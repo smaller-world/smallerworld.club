@@ -6,6 +6,8 @@ class InstallationInstructionsController < PublicController
 
   # GET /install
   def show
-    raise NotImplementedError
+    questions_params = params.permit(:platform, :testflight_installed)
+    questions = InstallationInstructionsQuestions.new(questions_params)
+    render Views::InstallationInstructions::Show.new(questions:)
   end
 end

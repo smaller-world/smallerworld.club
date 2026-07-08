@@ -85,6 +85,7 @@ class Components::Form < Superform::Rails::Form
       orientation: Symbol,
       label: T.any(T::Boolean, String),
       description: T.nilable(String),
+      label_class: T.nilable(String),
       error: T.any(T::Hash[Symbol, T.untyped], T::Boolean),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(row: Components::Field).void),
@@ -95,6 +96,7 @@ class Components::Form < Superform::Rails::Form
     orientation: :vertical,
     label: true,
     description: nil,
+    label_class: nil,
     error: true,
     **attributes,
     &content
@@ -108,7 +110,7 @@ class Components::Form < Superform::Rails::Form
         label_content = if label.is_a?(String)
           proc { label }
         end
-        render component.field.label(&label_content)
+        render component.field.label(class: label_class, &label_content)
       end
       render component
       if description.present?

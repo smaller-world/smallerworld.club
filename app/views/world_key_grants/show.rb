@@ -16,8 +16,8 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "you're invited!") do |layout|
-      layout.page_container(
+    Components::AppLayout(page_title: "you're invited!") do |app_layout|
+      app_layout.page_container(
         class: "flex-1 max-w-lg flex flex-col items-center justify-center gap-8",
       ) do
         span(class: "text-lg font-semibold") do

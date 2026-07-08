@@ -3,8 +3,13 @@
 
 class Smallerworld::Application
   sig { returns(String) }
+  def testflight_invitation_code
+    config.testflight_invitation_code
+  end
+
+  sig { returns(String) }
   def testflight_url
-    config.testflight_url
+    "https://testflight.apple.com/join/#{testflight_invitation_code}"
   end
 
   sig { returns(Integer) }

@@ -30,10 +30,10 @@ class Views::Home::Show < Views::Base
     Components::AppLayout(
       title: ("home" unless hotwire_native_app?),
       force_header: true,
-    ) do |layout|
+    ) do |app_layout|
       show_alert = !hotwire_native_app?
 
-      layout.page_container(class: "flex-1 max-w-lg flex flex-col") do
+      app_layout.page_container(class: "flex-1 max-w-lg flex flex-col") do
         if show_alert
           Components::Alert(class: "gap-y-1 mb-6") do |alert|
             alert.title do

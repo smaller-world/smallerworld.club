@@ -15,8 +15,8 @@ class Views::PostTypes::Edit < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "edit post type") do |layout|
-      layout.page_container(class: "max-w-lg space-y-6") do
+    Components::AppLayout(page_title: "edit post type") do |app_layout|
+      app_layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
           button_back_to(@world.name, @world, variant: :secondary)
         end

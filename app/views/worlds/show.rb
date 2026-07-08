@@ -36,8 +36,8 @@ class Views::Worlds::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: @world.name) do |layout|
-      layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+    Components::AppLayout(page_title: @world.name) do |app_layout|
+      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         div(class: "flex gap-8 justify-between", hidden: hotwire_native_app?) do
           button_back_to(:home, variant: :secondary)
 

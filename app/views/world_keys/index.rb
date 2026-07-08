@@ -32,8 +32,8 @@ class Views::WorldKeys::Index < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "your friends") do |layout|
-      layout.page_container(class: "max-w-lg space-y-6") do
+    Components::AppLayout(page_title: "your friends") do |app_layout|
+      app_layout.page_container(class: "max-w-lg space-y-6") do
         div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
           button_back_to(@world.name, @world, variant: :secondary)
         end

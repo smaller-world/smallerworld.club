@@ -17,13 +17,11 @@ class Views::Accounts::New < Views::Base
     Components::AppLayout(
       title: "create account",
       body_class: "bg-muted",
-    ) do |layout|
-      main(class: "flex-1 flex flex-col justify-center pb-20") do
-        layout.page_container(
-          class: "flex flex-col items-center justify-center",
-        ) do
-          account_card
-        end
+    ) do |app_layout|
+      app_layout.page_container(
+        class: "flex-1 flex flex-col items-center justify-center",
+      ) do
+        account_card
       end
     end
   end
@@ -35,7 +33,7 @@ class Views::Accounts::New < Views::Base
   sig { void }
   def account_card
     Components::Card(class: "w-full max-w-90") do |card|
-      card.header(class: "flex flex-col items-center gap-y-3") do
+      card.header(class: "flex flex-col items-center gap-2") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do
           plain("welcome to ")
@@ -44,7 +42,7 @@ class Views::Accounts::New < Views::Base
           end
         end
       end
-      card.content(class: "flex flex-col items-stretch gap-y-3") do
+      card.content do
         Components::AccountForm(user: @user)
       end
     end

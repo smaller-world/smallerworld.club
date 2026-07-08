@@ -18,8 +18,8 @@ class Views::WorldInvitations::New < Views::Base
   def view_template
     Components::AppLayout(
       page_title: "invite #{@recipient.name} to your world",
-    ) do |layout|
-      layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+    ) do |app_layout|
+      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         unless hotwire_native_app?
           button_back_to(
             "your friends",

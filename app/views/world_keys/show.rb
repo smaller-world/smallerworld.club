@@ -15,8 +15,8 @@ class Views::WorldKeys::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "world settings") do |layout|
-      layout.page_container(class: "max-w-lg space-y-6") do
+    Components::AppLayout(page_title: "world settings") do |app_layout|
+      app_layout.page_container(class: "max-w-lg space-y-6") do
         button_back_to("world", @world, variant: :secondary) unless hotwire_native_app?
 
         Components::Card(

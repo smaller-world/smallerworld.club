@@ -76,7 +76,7 @@ class Components::WorldKeyGrantForm < Components::Base
       turbo_frame_tag("world_key_grant_form_qr_code", data: {
         slot: "qr-code-frame",
       }) do
-        if @grant.granted_post_types.any?
+        if @grant.valid?
           Components::Badge(class: "self-center") do
             "now, get your friend to scan this qr code:"
           end

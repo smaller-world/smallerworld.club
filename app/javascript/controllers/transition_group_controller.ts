@@ -14,7 +14,7 @@ export default class TransitionGroupController extends Typed(Controller, {
   start(): void {
     const item = first(this.itemTargets);
     if (item) {
-      this.dispatch("start", { target: item, bubbles: false });
+      this.dispatch("start", { target: item });
     }
   }
 
@@ -24,7 +24,7 @@ export default class TransitionGroupController extends Typed(Controller, {
     }
     const nextItem = this.#nextItemTargetAfter(event.target);
     if (nextItem) {
-      this.dispatch("start", { target: nextItem, bubbles: false });
+      this.dispatch("start", { target: nextItem });
     }
   }
 

@@ -15,8 +15,8 @@ class Views::WorldKeyGrants::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "share a key to your world") do |layout|
-      layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+    Components::AppLayout(page_title: "share a key to your world") do |app_layout|
+      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         unless hotwire_native_app?
           button_back_to(
             "your friends",
