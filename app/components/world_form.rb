@@ -15,38 +15,33 @@ class Components::WorldForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model: @world, **normalize_mix(
+    Components::Form(@world, **mix(
       {
-        class: "flex flex-col gap-4",
         data: {
-          controller: "create-world-button-label haptic-bridge",
+          controller: "create-world-form haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         },
       },
       @attributes,
     )) do |form|
-      field_for(form, :name) do |f|
-        f.label { "name" }
-        f.text_input(
+      form.wrapped(
+        form.field(:name).text(
           required: true,
           placeholder: @world_owner.default_world_name,
           maxlength: World::NAME_MAX_LENGTH,
           data: {
-            create_world_button_label_target: "nameInput",
-            action: ("create-world-button-label#update" if @world.new_record?),
+            create_world_form_target: "nameInput",
+            action: ("create-world-button-label#updateSubmitLabel" if @world.new_record?),
           },
-        )
-        f.error
-      end
+        ),
+      )
 
-      div(
-        class: "flex flex-col gap-2",
-        data: { controller: "transition-group" },
-      ) do
+      div(class: "flex flex-col gap-2", data: { controller: "transition-group" }) do
         if @world.blurb.blank?
           Components::Button(
-            variant: :ghost,
-            class: "text-muted-foreground",
+            type: :button,
+            variant: :outline,
+            class: "text-muted-foreground self-center",
             data: {
               transition_group_target: "item",
               controller: "transition",
@@ -54,14 +49,23 @@ class Components::WorldForm < Components::Base
               transition_leave: "transition-opacity ease-out",
               transition_leave_end: "opacity-0",
             },
-          ) do
-            "add a tagline"
+          ) do |button|
+            button.inline_start_icon("huge/quotes")
+            span { "add a tagline" }
           end
         end
 
-        field_for(
-          form,
-          :blurb,
+        form.wrapped(
+          form.field(:blurb).input do |input|
+            Components::InputGroup() do |input_group|
+              input_group.addon(align: :inline_start) do
+                Icon("huge/quotes")
+              end
+              input_group.input(type: :text, **input.attributes)
+            end
+          end,
+          label: "tagline (optional)",
+          description: "appears just below the world name",
           class: class_names("hidden" => @world.blurb.blank?),
           data: {
             transition_group_target: "item",
@@ -70,37 +74,36 @@ class Components::WorldForm < Components::Base
             transition_enter: "transition-opacity ease-in",
             transition_enter_start: "opacity-0",
           },
-        ) do |f|
-          f.label { "tagline (optional)" }
-          f.text_input
-          f.description { "appears just below the world name" }
-          f.error
-        end
+        )
       end
 
-      field_for(form, :icon, data: { controller: "field-error" }) do |f|
-        f.label { "icon" }
-        div(class: "flex flex-col items-center") do
-          f.uppy_dnd(
-            required: true,
-            allowed_file_types: [
-              "image/png",
-              "image/jpeg",
-              "image/gif",
-              "image/heic",
-              "image/webp",
-              # "image/svg+xml",
-              "image/avif",
-            ],
-            crop_to_aspect_ratio: 1,
-            dropzone_class: "size-40 rounded-world-icon",
-            data: {
-              action: "uppy:error->field-error#show",
-            },
-          )
-        end
-        f.error(data: { field_error_target: "error" })
-      end
+      form.wrapped(
+        form.field(:icon).uppy(
+          required: true,
+          allowed_file_types: [
+            "image/png",
+            "image/jpeg",
+            "image/gif",
+            "image/heic",
+            "image/webp",
+            # "image/svg+xml",
+            "image/avif",
+          ],
+          crop_to_aspect_ratio: 1,
+          dropzone_class: "size-40 rounded-world-icon mx-auto",
+          data: {
+            action: "uppy:error->field-error#show",
+          },
+        ),
+        error: {
+          data: {
+            field_error_target: "error",
+          },
+        },
+        data: {
+          controller: "field-error",
+        },
+      )
 
       # if @world.persisted?
       #   Components::Card(class: "mt-4", size: hotwire_native_app? ? :sm : :default) do |card|
@@ -110,10 +113,10 @@ class Components::WorldForm < Components::Base
       #   end
       # end
 
-      submit_button_for(form, size: :lg) do |button|
+      form.submit(size: :lg) do |button|
         if @world.new_record?
           button.inline_start_icon("huge/plus-sign-square")
-          span(data: { create_world_button_label_sync_target: "label" }) do
+          span(data: { create_world_form_target: "submitLabel" }) do
             "create world"
           end
         else

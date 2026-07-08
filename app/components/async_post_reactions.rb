@@ -18,7 +18,8 @@ class Components::AsyncPostReactions < Components::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(
-      dom_id(@post, :reactions),
+      @post,
+      :reactions,
       src: [ @post, :reactions ],
       loading: :lazy,
       **mix(

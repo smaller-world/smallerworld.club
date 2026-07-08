@@ -21,7 +21,7 @@ class ReactionsTest < ApplicationSystemTestCase
     page.execute_script("window.__noReload = true")
 
     # Open the emoji picker and select fire.
-    click_button("new_reaction_dialog_trigger", wait: 10)
+    click_button("new_post_reaction_dialog_trigger", wait: 10)
     within("em-emoji-picker") do
       first('button[aria-label="😀"]', wait: 10).click
     end

@@ -8,7 +8,7 @@ class Components::FieldSet < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     root_element(
       :div,
@@ -57,17 +57,5 @@ class Components::FieldSet < Components::Base
       ),
       &content
     )
-  end
-
-  sig do
-    params(
-      form: T.untyped,
-      field: T.untyped,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(group: Components::FieldGroup).void),
-    ).void
-  end
-  def field_group(form: nil, field: nil, **attributes, &content)
-    render Components::FieldGroup.new(form:, field:, **attributes, &content)
   end
 end

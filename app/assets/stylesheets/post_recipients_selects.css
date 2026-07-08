@@ -1,0 +1,45 @@
+@layer base-components {
+  .post-recipients-select-trigger {
+    @apply relative;
+
+    [data-slot="badge"] {
+      @apply absolute -top-2 -right-2 size-5 px-0 text-xs;
+    }
+  }
+
+  .post-recipients-select-content {
+    @apply gap-2;
+
+    [data-slot="popover-header"] {
+      @apply text-center;
+    }
+
+    [data-slot="checkbox-group"] {
+      @apply flex-row flex-wrap justify-center gap-2 empty:hidden;
+    }
+
+    [data-slot="field-label"] {
+      @apply w-auto cursor-pointer;
+
+      [data-slot="field"] {
+        @apply w-auto items-center py-1 pr-2 pl-2;
+
+        [data-slot="field-title"] {
+          @apply flex items-center gap-1.5;
+        }
+
+        [data-slot="checkbox"] {
+          @apply rounded-full;
+        }
+      }
+    }
+
+    [data-slot="empty"] {
+      @apply p-6;
+
+      [data-slot="empty-header"] {
+        @apply gap-0;
+      }
+    }
+  }
+}

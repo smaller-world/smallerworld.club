@@ -20,49 +20,47 @@ class Components::ReplyInitiationForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(
-      id: dom_id(@post, :reply_initiation),
-      model: [ @post, @reply_initiation ],
-      url: [ @post, :reply_initiations ],
-      method: :post,
+    Components::Form(
+      @reply_initiation,
+      action: [ @post, :reply_initiations ],
+      id: dom_id(@post, :reply_initiation_form),
       data: {
         controller: "messaging-platform-dropdown haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",
       },
       **@attributes,
     ) do |form|
-      form.hidden_field(:platform, required: true, data: {
-        messaging_platform_dropdown_target: "input",
-      })
-
-      Components::DropdownMenu() do |menu|
-        menu.with_trigger_button(
-          variant: @replied ? :ghost : :default,
-          **compact_mix(
-            {
-              class: "loading-while-submitting",
-              data: {
-                controller: "disable-while-submitting",
+      Components::Field(invalid: form.invalid?(:platform)) do
+        form.Field(:platform).hidden(required: true, data: {
+          messaging_platform_dropdown_target: "input",
+        })
+        Components::DropdownMenu() do |menu|
+          menu.with_trigger_button(
+            variant: @replied ? :ghost : :default,
+            invalid: form.invalid?(:platform),
+            **mix(
+              {
+                class: "loading-while-submitting",
+                data: {
+                  controller: "disable-while-submitting",
+                },
               },
-              aria: {
-                invalid: ("true" if error_messages.any?),
-              },
-            },
-            error_tooltip_attributes,
-          ),
-        ) do |button|
-          button.inline_start_icon("huge/message-01")
-          span { "reply via" }
-        end
+              form.error_tooltip_attributes_for(:platform),
+            ),
+          ) do |button|
+            button.inline_start_icon("huge/message-01")
+            span { "reply via" }
+          end
 
-        menu.with_content(anchor: [ :bottom ]) do |menu_content|
-          ReplyInitiation.platform.values.each do |platform|
-            menu_content.button_item(data: {
-              action: "messaging-platform-dropdown#setInputValue",
-              platform:,
-            }) do
-              platform_icon(platform)
-              span { platform.to_s.humanize(capitalize: false) }
+          menu.with_content(anchor: [ :bottom ]) do |menu_content|
+            ReplyInitiation.platform.values.each do |platform|
+              menu_content.button_item(data: {
+                action: "messaging-platform-dropdown#setInputValue",
+                platform:,
+              }) do
+                platform_icon(platform)
+                span { platform.to_s.humanize(capitalize: false) }
+              end
             end
           end
         end
@@ -70,15 +68,7 @@ class Components::ReplyInitiationForm < Components::Base
     end
 
     if @reply_initiation.previously_new_record?
-      a(
-        id: dom_id(@reply_initiation, :link),
-        href: @reply_initiation.reply_url(native: hotwire_native_app?),
-        hidden: true,
-        data: {
-          controller: "autoclick",
-          autoclick_once_value: true,
-        },
-      )
+      Components::AutoclickingReplyLink(reply_initiation: @reply_initiation)
     end
   end
 
@@ -99,24 +89,5 @@ class Components::ReplyInitiationForm < Components::Base
       raise ArgumentError, "Unknown platform: #{platform}"
     end
     Icon(icon)
-  end
-
-  sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
-  def error_tooltip_attributes
-    if (message = error_messages.first)
-      {
-        data: {
-          controller: "tippy connection",
-          tippy_content_value: message,
-          tippy_placement_value: "bottom",
-          action: "connection:connect->tippy#show",
-        },
-      }
-    end
-  end
-
-  sig { returns(T::Array[String]) }
-  def error_messages
-    @reply_initiation.errors.messages_for(:platform)
   end
 end

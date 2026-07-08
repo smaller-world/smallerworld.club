@@ -39,7 +39,10 @@ class Components::Combobox::Content < Components::Base
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     vanish(&content)
-    list_block = @list_block or raise "Missing list"
+
+    unless @list_block
+      raise "Missing list"
+    end
 
     el_options(
       **mix(
@@ -60,7 +63,7 @@ class Components::Combobox::Content < Components::Base
       else
         empty { "no items found" }
       end
-      list_block.call
+      @list_block.call
     end
   end
 

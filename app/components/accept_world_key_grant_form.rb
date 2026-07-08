@@ -4,22 +4,28 @@
 class Components::AcceptWorldKeyGrantForm < Components::Base
   # == Initialization ==
 
-  sig { params(world: World, grant: String, invitation: WorldInvitation, attributes: T.untyped).void }
-  def initialize(world:, grant:, invitation:, **attributes)
+  sig do
+    params(
+      verified_grant: VerifiedWorldKeyGrant,
+      invitation: WorldInvitation,
+      attributes: T.untyped,
+    ).void
+  end
+  def initialize(verified_grant:, invitation:, **attributes)
     super(**attributes)
-    @world = world
-    @grant = grant
+    @verified_grant = verified_grant
     @invitation = invitation
+    @world = T.let(@verified_grant.world, World)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    form_with(
-      id: :accept_world_key_grant_form,
-      model: @invitation,
-      url: accept_world_key_grant_path(grant: @grant),
+    Components::Form(
+      @invitation,
+      id: "accept_world_key_grant_form",
+      action: accept_world_key_grant_path(message: @verified_grant.grant_message),
       **@attributes,
     ) do |form|
       Components::Card(
@@ -39,13 +45,14 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
         end
         card.content(class: Current.user ? "contents" : "flex flex-col gap-2.5 pb-1") do
           unless Current.user
-            field_for(form, :recipient_phone_number, class: "max-w-72 mx-auto") do |f|
-              f.phone_number_input(
+            form.wrapped(
+              form.field(:recipient_phone_number).phone_number(
                 placeholder: "your phone #",
-                disabled: invitation_accepted?,
-              )
-              f.error(class: "text-center")
-            end
+                class: "max-w-72 mx-auto",
+              ),
+              label: false,
+              error: { class: "text-center" },
+            )
           end
 
           if invitation_accepted?
@@ -53,11 +60,9 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
               "your invitation has been saved."
             end
           else
-            submit_button_for(
-              form,
+            form.submit(
               size: Current.user ? :lg : :default,
               class: "self-center",
-              disabled: invitation_accepted?,
             ) do |button|
               if Current.user
                 button.inline_start_icon("huge/door-01")
@@ -72,7 +77,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
           if invitation_accepted?
             button_link_to(
               "next, download the app!",
-              appstore_listing_path,
+              installation_instructions_path,
               variant: :default,
               icon: "huge/app-store",
               class: "self-center mt-2",

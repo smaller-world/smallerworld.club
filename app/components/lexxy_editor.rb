@@ -3,8 +3,7 @@
 
 class Components::LexxyEditor < Components::Input
   extend Phlex::Rails::HelperMacros
-
-  # == Helpers ==
+  include NormalizeAttributes
 
   register_output_helper def rich_textarea_tag(...) = nil
 
@@ -12,22 +11,20 @@ class Components::LexxyEditor < Components::Input
 
   sig { override(allow_incompatible: true).void }
   def view_template
-    attributes = normalize_mix(
+    attributes = @attributes
+    name = attributes.delete(:name)
+    value = attributes.delete(:value)
+    rich_textarea_tag(name, value, **normalize_attributes(mix(
       {
         class: "lexxy-content",
         data: {
           controller: "lexxy-editor",
         },
+        aria: {
+          invalid: ("true" if @invalid),
+        },
       },
-      @attributes,
-    )
-
-    if @form && @field
-      @form.rich_textarea(@field, **normalize_attributes(
-        with_invalid_aria(attributes),
-      ))
-    else
-      rich_textarea_tag(@field, **normalize_attributes(attributes))
-    end
+      attributes,
+    )))
   end
 end

@@ -45,7 +45,7 @@ class Views::Home::Show < Views::Base
             end
             button_link_to(
               "get the app!",
-              appstore_listing_path,
+              installation_instructions_path,
               variant: :default,
               icon: "huge/app-store",
               class: "mt-1",
@@ -89,7 +89,7 @@ class Views::Home::Show < Views::Base
       new_world_path,
       class: [
         "mx-auto world-icon-container hover:underline",
-        "hidden [ul:empty_+_&]:revert-display-layer",
+        "hidden [ul:empty+&]:revert-display-layer",
       ],
     ) do
       Components::Button(
@@ -183,9 +183,9 @@ class Views::Home::Show < Views::Base
   #     size: :icon_xs,
   #     class: "bg-muted rounded-full absolute -right-2 -top-2",
   #     data: {
-  #       controller: "tippy",
-  #       tippy_content_value: "you have a wallet card for #{world.name}!",
-  #       action: "click->tippy#show:prevent:stop",
+  #       controller: "tooltip",
+  #       tooltip_content_value: "you have a wallet card for #{world.name}!",
+  #       action: "click->tooltip#show:prevent:stop",
   #     },
   #   ) do
   #     Icon(

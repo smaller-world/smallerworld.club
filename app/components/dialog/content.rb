@@ -124,6 +124,7 @@ class Components::Dialog::Content < Components::Base
   end
   def close_button(**attributes, &content)
     Components::Button(
+      type: :button,
       variant: :outline,
       command: "close",
       commandfor: @dialog_id,

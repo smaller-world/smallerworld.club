@@ -170,12 +170,9 @@ class World < ApplicationRecord
 
   # == Keys ==
 
-  sig { params(post_types: T::Array[PostType]).returns(String) }
-  def key_grant(post_types: [])
-    WorldKey.grant_verifier.generate({
-      world_id: id,
-      post_type_ids: post_types.map(&:id),
-    })
+  sig { params(post_type_ids: T::Array[String]).returns(String) }
+  def key_grant_message(post_type_ids: [])
+    WorldKey.grant_verifier.generate({ world_id: id, post_type_ids: })
   end
 
   private

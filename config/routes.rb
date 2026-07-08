@@ -27,9 +27,8 @@ Rails.application.routes.draw do
 
   # == Authentication
   resource :session, only: [ :new, :destroy ]
-  resources :phone_number_verification_requests, path: "verifications", only: [ :create ] do
+  resources :phone_number_verification_requests, path: "verifications", only: :create do
     member do
-      # get :challenge
       post :verify
     end
   end
@@ -93,7 +92,7 @@ Rails.application.routes.draw do
   # end
 
   # == World Key Grants
-  resources :world_key_grants, only: [ :show ], param: :grant do
+  resources :world_key_grants, only: [ :show ], param: :message do
     member do
       post :accept
     end
@@ -101,6 +100,9 @@ Rails.application.routes.draw do
 
   # == Post Types
   resources :post_types, only: [ :edit, :update, :destroy ]
+  resource :post_recipients_select,
+    path: "/post_types/:post_type_id/post_recipients_select",
+    only: :show
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do
@@ -115,8 +117,8 @@ Rails.application.routes.draw do
   # == Reactions
   resources :reactions, only: :destroy
 
-  # == Appstore Listing
-  resource :appstore_listing, path: "/appstore", only: :show
+  # == Install
+  resource :installation_instructions, only: :show
 
   # == Passkit
   mount Passkit::Engine => "/passkit", as: "passkit"

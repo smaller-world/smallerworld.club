@@ -88,7 +88,8 @@ class WorldKey < ApplicationRecord
     key_recipient = recipient!
     Notification::Message.new(
       target_url: [ world, :keys ],
-      title: "#{key_recipient.name} joined your world!",
+      title: "#{key_recipient.name} joined #{world.name}!",
+      world:,
     )
   end
 
@@ -104,9 +105,9 @@ class WorldKey < ApplicationRecord
     Rails.application.message_verifier(:world_key_grant)
   end
 
-  sig { params(grant: String).returns(GrantMessage) }
-  def self.verify_grant(grant)
-    GrantMessage.new(grant_verifier.verify(grant))
+  sig { params(message: String).returns(VerifiedWorldKeyGrant) }
+  def self.verify_grant(message)
+    VerifiedWorldKeyGrant.new(grant_verifier.verify(message))
   end
 
   private

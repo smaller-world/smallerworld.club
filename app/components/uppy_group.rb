@@ -2,82 +2,91 @@
 # frozen_string_literal: true
 
 class Components::UppyGroup < Components::Input
+  include DeleteFrom
+
   # == Initialization ==
 
   sig do
     params(
-      form: T.nilable(PhlexRailsFormBuilder),
-      field: T.nilable(Symbol),
       value: T.nilable(T::Enumerable[ActiveStorage::Blob]),
+      max_number_of_files: T.nilable(Integer),
       required: T::Boolean,
-      max_files: T.nilable(Integer),
-      allowed_file_types: T.nilable(T::Array[String]),
+      invalid: T::Boolean,
       preview_fit: T.nilable(Symbol),
+      allowed_file_types: T.nilable(T::Array[String]),
       dropzone_class: T.nilable(String),
       attributes: T.untyped,
     )
       .void
   end
   def initialize(
-    form: nil,
-    field: nil,
     value: nil,
+    max_number_of_files: nil,
     required: false,
-    max_files: nil,
-    allowed_file_types: nil,
+    invalid: false,
     preview_fit: nil,
+    allowed_file_types: nil,
     dropzone_class: nil,
     **attributes
   )
-    super(form:, field:, **attributes)
+    input_id = attributes.delete(:id)
+    input_attributes = delete_from(attributes, :name)
+    super(invalid:, **attributes)
+
+    @max_number_of_files = max_number_of_files
+    @value = value
     @required = required
-    @max_files = max_files
-    @allowed_file_types = allowed_file_types
     @preview_fit = preview_fit
+    @allowed_file_types = allowed_file_types
     @dropzone_class = dropzone_class
-    @blobs = T.let(
-      value&.to_a ||
-        if form && field
-          case (value = form.object.try(field))
-          when Enumerable
-            value.to_a
-          when ActiveStorage::Attached::Many
-            value.blobs.to_a
-          end
-        end ||
-        [],
-      T::Array[ActiveStorage::Blob],
-    )
+
+    @input_id = T.let(input_id, T.nilable(String))
+    @input_attributes = T.let(input_attributes, T::Hash[Symbol, T.untyped])
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    id = SecureRandom.uuid
-    root_element(
-      :div,
-      id:,
-      class: "uppy-group",
-      data: {
-        controller: "uppy-group",
-        uppy_group_max_files_value: @max_files,
-        uppy_group_uppy_dnd_outlet: "[id='#{id}'] [data-controller=uppy-dnd]",
+    div(**mix(
+      {
+        class: "uppy-group",
+        data: {
+          controller: "uppy-group",
+          action: [
+            "uppy:uploaded->uppy-group#update",
+            "uppy:multiple-upload->uppy-group#addFilesToUpload",
+          ],
+          required: @required,
+          uppy_group_max_number_of_files_value: @max_number_of_files,
+          uppy_group_input_id_value: @input_id,
+        },
       },
-    ) do
-      template(data: { uppy_group_target: "dndTemplate" }) do
-        dnd(
-          data: {
-            action: "uppy-dnd:ready->uppy-group#startNextUpload",
-          },
-        )
+      @attributes,
+    )) do
+      template(data: { uppy_group_target: "itemTemplate" }) do
+        item(data: {
+          action: "uppy-group:request-upload->uppy#uploadExternalFile",
+        })
       end
-      @blobs.each do |blob|
-        dnd(value: blob)
+
+      @value&.each do |blob|
+        item(value: blob)
       end
-      if (n = remaining_files) && n > 0
-        dnd
+
+      remaining_files = self.remaining_files
+      if !remaining_files || remaining_files > 0
+        item(id: @input_id)
       end
+    end
+  end
+
+  # == Interface ==
+
+  sig { returns(T.nilable(Integer)) }
+  def remaining_files
+    if @max_number_of_files && @value
+      @max_number_of_files - @value.count
     end
   end
 
@@ -86,36 +95,30 @@ class Components::UppyGroup < Components::Input
   # == Helpers ==
 
   sig { params(attributes: T.untyped).void }
-  def dnd(**attributes)
-    Components::UppyDnd(
-      form: @form,
-      field: @field,
-      allowed_file_types: @allowed_file_types,
+  def item(**attributes)
+    Components::Uppy(
+      group: self,
       preview_fit: @preview_fit,
-      dropzone_class: @dropzone_class,
-      multiple: true,
-      max_files: remaining_files,
-      clear_action: "uppy-group#removeDnd",
-      clear_label: "remove",
+      allowed_file_types: @allowed_file_types,
       **mix(
         {
+          dropzone_class: @dropzone_class,
           data: {
+            uppy_group_target: "item",
+            slot: "uppy-group-item",
             action: [
-              "uppy-dnd:uploaded->uppy-group#update",
-              "uppy-dnd:multiple-upload->uppy-group#addUploads",
-              "uppy-group:upload->uppy-dnd#upload",
+              "uppy-group:request-allow-item-multiple-uploads->uppy#allowMultipleUploads",
+              "uppy-group:request-disallow-item-multiple-uploads->uppy#disallowMultipleUploads",
             ],
           },
         },
+        @input_attributes,
         attributes,
       ),
-    )
-  end
-
-  sig { returns(T.nilable(Integer)) }
-  def remaining_files
-    if @max_files
-      @max_files - @blobs.size
+    ) do |uppy|
+      uppy.with_clear_button(data: { action: "uppy-group#removeItem" }) do
+        "remove"
+      end
     end
   end
 end

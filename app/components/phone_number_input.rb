@@ -2,36 +2,28 @@
 # frozen_string_literal: true
 
 class Components::PhoneNumberInput < Components::Input
-  include Phlex::Rails::Helpers::HiddenFieldTag
-
-  # == Initialization ==
-
-  sig do
-    params(
-      form: T.nilable(PhlexRailsFormBuilder),
-      field: T.nilable(Symbol),
-      name: T.nilable(String),
-      id: T.nilable(String),
-      attributes: T.untyped,
-    ).void
-  end
-  def initialize(form: nil, field: nil, name: nil, id: nil, **attributes)
-    super(form:, field:, **attributes)
-    @name = name
-    @id = id
-  end
+  include DeleteFrom
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    div(
-      class: "phone-number-input-container",
-      data: {
-        controller: "phone-number-input",
+    attributes = @attributes
+    value = attributes.delete(:value).presence
+    input_attributes = delete_from(attributes, :id, :required, :disabled, :placeholder)
+    hidden_input_attributes = delete_from(attributes, :name)
+
+    div(**mix(
+      {
+        class: "phone-number-input",
+        data: {
+          slot: "phone-number-input",
+          controller: "phone-number-input",
+        },
       },
-    ) do
-      Components::Input(form: @form, field: @field, name: nil, id: field_id, **mix(
+      attributes,
+    )) do
+      Components::Input(value:, **mix(
         {
           data: {
             phone_number_input_target: "input",
@@ -41,46 +33,16 @@ class Components::PhoneNumberInput < Components::Input
             ],
           },
         },
-        @attributes,
+        input_attributes,
       ))
-
-      hidden_input_options = {
-        name: field_name,
-        data: {
-          phone_number_input_target: "hiddenInput",
+      input(type: "hidden", value:, **mix(
+        {
+          data: {
+            phone_number_input_target: "hiddenInput",
+          },
         },
-      }
-      if @form
-        @form.hidden_field(@field, id: nil, **hidden_input_options)
-      else
-        hidden_field_tag(@field, **hidden_input_options)
-      end
-    end
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(T.nilable(String)) }
-  def field_name
-    if @name
-      @name
-    elsif @form && @field
-      @form.field_name(@field)
-    elsif @field
-      super(@field)
-    end
-  end
-
-  sig { returns(T.nilable(String)) }
-  def field_id
-    if @id
-      @id
-    elsif @form && @field
-      @form.field_id(@field)
-    elsif @field
-      super(@field)
+        hidden_input_attributes,
+      ))
     end
   end
 end

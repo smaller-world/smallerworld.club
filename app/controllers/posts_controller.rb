@@ -51,18 +51,14 @@ class PostsController < ApplicationController
       end
       format.turbo_stream do
         append_post_items = turbo_stream.append(
-          :post_items,
+          "post_items",
           renderable: Components::WorldPostItems.new(posts:, replied_post_ids:),
         )
-        update_next_page_control = if pagy.next
-          turbo_stream.replace(
-            :next_page_control,
-            renderable: Components::WorldNextPageControl.new(world:, post_type:, pagy:),
-          )
-        else
-          turbo_stream.remove(:next_page_control)
-        end
-        render turbo_stream: [ append_post_items, update_next_page_control ]
+        replace_next_page_control = turbo_stream.replace(
+          "next_page_control",
+          renderable: Components::WorldNextPageControl.new(world:, post_type:, pagy:),
+        )
+        render turbo_stream: [ append_post_items, replace_next_page_control ]
       end
     end
   end
@@ -103,7 +99,7 @@ class PostsController < ApplicationController
         world = find_world
         authorize!(world, to: :post?)
         post_params = params.expect(
-          post: [ :type_id, :emoji, :title, :body, :quiet, images: [] ],
+          post: [ :type_id, :emoji, :title, :body, :quiet, images: [], recipient_ids: [] ],
         )
         post_type_id = post_params.delete(:type_id)
         post_type = world.post_types.find(post_type_id)
@@ -125,7 +121,7 @@ class PostsController < ApplicationController
         post = find_post
         authorize!(post)
         post_params = params.expect(
-          post: [ :type_id, :emoji, :title, :body, :quiet, images: [] ],
+          post: [ :type_id, :emoji, :title, :body, :quiet, images: [], recipient_ids: [] ],
         )
         if post.update(post_params)
           world = post.world!

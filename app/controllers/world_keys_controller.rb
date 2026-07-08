@@ -45,6 +45,7 @@ class WorldKeysController < ApplicationController
         world_key = find_world_key
         authorize!(world_key)
         world_key_params = params.expect(world_key: [ granted_post_type_ids: [] ])
+          .reverse_merge(granted_post_type_ids: [])
         world_key.update!(world_key_params)
         refresh_or_redirect_to([ world_key.world, :keys ], status: :see_other)
       end
@@ -62,7 +63,7 @@ class WorldKeysController < ApplicationController
         if allowed_to?(:manage?, world)
           refresh_or_redirect_to([ world, :keys ], status: :see_other)
         else
-          recede_or_redirect_to(home_path, status: :see_other)
+          redirect_to(home_path, status: :see_other)
         end
       end
     end

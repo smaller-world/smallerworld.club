@@ -16,15 +16,8 @@ class ReplyInitiationsController < ApplicationController
           **reply_initiation_params,
           replier: current_user,
         )
-
         if reply_initiation.save
-          render turbo_stream: turbo_stream.replace(
-            helpers.dom_id(post, :reply_initiation),
-            renderable: Components::ReplyInitiationForm.new(
-              reply_initiation:,
-              replied: true,
-            ),
-          )
+          render turbo_stream: replace_form(reply_initiation:, method: :morph)
         else
           message = "Failed to create reply initiation"
           if (error = reply_initiation.errors.full_messages.first)
@@ -33,13 +26,7 @@ class ReplyInitiationsController < ApplicationController
           Sentry.capture_message(message)
           render(
             turbo_stream: [
-              turbo_stream.replace(
-                helpers.dom_id(post, :reply_initiation),
-                renderable: Components::ReplyInitiationForm.new(
-                  reply_initiation:,
-                  replied: true,
-                ),
-              ),
+              replace_form(reply_initiation:, method: :morph),
               append_log_message(message, level: :error),
             ],
             status: :unprocessable_content,
@@ -56,5 +43,18 @@ class ReplyInitiationsController < ApplicationController
   sig { returns(Post) }
   def find_post
     Post.find(params.fetch(:post_id))
+  end
+
+  sig { params(reply_initiation: ReplyInitiation, options: T.untyped).returns(ActiveSupport::SafeBuffer) }
+  def replace_form(reply_initiation:, **options)
+    post = reply_initiation.post!
+    turbo_stream.replace(
+      helpers.dom_id(post, :reply_initiation_form),
+      renderable: Components::ReplyInitiationForm.new(
+        reply_initiation:,
+        replied: post.reply_initiations.any?,
+      ),
+      **options,
+    )
   end
 end

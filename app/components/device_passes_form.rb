@@ -2,44 +2,44 @@
 # frozen_string_literal: true
 
 class Components::DevicePassesForm < Components::Base
-  # == Initialization ==
+  # # == Initialization ==
 
-  sig { params(url: T.untyped, attributes: T.untyped).void }
-  def initialize(url:, **attributes)
-    @url = url
-    super(**attributes)
-  end
+  # sig { params(url: T.untyped, attributes: T.untyped).void }
+  # def initialize(url:, **attributes)
+  #   @url = url
+  #   super(**attributes)
+  # end
 
-  # == Component ==
+  # # == Component ==
 
-  sig { override.void }
-  def view_template
-    form_with(
-      url: @url,
-      method: :get,
-      **normalize_mix(
-        {
-          data: {
-            controller: "passes-bridge connection device-passes-form",
-            action: "passes-bridge:received->device-passes-form#submitPasses",
-          },
-          html: {
-            hidden: true,
-          },
-        },
-        @attributes,
-      ),
-    ) do |form|
-      template(data: { device_passes_form_target: "inputTemplate" }) do
-        form.hidden_field(
-          :pass_serial_numbers,
-          multiple: true,
-          value: nil,
-          data: {
-            device_passes_form_target: "input",
-          },
-        )
-      end
-    end
-  end
+  # sig { override.void }
+  # def view_template
+  #   form_with(
+  #     url: @url,
+  #     method: :get,
+  #     **normalize_mix(
+  #       {
+  #         data: {
+  #           controller: "passes-bridge connection device-passes-form",
+  #           action: "passes-bridge:received->device-passes-form#submitPasses",
+  #         },
+  #         html: {
+  #           hidden: true,
+  #         },
+  #       },
+  #       @attributes,
+  #     ),
+  #   ) do |form|
+  #     template(data: { device_passes_form_target: "inputTemplate" }) do
+  #       form.hidden_field(
+  #         :pass_serial_numbers,
+  #         multiple: true,
+  #         value: nil,
+  #         data: {
+  #           device_passes_form_target: "input",
+  #         },
+  #       )
+  #     end
+  #   end
+  # end
 end

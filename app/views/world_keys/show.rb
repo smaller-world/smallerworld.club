@@ -48,12 +48,8 @@ class Views::WorldKeys::Show < Views::Base
                     "this action is permanent and cannot be undone"
                   end
                 end
-                form_with(model: @world_key, method: :delete) do
-                  Components::Button(
-                    type: :submit,
-                    variant: :destructive,
-                    class: "w-full",
-                  ) do |button|
+                Components::Form(@world_key, method: :delete) do |form|
+                  form.submit(variant: :destructive, class: "w-full") do |button|
                     button.inline_start_icon("huge/heartbreak")
                     span { "really leave" }
                   end

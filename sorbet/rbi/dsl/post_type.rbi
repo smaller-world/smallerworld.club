@@ -418,7 +418,7 @@ class PostType
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
     def recipient_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :recipients, through: :world_keys`.
+    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :recipients, through: :granted_world_keys`.
     # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
     sig { returns(::User::PrivateCollectionProxy) }
     def recipients; end
@@ -431,20 +431,6 @@ class PostType
 
     sig { void }
     def reset_world; end
-
-    sig { returns(T::Array[T.untyped]) }
-    def subscriber_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def subscriber_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :subscribers, through: :world_keys`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def subscribers; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def subscribers=(value); end
 
     sig { returns(T.nilable(::World)) }
     def world; end

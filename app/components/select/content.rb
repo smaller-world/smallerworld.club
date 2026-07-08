@@ -15,16 +15,14 @@ class Components::Select::Content < Components::Base
 
   sig do
     params(
-      value: T.nilable(String),
-      register_selected_item_block: T.proc.params(selected_item_block: T.proc.void).void,
+      select: Components::Select,
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    value:,
-    register_selected_item_block:,
+    select,
     anchor: :bottom,
     anchor_strategy: nil,
     **attributes
@@ -34,8 +32,7 @@ class Components::Select::Content < Components::Base
     end
 
     super(**attributes)
-    @value = value
-    @register_selected_item_block = register_selected_item_block
+    @select = select
     @anchor = anchor
     @anchor_strategy = anchor_strategy
   end
@@ -65,16 +62,10 @@ class Components::Select::Content < Components::Base
 
   sig { params(value: String, attributes: T.untyped, content: T.proc.void).void }
   def item(value:, **attributes, &content)
-    render_item = ->() {
-      el_option(
-        value:,
-        class: "select-item-text",
-        data: {
-          forward_click_target: "clickable",
-        },
-        &content
-      )
-    }
+    selected = @select.value == value
+    if selected
+      @select.selected_item_block = content
+    end
     div(**mix(
       {
         class: "select-item",
@@ -85,13 +76,30 @@ class Components::Select::Content < Components::Base
       },
       attributes,
     )) do
-      render_item.call
+      item_text(value:, selected:, &content)
       span(class: "select-item-indicator") do
         Icon("huge/tick-02")
       end
     end
-    if value == @value
-      @register_selected_item_block.call(render_item)
+  end
+
+  sig { params(attributes: T.untyped).void }
+  def blank_item(**attributes)
+    selected = @select.value.nil?
+    div(**mix(
+      {
+        class: "select-item",
+        data: {
+          controller: "forward-click",
+          slot: "select-item",
+        },
+      },
+      attributes,
+    )) do
+      item_text(selected:)
+      span(class: "select-item-indicator") do
+        Icon("huge/tick-02")
+      end
     end
   end
 
@@ -119,5 +127,26 @@ class Components::Select::Content < Components::Base
     if (values = Array.wrap(@anchor).presence)
       values.join(" ")
     end
+  end
+
+  sig do
+    params(
+      value: T.nilable(String),
+      selected: T.nilable(T::Boolean),
+      content: T.nilable(T.proc.void),
+    ).void
+  end
+  def item_text(value: nil, selected: false, &content)
+    el_option(
+      value:,
+      class: "select-item-text",
+      data: {
+        forward_click_target: "clickable",
+      },
+      aria: {
+        selected: (selected.to_s unless selected.nil?),
+      },
+      &content
+    )
   end
 end

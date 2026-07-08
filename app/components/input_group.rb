@@ -2,21 +2,6 @@
 # frozen_string_literal: true
 
 class Components::InputGroup < Components::Base
-  # == Initialization ==
-
-  sig do
-    params(
-      form: T.nilable(PhlexRailsFormBuilder),
-      field: T.nilable(Symbol),
-      attributes: T.untyped,
-    ).void
-  end
-  def initialize(form: nil, field: nil, **attributes)
-    super(**attributes)
-    @form = form
-    @field = field
-  end
-
   # == Component ==
 
   sig { override.params(content: T.proc.void).void }
@@ -25,7 +10,9 @@ class Components::InputGroup < Components::Base
       :div,
       role: "group",
       class: "input-group group/input-group",
-      data: { slot: "input-group" },
+      data: {
+        slot: "input-group",
+      },
       &content
     )
   end
@@ -68,31 +55,6 @@ class Components::InputGroup < Components::Base
   sig { params(attributes: T.untyped).void }
   def input(**attributes)
     render Components::Input.new(
-      form: @form,
-      field: @field,
-      **mix(
-        {
-          class: "input-group-input",
-          data: {
-            slot!: "input-group-control",
-          },
-        },
-        attributes,
-      ),
-    )
-  end
-
-  sig { params(attributes: T.untyped).void }
-  def text_input(**attributes)
-    input(type: :text, **attributes)
-  end
-
-  sig { params(direct_upload: T::Boolean, attributes: T.untyped).void }
-  def file_input(direct_upload: true, **attributes)
-    render Components::FileInput.new(
-      form: @form,
-      field: @field,
-      direct_upload:,
       **mix(
         {
           class: "input-group-input",
@@ -107,9 +69,7 @@ class Components::InputGroup < Components::Base
 
   sig { params(attributes: T.untyped).void }
   def textarea(**attributes)
-    render Components::Textarea.new(
-      form: @form,
-      field: @field,
+    Components::Textarea(
       **mix(
         {
           class: "input-group-textarea",

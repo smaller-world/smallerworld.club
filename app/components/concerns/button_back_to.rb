@@ -5,9 +5,7 @@ module ButtonBackTo
   extend T::Sig
   include ButtonLinkTo
 
-  private
-
-  # == Method ==
+  # == Methods ==
 
   sig { params(args: T.untyped, attributes: T.untyped).void }
   def button_back_to(*args, **attributes)

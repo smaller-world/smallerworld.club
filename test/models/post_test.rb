@@ -6,16 +6,17 @@
 #
 # Table name: posts
 #
-#  id              :uuid             not null, primary key
-#  emoji           :string
-#  hidden_from_ids :uuid             default([]), not null, is an Array
-#  plain_body      :text             not null
-#  quiet           :boolean          default(FALSE), not null
-#  title           :string
-#  v1_attributes   :jsonb
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  type_id         :uuid             not null
+#  id                            :uuid             not null, primary key
+#  emoji                         :string
+#  hidden_from_ids               :uuid             default([]), not null, is an Array
+#  ordered_images_attachment_ids :uuid             default([]), not null, is an Array
+#  plain_body                    :text             not null
+#  quiet                         :boolean          default(FALSE), not null
+#  title                         :string
+#  v1_attributes                 :jsonb
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  type_id                       :uuid             not null
 #
 # Indexes
 #

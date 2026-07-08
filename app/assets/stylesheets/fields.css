@@ -59,11 +59,14 @@
   }
 
   .field-error {
+    /* Base styles */
     @apply text-sm font-normal text-destructive;
-    @apply empty:hidden;
 
-    ul {
+    > ul {
       @apply ml-4 flex list-disc flex-col gap-1;
     }
+
+    /* Customizations */
+    @apply empty:hidden;
   }
 }

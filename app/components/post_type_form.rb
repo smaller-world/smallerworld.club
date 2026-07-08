@@ -15,44 +15,50 @@ class Components::PostTypeForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(model:, **mix(
-      {
-        class: "flex flex-col gap-6",
-        data: {
-          controller: "haptic-bridge",
-          action: "turbo:submit-end->haptic-bridge#vibrate",
-        },
-      },
-      @attributes,
-    )) do |form|
-      field_for(form, :label) do |f|
-        f.label { "what's this post type called?" }
-        f.input(
+    Components::Form(
+      @post_type,
+      action: @post_type.new_record? ? [ @world, @post_type ] : @post_type,
+      vibrate_on_submit: true,
+    ) do |form|
+      form.wrapped(
+        form.field(:label).text(
           placeholder: @post_type.label.presence || "journal entry",
           required: true,
           data: {
             controller: "prevent-enter-submit",
           },
-        )
-        f.error
-      end
+        ),
+        label: "what's this post type called?",
+      )
 
       world_keys = @post_type.world_keys.includes(:recipient)
       Components::FieldSet(
-        class: class_names("gap-1", "hidden" => world_keys.none?),
+        class: class_names("gap-2", "hidden" => world_keys.none?),
       ) do |field_set|
         field_set.legend(class: "mb-0") do
           "who can see this post type?"
         end
-        checkbox_group_for(
-          form,
-          :granted_world_key_ids,
+        form.Field(:granted_world_key_ids).checkboxes(
+          world_keys,
           class: "flex-row gap-1.5 flex-wrap",
-        ) do |checkbox_group|
-          world_keys.find_each do |world_key|
-            granted_world_key_choice_card_for(world_key, checkbox_group:)
+        ) do |choice|
+          recipient = choice.item.recipient!
+          choice.label(class: "cursor-pointer w-fit") do
+            Components::Field(
+              orientation: :horizontal,
+              invalid: form.invalid?(:granted_world_key_ids),
+              class: "w-auto py-1 pl-2 pr-2 items-center",
+            ) do |field|
+              field.content do
+                field.title(class: "flex items-center gap-1.5") do
+                  recipient.name
+                end
+              end
+              choice.input(class: "rounded-full")
+            end
           end
         end
+        form.error_for(:granted_world_key_ids)
       end
 
       # Components::FieldSet(class: "gap-1") do |field_set|
@@ -89,54 +95,14 @@ class Components::PostTypeForm < Components::Base
       #   end
       # end
 
-      div(class: "flex flex-col gap-1") do
-        submit_button_for(form) do |button|
-          if @post_type.new_record?
-            button.inline_start_icon("huge/plus-sign-square")
-            span { "create post type" }
-          else
-            button.inline_start_icon("huge/floppy-disk")
-            span { "save changes" }
-          end
+      form.submit do |button|
+        if @post_type.new_record?
+          button.inline_start_icon("huge/plus-sign-square")
+          span { "create post type" }
+        else
+          button.inline_start_icon("huge/floppy-disk")
+          span { "save changes" }
         end
-      end
-    end
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(Object) }
-  def model
-    if @post_type.new_record?
-      [ @world, @post_type ]
-    else
-      @post_type
-    end
-  end
-
-  sig { params(world_key: WorldKey, checkbox_group: Components::CheckboxGroup).void }
-  def granted_world_key_choice_card_for(world_key, checkbox_group:)
-    recipient = world_key.recipient!
-    checkbox_group.field_label_for(
-      world_key.id,
-      class: "cursor-pointer w-fit",
-    ) do |field_label|
-      field_label.field(
-        orientation: :horizontal,
-        class: "w-auto py-1 pl-3 pr-2 items-center",
-      ) do |field|
-        field.content do
-          field.title(class: "flex items-center gap-1.5") do
-            recipient.name
-          end
-        end
-        field.checkbox_group_item_for(
-          world_key.id,
-          multiple: true,
-          class: "rounded-full",
-        )
       end
     end
   end

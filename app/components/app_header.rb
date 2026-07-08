@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::AppHeader < Components::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Component ==
 
   sig { override.void }

@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 import { type Root } from "react-dom/client";
 import { Typed } from "stimulus-typescript";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 import type { ToastEvent } from "#helpers/toaster_helpers";
 
 const targets = {
@@ -24,7 +24,7 @@ export default class ToasterController extends Typed(Controller<HTMLElement>, {
     void import("../helpers/toaster_helpers").then(({ createToasterRoot }) => {
       this.#reactRoot = createToasterRoot(this.element);
     });
-    addCleanupAction(this, "unmount");
+    addBeforeCacheAction(this, "unmount");
   }
 
   listenerTargetConnected(): void {

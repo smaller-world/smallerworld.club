@@ -28,9 +28,9 @@ class PhoneNumberVerificationRequestsControllerTest < ActionDispatch::Integratio
       params: {
         phone_number_verification_request: {
           verification_code: verification_request.verification_code,
-        },
-        user: {
-          time_zone_name: "America/New_York",
+          phone_number_owner: {
+            time_zone_name: "America/New_York",
+          },
         },
       },
       as: :turbo_stream

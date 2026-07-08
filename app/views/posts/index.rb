@@ -9,7 +9,7 @@ class Views::Posts::Index < Views::Base
       world: World,
       post_type: T.nilable(PostType),
       posts: T::Enumerable[Post],
-      pagy: T.nilable(Pagy),
+      pagy: Pagy,
       replied_post_ids: T.nilable(T::Set[String]),
       created_post_id: T.nilable(String),
     ).void
@@ -35,7 +35,7 @@ class Views::Posts::Index < Views::Base
 
   sig { override.void }
   def view_template
-    turbo_frame_tag(:posts) do
+    turbo_frame_tag(@world, :posts) do
       div(class: "space-y-4") do
         ul(id: "post_items", class: "space-y-4 empty:hidden") do
           Components::WorldPostItems(
@@ -44,7 +44,7 @@ class Views::Posts::Index < Views::Base
             created_post_id: @created_post_id,
           )
         end
-        Components::Empty(class: "hidden [ul:empty_+_&]:revert-display-layer") do |empty|
+        Components::Empty(class: "hidden [ul:empty+&]:revert-display-layer") do |empty|
           empty.header(class: "gap-0") do
             empty.media(variant: :icon) do
               Icon("huge/message-edit-01")
@@ -57,14 +57,12 @@ class Views::Posts::Index < Views::Base
             # end
           end
         end
-        if @pagy.nil? || @pagy.next
-          div(class: "flex flex-col items-center") do
-            Components::WorldNextPageControl(
-              world: @world,
-              post_type: @post_type,
-              pagy: @pagy,
-            )
-          end
+        div(class: "flex flex-col items-center") do
+          Components::WorldNextPageControl(
+            world: @world,
+            post_type: @post_type,
+            pagy: @pagy,
+          )
         end
       end
 

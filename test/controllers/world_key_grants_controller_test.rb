@@ -13,7 +13,7 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @world = T.let(create_world(owner: users(:bob), name: "Grant World"), World)
-    @grant = T.let(@world.key_grant, String)
+    @grant = T.let(@world.key_grant_message, String)
   end
 
   # == Tests ==
@@ -27,6 +27,6 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { recipient.world_keys.count }, 1 do
       post accept_world_key_grant_path(@grant), as: :turbo_stream
     end
-    assert_redirected_to world_path(@world, celebrate: true)
+    assert_redirected_to world_path(@world)
   end
 end

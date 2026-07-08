@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const targets = {
   content: HTMLDialogElement,
@@ -17,9 +17,9 @@ export default class DialogController extends Typed(Controller<HTMLElement>, {
     if (!this.hasContentTarget) {
       throw new Error("Missing content target");
     }
-
-    addCleanupAction(this, "close");
+    addBeforeCacheAction(this, "close");
   }
+
   // == Actions ==
 
   open(): void {

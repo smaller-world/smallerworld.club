@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::ClearAccountNotificationCountForm < Components::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig { params(current_user: User, attributes: T.untyped).void }

@@ -6,7 +6,7 @@ auto_install_disable_tools = ["overmind"]
 ruby = { version = "4.0.1", postinstall = "bundle install" }
 bun = { version = "1.3.7", postinstall = "bun install" }
 pkl = "0.31.1"
-hk = { version = "1.35.0", postinstall = 'if [ -z "$CI" ]; then hk install; fi' }
+hk = { version = "1.50.0", postinstall = 'if [ -z "$CI" ]; then hk install; fi' }
 overmind = "latest"
 
 [tasks]

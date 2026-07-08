@@ -7,7 +7,7 @@ import {
 import { Typed } from "stimulus-typescript";
 import { useResize } from "stimulus-use";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const ROTATIONS = [-1, 2, -2, 1];
 const STACK_OFFSET = 8;
@@ -64,7 +64,7 @@ export default class ImageStackController extends Typed(
 
   connect(): void {
     super.connect();
-    addCleanupAction(this, "destroy");
+    addBeforeCacheAction(this, "destroy");
   }
 
   disconnect(): void {

@@ -40,6 +40,13 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     phone_number if verified?
   end
 
+  # == Asosciations ==
+
+  sig { returns(T.nilable(User)) }
+  def phone_number_owner
+    User.find_by(phone_number:)
+  end
+
   # == Normalizations ==
 
   normalizes_phone_number :phone_number

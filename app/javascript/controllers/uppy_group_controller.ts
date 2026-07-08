@@ -1,24 +1,22 @@
-import { Controller } from "@hotwired/stimulus";
 import type { Meta, MinimalRequiredUppyFile } from "@uppy/core";
+import { isEmpty } from "lodash-es";
 import { Typed } from "stimulus-typescript";
 
-import UppyDndController from "./uppy_dnd_controller";
+import ApplicationController from "./application_controller";
 
 const targets = {
-  dndTemplate: HTMLTemplateElement,
-};
-
-const outlets = {
-  "uppy-dnd": UppyDndController,
+  itemTemplate: HTMLTemplateElement,
+  item: HTMLElement,
 };
 
 const values = {
-  maxFiles: Number,
+  inputId: String,
+  maxNumberOfFiles: Number,
 };
 
 export default class UppyGroupController extends Typed(
-  Controller<HTMLElement>,
-  { targets, outlets, values },
+  ApplicationController<HTMLElement>,
+  { targets, values },
 ) {
   #filesToUpload: MinimalRequiredUppyFile<Meta, { signed_id: string }>[] = [];
 
@@ -26,29 +24,40 @@ export default class UppyGroupController extends Typed(
 
   connect(): void {
     super.connect();
-    if (!this.hasDndTemplateTarget) {
-      throw new Error("Missing dndTemplate target");
+    if (!this.hasItemTemplateTarget) {
+      throw new Error("Missing itemTemplate target");
+    }
+  }
+
+  itemTargetConnected(item: HTMLHtmlElement) {
+    const [file, ...remainingFiles] = this.#filesToUpload;
+    if (itemIsEmpty(item) && file) {
+      this.#filesToUpload = remainingFiles;
+      this.dispatch("request-upload", {
+        detail: { file },
+        target: item,
+      });
     }
   }
 
   // == Actions ==
 
   update(): void {
-    this.#removeEmptyDndTargets();
-    this.#addDndTargets();
-    this.#updateDndValues();
-    if (this.#countNonEmptyDndTargets() === this.maxFilesValue) {
+    this.#removeEmptyItems();
+    this.#addItems();
+    this.#updateItemAttributes();
+    if (this.#countNonEmptyItems() === this.maxNumberOfFilesValue) {
       this.#filesToUpload = [];
     }
   }
 
-  removeDnd({ target }: PointerEvent): void {
+  removeItem({ target }: PointerEvent): void {
     if (!(target instanceof HTMLElement)) {
       return;
     }
-    for (const uppyDndElement of this.uppyDndOutletElements) {
-      if (uppyDndElement.contains(target)) {
-        uppyDndElement.remove();
+    for (const item of this.itemTargets) {
+      if (item.contains(target)) {
+        item.remove();
         this.dispatch("removed");
         break;
       }
@@ -56,7 +65,7 @@ export default class UppyGroupController extends Typed(
     this.update();
   }
 
-  addUploads({
+  addFilesToUpload({
     detail,
   }: CustomEvent<{
     files: MinimalRequiredUppyFile<Meta, { signed_id: string }>[];
@@ -64,55 +73,54 @@ export default class UppyGroupController extends Typed(
     this.#filesToUpload = detail.files;
   }
 
-  startNextUpload({ target }: CustomEvent): void {
-    const [file, ...remainingFiles] = this.#filesToUpload;
-    if (target instanceof HTMLElement && file) {
-      this.#filesToUpload = remainingFiles;
-      this.dispatch("upload", { target, detail: { file } });
-    }
-  }
-
   // == Helpers ==
 
-  #addDndTargets(): void {
+  #addItems(): void {
     if (
-      this.maxFilesValue &&
-      this.uppyDndOutlets.length >= this.maxFilesValue
+      this.maxNumberOfFilesValue &&
+      this.itemTargets.length < this.maxNumberOfFilesValue
     ) {
-      return;
+      const item = this.itemTemplateTarget.content.cloneNode(true);
+      this.element.appendChild(item);
     }
-    const dndTree = this.dndTemplateTarget.content.cloneNode(true);
-    this.element.appendChild(dndTree);
   }
 
-  #removeEmptyDndTargets(): void {
-    for (const uppyDnd of this.uppyDndOutlets) {
-      if (uppyDnd.isEmpty) {
-        uppyDnd.element.remove();
+  #removeEmptyItems(): void {
+    for (const item of this.itemTargets) {
+      if (itemIsEmpty(item)) {
+        item.remove();
       }
     }
   }
 
-  #updateDndValues(): void {
+  #updateItemAttributes(): void {
     const canUploadMore =
-      this.maxFilesValue &&
-      this.#countNonEmptyDndTargets() < this.maxFilesValue;
-    for (const uppyDnd of this.uppyDndOutlets) {
+      this.maxNumberOfFilesValue &&
+      this.#countNonEmptyItems() < this.maxNumberOfFilesValue;
+    for (const item of this.itemTargets) {
       if (canUploadMore) {
-        uppyDnd.multipleValue = true;
+        this.dispatch("request-allow-item-multiple-uploads", { target: item });
       } else {
-        uppyDnd.multipleValue = false;
+        this.dispatch("request-disallow-item-multiple-uploads", {
+          target: item,
+        });
       }
     }
   }
 
-  #countNonEmptyDndTargets(): number {
+  #countNonEmptyItems(): number {
     let count = 0;
-    for (const uppyDnd of this.uppyDndOutlets) {
-      if (!uppyDnd.isEmpty) {
+    for (const item of this.itemTargets) {
+      if (itemIsEmpty(item)) {
         count++;
       }
     }
     return count;
   }
 }
+
+const itemIsEmpty = (item: HTMLElement): boolean => {
+  const { dataset, ariaBusy } = item;
+  const { uppyPreviewSignedIdValue } = dataset;
+  return !uppyPreviewSignedIdValue && ariaBusy !== "true";
+};

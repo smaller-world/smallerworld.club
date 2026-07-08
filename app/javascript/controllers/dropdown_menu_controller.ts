@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const targets = {
   menu: HTMLElement,
@@ -18,7 +18,7 @@ export default class DropdownMenuController extends Typed(
     if (!this.hasMenuTarget) {
       throw new Error("Missing menu target");
     }
-    addCleanupAction(this, "close");
+    addBeforeCacheAction(this, "close");
   }
 
   // == Actions ==

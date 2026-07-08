@@ -70,7 +70,6 @@
   }
 
   .post-form {
-    @apply flex flex-col gap-6;
     @apply data-restoring-draft:loading;
 
     [name="post[type_id]"] {

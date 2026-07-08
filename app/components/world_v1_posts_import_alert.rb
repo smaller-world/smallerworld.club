@@ -3,6 +3,7 @@
 
 class Components::WorldV1PostsImportAlert < Components::Base
   include Phlex::Rails::Helpers::Pluralize
+  include Phlex::Rails::Helpers::FormWith
 
   # == Initialization ==
 
@@ -25,7 +26,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
   def view_template
     if has_importable_posts? || @import_job
       div(class: "flex flex-col gap-1.5") do
-        Components::Alert(**compact_mix(
+        Components::Alert(**mix(
           {
             class: current_import_finished? ? "pr-30" : "pr-28",
             data: {
@@ -59,9 +60,9 @@ class Components::WorldV1PostsImportAlert < Components::Base
             end
           end
           alert.action do
-            form_with(url: [ @world, :v1_posts_import ], method: :post) do |form|
-              submit_button_for(
-                form,
+            form_with(url: [ @world, :v1_posts_import ], method: :post) do
+              Components::Button(
+                type: :submit,
                 size: :sm,
                 disabled: !!@import_job,
                 class: class_names("loading *:invisible" => @import_job&.claimed?),

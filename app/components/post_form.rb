@@ -17,38 +17,46 @@ class Components::PostForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(
-      id: :post_form,
-      model:,
-      url: (restore_post_draft_path if @restore_draft),
+    action = if @restore_draft
+      restore_post_draft_path
+    else
+      @post.new_record? ? [ @world, @post ] : @post
+    end
+    Components::Form(
+      @post,
+      action:,
+      id: "post_form",
       **mix(
         {
           class: "post-form",
           data: {
             restoring_draft: (true if @restore_draft),
             controller: token_list(
-              "submit haptic-bridge",
+              "post-form-type submit haptic-bridge",
               "post-draft" => @post.new_record?,
             ),
+            post_form_type_recipients_select_frame_url_template_value:
+              post_recipients_select_path(":post_type_id"),
+            post_draft_world_id_value: (@world.id if @post.new_record?),
             action: token_list(
               "turbo:submit-end->haptic-bridge#vibrate" => !@restore_draft,
               "turbo:submit-end->post-draft#clear" => @post.new_record? && !@restore_draft,
               "turbo:load@document->post-draft#restore" => @post.new_record? && @restore_draft,
             ),
-            post_draft_world_id_value: @world.id,
           },
         },
         @attributes,
       ),
     ) do |form|
       div(class: "flex flex-col gap-4") do
-        field_for(form, :type_id) do |f|
-          div(class: "flex gap-4 justify-between") do
-            div(class: "flex gap-0.5") do
-              f.select(
+        div(class: "flex gap-4 justify-between") do
+          div(class: "flex gap-0.5") do
+            form.wrapped(
+              form.field(:type_id).select(
+                @post.world_post_types.select(:id, :icon, :label),
                 data: {
-                  controller: "post-type-select",
-                  action: "change->post-type-select#updateSearchParams",
+                  post_form_type_target: "select",
+                  action: "change->post-form-type#update",
                 },
               ) do |select|
                 select.with_trigger do
@@ -56,54 +64,71 @@ class Components::PostForm < Components::Base
                 end
                 select.with_content do |select_content|
                   select_content.group do
-                    @post.world_post_types.each do |post_type|
-                      select_content.item(value: post_type.id) do
+                    select.options.each do |post_type|
+                      select_content.item(
+                        value: post_type.id,
+                      ) do
                         div(class: "flex items-center gap-2") do
-                          if (icon = post_type.icon)
-                            Icon(icon)
-                          end
+                          Icon(post_type.icon)
                           span { post_type.label }
                         end
                       end
                     end
                   end
                 end
-              end
+              end,
+              label: false,
+              error: false,
+            )
+            button_link_to(
+              "edit",
+              [ :edit, @post_type ],
+              size: :sm,
+              class: "text-muted-foreground font-normal px-2 mt-0.5",
+            )
+          end
 
-              button_link_to(
-                "edit",
-                [ :edit, @post_type ],
-                size: :sm,
-                class: "text-muted-foreground font-normal px-2 mt-0.5",
+          unless @restore_draft
+            turbo_frame_tag(
+              "recipients_select",
+              data: {
+                post_form_type_target: "recipientsSelectFrame",
+              },
+            ) do
+              form.wrapped(
+                form.field(:recipient_ids).post_recipients_select(**T.unsafe({
+                  post: @post,
+                  **form.error_tooltip_attributes_for(:recipient_ids),
+                })),
+                orientation: :horizontal,
+                label: false,
+                error: false,
               )
             end
           end
-          f.error
         end
 
         Components::FieldGroup(class: "flex-row gap-3") do
-          field_for(form, :emoji, class: "flex-0") do |f|
-            f.emoji_input(**compact_mix(
-              {
-                data: {
-                  action: ("change->post-draft#save" if can_save_draft?),
-                },
-              },
-              error_tooltip_attributes_for(form, :emoji),
-            ))
-          end
-          field_for(form, :title, class: "flex-1") do |f|
-            f.text_input(
-              placeholder: "a title!",
-              data: {
-                action: ("change->post-draft#save" if can_save_draft?),
-              },
-            )
-            f.error
-          end
+          form.wrapped(
+            form.field(:emoji).emoji(**mix(
+              form.error_tooltip_attributes_for(:emoji),
+              ({ data: { action: "change->post-draft#save" } } if can_save_draft?),
+            )),
+            label: false,
+            error: false,
+            class: "flex-0",
+          )
+          form.wrapped(
+            form.field(:title).text(placeholder: "a title!", data: {
+              action: ("change->post-draft#save" if can_save_draft?),
+            }),
+            label: false,
+            class: "flex-1",
+          )
         end
-        field_for(form, :body) do |f|
-          f.lexxy_editor(
+
+        Components::Field(invalid: form.invalid?(:body)) do |field|
+          form.Field(:body).lexxy(
             placeholder: "something i want to share...",
             required: true,
             class: "min-h-36",
@@ -114,20 +139,21 @@ class Components::PostForm < Components::Base
               ),
             },
           )
-          f.description(
+          field.description(
             data: {
               post_draft_target: "savedTimestampLabel",
             },
           ) do
             "write freely! your posts are encrypted."
           end
-          f.error(class: "text-center")
+          form.error_for(:body, class: "text-center")
         end
       end
 
       div(class: "flex flex-col gap-2", data: { controller: "transition-group" }) do
         unless @post.images.attached?
           Components::Button(
+            type: :button,
             variant: :outline,
             class: "self-center",
             data: {
@@ -143,21 +169,10 @@ class Components::PostForm < Components::Base
           end
         end
 
-        field_for(
-          form,
-          :images,
-          class: class_names("hidden" => !@post.images.attached?),
-          data: {
-            transition_group_target: "item",
-            controller: "transition",
-            action: "transition-group:start->transition#enter",
-            transition_enter: "transition-all duration-200 ease-in",
-            transition_enter_start: "opacity-0 scale-95",
-          },
-        ) do |f|
-          f.label { "add up to 4 pics" }
-          f.uppy_group(
-            max_files: 4,
+        form.wrapped(
+          form.field(:images).uppy_group(
+            value: @post.ordered_images_blobs,
+            max_number_of_files: 4,
             allowed_file_types: [
               "image/png",
               "image/jpeg",
@@ -167,59 +182,87 @@ class Components::PostForm < Components::Base
               "image/svg+xml",
               "image/avif",
             ],
+            preview_fit: :contain,
             class: "grid grid-cols-2 mt-1",
             dropzone_class: "aspect-square",
-            preview_fit: :contain,
             data: {
               action: token_list(
-                "uppy-dnd:uploaded->post-draft#save" => can_save_draft?,
+                "uppy:error->field-error#show",
+                "uppy:uploaded->post-draft#save" => can_save_draft?,
                 "uppy-group:removed->post-draft#save" => can_save_draft?,
               ),
             },
-          )
-          f.error
-        end
+          ),
+          label: "add up to 4 pics",
+          error: {
+            data: {
+              field_error_target: "error",
+            },
+          },
+          class: class_names("hidden" => !@post.images.attached?),
+          data: {
+            transition_group_target: "item",
+            controller: "field-error transition",
+            action: "transition-group:start->transition#enter",
+            transition_enter: "transition-all duration-200 ease-in",
+            transition_enter_start: "opacity-0 scale-95",
+          },
+        )
       end
 
       div(class: "flex flex-col items-stretch gap-3") do
         if @post.new_record?
-          Components::FieldSet(data: { action: "change->post-draft#save" }) do
-            radio_group_for(form, :quiet, class: "grid-cols-2") do |radio_group|
-              quiet_choice_card_for(:off, radio_group:) do |field|
-                div(class: "flex items-center gap-1.5") do
-                  Icon("huge/notification-01", class: "size-3")
-                  field.title(class: "text-xs") { "post loudly" }
+          form.Field(:quiet).radios(
+            [ [ false, :loud ], [ true, :quiet ] ],
+            class: "grid-cols-2",
+          ) do |choice|
+            choice.label(class: "cursor-pointer") do
+              Components::Field(
+                orientation: :horizontal,
+                invalid: form.invalid?(:quiet),
+                class: "px-3 py-2",
+              ) do |field|
+                field.content(class: "flex flex-col gap-0.5") do
+                  div(class: "flex items-center gap-1.5") do
+                    icon = if choice.item == :loud
+                      "huge/notification-01"
+                    else
+                      "huge/notification-snooze-01"
+                    end
+                    Icon(icon, class: "size-3")
+                    field.title(class: "text-xs") do
+                      plain("post ")
+                      plain(choice.item == :loud ? "loudly" : "quietly")
+                    end
+                  end
+                  field.description(class: "text-xs leading-tight") do
+                    if choice.item == :loud
+                      "send notifications"
+                    else
+                      "no notifs + hide in tab"
+                    end
+                  end
                 end
-                field.description(class: "text-xs leading-tight") do
-                  "send notifications"
-                end
-              end
-              quiet_choice_card_for(:on, radio_group:, class: "border-dashed") do |field|
-                div(class: "flex items-center gap-1.5") do
-                  Icon("huge/notification-snooze-01", class: "size-3")
-                  field.title(class: "text-xs") { "post quietly" }
-                end
-                field.description(class: "text-xs leading-tight ") do
-                  "no notifs + hide in tab"
-                end
+                choice.input(class: "visually-hidden", data: {
+                  action: ("post-draft#save" if can_save_draft?),
+                })
               end
             end
           end
         else
-          field_for(
-            form,
-            :quiet,
+          Components::Field(
             orientation: :horizontal,
-            class: "self-center w-auto",
-          ) do |field|
-            field.checkbox
-            field.label(class: "post-form-checkbox-label") do
+            invalid: form.invalid?(:quiet),
+            class: "justify-center",
+          ) do
+            form.Field(:quiet).checkbox
+            form.Field(:quiet).label(class: "post-form-checkbox-label") do
               "hide post in #{@post_type.label} tab"
             end
           end
         end
 
-        submit_button_for(form, size: :lg) do |button|
+        form.submit(size: :lg) do |button|
           if @post.new_record?
             button.inline_start_icon("huge/mail-send-01")
             span { "submit post" }
@@ -236,88 +279,9 @@ class Components::PostForm < Components::Base
 
   # == Helpers ==
 
-  sig { returns(Object) }
-  def model
-    if @post.new_record?
-      [ @world, @post ]
-    else
-      @post
-    end
-  end
-
   sig { returns(T::Boolean) }
   def can_save_draft?
     @post.new_record? && !@restore_draft
-  end
-
-  sig { returns(User::PrivateAssociationRelation) }
-  def recipients
-    @post_type.recipients.where.not(id: @post.hidden_from_ids)
-  end
-
-  sig { params(recipient: User, checkbox_group: Components::CheckboxGroup).void }
-  def recipient_choice_card_for(recipient, checkbox_group:)
-    checkbox_group.field_label_for(recipient.id, class: "cursor-pointer w-fit") do |field_label|
-      field_label.field(
-        orientation: :horizontal,
-        class: "w-auto py-1 pl-2 pr-2 items-center",
-      ) do |field|
-        field.content do
-          field.title(class: "flex items-center gap-1.5") do
-            recipient.name
-          end
-        end
-        field.checkbox_group_item_for(
-          recipient.id,
-          multiple: true,
-          checked: true,
-          class: "rounded-full",
-        )
-      end
-    end
-  end
-
-  sig do
-    params(form: PhlexRailsFormBuilder, field: Symbol)
-      .returns(T.nilable(T::Hash[Symbol, T.untyped]))
-  end
-  def error_tooltip_attributes_for(form, field)
-    if (messages = full_error_messages_for(form, field)) && (message = messages.first)
-      {
-        data: {
-          controller: "tippy connection",
-          tippy_content_value: message,
-          tippy_placement_value: "bottom",
-          action: "connection:connect->tippy#show",
-        },
-      }
-    end
-  end
-
-  sig do
-    params(
-      value: Symbol,
-      radio_group: Components::RadioGroup,
-      attributes: T.untyped,
-      content: T.proc.params(field: Components::Field).void,
-    ).returns(T.untyped)
-  end
-  def quiet_choice_card_for(value, radio_group:, **attributes, &content)
-    radio_group.field_label_for(
-      value,
-      **mix({ class: "cursor-pointer" }, attributes),
-    ) do |field_label|
-      field_label.field(orientation: :horizontal, class: "px-3 py-2") do |field|
-        field.content(class: "flex flex-col gap-0.5") do
-          yield(field)
-        end
-        field.radio_group_item_for(value, class: "visually-hidden", input: {
-          data: {
-            action: ("post-draft#save" if can_save_draft?),
-          },
-        })
-      end
-    end
   end
 
   # sig { params(form: PhlexRailsFormBuilder).void }

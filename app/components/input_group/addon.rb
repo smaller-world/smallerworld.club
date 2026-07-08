@@ -43,7 +43,7 @@ class Components::InputGroup::Addon < Components::Base
       variant: Symbol,
       size: Symbol,
       attributes: T.untyped,
-      content: T.nilable(T.proc.params(component: Components::Button).void),
+      content: T.proc.params(component: Components::Button).void,
     ).void
   end
   def button(variant: :ghost, size: :xs, **attributes, &content)

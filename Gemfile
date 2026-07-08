@@ -167,6 +167,9 @@ gem "discard", "~> 2.0"
 # Protect user data, Rails console audit logs in production
 gem "console1984"
 
+# Render forms with Superform
+gem "superform", "~> 0.7.0"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"

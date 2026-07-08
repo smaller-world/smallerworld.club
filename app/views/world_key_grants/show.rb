@@ -4,12 +4,12 @@
 class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
-  sig { params(world: World, grant: String, invitation: WorldInvitation).void }
-  def initialize(world:, grant:, invitation: world.invitations.build)
+  sig { params(verified_grant: VerifiedWorldKeyGrant, invitation: WorldInvitation).void }
+  def initialize(verified_grant:, invitation: verified_grant.world.invitations.build)
     super()
-    @world = world
-    @grant = grant
+    @verfied_grant = verified_grant
     @invitation = invitation
+    @world = T.let(verified_grant.world, World)
   end
 
   # == View ==
@@ -31,8 +31,7 @@ class Views::WorldKeyGrants::Show < Views::Base
         end
 
         Components::AcceptWorldKeyGrantForm(
-          world: @world,
-          grant: @grant,
+          verified_grant: @verfied_grant,
           invitation: @invitation,
         )
       end

@@ -1,8 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
-import invariant from "tiny-invariant";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const targets = {
   container: HTMLElement,
@@ -27,8 +26,10 @@ export default class FlashTextController extends Typed(
 
   connect(): void {
     super.connect();
-    invariant(this.contentValue, "Missing contentValue");
-    addCleanupAction(this, "restore");
+    if (!this.contentValue) {
+      throw new Error("Missing content value");
+    }
+    addBeforeCacheAction(this, "restore");
   }
 
   disconnect(): void {
@@ -38,7 +39,7 @@ export default class FlashTextController extends Typed(
 
   // == Actions ==
 
-  show(): void {
+  flash(): void {
     if (this.timeout) {
       return;
     }

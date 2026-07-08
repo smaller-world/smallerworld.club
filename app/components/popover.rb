@@ -5,7 +5,7 @@ class Components::Popover < Components::Base
   # == Initialization ==
 
   sig { params(popover_id: String).void }
-  def initialize(popover_id: random_popover_id)
+  def initialize(popover_id: generate_popover_id)
     super()
     @popover_id = popover_id
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
@@ -75,7 +75,7 @@ class Components::Popover < Components::Base
   # == Helpers ==
 
   sig { returns(String) }
-  def random_popover_id
+  def generate_popover_id
     "popover_#{SecureRandom.uuid}"
   end
 end

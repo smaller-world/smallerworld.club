@@ -16,7 +16,7 @@ const updateActions = (
   }
 };
 
-export const addCleanupAction = (
+export const addBeforeCacheAction = (
   controller: Controller<HTMLElement>,
   action: string,
 ): void => {

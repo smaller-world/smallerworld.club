@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 
-import { addAction, addCleanupAction } from "#helpers/stimulus_helpers";
+import { addAction, addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const values = {
   sitekey: String,
@@ -36,7 +36,7 @@ export default class TurnstileController extends Typed(
       sitekey: this.sitekeyValue,
       action: this.actionValue,
     });
-    addCleanupAction(this, "reset");
+    addBeforeCacheAction(this, "reset");
   }
 
   reset(): void {

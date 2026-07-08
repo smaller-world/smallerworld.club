@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_211003) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_07_174648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -188,6 +188,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_211003) do
     t.datetime "created_at", null: false
     t.string "emoji"
     t.uuid "hidden_from_ids", default: [], null: false, array: true
+    t.uuid "ordered_images_attachment_ids", default: [], null: false, array: true
     t.text "plain_body", null: false
     t.boolean "quiet", default: false, null: false
     t.string "title"

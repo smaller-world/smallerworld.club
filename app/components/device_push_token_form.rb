@@ -14,18 +14,15 @@ class Components::DevicePushTokenForm < Components::Base
 
   sig { override.void }
   def view_template
-    form_with(
-      model: @current_device,
-      url: device_push_token_path,
+    Components::Form(
+      @current_device,
+      action: device_push_token_path,
       data: {
         controller: "submit",
       },
-      html: {
-        hidden: true,
-      },
+      hidden: true,
     ) do |form|
-      form.hidden_field(
-        :push_token,
+      form.Field(:push_token).hidden(
         data: {
           controller: "connection notification-token-bridge device-push-token-input",
           notification_token_bridge_provisional_value: true,

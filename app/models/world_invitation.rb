@@ -100,7 +100,7 @@ class WorldInvitation < ApplicationRecord
   # == World Keys ==
 
   sig { returns(String) }
-  def world_key_grant
+  def world_key_grant_message
     WorldKey.grant_verifier.generate({
       world_id:,
       post_type_ids: granted_post_type_ids,

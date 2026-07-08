@@ -9,8 +9,9 @@ class HomeController < ApplicationController
 
   # == Filters ==
 
-  before_action :redirect_to_appstore_if_app_required,
+  before_action :redirect_to_installation_instructions,
     only: :show,
+    if: :app_required?,
     unless: :hotwire_native_app?
 
   # == Actions ==
@@ -32,6 +33,11 @@ class HomeController < ApplicationController
 
   # == Helpers ==
 
+  sig { returns(T::Boolean) }
+  def app_required?
+    cast_boolean(params[:require_app])
+  end
+
   # TODO: Auto-link cards with existing keys?
   # sig do
   #   params(
@@ -48,9 +54,9 @@ class HomeController < ApplicationController
   # == Callbacks ==
 
   sig { void }
-  def redirect_to_appstore_if_app_required
+  def redirect_to_installation_instructions
     if params[:require_app].present?
-      redirect_to(appstore_listing_path)
+      redirect_to(installation_instructions_path)
     end
   end
 end

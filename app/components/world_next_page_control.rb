@@ -23,21 +23,19 @@ class Components::WorldNextPageControl < Components::Base
 
   sig { override.void }
   def view_template
-    render Components::NextPageControl.new(
+    Components::NextPageControl(**T.unsafe({
       target: [ @world, :posts ],
       pagy: @pagy,
       autoclick: true,
-      **mix(
-        {
-          params: {
-            type_id: @post_type&.id,
-          }.compact,
-        },
-        @attributes,
-      ),
-    ) do
-      Icon("huge/loading-03", data: { icon: "inline-start" })
-      span { "load more" }
+      **@attributes,
+    })) do |control|
+      if @post_type
+        control.with_param(name: "type_id", value: @post_type.id)
+      end
+      control.with_submit do |button|
+        button.inline_start_icon("huge/loading-03")
+        span { "load more" }
+      end
     end
   end
 end

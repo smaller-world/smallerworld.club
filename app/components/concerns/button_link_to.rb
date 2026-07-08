@@ -10,7 +10,7 @@ module ButtonLinkTo
   include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::URLFor
 
-  # == Helper ==
+  # == Methods ==
 
   sig do
     params(

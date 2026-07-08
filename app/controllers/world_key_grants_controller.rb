@@ -9,15 +9,14 @@ class WorldKeyGrantsController < ApplicationController
 
   # == Actions ==
 
-  # GET /world_key_grants/:grant
+  # GET /world_key_grants/:message
   def show
-    grant = params.fetch(:grant)
-    grant_message = WorldKey.verify_grant(grant)
-    world = World.find(grant_message.world_id)
+    verified_grant = verify_grant_message
+    world = verified_grant.world
     if (recipient = Current.user) && recipient.world_keys.exists?(world:)
       redirect_to(world)
     else
-      render Views::WorldKeyGrants::Show.new(world:, grant:)
+      render Views::WorldKeyGrants::Show.new(verified_grant:)
     end
   end
 
@@ -25,25 +24,19 @@ class WorldKeyGrantsController < ApplicationController
   def new
     world = find_world
     authorize!(world, to: :manage?)
-    granted_post_types = if (post_type_ids = params[:granted_post_type_ids])
-      PostType.where(id: post_type_ids).to_a
-    else
-      []
-    end
-    render Views::WorldKeyGrants::New.new(world:, granted_post_types:)
+    grant = WorldKeyGrant.new(params.permit(granted_post_type_ids: []), world:)
+    render Views::WorldKeyGrants::New.new(grant:)
   end
 
-  # POST /world_key_grants/:grant/accept
+  # POST /world_key_grants/:message/accept
   def accept
     respond_to do |format|
       format.turbo_stream do
-        grant = params.fetch(:grant)
-        grant_message = WorldKey.verify_grant(grant)
-        world = World.find(grant_message.world_id)
+        verified_grant = verify_grant_message
         if (current_user = Current.user)
-          accept_world_key(current_user:, world:, grant:, grant_message:)
+          accept_world_key(current_user:, verified_grant:)
         else
-          accept_world_invitation(world:, grant:, grant_message:)
+          accept_world_invitation(verified_grant:)
         end
       end
     end
@@ -58,21 +51,21 @@ class WorldKeyGrantsController < ApplicationController
     scope.friendly.find(params.fetch(:world_id))
   end
 
-  sig do
-    params(
-      current_user: User,
-      world: World,
-      grant: String,
-      grant_message: WorldKey::GrantMessage,
-    ).void
+  sig { returns(VerifiedWorldKeyGrant) }
+  def verify_grant_message
+    WorldKey.verify_grant(params.fetch(:message))
   end
-  def accept_world_key(current_user:, world:, grant:, grant_message:)
+
+  sig { params(current_user: User, verified_grant: VerifiedWorldKeyGrant).void }
+  def accept_world_key(current_user:, verified_grant:)
+    world = verified_grant.world
     world_key = current_user.world_keys.build(
       world:,
-      granted_post_type_ids: grant_message.post_type_ids,
+      granted_post_type_ids: verified_grant.post_type_ids,
     )
     if world_key.save
-      redirect_to([ world, celebrate: true ], status: :see_other)
+      flash[:celebrate] = true
+      redirect_to(world, status: :see_other)
     else
       message = "failed to create world key"
       if (error = world_key.errors.full_messages.first)
@@ -88,14 +81,9 @@ class WorldKeyGrantsController < ApplicationController
     end
   end
 
-  sig do
-    params(
-      world: World,
-      grant: String,
-      grant_message: WorldKey::GrantMessage,
-    ).void
-  end
-  def accept_world_invitation(world:, grant:, grant_message:)
+  sig { params(verified_grant: VerifiedWorldKeyGrant).void }
+  def accept_world_invitation(verified_grant:)
+    world = verified_grant.world
     world_invitation_params = params.expect(
       world_invitation: [ :recipient_phone_number ],
     )
@@ -105,23 +93,25 @@ class WorldKeyGrantsController < ApplicationController
     )
     world_invitation = world.invitations
       .find_or_initialize_by(recipient_phone_number:)
-    world_invitation.update(granted_post_type_ids: grant_message.post_type_ids)
-    if world_invitation.valid? && hotwire_native_app?
-      resume_or_redirect_to(
-        new_session_path(phone_number: recipient_phone_number),
-        status: :see_other,
-      )
+    if world_invitation.update(granted_post_type_ids: verified_grant.post_type_ids)
+      if hotwire_native_app?
+        resume_or_redirect_to(
+          new_session_path(phone_number: recipient_phone_number),
+          status: :see_other,
+        )
+      else
+        redirect_to(installation_instructions_path)
+      end
     else
       render(
         turbo_stream: turbo_stream.replace(
-          :accept_world_key_grant_form,
+          "accept_world_key_grant_form",
           renderable: Components::AcceptWorldKeyGrantForm.new(
-            world:,
-            grant:,
+            verified_grant:,
             invitation: world_invitation,
           ),
         ),
-        status: world_invitation.valid? ? :ok : :unprocessable_content,
+        status: :unprocessable_content,
       )
     end
   end

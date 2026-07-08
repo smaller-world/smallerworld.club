@@ -60,7 +60,7 @@ class Views::WorldKeys::Index < Views::Base
         end
 
         Components::Empty(
-          class: "hidden [:has([role=list]:empty)_+_&]:revert-display-layer",
+          class: "hidden [:has([role=list]:empty)+&]:revert-display-layer",
         ) do |empty|
           empty.header(class: "gap-0") do
             empty.media do
@@ -146,7 +146,7 @@ class Views::WorldKeys::Index < Views::Base
               menu.with_trigger_button(
                 variant: :ghost,
                 anchor: :bottom,
-                class: "font-normal",
+                class: "font-normal border-border",
               ) do |button|
                 button.inline_start_icon("huge/tick-01")
                 span { user.name }
@@ -156,7 +156,7 @@ class Views::WorldKeys::Index < Views::Base
                   Icon("huge/pencil-edit-01")
                   span { "edit invitation" }
                 end
-                form_with(model: invitation, method: :delete) do
+                Components::Form(invitation, method: :delete) do
                   menu_content.button_item(type: :submit, variant: :destructive) do
                     Icon("huge/delete-01")
                     span { "cancel invitation" }

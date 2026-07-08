@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
-import intlTelInput, { type Iso2 } from "intl-tel-input";
+import intlTelInput, { type Iso2, type Iti } from "intl-tel-input";
 import { Typed } from "stimulus-typescript";
+
+import { addAction, addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 import "intl-tel-input/styles";
 
@@ -13,6 +15,8 @@ export default class PhoneNumberInputController extends Typed(
   Controller<HTMLInputElement>,
   { targets },
 ) {
+  #iti?: Iti | null;
+
   // == Lifecycle ==
 
   connect(): void {
@@ -23,12 +27,17 @@ export default class PhoneNumberInputController extends Typed(
     if (!this.hasHiddenInputTarget) {
       throw new Error("Missing hiddenInput target");
     }
-    intlTelInput(this.inputTarget, {
+    this.#iti = intlTelInput(this.inputTarget, {
       loadUtils: () => import("intl-tel-input/utils"),
       countrySelectorMode: "DROPDOWN",
       separateDialCode: true,
       initialCountry: this.#initialCountry(),
     });
+    addBeforeCacheAction(this, "destroy");
+  }
+
+  disconnect(): void {
+    this.destroy();
   }
 
   // == Actions ==
@@ -37,6 +46,13 @@ export default class PhoneNumberInputController extends Typed(
     const iti = intlTelInput.getInstance(this.inputTarget);
     if (iti) {
       this.hiddenInputTarget.value = iti.getNumber("E164");
+    }
+  }
+
+  destroy(): void {
+    if (this.#iti) {
+      this.#iti.destroy();
+      this.#iti = null;
     }
   }
 

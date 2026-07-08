@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::ConfirmDeleteButton < Components::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig do

@@ -33,12 +33,13 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                 "#{verification_request.verification_code}",
             )
           end
-          render turbo_stream: replace_login_form(verification_request:)
-        elsif (message = verification_request.errors.full_messages_for(:ip_address).first)
-          redirect_to(new_session_path, alert: message, status: :see_other)
+          render(turbo_stream: replace_form(verification_request:))
+        elsif (error = verification_request.errors.full_messages_for(:ip_address).first)
+          alert = "failed to send verification code: #{error}"
+          redirect_to(new_session_path, alert:, status: :see_other)
         else
           render(
-            turbo_stream: replace_login_form(verification_request:),
+            turbo_stream: replace_form(verification_request:),
             status: :unprocessable_content,
           )
         end
@@ -51,16 +52,19 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         verification_request = find_verification_request
-        verification_code = params
-          .require(:phone_number_verification_request)
-          .fetch(:verification_code)
+        verification_request_params = params
+          .expect(phone_number_verification_request: [
+            :verification_code,
+            phone_number_owner: [ :time_zone_name ],
+          ])
+        verification_code = verification_request_params.delete(:verification_code)
         if verification_request.verify(verification_code)
-          user = User.find_by_phone_number(verification_request.phone_number)
-          if user
-            time_zone_name = params.require(:user).fetch(:time_zone_name)
-            user.update!(time_zone_name:)
+          if (phone_number_owner = verification_request.phone_number_owner)
+            phone_number_owner.update!(
+              **verification_request_params.fetch(:phone_number_owner),
+            )
             start_new_session_for(
-              user,
+              phone_number_owner,
               phone_number_verification_request: verification_request,
             )
             redirect_to(after_authentication_url, status: :see_other)
@@ -71,7 +75,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           end
         else
           render(
-            turbo_stream: replace_login_form(verification_request:),
+            turbo_stream: replace_form(verification_request:),
             status: :unprocessable_content,
           )
         end
@@ -92,9 +96,13 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     params(verification_request: PhoneNumberVerificationRequest)
       .returns(ActiveSupport::SafeBuffer)
   end
-  def replace_login_form(verification_request:)
-    form = Components::PhoneNumberVerificationRequestForm.new(verification_request:)
-    turbo_stream.replace(:login_form, renderable: form)
+  def replace_form(verification_request:)
+    turbo_stream.replace(
+      "phone_number_verification_form",
+      renderable: Components::PhoneNumberVerificationForm.new(
+        verification_request:,
+      ),
+    )
   end
 
   # == Callbacks ==
@@ -108,10 +116,16 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           remoteip: request.remote_ip,
         )
       rescue => error
-        redirect_to(new_session_path, alert: "cloudflare verification failed: #{error.message}", status: :see_other)
+        redirect_to(
+          new_session_path,
+          alert: "cloudflare verification failed: #{error.message}",
+        )
       end
     else
-      redirect_to(new_session_path, alert: "please click 'verify you are human'!", status: :see_other)
+      redirect_to(
+        new_session_path,
+        alert: "please click 'verify you are human'!",
+      )
     end
   end
 

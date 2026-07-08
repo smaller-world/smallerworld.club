@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 const targets = {
   message: HTMLElement,
@@ -30,7 +30,7 @@ export default class DisabledController extends Typed(Controller<HTMLElement>, {
         this.enable();
       }, this.enableAfterValue);
     }
-    addCleanupAction(this, "restore");
+    addBeforeCacheAction(this, "restore");
   }
 
   disconnect(): void {

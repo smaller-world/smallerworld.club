@@ -3,7 +3,7 @@ import { isEmpty } from "lodash-es";
 import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
-import { addCleanupAction } from "#helpers/stimulus_helpers";
+import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
 import type { PassData } from "./passes_bridge_controller";
 
@@ -24,7 +24,7 @@ export default class DeviceWorldCardsFormController extends Typed(
     if (!this.hasInputTemplateTarget) {
       throw new Error("Missing inputTemplate target");
     }
-    addCleanupAction(this, "removeAddedInputs");
+    addBeforeCacheAction(this, "removeAddedInputs");
   }
 
   // == Actions ==

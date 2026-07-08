@@ -13,7 +13,7 @@ class Components::Dialog < Components::Base
       attributes: T.untyped,
     ).void
   end
-  def initialize(dialog_id: random_dialog_id, open: false, **attributes)
+  def initialize(dialog_id: generate_dialog_id, open: false, **attributes)
     super(**attributes)
     @dialog_id = dialog_id
     @open = open
@@ -44,7 +44,7 @@ class Components::Dialog < Components::Base
   # == Interface ==
 
   sig { returns(String) }
-  def random_dialog_id
+  def generate_dialog_id
     "dialog_#{SecureRandom.uuid}"
   end
 
@@ -52,16 +52,31 @@ class Components::Dialog < Components::Base
     params(
       variant: Symbol,
       size: Symbol,
+      invalid: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(button: Components::Button).void,
     ).void
   end
-  def with_trigger_button(variant: :default, size: :default, **attributes, &content)
+  def with_trigger_button(
+    variant: :default,
+    size: :default,
+    invalid: false,
+    **attributes,
+    &content
+  )
     @trigger_block = ->() {
       render Components::Button.new(
+        type: :button,
         variant:,
         size:,
-        **mix({ command: "show-modal", commandfor: @dialog_id }, attributes),
+        invalid:,
+        **mix(
+          {
+            command: "show-modal",
+            commandfor: @dialog_id,
+          },
+          attributes,
+        ),
         &content
       )
     }

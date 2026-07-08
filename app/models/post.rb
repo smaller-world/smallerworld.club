@@ -6,16 +6,17 @@
 #
 # Table name: posts
 #
-#  id              :uuid             not null, primary key
-#  emoji           :string
-#  hidden_from_ids :uuid             default([]), not null, is an Array
-#  plain_body      :text             not null
-#  quiet           :boolean          default(FALSE), not null
-#  title           :string
-#  v1_attributes   :jsonb
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  type_id         :uuid             not null
+#  id                            :uuid             not null, primary key
+#  emoji                         :string
+#  hidden_from_ids               :uuid             default([]), not null, is an Array
+#  ordered_images_attachment_ids :uuid             default([]), not null, is an Array
+#  plain_body                    :text             not null
+#  quiet                         :boolean          default(FALSE), not null
+#  title                         :string
+#  v1_attributes                 :jsonb
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  type_id                       :uuid             not null
 #
 # Indexes
 #
@@ -72,7 +73,7 @@ class Post < ApplicationRecord
   # == Associations ==
 
   belongs_to :type, class_name: "PostType"
-  delegate :recipients, to: :type
+  has_many :type_recipients, through: :type, source: :recipients
 
   has_one :world, through: :type
   has_many :world_cards, through: :world, source: :cards
@@ -106,8 +107,8 @@ class Post < ApplicationRecord
   end
 
   sig { returns(T::Array[T.any(ActiveStorage::VariantWithRecord, ActiveStorage::Blob)]) }
-  def image_thumbnails
-    images_attachments.map do |attachment|
+  def ordered_images_thumbnails
+    ordered_images_attachments.map do |attachment|
       blob = attachment.blob or next
       if blob.content_type == "image/gif"
         blob
@@ -115,6 +116,11 @@ class Post < ApplicationRecord
         attachment.variant(:thumbnail)
       end
     end
+  end
+
+  sig { returns(T::Array[ActiveStorage::Blob]) }
+  def ordered_images_blobs
+    ordered_images_attachments.filter_map(&:blob)
   end
 
   # == Normalizations
@@ -141,9 +147,7 @@ class Post < ApplicationRecord
 
   before_validation :chomp_rich_text_body!, if: :body?
   before_save :set_plain_body
-  # after_commit :touch_world_cards,
-  #   on: [ :create, :destroy ],
-  #   if: :should_touch_world_cards?
+  after_save :preserve_images_attachments_ordering, if: :images_attachments_changed?
   after_create_commit :create_notifications_for_recipients!,
     if: :should_create_notifications?
   broadcasts_world_items
@@ -182,6 +186,24 @@ class Post < ApplicationRecord
     )
   end
 
+  # == Recipients ==
+
+  sig { returns(T::Array[String]) }
+  def recipient_ids
+    ids = type!.recipient_ids
+    ids - hidden_from_ids
+  end
+
+  sig { returns(User::PrivateAssociationRelation) }
+  def recipients
+    type_recipients.where.not(id: hidden_from_ids)
+  end
+
+  sig { params(value: T::Array[String]).void }
+  def recipient_ids=(value)
+    self.hidden_from_ids = type_recipient_ids - value
+  end
+
   # == Snippets ==
 
   sig { returns(T.nilable(String)) }
@@ -207,6 +229,24 @@ class Post < ApplicationRecord
     text.strip.truncate(36)
   end
 
+  # == Images ==
+
+  sig { returns(T::Array[ActiveStorage::Attachment]) }
+  def ordered_images_attachments
+    images_attachments
+      .index_by(&:id)
+      .values_at(*T.unsafe(ordered_images_attachment_ids))
+      .compact
+  end
+
+  # == Visibility ==
+
+  sig { params(user: User).returns(T::Boolean) }
+  def visible_to?(user)
+    !!(user == world_owner! ||
+      (recipients.include?(user) && hidden_from_ids.exclude?(user.id)))
+  end
+
   # == Methods ==
 
   sig { params(query: String).returns(T::Enumerator[Post]) }
@@ -217,12 +257,6 @@ class Post < ApplicationRecord
         yielder << post if pattern.match?(post.content)
       end
     end
-  end
-
-  sig { params(user: User).returns(T::Boolean) }
-  def visible_to?(user)
-    !!(user == world_owner! ||
-      (recipients.include?(user) && hidden_from_ids.exclude?(user.id)))
   end
 
   private
@@ -248,6 +282,11 @@ class Post < ApplicationRecord
     end
   end
 
+  sig { returns(T::Boolean) }
+  def images_attachments_changed?
+    attachment_changes.include?("images")
+  end
+
   # == Callbacks ==
 
   sig { void }
@@ -266,6 +305,11 @@ class Post < ApplicationRecord
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
+  end
+
+  sig { void }
+  def preserve_images_attachments_ordering
+    update_column("ordered_images_attachment_ids", images_attachments.map(&:id)) # rubocop:disable Rails/SkipsModelValidations
   end
 
   # sig { void }

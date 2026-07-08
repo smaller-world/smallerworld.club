@@ -6,6 +6,13 @@ class Components::Label < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    root_element(:label, class: "label", data: { slot: "label" }, &content)
+    root_element(
+      :label,
+      class: "label",
+      data: {
+        slot: "label",
+      },
+      &content
+    )
   end
 end

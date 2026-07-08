@@ -48,7 +48,7 @@ class Components::PostReactions < Components::Base
       ),
     ) do
       @reactions_by_emoji.each do |emoji, reactions|
-        render Components::ExistingReactionForm.new(
+        render Components::ExistingPostReactionForm.new(
           post: @post,
           emoji:,
           reactions:,
@@ -63,7 +63,7 @@ class Components::PostReactions < Components::Base
         )
       end
       if allowed_to?(:react?, @post)
-        render Components::NewReactionForm.new(
+        render Components::NewPostReactionForm.new(
           reaction: @new_reaction,
           variant: @reactions_by_emoji.any? ? :ghost : :default,
           **@new_reaction_form_options,

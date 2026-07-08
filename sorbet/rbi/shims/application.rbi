@@ -88,6 +88,19 @@ class Components::Base
   def ios_browser?; end
 end
 
+class Superform::Rails::Components::Base
+  sig { returns(Components::Form::Field) }
+  def field; end
+end
+
+class Components::Form
+  sig { params(key: Symbol).returns(Field) }
+  def Field(key); end # rubocop:disable Naming/MethodName
+
+  sig { params(key: Symbol).returns(Field) }
+  def field(key); end
+end
+
 class Current
   sig { returns(T.nilable(Session)) }
   def self.session; end
@@ -97,4 +110,17 @@ class Current
       .returns(T.nilable(User))
   end
   def self.user(*args, **kwargs, &block); end
+end
+
+class WorldKeyGrant
+  sig { returns(T::Array[String]) }
+  def granted_post_type_ids; end
+
+  sig { params(value: T::Array[String]).returns(T::Array[String]) }
+  def granted_post_type_ids=(value); end
+end
+
+class VerifiedWorldKeyGrant
+  sig { returns(T::Array[String]) }
+  def granted_post_type_ids; end
 end

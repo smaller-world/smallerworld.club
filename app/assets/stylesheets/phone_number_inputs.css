@@ -1,5 +1,5 @@
 @layer base-components {
-  .phone-number-input-container {
+  .phone-number-input {
     --iti-hover-color: var(--color-muted);
 
     @apply contents;

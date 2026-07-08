@@ -15,7 +15,7 @@ class WorldInvitationsController < ApplicationController
       format.html do
         invitation = find_invitation(scope: WorldInvitation.pending_acceptance)
         authorize!(invitation)
-        redirect_to(world_key_grant_path(grant: invitation.world_key_grant))
+        redirect_to(world_key_grant_path(message: invitation.world_key_grant_message))
       end
     end
   end

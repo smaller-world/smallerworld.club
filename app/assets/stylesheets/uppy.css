@@ -3,15 +3,62 @@
 @import "@uppy/image-editor/css/style.min.css" layer(base-components);
 
 @layer base-components {
-  .uppy-dnd {
+  .uppy {
     @apply flex flex-col;
+
+    &[data-required] {
+      [data-slot="uppy-clear"] {
+        @apply hidden;
+      }
+    }
+
+    &[data-uppy-preview-signed-id-value]:not([aria-busy="true"]) {
+      [data-slot="uppy-dropzone"] {
+        .uppy-DragDrop-inner {
+          @apply bg-background/70 opacity-0 backdrop-blur-[2px] hover:opacity-100;
+        }
+      }
+    }
+
+    &[aria-busy="true"] {
+      [data-slot="uppy-drozone"] {
+        .uppy-DragDrop-inner {
+          @apply relative;
+
+          &::before {
+            @apply absolute inset-0 bg-background/70 backdrop-blur-sm;
+
+            content: "";
+            border-radius: inherit;
+          }
+
+          &::after {
+            @apply absolute spinner;
+
+            content: "";
+          }
+        }
+      }
+    }
+
+    &:not([data-uppy-preview-signed-id-value]) {
+      [data-slot="uppy-clear"] {
+        @apply hidden;
+      }
+    }
   }
 
-  .uppy-dnd-dropzone {
+  .uppy-dropzone {
     @apply flex flex-col rounded-xl;
 
     &:not(:has(.uppy-Root)) {
       @apply animate-pulse bg-muted;
+    }
+
+    &[aria-invalid="true"] {
+      .uppy-DragDrop-container {
+        @apply border-destructive dark:border-destructive/50;
+      }
     }
 
     .uppy-Root {
@@ -25,10 +72,6 @@
 
       border-radius: inherit;
       color: unset;
-
-      .uppy-dnd-dropzone[aria-invalid="true"] & {
-        @apply border-destructive dark:border-destructive/50;
-      }
 
       &::before {
         @apply absolute inset-px bg-cover bg-center bg-no-repeat;
@@ -44,30 +87,6 @@
       @apply z-10 flex h-full flex-1 flex-col items-center justify-center p-4 transition-opacity;
 
       border-radius: inherit;
-
-      [data-controller~="uppy-dnd"][data-uppy-dnd-preview-signed-id-value]:not(
-          [aria-busy]
-        )
-        & {
-        @apply bg-background/70 opacity-0 backdrop-blur-sm hover:opacity-100;
-      }
-
-      [data-controller~="uppy-dnd"][aria-busy="true"] & {
-        @apply relative;
-
-        &::before {
-          @apply absolute inset-0 bg-background/70 backdrop-blur-sm;
-
-          content: "";
-          border-radius: inherit;
-        }
-
-        &::after {
-          @apply absolute spinner;
-
-          content: "";
-        }
-      }
     }
 
     .uppy-DragDrop-arrow {
@@ -83,16 +102,11 @@
     }
   }
 
-  .button[data-variant="link"].uppy-dnd-clear {
+  .uppy-clear.button[data-variant="link"] {
     @apply self-center text-muted-foreground;
-
-    [data-controller~="uppy-dnd"]:not([data-uppy-dnd-preview-signed-id-value])
-      & {
-      @apply hidden;
-    }
   }
 
-  .uppy-dnd-cropper {
+  .uppy-cropper {
     .uppy-ImageCropper .cropper-modal {
       @apply bg-popover;
     }
@@ -159,5 +173,13 @@
 
   .uppy-group {
     @apply flex flex-wrap gap-x-4 gap-y-2;
+
+    &[data-required] {
+      [data-slot="uppy-group-item"]:first-of-type {
+        [data-slot="uppy-clear"] {
+          @apply hidden;
+        }
+      }
+    }
   }
 }

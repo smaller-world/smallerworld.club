@@ -15,19 +15,15 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::TurboFrameTag
   include Phlex::Rails::Helpers::TurboStreamFrom
-  include Phlex::Rails::Helpers::FieldID
-  include Phlex::Rails::Helpers::FieldName
   include Phlex::Rails::Helpers::DOMID
 
   include PhlexIcons
 
-  include TokenList
+  include CompactMixing
   include ButtonBackTo
   include ButtonLinkTo
-  include AttributeHelpers
-  include FormHelpers
-  include FormWith
   include TurnstileTag
+  include TokenList
 
   register_output_helper :local_time
   register_output_helper :inline_svg_tag

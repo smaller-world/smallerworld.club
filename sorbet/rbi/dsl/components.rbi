@@ -6,57 +6,46 @@
 
 
 module Components
-  # workspace://app/components/accept_world_card_key_grant_form.rb:4
-  sig do
-    params(
-      card: ::WorldCard,
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AcceptWorldCardKeyGrantForm).void)
-    ).void
-  end
-  def AcceptWorldCardKeyGrantForm(card:, **attributes, &block); end
-
   # workspace://app/components/accept_world_key_grant_form.rb:4
   sig do
     params(
-      world: ::World,
-      grant: ::String,
+      verified_grant: ::VerifiedWorldKeyGrant,
       invitation: ::WorldInvitation,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
+      content: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
     ).void
   end
-  def AcceptWorldKeyGrantForm(world:, grant:, invitation:, **attributes, &block); end
+  def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes, &content); end
 
   # workspace://app/components/account_form.rb:4
   sig do
     params(
       user: ::User,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
+      content: T.nilable(T.proc.params(instance: Components::AccountForm).void)
     ).void
   end
-  def AccountForm(user:, **attributes, &block); end
+  def AccountForm(user:, **attributes, &content); end
 
   # workspace://app/components/account_time_zone_form.rb:4
   sig do
     params(
       current_user: ::User,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
+      content: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
     ).void
   end
-  def AccountTimeZoneForm(current_user:, **attributes, &block); end
+  def AccountTimeZoneForm(current_user:, **attributes, &content); end
 
   # workspace://app/components/alert.rb:4
   sig do
     params(
       variant: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Alert).void)
+      content: T.nilable(T.proc.params(instance: Components::Alert).void)
     ).void
   end
-  def Alert(variant: T.unsafe(nil), **attributes, &block); end
+  def Alert(variant: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/app_flash_alert.rb:4
   sig do
@@ -64,20 +53,20 @@ module Components
       message: ::String,
       type: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
+      content: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
     ).void
   end
-  def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
+  def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/app_header.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AppHeader).void)
+      content: T.nilable(T.proc.params(instance: Components::AppHeader).void)
     ).void
   end
-  def AppHeader(element: T.unsafe(nil), **attributes, &block); end
+  def AppHeader(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/app_layout.rb:4
   sig do
@@ -88,20 +77,20 @@ module Components
       force_header: T.nilable(::TrueClass),
       disable_cache: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+      content: T.nilable(T.proc.params(instance: Components::AppLayout).void)
     ).void
   end
-  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/async_post_reactions.rb:4
   sig do
     params(
       post: ::Post,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
+      content: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
     ).void
   end
-  def AsyncPostReactions(post:, **attributes, &block); end
+  def AsyncPostReactions(post:, **attributes, &content); end
 
   # workspace://app/components/async_world_post_item.rb:4
   sig do
@@ -109,104 +98,103 @@ module Components
       post: ::Post,
       initially_hidden: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
+      content: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
     ).void
   end
-  def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &block); end
+  def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &content); end
+
+  # workspace://app/components/autoclicking_reply_link.rb:4
+  sig do
+    params(
+      reply_initiation: ::ReplyInitiation,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::AutoclickingReplyLink).void)
+    ).void
+  end
+  def AutoclickingReplyLink(reply_initiation:, **attributes, &content); end
 
   # workspace://app/components/badge.rb:4
   sig do
     params(
       variant: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Badge).void)
+      content: T.proc.params(instance: Components::Badge).void
     ).void
   end
-  def Badge(variant: T.unsafe(nil), **attributes, &block); end
+  def Badge(variant: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/button.rb:4
   sig do
     params(
       variant: ::Symbol,
       size: ::Symbol,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Button).void)
+      content: T.proc.params(instance: Components::Button).void
     ).void
   end
-  def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+  def Button(variant: T.unsafe(nil), size: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/card.rb:4
   sig do
     params(
       size: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Card).void)
+      content: T.nilable(T.proc.params(instance: Components::Card).void)
     ).void
   end
-  def Card(size: T.unsafe(nil), **attributes, &block); end
+  def Card(size: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/checkbox.rb:4
   sig do
     params(
-      value: ::String,
-      checked: T.nilable(T::Boolean),
-      multiple: T::Boolean,
-      disabled: T::Boolean,
-      input: T::Hash[::Symbol, T.untyped],
+      checked: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Checkbox).void)
+      content: T.nilable(T.proc.params(instance: Components::Checkbox).void)
     ).void
   end
-  def Checkbox(value: T.unsafe(nil), checked: T.unsafe(nil), multiple: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+  def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/checkbox_group.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::CheckboxGroup).void)
+      content: T.proc.params(instance: Components::CheckboxGroup).void
     ).void
   end
-  def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/clear_account_notification_count_form.rb:4
   sig do
     params(
       current_user: ::User,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
+      content: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
     ).void
   end
-  def ClearAccountNotificationCountForm(current_user:, **attributes, &block); end
+  def ClearAccountNotificationCountForm(current_user:, **attributes, &content); end
 
   # workspace://app/components/clearable_file_input.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
-      direct_upload: T::Boolean,
-      required: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
+      content: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
     ).void
   end
-  def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
+  def ClearableFileInput(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/combobox.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      clear_on_expand: T.nilable(T::Boolean),
-      disabled: T::Boolean,
-      input: T::Hash[::Symbol, T.untyped],
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Combobox).void)
+      content: T.nilable(T.proc.params(instance: Components::Combobox).void)
     ).void
   end
-  def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+  def Combobox(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/confirm_delete_button.rb:4
   sig do
@@ -215,30 +203,30 @@ module Components
       description: ::String,
       confirm_label: ::String,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ConfirmDeleteButton).void)
+      content: T.proc.params(instance: Components::ConfirmDeleteButton).void
     ).void
   end
-  def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &block); end
+  def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/device_passes_form.rb:4
   sig do
     params(
-      url: T.untyped,
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
+      content: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
     ).void
   end
-  def DevicePassesForm(url:, **attributes, &block); end
+  def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/device_push_token_form.rb:4
   sig do
     params(
       current_device: ::Device,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
+      content: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
     ).void
   end
-  def DevicePushTokenForm(current_device:, **attributes, &block); end
+  def DevicePushTokenForm(current_device:, **attributes, &content); end
 
   # workspace://app/components/dialog.rb:4
   sig do
@@ -246,137 +234,132 @@ module Components
       dialog_id: ::String,
       open: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+      content: T.proc.params(instance: Components::Dialog).void
     ).void
   end
-  def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
+  def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/dropdown_menu.rb:4
-  sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)).void }
-  def DropdownMenu(**attributes, &block); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
+  def DropdownMenu(**attributes, &content); end
 
-  # workspace://app/components/emoji_input.rb:4
+  # workspace://app/components/emoji_select.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      required: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
+      content: T.nilable(T.proc.params(instance: Components::EmojiSelect).void)
     ).void
   end
-  def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
+  def EmojiSelect(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/empty.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Empty).void)
+      content: T.proc.params(instance: Components::Empty).void
     ).void
   end
-  def Empty(element: T.unsafe(nil), **attributes, &block); end
+  def Empty(element: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/existing_reaction_form.rb:4
+  # workspace://app/components/existing_post_reaction_form.rb:4
   sig do
     params(
       post: ::Post,
       emoji: ::String,
       reactions: T::Array[::Reaction],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ExistingReactionForm).void)
+      content: T.nilable(T.proc.params(instance: Components::ExistingPostReactionForm).void)
     ).void
   end
-  def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
+  def ExistingPostReactionForm(post:, emoji:, reactions:, **attributes, &content); end
 
   # workspace://app/components/field.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      id: T.nilable(::String),
       orientation: ::Symbol,
       invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Field).void)
+      content: T.proc.params(instance: Components::Field).void
     ).void
   end
-  def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
+  def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/field_error.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      messages: T.nilable(T::Array[::String]),
+      messages: T::Array[::String],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FieldError).void)
+      content: T.nilable(T.proc.params(instance: Components::FieldError).void)
     ).void
   end
-  def FieldError(form: T.unsafe(nil), field: T.unsafe(nil), messages: T.unsafe(nil), **attributes, &block); end
+  def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/field_group.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FieldGroup).void)
+      content: T.proc.params(instance: Components::FieldGroup).void
     ).void
   end
-  def FieldGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def FieldGroup(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/field_label.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      id: T.nilable(::String),
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FieldLabel).void)
+      content: T.proc.params(instance: Components::FieldLabel).void
     ).void
   end
-  def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
+  def FieldLabel(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/field_set.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FieldSet).void)
+      content: T.proc.params(instance: Components::FieldSet).void
     ).void
   end
-  def FieldSet(element: T.unsafe(nil), **attributes, &block); end
+  def FieldSet(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/file_input.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      direct_upload: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::FileInput).void)
+      content: T.nilable(T.proc.params(instance: Components::FileInput).void)
     ).void
   end
-  def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def FileInput(direct_upload: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/file_item.rb:4
+  # workspace://app/components/form.rb:4
   sig do
-    params(
-      attachment: ::ActiveStorage::Attachment,
-      block: T.nilable(T.proc.params(instance: Components::FileItem).void)
-    ).void
+    type_parameters(:U)
+      .params(
+        model: T.all(::Object, T.type_parameter(:U)),
+        action: ::Object,
+        method: T.nilable(::Symbol),
+        vibrate_on_submit: T::Boolean,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::Form[T.type_parameter(:U)]).void)
+      ).void
   end
-  def FileItem(attachment:, &block); end
+  def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/hint_alert.rb:4
   sig do
     params(
       message: ::String,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::HintAlert).void)
+      content: T.nilable(T.proc.params(instance: Components::HintAlert).void)
     ).void
   end
-  def HintAlert(message:, **attributes, &block); end
+  def HintAlert(message:, **attributes, &content); end
 
   # workspace://app/components/image_stack.rb:4
   sig do
@@ -385,32 +368,30 @@ module Components
       max_height: ::Integer,
       flip_boundary: ::Integer,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ImageStack).void)
+      content: T.nilable(T.proc.params(instance: Components::ImageStack).void)
     ).void
   end
-  def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
+  def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/input.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Input).void)
+      content: T.nilable(T.proc.params(instance: Components::Input).void)
     ).void
   end
-  def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def Input(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/input_group.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
+      content: T.proc.params(instance: Components::InputGroup).void
     ).void
   end
-  def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def InputGroup(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/item.rb:4
   sig do
@@ -418,51 +399,50 @@ module Components
       variant: ::Symbol,
       size: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Item).void)
+      content: T.proc.params(instance: Components::Item).void
     ).void
   end
-  def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+  def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/item_group.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
+      content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
     ).void
   end
-  def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
+  def ItemGroup(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/label.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Label).void)
+      content: T.proc.params(instance: Components::Label).void
     ).void
   end
-  def Label(element: T.unsafe(nil), **attributes, &block); end
+  def Label(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/lexxy_editor.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
+      content: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
     ).void
   end
-  def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def LexxyEditor(invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/new_reaction_form.rb:4
+  # workspace://app/components/new_post_reaction_form.rb:4
   sig do
     params(
       reaction: ::Reaction,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::NewReactionForm).void)
+      content: T.nilable(T.proc.params(instance: Components::NewPostReactionForm).void)
     ).void
   end
-  def NewReactionForm(reaction:, **attributes, &block); end
+  def NewPostReactionForm(reaction:, **attributes, &content); end
 
   # workspace://app/components/next_page_control.rb:4
   sig do
@@ -471,54 +451,35 @@ module Components
       pagy: T.nilable(::Pagy),
       autoclick: T::Boolean,
       disable_for: T.nilable(::ActiveSupport::Duration),
-      variant: ::Symbol,
-      size: ::Symbol,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
+      content: T.proc.params(instance: Components::NextPageControl).void
     ).void
   end
-  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
-
-  # workspace://app/components/otp_input.rb:6
-  sig do
-    params(
-      max_length: ::Integer,
-      pattern: T.any(::String, ::Symbol),
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      input: T::Hash[::Symbol, T.untyped],
-      attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::OtpInput).void)
-    ).void
-  end
-  def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/phone_number_input.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      name: T.nilable(::String),
-      id: T.nilable(::String),
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
+      content: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
     ).void
   end
-  def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), name: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
+  def PhoneNumberInput(invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/phone_number_verification_request_form.rb:4
+  # workspace://app/components/phone_number_verification_form.rb:4
   sig do
     params(
       verification_request: ::PhoneNumberVerificationRequest,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
+      content: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationForm).void)
     ).void
   end
-  def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
+  def PhoneNumberVerificationForm(verification_request:, **attributes, &content); end
 
   # workspace://app/components/popover.rb:4
-  sig { params(popover_id: ::String, block: T.nilable(T.proc.params(instance: Components::Popover).void)).void }
-  def Popover(popover_id: T.unsafe(nil), &block); end
+  sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
+  def Popover(popover_id: T.unsafe(nil), &content); end
 
   # workspace://app/components/post_card.rb:4
   sig do
@@ -529,20 +490,20 @@ module Components
       show_notification_prompt: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PostCard).void)
+      content: T.nilable(T.proc.params(instance: Components::PostCard).void)
     ).void
   end
-  def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &block); end
+  def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
+      content: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
     ).void
   end
-  def PostCardSkeleton(element: T.unsafe(nil), **attributes, &block); end
+  def PostCardSkeleton(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_form.rb:4
   sig do
@@ -550,10 +511,10 @@ module Components
       post: ::Post,
       restore_draft: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PostForm).void)
+      content: T.nilable(T.proc.params(instance: Components::PostForm).void)
     ).void
   end
-  def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &block); end
+  def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_reactions.rb:4
   sig do
@@ -563,32 +524,57 @@ module Components
       existing_reactions_form: T::Hash[::Symbol, T.untyped],
       new_reaction_form: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
+      content: T.nilable(T.proc.params(instance: Components::PostReactions).void)
     ).void
   end
-  def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+  def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &content); end
+
+  # workspace://app/components/post_recipients_select.rb:4
+  sig do
+    params(
+      post: ::Post,
+      value: T::Array[::String],
+      input_id_prefix: T.nilable(::String),
+      invalid: T::Boolean,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::PostRecipientsSelect).void)
+    ).void
+  end
+  def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_type_form.rb:4
   sig do
     params(
       post_type: ::PostType,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
+      content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
     ).void
   end
-  def PostTypeForm(post_type:, **attributes, &block); end
+  def PostTypeForm(post_type:, **attributes, &content); end
 
   # workspace://app/components/radio_group.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
       toggleable: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::RadioGroup).void)
+      content: T.proc.params(instance: Components::RadioGroup).void
     ).void
   end
-  def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes, &block); end
+  def RadioGroup(toggleable: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
+
+  # workspace://app/components/radio_group_item.rb:4
+  sig do
+    params(
+      value: T.nilable(T.any(::String, T::Boolean)),
+      checked: T::Boolean,
+      invalid: T::Boolean,
+      toggleable: T::Boolean,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::RadioGroupItem).void)
+    ).void
+  end
+  def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/reply_initiation_form.rb:4
   sig do
@@ -596,23 +582,22 @@ module Components
       reply_initiation: ::ReplyInitiation,
       replied: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
+      content: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
     ).void
   end
-  def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &block); end
+  def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &content); end
 
   # workspace://app/components/select.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      value: T.nilable(T.any(::String, ::Symbol)),
+      value: T.nilable(::String),
       disabled: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Select).void)
+      content: T.proc.params(instance: Components::Select).void
     ).void
   end
-  def Select(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), disabled: T.unsafe(nil), **attributes, &block); end
+  def Select(value: T.unsafe(nil), disabled: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/separator.rb:4
   sig do
@@ -620,20 +605,20 @@ module Components
       orientation: ::Symbol,
       decorative: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Separator).void)
+      content: T.nilable(T.proc.params(instance: Components::Separator).void)
     ).void
   end
-  def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
+  def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/spinner.rb:4
   sig do
     params(
       element: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Spinner).void)
+      content: T.nilable(T.proc.params(instance: Components::Spinner).void)
     ).void
   end
-  def Spinner(element: T.unsafe(nil), **attributes, &block); end
+  def Spinner(element: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/streamed_log_message.rb:6
   sig do
@@ -643,10 +628,10 @@ module Components
       action_name: ::String,
       log_level: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
+      content: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
     ).void
   end
-  def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
+  def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/streamed_toast.rb:6
   sig do
@@ -654,109 +639,103 @@ module Components
       message: ::String,
       type: T.nilable(::Symbol),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
+      content: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
     ).void
   end
-  def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
+  def StreamedToast(message:, type: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/textarea.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
+      invalid: T::Boolean,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::Textarea).void)
+      content: T.nilable(T.proc.params(instance: Components::Textarea).void)
     ).void
   end
-  def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+  def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/uppy_dnd.rb:4
+  # workspace://app/components/uppy.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
-      value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+      group: T.nilable(::Components::UppyGroup),
+      value: T.nilable(::ActiveStorage::Blob),
       required: T::Boolean,
-      multiple: T::Boolean,
+      invalid: T::Boolean,
       allowed_file_types: T.nilable(T::Array[::String]),
       crop_to_aspect_ratio: T.nilable(::Numeric),
-      clear_action: T.nilable(::String),
-      clear_label: ::String,
       preview_fit: T.nilable(::Symbol),
       dropzone_class: T.nilable(::String),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
+      content: T.nilable(T.proc.params(instance: Components::Uppy).void)
     ).void
   end
-  def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def Uppy(group: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/uppy_group.rb:4
   sig do
     params(
-      form: T.nilable(::PhlexRailsFormBuilder),
-      field: T.nilable(::Symbol),
       value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
+      max_number_of_files: T.nilable(::Integer),
       required: T::Boolean,
-      max_files: T.nilable(::Integer),
-      allowed_file_types: T.nilable(T::Array[::String]),
+      invalid: T::Boolean,
       preview_fit: T.nilable(::Symbol),
+      allowed_file_types: T.nilable(T::Array[::String]),
       dropzone_class: T.nilable(::String),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
+      content: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
     ).void
   end
-  def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+  def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/world_form.rb:4
   sig do
     params(
       world: ::World,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldForm).void)
     ).void
   end
-  def WorldForm(world:, **attributes, &block); end
+  def WorldForm(world:, **attributes, &content); end
 
   # workspace://app/components/world_invitation_form.rb:4
   sig do
     params(
       invitation: ::WorldInvitation,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
     ).void
   end
-  def WorldInvitationForm(invitation:, **attributes, &block); end
+  def WorldInvitationForm(invitation:, **attributes, &content); end
 
   # workspace://app/components/world_key_form.rb:4
   sig do
     params(
       world_key: ::WorldKey,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
     ).void
   end
-  def WorldKeyForm(world_key:, **attributes, &block); end
+  def WorldKeyForm(world_key:, **attributes, &content); end
 
   # workspace://app/components/world_key_grant_form.rb:4
   sig do
     params(
-      world: ::World,
-      granted_post_types: T::Array[::PostType],
+      grant: ::WorldKeyGrant,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
     ).void
   end
-  def WorldKeyGrantForm(world:, granted_post_types:, **attributes, &block); end
+  def WorldKeyGrantForm(grant:, **attributes, &content); end
 
   # workspace://app/components/world_key_grant_icon_button.rb:4
   sig do
     params(
       world: ::World,
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
     ).void
   end
-  def WorldKeyGrantIconButton(world:, **attributes, &block); end
+  def WorldKeyGrantIconButton(world:, **attributes, &content); end
 
   # workspace://app/components/world_next_page_control.rb:4
   sig do
@@ -765,10 +744,10 @@ module Components
       post_type: T.nilable(::PostType),
       pagy: T.nilable(::Pagy),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
     ).void
   end
-  def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &block); end
+  def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &content); end
 
   # workspace://app/components/world_post_items.rb:4
   sig do
@@ -776,21 +755,21 @@ module Components
       posts: T::Enumerable[::Post],
       replied_post_ids: T.nilable(T::Set[::String]),
       created_post_id: T.nilable(::String),
-      block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
     ).void
   end
-  def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
+  def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
 
   # workspace://app/components/world_post_type_form.rb:4
   sig do
     params(
       world: ::World,
-      post_type: T.nilable(::PostType),
+      selected_post_type: T.nilable(::PostType),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
     ).void
   end
-  def WorldPostTypeForm(world:, post_type:, **attributes, &block); end
+  def WorldPostTypeForm(world:, selected_post_type:, **attributes, &content); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig do
@@ -798,63 +777,52 @@ module Components
       world: ::World,
       import_job: T.nilable(::SolidQueue::Job),
       attributes: T.untyped,
-      block: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
+      content: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
     ).void
   end
-  def WorldV1PostsImportAlert(world:, import_job:, **attributes, &block); end
+  def WorldV1PostsImportAlert(world:, import_job:, **attributes, &content); end
 
   class << self
-    # workspace://app/components/accept_world_card_key_grant_form.rb:4
-    sig do
-      params(
-        card: ::WorldCard,
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AcceptWorldCardKeyGrantForm).void)
-      ).void
-    end
-    def AcceptWorldCardKeyGrantForm(card:, **attributes, &block); end
-
     # workspace://app/components/accept_world_key_grant_form.rb:4
     sig do
       params(
-        world: ::World,
-        grant: ::String,
+        verified_grant: ::VerifiedWorldKeyGrant,
         invitation: ::WorldInvitation,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
+        content: T.nilable(T.proc.params(instance: Components::AcceptWorldKeyGrantForm).void)
       ).void
     end
-    def AcceptWorldKeyGrantForm(world:, grant:, invitation:, **attributes, &block); end
+    def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes, &content); end
 
     # workspace://app/components/account_form.rb:4
     sig do
       params(
         user: ::User,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AccountForm).void)
+        content: T.nilable(T.proc.params(instance: Components::AccountForm).void)
       ).void
     end
-    def AccountForm(user:, **attributes, &block); end
+    def AccountForm(user:, **attributes, &content); end
 
     # workspace://app/components/account_time_zone_form.rb:4
     sig do
       params(
         current_user: ::User,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
+        content: T.nilable(T.proc.params(instance: Components::AccountTimeZoneForm).void)
       ).void
     end
-    def AccountTimeZoneForm(current_user:, **attributes, &block); end
+    def AccountTimeZoneForm(current_user:, **attributes, &content); end
 
     # workspace://app/components/alert.rb:4
     sig do
       params(
         variant: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Alert).void)
+        content: T.nilable(T.proc.params(instance: Components::Alert).void)
       ).void
     end
-    def Alert(variant: T.unsafe(nil), **attributes, &block); end
+    def Alert(variant: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/app_flash_alert.rb:4
     sig do
@@ -862,20 +830,20 @@ module Components
         message: ::String,
         type: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
+        content: T.nilable(T.proc.params(instance: Components::AppFlashAlert).void)
       ).void
     end
-    def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &block); end
+    def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/app_header.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AppHeader).void)
+        content: T.nilable(T.proc.params(instance: Components::AppHeader).void)
       ).void
     end
-    def AppHeader(element: T.unsafe(nil), **attributes, &block); end
+    def AppHeader(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/app_layout.rb:4
     sig do
@@ -886,20 +854,20 @@ module Components
         force_header: T.nilable(::TrueClass),
         disable_cache: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+        content: T.nilable(T.proc.params(instance: Components::AppLayout).void)
       ).void
     end
-    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &block); end
+    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/async_post_reactions.rb:4
     sig do
       params(
         post: ::Post,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
+        content: T.nilable(T.proc.params(instance: Components::AsyncPostReactions).void)
       ).void
     end
-    def AsyncPostReactions(post:, **attributes, &block); end
+    def AsyncPostReactions(post:, **attributes, &content); end
 
     # workspace://app/components/async_world_post_item.rb:4
     sig do
@@ -907,104 +875,103 @@ module Components
         post: ::Post,
         initially_hidden: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
+        content: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
       ).void
     end
-    def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &block); end
+    def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &content); end
+
+    # workspace://app/components/autoclicking_reply_link.rb:4
+    sig do
+      params(
+        reply_initiation: ::ReplyInitiation,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::AutoclickingReplyLink).void)
+      ).void
+    end
+    def AutoclickingReplyLink(reply_initiation:, **attributes, &content); end
 
     # workspace://app/components/badge.rb:4
     sig do
       params(
         variant: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Badge).void)
+        content: T.proc.params(instance: Components::Badge).void
       ).void
     end
-    def Badge(variant: T.unsafe(nil), **attributes, &block); end
+    def Badge(variant: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/button.rb:4
     sig do
       params(
         variant: ::Symbol,
         size: ::Symbol,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Button).void)
+        content: T.proc.params(instance: Components::Button).void
       ).void
     end
-    def Button(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+    def Button(variant: T.unsafe(nil), size: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/card.rb:4
     sig do
       params(
         size: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Card).void)
+        content: T.nilable(T.proc.params(instance: Components::Card).void)
       ).void
     end
-    def Card(size: T.unsafe(nil), **attributes, &block); end
+    def Card(size: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/checkbox.rb:4
     sig do
       params(
-        value: ::String,
-        checked: T.nilable(T::Boolean),
-        multiple: T::Boolean,
-        disabled: T::Boolean,
-        input: T::Hash[::Symbol, T.untyped],
+        checked: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Checkbox).void)
+        content: T.nilable(T.proc.params(instance: Components::Checkbox).void)
       ).void
     end
-    def Checkbox(value: T.unsafe(nil), checked: T.unsafe(nil), multiple: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+    def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/checkbox_group.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::CheckboxGroup).void)
+        content: T.proc.params(instance: Components::CheckboxGroup).void
       ).void
     end
-    def CheckboxGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/clear_account_notification_count_form.rb:4
     sig do
       params(
         current_user: ::User,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
+        content: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
       ).void
     end
-    def ClearAccountNotificationCountForm(current_user:, **attributes, &block); end
+    def ClearAccountNotificationCountForm(current_user:, **attributes, &content); end
 
     # workspace://app/components/clearable_file_input.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
-        direct_upload: T::Boolean,
-        required: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
+        content: T.nilable(T.proc.params(instance: Components::ClearableFileInput).void)
       ).void
     end
-    def ClearableFileInput(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), direct_upload: T.unsafe(nil), required: T.unsafe(nil), attributes: T.unsafe(nil), &block); end
+    def ClearableFileInput(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/combobox.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        clear_on_expand: T.nilable(T::Boolean),
-        disabled: T::Boolean,
-        input: T::Hash[::Symbol, T.untyped],
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Combobox).void)
+        content: T.nilable(T.proc.params(instance: Components::Combobox).void)
       ).void
     end
-    def Combobox(form: T.unsafe(nil), field: T.unsafe(nil), clear_on_expand: T.unsafe(nil), disabled: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+    def Combobox(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/confirm_delete_button.rb:4
     sig do
@@ -1013,30 +980,30 @@ module Components
         description: ::String,
         confirm_label: ::String,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ConfirmDeleteButton).void)
+        content: T.proc.params(instance: Components::ConfirmDeleteButton).void
       ).void
     end
-    def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &block); end
+    def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/device_passes_form.rb:4
     sig do
       params(
-        url: T.untyped,
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
+        content: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
       ).void
     end
-    def DevicePassesForm(url:, **attributes, &block); end
+    def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/device_push_token_form.rb:4
     sig do
       params(
         current_device: ::Device,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
+        content: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
       ).void
     end
-    def DevicePushTokenForm(current_device:, **attributes, &block); end
+    def DevicePushTokenForm(current_device:, **attributes, &content); end
 
     # workspace://app/components/dialog.rb:4
     sig do
@@ -1044,142 +1011,132 @@ module Components
         dialog_id: ::String,
         open: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Dialog).void)
+        content: T.proc.params(instance: Components::Dialog).void
       ).void
     end
-    def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &block); end
+    def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/dropdown_menu.rb:4
-    sig do
-      params(
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::DropdownMenu).void)
-      ).void
-    end
-    def DropdownMenu(**attributes, &block); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
+    def DropdownMenu(**attributes, &content); end
 
-    # workspace://app/components/emoji_input.rb:4
+    # workspace://app/components/emoji_select.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        required: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::EmojiInput).void)
+        content: T.nilable(T.proc.params(instance: Components::EmojiSelect).void)
       ).void
     end
-    def EmojiInput(form: T.unsafe(nil), field: T.unsafe(nil), required: T.unsafe(nil), **attributes, &block); end
+    def EmojiSelect(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/empty.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Empty).void)
+        content: T.proc.params(instance: Components::Empty).void
       ).void
     end
-    def Empty(element: T.unsafe(nil), **attributes, &block); end
+    def Empty(element: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/existing_reaction_form.rb:4
+    # workspace://app/components/existing_post_reaction_form.rb:4
     sig do
       params(
         post: ::Post,
         emoji: ::String,
         reactions: T::Array[::Reaction],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ExistingReactionForm).void)
+        content: T.nilable(T.proc.params(instance: Components::ExistingPostReactionForm).void)
       ).void
     end
-    def ExistingReactionForm(post:, emoji:, reactions:, **attributes, &block); end
+    def ExistingPostReactionForm(post:, emoji:, reactions:, **attributes, &content); end
 
     # workspace://app/components/field.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        id: T.nilable(::String),
         orientation: ::Symbol,
         invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Field).void)
+        content: T.proc.params(instance: Components::Field).void
       ).void
     end
-    def Field(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &block); end
+    def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/field_error.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        messages: T.nilable(T::Array[::String]),
+        messages: T::Array[::String],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FieldError).void)
+        content: T.nilable(T.proc.params(instance: Components::FieldError).void)
       ).void
     end
-    def FieldError(form: T.unsafe(nil), field: T.unsafe(nil), messages: T.unsafe(nil), **attributes, &block); end
+    def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/field_group.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FieldGroup).void)
+        content: T.proc.params(instance: Components::FieldGroup).void
       ).void
     end
-    def FieldGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def FieldGroup(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/field_label.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        id: T.nilable(::String),
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FieldLabel).void)
+        content: T.proc.params(instance: Components::FieldLabel).void
       ).void
     end
-    def FieldLabel(form: T.unsafe(nil), field: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
+    def FieldLabel(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/field_set.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FieldSet).void)
+        content: T.proc.params(instance: Components::FieldSet).void
       ).void
     end
-    def FieldSet(element: T.unsafe(nil), **attributes, &block); end
+    def FieldSet(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/file_input.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        direct_upload: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::FileInput).void)
+        content: T.nilable(T.proc.params(instance: Components::FileInput).void)
       ).void
     end
-    def FileInput(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def FileInput(direct_upload: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/file_item.rb:4
+    # workspace://app/components/form.rb:4
     sig do
-      params(
-        attachment: ::ActiveStorage::Attachment,
-        block: T.nilable(T.proc.params(instance: Components::FileItem).void)
-      ).void
+      type_parameters(:U)
+        .params(
+          model: T.all(::Object, T.type_parameter(:U)),
+          action: ::Object,
+          method: T.nilable(::Symbol),
+          vibrate_on_submit: T::Boolean,
+          attributes: T.untyped,
+          content: T.nilable(T.proc.params(instance: Components::Form[T.type_parameter(:U)]).void)
+        ).void
     end
-    def FileItem(attachment:, &block); end
+    def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/hint_alert.rb:4
     sig do
       params(
         message: ::String,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::HintAlert).void)
+        content: T.nilable(T.proc.params(instance: Components::HintAlert).void)
       ).void
     end
-    def HintAlert(message:, **attributes, &block); end
+    def HintAlert(message:, **attributes, &content); end
 
     # workspace://app/components/image_stack.rb:4
     sig do
@@ -1188,32 +1145,30 @@ module Components
         max_height: ::Integer,
         flip_boundary: ::Integer,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ImageStack).void)
+        content: T.nilable(T.proc.params(instance: Components::ImageStack).void)
       ).void
     end
-    def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &block); end
+    def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/input.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Input).void)
+        content: T.nilable(T.proc.params(instance: Components::Input).void)
       ).void
     end
-    def Input(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def Input(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/input_group.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::InputGroup).void)
+        content: T.proc.params(instance: Components::InputGroup).void
       ).void
     end
-    def InputGroup(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def InputGroup(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/item.rb:4
     sig do
@@ -1221,51 +1176,50 @@ module Components
         variant: ::Symbol,
         size: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Item).void)
+        content: T.proc.params(instance: Components::Item).void
       ).void
     end
-    def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
+    def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/item_group.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
+        content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
       ).void
     end
-    def ItemGroup(element: T.unsafe(nil), **attributes, &block); end
+    def ItemGroup(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/label.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Label).void)
+        content: T.proc.params(instance: Components::Label).void
       ).void
     end
-    def Label(element: T.unsafe(nil), **attributes, &block); end
+    def Label(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/lexxy_editor.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
+        content: T.nilable(T.proc.params(instance: Components::LexxyEditor).void)
       ).void
     end
-    def LexxyEditor(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def LexxyEditor(invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/new_reaction_form.rb:4
+    # workspace://app/components/new_post_reaction_form.rb:4
     sig do
       params(
         reaction: ::Reaction,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::NewReactionForm).void)
+        content: T.nilable(T.proc.params(instance: Components::NewPostReactionForm).void)
       ).void
     end
-    def NewReactionForm(reaction:, **attributes, &block); end
+    def NewPostReactionForm(reaction:, **attributes, &content); end
 
     # workspace://app/components/next_page_control.rb:4
     sig do
@@ -1274,54 +1228,35 @@ module Components
         pagy: T.nilable(::Pagy),
         autoclick: T::Boolean,
         disable_for: T.nilable(::ActiveSupport::Duration),
-        variant: ::Symbol,
-        size: ::Symbol,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::NextPageControl).void)
+        content: T.proc.params(instance: Components::NextPageControl).void
       ).void
     end
-    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &block); end
-
-    # workspace://app/components/otp_input.rb:6
-    sig do
-      params(
-        max_length: ::Integer,
-        pattern: T.any(::String, ::Symbol),
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        input: T::Hash[::Symbol, T.untyped],
-        attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::OtpInput).void)
-      ).void
-    end
-    def OtpInput(max_length: T.unsafe(nil), pattern: T.unsafe(nil), form: T.unsafe(nil), field: T.unsafe(nil), input: T.unsafe(nil), **attributes, &block); end
+    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/phone_number_input.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        name: T.nilable(::String),
-        id: T.nilable(::String),
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
+        content: T.nilable(T.proc.params(instance: Components::PhoneNumberInput).void)
       ).void
     end
-    def PhoneNumberInput(form: T.unsafe(nil), field: T.unsafe(nil), name: T.unsafe(nil), id: T.unsafe(nil), **attributes, &block); end
+    def PhoneNumberInput(invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/phone_number_verification_request_form.rb:4
+    # workspace://app/components/phone_number_verification_form.rb:4
     sig do
       params(
         verification_request: ::PhoneNumberVerificationRequest,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationRequestForm).void)
+        content: T.nilable(T.proc.params(instance: Components::PhoneNumberVerificationForm).void)
       ).void
     end
-    def PhoneNumberVerificationRequestForm(verification_request:, **attributes, &block); end
+    def PhoneNumberVerificationForm(verification_request:, **attributes, &content); end
 
     # workspace://app/components/popover.rb:4
-    sig { params(popover_id: ::String, block: T.nilable(T.proc.params(instance: Components::Popover).void)).void }
-    def Popover(popover_id: T.unsafe(nil), &block); end
+    sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
+    def Popover(popover_id: T.unsafe(nil), &content); end
 
     # workspace://app/components/post_card.rb:4
     sig do
@@ -1332,20 +1267,20 @@ module Components
         show_notification_prompt: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PostCard).void)
+        content: T.nilable(T.proc.params(instance: Components::PostCard).void)
       ).void
     end
-    def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &block); end
+    def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
+        content: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
       ).void
     end
-    def PostCardSkeleton(element: T.unsafe(nil), **attributes, &block); end
+    def PostCardSkeleton(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_form.rb:4
     sig do
@@ -1353,10 +1288,10 @@ module Components
         post: ::Post,
         restore_draft: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PostForm).void)
+        content: T.nilable(T.proc.params(instance: Components::PostForm).void)
       ).void
     end
-    def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &block); end
+    def PostForm(post:, restore_draft: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_reactions.rb:4
     sig do
@@ -1366,32 +1301,57 @@ module Components
         existing_reactions_form: T::Hash[::Symbol, T.untyped],
         new_reaction_form: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PostReactions).void)
+        content: T.nilable(T.proc.params(instance: Components::PostReactions).void)
       ).void
     end
-    def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &block); end
+    def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes, &content); end
+
+    # workspace://app/components/post_recipients_select.rb:4
+    sig do
+      params(
+        post: ::Post,
+        value: T::Array[::String],
+        input_id_prefix: T.nilable(::String),
+        invalid: T::Boolean,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::PostRecipientsSelect).void)
+      ).void
+    end
+    def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_type_form.rb:4
     sig do
       params(
         post_type: ::PostType,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
+        content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
       ).void
     end
-    def PostTypeForm(post_type:, **attributes, &block); end
+    def PostTypeForm(post_type:, **attributes, &content); end
 
     # workspace://app/components/radio_group.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
         toggleable: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::RadioGroup).void)
+        content: T.proc.params(instance: Components::RadioGroup).void
       ).void
     end
-    def RadioGroup(form: T.unsafe(nil), field: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes, &block); end
+    def RadioGroup(toggleable: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
+
+    # workspace://app/components/radio_group_item.rb:4
+    sig do
+      params(
+        value: T.nilable(T.any(::String, T::Boolean)),
+        checked: T::Boolean,
+        invalid: T::Boolean,
+        toggleable: T::Boolean,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::RadioGroupItem).void)
+      ).void
+    end
+    def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/reply_initiation_form.rb:4
     sig do
@@ -1399,23 +1359,22 @@ module Components
         reply_initiation: ::ReplyInitiation,
         replied: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
+        content: T.nilable(T.proc.params(instance: Components::ReplyInitiationForm).void)
       ).void
     end
-    def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &block); end
+    def ReplyInitiationForm(reply_initiation:, replied:, **attributes, &content); end
 
     # workspace://app/components/select.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        value: T.nilable(T.any(::String, ::Symbol)),
+        value: T.nilable(::String),
         disabled: T::Boolean,
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Select).void)
+        content: T.proc.params(instance: Components::Select).void
       ).void
     end
-    def Select(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), disabled: T.unsafe(nil), **attributes, &block); end
+    def Select(value: T.unsafe(nil), disabled: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/separator.rb:4
     sig do
@@ -1423,20 +1382,20 @@ module Components
         orientation: ::Symbol,
         decorative: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Separator).void)
+        content: T.nilable(T.proc.params(instance: Components::Separator).void)
       ).void
     end
-    def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &block); end
+    def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/spinner.rb:4
     sig do
       params(
         element: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Spinner).void)
+        content: T.nilable(T.proc.params(instance: Components::Spinner).void)
       ).void
     end
-    def Spinner(element: T.unsafe(nil), **attributes, &block); end
+    def Spinner(element: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/streamed_log_message.rb:6
     sig do
@@ -1446,10 +1405,10 @@ module Components
         action_name: ::String,
         log_level: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
+        content: T.nilable(T.proc.params(instance: Components::StreamedLogMessage).void)
       ).void
     end
-    def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &block); end
+    def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/streamed_toast.rb:6
     sig do
@@ -1457,109 +1416,103 @@ module Components
         message: ::String,
         type: T.nilable(::Symbol),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
+        content: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
       ).void
     end
-    def StreamedToast(message:, type: T.unsafe(nil), **attributes, &block); end
+    def StreamedToast(message:, type: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/textarea.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
+        invalid: T::Boolean,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::Textarea).void)
+        content: T.nilable(T.proc.params(instance: Components::Textarea).void)
       ).void
     end
-    def Textarea(form: T.unsafe(nil), field: T.unsafe(nil), **attributes, &block); end
+    def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/uppy_dnd.rb:4
+    # workspace://app/components/uppy.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
-        value: T.nilable(T.any(::ActiveStorage::Attachment, ::ActiveStorage::Blob)),
+        group: T.nilable(::Components::UppyGroup),
+        value: T.nilable(::ActiveStorage::Blob),
         required: T::Boolean,
-        multiple: T::Boolean,
+        invalid: T::Boolean,
         allowed_file_types: T.nilable(T::Array[::String]),
         crop_to_aspect_ratio: T.nilable(::Numeric),
-        clear_action: T.nilable(::String),
-        clear_label: ::String,
         preview_fit: T.nilable(::Symbol),
         dropzone_class: T.nilable(::String),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::UppyDnd).void)
+        content: T.nilable(T.proc.params(instance: Components::Uppy).void)
       ).void
     end
-    def UppyDnd(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), multiple: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), clear_action: T.unsafe(nil), clear_label: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def Uppy(group: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/uppy_group.rb:4
     sig do
       params(
-        form: T.nilable(::PhlexRailsFormBuilder),
-        field: T.nilable(::Symbol),
         value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
+        max_number_of_files: T.nilable(::Integer),
         required: T::Boolean,
-        max_files: T.nilable(::Integer),
-        allowed_file_types: T.nilable(T::Array[::String]),
+        invalid: T::Boolean,
         preview_fit: T.nilable(::Symbol),
+        allowed_file_types: T.nilable(T::Array[::String]),
         dropzone_class: T.nilable(::String),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
+        content: T.nilable(T.proc.params(instance: Components::UppyGroup).void)
       ).void
     end
-    def UppyGroup(form: T.unsafe(nil), field: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), max_files: T.unsafe(nil), allowed_file_types: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &block); end
+    def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/world_form.rb:4
     sig do
       params(
         world: ::World,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldForm).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldForm).void)
       ).void
     end
-    def WorldForm(world:, **attributes, &block); end
+    def WorldForm(world:, **attributes, &content); end
 
     # workspace://app/components/world_invitation_form.rb:4
     sig do
       params(
         invitation: ::WorldInvitation,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
       ).void
     end
-    def WorldInvitationForm(invitation:, **attributes, &block); end
+    def WorldInvitationForm(invitation:, **attributes, &content); end
 
     # workspace://app/components/world_key_form.rb:4
     sig do
       params(
         world_key: ::WorldKey,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldKeyForm).void)
       ).void
     end
-    def WorldKeyForm(world_key:, **attributes, &block); end
+    def WorldKeyForm(world_key:, **attributes, &content); end
 
     # workspace://app/components/world_key_grant_form.rb:4
     sig do
       params(
-        world: ::World,
-        granted_post_types: T::Array[::PostType],
+        grant: ::WorldKeyGrant,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldKeyGrantForm).void)
       ).void
     end
-    def WorldKeyGrantForm(world:, granted_post_types:, **attributes, &block); end
+    def WorldKeyGrantForm(grant:, **attributes, &content); end
 
     # workspace://app/components/world_key_grant_icon_button.rb:4
     sig do
       params(
         world: ::World,
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldKeyGrantIconButton).void)
       ).void
     end
-    def WorldKeyGrantIconButton(world:, **attributes, &block); end
+    def WorldKeyGrantIconButton(world:, **attributes, &content); end
 
     # workspace://app/components/world_next_page_control.rb:4
     sig do
@@ -1568,10 +1521,10 @@ module Components
         post_type: T.nilable(::PostType),
         pagy: T.nilable(::Pagy),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldNextPageControl).void)
       ).void
     end
-    def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &block); end
+    def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &content); end
 
     # workspace://app/components/world_post_items.rb:4
     sig do
@@ -1579,21 +1532,21 @@ module Components
         posts: T::Enumerable[::Post],
         replied_post_ids: T.nilable(T::Set[::String]),
         created_post_id: T.nilable(::String),
-        block: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
       ).void
     end
-    def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &block); end
+    def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
 
     # workspace://app/components/world_post_type_form.rb:4
     sig do
       params(
         world: ::World,
-        post_type: T.nilable(::PostType),
+        selected_post_type: T.nilable(::PostType),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
       ).void
     end
-    def WorldPostTypeForm(world:, post_type:, **attributes, &block); end
+    def WorldPostTypeForm(world:, selected_post_type:, **attributes, &content); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig do
@@ -1601,9 +1554,9 @@ module Components
         world: ::World,
         import_job: T.nilable(::SolidQueue::Job),
         attributes: T.untyped,
-        block: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
+        content: T.nilable(T.proc.params(instance: Components::WorldV1PostsImportAlert).void)
       ).void
     end
-    def WorldV1PostsImportAlert(world:, import_job:, **attributes, &block); end
+    def WorldV1PostsImportAlert(world:, import_job:, **attributes, &content); end
   end
 end

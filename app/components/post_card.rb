@@ -112,7 +112,7 @@ class Components::PostCard < Components::Base
               end
             end
           end
-          if (images = @post.image_thumbnails.presence)
+          if (images = @post.ordered_images_thumbnails.presence)
             Components::ImageStack(images:)
           end
         end
@@ -192,19 +192,19 @@ class Components::PostCard < Components::Base
           "notification-permission-bridge",
           "notification-token-bridge",
           "transition",
-          "tippy",
+          "tooltip",
           "connection",
         ],
         transition_enter: "transition-[opacity,scale] ease-in-quart duration-200",
         transition_enter_start: "scale-95 opacity-0",
-        tippy_content_value: "get notified when friends react!",
-        tippy_trigger_value: "manual",
-        tippy_placement_value: "bottom-start",
-        tippy_flash_duration_value: 5000,
-        tippy_flash_delay_value: 1000,
+        tooltip_content_value: "get notified when friends react!",
+        tooltip_trigger_value: "manual",
+        tooltip_placement_value: "bottom-start",
+        tooltip_flash_duration_value: 5000,
+        tooltip_flash_delay_value: 1000,
         action: [
           "notification-permission-bridge:pending-authorization->transition#enter",
-          "transition:entered->tippy#flash",
+          "transition:entered->tooltip#flash",
           "notification-token-bridge#request",
         ],
       },

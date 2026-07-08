@@ -2,65 +2,28 @@
 # frozen_string_literal: true
 
 class Components::Input < Components::Base
-  include Phlex::Rails::Helpers::TextFieldTag
-
   # == Initialization ==
 
-  sig do
-    params(
-      form: T.nilable(PhlexRailsFormBuilder),
-      field: T.nilable(Symbol),
-      attributes: T.untyped,
-    ).void
-  end
-  def initialize(form: nil, field: nil, **attributes)
+  sig { params(invalid: T::Boolean, attributes: T.untyped).void }
+  def initialize(invalid: false, **attributes)
     super(**attributes)
-    @form = form
-    @field = field
+    @invalid = invalid
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    attributes = mix(
-      {
-        class: "input",
-        data: {
-          slot: "input",
-        },
+    slot = @attributes[:data]&.delete(:slot) || "input"
+    root_element(
+      :input,
+      class: "input",
+      data: {
+        slot:,
       },
-      @attributes,
+      aria: {
+        invalid: ("true" if @invalid),
+      },
     )
-    if @form
-      @form.text_field(@field, **normalize_attributes(with_invalid_aria(attributes)))
-    else
-      value = attributes.delete(:value)
-      text_field_tag(@field, value, **normalize_attributes(attributes))
-    end
-  end
-
-  # == Helpers ==
-
-  sig do
-    params(attributes: T::Hash[Symbol, T.untyped])
-      .returns(T::Hash[Symbol, T.untyped])
-  end
-  def with_invalid_aria(attributes)
-    if field_has_errors?
-      mix({ aria: { invalid: "true" } }, attributes)
-    else
-      attributes
-    end
-  end
-
-  sig { returns(T::Boolean) }
-  def field_has_errors?
-    !!((object = @form&.object) &&
-      @field &&
-      object.respond_to?(:errors) &&
-      (errors = object.errors) &&
-      errors.respond_to?(:[]) &&
-      errors[@field].present?)
   end
 end

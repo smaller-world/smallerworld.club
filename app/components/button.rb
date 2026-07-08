@@ -10,28 +10,39 @@ class Components::Button < Components::Base
 
   # == Initialization ==
 
-  sig { params(variant: Symbol, size: Symbol, attributes: T.untyped).void }
-  def initialize(variant: :default, size: :default, **attributes)
+  sig do
+    params(
+      variant: Symbol,
+      size: Symbol,
+      invalid: T::Boolean,
+      attributes: T.untyped,
+    ).void
+  end
+  def initialize(variant: :default, size: :default, invalid: false, **attributes)
     self.class.check_parameters!(variant:, size:)
 
     super(**attributes)
     @variant = variant
     @size = size
+    @invalid = invalid
   end
 
   # == Component ==
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
+    slot = @attributes[:data]&.delete(:slot) || "button"
     root_element(
       :button,
-      **mix(
-        {
-          type: ("button" if @element.nil? || @element == :button),
-          data: { slot: "button" },
-        },
-        self.class.root_attributes(variant: @variant, size: @size),
-      ),
+      class: "button group/button",
+      aria: {
+        invalid: ("true" if @invalid),
+      },
+      data: {
+        slot:,
+        variant: @variant,
+        size: @size,
+      },
       &content
     )
   end
@@ -49,21 +60,6 @@ class Components::Button < Components::Base
   end
 
   # == Helpers ==
-
-  sig do
-    params(variant: Symbol, size: Symbol)
-      .returns(T::Hash[Symbol, T.untyped])
-  end
-  def self.root_attributes(variant: :default, size: :default)
-    check_parameters!(variant:, size:)
-    {
-      class: "button group/button",
-      data: {
-        variant: variant.to_s,
-        size:,
-      },
-    }
-  end
 
   sig { params(variant: Symbol, size: Symbol).void }
   def self.check_parameters!(variant:, size:)

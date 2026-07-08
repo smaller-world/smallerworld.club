@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class Components::Select < Components::Input
-  include Phlex::Rails::Helpers::HiddenFieldTag
-
   register_element :el_select
   register_element :el_selectedcontent
 
@@ -15,15 +13,14 @@ class Components::Select < Components::Input
 
   sig do
     params(
-      form: T.nilable(PhlexRailsFormBuilder),
-      field: T.nilable(Symbol),
-      value: T.nilable(T.any(String, Symbol)),
+      value: T.nilable(String),
       disabled: T::Boolean,
+      invalid: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(form: nil, field: nil, value: nil, disabled: false, **attributes)
-    super(form:, field:, **attributes)
+  def initialize(value: nil, disabled: false, invalid: false, **attributes)
+    super(invalid:, **attributes)
     @value = value
     @disabled = disabled
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
@@ -31,53 +28,57 @@ class Components::Select < Components::Input
     @selected_item_block = T.let(nil, T.nilable(T.proc.void))
   end
 
-  # == Initialization ==
+  sig { returns(T.nilable(String)) }
+  attr_reader :value
+
+  sig { params(selected_item_block: T.proc.void).void }
+  attr_writer :selected_item_block
+
+  # == Component ==
 
   sig { override.params(content: T.proc.void).returns(T.untyped) }
   def view_template(&content)
     vanish(&content)
-    content_block = @content_block or raise "Missing content"
 
+    unless @content_block
+      raise "Missing content"
+    end
+    unless @trigger_block
+      raise "Missing trigger"
+    end
+
+    content_html = capture do
+      @content_block.call
+    end
     el_select(
+      value: @value,
       **mix(
         {
           class: "select",
           data: {
             controller: "select",
             action: "change->select#update",
-            placeholder: (true unless field_value),
+            placeholder: (true unless @value),
           },
           aria: {
-            invalid: ("true" if field_has_errors?),
+            invalid: ("true" if @invalid),
           },
         },
-        field_options,
         @attributes,
       ),
     ) do
-      content_html = capture do
-        content_block.call
-      end
-      if (block = @trigger_block)
-        block.call
-      else
-        trigger
-      end
+      @trigger_block.call
       raw(content_html) # rubocop:disable Rails/OutputSafety
     end
   end
 
   # == Interface ==
 
-  sig do
-    params(
-      size: Symbol,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.void),
-    ).void
-  end
+  sig { params(size: Symbol, attributes: T.untyped, content: T.proc.void).void }
   def with_trigger(size: :default, **attributes, &content)
-    @trigger_block = ->() { trigger(size:, **attributes, &content) }
+    @trigger_block = ->() {
+      trigger(size:, **attributes, &content)
+    }
   end
 
   sig do
@@ -85,7 +86,7 @@ class Components::Select < Components::Input
       anchor: T.any(Symbol, T::Array[Symbol]),
       anchor_strategy: T.nilable(Symbol),
       attributes: T.untyped,
-      content: T.proc.params(options: Components::Select::Content).void,
+      content: T.proc.params(content: Components::Select::Content).void,
     ).void
   end
   def with_content(
@@ -96,10 +97,7 @@ class Components::Select < Components::Input
   )
     @content_block = ->() {
       render Components::Select::Content.new(
-        value: field_value,
-        register_selected_item_block: ->(selected_item_block) {
-          @selected_item_block = selected_item_block
-        },
+        self,
         anchor:,
         anchor_strategy:,
         **attributes,
@@ -112,43 +110,7 @@ class Components::Select < Components::Input
 
   # == Helpers ==
 
-  sig { returns(T::Hash[Symbol, T.untyped]) }
-  def field_options
-    {
-      id: field_id,
-      name: field_name,
-      value: field_value,
-    }.compact
-  end
-
-  sig { returns(T.nilable(String)) }
-  def field_id
-    if @form && @field
-      @form.field_id(@field)
-    elsif @field
-      super(@field)
-    end
-  end
-
-  sig { returns(T.nilable(String)) }
-  def field_name
-    if @form && @field
-      @form.field_name(@field)
-    elsif @field
-      super(@field)
-    end
-  end
-
-  sig { returns(T.nilable(String)) }
-  def field_value
-    if @form && @field
-      @form.object.public_send(@field)
-    elsif @value
-      @value.to_s
-    end
-  end
-
-  sig { params(size: Symbol, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(size: Symbol, attributes: T.untyped, content: T.proc.void).void }
   def trigger(size: :default, **attributes, &content)
     unless size.in?(TRIGGER_SIZES)
       raise InvalidParameter.new(parameter: :size, value: size)
@@ -163,7 +125,7 @@ class Components::Select < Components::Input
           data: {
             slot: "select-trigger",
             select_target: "trigger",
-            placeholder: (true unless field_value),
+            placeholder: (true unless @value),
             size:,
           },
         },
@@ -173,10 +135,8 @@ class Components::Select < Components::Input
       el_selectedcontent(class: "select-value", data: { slot: "select-value" }) do
         if @selected_item_block
           @selected_item_block.call
-        elsif content
-          yield
         else
-          @field.to_s.humanize(capitalize: false)
+          yield
         end
       end
       span do

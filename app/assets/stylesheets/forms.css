@@ -5,6 +5,12 @@
   }
 }
 
+@layer base-components {
+  .form {
+    @apply flex flex-col gap-6;
+  }
+}
+
 @custom-variant form-submitting {
   form[aria-busy="true"] &:disabled {
     @slot;

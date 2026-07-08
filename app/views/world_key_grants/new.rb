@@ -4,11 +4,11 @@
 class Views::WorldKeyGrants::New < Views::Base
   # == Initialization ==
 
-  sig { params(world: World, granted_post_types: T::Array[PostType]).void }
-  def initialize(world:, granted_post_types:)
+  sig { params(grant: WorldKeyGrant).void }
+  def initialize(grant:)
     super()
-    @world = world
-    @granted_post_types = granted_post_types
+    @grant = grant
+    @world = T.let(grant.world, World)
   end
 
   # == View ==
@@ -39,10 +39,7 @@ class Views::WorldKeyGrants::New < Views::Base
           end
         end
 
-        Components::WorldKeyGrantForm(
-          world: @world,
-          granted_post_types: @granted_post_types,
-        )
+        Components::WorldKeyGrantForm(grant: @grant)
       end
     end
   end

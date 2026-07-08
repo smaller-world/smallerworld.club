@@ -56,21 +56,16 @@ class PostType < ApplicationRecord
   belongs_to :world
   has_many :grants, class_name: "PostTypeGrant", dependent: :destroy
   has_many :granted_world_keys, through: :grants, source: :world_key
+  has_many :recipients, through: :granted_world_keys, source: :recipient
 
   has_many :world_keys, through: :world, source: :keys
   has_many :world_key_recipients, through: :world_keys, source: :recipient
-  has_many :recipients,
-    ->(post_type) {
-      where(world_keys: { id: post_type.grants.select(:world_key_id) })
-    },
-    through: :world_keys,
-    source: :recipient
-  has_many :subscribers,
-    ->(post_type) {
-      merge(post_type.recipients)
-    },
-    through: :world_keys,
-    source: :recipient
+  # has_many :subscribers,
+  #   ->(post_type) {
+  #     merge(post_type.recipients)
+  #   },
+  #   through: :world_keys,
+  #   source: :recipient
 
   has_many :posts, inverse_of: :type, foreign_key: :type_id, dependent: :destroy
 

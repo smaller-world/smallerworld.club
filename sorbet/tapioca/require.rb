@@ -11,3 +11,8 @@ ENV["PASSKIT_PRIVATE_P12_CERTIFICATE"] = "dummy"
 ENV["PASSKIT_APPLE_INTERMEDIATE_CERTIFICATE"] = "dummy"
 ENV["PASSKIT_CERTIFICATE_KEY"] = "dummy"
 require "passkit/generator"
+
+# To type the correct superclass for Superform::Rails::Form
+module Components
+  class Base < Phlex::HTML; end
+end

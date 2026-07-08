@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Views::Worlds::Show < Views::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig do
@@ -135,9 +137,10 @@ class Views::Worlds::Show < Views::Base
         end
 
         div(class: "flex flex-col gap-4") do
-          Components::WorldPostTypeForm(world: @world, post_type: @post_type)
+          Components::WorldPostTypeForm(world: @world, selected_post_type: @post_type)
 
           turbo_frame_tag(
+            @world,
             :posts,
             src: [
               @world,
@@ -234,7 +237,7 @@ class Views::Worlds::Show < Views::Base
             end
           end
           item_group.separator(
-            class: "hidden [form[data-draft-available]_+_&]:revert-display-layer",
+            class: "hidden [form[data-draft-available]+&]:revert-display-layer",
           )
 
           @world.post_types.each do |post_type|
