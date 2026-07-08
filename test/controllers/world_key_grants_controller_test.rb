@@ -12,20 +12,19 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
   HOTWIRE_NATIVE_IOS_USER_AGENT = "#{IOS_USER_AGENT} Hotwire Native iOS"
 
   setup do
-    @world = T.let(create_world(owner: users(:bob), name: "Grant World"), World)
-    @grant = T.let(@world.key_grant_message, String)
+    @owner = users(:bob)
+    @world = create_world(owner: @owner, name: "Grant World")
+    @grant_message = @world.key_grant_message(post_type_ids: @world.post_type_ids)
   end
 
   # == Tests ==
 
   test "accepting a key grant adds the recipient to the world" do
     recipient = users(:sue)
-    recipients_device = devices(:sues_phone)
-
-    sign_in_as(recipient, device: recipients_device)
+    sign_in_as(recipient)
 
     assert_difference -> { recipient.world_keys.count }, 1 do
-      post accept_world_key_grant_path(@grant), as: :turbo_stream
+      post accept_world_key_grant_path(@grant_message), as: :turbo_stream
     end
     assert_redirected_to world_path(@world)
   end
