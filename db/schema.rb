@@ -25,8 +25,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_07_174648) do
   end
 
   create_table "active_record_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
-    t.timestamptz "created_at", null: false
-    t.timestamptz "updated_at", null: false
+    t.timestamptz "created_at", precision: 6, null: false
+    t.timestamptz "updated_at", precision: 6, null: false
     t.string "value"
   end
 

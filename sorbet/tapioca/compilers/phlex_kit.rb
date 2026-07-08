@@ -140,7 +140,7 @@ module Tapioca
 
           nil_type = T::Utils.coerce(NilClass)
           if block_type.is_a?(T::Types::Union)
-            return block_type.types.none? { |type| type == nil_type }
+            return block_type.types.none?(nil_type)
           end
 
           true
@@ -181,6 +181,7 @@ module Tapioca
           type_variables.each do |type_variable|
             next if type_variable.type ==
               Tapioca::TypeVariableModule::Type::HasAttachedClass
+
             name = type_variable.name
             next if name.nil?
 

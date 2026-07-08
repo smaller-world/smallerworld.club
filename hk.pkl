@@ -32,8 +32,13 @@ local linters = new Mapping<String, Step> {
   }
   ["sorbet"] = (Builtins.sorbet) {
     exclude = List("sorbet/tapioca/compilers/**/*.rb", "bin/*", "ruby_lsp/**/*.rb")
-    check = "bin/srb tc --no-error-count {{ files }}"
-    fix = "bin/srb tc --no-error-count --autocorrect {{ files }}"
+    // NOTE: Sorbet is a whole-program typechecker and reads its input paths from
+    // sorbet/config (--dir=.). Passing {{ files }} here would make Sorbet load
+    // each changed file twice (once via --dir=., once via the explicit arg),
+    // producing spurious "Duplicate type member" errors. So we check the whole
+    // project and let `glob` decide when the step runs.
+    check = "bin/srb tc --no-error-count"
+    fix = "bin/srb tc --no-error-count --autocorrect"
   }
 
   // Or define custom steps:

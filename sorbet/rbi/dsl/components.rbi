@@ -448,14 +448,15 @@ module Components
   sig do
     params(
       target: ::Object,
-      pagy: T.nilable(::Pagy),
+      pagy: ::Pagy,
       autoclick: T::Boolean,
+      id: ::String,
       disable_for: T.nilable(::ActiveSupport::Duration),
       attributes: T.untyped,
       content: T.proc.params(instance: Components::NextPageControl).void
     ).void
   end
-  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
+  def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), id: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/phone_number_input.rb:4
   sig do
@@ -1225,14 +1226,15 @@ module Components
     sig do
       params(
         target: ::Object,
-        pagy: T.nilable(::Pagy),
+        pagy: ::Pagy,
         autoclick: T::Boolean,
+        id: ::String,
         disable_for: T.nilable(::ActiveSupport::Duration),
         attributes: T.untyped,
         content: T.proc.params(instance: Components::NextPageControl).void
       ).void
     end
-    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
+    def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), id: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/phone_number_input.rb:4
     sig do
