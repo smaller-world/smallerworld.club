@@ -61,7 +61,8 @@ class Components::WorldForm < Components::Base
               input_group.addon(align: :inline_start) do
                 Icon("huge/quotes")
               end
-              input_group.input(type: :text, **input.attributes)
+              input_group.input(**input.attributes)
+              input_group.addon(align: :inline_end, &:clear_button)
             end
           end,
           label: "tagline (optional)",

@@ -60,7 +60,10 @@ class Components::WorldV1PostsImportAlert < Components::Base
             end
           end
           alert.action do
-            form_with(url: [ @world, :v1_posts_import ], method: :post) do
+            form_with(url: [ @world, :v1_posts_import ], method: :post, data: {
+              controller: "haptic-bridge",
+              action: "turbo:submit-end:haptic-bridge#vibrate",
+            }) do
               Components::Button(
                 type: :submit,
                 size: :sm,

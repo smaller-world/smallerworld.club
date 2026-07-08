@@ -12,6 +12,7 @@ class Components::InputGroup < Components::Base
       class: "input-group group/input-group",
       data: {
         slot: "input-group",
+        controller: "input-group-addon",
       },
       &content
     )
@@ -30,28 +31,6 @@ class Components::InputGroup < Components::Base
     render Components::InputGroup::Addon.new(align:, **attributes, &content)
   end
 
-  sig do
-    params(
-      variant: Symbol,
-      size: Symbol,
-      attributes: T.untyped,
-      content: T.proc.params(component: Components::Button).void,
-    ).void
-  end
-  def button(variant: :ghost, size: :xs, **attributes, &content)
-    render Components::Button.new(
-      variant:,
-      size:,
-      **mix({ class: "input-group-button" }, attributes),
-      &content
-    )
-  end
-
-  sig { params(attributes: T.untyped, content: T.proc.void).void }
-  def text(**attributes, &content)
-    span(**mix({ class: "input-group-text" }, attributes), &content)
-  end
-
   sig { params(attributes: T.untyped).void }
   def input(**attributes)
     render Components::Input.new(
@@ -59,7 +38,8 @@ class Components::InputGroup < Components::Base
         {
           class: "input-group-input",
           data: {
-            slot!: "input-group-control",
+            input_group_addon_target: "control",
+            slot: "input-group-control",
           },
         },
         attributes,
@@ -74,11 +54,38 @@ class Components::InputGroup < Components::Base
         {
           class: "input-group-textarea",
           data: {
-            slot!: "input-group-control",
+            slot: "input-group-control",
           },
         },
         attributes,
       ),
     )
   end
+
+  # sig { params(attributes: T.untyped, content: T.proc.void).void }
+  # def text(**attributes, &content)
+  #   span(**mix({ class: "input-group-text" }, attributes), &content)
+  # end
+
+  # sig do
+  #   params(
+  #     variant: Symbol,
+  #     size: Symbol,
+  #     attributes: T.untyped,
+  #     content: T.proc.params(component: Components::Button).void,
+  #   ).void
+  # end
+  # def button(variant: :ghost, size: :xs, **attributes, &content)
+  #   Components::Button(
+  #     variant:,
+  #     size:,
+  #     **mix(
+  #       {
+  #         class: "input-group-button",
+  #       },
+  #       attributes,
+  #     ),
+  #     &content
+  #   )
+  # end
 end

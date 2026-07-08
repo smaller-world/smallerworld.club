@@ -29,8 +29,7 @@ class Components::InputGroup::Addon < Components::Base
       data: {
         slot: "input-group-addon",
         align: @align,
-        controller: "input-group-addon",
-        action: "click->input-group-addon#focus",
+        action: "click->input-group-addon#focusInput",
       },
       &content
     )
@@ -48,11 +47,30 @@ class Components::InputGroup::Addon < Components::Base
   end
   def button(variant: :ghost, size: :xs, **attributes, &content)
     Components::Button(
+      type: :button,
       variant:,
       size:,
       **mix({ class: "input-group-button" }, attributes),
       &content
     )
+  end
+
+  sig do
+    params(
+      variant: Symbol,
+      size: Symbol,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(component: Components::Button).void),
+    ).void
+  end
+  def clear_button(variant: :ghost, size: :icon_sm, **attributes, &content)
+    button(variant:, size:, data: { action: "input-group-addon#clearInput" }) do |button|
+      if block_given?
+        yield(button)
+      else
+        Icon("huge/text-clear")
+      end
+    end
   end
 
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }

@@ -1,14 +1,29 @@
 import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 
-export default class InputGroupAddonController extends Typed(Controller, {}) {
+const targets = {
+  control: HTMLInputElement,
+};
+
+export default class InputGroupAddonController extends Typed(Controller, {
+  targets,
+}) {
+  // == Lifecycle ==
+
+  connect(): void {
+    super.connect();
+    if (!this.hasControlTarget) {
+      throw new Error("Missing control target");
+    }
+  }
+
   // == Actions ==
 
-  focus(event: MouseEvent): void {
-    if ((event.target as HTMLElement).closest("button")) return;
-    const control = this.element.parentElement?.querySelector<
-      HTMLInputElement | HTMLTextAreaElement
-    >("input, textarea");
-    control?.focus();
+  focusInput(): void {
+    this.controlTarget.focus();
+  }
+
+  clearInput(): void {
+    this.controlTarget.value = "";
   }
 }
