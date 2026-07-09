@@ -168,7 +168,7 @@ class World < ApplicationRecord
         .arel,
     )
     select(arel_table[Arel.star], latest_post_at.as("latest_post_at"))
-      .order(latest_post_at.desc.nulls_last)
+      .order(Arel.sql("latest_post_at").desc.nulls_last)
   }
 
   # == Post Types ==
