@@ -57,9 +57,9 @@ class Components::Checkbox < Components::Input
     end
     input(
       type: :checkbox,
+      tabindex: -1,
       checked: @checked,
       class: "visually-hidden",
-      tabindex: -1,
       aria: {
         hidden: true,
       },

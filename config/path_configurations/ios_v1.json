@@ -38,13 +38,15 @@
       "patterns": ["\/posts\/new", "^\/posts\/[\\w-]+\/edit$"],
       "properties": {
         "modal_style": "page_sheet",
-        "modal_dismiss_gesture_enabled": false
+        "modal_dismiss_gesture_enabled": false,
+        "query_string_presentation": "replace"
       }
     },
     {
       "patterns": ["^\/worlds\/[\\w-]+$"],
       "properties": {
-        "interactive_content_pop_gesture_enabled": false
+        "interactive_content_pop_gesture_enabled": false,
+        "query_string_presentation": "replace"
       }
     },
     {

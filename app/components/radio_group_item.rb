@@ -62,6 +62,7 @@ class Components::RadioGroupItem < Components::Input
     input(
       type: :radio,
       value:,
+      checked: @checked,
       tabindex: -1,
       class: "visually-hidden",
       aria: {

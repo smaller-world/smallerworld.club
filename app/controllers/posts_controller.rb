@@ -63,18 +63,15 @@ class PostsController < ApplicationController
     end
   end
 
-  # GET /world/:world_id/posts/new[?type_id=...]
+  # GET /world/:world_id/posts/new?type_id=...
   def new
     respond_to do |format|
       format.html do
         world = find_world
         authorize!(world, to: :post?)
-        post = if (type_id = params[:type_id])
-          post_type = world.post_types.find(type_id)
-          post_type.posts.build
-        else
-          Post.new
-        end
+        type_id = params.require(:type_id)
+        post_type = world.post_types.find(type_id)
+        post = post_type.posts.build
         restore_draft = cast_boolean(params[:restore_draft])
         render Views::Posts::New.new(post:, restore_draft:)
       end

@@ -4,10 +4,17 @@
 class Components::PostTypeForm < Components::Base
   # == Initialization ==
 
-  sig { params(post_type: PostType, attributes: T.untyped).void }
-  def initialize(post_type:, **attributes)
+  sig do
+    params(
+      post_type: PostType,
+      previous_url: T.nilable(String),
+      attributes: T.untyped,
+    ).void
+  end
+  def initialize(post_type:, previous_url:, **attributes)
     super(**attributes)
     @post_type = post_type
+    @previous_url = previous_url
     @world = T.let(@post_type.world!, World)
   end
 
@@ -20,6 +27,10 @@ class Components::PostTypeForm < Components::Base
       action: @post_type.new_record? ? [ @world, @post_type ] : @post_type,
       vibrate_on_submit: true,
     ) do |form|
+      if (previous_url = @previous_url)
+        input(type: "hidden", name: "previous_url", value: previous_url)
+      end
+
       form.wrapped(
         form.field(:label).text(
           placeholder: @post_type.label.presence || "journal entry",

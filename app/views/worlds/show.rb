@@ -11,7 +11,8 @@ class Views::Worlds::Show < Views::Base
       current_user: User,
       world: World,
       celebrate: T::Boolean,
-      post_type: T.nilable(PostType),
+      new_post_dialog_open: T::Boolean,
+      selected_post_type: T.nilable(PostType),
       created_post_id: T.nilable(String),
     ).void
   end
@@ -19,14 +20,16 @@ class Views::Worlds::Show < Views::Base
     current_user:,
     world:,
     celebrate:,
-    post_type:,
+    new_post_dialog_open:,
+    selected_post_type:,
     created_post_id:
   )
     super()
     @current_user = current_user
     @world = world
     @celebrate = celebrate
-    @post_type = post_type
+    @new_post_dialog_open = new_post_dialog_open
+    @selected_post_type = selected_post_type
     @created_post_id = created_post_id
     @owner = T.let(@world.owner!, User)
     @world_key = T.let(@world.keys.find_by(recipient: @current_user), T.nilable(WorldKey))
@@ -139,7 +142,7 @@ class Views::Worlds::Show < Views::Base
         end
 
         div(class: "flex flex-col gap-4") do
-          Components::WorldPostTypeForm(world: @world, selected_post_type: @post_type)
+          Components::WorldPostTypeForm(world: @world, selected_post_type: @selected_post_type)
 
           turbo_frame_tag(
             @world,
@@ -147,7 +150,7 @@ class Views::Worlds::Show < Views::Base
             src: [
               @world,
               :posts,
-              type_id: @post_type&.id,
+              type_id: @selected_post_type&.id,
               created_post_id: @created_post_id,
             ],
             target: "_top",
@@ -173,7 +176,17 @@ class Views::Worlds::Show < Views::Base
 
   sig { void }
   def new_post_button
-    Components::Dialog() do |dialog|
+    Components::Dialog(
+      open: @new_post_dialog_open,
+      data: {
+        controller: "world-new-post-dialog",
+        action: [
+          "open->world-new-post-dialog#updateSearchParams",
+          "close->world-new-post-dialog#updateSearchParams",
+          "cancel->world-new-post-dialog#updateSearchParams",
+        ],
+      },
+    ) do |dialog|
       dialog.with_trigger_button(
         size: :lg,
         class: "world-action-button group/new-post-button relative",
@@ -267,6 +280,10 @@ class Views::Worlds::Show < Views::Base
                 [ :edit, post_type ],
                 size: :sm,
                 class: "text-muted-foreground",
+                data: {
+                  controller: "redirect-back-to-self",
+                  action: "redirect-back-to-self#visit:prevent dialog#close",
+                },
               )
             end
           end
@@ -278,6 +295,10 @@ class Views::Worlds::Show < Views::Base
             href: url_for([ :new, @world, :post_type ]),
             variant: :muted,
             size: :sm,
+            data: {
+              controller: "redirect-back-to-self",
+              action: "redirect-back-to-self#visit:prevent dialog#close",
+            },
           ) do |item|
             item.content(class: "gap-0") do
               item.title do

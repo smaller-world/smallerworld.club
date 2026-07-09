@@ -87,8 +87,9 @@ class Components::PostCard < Components::Base
         end
         card.content do
           div(
-            class: "post-body",
+            class: "post-card-body",
             data: {
+              slot: "post-card-body",
               controller: "collapse",
             },
           ) do

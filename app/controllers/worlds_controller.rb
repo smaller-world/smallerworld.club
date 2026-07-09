@@ -16,7 +16,8 @@ class WorldsController < ApplicationController
         world = find_world
         authorize!(world)
         celebrate = !!flash[:celebrate]
-        post_type = if (type_id = params[:post_type_id])
+        new_post_dialog_open = cast_boolean(params[:new_post])
+        selected_post_type = if (type_id = params[:post_type_id])
           world.post_types.find(type_id)
         end
         created_post_id = flash[:created_post_id]
@@ -24,7 +25,8 @@ class WorldsController < ApplicationController
           current_user:,
           world:,
           celebrate:,
-          post_type:,
+          new_post_dialog_open:,
+          selected_post_type:,
           created_post_id:,
         )
       end

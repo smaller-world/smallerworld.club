@@ -547,11 +547,12 @@ module Components
   sig do
     params(
       post_type: ::PostType,
+      previous_url: T.nilable(::String),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
     ).void
   end
-  def PostTypeForm(post_type:, **attributes, &content); end
+  def PostTypeForm(post_type:, previous_url: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/radio_group.rb:4
   sig do
@@ -1325,11 +1326,12 @@ module Components
     sig do
       params(
         post_type: ::PostType,
+        previous_url: T.nilable(::String),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
       ).void
     end
-    def PostTypeForm(post_type:, **attributes, &content); end
+    def PostTypeForm(post_type:, previous_url: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/radio_group.rb:4
     sig do

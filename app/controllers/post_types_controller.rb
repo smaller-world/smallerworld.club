@@ -10,8 +10,9 @@ class PostTypesController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
+        previous_url = params[:redirect_back_to]
         post_type = world.post_types.build
-        render Views::PostTypes::New.new(post_type:)
+        render Views::PostTypes::New.new(post_type:, previous_url:)
       end
     end
   end
@@ -22,7 +23,8 @@ class PostTypesController < ApplicationController
       format.html do
         post_type = find_post_type
         authorize!(post_type)
-        render Views::PostTypes::Edit.new(post_type:)
+        previous_url = params[:redirect_back_to]
+        render Views::PostTypes::Edit.new(post_type:, previous_url:)
       end
     end
   end
@@ -33,12 +35,13 @@ class PostTypesController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
+        previous_url = params[:previous_url]
         post_type_params = params.expect(
           post_type: [ :label, :icon, granted_world_key_ids: [] ],
         )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
-          refresh_or_redirect_to(world, status: :see_other)
+          refresh_or_redirect_to(previous_url || world, status: :see_other)
         else
           render Views::PostTypes::New.new(post_type:), status: :unprocessable_content
         end
@@ -52,11 +55,12 @@ class PostTypesController < ApplicationController
       format.html do
         post_type = find_post_type
         authorize!(post_type)
+        previous_url = params[:previous_url]
         post_type_params = params.expect(
           post_type: [ :label, :icon, granted_world_key_ids: [] ],
         )
         if post_type.update(**post_type_params)
-          refresh_or_redirect_to(post_type.world, status: :see_other)
+          redirect_to(previous_url || post_type.world, status: :see_other)
         else
           render Views::PostTypes::Edit.new(post_type:), status: :unprocessable_content
         end

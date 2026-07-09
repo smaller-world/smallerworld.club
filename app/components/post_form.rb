@@ -4,7 +4,13 @@
 class Components::PostForm < Components::Base
   # == Initialization ==
 
-  sig { params(post: Post, restore_draft: T::Boolean, attributes: T.untyped).void }
+  sig do
+    params(
+      post: Post,
+      restore_draft: T::Boolean,
+      attributes: T.untyped,
+    ).void
+  end
   def initialize(post:, restore_draft: false, **attributes)
     super(**attributes)
     @post = post
@@ -35,6 +41,7 @@ class Components::PostForm < Components::Base
               "post-form-type submit haptic-bridge",
               "post-draft" => @post.new_record?,
             ),
+            post_form_type_edit_url_template_value: edit_post_type_path(":post_type_id"),
             post_form_type_recipients_select_frame_url_template_value:
               post_recipients_select_path(":post_type_id"),
             post_draft_world_id_value: (@world.id if @post.new_record?),
@@ -85,6 +92,11 @@ class Components::PostForm < Components::Base
               [ :edit, @post_type ],
               size: :sm,
               class: "text-muted-foreground font-normal px-2 mt-0.5",
+              data: {
+                post_form_type_target: "editAnchor",
+                controller: "redirect-back-to-self",
+                action: "redirect-back-to-self#visit:prevent",
+              },
             )
           end
 
@@ -130,7 +142,7 @@ class Components::PostForm < Components::Base
         Components::Field(invalid: form.invalid?(:body)) do |field|
           form.Field(:body).lexxy(
             placeholder: "something i want to share...",
-            required: true,
+            required: !@restore_draft,
             class: "min-h-36",
             data: {
               action: token_list(

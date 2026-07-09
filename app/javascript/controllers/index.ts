@@ -56,6 +56,7 @@ import PostTimestampController from "./post_timestamp_controller";
 import DevicePushTokenInputController from "./push_token_input_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
+import RedirectBackToSelfController from "./redirect_back_to_self_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
@@ -68,6 +69,7 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyController from "./uppy_controller";
 import UppyGroupController from "./uppy_group_controller";
+import WorldNewPostDialogController from "./world_new_post_dialog_controller";
 import WorldPostTypeInputController from "./world_post_type_input_controller";
 
 // == Library helpers
@@ -105,6 +107,7 @@ application.register("forward-click", ForwardClickController);
 application.register("checkbox-proxy", CheckboxProxyController);
 application.register("radio-group-item", RadioGroupItemController);
 application.register("radio-toggle", RadioToggleController);
+application.register("redirect-back-to-self", RedirectBackToSelfController);
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -150,6 +153,7 @@ application.register("streamed-toast", StreamedToastController);
 // == Specific components
 application.register("device-push-token-input", DevicePushTokenInputController);
 application.register("world-post-type-input", WorldPostTypeInputController);
+application.register("world-new-post-dialog", WorldNewPostDialogController);
 application.register("create-world-form", CreateWorldFormController);
 application.register("post-timestamp", PostTimestampController);
 application.register("post-draft", PostDraftController);

@@ -4,10 +4,11 @@
 class Views::PostTypes::Edit < Views::Base
   # == Initialization ==
 
-  sig { params(post_type: PostType).void }
-  def initialize(post_type:)
+  sig { params(post_type: PostType, previous_url: T.nilable(String)).void }
+  def initialize(post_type:, previous_url:)
     super()
     @post_type = post_type
+    @previous_url = previous_url
     @world = T.let(@post_type.world!, World)
   end
 
@@ -18,11 +19,11 @@ class Views::PostTypes::Edit < Views::Base
     Components::AppLayout(page_title: "edit post type") do |app_layout|
       app_layout.page_container(class: "max-w-lg space-y-6") do
         unless hotwire_native_app?
-          button_back_to(@world.name, @world, variant: :secondary)
+          button_back_to(@world.name, @previous_url || @world, variant: :secondary)
         end
 
         div(class: "flex flex-col gap-0.5") do
-          Components::PostTypeForm(post_type: @post_type)
+          Components::PostTypeForm(post_type: @post_type, previous_url: @previous_url)
           Components::ConfirmDeleteButton(
             target: @post_type,
             description: "all posts of this type will be deleted.",
