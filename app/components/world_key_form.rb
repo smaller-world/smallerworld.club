@@ -17,7 +17,7 @@ class Components::WorldKeyForm < Components::Base
   sig { override.void }
   def view_template
     Components::Form(@world_key, vibrate_on_submit: true) do |form|
-      Components::FieldSet(class: "gap-1") do |field_set|
+      Components::FieldSet() do |field_set|
         field_set.legend(class: "text-center mb-0") do
           "which post types can #{@recipient.name} see?"
         end

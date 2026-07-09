@@ -157,7 +157,22 @@ class World < ApplicationRecord
       },
     }
 
+  # == Scopes ==
+
+  scope :order_by_latest_post_visible_to, ->(user) {
+    latest_post_at = Arel::Nodes::Grouping.new(
+      Post.visible_to(user)
+        .joins(:type)
+        .where(PostType.arel_table[:world_id].eq(arel_table[:id]))
+        .select(Post.arel_table[:created_at].maximum)
+        .arel,
+    )
+    select(arel_table[Arel.star], latest_post_at.as("latest_post_at"))
+      .order(latest_post_at.desc.nulls_last)
+  }
+
   # == Post Types ==
+
   sig { returns(T::Array[PostType]) }
   def self.default_post_types
     [

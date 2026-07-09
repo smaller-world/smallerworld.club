@@ -13,7 +13,8 @@ class Views::Home::Show < Views::Base
       World::PrivateAssociationRelation,
     )
     @accessible_worlds = T.let(
-      @current_user.accessible_worlds.with_attached_icon,
+      @current_user.accessible_worlds.order_by_latest_post_visible_to(@current_user)
+        .with_attached_icon,
       World::PrivateAssociationRelation,
     )
     @pending_world_invitations = T.let(

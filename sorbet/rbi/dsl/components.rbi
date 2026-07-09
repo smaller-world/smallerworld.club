@@ -552,7 +552,7 @@ module Components
       content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
     ).void
   end
-  def PostTypeForm(post_type:, previous_url: T.unsafe(nil), **attributes, &content); end
+  def PostTypeForm(post_type:, previous_url:, **attributes, &content); end
 
   # workspace://app/components/radio_group.rb:4
   sig do
@@ -1331,7 +1331,7 @@ module Components
         content: T.nilable(T.proc.params(instance: Components::PostTypeForm).void)
       ).void
     end
-    def PostTypeForm(post_type:, previous_url: T.unsafe(nil), **attributes, &content); end
+    def PostTypeForm(post_type:, previous_url:, **attributes, &content); end
 
     # workspace://app/components/radio_group.rb:4
     sig do

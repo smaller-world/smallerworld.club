@@ -20,9 +20,9 @@
 #
 # Indexes
 #
-#  index_posts_on_hidden_from_ids  (hidden_from_ids) USING gin
-#  index_posts_on_quiet            (quiet)
-#  index_posts_on_type_id          (type_id)
+#  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
+#  index_posts_on_quiet                   (quiet)
+#  index_posts_on_type_id_and_created_at  (type_id,created_at)
 #
 # Foreign Keys
 #
