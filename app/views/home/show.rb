@@ -80,6 +80,33 @@ class Views::Home::Show < Views::Base
 
   # == Helpers ==
 
+  sig { params(world_key: WorldKey).returns(Integer) }
+  def badge_count_for(world_key)
+    badge_counts_by_world_key_id.fetch(world_key.id, 0)
+  end
+
+  # Counts new visible posts for every one of the current user's world keys in a
+  # single grouped query, avoiding an N+1 across `@world_keys`. Mirrors
+  # `WorldKey#new_visible_world_posts_since_last_visited`: only posts of granted
+  # post types, not hidden from the recipient, created after each key was last
+  # visited.
+  sig { returns(T::Hash[String, Integer]) }
+  def badge_counts_by_world_key_id
+    @badge_counts_by_world_key_id ||= T.let(
+      PostTypeGrant
+        .joins(:world_key, post_type: :posts)
+        .where(world_keys: { recipient: @current_user })
+        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
+        .where(
+          "world_keys.world_last_visited_at IS NULL OR " \
+            "posts.created_at > world_keys.world_last_visited_at",
+        )
+        .group("world_keys.id")
+        .count,
+      T.nilable(T::Hash[String, Integer]),
+    )
+  end
+
   sig { void }
   def owned_worlds
     ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
@@ -121,7 +148,7 @@ class Views::Home::Show < Views::Base
     ul(class: "flex gap-4 flex-wrap justify-center") do
       @world_keys.each do |world_key|
         world = world_key.world!
-        badge_count = world_key.new_visible_world_posts_since_last_visited.count
+        badge_count = badge_count_for(world_key)
         li do
           link_to(world, class: "world-icon-container hover:underline") do
             div(class: "relative") do
