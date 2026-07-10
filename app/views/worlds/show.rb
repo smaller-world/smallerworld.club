@@ -371,8 +371,8 @@ class Views::Worlds::Show < Views::Base
                 item.media(variant: :icon) do
                   Icon(post_type.icon)
                 end
-                item.content do
-                  item.title do
+                item.content do |item_content|
+                  item_content.title do
                     post_type.label
                   end
                 end
