@@ -29,8 +29,8 @@ class Components::Dialog::Content < Components::Base
 
   # == Component ==
 
-  sig { override.params(block: T.proc.bind(T.self_type).void).void }
-  def view_template(&block)
+  sig { override.params(content: T.proc.bind(T.self_type).void).void }
+  def view_template(&content)
     dialog(**mix(
       {
         id: @dialog_id,
@@ -78,7 +78,7 @@ class Components::Dialog::Content < Components::Base
     end
   end
 
-  # == Slots ==
+  # == Interface  ==
 
   sig do
     params(

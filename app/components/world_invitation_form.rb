@@ -7,12 +7,14 @@ class Components::WorldInvitationForm < Components::Base
   sig do
     params(
       invitation: WorldInvitation,
+      previous_url: T.nilable(String),
       attributes: T.untyped,
     ).void
   end
-  def initialize(invitation:, **attributes)
+  def initialize(invitation:, previous_url:, **attributes)
     super(**attributes)
     @invitation = invitation
+    @previous_url = previous_url
     @world = T.let(@invitation.world!, World)
     @recipient = T.let(@invitation.recipient!, User)
   end
@@ -33,6 +35,9 @@ class Components::WorldInvitationForm < Components::Base
         @attributes,
       ),
     ) do |form|
+      if (previous_url = @previous_url)
+        input(type: "hidden", name: "previous_url", value: previous_url)
+      end
       if @invitation.new_record?
         form.Field(:recipient_id).hidden
       end
@@ -63,6 +68,14 @@ class Components::WorldInvitationForm < Components::Base
             end
           end
         end
+        field_set.description(
+          class: class_names(
+            "mt-0 text-center [[data-slot=checkbox-group]:has(:checked)+&]:hidden",
+            "hidden" => form.invalid?(:granted_post_type_ids),
+          ),
+        ) do
+          "select at least one"
+        end
         form.error_for(:granted_post_type_ids, class: "text-center")
       end
 
@@ -73,7 +86,6 @@ class Components::WorldInvitationForm < Components::Base
         else
           button.inline_start_icon("huge/floppy-disk")
           span { "save changes" }
-
         end
       end
     end

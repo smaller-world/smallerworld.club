@@ -19,13 +19,6 @@ class Views::WorldKeys::Index < Views::Base
       @current_user.accessible_world_owners_without_key_for(@world),
       User::PrivateAssociationRelation,
     )
-    @pending_invitations_by_recipient_id = T.let(
-      @world.invitations.pending_acceptance.where(recipient: @invitable_users)
-        .index_by do |invitation|
-          T.must(invitation.recipient_id)
-        end,
-      T::Hash[String, WorldInvitation],
-    )
   end
 
   # == View ==
@@ -33,30 +26,30 @@ class Views::WorldKeys::Index < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "your friends") do |app_layout|
-      app_layout.page_container(class: "max-w-lg space-y-6") do
+      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
           button_back_to(@world.name, @world, variant: :secondary)
+          button_link_to(
+            "give a key to a new friend",
+            [ :new, @world, :key_grant ],
+            variant: :default,
+            icon: "huge/user-add-01",
+            class: "self-center",
+            data: {
+              controller: "button-bridge",
+              bridge_ios_image: "person.crop.circle.fill.badge.plus",
+            },
+          )
         end
 
         if @invitable_users.any?
           invitations_item
         end
 
-        div(class: "flex flex-col gap-4 has-[[role=list]:empty]:hidden") do
-          Components::ItemGroup(class: "gap-2") do
-            @world_keys.each do |world_key|
-              world_key_item(world_key)
-            end
+        Components::ItemGroup(class: "empty:hidden") do
+          @world_keys.each do |world_key|
+            world_key_item(world_key)
           end
-
-          button_link_to(
-            "give a key to a new friend",
-            [ :new, @world, :key_grant ],
-            variant: :default,
-            size: :lg,
-            icon: "huge/user-add-01",
-            class: "self-center",
-          )
         end
 
         Components::Empty(
@@ -90,6 +83,22 @@ class Views::WorldKeys::Index < Views::Base
 
   # == Helpers ==
 
+  sig { returns(T::Hash[String, WorldInvitation]) }
+  def pending_invitations_by_recipient_id
+    @pending_invitations_by_recipient_id ||= T.let(
+      @world.invitations.pending_acceptance.where(recipient: @invitable_users)
+        .index_by do |invitation|
+          T.must(invitation.recipient_id)
+        end,
+      T.nilable(T::Hash[String, WorldInvitation]),
+    )
+  end
+
+  sig { params(recipient: User).returns(T.nilable(WorldInvitation)) }
+  def pending_invitation_for(recipient:)
+    pending_invitations_by_recipient_id[recipient.id]
+  end
+
   sig { params(world_key: WorldKey).void }
   def world_key_item(world_key)
     recipient = world_key.recipient!
@@ -97,11 +106,11 @@ class Views::WorldKeys::Index < Views::Base
       variant: :muted,
       class: "flex-nowrap items-start gap-2",
     ) do |item|
-      item.content(class: "flex-row items-start") do
-        item.title do
+      item.content(class: "flex-row items-start") do |item_content|
+        item_content.title do
           recipient.name
         end
-        item.description(
+        item_content.description(
           class: "flex-1 flex items-center justify-end gap-0.5 flex-wrap",
         ) do
           world_key.granted_post_types.each do |post_type|
@@ -138,10 +147,11 @@ class Views::WorldKeys::Index < Views::Base
           "these friends don't have access to your world: "
         end
       end
-      item.footer(class: "justify-start gap-1.5") do
-        @invitable_users.partition { |user| pending_invitation_for(user).nil? }
+      item.footer(class: "justify-start") do
+        @invitable_users
+          .partition { |user| pending_invitation_for(recipient: user).nil? }
           .flatten.each do |user|
-          if (invitation = pending_invitation_for(user))
+          if (invitation = pending_invitation_for(recipient: user))
             Components::DropdownMenu() do |menu|
               menu.with_trigger_button(
                 variant: :ghost,
@@ -175,10 +185,5 @@ class Views::WorldKeys::Index < Views::Base
         end
       end
     end
-  end
-
-  sig { params(user: User).returns(T.nilable(WorldInvitation)) }
-  def pending_invitation_for(user)
-    @pending_invitations_by_recipient_id[user.id]
   end
 end

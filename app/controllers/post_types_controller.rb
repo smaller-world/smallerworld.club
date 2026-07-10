@@ -4,7 +4,7 @@
 class PostTypesController < ApplicationController
   # == Actions ==
 
-  # GET /worlds/:world_id/post_types/new
+  # GET /worlds/:world_id/post_types/new[?redirect_back_to=...]
   def new
     respond_to do |format|
       format.html do
@@ -17,7 +17,7 @@ class PostTypesController < ApplicationController
     end
   end
 
-  # GET /post_types/:id/edit
+  # GET /post_types/:id/edit[?redirect_back_to=...]
   def edit
     respond_to do |format|
       format.html do
@@ -41,9 +41,13 @@ class PostTypesController < ApplicationController
         )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
-          refresh_or_redirect_to(previous_url || world, status: :see_other)
+          refresh_or_redirect_to(
+            previous_url || world,
+            status: :see_other,
+          )
         else
-          render Views::PostTypes::New.new(post_type:), status: :unprocessable_content
+          render Views::PostTypes::New.new(post_type:, previous_url:),
+            status: :unprocessable_content
         end
       end
     end
@@ -62,7 +66,8 @@ class PostTypesController < ApplicationController
         if post_type.update(**post_type_params)
           redirect_to(previous_url || post_type.world, status: :see_other)
         else
-          render Views::PostTypes::Edit.new(post_type:), status: :unprocessable_content
+          render Views::PostTypes::Edit.new(post_type:, previous_url:),
+            status: :unprocessable_content
         end
       end
     end

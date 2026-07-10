@@ -44,11 +44,11 @@ class Views::WorldInvitations::Edit < Views::Base
               end
             end
           end
-          item.content do
-            item.title do
+          item.content do |item_content|
+            item_content.title do
               "#{@recipient.name}'s invitation"
             end
-            item.description(class: "text-xs") do
+            item_content.description(class: "text-xs") do
               plain("you invited #{@recipient.name} to your world on ")
               local_time(@world.created_at)
             end

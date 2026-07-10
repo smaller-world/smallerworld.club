@@ -107,6 +107,14 @@ class User < ApplicationRecord
     owned_worlds.chronological.pick(:id)
   end
 
+  sig { params(recipient: User).returns(World::PrivateAssociationRelation) }
+  def owned_worlds_without_key_or_invitation_for(recipient)
+    owned_worlds
+      .where.not(id: WorldKey.where(recipient:).select(:world_id))
+      .where.not(id: WorldInvitation.pending_acceptance.where(recipient:).select(:world_id))
+      .chronological
+  end
+
   sig { params(world: World).returns(User::PrivateAssociationRelation) }
   def accessible_world_owners_without_key_for(world)
     accessible_world_owners.where.not(id: world.keys.select(:recipient_id))

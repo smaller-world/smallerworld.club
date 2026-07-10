@@ -58,7 +58,7 @@ class Components::DropdownMenu < Components::Base
       render Components::Button.new(
         variant:,
         size:,
-        ** attributes,
+        **attributes,
         &content
       )
     }

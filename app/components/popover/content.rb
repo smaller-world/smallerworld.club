@@ -52,7 +52,7 @@ class Components::Popover::Content < Components::Base
     )
   end
 
-  # == Slots ==
+  # == Interface ==
 
   sig do
     params(

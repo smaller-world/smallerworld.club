@@ -33,10 +33,6 @@ class Views::Worlds::Show < Views::Base
     @created_post_id = created_post_id
 
     @owner = T.let(@world.owner!, User)
-    @world_key = T.let(
-      world.keys.find_by(recipient: current_user),
-      T.nilable(WorldKey),
-    )
   end
 
   # == View ==
@@ -45,46 +41,10 @@ class Views::Worlds::Show < Views::Base
   def view_template
     Components::AppLayout(page_title: @world.name) do |app_layout|
       app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        div(class: "flex gap-8 justify-between", hidden: hotwire_native_app?) do
-          button_back_to(:home, variant: :secondary)
+        navigation_buttons
 
-          if allowed_to?(:manage?, @world)
-            button_link_to(
-              "edit",
-              [ :edit, @world ],
-              icon: "huge/pencil-edit-01",
-              variant: :secondary,
-              data: {
-                controller: "button-bridge",
-              },
-            )
-          elsif @world_key
-            button_link_to(
-              "settings",
-              @world_key,
-              variant: :secondary,
-              icon: "huge/settings-01",
-              data: {
-                controller: "button-bridge",
-                bridge_ios_image: "gearshape.fill",
-              },
-            )
-          end
-        end
-
-        if allowed_to?(:manage?, @world)
-          if @owner.has_v1_account?
-            turbo_frame_tag(
-              :v1_posts_import,
-              src: [ @world, :v1_posts_import ],
-              class: "empty:hidden pb-2",
-              data: {
-                controller: "frame-reload frame-reset user-focus",
-              },
-            )
-            turbo_stream_from(@world, :v1_posts_import, hidden: true)
-          end
-        end
+        world_invitation_alert
+        v1_post_import_frame
 
         div(class: "flex flex-col gap-6") do
           section(class: "flex flex-col items-center gap-2") do
@@ -170,6 +130,152 @@ class Views::Worlds::Show < Views::Base
 
   # == Helpers ==
 
+  sig { returns(T.nilable(WorldKey)) }
+  def world_key
+    @world_key = T.let(
+      @world.keys.find_by(recipient: @current_user),
+      T.nilable(WorldKey),
+    )
+  end
+
+  sig { void }
+  def navigation_buttons
+    div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
+      button_back_to(:home, variant: :secondary)
+
+      if allowed_to?(:manage?, @world)
+        button_link_to(
+          "edit",
+          [ :edit, @world ],
+          icon: "huge/pencil-edit-01",
+          variant: :secondary,
+          data: {
+            controller: "button-bridge",
+          },
+        )
+      elsif (world_key = self.world_key)
+        button_link_to(
+          "settings",
+          world_key,
+          variant: :secondary,
+          icon: "huge/settings-01",
+          data: {
+            controller: "button-bridge",
+            bridge_ios_image: "gearshape.fill",
+          },
+        )
+      end
+    end
+  end
+
+  sig { void }
+  def world_invitation_alert
+    if @current_user != @owner &&
+        (worlds = @current_user
+          .owned_worlds_without_key_or_invitation_for(@owner)
+          .to_a.presence) &&
+        worlds.size == @current_user.owned_worlds.size
+      Components::Item(variant: :muted, class: "gap-2") do |item|
+        item.content(class: "gap-0.5") do |item_content|
+          item_content.title do
+            "you can #{@owner.name}'s posts, but #{@owner.name} can't see yours!"
+          end
+          description_html = capture do
+            item_content.description do
+              "give #{@owner.name} a key to your world?"
+            end
+          end
+          primary_world, *other_worlds = worlds
+          primary_world = T.must(primary_world)
+          if other_worlds.none?
+            link_to(
+              [ :new, primary_world, :invitation, recipient_id: @owner.id ],
+              class: "underline",
+              data: {
+                controller: "redirect-back-to-self",
+                action: "redirect-back-to-self#visit:prevent",
+              },
+            ) do
+              raw(description_html) # rubocop:disable Rails/OutputSafety
+            end
+          else
+            Components::Dialog() do |dialog|
+              dialog.with_trigger do
+                button(
+                  data: { action: "dialog#open" },
+                  class: "text-muted-foreground underline",
+                ) do
+                  raw(description_html) # rubocop:disable Rails/OutputSafety
+                end
+              end
+              dialog.with_content do |dialog_content|
+                dialog_content.header do |dialog_header|
+                  dialog_header.title do
+                    "give #{@owner.name} a key to your world!"
+                  end
+                end
+
+                div(class: "space-y-3") do
+                  div(class: "text-sm") do
+                    "pick the world you'd like to invite #{@owner.name} to:"
+                  end
+                  Components::ItemGroup() do |group|
+                    worlds.each do |world|
+                      group.item(
+                        element: :a,
+                        href: url_for([
+                          :new,
+                          world,
+                          :invitation,
+                          recipient_id: @owner.id,
+                        ]),
+                        variant: :outline,
+                        size: :sm,
+                        data: {
+                          controller: "redirect-back-to-self",
+                          action: "redirect-back-to-self#visit:prevent",
+                        },
+                      ) do |item|
+                        item.media(variant: :image, class: "size-14 rounded-world-icon") do
+                          image_tag(world.page_icon_variant)
+                        end
+                        item.content(class: "gap-0.5") do |item_content|
+                          item_content.title(class: "text-base font-heading") do
+                            world.name
+                          end
+                          if (blurb = world.blurb)
+                            item_content.description(class: "text-xs") do
+                              blurb
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  sig { void }
+  def v1_post_import_frame
+    if allowed_to?(:manage?, @world) && @owner.has_v1_account?
+      turbo_frame_tag(
+        :v1_posts_import,
+        src: [ @world, :v1_posts_import ],
+        class: "empty:hidden pb-2",
+        data: {
+          controller: "frame-reload frame-reset user-focus",
+        },
+      )
+      turbo_stream_from(@world, :v1_posts_import, hidden: true)
+    end
+  end
+
   sig { void }
   def new_post_button
     Components::Dialog(
@@ -234,11 +340,11 @@ class Views::Worlds::Show < Views::Base
                 action: "dialog#close",
               },
             ) do |item|
-              item.content do
-                item.title do
+              item.content do |item_content|
+                item_content.title do
                   "continue from draft?"
                 end
-                item.description(
+                item_content.description(
                   class: "empty:hidden text-primary-foreground/80 border-l-2 border-border/50 pl-3 italic",
                   data: {
                     post_draft_info_target: "descriptionLabel",
@@ -296,11 +402,11 @@ class Views::Worlds::Show < Views::Base
               action: "redirect-back-to-self#visit:prevent dialog#close",
             },
           ) do |item|
-            item.content(class: "gap-0") do
-              item.title do
+            item.content(class: "gap-0") do |item_content|
+              item_content.title do
                 "something else!"
               end
-              item.description do
+              item_content.description do
                 "create your own post type"
               end
             end

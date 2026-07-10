@@ -16,7 +16,7 @@ class Components::Dialog::Header < Components::Base
     )
   end
 
-  # == Slots ==
+  # == Interface ==
 
   sig { params(attributes: T.untyped, block: T.proc.void).void }
   def title(**attributes, &block)

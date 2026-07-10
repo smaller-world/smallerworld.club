@@ -1,6 +1,6 @@
 @layer base-components {
   .item-group {
-    @apply flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2;
+    @apply flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-[[data-slot=item][data-size=xs]]:gap-2;
   }
 
   .item-separator {

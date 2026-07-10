@@ -20,7 +20,7 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
-  # GET /world/:world_id/invitations/new?recipient_id=...
+  # GET /world/:world_id/invitations/new?recipient_id=...[?redirect_back_to=...]
   def new
     respond_to do |format|
       format.html do
@@ -29,7 +29,8 @@ class WorldInvitationsController < ApplicationController
         recipient_id = params.fetch(:recipient_id)
         recipient = User.find(recipient_id)
         invitation = world.invitations.build(recipient:)
-        render Views::WorldInvitations::New.new(invitation:)
+        previous_url = params[:redirect_back_to]
+        render Views::WorldInvitations::New.new(invitation:, previous_url:)
       end
     end
   end
@@ -51,15 +52,23 @@ class WorldInvitationsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
+        previous_url = params[:previous_url]
         invitation_params = params.expect(
           world_invitation: [ :recipient_id, granted_post_type_ids: [] ],
         )
         invitation = world.invitations.build(**invitation_params)
         if invitation.save
-          refresh_or_redirect_to([ world, :keys ], status: :see_other)
+          if previous_url
+            recipient = invitation.recipient!
+            flash.notice = "invitation sent to #{recipient.name}!"
+          end
+          refresh_or_redirect_to(
+            previous_url || [ world, :keys ],
+            status: :see_other,
+          )
         else
           render(
-            Views::WorldInvitations::New.new(invitation:),
+            Views::WorldInvitations::New.new(invitation:, previous_url:),
             status: :unprocessable_content,
           )
         end
