@@ -49,7 +49,11 @@ class PostsController < ApplicationController
       format.turbo_stream do
         append_post_items = turbo_stream.append(
           "post_items",
-          renderable: Components::WorldPostItems.new(posts:, replied_post_ids:),
+          renderable: Components::WorldPostItems.new(
+            current_user:,
+            posts:,
+            replied_post_ids:,
+          ),
         )
         replace_next_page_control = turbo_stream.replace(
           "next_page_control",
