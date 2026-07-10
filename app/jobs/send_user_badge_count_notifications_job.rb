@@ -11,6 +11,6 @@ class SendUserBadgeCountNotificationsJob < ApplicationJob
 
   sig { params(user: User).void }
   def perform(user)
-    user.send_badge_count_notifications
+    # user.send_badge_count_notifications
   end
 end

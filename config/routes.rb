@@ -35,16 +35,14 @@ Rails.application.routes.draw do
 
   # == Account
   resource :account, only: [ :new, :create ]
-  resource :account_time_zone, path: "/account/time_zone", only: [ :update ]
-  resource :account_notification_count, path: "/account/notification_count", only: [] do
-    post :clear
-  end
+  resource :account_time_zone, path: "/account/time_zone", only: :update
+  resource :account_app_visits, path: "/account/app_visits", only: :create
 
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id
 
   # == Devices
-  resource :device_push_token, path: "/device/push_token", only: [ :update ] do
+  resource :device_push_token, path: "/device/push_token", only: :update do
     post :test
   end
 
@@ -82,6 +80,9 @@ Rails.application.routes.draw do
       post :accept
     end
   end
+  resources :world_key_world_visits,
+    path: "/world_keys/:world_key_id/world_visits",
+    only: :create
 
   # == World Cards
   # resources :world_cards, only: [ :show ] do
@@ -92,7 +93,7 @@ Rails.application.routes.draw do
   # end
 
   # == World Key Grants
-  resources :world_key_grants, only: [ :show ], param: :message do
+  resources :world_key_grants, only: :show, param: :message do
     member do
       post :accept
     end

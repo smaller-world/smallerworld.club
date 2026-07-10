@@ -9,17 +9,21 @@ class Views::Home::Show < Views::Base
     super()
     @current_user = current_user
     @owned_worlds = T.let(
-      @current_user.owned_worlds.chronological.with_attached_icon,
+      @current_user.owned_worlds
+        .chronological
+        .with_attached_icon,
       World::PrivateAssociationRelation,
     )
     @accessible_worlds = T.let(
-      @current_user.accessible_worlds.order_by_latest_post_visible_to(@current_user)
+      @current_user.accessible_worlds
+        .order_by_latest_post_visible_to(@current_user)
         .with_attached_icon,
       World::PrivateAssociationRelation,
     )
     @pending_world_invitations = T.let(
-      @current_user.world_invitations.pending_acceptance
-        .joins(world: [ icon_attachment: :blob ]),
+      @current_user.world_invitations
+        .pending_acceptance
+        .with_world_icon,
       WorldInvitation::PrivateRelation,
     )
   end
@@ -66,6 +70,8 @@ class Views::Home::Show < Views::Base
           div(class: "flex-1 max-h-40 min-h-0 shrink")
         end
       end
+
+      Components::AccountAppVisitForm(current_user: @current_user)
     end
   end
 

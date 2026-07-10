@@ -25,6 +25,9 @@ class WorldKeyPolicy < ApplicationPolicy
     user.in?([ world_key.world_owner!, world_key.recipient! ])
   end
 
+  # Key recipients can track visits to the key's associated world
+  alias_rule :track_world_visit?, to: :show?
+
   # == Scopes ==
 
   scope_for :active_record_relation do |relation|

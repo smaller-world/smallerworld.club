@@ -16,6 +16,9 @@ module GeneratedPathHelpersModule
   def accept_world_keys_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def account_app_visits_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -23,9 +26,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def apple_app_site_association_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def clear_account_notification_count_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
@@ -254,6 +254,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_key_world_visits_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_keys_path(*args); end

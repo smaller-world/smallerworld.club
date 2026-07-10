@@ -6,12 +6,13 @@
 #
 # Table name: world_keys
 #
-#  id            :uuid             not null, primary key
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  invitation_id :uuid
-#  recipient_id  :uuid             not null
-#  world_id      :uuid             not null
+#  id                    :uuid             not null, primary key
+#  world_last_visited_at :timestamptz
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  invitation_id         :uuid
+#  recipient_id          :uuid             not null
+#  world_id              :uuid             not null
 #
 # Indexes
 #

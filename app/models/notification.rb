@@ -100,7 +100,7 @@ class Notification < ApplicationRecord
         thread_id: world&.id,
         title: message.title,
         body: message.body,
-        badge: recipient.notifications_received_since_last_cleared.count,
+        badge: recipient.notifications_received_since_app_last_visited.count,
       )
     recipient.devices.notifiable.find_each do |device|
       device.push(device_notification)

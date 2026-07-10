@@ -13,7 +13,7 @@ export default class SubmitController extends Typed(
 
   request(): void {
     if (this.requirePageVisibleValue && document.visibilityState === "hidden") {
-      console.info("Page is hidden; skipping submission");
+      console.warn("Page is hidden; skipping submission");
       return;
     }
     this.element.requestSubmit();

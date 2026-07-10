@@ -31,8 +31,12 @@ class Views::Worlds::Show < Views::Base
     @new_post_dialog_open = new_post_dialog_open
     @selected_post_type = selected_post_type
     @created_post_id = created_post_id
+
     @owner = T.let(@world.owner!, User)
-    @world_key = T.let(@world.keys.find_by(recipient: @current_user), T.nilable(WorldKey))
+    @world_key = T.let(
+      @world.keys.find_by(recipient: @current_user),
+      T.nilable(WorldKey),
+    )
   end
 
   # == View ==
@@ -166,6 +170,11 @@ class Views::Worlds::Show < Views::Base
             end
           end
         end
+      end
+
+      Components::AccountAppVisitForm(current_user: @current_user)
+      if @world_key
+        Components::WorldKeyWorldVisitForm(world_key: @world_key)
       end
     end
   end

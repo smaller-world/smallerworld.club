@@ -6,12 +6,13 @@
 #
 # Table name: world_keys
 #
-#  id            :uuid             not null, primary key
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  invitation_id :uuid
-#  recipient_id  :uuid             not null
-#  world_id      :uuid             not null
+#  id                    :uuid             not null, primary key
+#  world_last_visited_at :timestamptz
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  invitation_id         :uuid
+#  recipient_id          :uuid             not null
+#  world_id              :uuid             not null
 #
 # Indexes
 #
@@ -108,6 +109,13 @@ class WorldKey < ApplicationRecord
   sig { params(message: String).returns(VerifiedWorldKeyGrant) }
   def self.verify_grant(message)
     VerifiedWorldKeyGrant.new(grant_verifier.verify(message))
+  end
+
+  # == Methods ==
+
+  sig { returns(T::Boolean) }
+  def record_world_visit
+    update(world_last_visited_at: Time.current)
   end
 
   private

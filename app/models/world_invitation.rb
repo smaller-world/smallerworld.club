@@ -77,6 +77,7 @@ class WorldInvitation < ApplicationRecord
 
   scope :pending_acceptance, -> { where.missing(:world_key) }
   scope :accepted, -> { where.associated(:world_key) }
+  scope :with_world_icon, -> { joins(world: [ icon_attachment: :blob ]) }
 
   # == Hooks ==
 

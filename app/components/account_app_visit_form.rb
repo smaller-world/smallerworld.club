@@ -1,8 +1,10 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::ClearAccountNotificationCountForm < Components::Base
+class Components::AccountAppVisitForm < Components::Base
   include Phlex::Rails::Helpers::FormWith
+  include Phlex::Rails::Helpers::ControllerPath
+  include NormalizeAttributes
 
   # == Initialization ==
 
@@ -17,19 +19,21 @@ class Components::ClearAccountNotificationCountForm < Components::Base
   sig { override.void }
   def view_template
     form_with(
-      url: clear_account_notification_count_path,
+      url: account_app_visits_path,
       data: {
         controller: "submit notification-badge-count-bridge",
         submit_require_page_visible_value: true,
         action: token_list(
           "turbo:submit-end->notification-badge-count-bridge#clear",
-          "turbo:load@document->submit#request" =>
-            @current_user.has_uncleared_notifications?,
+          "turbo:load@document->submit#request:once",
         ),
       },
       html: {
         hidden: true,
+        **normalize_attributes(@attributes),
       },
-    )
+    ) do
+      # NOTE: Keep block open unless you want rendering errors.
+    end
   end
 end

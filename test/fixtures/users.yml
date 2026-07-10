@@ -3,14 +3,14 @@
 #
 # Table name: users
 #
-#  id                            :uuid             not null, primary key
-#  has_v1_account                :boolean          default(FALSE), not null
-#  name                          :string           not null
-#  notifications_last_cleared_at :timestamptz
-#  phone_number                  :string           not null
-#  time_zone_name                :string           not null
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
+#  id                  :uuid             not null, primary key
+#  app_last_visited_at :timestamptz
+#  has_v1_account      :boolean          default(FALSE), not null
+#  name                :string           not null
+#  phone_number        :string           not null
+#  time_zone_name      :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 # Indexes
 #

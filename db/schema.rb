@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_09_052330) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_09_175443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -376,10 +376,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_052330) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "app_last_visited_at"
     t.datetime "created_at", null: false
     t.boolean "has_v1_account", default: false, null: false
     t.string "name", null: false
-    t.timestamptz "notifications_last_cleared_at"
     t.string "phone_number", null: false
     t.string "time_zone_name", null: false
     t.datetime "updated_at", null: false
@@ -421,6 +421,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_052330) do
     t.uuid "recipient_id", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.timestamptz "world_last_visited_at"
     t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
     t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
     t.index ["world_id", "recipient_id"], name: "index_world_keys_uniqueness", unique: true

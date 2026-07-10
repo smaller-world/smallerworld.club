@@ -6,14 +6,14 @@
 #
 # Table name: users
 #
-#  id                            :uuid             not null, primary key
-#  has_v1_account                :boolean          default(FALSE), not null
-#  name                          :string           not null
-#  notifications_last_cleared_at :timestamptz
-#  phone_number                  :string           not null
-#  time_zone_name                :string           not null
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
+#  id                  :uuid             not null, primary key
+#  app_last_visited_at :timestamptz
+#  has_v1_account      :boolean          default(FALSE), not null
+#  name                :string           not null
+#  phone_number        :string           not null
+#  time_zone_name      :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 # Indexes
 #
@@ -147,39 +147,34 @@ class User < ApplicationRecord
       Notification::PrivateCollectionProxy,
     ))
   end
-  def notifications_received_since_last_cleared
-    if (last_cleared_at = notifications_last_cleared_at)
-      received_notifications.where("created_at > ?", last_cleared_at)
+  def notifications_received_since_app_last_visited
+    if (visited_at = app_last_visited_at)
+      received_notifications.where("created_at > ?", visited_at)
     else
       received_notifications
     end
   end
 
   sig { returns(T::Boolean) }
-  def clear_notifications
-    update(notifications_last_cleared_at: Time.current)
+  def has_pending_notifications?
+    notifications_received_since_app_last_visited.any?
   end
 
-  sig { returns(T::Boolean) }
-  def has_uncleared_notifications?
-    notifications_received_since_last_cleared.any?
-  end
+  # sig { void }
+  # def send_badge_count_notifications
+  #   notification = DevicePushNotification.new(
+  #     badge: notifications_received_since_app_last_visited.count,
+  #     high_priority: false,
+  #   )
+  #   devices.find_each do |device|
+  #     device.push(notification)
+  #   end
+  # end
 
-  sig { void }
-  def send_badge_count_notifications
-    notification = DevicePushNotification.new(
-      badge: notifications_received_since_last_cleared.count,
-      high_priority: false,
-    )
-    devices.find_each do |device|
-      device.push(notification)
-    end
-  end
-
-  sig { returns(T.any(SendUserBadgeCountNotificationsJob, FalseClass)) }
-  def send_badge_count_notifications_later
-    SendUserBadgeCountNotificationsJob.perform_later(self)
-  end
+  # sig { returns(T.any(SendUserBadgeCountNotificationsJob, FalseClass)) }
+  # def send_badge_count_notifications_later
+  #   SendUserBadgeCountNotificationsJob.perform_later(self)
+  # end
 
   # == Methods ==
 
@@ -211,6 +206,11 @@ class User < ApplicationRecord
     else
       raise ArgumentError, "Unsupported platform: #{platform.inspect}"
     end
+  end
+
+  sig { returns(T::Boolean) }
+  def record_app_visit
+    update(app_last_visited_at: Time.current)
   end
 
   sig { returns(T.nilable(V1::User)) }

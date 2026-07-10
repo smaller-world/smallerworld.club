@@ -17,6 +17,16 @@ module Components
   end
   def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes, &content); end
 
+  # workspace://app/components/account_app_visit_form.rb:4
+  sig do
+    params(
+      current_user: ::User,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::AccountAppVisitForm).void)
+    ).void
+  end
+  def AccountAppVisitForm(current_user:, **attributes, &content); end
+
   # workspace://app/components/account_form.rb:4
   sig do
     params(
@@ -165,16 +175,6 @@ module Components
     ).void
   end
   def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
-
-  # workspace://app/components/clear_account_notification_count_form.rb:4
-  sig do
-    params(
-      current_user: ::User,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
-    ).void
-  end
-  def ClearAccountNotificationCountForm(current_user:, **attributes, &content); end
 
   # workspace://app/components/clearable_file_input.rb:4
   sig do
@@ -739,6 +739,16 @@ module Components
   end
   def WorldKeyGrantIconButton(world:, **attributes, &content); end
 
+  # workspace://app/components/world_key_world_visit_form.rb:4
+  sig do
+    params(
+      world_key: ::WorldKey,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::WorldKeyWorldVisitForm).void)
+    ).void
+  end
+  def WorldKeyWorldVisitForm(world_key:, **attributes, &content); end
+
   # workspace://app/components/world_next_page_control.rb:4
   sig do
     params(
@@ -795,6 +805,16 @@ module Components
       ).void
     end
     def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes, &content); end
+
+    # workspace://app/components/account_app_visit_form.rb:4
+    sig do
+      params(
+        current_user: ::User,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::AccountAppVisitForm).void)
+      ).void
+    end
+    def AccountAppVisitForm(current_user:, **attributes, &content); end
 
     # workspace://app/components/account_form.rb:4
     sig do
@@ -944,16 +964,6 @@ module Components
       ).void
     end
     def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
-
-    # workspace://app/components/clear_account_notification_count_form.rb:4
-    sig do
-      params(
-        current_user: ::User,
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::ClearAccountNotificationCountForm).void)
-      ).void
-    end
-    def ClearAccountNotificationCountForm(current_user:, **attributes, &content); end
 
     # workspace://app/components/clearable_file_input.rb:4
     sig do
@@ -1517,6 +1527,16 @@ module Components
       ).void
     end
     def WorldKeyGrantIconButton(world:, **attributes, &content); end
+
+    # workspace://app/components/world_key_world_visit_form.rb:4
+    sig do
+      params(
+        world_key: ::WorldKey,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::WorldKeyWorldVisitForm).void)
+      ).void
+    end
+    def WorldKeyWorldVisitForm(world_key:, **attributes, &content); end
 
     # workspace://app/components/world_next_page_control.rb:4
     sig do

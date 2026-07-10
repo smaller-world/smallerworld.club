@@ -51,7 +51,7 @@ class Components::AppLayout < Components::Base
 
   sig { override.params(content: T.nilable(T.proc.void)).void }
   def view_template(&content)
-    body = capture(&content)
+    content_html = capture(&content)
 
     doctype
 
@@ -119,7 +119,7 @@ class Components::AppLayout < Components::Base
           Components::AppHeader()
         end
         flash_section
-        raw(body) # rubocop:disable Rails/OutputSafety
+        raw(content_html) # rubocop:disable Rails/OutputSafety
         confetti_canvas
         logs_container
         toasts_container
@@ -127,9 +127,6 @@ class Components::AppLayout < Components::Base
         if (current_user = @current_user)
           # Auto-update user time zone
           Components::AccountTimeZoneForm(current_user:)
-
-          # Auto-clear notification count
-          Components::ClearAccountNotificationCountForm(current_user:)
         end
         if (current_device = @current_device)
           # Auto-register device push token
