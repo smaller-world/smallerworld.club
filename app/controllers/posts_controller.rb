@@ -14,12 +14,8 @@ class PostsController < ApplicationController
     end
     posts_scope = begin
       scope = world.posts
-      scope = if post_type
-        scope.where(type: post_type)
-      elsif world.owner! == current_user
-        scope
-      else
-        scope.loud
+      if post_type
+        scope.where!(type: post_type)
       end
       authorized_scope(scope)
         .reverse_chronological
@@ -40,6 +36,7 @@ class PostsController < ApplicationController
         format.html do
           created_post_id = params[:created_post_id]
           render Views::Posts::Index.new(
+            current_user:,
             world:,
             post_type:,
             posts:,

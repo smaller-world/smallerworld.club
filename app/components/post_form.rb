@@ -251,7 +251,7 @@ class Components::PostForm < Components::Base
                     if choice.item == :loud
                       "send notifications"
                     else
-                      "no notifs + hide in tab"
+                      "no notifs"
                     end
                   end
                 end

@@ -2,13 +2,13 @@
   .post-card {
     @apply overflow-visible shadow-sm;
 
-    &[data-quiet] {
+    /*&[data-quiet] {
       @apply border border-dashed border-foreground/10 bg-background shadow-none ring-0;
 
       [data-slot="post-card-body"][data-collapsed="true"]::after {
         @apply from-background;
       }
-    }
+    }*/
 
     [data-slot="card-header"] {
       @apply gap-1.5;

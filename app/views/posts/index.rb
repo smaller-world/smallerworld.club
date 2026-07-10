@@ -6,6 +6,7 @@ class Views::Posts::Index < Views::Base
 
   sig do
     params(
+      current_user: User,
       world: World,
       post_type: T.nilable(PostType),
       posts: T::Enumerable[Post],
@@ -15,6 +16,7 @@ class Views::Posts::Index < Views::Base
     ).void
   end
   def initialize(
+    current_user:,
     world:,
     post_type:,
     posts:,
@@ -23,6 +25,7 @@ class Views::Posts::Index < Views::Base
     created_post_id:
   )
     super()
+    @current_user = current_user
     @world = world
     @post_type = post_type
     @posts = posts
@@ -39,6 +42,7 @@ class Views::Posts::Index < Views::Base
       div(class: "space-y-4") do
         ul(id: "post_items", class: "space-y-4 empty:hidden") do
           Components::WorldPostItems(
+            current_user: @current_user,
             posts: @posts,
             replied_post_ids: @replied_post_ids,
             created_post_id: @created_post_id,

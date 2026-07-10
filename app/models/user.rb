@@ -155,10 +155,10 @@ class User < ApplicationRecord
     end
   end
 
-  sig { returns(T::Boolean) }
-  def has_pending_notifications?
-    notifications_received_since_app_last_visited.any?
-  end
+  # sig { returns(T::Boolean) }
+  # def has_pending_notifications?
+  #   notifications_received_since_app_last_visited.any?
+  # end
 
   # sig { void }
   # def send_badge_count_notifications
@@ -208,9 +208,9 @@ class User < ApplicationRecord
     end
   end
 
-  sig { returns(T::Boolean) }
-  def record_app_visit
-    update(app_last_visited_at: Time.current)
+  sig { returns(TrueClass) }
+  def record_app_visit!
+    update!(app_last_visited_at: Time.current)
   end
 
   sig { returns(T.nilable(V1::User)) }

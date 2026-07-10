@@ -13,16 +13,15 @@ class AccountAppVisitsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         current_user = Current.user!
-        if current_user.record_app_visit
+        begin
+          current_user.record_app_visit!
           render turbo_stream: append_log_message(
-            "Tacked app visit for user: #{current_user.id}",
+            "Recorded app visit for user: #{current_user.id}",
             level: :info,
           )
-        else
-          message = "Failed to track app visit for user: #{current_user.id}"
-          if (error = current_user.errors.full_messages.first)
-            message += " (#{error})"
-          end
+        rescue => error
+          message =
+            "Failed to track app visit for user: #{current_user.id} (#{error.message})"
           Sentry.capture_message(message)
           render(
             turbo_stream: append_log_message(message, level: :error),

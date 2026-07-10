@@ -8,9 +8,4 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get home_path
     assert_redirected_to new_session_path
   end
-
-  test "redirects to the installation instructions when the app is required" do
-    get home_path, params: { require_app: "1" }
-    assert_redirected_to installation_instructions_path
-  end
 end

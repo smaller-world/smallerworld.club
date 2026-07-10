@@ -485,6 +485,7 @@ module Components
   # workspace://app/components/post_card.rb:4
   sig do
     params(
+      current_user: ::User,
       post: ::Post,
       replied: T::Boolean,
       async_reactions: T::Boolean,
@@ -494,7 +495,7 @@ module Components
       content: T.nilable(T.proc.params(instance: Components::PostCard).void)
     ).void
   end
-  def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
+  def PostCard(current_user:, post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig do
@@ -764,13 +765,14 @@ module Components
   # workspace://app/components/world_post_items.rb:4
   sig do
     params(
+      current_user: ::User,
       posts: T::Enumerable[::Post],
       replied_post_ids: T.nilable(T::Set[::String]),
       created_post_id: T.nilable(::String),
       content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
     ).void
   end
-  def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
+  def WorldPostItems(current_user:, posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
 
   # workspace://app/components/world_post_type_form.rb:4
   sig do
@@ -1274,6 +1276,7 @@ module Components
     # workspace://app/components/post_card.rb:4
     sig do
       params(
+        current_user: ::User,
         post: ::Post,
         replied: T::Boolean,
         async_reactions: T::Boolean,
@@ -1283,7 +1286,7 @@ module Components
         content: T.nilable(T.proc.params(instance: Components::PostCard).void)
       ).void
     end
-    def PostCard(post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
+    def PostCard(current_user:, post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig do
@@ -1553,13 +1556,14 @@ module Components
     # workspace://app/components/world_post_items.rb:4
     sig do
       params(
+        current_user: ::User,
         posts: T::Enumerable[::Post],
         replied_post_ids: T.nilable(T::Set[::String]),
         created_post_id: T.nilable(::String),
         content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
       ).void
     end
-    def WorldPostItems(posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
+    def WorldPostItems(current_user:, posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
 
     # workspace://app/components/world_post_type_form.rb:4
     sig do

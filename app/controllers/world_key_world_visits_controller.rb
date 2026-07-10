@@ -10,15 +10,15 @@ class WorldKeyWorldVisitsController < ApplicationController
       format.html do
         world_key = find_world_key
         authorize!(world_key, to: :track_world_visit?)
-        if world_key.record_world_visit
+        begin
+          world_key.record_world_visit!
           render turbo_stream: append_log_message(
-            "Tracked world visit for world key: #{world_key.id}",
+            "Recorded world visit for world key: #{world_key.id}",
           )
-        else
-          message = "Failed to track world visit for world key: #{world_key.id}"
-          if (error = world_key.errors.full_messages.first)
-            message += " (#{error})"
-          end
+        rescue => error
+          message =
+            "Failed to track world visit for world key: #{world_key.id} " \
+              "(#{error.message})"
           Sentry.capture_message(message)
           render(
             turbo_stream: append_log_message(message, level: :error),

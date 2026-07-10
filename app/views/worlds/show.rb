@@ -34,7 +34,7 @@ class Views::Worlds::Show < Views::Base
 
     @owner = T.let(@world.owner!, User)
     @world_key = T.let(
-      @world.keys.find_by(recipient: @current_user),
+      world.keys.find_by(recipient: current_user),
       T.nilable(WorldKey),
     )
   end
@@ -84,20 +84,6 @@ class Views::Worlds::Show < Views::Base
             )
             turbo_stream_from(@world, :v1_posts_import, hidden: true)
           end
-          # else
-          #   turbo_frame_tag(
-          #     :unclaimed_world_card_notice,
-          #     target: "_top",
-          #     class: "empty:hidden has-[>_form]:hidden",
-          #   ) do
-          #     if (cards = @unclaimed_world_cards)
-          #       unclaimed_world_cards(cards)
-          #     else
-          #       Components::DevicePassesForm(url: @world, data: {
-          #         turbo_frame: :unclaimed_world_card_notice,
-          #       })
-          #     end
-          #   end
         end
 
         div(class: "flex flex-col gap-6") do
@@ -172,9 +158,10 @@ class Views::Worlds::Show < Views::Base
         end
       end
 
-      Components::AccountAppVisitForm(current_user: @current_user)
       if @world_key
         Components::WorldKeyWorldVisitForm(world_key: @world_key)
+      else
+        Components::AccountAppVisitForm(current_user: @current_user)
       end
     end
   end

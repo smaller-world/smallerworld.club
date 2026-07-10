@@ -6,13 +6,15 @@ class Components::WorldPostItems < Components::Base
 
   sig do
     params(
+      current_user: User,
       posts: T::Enumerable[Post],
       replied_post_ids: T.nilable(T::Set[String]),
       created_post_id: T.nilable(String),
     ).void
   end
-  def initialize(posts:, replied_post_ids:, created_post_id: nil)
+  def initialize(current_user:, posts:, replied_post_ids:, created_post_id: nil)
     super()
+    @current_user = current_user
     @posts = posts
     @replied_post_ids = replied_post_ids
     @created_post_id = created_post_id
@@ -25,6 +27,7 @@ class Components::WorldPostItems < Components::Base
     @posts.each do |post|
       li(id: dom_id(post, :item)) do
         Components::PostCard(
+          current_user: @current_user,
           post:,
           replied: @replied_post_ids&.include?(post.id) || false,
           async_reactions: true,

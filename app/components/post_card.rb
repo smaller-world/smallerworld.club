@@ -6,6 +6,7 @@ class Components::PostCard < Components::Base
 
   sig do
     params(
+      current_user: User,
       post: Post,
       replied: T::Boolean,
       async_reactions: T::Boolean,
@@ -15,6 +16,7 @@ class Components::PostCard < Components::Base
     ).void
   end
   def initialize(
+    current_user:,
     post:,
     replied:,
     async_reactions: false,
@@ -23,6 +25,7 @@ class Components::PostCard < Components::Base
     **attributes
   )
     super(**attributes)
+    @current_user = current_user
     @post = post
     @replied = replied
     @async_reactions = async_reactions
@@ -39,9 +42,9 @@ class Components::PostCard < Components::Base
       Components::Card(size: :sm, **mix(
         {
           class: "post-card",
-          data: {
-            quiet: @post.quiet?,
-          },
+          # data: {
+          #   quiet: @post.quiet?,
+          # },
         },
         @attributes,
       )) do |card|
@@ -119,7 +122,7 @@ class Components::PostCard < Components::Base
         end
 
         card.footer do
-          if allowed_to?(:reply?, @post)
+          if @current_user != @post.world_owner!
             Components::ReplyInitiationForm(
               reply_initiation: @post.reply_initiations.build,
               replied: @replied,

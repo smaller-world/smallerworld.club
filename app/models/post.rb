@@ -57,9 +57,6 @@ class Post < ApplicationRecord
 
   encrypts :title, :plain_body
 
-  sig { returns(T::Boolean) }
-  def loud? = !quiet?
-
   sig { returns(T.nilable(String)) }
   def fun_title
     [ emoji, title ].compact.presence&.join(" ")
@@ -137,8 +134,8 @@ class Post < ApplicationRecord
 
   # == Scopes ==
 
-  scope :loud, -> { where(quiet: false) }
-  scope :quiet, -> { where(quiet: true) }
+  # scope :loud, -> { where(quiet: false) }
+  # scope :quiet, -> { where(quiet: true) }
   scope :visible_to, ->(user) {
     owned = PostType.where(world: World.where(owner: user))
     granted = PostTypeGrant
@@ -269,7 +266,7 @@ class Post < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def should_create_notifications?
-    !v1_attributes? && loud?
+    !v1_attributes? && !quiet?
   end
 
   sig { returns(T::Boolean) }

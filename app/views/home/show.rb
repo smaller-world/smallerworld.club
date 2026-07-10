@@ -14,16 +14,17 @@ class Views::Home::Show < Views::Base
         .with_attached_icon,
       World::PrivateAssociationRelation,
     )
-    @accessible_worlds = T.let(
-      @current_user.accessible_worlds
-        .order_by_latest_post_visible_to(@current_user)
-        .with_attached_icon,
-      World::PrivateAssociationRelation,
+    @world_keys = T.let(
+      @current_user
+        .world_keys
+        .order_by_latest_visible_post
+        .with_world_and_attached_icon,
+      WorldKey::PrivateAssociationRelation,
     )
     @pending_world_invitations = T.let(
       @current_user.world_invitations
         .pending_acceptance
-        .with_world_icon,
+        .with_world_and_attached_icon,
       WorldInvitation::PrivateRelation,
     )
   end
@@ -118,7 +119,9 @@ class Views::Home::Show < Views::Base
   sig { void }
   def accessible_worlds
     ul(class: "flex gap-4 flex-wrap justify-center") do
-      @accessible_worlds.each do |world|
+      @world_keys.each do |world_key|
+        world = world_key.world!
+        badge_count = world_key.new_visible_world_posts_since_last_visited.count
         li do
           link_to(world, class: "world-icon-container hover:underline") do
             div(class: "relative") do
@@ -127,6 +130,11 @@ class Views::Home::Show < Views::Base
                 class: "world-icon",
                 data: { world_icon_size: "sm" },
               )
+              if badge_count > 0
+                Components::Badge(class: "absolute -top-1.5 -right-1.5 px-1 min-w-5") do
+                  badge_count
+                end
+              end
             end
             span(class: "world-icon-label text-xs") do
               world.name

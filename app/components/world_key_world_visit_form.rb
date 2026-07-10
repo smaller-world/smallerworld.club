@@ -29,6 +29,7 @@ class Components::WorldKeyWorldVisitForm < Components::Base
         **normalize_attributes(@attributes),
       },
     ) do
+      # NOTE: Keep block open unless you want rendering errors.
     end
   end
 end

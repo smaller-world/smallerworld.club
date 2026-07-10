@@ -7,16 +7,9 @@ class HomeController < ApplicationController
   allow_unauthenticated_access
   skip_verify_authorized
 
-  # == Filters ==
-
-  before_action :redirect_to_installation_instructions,
-    only: :show,
-    if: :app_required?,
-    unless: :hotwire_native_app?
-
   # == Actions ==
 
-  # GET /home?require_app=1&pass_serial_numbers[]=...
+  # GET /home[?require_app=1]
   def show
     respond_to do |format|
       format.html do
@@ -29,14 +22,14 @@ class HomeController < ApplicationController
     end
   end
 
-  private
+  # private
 
   # == Helpers ==
 
-  sig { returns(T::Boolean) }
-  def app_required?
-    cast_boolean(params[:require_app])
-  end
+  # sig { returns(T::Boolean) }
+  # def app_required?
+  #   cast_boolean(params[:require_app])
+  # end
 
   # TODO: Auto-link cards with existing keys?
   # sig do
@@ -50,13 +43,4 @@ class HomeController < ApplicationController
   #   cards.find_each do |card|
   #   end
   # end
-
-  # == Callbacks ==
-
-  sig { void }
-  def redirect_to_installation_instructions
-    if params[:require_app].present?
-      redirect_to(installation_instructions_path)
-    end
-  end
 end

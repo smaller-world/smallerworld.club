@@ -517,6 +517,12 @@ class WorldKey
     def world_owner=(value); end
 
     sig { returns(T::Array[T.untyped]) }
+    def world_post_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_post_ids=(ids); end
+
+    sig { returns(T::Array[T.untyped]) }
     def world_post_type_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
@@ -529,6 +535,14 @@ class WorldKey
 
     sig { params(value: T::Enumerable[::PostType]).void }
     def world_post_types=(value); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :world_posts, through: :world_post_types`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::Post::PrivateCollectionProxy) }
+    def world_posts; end
+
+    sig { params(value: T::Enumerable[::Post]).void }
+    def world_posts=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
@@ -629,6 +643,9 @@ class WorldKey
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def order_by_latest_visible_post(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -684,6 +701,9 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_world_and_attached_icon(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def without(*args, &blk); end
@@ -1242,6 +1262,9 @@ class WorldKey
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def order_by_latest_visible_post(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1297,6 +1320,9 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_world_and_attached_icon(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def without(*args, &blk); end

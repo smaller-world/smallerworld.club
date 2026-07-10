@@ -37,6 +37,7 @@ class WorldKey < ApplicationRecord
   has_many :world_invitations, through: :world, source: :invitations
   has_one :world_owner, through: :world, source: :owner
   has_many :world_post_types, through: :world, source: :post_types
+  has_many :world_posts, through: :world_post_types, source: :posts
 
   has_many :post_type_grants, dependent: :destroy
   has_many :granted_post_types, through: :post_type_grants, source: :post_type
@@ -78,8 +79,30 @@ class WorldKey < ApplicationRecord
   after_initialize :set_invitation, unless: :invitation_id?
   after_create_commit :create_notification_for_world_owner!
 
-  # after_destroy :discard_recipient_world_cards!,
-  #   unless: :recipient_has_other_keys?
+  # == Scopes ==
+
+  scope :order_by_latest_visible_post, -> {
+    latest_post_at = Arel::Nodes::Grouping.new(
+      Post
+        .joins(:type)
+        .where("post_types.world_id = world_id")
+        .where(
+          PostTypeGrant
+            .where("post_type_grants.world_key_id = world_keys.id")
+            .where("post_type_grants.post_type_id = posts.type_id")
+            .arel
+            .exists,
+        )
+        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
+        .select("MAX(posts.created_at)")
+        .arel,
+    )
+    select("*", latest_post_at.as("latest_post_at"))
+      .order("latest_post_at DESC NULLS LAST")
+  }
+  scope :with_world_and_attached_icon, -> {
+    includes(world: { icon_attachment: :blob })
+  }
 
   # == Notifications ==
 
@@ -114,8 +137,21 @@ class WorldKey < ApplicationRecord
   # == Methods ==
 
   sig { returns(T::Boolean) }
-  def record_world_visit
-    update(world_last_visited_at: Time.current)
+  def record_world_visit!
+    transaction do
+      update!(world_last_visited_at: Time.current)
+      recipient!.record_app_visit!
+    end
+  end
+
+  sig { returns(Post::PrivateAssociationRelation) }
+  def new_visible_world_posts_since_last_visited
+    recipient = recipient!
+    scope = world_posts
+    if (last_visited_at = world_last_visited_at)
+      scope = scope.where("posts.created_at > ?", last_visited_at)
+    end
+    scope.visible_to(recipient)
   end
 
   private
