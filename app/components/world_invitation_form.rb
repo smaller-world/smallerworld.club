@@ -11,7 +11,7 @@ class Components::WorldInvitationForm < Components::Base
       attributes: T.untyped,
     ).void
   end
-  def initialize(invitation:, previous_url:, **attributes)
+  def initialize(invitation:, previous_url: nil, **attributes)
     super(**attributes)
     @invitation = invitation
     @previous_url = previous_url

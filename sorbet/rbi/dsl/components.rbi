@@ -704,11 +704,12 @@ module Components
   sig do
     params(
       invitation: ::WorldInvitation,
+      previous_url: T.nilable(::String),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
     ).void
   end
-  def WorldInvitationForm(invitation:, **attributes, &content); end
+  def WorldInvitationForm(invitation:, previous_url: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/world_key_form.rb:4
   sig do
@@ -1495,11 +1496,12 @@ module Components
     sig do
       params(
         invitation: ::WorldInvitation,
+        previous_url: T.nilable(::String),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::WorldInvitationForm).void)
       ).void
     end
-    def WorldInvitationForm(invitation:, **attributes, &content); end
+    def WorldInvitationForm(invitation:, previous_url: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/world_key_form.rb:4
     sig do
