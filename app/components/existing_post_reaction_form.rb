@@ -40,16 +40,13 @@ class Components::ExistingPostReactionForm < Components::Base
       @reaction,
       action: @reaction.new_record? ? [ @post, @reaction ] : @reaction,
       method: @reaction.new_record? ? :post : :delete,
+      vibrate_on_submit: @reaction.new_record?,
       **mix(
         {
           data: {
-            controller: token_list(
-              "haptic-bridge",
-              "confetti" => !@current_user_reaction,
-            ),
+            controller: "confetti",
             action: token_list(
-              "turbo:submit-end->confetti#launch",
-              "turbo:submit-end->haptic-bridge#vibrate" => !@current_user_reaction,
+              "turbo:submit-end->confetti#launch" => @reaction.new_record?,
             ),
             confetti_emoji_value: @emoji,
             confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
