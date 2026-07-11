@@ -143,10 +143,18 @@ class PostsController < ApplicationController
   def favorite
     respond_to do |format|
       format.turbo_stream do
+        current_user = Current.user!
         post = find_post
         authorize!(post)
         if post.favorite
-          render turbo_stream: []
+          render turbo_stream: turbo_stream.replace(
+            helpers.dom_id(post, :card),
+            renderable: Components::PostCard.new(
+              current_user:,
+              post:,
+              replied: false,
+            ),
+          )
         else
           message = "failed to favorite post"
           description = post.errors.full_messages.first
@@ -163,10 +171,18 @@ class PostsController < ApplicationController
   def unfavorite
     respond_to do |format|
       format.turbo_stream do
+        current_user = Current.user!
         post = find_post
         authorize!(post)
         if post.unfavorite
-          render turbo_stream: []
+          render turbo_stream: turbo_stream.replace(
+            helpers.dom_id(post, :card),
+            renderable: Components::PostCard.new(
+              current_user:,
+              post:,
+              replied: false,
+            ),
+          )
         else
           message = "failed to unfavorite post"
           description = post.errors.full_messages.first
