@@ -46,6 +46,9 @@ module GeneratedPathHelpersModule
   def edit_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def favorite_post_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def fly_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -236,6 +239,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def ui_docs_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def unfavorite_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end

@@ -107,6 +107,10 @@ Rails.application.routes.draw do
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do
+    member do
+      post :favorite
+      post :unfavorite
+    end
     resources :reactions, only: [ :index, :create ]
     resources :reply_initiations, only: :create
   end

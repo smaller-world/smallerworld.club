@@ -20,7 +20,8 @@ class Components::WorldKeyWorldVisitForm < Components::Base
     form_with(
       url: world_key_world_visits_path(@world_key),
       data: {
-        controller: "submit",
+        turbo: false,
+        controller: "async-submission submit",
         submit_require_page_visible_value: true,
         action: "turbo:load@document->submit#request:once",
       },

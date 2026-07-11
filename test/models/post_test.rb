@@ -8,6 +8,7 @@
 #
 #  id                            :uuid             not null, primary key
 #  emoji                         :string
+#  favorited_at                  :timestamptz
 #  hidden_from_ids               :uuid             default([]), not null, is an Array
 #  ordered_images_attachment_ids :uuid             default([]), not null, is an Array
 #  plain_body                    :text             not null
@@ -20,6 +21,7 @@
 #
 # Indexes
 #
+#  index_posts_on_favorited_at            (favorited_at)
 #  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
 #  index_posts_on_quiet                   (quiet)
 #  index_posts_on_type_id_and_created_at  (type_id,created_at)

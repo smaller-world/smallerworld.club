@@ -218,16 +218,6 @@ module Components
   end
   def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/device_push_token_form.rb:4
-  sig do
-    params(
-      current_device: ::Device,
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
-    ).void
-  end
-  def DevicePushTokenForm(current_device:, **attributes, &content); end
-
   # workspace://app/components/dialog.rb:4
   sig do
     params(
@@ -1009,16 +999,6 @@ module Components
       ).void
     end
     def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
-
-    # workspace://app/components/device_push_token_form.rb:4
-    sig do
-      params(
-        current_device: ::Device,
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::DevicePushTokenForm).void)
-      ).void
-    end
-    def DevicePushTokenForm(current_device:, **attributes, &content); end
 
     # workspace://app/components/dialog.rb:4
     sig do

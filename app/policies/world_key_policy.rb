@@ -26,7 +26,7 @@ class WorldKeyPolicy < ApplicationPolicy
   end
 
   # Key recipients can track visits to the key's associated world
-  alias_rule :track_world_visit?, to: :show?
+  alias_rule :record_world_visit?, to: :show?
 
   # == Scopes ==
 

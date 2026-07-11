@@ -2,11 +2,6 @@
 # frozen_string_literal: true
 
 class WorldInvitationsController < ApplicationController
-  # == Configuration ==
-
-  # allow_unauthenticated_access only: [ :create ]
-  # skip_verify_authorized only: [ :create ]
-
   # == Actions ==
 
   # GET /invitations/:id
@@ -117,7 +112,7 @@ class WorldInvitationsController < ApplicationController
     scope.find(params.fetch(:id))
   end
 
-  sig { params(scope: T.untyped).returns(World) }
+  sig { params(scope: World::PrivateRelation).returns(World) }
   def find_world(scope: World.all)
     scope.friendly.find(params.fetch(:world_id))
   end

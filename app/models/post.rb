@@ -8,6 +8,7 @@
 #
 #  id                            :uuid             not null, primary key
 #  emoji                         :string
+#  favorited_at                  :timestamptz
 #  hidden_from_ids               :uuid             default([]), not null, is an Array
 #  ordered_images_attachment_ids :uuid             default([]), not null, is an Array
 #  plain_body                    :text             not null
@@ -20,6 +21,7 @@
 #
 # Indexes
 #
+#  index_posts_on_favorited_at            (favorited_at)
 #  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
 #  index_posts_on_quiet                   (quiet)
 #  index_posts_on_type_id_and_created_at  (type_id,created_at)
@@ -56,6 +58,9 @@ class Post < ApplicationRecord
   end
 
   encrypts :title, :plain_body
+
+  sig { returns(T::Boolean) }
+  def favorited? = favorited_at?
 
   sig { returns(T.nilable(String)) }
   def fun_title
@@ -148,6 +153,7 @@ class Post < ApplicationRecord
       .or(where(type: received))
       .where.not(":user_id = ANY(posts.hidden_from_ids)", user_id: user.id)
   }
+  scope :favorited, -> { where.not(favorited_at: nil) }
 
   # scope :with_type, -> { includes(:type) }
   # scope :with_world_owner, -> { includes(:world_owner) }
@@ -238,6 +244,18 @@ class Post < ApplicationRecord
   sig { returns(T::Array[ActiveStorage::Blob]) }
   def ordered_images_blobs
     ordered_images_attachments.filter_map(&:blob)
+  end
+
+  # == Favoriting ==
+
+  sig { returns(T::Boolean) }
+  def favorite
+    update(favorited_at: Time.current)
+  end
+
+  sig { returns(T::Boolean) }
+  def unfavorite
+    update(favorited_at: nil)
   end
 
   # == Visibility ==

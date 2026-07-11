@@ -13,13 +13,16 @@ module ToastStreaming
   # == Methods ==
 
   sig do
-    params(message: String, type: T.nilable(Symbol))
-      .returns(ActiveSupport::SafeBuffer)
+    params(
+      message: String,
+      type: T.nilable(Symbol),
+      description: T.nilable(String),
+    ).returns(ActiveSupport::SafeBuffer)
   end
-  def append_toast(message, type: nil)
+  def append_toast(message, type: nil, description: nil)
     turbo_stream.append(
       "toasts",
-      renderable: Components::StreamedToast.new(message:, type:),
+      renderable: Components::StreamedToast.new(message:, type:, description:),
     )
   end
 end

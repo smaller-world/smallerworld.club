@@ -2,28 +2,22 @@
 # frozen_string_literal: true
 
 class WorldKeyWorldVisitsController < ApplicationController
+  include RenderJsonError
+
   # == Actions ==
 
   # POST /world_key/:world_key_id/world_visit
   def create
     respond_to do |format|
-      format.html do
+      format.json do
         world_key = find_world_key
-        authorize!(world_key, to: :track_world_visit?)
+        authorize!(world_key, to: :record_world_visit?)
         begin
           world_key.record_world_visit!
-          render turbo_stream: append_log_message(
-            "Recorded world visit for world key: #{world_key.id}",
-          )
+          render(json: { world_id: world_key.world_id })
         rescue => error
-          message =
-            "Failed to track world visit for world key: #{world_key.id} " \
-              "(#{error.message})"
-          Sentry.capture_message(message)
-          render(
-            turbo_stream: append_log_message(message, level: :error),
-            status: :unprocessable_content,
-          )
+          Sentry.capture_exception(error)
+          render_json_error(error)
         end
       end
     end

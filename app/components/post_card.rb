@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::PostCard < Components::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig do
@@ -75,13 +77,17 @@ class Components::PostCard < Components::Base
             end
 
             if allowed_to?(:manage?, @post)
-              button_link_to(
-                "edit",
-                [ :edit, @post ],
-                variant: :secondary,
-                size: :xs,
-                icon: "huge/pencil-edit-01",
-              )
+              div(class: "flex items-center gap-0.5") do
+                button_link_to(
+                  "edit",
+                  [ :edit, @post ],
+                  variant: :secondary,
+                  size: :xs,
+                  icon: "huge/pencil-edit-01",
+                )
+
+                favorite_button
+              end
             end
           end
           if (title = @post.title)
@@ -146,6 +152,24 @@ class Components::PostCard < Components::Base
   private
 
   # == Helpers ==
+
+  sig { void }
+  def favorite_button
+    action = @post.favorited? ? :unfavorite : :favorite
+    form_with(model: [ action, @post ], method: :post) do
+      Components::Button(
+        type: :submit,
+        variant: :ghost,
+        size: :icon_xs,
+        class: "post-card-favorite-button",
+        data: {
+          favorited: ("" if @post.favorited?),
+        },
+      ) do
+        Icon("huge/star")
+      end
+    end
+  end
 
   # sig { params(card: Components::Card).void }
   # def edit_menu(card:)

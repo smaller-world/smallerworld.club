@@ -14,12 +14,14 @@ class Components::StreamedToast < Components::Base
     params(
       message: String,
       type: T.nilable(Symbol),
+      description: T.nilable(String),
       attributes: T.untyped,
     ).void
   end
   def initialize(
     message:,
     type: nil,
+    description: nil,
     **attributes
   )
     if type && !type.in?(TYPES)
@@ -28,6 +30,7 @@ class Components::StreamedToast < Components::Base
 
     @message = message
     @type = type
+    @description = description
     super(**attributes)
   end
 
@@ -35,13 +38,16 @@ class Components::StreamedToast < Components::Base
 
   sig { override.void }
   def view_template
-    template(
-      data: {
-        turbo_temporary: true,
-        controller: "streamed-toast",
-        streamed_toast_type_value: @type,
+    template(**mix(
+      {
+        data: {
+          turbo_temporary: true,
+          controller: "streamed-toast",
+          streamed_toast_type_value: @type,
+        },
       },
-    ) do
+      @attributes,
+    )) do
       @message
     end
   end

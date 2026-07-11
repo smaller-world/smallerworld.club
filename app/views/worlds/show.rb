@@ -118,10 +118,9 @@ class Views::Worlds::Show < Views::Base
         end
       end
 
+      Components::AccountAppVisitForm(current_user: @current_user)
       if @world_key
         Components::WorldKeyWorldVisitForm(world_key: @world_key)
-      else
-        Components::AccountAppVisitForm(current_user: @current_user)
       end
     end
   end

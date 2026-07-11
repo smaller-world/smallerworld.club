@@ -21,7 +21,8 @@ class Components::AccountAppVisitForm < Components::Base
     form_with(
       url: account_app_visits_path,
       data: {
-        controller: "submit notification-badge-count-bridge",
+        turbo: false,
+        controller: "async-submission submit notification-badge-count-bridge",
         submit_require_page_visible_value: true,
         action: token_list(
           "turbo:submit-end->notification-badge-count-bridge#clear",

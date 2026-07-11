@@ -119,13 +119,61 @@ class PostsController < ApplicationController
         post = find_post
         authorize!(post)
         post_params = params.expect(
-          post: [ :type_id, :emoji, :title, :body, :quiet, images: [], recipient_ids: [] ],
+          post: [
+            :type_id,
+            :emoji,
+            :title,
+            :body,
+            :quiet,
+            images: [],
+            recipient_ids: [],
+          ],
         )
         if post.update(post_params)
           world = post.world!
           refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else
           render Views::Posts::Edit.new(post:), status: :unprocessable_content
+        end
+      end
+    end
+  end
+
+  # POST /posts/:id/favorite
+  def favorite
+    respond_to do |format|
+      format.turbo_stream do
+        post = find_post
+        authorize!(post)
+        if post.favorite
+          render turbo_stream: []
+        else
+          message = "failed to favorite post"
+          description = post.errors.full_messages.first
+          render(
+            turbo_stream: append_toast(message, description:),
+            status: :internal_server_error,
+          )
+        end
+      end
+    end
+  end
+
+  # POST /posts/:id/unfavorite
+  def unfavorite
+    respond_to do |format|
+      format.turbo_stream do
+        post = find_post
+        authorize!(post)
+        if post.unfavorite
+          render turbo_stream: []
+        else
+          message = "failed to unfavorite post"
+          description = post.errors.full_messages.first
+          render(
+            turbo_stream: append_toast(message, description:),
+            status: :internal_server_error,
+          )
         end
       end
     end

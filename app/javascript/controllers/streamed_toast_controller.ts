@@ -13,12 +13,14 @@ export default class StreamedToastController extends Typed(
 
   connect(): void {
     super.connect();
-    const { textContent } = this.element.content;
+    const { dataset, content } = this.element;
+    const { title } = dataset;
     this.dispatch("toast", {
       prefix: "",
       detail: {
-        message: textContent,
+        message: content.textContent,
         type: this.typeValue,
+        title,
       },
     });
   }

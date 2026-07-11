@@ -17,7 +17,7 @@ class PostCardsController < ApplicationController
           post = find_post(scope: Post.includes(:reactions))
           authorize!(post)
           replied = post.reply_initiations.exists?(replier: current_user)
-          render Views::PostCards::Show.new(post:, replied:)
+          render Views::PostCards::Show.new(current_user:, post:, replied:)
         end
       end
     end

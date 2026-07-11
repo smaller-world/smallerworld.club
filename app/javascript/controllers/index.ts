@@ -12,6 +12,7 @@ import {
 
 import { application } from "./application";
 import AsyncItemController from "./async_item_controller";
+import AsyncSubmissionController from "./async_submission_controller";
 import AutoclickController from "./autoclick_controller";
 import CheckboxProxyController from "./checkbox_proxy_controller";
 import ClearableFileInputController from "./clearable_file_input_controller";
@@ -108,6 +109,7 @@ application.register("checkbox-proxy", CheckboxProxyController);
 application.register("radio-group-item", RadioGroupItemController);
 application.register("radio-toggle", RadioToggleController);
 application.register("redirect-back-to-self", RedirectBackToSelfController);
+application.register("async-submission", AsyncSubmissionController);
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */

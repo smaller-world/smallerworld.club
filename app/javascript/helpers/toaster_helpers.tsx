@@ -2,7 +2,11 @@ import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { type Container, createRoot, type Root } from "react-dom/client";
 import { type ExternalToast, toast, Toaster } from "sonner";
 
-export type ToastEvent = CustomEvent<{ message: string; type: string }>;
+export type ToastEvent = CustomEvent<{
+  message: string;
+  type: string;
+  description: string | null;
+}>;
 
 export const createToasterRoot = (container: Container): Root => {
   const root = createRoot(container);
@@ -37,8 +41,8 @@ const ToastListener = () => {
     }
 
     const listener = (event: ToastEvent) => {
-      const { message, type } = event.detail;
-      const options: ExternalToast = {};
+      const { message, type, description } = event.detail;
+      const options: ExternalToast = { description };
       switch (type) {
         case "success":
           toast.success(message, options);

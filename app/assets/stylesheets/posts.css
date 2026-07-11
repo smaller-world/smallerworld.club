@@ -105,4 +105,12 @@
   .post-reactions {
     @apply flex flex-1 flex-wrap justify-end gap-1;
   }
+
+  .post-card-favorite-button {
+    &[data-favorited] {
+      > svg {
+        @apply fill-primary;
+      }
+    }
+  }
 }

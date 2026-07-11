@@ -138,10 +138,7 @@ class WorldKey < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def record_world_visit!
-    transaction do
-      update!(world_last_visited_at: Time.current)
-      recipient!.record_app_visit!
-    end
+    update!(world_last_visited_at: Time.current)
   end
 
   sig { returns(Post::PrivateAssociationRelation) }

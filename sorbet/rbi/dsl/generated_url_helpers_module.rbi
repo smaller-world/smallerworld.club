@@ -46,6 +46,9 @@ module GeneratedUrlHelpersModule
   def edit_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def favorite_post_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def fly_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -236,6 +239,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def ui_docs_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def unfavorite_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end
