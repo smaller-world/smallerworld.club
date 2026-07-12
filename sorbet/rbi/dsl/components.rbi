@@ -631,11 +631,12 @@ module Components
     params(
       message: ::String,
       type: T.nilable(::Symbol),
+      description: T.nilable(::String),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
     ).void
   end
-  def StreamedToast(message:, type: T.unsafe(nil), **attributes, &content); end
+  def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/textarea.rb:4
   sig do
@@ -770,11 +771,12 @@ module Components
     params(
       world: ::World,
       selected_post_type: T.nilable(::PostType),
+      showing_favorites: T::Boolean,
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
     ).void
   end
-  def WorldPostTypeForm(world:, selected_post_type:, **attributes, &content); end
+  def WorldPostTypeForm(world:, selected_post_type:, showing_favorites:, **attributes, &content); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig do
@@ -1413,11 +1415,12 @@ module Components
       params(
         message: ::String,
         type: T.nilable(::Symbol),
+        description: T.nilable(::String),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::StreamedToast).void)
       ).void
     end
-    def StreamedToast(message:, type: T.unsafe(nil), **attributes, &content); end
+    def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/textarea.rb:4
     sig do
@@ -1552,11 +1555,12 @@ module Components
       params(
         world: ::World,
         selected_post_type: T.nilable(::PostType),
+        showing_favorites: T::Boolean,
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
       ).void
     end
-    def WorldPostTypeForm(world:, selected_post_type:, **attributes, &content); end
+    def WorldPostTypeForm(world:, selected_post_type:, showing_favorites:, **attributes, &content); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig do

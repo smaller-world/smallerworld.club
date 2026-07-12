@@ -9,13 +9,17 @@ class PostsController < ApplicationController
     current_user = Current.user!
     world = find_world
     authorize!(world, to: :show?)
+    only_favorited = cast_boolean(params[:only_favorited])
     post_type = if (type_id = params[:type_id])
       world.post_types.find(type_id)
     end
     posts_scope = begin
       scope = world.posts
       if post_type
-        scope.where!(type: post_type)
+        scope = scope.where(type: post_type)
+      end
+      if only_favorited
+        scope = scope.favorited
       end
       authorized_scope(scope)
         .reverse_chronological

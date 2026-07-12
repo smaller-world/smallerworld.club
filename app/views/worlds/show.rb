@@ -12,6 +12,7 @@ class Views::Worlds::Show < Views::Base
       world: World,
       celebrate: T::Boolean,
       new_post_dialog_open: T::Boolean,
+      only_favorited: T::Boolean,
       selected_post_type: T.nilable(PostType),
       created_post_id: T.nilable(String),
     ).void
@@ -21,6 +22,7 @@ class Views::Worlds::Show < Views::Base
     world:,
     celebrate:,
     new_post_dialog_open:,
+    only_favorited:,
     selected_post_type:,
     created_post_id:
   )
@@ -29,6 +31,7 @@ class Views::Worlds::Show < Views::Base
     @world = world
     @celebrate = celebrate
     @new_post_dialog_open = new_post_dialog_open
+    @only_favorited = only_favorited
     @selected_post_type = selected_post_type
     @created_post_id = created_post_id
 
@@ -92,7 +95,11 @@ class Views::Worlds::Show < Views::Base
         end
 
         div(class: "flex flex-col gap-4") do
-          Components::WorldPostTypeForm(world: @world, selected_post_type: @selected_post_type)
+          Components::WorldPostTypeForm(
+            world: @world,
+            selected_post_type: @selected_post_type,
+            showing_favorites: @only_favorited,
+          )
 
           turbo_frame_tag(
             @world,
@@ -102,6 +109,7 @@ class Views::Worlds::Show < Views::Base
               :posts,
               type_id: @selected_post_type&.id,
               created_post_id: @created_post_id,
+              only_favorited: (true if @only_favorited),
             ],
             target: "_top",
             class: "world-posts-frame",

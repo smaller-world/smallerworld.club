@@ -5,11 +5,15 @@ class Components::Form
   class Label < Superform::Rails::Components::Label
     # == Component ==
 
-    sig { params(content: T.nilable(T.proc.returns(T.anything))).void }
+    sig do
+      params(content: T.nilable(
+        T.proc.params(field_label: Components::FieldLabel).returns(T.anything),
+      )).void
+    end
     def view_template(&content)
-      Components::FieldLabel(**attributes) do
+      Components::FieldLabel(**attributes) do |field_label|
         if block_given?
-          yield
+          yield(field_label)
         else
           plain(label_text)
         end

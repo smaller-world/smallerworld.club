@@ -9,17 +9,19 @@ class Components::Form
     sig do
       override.params(
         attributes: T.untyped,
-        content: T.nilable(T.proc.returns(T.anything)),
+        content: T.nilable(
+          T.proc.params(field_label: Components::FieldLabel).returns(T.anything),
+        ),
       ).returns(Label)
     end
     def label(**attributes, &content)
       Label.new(self, **attributes, &content)
     end
 
-    # sig { params(attributes: T.untyped).returns(Error) }
-    # def error(**attributes)
-    #   Error.new(self, **attributes)
-    # end
+    sig { params(attributes: T.untyped).returns(Error) }
+    def error(**attributes)
+      Error.new(self, **attributes)
+    end
 
     sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
     def error_tooltip_attributes

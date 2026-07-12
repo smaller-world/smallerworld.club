@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::WorldPostTypeForm < Components::Base
@@ -8,13 +8,15 @@ class Components::WorldPostTypeForm < Components::Base
     params(
       world: World,
       selected_post_type: T.nilable(PostType),
+      showing_favorites: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(world:, selected_post_type:, **attributes)
+  def initialize(world:, selected_post_type:, showing_favorites:, **attributes)
     super(**attributes)
     @world = world
     @selected_post_type = selected_post_type
+    @showing_favorites = showing_favorites
   end
 
   # == Component ==
@@ -25,25 +27,25 @@ class Components::WorldPostTypeForm < Components::Base
       @world,
       action: [ @world, :posts ],
       method: :get,
+      class: "flex-row items-start gap-2",
       data: {
         turbo_frame: dom_id(@world, :posts),
-        controller: "submit",
+        controller: "world-post-type-form",
       },
     ) do |form|
       form.Field(:type_id).radios(
         post_types,
         class: "flex justify-center gap-0.5 flex-wrap",
       ) do |choice|
-        choice.label(class: "world-post-type-choice-badge") do
+        choice.label(class: "world-post-type-choice-label") do
           Components::Field(
             orientation: :horizontal,
-            invalid: form.invalid?(:type_id),
             class: "badge font-normal",
             data: {
               variant: "ghost",
             },
           ) do
-            Icon(choice.item.icon, data: { icon: "inline-start" })
+            Icon(choice.item.icon, data: { icon: :inline_start })
             span do
               choice.item.label
             end
@@ -59,8 +61,29 @@ class Components::WorldPostTypeForm < Components::Base
               class: "visually-hidden",
               toggleable: true,
               data: {
-                controller: "world-post-type-input",
-                action: "world-post-type-input#updateSearchParams submit#request",
+                action: "world-post-type-form#updateSearchParamsAndSubmit",
+              },
+            )
+          end
+        end
+      end
+
+      if allowed_to?(:manage?, @world) && @world.posts.favorited.any?
+        form.label_for(:only_favorited, class: "world-only-favorited-label") do
+          Components::Field(
+            orientation: :horizontal,
+            class: "badge",
+            data: {
+              variant: "secondary",
+            },
+          ) do
+            Icon("huge/star")
+            form.Field(:only_favorited).checkbox(
+              checked: @showing_favorites,
+              class: "visually-hidden",
+              name: "only_favorited",
+              data: {
+                action: "world-post-type-form#updateSearchParamsAndSubmit",
               },
             )
           end
@@ -76,5 +99,14 @@ class Components::WorldPostTypeForm < Components::Base
   sig { returns(PostType::PrivateAssociationRelation) }
   def post_types
     authorized_scope(@world.post_types).chronological
+  end
+
+  sig { returns(String) }
+  def favorited_world_url
+    options = {}
+    unless @showing_favorites
+      options[:only_favorited] = true
+    end
+    world_url(@world, **options)
   end
 end

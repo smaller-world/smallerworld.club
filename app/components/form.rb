@@ -108,7 +108,7 @@ class Components::Form < Superform::Rails::Form
     ) do |row|
       unless label == false
         label_content = if label.is_a?(String)
-          proc { label }
+          ->(_field_label) { label }
         end
         render component.field.label(class: label_class, &label_content)
       end
@@ -131,9 +131,20 @@ class Components::Form < Superform::Rails::Form
     field(key).invalid?
   end
 
+  sig do
+    params(
+      key: Symbol,
+      attributes: T.untyped,
+      content: T.proc.params(field_label: Components::FieldLabel).returns(T.anything),
+    ).void
+  end
+  def label_for(key, **attributes, &content)
+    render field(key).label(**attributes, &content)
+  end
+
   sig { params(key: Symbol, attributes: T.untyped).void }
   def error_for(key, **attributes)
-    render Error.new(field(key), **attributes)
+    render field(key).error(**attributes)
   end
 
   sig { params(key: Symbol).returns(T.nilable(T::Hash[Symbol, T.untyped])) }
