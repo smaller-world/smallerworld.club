@@ -74,7 +74,7 @@ class Components::WorldPostTypeForm < Components::Base
             orientation: :horizontal,
             class: "badge",
             data: {
-              variant: "secondary",
+              variant: "ghost",
             },
           ) do
             Icon("huge/star")

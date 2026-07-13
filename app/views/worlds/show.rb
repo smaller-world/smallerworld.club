@@ -14,7 +14,6 @@ class Views::Worlds::Show < Views::Base
       new_post_dialog_open: T::Boolean,
       only_favorited: T::Boolean,
       selected_post_type: T.nilable(PostType),
-      created_post_id: T.nilable(String),
     ).void
   end
   def initialize(
@@ -23,8 +22,7 @@ class Views::Worlds::Show < Views::Base
     celebrate:,
     new_post_dialog_open:,
     only_favorited:,
-    selected_post_type:,
-    created_post_id:
+    selected_post_type:
   )
     super()
     @current_user = current_user
@@ -33,7 +31,6 @@ class Views::Worlds::Show < Views::Base
     @new_post_dialog_open = new_post_dialog_open
     @only_favorited = only_favorited
     @selected_post_type = selected_post_type
-    @created_post_id = created_post_id
 
     @owner = T.let(@world.owner!, User)
   end
@@ -102,18 +99,17 @@ class Views::Worlds::Show < Views::Base
           )
 
           turbo_frame_tag(
-            @world,
-            :posts,
+            dom_id(@world, :posts),
             src: [
               @world,
               :posts,
               type_id: @selected_post_type&.id,
-              created_post_id: @created_post_id,
               only_favorited: (true if @only_favorited),
             ],
             target: "_top",
             class: "world-posts-frame",
             data: {
+              controller: "frame-reload",
               turbo_permanent: (true if hotwire_native_app?),
             },
           ) do

@@ -4,11 +4,11 @@
 class Components::AsyncWorldPostItem < Components::Base
   # == Initialization ==
 
-  sig { params(post: Post, initially_hidden: T::Boolean, attributes: T.untyped).void }
-  def initialize(post:, initially_hidden: false, **attributes)
+  sig { params(post: Post, newly_created: T::Boolean, attributes: T.untyped).void }
+  def initialize(post:, newly_created: false, **attributes)
     super(**attributes)
     @post = post
-    @initially_hidden = initially_hidden
+    @newly_created = newly_created
   end
 
   # == Component ==
@@ -17,7 +17,7 @@ class Components::AsyncWorldPostItem < Components::Base
   def view_template
     li(id: dom_id(@post, :item), **mix(
       {
-        hidden: @initially_hidden,
+        hidden: @newly_created,
         data: {
           controller: "async-item",
         },
@@ -28,7 +28,7 @@ class Components::AsyncWorldPostItem < Components::Base
         @post,
         :card,
         target: "_top",
-        src: [ @post, :card ],
+        src: [ @post, :card, newly_created: (true if @newly_created) ],
         data: {
           action: token_list(
             "turbo:frame-load->async-item#show",

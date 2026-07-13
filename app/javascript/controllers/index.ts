@@ -25,6 +25,7 @@ import ConfettiController from "./confetti_controller";
 import ConnectionController from "./connection_controller";
 import CreateWorldFormController from "./create_world_form_controller";
 import CurrentTimeZoneInputController from "./current_time_zone_input_controller";
+import DevicePushTokenFormController from "./device_push_token_form_controller";
 import DialogController from "./dialog_controller";
 import DisableWhileSubmittingController from "./disable_while_submitting_controller";
 import DisabledController from "./disabled_controller";
@@ -54,7 +55,6 @@ import PostDraftInfoController from "./post_draft_info_controller";
 import PostFormTypeController from "./post_form_type_controller";
 import PostRecipientsSelectcontroller from "./post_recipients_select_controller";
 import PostTimestampController from "./post_timestamp_controller";
-import DevicePushTokenInputController from "./push_token_input_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
 import RedirectBackToSelfController from "./redirect_back_to_self_controller";
@@ -153,7 +153,7 @@ application.register("streamed-log-message", StreamedLogMessageController);
 application.register("streamed-toast", StreamedToastController);
 
 // == Specific components
-application.register("device-push-token-input", DevicePushTokenInputController);
+application.register("device-push-token-form", DevicePushTokenFormController);
 application.register("world-post-type-form", WorldPostTypeFormController);
 application.register("world-new-post-dialog", WorldNewPostDialogController);
 application.register("create-world-form", CreateWorldFormController);

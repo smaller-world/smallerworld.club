@@ -11,8 +11,8 @@ class Components::PostCard < Components::Base
       current_user: User,
       post: Post,
       replied: T::Boolean,
+      newly_created: T::Boolean,
       async_reactions: T::Boolean,
-      show_notification_prompt: T::Boolean,
       frame: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
@@ -21,17 +21,17 @@ class Components::PostCard < Components::Base
     current_user:,
     post:,
     replied:,
+    newly_created: false,
     async_reactions: false,
-    show_notification_prompt: false,
     frame: {},
     **attributes
   )
     super(**attributes)
     @current_user = current_user
     @post = post
+    @newly_created = newly_created
     @replied = replied
     @async_reactions = async_reactions
-    @show_notification_prompt = show_notification_prompt
     @frame_options = frame
     @post_type = T.let(@post.type!, PostType)
   end
@@ -41,15 +41,7 @@ class Components::PostCard < Components::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(@post, :card, target: "_top", **@frame_options) do
-      Components::Card(size: :sm, **mix(
-        {
-          class: "post-card",
-          # data: {
-          #   quiet: @post.quiet?,
-          # },
-        },
-        @attributes,
-      )) do |card|
+      Components::Card(size: :sm, **mix({ class: "post-card" }, @attributes)) do |card|
         card.header do
           card.description do
             div(class: "flex-1 flex items-center gap-x-2 gap-y-1 flex-wrap") do
@@ -133,8 +125,8 @@ class Components::PostCard < Components::Base
               reply_initiation: @post.reply_initiations.build,
               replied: @replied,
             )
-          elsif @show_notification_prompt
-            notification_prompt_button
+          elsif @newly_created && (current_device = @current_device)
+            notification_prompt_button(current_device:)
           end
 
           if @async_reactions
@@ -211,34 +203,49 @@ class Components::PostCard < Components::Base
   #   end
   # end
 
-  sig { void }
-  def notification_prompt_button
-    Components::Button(
-      class: "hidden",
+  sig { params(current_device: Device).void }
+  def notification_prompt_button(current_device:)
+    Components::Form(
+      current_device,
+      action: device_push_token_path,
+      method: :put,
       data: {
-        controller: [
-          "notification-permission-bridge",
-          "notification-token-bridge",
-          "transition",
-          "tooltip",
-          "connection",
-        ],
-        transition_enter: "transition-[opacity,scale] ease-in-quart duration-200",
-        transition_enter_start: "scale-95 opacity-0",
-        tooltip_content_value: "get notified when friends react!",
-        tooltip_trigger_value: "manual",
-        tooltip_placement_value: "bottom-start",
-        tooltip_flash_duration_value: 5000,
-        tooltip_flash_delay_value: 1000,
-        action: [
-          "notification-permission-bridge:pending-authorization->transition#enter",
-          "transition:entered->tooltip#flash",
-          "notification-token-bridge#request",
-        ],
+        controller: "device-push-token-form",
+        action: "turbo:submit-end->frame-reload#reload",
+
       },
-    ) do |button|
-      button.inline_start_icon("huge/notification-01")
-      span { "enable notifications" }
+    ) do |form|
+      form.Field(:push_token).hidden(data: { device_push_token_form_target: "input" })
+
+      form.submit(
+        class: "hidden",
+        data: {
+          controller: [
+            "notification-permission-bridge",
+            "notification-token-bridge",
+            "transition",
+            "tooltip",
+            "connection",
+          ],
+          transition_enter: "transition-[opacity,scale] ease-in-quart duration-200",
+          transition_enter_start: "scale-95 opacity-0",
+          tooltip_content_value: "get notified when friends react!",
+          tooltip_trigger_value: "manual",
+          tooltip_placement_value: "bottom-start",
+          tooltip_flash_duration_value: 5000,
+          tooltip_flash_delay_value: 1000,
+          action: token_list(
+            "notification-permission-bridge:pending-authorization->transition#enter",
+            "transition:entered->tooltip#flash",
+            "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
+            "notification-token-bridge#request:prevent",
+            "connection:connect->transition#enter" => !current_device.push_token?,
+          ),
+        },
+      ) do |button|
+        button.inline_start_icon("huge/notification-01")
+        span { "enable notifications" }
+      end
     end
   end
 end

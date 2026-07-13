@@ -48,7 +48,7 @@ module Post::WorldItemBroadcasts
       world,
       :posts,
       target: :post_items,
-      renderable: Components::AsyncWorldPostItem.new(post: self, initially_hidden: true),
+      renderable: Components::AsyncWorldPostItem.new(post: self, newly_created: true),
     )
   end
 

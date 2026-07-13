@@ -54,7 +54,9 @@
     [data-slot="field"] {
       @apply h-6 px-2 py-0 text-muted-foreground hover:bg-secondary/80;
 
-      &:has(:checked) {
+      &:has([data-checked]) {
+        @apply bg-secondary;
+
         > svg {
           @apply fill-primary;
         }

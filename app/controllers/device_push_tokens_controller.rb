@@ -39,8 +39,7 @@ class DevicePushTokensController < ApplicationController
         device_params = params.expect(device: [ :push_token ])
         if current_device.update(device_params)
           render turbo_stream: [
-            append_log_message("Device push token updated", level: :info),
-            turbo_stream.replace(:app_header, renderable: Components::AppHeader.new),
+            append_toast("push notifications enabled :)"),
           ]
         else
           message = "Failed to update device push token"

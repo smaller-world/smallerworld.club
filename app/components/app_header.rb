@@ -37,12 +37,12 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    if @current_device
+    if @current_device&.push_token?
       form_with(url: test_device_push_token_path, data: {
         controller: "haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",
       }) do
-        content.button_item(type: :submit, disabled: !@current_device.push_token?) do
+        content.button_item(type: :submit) do
           Icon("huge/notification-01")
           span { "send test notification" }
         end

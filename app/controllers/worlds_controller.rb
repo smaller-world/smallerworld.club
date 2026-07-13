@@ -21,7 +21,6 @@ class WorldsController < ApplicationController
         selected_post_type = if (type_id = params[:post_type_id])
           world.post_types.find(type_id)
         end
-        created_post_id = flash[:created_post_id]
         render Views::Worlds::Show.new(
           current_user:,
           world:,
@@ -29,7 +28,6 @@ class WorldsController < ApplicationController
           new_post_dialog_open:,
           only_favorited:,
           selected_post_type:,
-          created_post_id:,
         )
       end
     end

@@ -38,7 +38,6 @@ class PostsController < ApplicationController
     respond_to do |format|
       if turbo_frame_request?
         format.html do
-          created_post_id = params[:created_post_id]
           render Views::Posts::Index.new(
             current_user:,
             world:,
@@ -46,7 +45,6 @@ class PostsController < ApplicationController
             posts:,
             pagy:,
             replied_post_ids:,
-            created_post_id:,
           )
         end
       end
@@ -107,7 +105,6 @@ class PostsController < ApplicationController
         post_type = world.post_types.find(post_type_id)
         post = post_type.posts.build(**post_params)
         if post.save
-          flash[:created_post_id] = post.id
           refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else
           render Views::Posts::New.new(post:), status: :unprocessable_content
