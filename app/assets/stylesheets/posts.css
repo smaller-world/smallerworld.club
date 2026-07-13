@@ -103,11 +103,13 @@
   }
 
   .post-reactions {
-    @apply flex flex-1 flex-wrap justify-end gap-1;
+    @apply flex flex-1 flex-wrap gap-1;
   }
 
   .post-card-favorite-button {
     &[data-favorited] {
+      @apply text-primary;
+
       > svg {
         @apply fill-primary;
       }

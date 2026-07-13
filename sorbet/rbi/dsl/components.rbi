@@ -106,12 +106,12 @@ module Components
   sig do
     params(
       post: ::Post,
-      initially_hidden: T::Boolean,
+      newly_created: T::Boolean,
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
     ).void
   end
-  def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &content); end
+  def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/autoclicking_reply_link.rb:4
   sig do
@@ -478,14 +478,14 @@ module Components
       current_user: ::User,
       post: ::Post,
       replied: T::Boolean,
+      newly_created: T::Boolean,
       async_reactions: T::Boolean,
-      show_notification_prompt: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::PostCard).void)
     ).void
   end
-  def PostCard(current_user:, post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
+  def PostCard(current_user:, post:, replied:, newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig do
@@ -760,23 +760,22 @@ module Components
       current_user: ::User,
       posts: T::Enumerable[::Post],
       replied_post_ids: T.nilable(T::Set[::String]),
-      created_post_id: T.nilable(::String),
       content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
     ).void
   end
-  def WorldPostItems(current_user:, posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
+  def WorldPostItems(current_user:, posts:, replied_post_ids:, &content); end
 
   # workspace://app/components/world_post_type_form.rb:4
   sig do
     params(
       world: ::World,
-      selected_post_type: T.nilable(::PostType),
-      showing_favorites: T::Boolean,
+      currently_showing_favorited: T::Boolean,
+      current_post_type: T.nilable(::PostType),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
     ).void
   end
-  def WorldPostTypeForm(world:, selected_post_type:, showing_favorites:, **attributes, &content); end
+  def WorldPostTypeForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig do
@@ -890,12 +889,12 @@ module Components
     sig do
       params(
         post: ::Post,
-        initially_hidden: T::Boolean,
+        newly_created: T::Boolean,
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::AsyncWorldPostItem).void)
       ).void
     end
-    def AsyncWorldPostItem(post:, initially_hidden: T.unsafe(nil), **attributes, &content); end
+    def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/autoclicking_reply_link.rb:4
     sig do
@@ -1262,14 +1261,14 @@ module Components
         current_user: ::User,
         post: ::Post,
         replied: T::Boolean,
+        newly_created: T::Boolean,
         async_reactions: T::Boolean,
-        show_notification_prompt: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::PostCard).void)
       ).void
     end
-    def PostCard(current_user:, post:, replied:, async_reactions: T.unsafe(nil), show_notification_prompt: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
+    def PostCard(current_user:, post:, replied:, newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig do
@@ -1544,23 +1543,22 @@ module Components
         current_user: ::User,
         posts: T::Enumerable[::Post],
         replied_post_ids: T.nilable(T::Set[::String]),
-        created_post_id: T.nilable(::String),
         content: T.nilable(T.proc.params(instance: Components::WorldPostItems).void)
       ).void
     end
-    def WorldPostItems(current_user:, posts:, replied_post_ids:, created_post_id: T.unsafe(nil), &content); end
+    def WorldPostItems(current_user:, posts:, replied_post_ids:, &content); end
 
     # workspace://app/components/world_post_type_form.rb:4
     sig do
       params(
         world: ::World,
-        selected_post_type: T.nilable(::PostType),
-        showing_favorites: T::Boolean,
+        currently_showing_favorited: T::Boolean,
+        current_post_type: T.nilable(::PostType),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
       ).void
     end
-    def WorldPostTypeForm(world:, selected_post_type:, showing_favorites:, **attributes, &content); end
+    def WorldPostTypeForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig do

@@ -12,9 +12,9 @@ export default class WorldPostTypeFormController extends Controller<HTMLFormElem
     } else {
       url.searchParams.delete("post_type_id");
     }
-    const onlyFavorited = formData.get("only_favorited");
-    if (onlyFavorited && typeof onlyFavorited === "string") {
-      url.searchParams.set("only_favorited", onlyFavorited);
+    const favorited = formData.get("favorited");
+    if (favorited && typeof favorited === "string") {
+      url.searchParams.set("only_favorited", favorited);
     } else {
       url.searchParams.delete("only_favorited");
     }

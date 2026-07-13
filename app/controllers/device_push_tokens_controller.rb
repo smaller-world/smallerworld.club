@@ -34,23 +34,18 @@ class DevicePushTokensController < ApplicationController
   # PUT/PATCH /device/push_token
   def update
     respond_to do |format|
-      format.turbo_stream do
+      format.html do
         current_device = Current.device!
         device_params = params.expect(device: [ :push_token ])
         if current_device.update(device_params)
-          render turbo_stream: [
-            append_toast("push notifications enabled :)"),
-          ]
+          redirect_back_or_to(home_path, notice: "push notifications enabled <3")
         else
           message = "Failed to update device push token"
           if (error = current_device.errors.full_messages.first)
             message = "#{message}: #{error}"
           end
           Sentry.capture_message(message)
-          render(
-            turbo_stream: append_log_message(message, level: :error),
-            status: :unprocessable_content,
-          )
+          redirect_back_or_to(home_path, alert: message)
         end
       end
     end

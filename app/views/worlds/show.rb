@@ -10,27 +10,27 @@ class Views::Worlds::Show < Views::Base
     params(
       current_user: User,
       world: World,
-      celebrate: T::Boolean,
-      new_post_dialog_open: T::Boolean,
+      only_post_type: T.nilable(PostType),
       only_favorited: T::Boolean,
-      selected_post_type: T.nilable(PostType),
+      celebrate: T::Boolean,
+      open_new_post_dialog: T::Boolean,
     ).void
   end
   def initialize(
     current_user:,
     world:,
-    celebrate:,
-    new_post_dialog_open:,
+    only_post_type:,
     only_favorited:,
-    selected_post_type:
+    celebrate:,
+    open_new_post_dialog:
   )
     super()
     @current_user = current_user
     @world = world
-    @celebrate = celebrate
-    @new_post_dialog_open = new_post_dialog_open
+    @only_post_type = only_post_type
     @only_favorited = only_favorited
-    @selected_post_type = selected_post_type
+    @celebrate = celebrate
+    @open_new_post_dialog = open_new_post_dialog
 
     @owner = T.let(@world.owner!, User)
   end
@@ -43,8 +43,19 @@ class Views::Worlds::Show < Views::Base
       app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         navigation_buttons
 
-        world_invitation_alert
-        v1_post_import_frame
+        if @current_user == @owner
+          v1_post_import_frame
+        elsif (own_worlds = @current_user
+            .owned_worlds_without_key_or_invitation_for(@owner)
+            .to_a
+            .presence) &&
+            # If the owner is already invited to one of the user's worlds, don't show this
+            # alert.
+            own_worlds.size == @current_user.owned_worlds.size
+          send_own_world_invitation_alert(own_worlds:)
+        elsif (current_device = @current_device) && !@current_device.push_token?
+          enable_notifications_alert(current_device:)
+        end
 
         div(class: "flex flex-col gap-6") do
           section(class: "flex flex-col items-center gap-2") do
@@ -94,8 +105,8 @@ class Views::Worlds::Show < Views::Base
         div(class: "flex flex-col gap-4") do
           Components::WorldPostTypeForm(
             world: @world,
-            selected_post_type: @selected_post_type,
-            showing_favorites: @only_favorited,
+            currently_showing_favorited: @only_favorited,
+            current_post_type: @only_post_type,
           )
 
           turbo_frame_tag(
@@ -103,8 +114,8 @@ class Views::Worlds::Show < Views::Base
             src: [
               @world,
               :posts,
-              type_id: @selected_post_type&.id,
-              only_favorited: (true if @only_favorited),
+              type_id: @only_post_type&.id,
+              only_ravorited: (true if @only_favorited),
             ],
             target: "_top",
             class: "world-posts-frame",
@@ -172,85 +183,91 @@ class Views::Worlds::Show < Views::Base
   end
 
   sig { void }
-  def world_invitation_alert
-    if @current_user != @owner &&
-        (worlds = @current_user
-          .owned_worlds_without_key_or_invitation_for(@owner)
-          .to_a.presence) &&
-        worlds.size == @current_user.owned_worlds.size
-      Components::Item(variant: :muted, class: "gap-2") do |item|
-        item.content(class: "gap-0.5") do |item_content|
-          item_content.title do
-            "you can #{@owner.name}'s posts, but #{@owner.name} can't see yours!"
-          end
-          description_html = capture do
-            item_content.description do
-              "give #{@owner.name} a key to your world?"
-            end
-          end
-          primary_world, *other_worlds = worlds
-          primary_world = T.must(primary_world)
-          if other_worlds.none?
-            link_to(
-              [ :new, primary_world, :invitation, recipient_id: @owner.id ],
-              class: "underline",
-              data: {
-                controller: "redirect-back-to-self",
-                action: "redirect-back-to-self#visit:prevent",
-              },
+  def v1_post_import_frame
+    if @owner.has_v1_account?
+      turbo_frame_tag(
+        :v1_posts_import,
+        src: [ @world, :v1_posts_import ],
+        class: "empty:hidden pb-2",
+        data: {
+          controller: "frame-reload frame-reset user-focus",
+        },
+      )
+      turbo_stream_from(@world, :v1_posts_import, hidden: true)
+    end
+  end
+
+  sig { params(own_worlds: T::Array[World]).void }
+  def send_own_world_invitation_alert(own_worlds:)
+    Components::Alert(class: "flex flex-col") do |alert|
+      alert.title do
+        "you can see #{@owner.name}'s posts, but #{@owner.name} can't see yours!"
+      end
+      description_html = capture do
+        alert.description(class: "text-end") do
+          "give #{@owner.name} a key to your world?"
+        end
+      end
+      primary_world, *other_worlds = own_worlds
+      if other_worlds.none?
+        link_to(
+          [ :new, primary_world, :invitation, recipient_id: @owner.id ],
+          class: "underline",
+          data: {
+            controller: "redirect-back-to-self",
+            action: "redirect-back-to-self#visit:prevent",
+          },
+        ) do
+          raw(description_html) # rubocop:disable Rails/OutputSafety
+        end
+      else
+        Components::Dialog() do |dialog|
+          dialog.with_trigger do
+            button(
+              data: { action: "dialog#open" },
+              class: "text-muted-foreground underline self-end",
             ) do
               raw(description_html) # rubocop:disable Rails/OutputSafety
             end
-          else
-            Components::Dialog() do |dialog|
-              dialog.with_trigger do
-                button(
-                  data: { action: "dialog#open" },
-                  class: "text-muted-foreground underline",
-                ) do
-                  raw(description_html) # rubocop:disable Rails/OutputSafety
-                end
+          end
+          dialog.with_content do |dialog_content|
+            dialog_content.header do |dialog_header|
+              dialog_header.title do
+                "give #{@owner.name} a key to your world!"
               end
-              dialog.with_content do |dialog_content|
-                dialog_content.header do |dialog_header|
-                  dialog_header.title do
-                    "give #{@owner.name} a key to your world!"
-                  end
-                end
+            end
 
-                div(class: "space-y-3") do
-                  div(class: "text-sm") do
-                    "pick the world you'd like to invite #{@owner.name} to:"
-                  end
-                  Components::ItemGroup() do |group|
-                    worlds.each do |world|
-                      group.item(
-                        element: :a,
-                        href: url_for([
-                          :new,
-                          world,
-                          :invitation,
-                          recipient_id: @owner.id,
-                        ]),
-                        variant: :outline,
-                        size: :sm,
-                        data: {
-                          controller: "redirect-back-to-self",
-                          action: "redirect-back-to-self#visit:prevent",
-                        },
-                      ) do |item|
-                        item.media(variant: :image, class: "size-14 rounded-world-icon") do
-                          image_tag(world.page_icon_variant)
-                        end
-                        item.content(class: "gap-0.5") do |item_content|
-                          item_content.title(class: "text-base font-heading") do
-                            world.name
-                          end
-                          if (blurb = world.blurb)
-                            item_content.description(class: "text-xs") do
-                              blurb
-                            end
-                          end
+            div(class: "space-y-3") do
+              div(class: "text-sm") do
+                "pick the world you'd like to invite #{@owner.name} to:"
+              end
+              Components::ItemGroup() do |group|
+                own_worlds.each do |world|
+                  group.item(
+                    element: :a,
+                    href: url_for([
+                      :new,
+                      world,
+                      :invitation,
+                      recipient_id: @owner.id,
+                    ]),
+                    variant: :outline,
+                    size: :sm,
+                    data: {
+                      controller: "redirect-back-to-self",
+                      action: "redirect-back-to-self#visit:prevent",
+                    },
+                  ) do |item|
+                    item.media(variant: :image, class: "size-14 rounded-world-icon") do
+                      image_tag(world.page_icon_variant)
+                    end
+                    item.content(class: "gap-0.5") do |item_content|
+                      item_content.title(class: "text-base font-heading") do
+                        world.name
+                      end
+                      if (blurb = world.blurb)
+                        item_content.description(class: "text-xs") do
+                          blurb
                         end
                       end
                     end
@@ -264,25 +281,48 @@ class Views::Worlds::Show < Views::Base
     end
   end
 
-  sig { void }
-  def v1_post_import_frame
-    if allowed_to?(:manage?, @world) && @owner.has_v1_account?
-      turbo_frame_tag(
-        :v1_posts_import,
-        src: [ @world, :v1_posts_import ],
-        class: "empty:hidden pb-2",
+  sig { params(current_device: Device).void }
+  def enable_notifications_alert(current_device:)
+    Components::Alert(class: "gap-2") do |alert|
+      Icon("huge/notification-01")
+      alert.title do
+        "get notified with #{@owner.name} posts!!"
+      end
+      Components::Form(
+        current_device,
+        action: device_push_token_path,
+        method: :put,
+        class: "flex flex-col items-end",
         data: {
-          controller: "frame-reload frame-reset user-focus",
+          controller: "device-push-token-form",
         },
-      )
-      turbo_stream_from(@world, :v1_posts_import, hidden: true)
+      ) do |form|
+        form.Field(:push_token).hidden(data: {
+          device_push_token_form_target: "input",
+        })
+        form.submit(
+          data: {
+            controller: [
+              "notification-permission-bridge",
+              "notification-token-bridge",
+            ],
+            action: [
+              "notification-token-bridge#request:prevent",
+              "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
+            ],
+          },
+        ) do |button|
+          button.inline_start_icon("huge/love-korean-finger")
+          span { "enable notifications" }
+        end
+      end
     end
   end
 
   sig { void }
   def new_post_button
     Components::Dialog(
-      open: @new_post_dialog_open,
+      open: @open_new_post_dialog,
       data: {
         controller: "world-new-post-dialog",
         action: [

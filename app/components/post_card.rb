@@ -120,19 +120,20 @@ class Components::PostCard < Components::Base
         end
 
         card.footer do
+          if @async_reactions
+            Components::AsyncPostReactions(post: @post)
+          else
+            Components::PostReactions(post: @post)
+          end
+
           if @current_user != @post.world_owner!
             Components::ReplyInitiationForm(
               reply_initiation: @post.reply_initiations.build,
               replied: @replied,
             )
-          elsif @newly_created && (current_device = @current_device)
-            notification_prompt_button(current_device:)
-          end
-
-          if @async_reactions
-            Components::AsyncPostReactions(post: @post)
-          else
-            Components::PostReactions(post: @post)
+          elsif @newly_created &&
+              (current_device = @current_device) && !current_device.push_token?
+            enable_notifications_button(current_device:)
           end
         end
       end
@@ -204,7 +205,7 @@ class Components::PostCard < Components::Base
   # end
 
   sig { params(current_device: Device).void }
-  def notification_prompt_button(current_device:)
+  def enable_notifications_button(current_device:)
     Components::Form(
       current_device,
       action: device_push_token_path,
@@ -215,8 +216,9 @@ class Components::PostCard < Components::Base
 
       },
     ) do |form|
-      form.Field(:push_token).hidden(data: { device_push_token_form_target: "input" })
-
+      form.Field(:push_token).hidden(data: {
+        device_push_token_form_target: "input",
+      })
       form.submit(
         class: "hidden",
         data: {
@@ -234,13 +236,12 @@ class Components::PostCard < Components::Base
           tooltip_placement_value: "bottom-start",
           tooltip_flash_duration_value: 5000,
           tooltip_flash_delay_value: 1000,
-          action: token_list(
-            "notification-permission-bridge:pending-authorization->transition#enter",
-            "transition:entered->tooltip#flash",
-            "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
+          action: [
             "notification-token-bridge#request:prevent",
-            "connection:connect->transition#enter" => !current_device.push_token?,
-          ),
+            "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
+            "notification-token-bridge:retrieved->transition#enter",
+            "transition:entered->tooltip#flash",
+          ],
         },
       ) do |button|
         button.inline_start_icon("huge/notification-01")

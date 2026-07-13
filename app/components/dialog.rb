@@ -30,6 +30,7 @@ class Components::Dialog < Components::Base
 
     el_dialog(open: @open, **mix(
       {
+        class: "contents",
         data: {
           controller: "dialog",
         },

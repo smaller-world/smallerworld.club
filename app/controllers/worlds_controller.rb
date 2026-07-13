@@ -8,26 +8,26 @@ class WorldsController < ApplicationController
 
   # == Actions ==
 
-  # GET /worlds/:id?post_type_id=...&celebrate=...
+  # GET /worlds/:id?post_type_id=...[&new_post=1][&only_favorited=1]
   def show
     respond_to do |format|
       format.html do
         current_user = Current.user!
         world = find_world
         authorize!(world)
-        new_post_dialog_open = cast_boolean(params[:new_post])
-        only_favorited = cast_boolean(params[:only_favorited])
-        celebrate = !!flash[:celebrate]
-        selected_post_type = if (type_id = params[:post_type_id])
+        only_post_type = if (type_id = params[:post_type_id])
           world.post_types.find(type_id)
         end
+        only_favorited = cast_boolean(params[:only_favorited])
+        celebrate = !!flash[:celebrate]
+        open_new_post_dialog = cast_boolean(params[:new_post])
         render Views::Worlds::Show.new(
           current_user:,
           world:,
-          celebrate:,
-          new_post_dialog_open:,
+          only_post_type:,
           only_favorited:,
-          selected_post_type:,
+          celebrate:,
+          open_new_post_dialog:,
         )
       end
     end

@@ -28,7 +28,7 @@ class Components::AppFlashAlert < Components::Base
       ),
     ) do |alert|
       Icon(@type == :alert ? "huge/alert-01" : "huge/information-circle")
-      alert.description do
+      alert.title do
         @message
       end
       # alert.action do

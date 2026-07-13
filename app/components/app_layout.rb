@@ -112,7 +112,7 @@ class Components::AppLayout < Components::Base
       body(
         class: [ "flex min-h-dvh flex-col", @body_class ],
         data: {
-          controller: "page-load-bridge",
+          controller: "page-load-bridge page-reload",
         },
       ) do
         if @force_header || !hotwire_native_app?

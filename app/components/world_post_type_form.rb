@@ -7,16 +7,16 @@ class Components::WorldPostTypeForm < Components::Base
   sig do
     params(
       world: World,
-      selected_post_type: T.nilable(PostType),
-      showing_favorites: T::Boolean,
+      currently_showing_favorited: T::Boolean,
+      current_post_type: T.nilable(PostType),
       attributes: T.untyped,
     ).void
   end
-  def initialize(world:, selected_post_type:, showing_favorites:, **attributes)
+  def initialize(world:, currently_showing_favorited:, current_post_type:, **attributes)
     super(**attributes)
     @world = world
-    @selected_post_type = selected_post_type
-    @showing_favorites = showing_favorites
+    @current_post_type = current_post_type
+    @currently_showing_favorited = currently_showing_favorited
   end
 
   # == Component ==
@@ -57,7 +57,7 @@ class Components::WorldPostTypeForm < Components::Base
             end
             choice.input(
               name: "type_id",
-              checked: choice.item == @selected_post_type,
+              checked: choice.item == @current_post_type,
               class: "visually-hidden",
               toggleable: true,
               data: {
@@ -69,7 +69,7 @@ class Components::WorldPostTypeForm < Components::Base
       end
 
       if allowed_to?(:manage?, @world) && @world.posts.favorited.any?
-        form.label_for(:only_favorited, class: "world-only-favorited-label") do
+        form.label_for(:favorited, class: "world-only-favorited-label") do
           Components::Field(
             orientation: :horizontal,
             class: "badge",
@@ -78,10 +78,10 @@ class Components::WorldPostTypeForm < Components::Base
             },
           ) do
             Icon("huge/star")
-            form.Field(:only_favorited).checkbox(
-              checked: @showing_favorites,
+            form.Field(:favorited).checkbox(
+              checked: @currently_showing_favorited,
               class: "visually-hidden",
-              name: "only_favorited",
+              name: "favorited",
               data: {
                 action: "world-post-type-form#updateSearchParamsAndSubmit",
               },
@@ -104,7 +104,7 @@ class Components::WorldPostTypeForm < Components::Base
   sig { returns(String) }
   def favorited_world_url
     options = {}
-    unless @showing_favorites
+    unless @currently_showing_favorited
       options[:only_favorited] = true
     end
     world_url(@world, **options)

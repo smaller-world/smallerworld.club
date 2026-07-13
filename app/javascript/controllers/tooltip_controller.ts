@@ -118,6 +118,7 @@ export default class TooltipController extends Typed(Controller<HTMLElement>, {
     if (isPlacement(this.placementValue)) {
       props.placement = this.placementValue;
     }
+
     if (this.#tippy) {
       if (!this.contentValue) {
         const tippy = this.#tippy;
@@ -164,6 +165,8 @@ export default class TooltipController extends Typed(Controller<HTMLElement>, {
   }
 }
 
+const validPlacements = new Set<string>(placements);
+
 const isPlacement = (value: string): value is Placement => {
-  return value in placements;
+  return validPlacements.has(value);
 };

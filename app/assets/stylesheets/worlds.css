@@ -55,7 +55,7 @@
       @apply h-6 px-2 py-0 text-muted-foreground hover:bg-secondary/80;
 
       &:has([data-checked]) {
-        @apply bg-secondary;
+        @apply bg-secondary text-primary;
 
         > svg {
           @apply fill-primary;

@@ -47,6 +47,7 @@ import NotificationBadgeCountBridgeController from "./notification_badge_count_b
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
+import PageReloadController from "./page_reload_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
@@ -134,6 +135,7 @@ application.register(
 );
 
 // == General components
+application.register("page-reload", PageReloadController);
 application.register("clearable-file-input", ClearableFileInputController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
 application.register("emoji-select", EmojiSelectController);

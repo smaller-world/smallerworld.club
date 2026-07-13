@@ -4,12 +4,12 @@
 class PostsController < ApplicationController
   # == Actions ==
 
-  # GET /world/:world_id/posts?type_id=...&created_post_id=...
+  # GET /world/:world_id/posts[?type_id=...][&favorited=1]
   def index
     current_user = Current.user!
     world = find_world
     authorize!(world, to: :show?)
-    only_favorited = cast_boolean(params[:only_favorited])
+    favorited = cast_boolean(params[:favorited])
     post_type = if (type_id = params[:type_id])
       world.post_types.find(type_id)
     end
@@ -18,7 +18,7 @@ class PostsController < ApplicationController
       if post_type
         scope = scope.where(type: post_type)
       end
-      if only_favorited
+      if favorited
         scope = scope.favorited
       end
       authorized_scope(scope)
