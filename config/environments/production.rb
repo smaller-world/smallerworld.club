@@ -9,7 +9,7 @@ Rails.application.configure do
   # Set default URL options.
   routes.default_url_options = {
     protocol: "https",
-    host: "smallerworld.club",
+    host: "old.smallerworld.club",
   }
 
   # Run Good Job in async mode.

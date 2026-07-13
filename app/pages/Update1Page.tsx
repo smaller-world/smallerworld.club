@@ -189,7 +189,7 @@ const Update1Page: PageComponent<Update1PageProps> = () => (
         </Title>
         <Text ta="center" maw={400}>
           yes! we have a new (and easy-to-read) terms of use & privacy policy:{" "}
-          <Anchor href="https://smallerworld.club/policies" fw={600}>
+          <Anchor href="https://old.smallerworld.club/policies" fw={600}>
             smallerworld.club/policies
           </Anchor>
         </Text>
@@ -537,7 +537,7 @@ const Update1Page: PageComponent<Update1PageProps> = () => (
           for inspo on getting the ball rolling, you can see some of the public
           posts in the smaller universe:{" "}
           <Anchor
-            href="https://smallerworld.club/universe"
+            href="https://old.smallerworld.club/universe"
             fw={600}
             target="_blank"
           >

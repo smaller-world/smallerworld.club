@@ -1,4 +1,4 @@
-# smallerworld.club
+# old.smallerworld.club
 
 _your new secret blog, for close friends only._
 
@@ -12,7 +12,7 @@ brew install docker mise watchman
 brew install libvips
 
 # set up environment
-git clone git@github.com:hulloitskai/smallerworld.club
+git clone git@github.com:hulloitskai/smallerworld.club -b v1
 cd smallerworld.club
 mise trust
 mise install

@@ -1,1 +1,1 @@
-export const CANONICAL_DOMAIN = "smallerworld.club";
+export const CANONICAL_DOMAIN = "old.smallerworld.club";
