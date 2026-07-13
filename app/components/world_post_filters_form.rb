@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::WorldPostTypeForm < Components::Base
+class Components::WorldPostFiltersForm < Components::Base
   # == Initialization ==
 
   sig do
@@ -30,7 +30,7 @@ class Components::WorldPostTypeForm < Components::Base
       class: "flex-row items-start gap-2",
       data: {
         turbo_frame: dom_id(@world, :posts),
-        controller: "world-post-type-form",
+        controller: "world-post-filters-form",
       },
     ) do |form|
       form.Field(:type_id).radios(
@@ -61,7 +61,7 @@ class Components::WorldPostTypeForm < Components::Base
               class: "visually-hidden",
               toggleable: true,
               data: {
-                action: "world-post-type-form#updateSearchParamsAndSubmit",
+                action: "world-post-filters-form#updateSearchParamsAndSubmit",
               },
             )
           end
@@ -75,6 +75,8 @@ class Components::WorldPostTypeForm < Components::Base
             class: "badge",
             data: {
               variant: "ghost",
+              controller: "tooltip",
+              tooltip_content_value: "show only your starred posts",
             },
           ) do
             Icon("huge/star")
@@ -83,7 +85,7 @@ class Components::WorldPostTypeForm < Components::Base
               class: "visually-hidden",
               name: "favorited",
               data: {
-                action: "world-post-type-form#updateSearchParamsAndSubmit",
+                action: "world-post-filters-form#updateSearchParamsAndSubmit",
               },
             )
           end

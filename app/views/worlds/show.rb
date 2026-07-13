@@ -103,7 +103,7 @@ class Views::Worlds::Show < Views::Base
         end
 
         div(class: "flex flex-col gap-4") do
-          Components::WorldPostTypeForm(
+          Components::WorldPostFiltersForm(
             world: @world,
             currently_showing_favorited: @only_favorited,
             current_post_type: @only_post_type,

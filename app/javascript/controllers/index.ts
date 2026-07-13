@@ -72,7 +72,7 @@ import TurnstileController from "./turnstile_controller";
 import UppyController from "./uppy_controller";
 import UppyGroupController from "./uppy_group_controller";
 import WorldNewPostDialogController from "./world_new_post_dialog_controller";
-import WorldPostTypeFormController from "./world_post_type_form_controller";
+import WorldPostFiltersFormController from "./world_post_filters_form_controller";
 
 // == Library helpers
 application.register("turnstile", TurnstileController);
@@ -156,7 +156,7 @@ application.register("streamed-toast", StreamedToastController);
 
 // == Specific components
 application.register("device-push-token-form", DevicePushTokenFormController);
-application.register("world-post-type-form", WorldPostTypeFormController);
+application.register("world-post-filters-form", WorldPostFiltersFormController);
 application.register("world-new-post-dialog", WorldNewPostDialogController);
 application.register("create-world-form", CreateWorldFormController);
 application.register("post-timestamp", PostTimestampController);

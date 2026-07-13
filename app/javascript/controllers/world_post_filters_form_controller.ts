@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class WorldPostTypeFormController extends Controller<HTMLFormElement> {
+export default class WorldPostFiltersFormController extends Controller<HTMLFormElement> {
   // == Actions ==
 
   updateSearchParamsAndSubmit(): void {

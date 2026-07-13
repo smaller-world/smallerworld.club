@@ -754,6 +754,18 @@ module Components
   end
   def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &content); end
 
+  # workspace://app/components/world_post_filters_form.rb:4
+  sig do
+    params(
+      world: ::World,
+      currently_showing_favorited: T::Boolean,
+      current_post_type: T.nilable(::PostType),
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::WorldPostFiltersForm).void)
+    ).void
+  end
+  def WorldPostFiltersForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
+
   # workspace://app/components/world_post_items.rb:4
   sig do
     params(
@@ -764,18 +776,6 @@ module Components
     ).void
   end
   def WorldPostItems(current_user:, posts:, replied_post_ids:, &content); end
-
-  # workspace://app/components/world_post_type_form.rb:4
-  sig do
-    params(
-      world: ::World,
-      currently_showing_favorited: T::Boolean,
-      current_post_type: T.nilable(::PostType),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
-    ).void
-  end
-  def WorldPostTypeForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig do
@@ -1537,6 +1537,18 @@ module Components
     end
     def WorldNextPageControl(world:, post_type:, pagy:, **attributes, &content); end
 
+    # workspace://app/components/world_post_filters_form.rb:4
+    sig do
+      params(
+        world: ::World,
+        currently_showing_favorited: T::Boolean,
+        current_post_type: T.nilable(::PostType),
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::WorldPostFiltersForm).void)
+      ).void
+    end
+    def WorldPostFiltersForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
+
     # workspace://app/components/world_post_items.rb:4
     sig do
       params(
@@ -1547,18 +1559,6 @@ module Components
       ).void
     end
     def WorldPostItems(current_user:, posts:, replied_post_ids:, &content); end
-
-    # workspace://app/components/world_post_type_form.rb:4
-    sig do
-      params(
-        world: ::World,
-        currently_showing_favorited: T::Boolean,
-        current_post_type: T.nilable(::PostType),
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::WorldPostTypeForm).void)
-      ).void
-    end
-    def WorldPostTypeForm(world:, currently_showing_favorited:, current_post_type:, **attributes, &content); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig do
