@@ -182,22 +182,16 @@ class Post < ApplicationRecord
     )
   end
 
+  sig { returns(User::PrivateAssociationRelation) }
+  def subscribers
+    type_subscribers.where.not(id: hidden_from_ids)
+  end
+
   # == Recipients ==
 
   sig { returns(T::Array[String]) }
   def recipient_ids
-    ids = type_recipient_ids
-    ids - hidden_from_ids
-  end
-
-  sig { returns(User::PrivateAssociationRelation) }
-  def recipients
-    type_recipients.where.not(id: hidden_from_ids)
-  end
-
-  sig { returns(User::PrivateAssociationRelation) }
-  def subscribers
-    type_subscribers.where.not(id: hidden_from_ids)
+    type_recipient_ids - hidden_from_ids
   end
 
   sig { params(value: T::Array[String]).void }
@@ -277,8 +271,7 @@ class Post < ApplicationRecord
 
   sig { params(user: User).returns(T::Boolean) }
   def visible_to?(user)
-    !!(user == world_owner! ||
-      (recipients.include?(user) && hidden_from_ids.exclude?(user.id)))
+    !!(user == world_owner! || recipient_ids.include?(user.id))
   end
 
   # == Methods ==

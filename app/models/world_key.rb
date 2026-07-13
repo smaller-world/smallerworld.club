@@ -119,9 +119,16 @@ class WorldKey < ApplicationRecord
     )
   end
 
-  sig { void }
-  def create_notification_for_world_owner!
-    notifications.create!(recipient: world_owner!)
+  # == Subscribed Post Types ==
+
+  sig { returns(T::Array[String]) }
+  def subscribed_post_types_ids
+    world_post_type_ids - muted_post_type_ids
+  end
+
+  sig { params(value: T::Array[String]).void }
+  def subscribed_post_type_ids=(value)
+    self.muted_post_type_ids = world_post_ids - value
   end
 
   # == Grants ==
@@ -180,6 +187,11 @@ class WorldKey < ApplicationRecord
     if recipient_id == world&.owner_id
       errors.add(:recipient, "cannot be the world owner")
     end
+  end
+
+  sig { void }
+  def create_notification_for_world_owner!
+    notifications.create!(recipient: world_owner!)
   end
 
   # sig { void }
