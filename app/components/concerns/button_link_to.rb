@@ -42,8 +42,8 @@ module ButtonLinkTo
         elsif label
           span { label }
         end
-      elsif content
-        raw(label) # rubocop:disable Rails/OutputSafety
+      elsif label_html
+        raw(label_html) # rubocop:disable Rails/OutputSafety
       else
         plain(label)
       end
