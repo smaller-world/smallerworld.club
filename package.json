@@ -13,7 +13,7 @@
     "build:css": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.tailwind.css --minify"
   },
   "dependencies": {
-    "@37signals/lexxy": "^0.9.18",
+    "@37signals/lexxy": "^0.9.23",
     "@gothassos/uppy-activestorage-upload": "^2.0.2",
     "@hotwired/hotwire-native-bridge": "^1.2.2",
     "@hotwired/stimulus": "^3.2.2",
@@ -41,7 +41,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "requestidlecallback-polyfill": "^1.0.2",
-    "shadcn": "^4.11.0",
+    "shadcn": "^4.13.0",
     "sonner": "^2.0.7",
     "stimulus-library": "^1.7.0",
     "stimulus-typescript": "^0.1.3",
@@ -64,10 +64,10 @@
     "@types/rails__request.js": "^0.0.1",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^10.4.1",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
-    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.6.0",
     "playwright": "1.60.0",
@@ -78,7 +78,7 @@
     "tw-fade": "^0.6.0",
     "tw-shimmer": "^0.4.11",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.60.1"
+    "typescript-eslint": "^8.62.1"
   },
   "resolutions": {
     "fast-uri": "3.1.2",
