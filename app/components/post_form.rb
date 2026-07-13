@@ -95,7 +95,7 @@ class Components::PostForm < Components::Base
               data: {
                 post_form_type_target: "editAnchor",
                 controller: "redirect-back-to-self",
-                action: "redirect-back-to-self#visit:prevent",
+                action: "redirect-back-to-self#visit",
               },
             )
           end

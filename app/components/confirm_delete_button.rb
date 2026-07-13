@@ -37,7 +37,10 @@ class Components::ConfirmDeleteButton < Components::Base
           popover_header.title { "are you sure?" }
           popover_header.description { @description }
         end
-        form_with(url: @target, method: :delete) do
+        form_with(url: @target, method: :delete, data: {
+          controller: "haptic-bridge",
+          action: "turbo:submit-end->haptic-bridge#vibrate",
+        }) do
           Components::Button(
             type: :submit,
             variant: :destructive,

@@ -99,6 +99,11 @@ class Components::PostRecipientsSelect < Components::Input
                 [ :edit, @post_type ],
                 variant: :default,
                 icon: @post_type.icon,
+                data: {
+                  turbo_frame: "_top",
+                  controller: "redirect-back-to-self",
+                  action: "redirect-back-to-self#visit",
+                },
               )
             end
           end

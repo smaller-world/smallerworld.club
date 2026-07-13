@@ -149,7 +149,10 @@ class Components::PostCard < Components::Base
   sig { void }
   def favorite_button
     action = @post.favorited? ? :unfavorite : :favorite
-    form_with(model: [ action, @post ], method: :post) do
+    form_with(model: [ action, @post ], method: :post, data: {
+      controller: "haptic-bridge",
+      action: "turbo:submit-end->haptic-bridge#vibrate",
+    }) do
       Components::Button(
         type: :submit,
         variant: :ghost,

@@ -215,7 +215,7 @@ class Views::Worlds::Show < Views::Base
           class: "underline",
           data: {
             controller: "redirect-back-to-self",
-            action: "redirect-back-to-self#visit:prevent",
+            action: "redirect-back-to-self#visit",
           },
         ) do
           raw(description_html) # rubocop:disable Rails/OutputSafety
@@ -255,7 +255,7 @@ class Views::Worlds::Show < Views::Base
                     size: :sm,
                     data: {
                       controller: "redirect-back-to-self",
-                      action: "redirect-back-to-self#visit:prevent",
+                      action: "redirect-back-to-self#visit",
                     },
                   ) do |item|
                     item.media(variant: :image, class: "size-14 rounded-world-icon") do
@@ -427,7 +427,7 @@ class Views::Worlds::Show < Views::Base
                 class: "text-muted-foreground",
                 data: {
                   controller: "redirect-back-to-self",
-                  action: "redirect-back-to-self#visit:prevent dialog#close",
+                  action: "redirect-back-to-self#visit dialog#close",
                 },
               )
             end
@@ -442,7 +442,7 @@ class Views::Worlds::Show < Views::Base
             size: :sm,
             data: {
               controller: "redirect-back-to-self",
-              action: "redirect-back-to-self#visit:prevent dialog#close",
+              action: "redirect-back-to-self#visit dialog#close",
             },
           ) do |item|
             item.content(class: "gap-0") do |item_content|

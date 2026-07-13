@@ -51,7 +51,7 @@ class Components::WorldPostTypeForm < Components::Base
             end
             button_link_to([ :edit, choice.item ], size: :icon_xs, data: {
               controller: "event redirect-back-to-self",
-              action: "event#stopPropagation redirect-back-to-self#visit:prevent",
+              action: "event#stopPropagation redirect-back-to-self#visit",
             }) do
               Icon("huge/settings-01")
             end
