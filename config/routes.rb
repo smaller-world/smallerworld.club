@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   end
 
   # == Account
-  resource :account, only: [ :new, :create ]
+  resource :account, only: [ :new, :edit, :create, :update ]
   resource :account_time_zone, path: "/account/time_zone", only: :update
   resource :account_app_visits, path: "/account/app_visits", only: :create
 

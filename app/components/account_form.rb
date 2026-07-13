@@ -16,25 +16,23 @@ class Components::AccountForm < Components::Base
 
   sig { override.void }
   def view_template
-    Components::Form(
-      @user,
-      action: account_path,
-      **@attributes,
-    ) do |form|
+    Components::Form(@user, action: account_path, **@attributes) do |form|
       form.Field(:time_zone_name).hidden(data: { controller: "current-time-zone-input" })
 
       form.wrapped(
         form.field(:name).text(
-          placeholder: "what's your name?",
+          placeholder: @user.new_record? ? "what's your name?" : @user.name,
           autocomplete: "given-name",
           maxlength: User::NAME_MAX_LENGTH,
         ),
-        label: "let's create your account!",
+        label: @user.new_record? ? "let's create your account!" : "your name",
       )
 
       form.submit do |button|
-        button.inline_start_icon("huge/user")
-        span { "create account" }
+        button.inline_start_icon(@user.new_record? ? "huge/user" : "huge/floppy-disk")
+        span do
+          @user.new_record? ? "create account" : "save changes"
+        end
       end
     end
   end

@@ -22,11 +22,11 @@ module ButtonLinkTo
     ).void
   end
   def button_link_to(*args, icon: nil, icon_class: nil, **attributes, &content)
-    if content
-      label = capture(&content)
-      target = args.first
-    else
+    if args.size > 1
       label, target = args
+    else
+      label_html = capture(&content) if content
+      target = args.first
     end
 
     Components::Button(
@@ -37,9 +37,9 @@ module ButtonLinkTo
     ) do |button|
       if icon.present?
         button.inline_start_icon(icon, class: icon_class)
-        if content
-          raw(label) # rubocop:disable Rails/OutputSafety
-        else
+        if label_html
+          raw(label_html) # rubocop:disable Rails/OutputSafety
+        elsif label
           span { label }
         end
       elsif content

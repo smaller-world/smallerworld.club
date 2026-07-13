@@ -31,6 +31,9 @@ module GeneratedPathHelpersModule
   def device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_account_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_post_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

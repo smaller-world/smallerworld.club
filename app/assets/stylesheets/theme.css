@@ -212,7 +212,6 @@
   }
 
   body {
-    /*@apply ios-app-on-mac:text-xl;*/
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
   }

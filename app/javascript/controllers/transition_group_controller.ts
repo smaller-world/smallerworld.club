@@ -2,11 +2,16 @@ import { Controller } from "@hotwired/stimulus";
 import { first } from "lodash-es";
 import { Typed } from "stimulus-typescript";
 
+const values = {
+  itemDelay: Number,
+};
+
 const targets = {
   item: HTMLElement,
 };
 
 export default class TransitionGroupController extends Typed(Controller, {
+  values,
   targets,
 }) {
   // == Actions ==
@@ -24,7 +29,9 @@ export default class TransitionGroupController extends Typed(Controller, {
     }
     const nextItem = this.#nextItemTargetAfter(event.target);
     if (nextItem) {
-      this.dispatch("start", { target: nextItem });
+      setTimeout(() => {
+        this.dispatch("start", { target: nextItem });
+      }, this.itemDelayValue);
     }
   }
 

@@ -27,6 +27,11 @@ class Views::Home::Show < Views::Base
         .with_world_and_attached_icon,
       WorldInvitation::PrivateRelation,
     )
+
+    @transition_enter = T.let(
+      "transition-[scale,opacity] duration-300 ease-in-quart",
+      String,
+    )
   end
 
   # == View ==
@@ -59,10 +64,17 @@ class Views::Home::Show < Views::Base
           end
         end
 
-        div(class: class_names(
-          "flex-1 flex flex-col gap-8 justify-center",
-          "mt-4" => !show_alert,
-        )) do
+        div(
+          class: class_names(
+            "flex-1 flex flex-col gap-8 justify-center",
+            "mt-4" => !show_alert,
+          ),
+          data: {
+            controller: "transition-group connection",
+            transition_group_item_delay_value: 100,
+            action: "connection:connect->transition-group#start",
+          },
+        ) do
           owned_worlds
           accessible_worlds
         end
@@ -70,6 +82,19 @@ class Views::Home::Show < Views::Base
         if show_alert
           div(class: "flex-1 max-h-40 min-h-0 shrink")
         end
+      end
+
+      div(class: [
+        "absolute top-[env(safe-area-inset-top,0px)] right-[env(safe-area-inset-right,0px)]",
+        "flex items-center",
+      ]) do
+        button_link_to(
+          edit_account_path,
+          variant: :ghost,
+          size: :icon,
+          icon: "huge/settings-01",
+          class: "mt-1 mr-6 [&>svg]:size-5 text-muted-foreground",
+        )
       end
 
       Components::AccountAppVisitForm(current_user: @current_user)
@@ -111,7 +136,15 @@ class Views::Home::Show < Views::Base
   def owned_worlds
     ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
       @owned_worlds.each do |world|
-        li(class: "relative") do
+        li(class: "relative starting:opacity-0 starting:scale-95 hidden", data: {
+          transition_group_target: "item",
+          controller: "transition",
+          transition_enter: @transition_enter,
+          action: [
+            "transition-group:start->transition#enter",
+            "transition-group:start->transition-group#startNext",
+          ],
+        }) do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
             span(class: "world-icon-label") do
@@ -149,7 +182,15 @@ class Views::Home::Show < Views::Base
       @world_keys.each do |world_key|
         world = world_key.world!
         badge_count = badge_count_for(world_key)
-        li do
+        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
+          transition_group_target: "item",
+          controller: "transition",
+          transition_enter: @transition_enter,
+          action: [
+            "transition-group:start->transition#enter",
+            "transition-group:start->transition-group#startNext",
+          ],
+        }) do
           link_to(world, class: "world-icon-container hover:underline") do
             div(class: "relative") do
               image_tag(
@@ -190,12 +231,27 @@ class Views::Home::Show < Views::Base
       end
 
       if hotwire_native_app?
-        link_to("/scan_qr_code", class: "world-icon-container hover:underline") do
+        link_to(
+          "/scan_qr_code",
+          class: [
+            "world-icon-container hover:underline",
+            "hidden starting:scale-95 starting:opacity-0",
+          ],
+          data: {
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: @transition_enter,
+            action:
+              "transition-group:start->transition#enter",
+          },
+        ) do
           Components::Button(
             element: :div,
             variant: :outline,
             class: "world-icon shadow-none border-dashed",
-            data: { world_icon_size: "sm" },
+            data: {
+              world_icon_size: "sm",
+            },
           ) do
             Icon("huge/qr-code", class: "size-7 text-muted-foreground")
           end

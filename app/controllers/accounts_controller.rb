@@ -4,7 +4,7 @@
 class AccountsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access
+  allow_unauthenticated_access only: [ :new, :create ]
   skip_verify_authorized
 
   # == Actions ==
@@ -34,6 +34,16 @@ class AccountsController < ApplicationController
 
         user = User.new
         render Views::Accounts::New.new(user:)
+      end
+    end
+  end
+
+  # GET /account/edit
+  def edit
+    respond_to do |format|
+      format.html do
+        current_user = Current.user!
+        render Views::Accounts::Edit.new(current_user:)
       end
     end
   end
@@ -80,6 +90,25 @@ class AccountsController < ApplicationController
           redirect_to(after_authentication_url, status: :see_other)
         else
           render Views::Accounts::New.new(user:), status: :unprocessable_content
+        end
+      end
+    end
+  end
+
+  # PUT/PATCH /account
+  def update
+    respond_to do |format|
+      format.html do
+        current_user = Current.user!
+        user_params = params.expect(user: [ :name, :time_zone_name ])
+        if current_user.update(user_params)
+          refresh_or_redirect_to(
+            home_path,
+            status: :see_other,
+            notice: "your account settings were saved",
+          )
+        else
+          render Views::Accounts::Edit.new(current_user:), status: :unprocessable_content
         end
       end
     end

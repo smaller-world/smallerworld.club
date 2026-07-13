@@ -31,6 +31,9 @@ module GeneratedUrlHelpersModule
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_account_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_post_type_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
