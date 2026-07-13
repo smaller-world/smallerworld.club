@@ -76,6 +76,16 @@ class Post < ApplicationRecord
 
   belongs_to :type, class_name: "PostType"
   has_many :type_recipients, through: :type, source: :recipients
+  has_many :type_subscribers,
+    ->(post) {
+      post = T.let(post, Post)
+      where.not(
+        id: WorldKey.where("? = ANY(muted_post_type_ids)", post.type_id)
+          .select(:recipient_id),
+      )
+    },
+    through: :type,
+    source: :recipients
 
   has_one :world, through: :type
   has_many :world_cards, through: :world, source: :cards
@@ -133,7 +143,7 @@ class Post < ApplicationRecord
   before_validation :chomp_rich_text_body!, if: :body?
   before_save :set_plain_body
   after_save :preserve_images_attachments_ordering, if: :images_attachments_changed?
-  after_create_commit :create_notifications_for_recipients!,
+  after_create_commit :create_notifications_for_subscribers!,
     if: :should_create_notifications?
   broadcasts_world_items
 
@@ -176,13 +186,18 @@ class Post < ApplicationRecord
 
   sig { returns(T::Array[String]) }
   def recipient_ids
-    ids = type!.recipient_ids
+    ids = type_recipient_ids
     ids - hidden_from_ids
   end
 
   sig { returns(User::PrivateAssociationRelation) }
   def recipients
     type_recipients.where.not(id: hidden_from_ids)
+  end
+
+  sig { returns(User::PrivateAssociationRelation) }
+  def subscribers
+    type_subscribers.where.not(id: hidden_from_ids)
   end
 
   sig { params(value: T::Array[String]).void }
@@ -337,8 +352,8 @@ class Post < ApplicationRecord
   # end
 
   sig { void }
-  def create_notifications_for_recipients!
-    recipients.find_each do |subscriber|
+  def create_notifications_for_subscribers!
+    subscribers.find_each do |subscriber|
       notifications.create!(
         recipient: subscriber,
         delivery_delay: NOTIFICATION_DELIVERY_DELAY,

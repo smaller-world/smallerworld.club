@@ -432,6 +432,34 @@ class PostType
     sig { void }
     def reset_world; end
 
+    sig { returns(T::Array[T.untyped]) }
+    def subscribed_world_key_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def subscribed_world_key_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :subscribed_world_keys, through: :grants`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldKey::PrivateCollectionProxy) }
+    def subscribed_world_keys; end
+
+    sig { params(value: T::Enumerable[::WorldKey]).void }
+    def subscribed_world_keys=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def subscriber_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def subscriber_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :subscribers, through: :subscribed_world_keys`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def subscribers; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def subscribers=(value); end
+
     sig { returns(T.nilable(::World)) }
     def world; end
 

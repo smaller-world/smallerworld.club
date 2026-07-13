@@ -543,6 +543,20 @@ class Post
     sig { params(value: T::Enumerable[::User]).void }
     def type_recipients=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def type_subscriber_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def type_subscriber_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :type_subscribers, through: :type`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def type_subscribers; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def type_subscribers=(value); end
+
     sig { returns(T.nilable(::World)) }
     def world; end
 

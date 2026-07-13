@@ -7,6 +7,7 @@
 # Table name: world_keys
 #
 #  id                    :uuid             not null, primary key
+#  muted_post_type_ids   :uuid             default([]), not null, is an Array
 #  world_last_visited_at :timestamptz
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -16,10 +17,11 @@
 #
 # Indexes
 #
-#  index_world_keys_on_invitation_id  (invitation_id)
-#  index_world_keys_on_recipient_id   (recipient_id)
-#  index_world_keys_on_world_id       (world_id)
-#  index_world_keys_uniqueness        (world_id,recipient_id) UNIQUE
+#  index_world_keys_on_invitation_id        (invitation_id)
+#  index_world_keys_on_muted_post_type_ids  (muted_post_type_ids) USING gin
+#  index_world_keys_on_recipient_id         (recipient_id)
+#  index_world_keys_on_world_id             (world_id)
+#  index_world_keys_uniqueness              (world_id,recipient_id) UNIQUE
 #
 # Foreign Keys
 #

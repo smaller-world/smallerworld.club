@@ -56,7 +56,15 @@ class PostType < ApplicationRecord
   belongs_to :world
   has_many :grants, class_name: "PostTypeGrant", dependent: :destroy
   has_many :granted_world_keys, through: :grants, source: :world_key
-  has_many :recipients, through: :granted_world_keys, source: :recipient
+  has_many :recipients, through: :granted_world_keys
+  has_many :subscribed_world_keys,
+    ->(post_type) {
+      post_type = T.let(post_type, PostType)
+      where.not("? = ANY(muted_post_type_ids)", post_type.id)
+    },
+    through: :grants,
+    source: :world_key
+  has_many :subscribers, through: :subscribed_world_keys, source: :recipient
 
   has_many :world_keys, through: :world, source: :keys
   has_many :world_key_recipients, through: :world_keys, source: :recipient

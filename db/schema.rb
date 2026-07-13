@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_11_144442) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_150742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -420,11 +420,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_144442) do
   create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.uuid "invitation_id"
+    t.uuid "muted_post_type_ids", default: [], null: false, array: true
     t.uuid "recipient_id", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.timestamptz "world_last_visited_at"
     t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
+    t.index ["muted_post_type_ids"], name: "index_world_keys_on_muted_post_type_ids", using: :gin
     t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
     t.index ["world_id", "recipient_id"], name: "index_world_keys_uniqueness", unique: true
     t.index ["world_id"], name: "index_world_keys_on_world_id"
