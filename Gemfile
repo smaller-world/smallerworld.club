@@ -207,7 +207,7 @@ group :development do
   gem "ruby-lsp", require: false
 
   # Type checking with Sorbet
-  gem "sorbet", "0.6.13281", require: false
+  gem "sorbet", "0.6.13341", require: false
 
   # Live-reload for Hotwire
   gem "hotwire-spark", "~> 0.1.13"
