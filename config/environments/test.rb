@@ -42,7 +42,7 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = {
     protocol: "https",
-    host: "app.smallerworld.club",
+    host: "smallerworld.club",
   }
 
   # Print deprecation notices to the stderr.

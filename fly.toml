@@ -13,7 +13,7 @@ strategy = "bluegreen"
 release_command = "./bin/prepare-deployment"
 
 [env]
-CANONICAL_HOST = "app.smallerworld.club"
+CANONICAL_HOST = "smallerworld.club"
 THRUSTER_HTTP_PORT = "8080"
 
 [processes]
