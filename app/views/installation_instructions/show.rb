@@ -89,10 +89,9 @@ class Views::InstallationInstructions::Show < Views::Base
                       "text-xs text-center text-balance transition-opacity",
                       "has-[+_[data-clicked]]:opacity-50",
                     ]) do
-                      plain("first, please install testflight.")
-                      br
+                      plain("first, please install and open testflight. ")
                       span(class: "font-semibold") do
-                        "come back to this page when you're done!"
+                        "when it asks you for the invite code, please RETURN TO THIS PAGE!"
                       end
                     end
 
@@ -105,7 +104,7 @@ class Views::InstallationInstructions::Show < Views::Base
                       class:  "installation-instructions-testflight-button",
                       data: {
                         controller: "click-tracking alert",
-                        alert_message_value: "come back to this page after you install testflight!",
+                        alert_message_value: "testflight is a little confusing, make sure you read the instructions on this page!",
                         action: "transition-group#start click-tracking#track alert#alert",
                       },
                     )
