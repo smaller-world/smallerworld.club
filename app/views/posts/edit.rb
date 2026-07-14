@@ -28,7 +28,7 @@ class Views::Posts::Edit < Views::Base
         div(class: "flex flex-col gap-0.5") do
           Components::PostForm(post: @post)
           Components::ConfirmDeleteButton(
-            target: @post,
+            url: @post,
             variant: :link,
             class: "self-center text-muted-foreground",
           ) do

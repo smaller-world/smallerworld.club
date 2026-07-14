@@ -199,14 +199,14 @@ module Components
   # workspace://app/components/confirm_delete_button.rb:4
   sig do
     params(
-      target: ::Object,
+      url: ::Object,
       description: ::String,
       confirm_label: ::String,
       attributes: T.untyped,
       content: T.proc.params(instance: Components::ConfirmDeleteButton).void
     ).void
   end
-  def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
+  def ConfirmDeleteButton(url:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/device_passes_form.rb:4
   sig do
@@ -982,14 +982,14 @@ module Components
     # workspace://app/components/confirm_delete_button.rb:4
     sig do
       params(
-        target: ::Object,
+        url: ::Object,
         description: ::String,
         confirm_label: ::String,
         attributes: T.untyped,
         content: T.proc.params(instance: Components::ConfirmDeleteButton).void
       ).void
     end
-    def ConfirmDeleteButton(target:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
+    def ConfirmDeleteButton(url:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/device_passes_form.rb:4
     sig do

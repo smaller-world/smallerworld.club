@@ -55,7 +55,7 @@ class Views::WorldKeys::Edit < Views::Base
         div(class: "flex flex-col gap-0.5") do
           Components::WorldKeyForm(world_key: @world_key)
           Components::ConfirmDeleteButton(
-            target: @world_key,
+            url: @world_key,
             variant: :link,
             confirm_label: "really destroy",
             class: "self-center text-muted-foreground",

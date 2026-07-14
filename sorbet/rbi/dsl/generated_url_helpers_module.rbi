@@ -109,6 +109,9 @@ module GeneratedUrlHelpersModule
   def phone_number_verification_requests_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def policies_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def post_card_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -221,6 +224,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def session_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def start_pwa_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_url(*args); end

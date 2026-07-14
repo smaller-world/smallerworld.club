@@ -23,7 +23,7 @@ class Views::Worlds::Edit < Views::Base
         div(class: "flex flex-col gap-0.5") do
           Components::WorldForm(world: @world)
           Components::ConfirmDeleteButton(
-            target: @world,
+            url: @world,
             variant: :link,
             class: "self-center text-muted-foreground",
           ) do

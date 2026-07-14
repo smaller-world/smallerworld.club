@@ -25,7 +25,7 @@ class Views::PostTypes::Edit < Views::Base
         div(class: "flex flex-col gap-0.5") do
           Components::PostTypeForm(post_type: @post_type, previous_url: @previous_url)
           Components::ConfirmDeleteButton(
-            target: @post_type,
+            url: @post_type,
             description: "all posts of this type will be deleted.",
             variant: :link,
             class: "self-center text-muted-foreground",

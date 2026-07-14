@@ -19,9 +19,16 @@ class Views::Accounts::Edit < Views::Base
       body_class: "bg-muted",
     ) do |app_layout|
       app_layout.page_container(
-        class: "flex-1 flex flex-col max-w-md",
+        class: "flex-1 flex flex-col gap-0.5 max-w-md",
       ) do
         Components::AccountForm(user: @current_user)
+        Components::ConfirmDeleteButton(
+          url: account_path,
+          variant: :link,
+          class: "self-center text-muted-foreground",
+        ) do
+          "delete account"
+        end
       end
     end
   end

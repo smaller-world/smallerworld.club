@@ -113,4 +113,18 @@ class AccountsController < ApplicationController
       end
     end
   end
+
+  # DELETE /account
+  def destroy
+    respond_to do |format|
+      format.html do
+        current_user = Current.user!
+        if current_user.destroy
+          redirect_to(root_path, notice: "your account has been deleted. bye-bye!")
+        else
+          render Views::Accounts::Edit.new(current_user:), status: :unprocessable_content
+        end
+      end
+    end
+  end
 end

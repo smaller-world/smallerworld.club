@@ -109,6 +109,9 @@ module GeneratedPathHelpersModule
   def phone_number_verification_requests_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def policies_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def post_card_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -221,6 +224,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def start_pwa_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_path(*args); end

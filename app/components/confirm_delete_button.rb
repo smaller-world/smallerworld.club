@@ -8,20 +8,20 @@ class Components::ConfirmDeleteButton < Components::Base
 
   sig do
     params(
-      target: Object,
+      url: Object,
       description: String,
       confirm_label: String,
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    target:,
+    url:,
     description: "this action is permanent and cannot be undone",
     confirm_label: "really delete",
     **attributes
   )
     super(**attributes)
-    @target = target
+    @url = url
     @description = description
     @confirm_label = confirm_label
   end
@@ -37,7 +37,7 @@ class Components::ConfirmDeleteButton < Components::Base
           popover_header.title { "are you sure?" }
           popover_header.description { @description }
         end
-        form_with(url: @target, method: :delete, data: {
+        form_with(url: @url, method: :delete, data: {
           controller: "haptic-bridge",
           action: "turbo:submit-end->haptic-bridge#vibrate",
         }) do

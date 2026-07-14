@@ -93,7 +93,7 @@ class Views::Home::Show < Views::Base
           variant: :ghost,
           size: :icon,
           icon: "huge/settings-01",
-          class: "mt-1 mr-6 [&>svg]:size-5 text-muted-foreground",
+          class: "mt-2 mr-6 [&>svg]:size-5 text-muted-foreground",
         )
       end
 
