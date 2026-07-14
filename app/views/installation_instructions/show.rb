@@ -71,7 +71,7 @@ class Views::InstallationInstructions::Show < Views::Base
                   controller: "transition-group",
                 }) do
                   if @questions.testflight_installed
-                    p(class: "text-center text-balance text-xs text-muted-foreground") do
+                    p(class: "text-center text-balance text-sm text-muted-foreground") do
                       "great! please accept this invitation to test smaller world:"
                     end
                     button_link_to(
@@ -81,12 +81,12 @@ class Views::InstallationInstructions::Show < Views::Base
                       icon: "huge/link-square-01",
                     )
                   else
-                    p(class: "text-center text-balance text-xs text-muted-foreground") do
+                    p(class: "text-center text-balance text-sm text-muted-foreground") do
                       "we're not live on the app store yet, so you'll have to use " \
                         "apple's testflight app to install smaller world (for now)."
                     end
                     p(class: [
-                      "text-xs text-center text-balance transition-opacity",
+                      "text-sm text-center text-balance transition-opacity",
                       "has-[+_[data-clicked]]:opacity-50",
                     ]) do
                       plain("first, please install and open testflight. ")
@@ -115,7 +115,7 @@ class Views::InstallationInstructions::Show < Views::Base
                       transition_enter: "transition-opacity duration-200 ease",
                       action: "transition-group:start->transition#enter",
                     }) do
-                      p(class: "text-xs text-center text-balance") do
+                      p(class: "text-sm text-center text-balance") do
                         "now, install and open testflight. when prompted for an " \
                           "invitation code, just press paste!"
                       end
