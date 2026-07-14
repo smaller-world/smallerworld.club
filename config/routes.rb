@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   # == Pages
   scope controller: :pages do
     root action: :landing
+    get :policies
   end
 
   # == Authentication

@@ -8,8 +8,16 @@ class PagesController < PublicController
   def landing
     respond_to do |format|
       format.html do
-        # flash.now[:notice] = "welcome to smaller world!"
         render Views::Pages::Landing
+      end
+    end
+  end
+
+  # GET /policies
+  def policies
+    respond_to do |format|
+      format.html do
+        render Views::Pages::Policies
       end
     end
   end
