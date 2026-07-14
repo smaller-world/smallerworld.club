@@ -66,8 +66,14 @@ class Components::Base
   include InlineSvg::ActionView::Helpers
   include ActionPolicy::Behaviour
 
-  sig { params(text: String, options: T.untyped).returns(String) }
-  def auto_link(text, **options); end
+  sig do
+    params(
+      text: String,
+      options: T.untyped,
+      block: T.nilable(T.proc.params(text: String).returns(String)),
+    ).returns(String)
+  end
+  def auto_link(text, **options, &block); end
 
   sig { returns(T::Boolean) }
   def authenticated?; end

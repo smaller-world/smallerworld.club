@@ -4,7 +4,7 @@ import { visit } from "@hotwired/turbo";
 import { urlPathWithQuery } from "#helpers/url_helpers";
 
 export default class RedirectBackToSelfController extends Controller<HTMLAnchorElement> {
-  // == Helpers ==
+  // == Actions ==
 
   visit(event: Event): void {
     event.preventDefault();

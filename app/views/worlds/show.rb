@@ -82,7 +82,14 @@ class Views::Worlds::Show < Views::Base
             end
             if (blurb = @world.blurb)
               p(class: "whitespace-pre-wrap text-center text-muted-foreground text-sm") do
-                blurb
+                auto_link(blurb, html: {
+                  class: "underline",
+                  target: "_blank",
+                  rel: "noopener noreferrer nofollow",
+                }) do |text|
+                  # Normalize URL (strip protocol)
+                  Addressable::URI.parse(text).omit(:scheme).to_s.delete_prefix("//")
+                end
               end
             end
           end
