@@ -75,6 +75,10 @@ class Components::AppHeader < Components::Base
         end
       end
     else
+      content.link_item_to(root_path) do
+        image_tag("logo.png", class: "size-4")
+        span { "about smaller world" }
+      end
       content.link_item_to(new_session_path) do
         Icon("huge/door-01")
         span { "sign in" }

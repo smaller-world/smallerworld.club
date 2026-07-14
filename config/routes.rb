@@ -135,6 +135,12 @@ Rails.application.routes.draw do
   get "/metrics" => redirect(Rails.configuration.metrics_url, status: 302)
   get "/sentry" => redirect(Rails.configuration.sentry_url, status: 302)
 
+  # == V1 Redirects
+  scope controller: "v1_redirects" do
+    get "/start/pwa", action: "redirect"
+    get "/@:v1_world_handle", action: "redirect"
+  end
+
   # == UI Docs
   resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
 

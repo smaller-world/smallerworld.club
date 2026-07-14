@@ -198,7 +198,7 @@ class Views::Pages::Policies < Views::Base
   sig { void }
   def header
     div(class: "flex flex-col items-center gap-1 text-center") do
-      h1(class: "font-heading text-2xl font-semibold text-balance sm:text-3xl") do
+      h1(class: "font-heading text-2xl font-semibold text-balance sm:mt-8 sm:text-3xl") do
         "Terms of Use & Privacy Policy"
       end
       p(class: "text-sm text-muted-foreground") do
