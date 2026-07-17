@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::Button < Components::Base
+class Components::Button < Components::Polymorphic
   # == Configuration ==
 
   VARIANTS = [ :default, :outline, :secondary, :ghost, :destructive, :link ].freeze

@@ -85,6 +85,9 @@ module Smallerworld
     config.console1984.ask_for_username_if_empty = true
     config.console1984.incinerate_after = 1.year
 
+    # Load email images.
+    config.action_mailer.asset_host = "http://localhost:3000"
+
     # == Custom Helpers ==
 
     sig { returns(String) }

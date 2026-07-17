@@ -1,0 +1,68 @@
+@layer theme, base, base-components, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "../../components/mailer_layout.rb";
+@source "../../components/concerns/mailer_elements.rb";
+@source "../../views/mailers/";
+
+@import "shadcn/tailwind.css";
+@import "./theme.css";
+
+/* Mailchimp CSS Reset */
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    border: 0 none;
+    height: auto;
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+  }
+
+  a img {
+    border: 0 none;
+  }
+
+  .imageFix {
+    display: block;
+  }
+
+  table,
+  td {
+    border-collapse: collapse;
+  }
+
+  #bodyTable {
+    height: 100% !important;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+  }
+}
+
+/* Custom email styles */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    @apply bg-muted;
+  }
+
+  a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+
+  #bodyTable {
+    @apply bg-muted;
+  }
+}

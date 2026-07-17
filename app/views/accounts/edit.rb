@@ -14,20 +14,27 @@ class Views::Accounts::Edit < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(
-      title: "your account",
-      body_class: "bg-muted",
-    ) do |app_layout|
+    Components::AppLayout(title: "your account", class: "bg-muted") do |app_layout|
       app_layout.page_container(
-        class: "flex-1 flex flex-col gap-0.5 max-w-md",
+        class: "flex flex-col gap-6 max-w-md",
       ) do
-        Components::AccountForm(user: @current_user)
-        Components::ConfirmDeleteButton(
-          url: account_path,
-          variant: :link,
-          class: "self-center text-muted-foreground",
+        div(class: "flex flex-col gap-0.5") do
+          Components::AccountForm(user: @current_user)
+          Components::ConfirmDeleteButton(
+            url: account_path,
+            variant: :link,
+            class: "self-center text-muted-foreground",
+          ) do
+            "delete account"
+          end
+        end
+        link_to(
+          policies_path,
+          class: "mx-auto text-xs text-muted-foreground underline",
+          target: "_blank",
+          rel: "noopener",
         ) do
-          "delete account"
+          "our terms and policies"
         end
       end
     end

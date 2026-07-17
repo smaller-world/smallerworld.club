@@ -55,8 +55,9 @@ gem "sorbet-runtime"
 # Perform full text search with Postgres
 gem "pg_search", "~> 2.3"
 
-# Inline CSS into email templates
-gem "roadie-rails"
+# Inline CSS into email templates (& generate text versions of emails)
+gem "premailer-rails"
+gem "premailer", "~> 1.29"
 
 # Build views with Ruby
 gem "phlex-rails", "~> 2.4"
@@ -170,6 +171,9 @@ gem "console1984"
 # Render forms with Superform
 gem "superform", "~> 0.7.0"
 
+# Send transactional emails with Resend
+gem "resend", "~> 1.6"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"
@@ -220,6 +224,9 @@ group :development do
 
   # Generate a standard Rails Dockerfile
   gem "dockerfile-rails"
+
+  # Preview Action Mailer emails sent in development
+  gem "letter_opener"
 end
 
 group :test do

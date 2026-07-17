@@ -58,12 +58,11 @@ class Components::Base < Phlex::HTML
 
   # == Initialization ==
 
-  sig { params(element: T.nilable(Symbol), attributes: T.untyped).void }
-  def initialize(element: nil, **attributes)
+  sig { params(attributes: T.untyped).void }
+  def initialize(**attributes)
     super()
     @current_user = T.let(Current.user, T.nilable(User))
     @current_device = T.let(Current.device, T.nilable(Device))
-    @element = element
     @attributes = attributes
   end
 
@@ -92,17 +91,13 @@ class Components::Base < Phlex::HTML
 
   sig do
     params(
-      default_element: Symbol,
+      element: Symbol,
       attributes: T.untyped,
       content: T.nilable(T.proc.void),
     ).void
   end
-  def root_element(default_element, **attributes, &content)
-    public_send(
-      @element || default_element,
-      **mix(attributes, @attributes),
-      &content
-    )
+  def root_element(element, **attributes, &content)
+    public_send(element, **mix(attributes, @attributes), &content)
   end
 
   sig { returns(UrlHelpers) }

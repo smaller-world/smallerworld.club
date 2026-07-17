@@ -22,7 +22,7 @@ class Views::Pages::Landing < Views::Base
               end
               p(class: "text-balance text-muted-foreground max-w-xs") do
                 "smaller world is a place where you can share your inner world with " \
-                  "close friends :)"
+                  "your friends :)"
               end
             end
           end

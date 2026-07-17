@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::Badge < Components::Base
+class Components::Badge < Components::Polymorphic
   # == Configuration
 
   VARIANTS = [ :default, :secondary, :destructive, :outline, :ghost, :link ]

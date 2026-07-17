@@ -11,12 +11,16 @@ class AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_account_path
     assert_difference -> { User.count }, 1 do
       post account_path, params: {
-        user: { name: "Casey", time_zone_name: "America/New_York" },
+        user: {
+          name: "bobby",
+          unconfirmed_email_address: "bobbysue@example.com",
+          time_zone_name: "America/New_York",
+        },
       }
     end
 
     user = User.find_by!(phone_number:)
-    assert_equal "Casey", user.name
+    assert_equal "bobby", user.name
     assert_redirected_to home_url
     assert_predicate cookies[:session_id], :present?
   end

@@ -7,9 +7,4 @@
 
 class ApplicationMailer
   include GeneratedUrlHelpersModule
-
-  class << self
-    sig { returns(::ActionMailer::MessageDelivery) }
-    def roadie_options; end
-  end
 end

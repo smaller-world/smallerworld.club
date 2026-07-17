@@ -6,14 +6,18 @@
 #
 # Table name: users
 #
-#  id                  :uuid             not null, primary key
-#  app_last_visited_at :timestamptz
-#  has_v1_account      :boolean          default(FALSE), not null
-#  name                :string           not null
-#  phone_number        :string           not null
-#  time_zone_name      :string           not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  id                                 :uuid             not null, primary key
+#  app_last_visited_at                :timestamptz
+#  email_address                      :string
+#  email_address_confirmation_sent_at :timestamptz
+#  email_address_confirmed_at         :timestamptz
+#  has_v1_account                     :boolean          default(FALSE), not null
+#  name                               :string           not null
+#  phone_number                       :string           not null
+#  time_zone_name                     :string           not null
+#  unconfirmed_email_address          :string
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
 #
 # Indexes
 #
@@ -48,6 +52,12 @@ class User < ApplicationRecord
   sig { returns(String) }
   def interpreted_first_name
     name.split(" ").first || name
+  end
+
+  sig { returns(String) }
+  def unconfirmed_email_address!
+    unconfirmed_email_address or
+      raise ApplicationError, "Missing unconfirmed email address"
   end
 
   # == Associations ==
@@ -131,11 +141,15 @@ class User < ApplicationRecord
     presence: true,
     uniqueness: { message: "already registered" },
     phone: { possible: true, types: :mobile, extensions: false }
+  validates :email_address, :unconfirmed_email_address, email: true, allow_nil: true
+  validates :unconfirmed_email_address, presence: true, on: :create
+  validates :email_address, presence: true, unless: :unconfirmed_email_address?, on: :create
   validates_time_zone_name
 
   # == Hooks ==
 
   before_create :set_has_v1_account unless Rails.env.test?
+  after_create_commit :deliver_email_address_confirmation_later
 
   # == Search ==
 
@@ -183,6 +197,41 @@ class User < ApplicationRecord
   # def send_badge_count_notifications_later
   #   SendUserBadgeCountNotificationsJob.perform_later(self)
   # end
+
+  # == Email Address Confirmation ==
+
+  generates_token_for :email_address_confirmation do
+    unconfirmed_email_address!
+  end
+
+  sig { returns(String) }
+  def generate_email_address_confirmation_token
+    generate_token_for(:email_address_confirmation)
+  end
+
+  sig { params(token: String).returns(User) }
+  def self.find_by_email_address_confirmation_token!(token)
+    find_by_token_for!(:email_address_confirmation, token)
+  end
+
+  sig { returns(T.untyped) }
+  def confirm_email_address!
+    update!(
+      email_address: unconfirmed_email_address!,
+      unconfirmed_email_address: nil,
+    )
+  end
+
+  sig { void }
+  def deliver_email_address_confirmation
+    AccountMailer.email_address_confirmation(user: self).deliver_now
+    update!(email_address_confirmation_sent_at: Time.current)
+  end
+
+  sig { params(options: T.untyped).returns(DeliverUserEmailAddressConfirmationJob) }
+  def deliver_email_address_confirmation_later(**options)
+    DeliverUserEmailAddressConfirmationJob.set(**options).perform_later(self)
+  end
 
   # == Methods ==
 

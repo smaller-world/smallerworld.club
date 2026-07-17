@@ -22,7 +22,8 @@ class UsersTest < ApplicationSystemTestCase
 
     assert_current_path new_account_path, wait: 10
 
-    fill_in "what's your name?", with: "Casey"
+    fill_in "your name", with: "bobby"
+    fill_in "your email", with: "bobbysue@example.ca"
     click_button "create account"
 
     assert_current_path home_path, wait: 10

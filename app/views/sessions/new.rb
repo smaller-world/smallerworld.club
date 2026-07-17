@@ -18,7 +18,7 @@ class Views::Sessions::New < Views::Base
   def view_template
     Components::AppLayout(
       title: ("sign in to smaller world" unless hotwire_native_app?),
-      body_class: "bg-muted [&_.flash]:bg-background",
+      class: "bg-muted [&_.flash]:bg-background",
       disable_cache: true,
     ) do |app_layout|
       app_layout.with_head do

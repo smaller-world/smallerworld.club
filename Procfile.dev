@@ -1,4 +1,4 @@
 db: bin/postgres
 web: bin/postgres-await && env RUBY_DEBUG_OPEN=true bin/rails server -p 3000
 js: bun run build --watch
-css: bun run build:css --watch
+css: bunx -p npm-run-all2 run-p "build:css:* -- --watch"

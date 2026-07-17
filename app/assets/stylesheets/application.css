@@ -1,20 +1,23 @@
-@source not "../../../sorbet/";
+@layer theme, base, base-components, components, utilities;
 
 @import "tailwindcss";
+@source not "../../../sorbet/";
+@source not "../../views/mailers/";
+
 @import "tw-fade";
 @import "tw-animate-css";
 @import "tw-shimmer";
 @import "shadcn/tailwind.css";
 
 @import "./hotwire_native.css";
+@import "./theme.css";
+
 @import "./tippy.css";
 @import "./pagy.css";
 @import "./lexxy.css";
 @import "./uppy.css";
 @import "./toasts.css";
 @import "./fslightbox.css";
-
-@import "./theme.css";
 
 @import "./loading.css";
 @import "./alerts.css";
@@ -53,3 +56,43 @@
 
 /* @import "./sign_in_with_apple.css";
 @import "./sign_in_with_google.css"; */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  .link {
+    @apply text-muted-foreground underline-offset-4 hover:underline;
+  }
+}
+
+@layer utilities {
+  .hidden[data-hidden-inline] {
+    display: revert-layer;
+    opacity: 0;
+  }
+}
+
+@utility revert-display-layer {
+  display: revert-layer;
+}
+
+@utility visually-hidden {
+  @apply fixed top-0 left-0 -m-px size-px overflow-hidden border-0 p-0 whitespace-nowrap;
+
+  clip-path: inset(50%);
+}
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    :where(body:not(.no-dark)) & {
+      @slot;
+    }
+  }
+}

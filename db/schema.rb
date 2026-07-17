@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_150742) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_165946) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -380,10 +380,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_150742) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.timestamptz "app_last_visited_at"
     t.datetime "created_at", null: false
+    t.string "email_address"
+    t.timestamptz "email_address_confirmation_sent_at"
+    t.timestamptz "email_address_confirmed_at"
     t.boolean "has_v1_account", default: false, null: false
     t.string "name", null: false
     t.string "phone_number", null: false
     t.string "time_zone_name", null: false
+    t.string "unconfirmed_email_address"
     t.datetime "updated_at", null: false
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end

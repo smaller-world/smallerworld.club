@@ -69,28 +69,21 @@ module Components
   def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/app_header.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::AppHeader).void)
-    ).void
-  end
-  def AppHeader(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::AppHeader).void)).void }
+  def AppHeader(**attributes, &content); end
 
   # workspace://app/components/app_layout.rb:4
   sig do
     params(
       page_title: T.nilable(T.any(::String, T::Array[::String])),
       title: T.nilable(::String),
-      body_class: T.nilable(::String),
       force_header: T.nilable(::TrueClass),
       disable_cache: T::Boolean,
       attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+      content: T.proc.params(instance: Components::AppLayout).void
     ).void
   end
-  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
+  def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/async_post_reactions.rb:4
   sig do
@@ -167,14 +160,8 @@ module Components
   def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/checkbox_group.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::CheckboxGroup).void
-    ).void
-  end
-  def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
+  def CheckboxGroup(**attributes, &content); end
 
   # workspace://app/components/clearable_file_input.rb:4
   sig do
@@ -187,14 +174,8 @@ module Components
   def ClearableFileInput(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/combobox.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::Combobox).void)
-    ).void
-  end
-  def Combobox(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::Combobox).void)).void }
+  def Combobox(**attributes, &content); end
 
   # workspace://app/components/confirm_delete_button.rb:4
   sig do
@@ -211,12 +192,11 @@ module Components
   # workspace://app/components/device_passes_form.rb:4
   sig do
     params(
-      element: T.nilable(::Symbol),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
     ).void
   end
-  def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
+  def DevicePassesForm(**attributes, &content); end
 
   # workspace://app/components/dialog.rb:4
   sig do
@@ -244,14 +224,8 @@ module Components
   def EmojiSelect(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/empty.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::Empty).void
-    ).void
-  end
-  def Empty(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Empty).void).void }
+  def Empty(**attributes, &content); end
 
   # workspace://app/components/existing_post_reaction_form.rb:4
   sig do
@@ -287,34 +261,16 @@ module Components
   def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/field_group.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::FieldGroup).void
-    ).void
-  end
-  def FieldGroup(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldGroup).void).void }
+  def FieldGroup(**attributes, &content); end
 
   # workspace://app/components/field_label.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::FieldLabel).void
-    ).void
-  end
-  def FieldLabel(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldLabel).void).void }
+  def FieldLabel(**attributes, &content); end
 
   # workspace://app/components/field_set.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::FieldSet).void
-    ).void
-  end
-  def FieldSet(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldSet).void).void }
+  def FieldSet(**attributes, &content); end
 
   # workspace://app/components/file_input.rb:4
   sig do
@@ -374,14 +330,8 @@ module Components
   def Input(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/input_group.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::InputGroup).void
-    ).void
-  end
-  def InputGroup(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::InputGroup).void).void }
+  def InputGroup(**attributes, &content); end
 
   # workspace://app/components/item.rb:4
   sig do
@@ -395,24 +345,12 @@ module Components
   def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/item_group.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
-    ).void
-  end
-  def ItemGroup(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)).void }
+  def ItemGroup(**attributes, &content); end
 
   # workspace://app/components/label.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.proc.params(instance: Components::Label).void
-    ).void
-  end
-  def Label(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Label).void).void }
+  def Label(**attributes, &content); end
 
   # workspace://app/components/lexxy_editor.rb:4
   sig do
@@ -423,6 +361,10 @@ module Components
     ).void
   end
   def LexxyEditor(invalid: T.unsafe(nil), **attributes, &content); end
+
+  # workspace://app/components/mailer_layout.rb:4
+  sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::MailerLayout).void).void }
+  def MailerLayout(**attributes, &content); end
 
   # workspace://app/components/new_post_reaction_form.rb:4
   sig do
@@ -468,6 +410,16 @@ module Components
   end
   def PhoneNumberVerificationForm(verification_request:, **attributes, &content); end
 
+  # workspace://app/components/polymorphic.rb:4
+  sig do
+    params(
+      element: T.nilable(::Symbol),
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::Polymorphic).void)
+    ).void
+  end
+  def Polymorphic(element: T.unsafe(nil), **attributes, &content); end
+
   # workspace://app/components/popover.rb:4
   sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
   def Popover(popover_id: T.unsafe(nil), &content); end
@@ -490,12 +442,11 @@ module Components
   # workspace://app/components/post_card_skeleton.rb:4
   sig do
     params(
-      element: T.nilable(::Symbol),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
     ).void
   end
-  def PostCardSkeleton(element: T.unsafe(nil), **attributes, &content); end
+  def PostCardSkeleton(**attributes, &content); end
 
   # workspace://app/components/post_form.rb:4
   sig do
@@ -604,14 +555,8 @@ module Components
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/spinner.rb:4
-  sig do
-    params(
-      element: T.nilable(::Symbol),
-      attributes: T.untyped,
-      content: T.nilable(T.proc.params(instance: Components::Spinner).void)
-    ).void
-  end
-  def Spinner(element: T.unsafe(nil), **attributes, &content); end
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::Spinner).void)).void }
+  def Spinner(**attributes, &content); end
 
   # workspace://app/components/streamed_log_message.rb:6
   sig do
@@ -852,28 +797,21 @@ module Components
     def AppFlashAlert(message:, type: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/app_header.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::AppHeader).void)
-      ).void
-    end
-    def AppHeader(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::AppHeader).void)).void }
+    def AppHeader(**attributes, &content); end
 
     # workspace://app/components/app_layout.rb:4
     sig do
       params(
         page_title: T.nilable(T.any(::String, T::Array[::String])),
         title: T.nilable(::String),
-        body_class: T.nilable(::String),
         force_header: T.nilable(::TrueClass),
         disable_cache: T::Boolean,
         attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::AppLayout).void)
+        content: T.proc.params(instance: Components::AppLayout).void
       ).void
     end
-    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), body_class: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
+    def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/async_post_reactions.rb:4
     sig do
@@ -950,14 +888,8 @@ module Components
     def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/checkbox_group.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::CheckboxGroup).void
-      ).void
-    end
-    def CheckboxGroup(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
+    def CheckboxGroup(**attributes, &content); end
 
     # workspace://app/components/clearable_file_input.rb:4
     sig do
@@ -970,14 +902,8 @@ module Components
     def ClearableFileInput(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/combobox.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::Combobox).void)
-      ).void
-    end
-    def Combobox(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::Combobox).void)).void }
+    def Combobox(**attributes, &content); end
 
     # workspace://app/components/confirm_delete_button.rb:4
     sig do
@@ -994,12 +920,11 @@ module Components
     # workspace://app/components/device_passes_form.rb:4
     sig do
       params(
-        element: T.nilable(::Symbol),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::DevicePassesForm).void)
       ).void
     end
-    def DevicePassesForm(element: T.unsafe(nil), **attributes, &content); end
+    def DevicePassesForm(**attributes, &content); end
 
     # workspace://app/components/dialog.rb:4
     sig do
@@ -1027,14 +952,8 @@ module Components
     def EmojiSelect(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/empty.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::Empty).void
-      ).void
-    end
-    def Empty(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Empty).void).void }
+    def Empty(**attributes, &content); end
 
     # workspace://app/components/existing_post_reaction_form.rb:4
     sig do
@@ -1070,34 +989,16 @@ module Components
     def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/field_group.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::FieldGroup).void
-      ).void
-    end
-    def FieldGroup(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldGroup).void).void }
+    def FieldGroup(**attributes, &content); end
 
     # workspace://app/components/field_label.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::FieldLabel).void
-      ).void
-    end
-    def FieldLabel(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldLabel).void).void }
+    def FieldLabel(**attributes, &content); end
 
     # workspace://app/components/field_set.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::FieldSet).void
-      ).void
-    end
-    def FieldSet(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldSet).void).void }
+    def FieldSet(**attributes, &content); end
 
     # workspace://app/components/file_input.rb:4
     sig do
@@ -1157,14 +1058,8 @@ module Components
     def Input(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/input_group.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::InputGroup).void
-      ).void
-    end
-    def InputGroup(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::InputGroup).void).void }
+    def InputGroup(**attributes, &content); end
 
     # workspace://app/components/item.rb:4
     sig do
@@ -1178,24 +1073,12 @@ module Components
     def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/item_group.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)
-      ).void
-    end
-    def ItemGroup(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)).void }
+    def ItemGroup(**attributes, &content); end
 
     # workspace://app/components/label.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.proc.params(instance: Components::Label).void
-      ).void
-    end
-    def Label(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Label).void).void }
+    def Label(**attributes, &content); end
 
     # workspace://app/components/lexxy_editor.rb:4
     sig do
@@ -1206,6 +1089,10 @@ module Components
       ).void
     end
     def LexxyEditor(invalid: T.unsafe(nil), **attributes, &content); end
+
+    # workspace://app/components/mailer_layout.rb:4
+    sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::MailerLayout).void).void }
+    def MailerLayout(**attributes, &content); end
 
     # workspace://app/components/new_post_reaction_form.rb:4
     sig do
@@ -1251,6 +1138,16 @@ module Components
     end
     def PhoneNumberVerificationForm(verification_request:, **attributes, &content); end
 
+    # workspace://app/components/polymorphic.rb:4
+    sig do
+      params(
+        element: T.nilable(::Symbol),
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::Polymorphic).void)
+      ).void
+    end
+    def Polymorphic(element: T.unsafe(nil), **attributes, &content); end
+
     # workspace://app/components/popover.rb:4
     sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
     def Popover(popover_id: T.unsafe(nil), &content); end
@@ -1273,12 +1170,11 @@ module Components
     # workspace://app/components/post_card_skeleton.rb:4
     sig do
       params(
-        element: T.nilable(::Symbol),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::PostCardSkeleton).void)
       ).void
     end
-    def PostCardSkeleton(element: T.unsafe(nil), **attributes, &content); end
+    def PostCardSkeleton(**attributes, &content); end
 
     # workspace://app/components/post_form.rb:4
     sig do
@@ -1387,14 +1283,8 @@ module Components
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/spinner.rb:4
-    sig do
-      params(
-        element: T.nilable(::Symbol),
-        attributes: T.untyped,
-        content: T.nilable(T.proc.params(instance: Components::Spinner).void)
-      ).void
-    end
-    def Spinner(element: T.unsafe(nil), **attributes, &content); end
+    sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::Spinner).void)).void }
+    def Spinner(**attributes, &content); end
 
     # workspace://app/components/streamed_log_message.rb:6
     sig do

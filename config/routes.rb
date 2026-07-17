@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   # == Authentication
   resource :session, only: [ :new, :destroy ]
-  resources :phone_number_verification_requests, path: "verifications", only: :create do
+  resources :phone_number_verification_requests, only: :create do
     member do
       post :verify
     end
@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   resource :account, only: [ :new, :edit, :create, :update, :destroy ]
   resource :account_time_zone, path: "/account/time_zone", only: :update
   resource :account_app_visits, path: "/account/app_visits", only: :create
+  resource :account_email_address, path: "/account/email_address", only: [] do
+    get :confirm
+  end
 
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id

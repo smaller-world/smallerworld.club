@@ -1,0 +1,3 @@
+@import "../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css"
+  layer(base-components);
+@import "intl-tel-input/styles" layer(base-components);

@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::Item < Components::Base
+class Components::Item < Components::Polymorphic
   include Slot
 
   # == Configuration ==

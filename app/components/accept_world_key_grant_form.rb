@@ -30,7 +30,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
     ) do |form|
       Components::Card(
         size: :sm,
-        class: class_names("min-w-sm", "contents" => Current.user),
+        class: class_names("contents" => Current.user),
       ) do |card|
         unless Current.user
           card.header do

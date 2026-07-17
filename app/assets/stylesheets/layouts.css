@@ -1,4 +1,15 @@
+@layer base {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 @layer base-components {
+  .app-layout {
+    @apply flex min-h-dvh flex-col;
+  }
+
   .page-container {
     @apply mx-auto w-full max-w-2xl self-center p-4;
   }

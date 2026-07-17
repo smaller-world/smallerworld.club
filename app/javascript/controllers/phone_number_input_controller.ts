@@ -4,8 +4,6 @@ import { Typed } from "stimulus-typescript";
 
 import { addAction, addBeforeCacheAction } from "#helpers/stimulus_helpers";
 
-import "intl-tel-input/styles";
-
 const targets = {
   input: HTMLInputElement,
   hiddenInput: HTMLInputElement,

@@ -14,10 +14,7 @@ class Views::Accounts::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(
-      title: "create account",
-      body_class: "bg-muted",
-    ) do |app_layout|
+    Components::AppLayout(title: "create account", class: "bg-muted") do |app_layout|
       app_layout.page_container(
         class: "flex-1 flex flex-col items-center justify-center",
       ) do
@@ -32,7 +29,7 @@ class Views::Accounts::New < Views::Base
 
   sig { void }
   def account_card
-    Components::Card(class: "w-full max-w-90") do |card|
+    Components::Card(class: "w-full max-w-90 gap-2.5") do |card|
       card.header(class: "flex flex-col items-center gap-2") do
         image_tag("logo.png", class: "size-10")
         card.title(class: "text-lg text-center") do

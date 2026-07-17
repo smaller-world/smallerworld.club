@@ -52,7 +52,7 @@ class AccountsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        user_params = params.expect(user: [ :name, :time_zone_name ])
+        user_params = params.expect(user: [ :name, :unconfirmed_email_address, :time_zone_name ])
         phone_number_verification_token = session[:phone_number_verification_token]
         unless phone_number_verification_token
           tag_logger do

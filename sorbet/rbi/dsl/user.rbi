@@ -754,6 +754,141 @@ class User
     sig { void }
     def created_at_will_change!; end
 
+    sig { returns(T.nilable(::String)) }
+    def email_address; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def email_address=(value); end
+
+    sig { returns(T::Boolean) }
+    def email_address?; end
+
+    sig { returns(T.nilable(::String)) }
+    def email_address_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def email_address_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def email_address_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def email_address_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def email_address_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at; end
+
+    sig { params(value: T.nilable(::ActiveSupport::TimeWithZone)).returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at=(value); end
+
+    sig { returns(T::Boolean) }
+    def email_address_confirmation_sent_at?; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def email_address_confirmation_sent_at_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def email_address_confirmation_sent_at_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmation_sent_at_change; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmation_sent_at_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_confirmation_sent_at_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmation_sent_at_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_confirmation_sent_at_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at_previously_was; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmation_sent_at_was; end
+
+    sig { void }
+    def email_address_confirmation_sent_at_will_change!; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at; end
+
+    sig { params(value: T.nilable(::ActiveSupport::TimeWithZone)).returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at=(value); end
+
+    sig { returns(T::Boolean) }
+    def email_address_confirmed_at?; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def email_address_confirmed_at_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def email_address_confirmed_at_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmed_at_change; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmed_at_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_confirmed_at_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def email_address_confirmed_at_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_confirmed_at_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at_previously_was; end
+
+    sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
+    def email_address_confirmed_at_was; end
+
+    sig { void }
+    def email_address_confirmed_at_will_change!; end
+
+    sig { returns(T.nilable(::String)) }
+    def email_address_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def email_address_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def email_address_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def email_address_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def email_address_was; end
+
+    sig { void }
+    def email_address_will_change!; end
+
     sig { returns(T::Boolean) }
     def has_v1_account; end
 
@@ -986,6 +1121,15 @@ class User
     def restore_created_at!; end
 
     sig { void }
+    def restore_email_address!; end
+
+    sig { void }
+    def restore_email_address_confirmation_sent_at!; end
+
+    sig { void }
+    def restore_email_address_confirmed_at!; end
+
+    sig { void }
     def restore_has_v1_account!; end
 
     sig { void }
@@ -1004,6 +1148,9 @@ class User
     def restore_time_zone_name!; end
 
     sig { void }
+    def restore_unconfirmed_email_address!; end
+
+    sig { void }
     def restore_updated_at!; end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
@@ -1017,6 +1164,24 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_email_address; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def saved_change_to_email_address_confirmation_sent_at; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_email_address_confirmation_sent_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
+    def saved_change_to_email_address_confirmed_at; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_email_address_confirmed_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T::Boolean, T::Boolean])) }
     def saved_change_to_has_v1_account; end
@@ -1053,6 +1218,12 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_time_zone_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_unconfirmed_email_address; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_unconfirmed_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
@@ -1104,6 +1275,51 @@ class User
 
     sig { void }
     def time_zone_name_will_change!; end
+
+    sig { returns(T.nilable(::String)) }
+    def unconfirmed_email_address; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def unconfirmed_email_address=(value); end
+
+    sig { returns(T::Boolean) }
+    def unconfirmed_email_address?; end
+
+    sig { returns(T.nilable(::String)) }
+    def unconfirmed_email_address_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def unconfirmed_email_address_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def unconfirmed_email_address_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def unconfirmed_email_address_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def unconfirmed_email_address_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def unconfirmed_email_address_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def unconfirmed_email_address_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def unconfirmed_email_address_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def unconfirmed_email_address_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def unconfirmed_email_address_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def unconfirmed_email_address_was; end
+
+    sig { void }
+    def unconfirmed_email_address_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -1157,6 +1373,15 @@ class User
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_email_address_confirmation_sent_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_email_address_confirmed_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_has_v1_account?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1173,6 +1398,9 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_time_zone_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_unconfirmed_email_address?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end

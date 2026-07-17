@@ -3,8 +3,12 @@ import path from "path";
 
 const config = {
   sourcemap: "external",
-  entrypoints: ["app/javascript/application.ts"],
+  entrypoints: [
+    "app/javascript/application.ts",
+    "app/assets/stylesheets/application.bundle.css",
+  ],
   outdir: path.join(process.cwd(), "app/assets/builds"),
+  naming: "[name].[ext]",
 };
 
 const build = async (config) => {

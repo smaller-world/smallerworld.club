@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Components::AppLayout < Components::Base
+  include DeleteFrom
+
   # == Helpers ==
 
   include Phlex::Rails::Helpers::CSRFMetaTags
@@ -18,7 +20,6 @@ class Components::AppLayout < Components::Base
     params(
       page_title: T.nilable(T.any(String, T::Array[String])),
       title: T.nilable(String),
-      body_class: T.nilable(String),
       force_header: T.nilable(TrueClass),
       disable_cache: T::Boolean,
       attributes: T.untyped,
@@ -27,7 +28,6 @@ class Components::AppLayout < Components::Base
   def initialize(
     page_title: nil,
     title: nil,
-    body_class: nil,
     force_header: nil,
     disable_cache: false,
     **attributes
@@ -42,20 +42,25 @@ class Components::AppLayout < Components::Base
       T.nilable(String),
     )
     @title = title
-    @body_class = body_class
     @force_header = force_header
     @disable_cache = disable_cache
   end
 
   # == Component ==
 
-  sig { override.params(content: T.nilable(T.proc.void)).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
+    attributes = @attributes
+    body_attributes = delete_from(attributes, :class, :data)
+
     content_html = capture(&content)
 
     doctype
 
-    root_element(:html, data: { hotwire_native_platform: hotwire_native_platform }) do
+    html(**mix(
+      { data: { hotwire_native_platform: } },
+      attributes,
+    )) do
       head do
         if (site_title = self.site_title)
           title { site_title }
@@ -90,12 +95,12 @@ class Components::AppLayout < Components::Base
         link(rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true)
         link(
           rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..600;1,400..700&family=Manrope:wght@400..700&family=Single+Day&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&family=Manrope:wght@200..800&family=Single+Day&display=swap",
         )
 
         # == Assets
-        stylesheet_link_tag("application.base", "data-turbo-track": "reload")
-        stylesheet_link_tag("application.tailwind", "data-turbo-track": "reload")
+        stylesheet_link_tag("application", "data-turbo-track": "reload")
+        stylesheet_link_tag("application.bundle", "data-turbo-track": "reload")
         javascript_include_tag("application", "data-turbo-track": "reload", type: "module")
 
         # == Meta & OpenGraphh
@@ -109,12 +114,15 @@ class Components::AppLayout < Components::Base
         @head&.call
       end
 
-      body(
-        class: [ "flex min-h-dvh flex-col", @body_class ],
-        data: {
-          controller: "page-load-bridge page-reload",
+      body(**mix(
+        {
+          class: "app-layout",
+          data: {
+            controller: "page-load-bridge page-reload",
+          },
         },
-      ) do
+        body_attributes,
+      )) do
         if @force_header || !hotwire_native_app?
           Components::AppHeader()
         end

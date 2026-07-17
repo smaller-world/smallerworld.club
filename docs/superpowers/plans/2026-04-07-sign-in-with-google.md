@@ -813,7 +813,7 @@ class Views::Sessions::New < Views::Base
   def view_template
     Components::AppLayout(
       title: "sign in to smaller world",
-      body_class: "bg-muted",
+      class: "bg-muted",
     ) do |layout|
       layout.with_head do
         link(
