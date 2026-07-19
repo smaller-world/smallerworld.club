@@ -146,7 +146,7 @@ class User < ApplicationRecord
   validates :email_address,
     uniqueness: { case_sensitive: false },
     allow_nil: true
-  validates :unconfirmed_email_address, presence: true, on: :create
+  validates :unconfirmed_email_address, presence: true, on: :create, unless: :test_user?
   validates :email_address, presence: true, unless: :unconfirmed_email_address?, on: :create
   validates_time_zone_name
 
@@ -187,6 +187,35 @@ class User < ApplicationRecord
     else
       received_notifications
     end
+  end
+
+  # == Test User ==
+
+  sig { returns(String) }
+  def self.test_user_phone_number
+    Smallerworld.application.test_user_phone_number
+  end
+  delegate :test_user_phone_number, to: :class
+
+  sig { returns(User) }
+  def self.test_user
+    find_or_create_by!(phone_number: test_user_phone_number) do |user|
+      user.name = "test user"
+      user.email_address = "testuser@smallerworld.club"
+      user.time_zone_name = "America/Toronto"
+      user.owned_worlds.build(
+        name: "tester's world",
+        icon: {
+          io: Rails.root.join("app/assets/images/yumcat.png").open,
+          filename: "yumcat.png",
+        },
+      )
+    end
+  end
+
+  sig { returns(T::Boolean) }
+  def test_user?
+    phone_number == test_user_phone_number
   end
 
   # sig { returns(T::Boolean) }

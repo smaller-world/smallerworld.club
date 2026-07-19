@@ -63,8 +63,9 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     presence: true,
     phone: { possible: true, types: :mobile, extensions: false, allow_blank: true }
 
-  # == Callbacks ==
+  # == Hooks ==
 
+  before_save :set_test_user_verification_code, if: :test_user_phone_number?
   after_create_commit :deliver_verification_code, if: :should_deliver_verification_code?
 
   # == Scopes ==
@@ -150,7 +151,8 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def should_deliver_verification_code?
-    Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false
+    !test_user_phone_number? &&
+      (Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false)
   end
 
   sig { params(code: String).returns(T::Boolean) }
@@ -166,5 +168,21 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     end
 
     update(verified_at: Time.current)
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(T::Boolean) }
+  def test_user_phone_number?
+    phone_number == Smallerworld.application.test_user_phone_number
+  end
+
+  # == Callbacks ==
+
+  sig { void }
+  def set_test_user_verification_code
+    self.verification_code = Smallerworld.application.test_user_verification_code
   end
 end
