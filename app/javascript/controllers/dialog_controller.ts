@@ -17,16 +17,23 @@ export default class DialogController extends Typed(Controller<HTMLElement>, {
     if (!this.hasContentTarget) {
       throw new Error("Missing content target");
     }
-    addBeforeCacheAction(this, "close");
+    addBeforeCacheAction(this, "closeImmediately");
   }
 
   // == Actions ==
 
   open(): void {
     this.contentTarget.showModal();
+    requestAnimationFrame(() => {
+      this.dispatch("opened");
+    });
   }
 
   close(): void {
     this.contentTarget.close();
+  }
+
+  closeImmediately(): void {
+    this.contentTarget.requestClose();
   }
 }

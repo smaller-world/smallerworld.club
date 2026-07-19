@@ -407,7 +407,7 @@ class Views::Worlds::Show < Views::Base
             class: "hidden [form[data-draft-available]+&]:revert-display-layer",
           )
 
-          @world.post_types.each do |post_type|
+          @world.post_types.chronological.each do |post_type|
             div(class: "flex items-center gap-1") do
               item_group.item(
                 element: :a,

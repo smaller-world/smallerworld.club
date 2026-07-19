@@ -27,6 +27,19 @@ export default class EmojiMartController extends Controller<HTMLElement> {
 
   // == Actions ==
 
+  focusSearch(): void {
+    const { firstElementChild } = this.element;
+    if (firstElementChild instanceof HTMLElement) {
+      const { shadowRoot } = firstElementChild;
+      if (shadowRoot) {
+        const searchInput = shadowRoot.querySelector("input[type=search]");
+        if (searchInput instanceof HTMLInputElement) {
+          searchInput.focus();
+        }
+      }
+    }
+  }
+
   destroy(): void {
     this.element.replaceChildren();
   }

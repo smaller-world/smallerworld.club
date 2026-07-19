@@ -18,6 +18,7 @@ class Components::EmojiSelect < Components::Input
           controller: "emoji-select",
           action: [
             "emoji-select:request-open-picker->dialog#open",
+            "dialog:opened->emoji-select#requestPickerFocusSearch",
           ],
         },
       },
@@ -61,8 +62,10 @@ class Components::EmojiSelect < Components::Input
         class: "p-0 w-min",
       ) do
         div(data: {
+          emoji_select_target: "picker",
           controller: "emoji-mart",
           action: [
+            "emoji-select:request-picker-focus-search->emoji-mart#focusSearch",
             "emoji-mart:select->emoji-select#receiveSelection",
             "emoji-mart:select->dialog#close",
           ],

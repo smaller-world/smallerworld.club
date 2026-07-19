@@ -47,7 +47,7 @@ class Components::PhoneNumberVerificationForm < Components::Base
         end
       end
 
-      Components::FieldSet(class: "gap-2") do
+      Components::FieldSet(class: "gap-3") do
         form.wrapped(
           form.field(:phone_number).phone_number(
             placeholder: "your phone #",

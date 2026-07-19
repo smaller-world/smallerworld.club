@@ -4,6 +4,7 @@ import ApplicationController from "./application_controller";
 
 const targets = {
   input: HTMLInputElement,
+  picker: HTMLElement,
 };
 
 export default class EmojiSelectController extends Typed(
@@ -16,6 +17,9 @@ export default class EmojiSelectController extends Typed(
     super.connect();
     if (!this.hasInputTarget) {
       throw new Error("Missing input target");
+    }
+    if (!this.hasPickerTarget) {
+      throw new Error("Missing picker target");
     }
   }
 
@@ -44,5 +48,9 @@ export default class EmojiSelectController extends Typed(
     } else {
       this.dispatch("request-disable-tooltip", { target: inputTarget });
     }
+  }
+
+  requestPickerFocusSearch(): void {
+    this.dispatch("request-picker-focus-search", { target: this.pickerTarget });
   }
 }
