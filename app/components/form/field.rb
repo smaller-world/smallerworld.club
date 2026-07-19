@@ -18,9 +18,16 @@ class Components::Form
       Label.new(self, **attributes, &content)
     end
 
-    sig { params(attributes: T.untyped).returns(Error) }
-    def error(**attributes)
-      Error.new(self, **attributes)
+    sig do
+      params(
+        attributes: T.untyped,
+        content: T.nilable(
+          T.proc.params(field_error: Components::FieldError).returns(T.anything),
+        ),
+      ).returns(Error)
+    end
+    def error(**attributes, &content)
+      Error.new(self, **attributes, &content)
     end
 
     sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }

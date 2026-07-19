@@ -48,18 +48,18 @@ class Views::Home::Show < Views::Base
         if show_alert
           Components::Alert(class: "gap-y-1 mb-6") do |alert|
             alert.title do
-              "please try our app!!"
+              "we made an app for you!"
             end
             alert.description do
-              "it looks like you're using smaller world in the browser. to get the " \
-                "best experience, please download our app. thank you :)"
+              "it looks like you're using smaller world in the browser! to get the " \
+                "best experience, please download our app. thank you!!"
             end
             button_link_to(
               "get the app!",
               installation_instructions_path,
               variant: :default,
               icon: "huge/app-store",
-              class: "mt-1",
+              class: "mt-1.5",
             )
           end
         end
@@ -98,6 +98,10 @@ class Views::Home::Show < Views::Base
       end
 
       Components::AccountAppVisitForm(current_user: @current_user)
+
+      if !@current_user.email_address? && !@current_user.unconfirmed_email_address?
+        current_user_email_appeal
+      end
     end
   end
 
@@ -257,6 +261,69 @@ class Views::Home::Show < Views::Base
           end
           span(class: "world-icon-label text-xs text-muted-foreground") do
             "join a friend's world"
+          end
+        end
+      end
+    end
+  end
+
+  sig { void }
+  def current_user_email_appeal
+    Components::Dialog(open: true) do |dialog|
+      dialog.with_content(class: "gap-4") do |dialog_content|
+        dialog_content.header do |dialog_header|
+          dialog_header.title(class: "leading-tight") do
+            "can we have your email address pweeeease?"
+          end
+        end
+        div(class: "space-y-3") do
+          p do
+            "so basically adam told me that he'd like to be able to email people " \
+              "when we have important updates and stuff."
+          end
+          p do
+            "and i was like—can we just text people?? we already have y'alls " \
+              "phone #s on file..."
+          end
+          p do
+            plain("but he insisted and told me: ")
+            span(class: "italic") do
+              "but then i have to reach out manually to everyone on my personal # " \
+                "and when i did that to invite people to the smaller world reunion " \
+                "it took like 2 hours, i can't keep doing that"
+            end
+          end
+          p { "and so i would like to appeal to you, the user..." }
+        end
+        Components::Form(
+          @current_user,
+          action: account_path,
+          vibrate_on_submit: true,
+          class: "gap-4",
+        ) do |form|
+          form.wrapped(
+            form.field(:unconfirmed_email_address).email(
+              placeholder: "email@example.com",
+              required: true,
+            ),
+            label: "please give us your email!!",
+          )
+          div(class: "flex flex-col gap-1") do
+            form.submit do |button|
+              button.inline_start_icon("huge/floppy-disk")
+              span { "save account email" }
+            end
+            Components::Button(
+              type: :button,
+              variant: :link,
+              size: :xs,
+              class: "self-center text-muted-foreground underline",
+              data: {
+                action: "dialog#close",
+              },
+            ) do
+              "not right now >:("
+            end
           end
         end
       end

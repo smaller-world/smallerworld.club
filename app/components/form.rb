@@ -97,7 +97,7 @@ class Components::Form < Superform::Rails::Form
     label: true,
     description: nil,
     label_class: nil,
-    error: true,
+    error: component.field.invalid?,
     **attributes,
     &content
   )

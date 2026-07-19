@@ -83,7 +83,7 @@ class Views::Worlds::Show < Views::Base
             if (blurb = @world.blurb)
               p(class: "whitespace-pre-wrap text-center text-muted-foreground text-sm") do
                 auto_link(blurb, html: {
-                  class: "underline",
+                  class: "underline underline-offset-4",
                   target: "_blank",
                   rel: "noopener noreferrer nofollow",
                 }) do |text|
@@ -219,7 +219,7 @@ class Views::Worlds::Show < Views::Base
       if other_worlds.none?
         link_to(
           [ :new, primary_world, :invitation, recipient_id: @owner.id ],
-          class: "underline",
+          class: "underline underline-offset-4",
           data: {
             controller: "redirect-back-to-self",
             action: "redirect-back-to-self#visit",

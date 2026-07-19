@@ -60,10 +60,7 @@ class Components::NewPostReactionForm < Components::Base
         ) do
           Icon("huge/heart-add", class: "size-4.5")
         end
-        dialog.with_content(
-          show_close_button: false,
-          panel: { class: "p-0 w-min" },
-        ) do
+        dialog.with_content(show_close_button: false, class: "p-0 w-min") do
           div(data: {
             controller: "emoji-mart",
             action: [

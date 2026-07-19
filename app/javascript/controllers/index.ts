@@ -51,6 +51,7 @@ import PageReloadController from "./page_reload_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
+import PhoneNumberVerificationFormController from "./phone_number_verification_form_controller";
 import PostDraftController from "./post_draft_controller";
 import PostDraftInfoController from "./post_draft_info_controller";
 import PostFormTypeController from "./post_form_type_controller";
@@ -167,4 +168,8 @@ application.register("post-recipients-select", PostRecipientsSelectcontroller);
 application.register(
   "messaging-platform-dropdown",
   MessagingPlatformDropdownController,
+);
+application.register(
+  "phone-number-verification-form",
+  PhoneNumberVerificationFormController,
 );

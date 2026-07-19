@@ -6,19 +6,19 @@ class Components::FieldError < Components::Base
 
   sig do
     params(
-      messages: T::Array[String],
+      messages: T.nilable(T::Array[String]),
       attributes: T.untyped,
     ).void
   end
-  def initialize(messages: [], **attributes)
+  def initialize(messages: nil, **attributes)
     super(**attributes)
     @messages = messages
   end
 
   # == Component ==
 
-  sig { override.void }
-  def view_template
+  sig { override.params(content: T.nilable(T.proc.void)).void }
+  def view_template(&content)
     root_element(
       :div,
       class: "field-error",
@@ -27,14 +27,18 @@ class Components::FieldError < Components::Base
         slot: "field-error",
       },
     ) do
-      if @messages.length > 1
-        ul do
-          @messages.each do |msg|
-            li { msg }
+      if content
+        yield
+      elsif (messages = @messages)
+        if messages.length > 1
+          ul do
+            messages.each do |msg|
+              li { msg }
+            end
           end
+        else
+          messages.first
         end
-      else
-        @messages.first
       end
     end
   end

@@ -68,7 +68,7 @@ class AccountsController < ApplicationController
 
         phone_number_verification_request = PhoneNumberVerificationRequest
           .find_by_registration_token(phone_number_verification_token)
-        unless phone_number_verification_request
+        unless phone_number_verification_request&.verified?
           tag_logger do
             logger.warn("Invalid phone number verification token")
           end
@@ -100,12 +100,21 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html do
         current_user = Current.user!
-        user_params = params.expect(user: [ :name, :time_zone_name ])
+        user_params = params.expect(user: [
+          :name,
+          :time_zone_name,
+          :unconfirmed_email_address,
+        ])
         if current_user.update(user_params)
+          alert = if current_user.unconfirmed_email_address? &&
+              current_user.saved_change_to_unconfirmed_email_address?
+            "please check your inbox for a confirmation email! ty <3"
+          end
           refresh_or_redirect_to(
             home_path,
             status: :see_other,
             notice: "your account settings were saved",
+            alert:,
           )
         else
           render Views::Accounts::Edit.new(current_user:), status: :unprocessable_content

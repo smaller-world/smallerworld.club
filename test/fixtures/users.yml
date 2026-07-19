@@ -18,7 +18,8 @@
 #
 # Indexes
 #
-#  index_users_on_phone_number  (phone_number) UNIQUE
+#  index_users_on_email_addresses_case_insensitive  (lower((email_address)::text)) UNIQUE WHERE (email_address IS NOT NULL)
+#  index_users_on_phone_number                      (phone_number) UNIQUE
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 bob:

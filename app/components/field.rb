@@ -101,6 +101,19 @@ class Components::Field < Components::Base
     )
   end
 
+  sig do
+    params(
+      messages: T.nilable(T::Array[String]),
+      attributes: T.untyped,
+      content: T.nilable(
+        T.proc.params(field_error: Components::FieldError).returns(T.anything),
+      ),
+    ).void
+  end
+  def error(messages: nil, **attributes, &content)
+    Components::FieldError(messages:, **attributes, &content)
+  end
+
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
   def separator(**attributes, &content)
     div(

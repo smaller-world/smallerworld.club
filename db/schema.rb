@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_165946) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_19_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -389,6 +389,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_165946) do
     t.string "time_zone_name", null: false
     t.string "unconfirmed_email_address"
     t.datetime "updated_at", null: false
+    t.index "lower((email_address)::text)", name: "index_users_on_email_addresses_case_insensitive", unique: true, where: "(email_address IS NOT NULL)"
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 

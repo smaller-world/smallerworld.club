@@ -19,6 +19,9 @@ module GeneratedPathHelpersModule
   def account_app_visits_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def account_email_address_confirmation_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -26,9 +29,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def apple_app_site_association_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def confirm_account_email_address_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
@@ -215,6 +215,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def reaction_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def resend_account_email_address_confirmation_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def restore_post_draft_path(*args); end

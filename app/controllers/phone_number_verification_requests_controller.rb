@@ -11,6 +11,14 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   #   only: :create,
   #   with: :handle_rate_limit_exceeded if Rails.env.production?
   before_action :verify_turnstile_request, only: :create
+  rate_limit to: 10,
+    within: 5.minutes,
+    only: :verify,
+    by: -> {
+      T.bind(self, PhoneNumberVerificationRequestsController)
+      params.fetch(:id)
+    },
+    with: :handle_verify_rate_limit_exceeded if Rails.env.production?
 
   # == Actions ==
 
@@ -134,6 +142,15 @@ class PhoneNumberVerificationRequestsController < ApplicationController
     redirect_to(
       new_session_path,
       alert: "you have requested a login code too many times. please try again later.",
+      status: :see_other,
+    )
+  end
+
+  sig { void }
+  def handle_verify_rate_limit_exceeded
+    redirect_to(
+      new_session_path,
+      alert: "too many incorrect verification attempts. please try again later.",
       status: :see_other,
     )
   end

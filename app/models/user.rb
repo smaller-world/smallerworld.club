@@ -21,7 +21,8 @@
 #
 # Indexes
 #
-#  index_users_on_phone_number  (phone_number) UNIQUE
+#  index_users_on_email_addresses_case_insensitive  (lower((email_address)::text)) UNIQUE WHERE (email_address IS NOT NULL)
+#  index_users_on_phone_number                      (phone_number) UNIQUE
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class User < ApplicationRecord
@@ -142,14 +143,25 @@ class User < ApplicationRecord
     uniqueness: { message: "already registered" },
     phone: { possible: true, types: :mobile, extensions: false }
   validates :email_address, :unconfirmed_email_address, email: true, allow_nil: true
+  validates :email_address,
+    uniqueness: { case_sensitive: false },
+    allow_nil: true
   validates :unconfirmed_email_address, presence: true, on: :create
   validates :email_address, presence: true, unless: :unconfirmed_email_address?, on: :create
   validates_time_zone_name
 
   # == Hooks ==
 
+  before_save :clear_unconfirmed_email_address_if_same_as_confirmed,
+    if: :unconfirmed_email_address?
+  before_save :clear_email_address_confirmation_timestamps,
+    if: [ :unconfirmed_email_address?, :unconfirmed_email_address_changed? ]
   before_create :set_has_v1_account unless Rails.env.test?
-  after_create_commit :deliver_email_address_confirmation_later
+  after_commit :deliver_email_address_confirmation_later,
+    if: [
+      :unconfirmed_email_address?,
+      :saved_change_to_unconfirmed_email_address?,
+    ]
 
   # == Search ==
 
@@ -200,12 +212,16 @@ class User < ApplicationRecord
 
   # == Email Address Confirmation ==
 
-  generates_token_for :email_address_confirmation do
-    unconfirmed_email_address!
+  generates_token_for :email_address_confirmation, expires_in: 1.week do
+    unconfirmed_email_address
   end
 
   sig { returns(String) }
   def generate_email_address_confirmation_token
+    unless unconfirmed_email_address
+      raise ApplicationError, "Missing unconfirmed email address"
+    end
+
     generate_token_for(:email_address_confirmation)
   end
 
@@ -214,16 +230,29 @@ class User < ApplicationRecord
     find_by_token_for!(:email_address_confirmation, token)
   end
 
-  sig { returns(T.untyped) }
+  sig { void }
   def confirm_email_address!
-    update!(
-      email_address: unconfirmed_email_address!,
-      unconfirmed_email_address: nil,
-    )
+    email_address = unconfirmed_email_address!
+    transaction do
+      # Reclaim the address from any other user who previously confirmed it. The
+      # confirmation token proves ownership, so the most recent confirmation wins.
+      User.where.not(id:)
+        .where("LOWER(email_address) = LOWER(?)", email_address)
+        .update_all( # rubocop:disable Rails/SkipsModelValidations
+          email_address: nil,
+          email_address_confirmed_at: nil,
+          updated_at: Time.current,
+        )
+      update!(
+        email_address:,
+        email_address_confirmed_at: Time.current,
+        unconfirmed_email_address: nil,
+      )
+    end
   end
 
   sig { void }
-  def deliver_email_address_confirmation
+  def deliver_email_address_confirmation!
     AccountMailer.email_address_confirmation(user: self).deliver_now
     update!(email_address_confirmation_sent_at: Time.current)
   end
@@ -284,6 +313,19 @@ class User < ApplicationRecord
     if V1::User.exists?(phone_number:)
       self.has_v1_account = true
     end
+  end
+
+  sig { void }
+  def clear_unconfirmed_email_address_if_same_as_confirmed
+    if unconfirmed_email_address == email_address
+      self.unconfirmed_email_address = nil
+    end
+  end
+
+  sig { void }
+  def clear_email_address_confirmation_timestamps
+    self.email_address_confirmation_sent_at = nil
+    self.email_address_confirmed_at = nil
   end
 
   # sig { void }

@@ -253,7 +253,7 @@ module Components
   # workspace://app/components/field_error.rb:4
   sig do
     params(
-      messages: T::Array[::String],
+      messages: T.nilable(T::Array[::String]),
       attributes: T.untyped,
       content: T.nilable(T.proc.params(instance: Components::FieldError).void)
     ).void
@@ -981,7 +981,7 @@ module Components
     # workspace://app/components/field_error.rb:4
     sig do
       params(
-        messages: T::Array[::String],
+        messages: T.nilable(T::Array[::String]),
         attributes: T.untyped,
         content: T.nilable(T.proc.params(instance: Components::FieldError).void)
       ).void

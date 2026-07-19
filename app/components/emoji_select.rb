@@ -58,7 +58,7 @@ class Components::EmojiSelect < Components::Input
       end
       dialog.with_content(
         show_close_button: false,
-        panel: { class: "p-0 w-min" },
+        class: "p-0 w-min",
       ) do
         div(data: {
           controller: "emoji-mart",

@@ -39,8 +39,8 @@ class Views::Mailers::Accounts::EmailAddressConfirmation < Views::Mailers::Base
   sig { returns(String) }
   def confirmation_url
     @confirmation_url ||= T.let(
-      confirm_account_email_address_url(
-        token: @user.generate_email_address_confirmation_token,
+      account_email_address_confirmation_url(
+        confirmation_token: @user.generate_email_address_confirmation_token,
       ),
       T.nilable(String),
     )

@@ -30,17 +30,9 @@ module Smallerworld
 
     # == Custom Configuration ==
 
+    # Site title and tagline
     config.x.site.name = "smaller world"
     config.x.site.tagline = "share your inner world with close friends"
-
-    config.fly_url = "https://fly.io/apps/smallerworld"
-    config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
-    config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
-    config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
-    config.testflight_url = "https://testflight.apple.com/join/n6v7J3Nd"
-    config.v1_url = "https://old.smallerworld.club"
-    config.v1_posts_import_limit = 20
-    config.confetti_canvas_id = "confetti_canvas"
 
     # Cloudflare Turnstile server-side test secret keys.
     # See: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
@@ -49,8 +41,19 @@ module Smallerworld
     config.x.turnstile_test_secret_keys.already_spent_key = "3x0000000000000000000000000000000AA"
     config.x.turnstile_test_site_keys.always_passes_key = "1x00000000000000000000AA"
 
-    # config.x.instagram_url = "https://instagram.com/smallerworld"
-    # config.x.appleid.signin_scope = "email name"
+    config.fly_url = "https://fly.io/apps/smallerworld"
+    config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
+    config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
+    config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
+    config.testflight_url = "https://testflight.apple.com/join/n6v7J3Nd"
+
+    config.v1_url = "https://old.smallerworld.club"
+    config.v1_posts_import_limit = 20
+
+    config.email_disclaimer =
+      "we will only email you about important announcements. we will not spam you or " \
+        "send you marketing emails."
+    config.confetti_canvas_id = "confetti_canvas"
 
     # == Rails Configuration ==
 
@@ -87,13 +90,6 @@ module Smallerworld
 
     # Load email images.
     config.action_mailer.asset_host = "http://localhost:3000"
-
-    # == Custom Helpers ==
-
-    sig { returns(String) }
-    def site_name
-      Rails.configuration.x.site.name or raise "Missing site name"
-    end
   end
 
   sig { returns(Smallerworld::Application) }

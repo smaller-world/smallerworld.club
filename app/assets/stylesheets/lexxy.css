@@ -1,5 +1,31 @@
 @layer base-components {
   .lexxy-content {
+    /* Themes */
+    --lexxy-color-selected: var(--color-olive-300);
+    --lexxy-color-selected-hover: var(--color-olive-100);
+    --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
+    --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
+    --lexxy-focus-ring-size: 0px;
+    --lexxy-color-ink: var(--color-olive-950);
+    --lexxy-color-red: var(--destructive);
+    --lexxy-radius: var(--radius-xl);
+    --lexxy-content-margin: var(--spacing);
+    --lexxy-color-accent-dark: var(--color-accent-foreground);
+    --lexxy-color-ink-lightest: var(--color-secondary);
+    --lexxy-color-accent-medium: color-mix(
+      in oklab,
+      var(--color-primary) 80%,
+      transparent
+    );
+
+    @media (prefers-color-scheme: dark) {
+      --lexxy-color-ink: var(--color-olive-50);
+      --lexxy-color-ink-inverted: var(--color-olive-800);
+      --lexxy-color-ink-lightest: var(--color-olive-700);
+      --lexxy-color-selected: var(--color-olive-600);
+      --lexxy-color-selected-hover: var(--color-olive-700);
+    }
+
     @apply text-base leading-relaxed md:text-sm;
 
     p:not(:last-of-type):has(> br:only-child) {

@@ -35,6 +35,9 @@ export default class TurnstileController extends Typed(
     this.#widgetId = window.turnstile.render(this.element, {
       sitekey: this.sitekeyValue,
       action: this.actionValue,
+      callback: () => {
+        this.dispatch("success");
+      },
     });
     addBeforeCacheAction(this, "reset");
   }

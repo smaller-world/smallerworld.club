@@ -114,47 +114,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* == Customizations == */
-
-@layer theme {
-  :root {
-    /* Lexxy */
-    --lexxy-color-selected: var(--color-olive-300);
-    --lexxy-color-selected-hover: var(--color-olive-100);
-    --lexxy-toolbar-button-size: calc(var(--spacing) * 10);
-    --lexxy-toolbar-button-desktop-size: calc(var(--spacing) * 8);
-    --lexxy-focus-ring-size: 0px;
-    --lexxy-color-ink: var(--color-olive-950);
-    --lexxy-color-red: var(--destructive);
-    --lexxy-radius: var(--radius-xl);
-    --lexxy-content-margin: var(--spacing);
-    --lexxy-color-accent-dark: var(--color-accent-foreground);
-    --lexxy-color-ink-lightest: var(--color-secondary);
-    --lexxy-color-accent-medium: color-mix(
-      in oklab,
-      var(--color-primary) 80%,
-      transparent
-    );
-    /*--lexxy-color-ink-inverted: var(--color-olive-50);*/
-
-    @media (prefers-color-scheme: dark) {
-      /* Lexxy */
-      --lexxy-color-ink: var(--color-olive-50);
-      --lexxy-color-ink-inverted: var(--color-olive-800);
-      --lexxy-color-ink-lightest: var(--color-olive-700);
-      --lexxy-color-selected: var(--color-olive-600);
-      --lexxy-color-selected-hover: var(--color-olive-700);
-
-      /* World keys */
-      --world-key-color-green: #c6f871;
-      --world-key-color-pink: #f48c8c;
-      --world-key-color-red: #ac3d66;
-      --world-key-color-blue: #5d5fae;
-      --world-key-color-orange: #ec7d56;
-    }
-  }
-}
-
 @theme inline {
   /* Easings */
   --ease-linear: cubic-bezier(0.25, 0.25, 0.75, 0.75);

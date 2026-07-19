@@ -2,10 +2,6 @@
 # frozen_string_literal: true
 
 class Components::AppLayout < Components::Base
-  include DeleteFrom
-
-  # == Helpers ==
-
   include Phlex::Rails::Helpers::CSRFMetaTags
   include Phlex::Rails::Helpers::CSPMetaTag
   include Phlex::Rails::Helpers::StyleSheetLinkTag
@@ -13,6 +9,11 @@ class Components::AppLayout < Components::Base
   include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::AssetPath
   include Phlex::Rails::Helpers::ActionCableMetaTag
+  include DeleteFrom
+
+  # == Configuration ==
+
+  FLASH_TYPES = [ :alert, :notice ]
 
   # == Initialization ==
 
@@ -213,10 +214,11 @@ class Components::AppLayout < Components::Base
 
   sig { void }
   def flash_section
-    section(id: :flash, class: "max-w-lg p-4 self-center w-full empty:hidden") do
-      if (message = flash[:notice] || flash[:alert])
-        type = flash.key?(:alert) ? :alert : :notice
-        Components::AppFlashAlert(message:, type:)
+    section(id: :flash, class: "self-center w-full max-w-lg p-4 flex flex-col gap-4 empty:hidden") do
+      FLASH_TYPES.each do |type|
+        if (message = flash[type])
+          Components::AppFlashAlert(message:, type:)
+        end
       end
     end
   end

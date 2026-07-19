@@ -2,6 +2,10 @@
 # frozen_string_literal: true
 
 class Components::Dialog::Content < Components::Base
+  include DeleteFrom
+
+  # == Configuration ==
+
   register_element :el_dialog_backdrop
   register_element :el_dialog_panel
 
@@ -11,26 +15,26 @@ class Components::Dialog::Content < Components::Base
     params(
       dialog_id: String,
       show_close_button: T::Boolean,
-      panel: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
   end
   def initialize(
     dialog_id:,
     show_close_button: true,
-    panel: {},
     **attributes
   )
+    super(**attributes)
     @dialog_id = dialog_id
     @show_close_button = show_close_button
-    @panel_options = panel
-    super(**attributes)
   end
 
   # == Component ==
 
   sig { override.params(content: T.proc.bind(T.self_type).void).void }
   def view_template(&content)
+    attributes = @attributes
+    panel_attributes = delete_from(attributes, :class)
+
     dialog(**mix(
       {
         id: @dialog_id,
@@ -54,21 +58,21 @@ class Components::Dialog::Content < Components::Base
               slot: "dialog-content",
             },
           },
-          @panel_options,
+          panel_attributes,
         ),
       ) do
         yield
         if @show_close_button
           Components::Button(
+            type: "button",
+            command: "close",
+            commandfor: @dialog_id,
             variant: :ghost,
             size: :icon_sm,
-            type: "button",
             class: "dialog-close",
             data: {
               slot: "dialog-close",
             },
-            command: "close",
-            commandfor: @dialog_id,
           ) do
             Icon("huge/cancel-01")
             span(class: "sr-only") { "close" }

@@ -31,6 +31,9 @@ class Components::PhoneNumberVerificationForm < Components::Base
       vibrate_on_submit: @verification_request.persisted?,
       id: "phone_number_verification_form",
       class: "gap-4",
+      data: {
+        controller: "phone-number-verification-form",
+      },
       **@attributes,
     ) do |form|
       if @verification_request.persisted? && @verification_request.phone_number_owner
@@ -75,12 +78,20 @@ class Components::PhoneNumberVerificationForm < Components::Base
       div(class: "space-y-2") do
         if @verification_request.new_record?
           div(class: "rounded-xl ring-1 ring-foreground/10 overflow-hidden h-[61px] bg-card") do
-            turnstile_tag(class: "-m-[2px]", data: { size: "flexible" })
+            turnstile_tag(class: "-m-[2px]", data: {
+              size: "flexible",
+              action: "turnstile:success->phone-number-verification-form#enableSubmitButton",
+            })
           end
         end
 
         div(class: "flex flex-col gap-1") do
-          form.submit do |button|
+          form.submit(
+            disabled: @verification_request.new_record?,
+            data: {
+              phone_number_verification_form_target: "submitButton",
+            },
+          ) do |button|
             if @verification_request.new_record?
               button.inline_start_icon("huge/sms-code")
               span { "send verification code" }

@@ -27,6 +27,6 @@ export default class DialogController extends Typed(Controller<HTMLElement>, {
   }
 
   close(): void {
-    this.contentTarget.requestClose();
+    this.contentTarget.close();
   }
 }

@@ -14,7 +14,7 @@ class Views::Accounts::Edit < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(title: "your account", class: "bg-muted") do |app_layout|
+    Components::AppLayout(title: "your account") do |app_layout|
       app_layout.page_container(
         class: "flex flex-col gap-6 max-w-md",
       ) do

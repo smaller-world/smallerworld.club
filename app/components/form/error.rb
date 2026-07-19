@@ -5,9 +5,15 @@ class Components::Form
   class Error < Superform::Rails::Components::Base
     # == Component ==
 
-    sig { override.params(content: T.nilable(T.proc.void)).void }
+    sig do
+      override.params(
+        content: T.nilable(
+          T.proc.params(field_error: Components::FieldError).returns(T.anything),
+        ),
+      ).void
+    end
     def view_template(&content)
-      Components::FieldError(messages: field.errors, **attributes)
+      Components::FieldError(messages: field.errors, **attributes, &content)
     end
   end
 end

@@ -10,6 +10,6 @@ class DeliverUserEmailAddressConfirmationJob < ApplicationJob
 
   sig { params(user: User).void }
   def perform(user)
-    user.deliver_email_address_confirmation
+    user.deliver_email_address_confirmation!
   end
 end
