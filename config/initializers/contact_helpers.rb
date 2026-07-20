@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 class Smallerworld::Application
-  sig { returns(T.nilable(String)) }
+  sig { returns(String) }
   def contact_email
-    credentials.contact&.email
+    credentials.contact!.email!
   end
 end

@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   # == Path configuration
   resources :path_configurations, only: :show, constraints: { id: /[\w_]+/ }
 
+  # == Media previews
+  resources :media_previews, only: [ :show ], param: :signed_id
+
   # == Pages
   scope controller: :pages do
     root action: :landing
@@ -43,9 +46,6 @@ Rails.application.routes.draw do
     only: [ :show, :create ] do
     get :resend
   end
-
-  # == Media previews
-  resources :media_previews, only: [ :show ], param: :signed_id
 
   # == Devices
   resource :device_push_token, path: "/device/push_token", only: :update do
@@ -128,11 +128,14 @@ Rails.application.routes.draw do
   # == Reactions
   resources :reactions, only: :destroy
 
-  # == Install
+  # == Installation Instructions
   resource :installation_instructions, path: "/install", only: :show
 
   # == Passkit
-  mount Passkit::Engine => "/passkit", as: "passkit"
+  # mount Passkit::Engine => "/passkit", as: "passkit"
+
+  # == Support
+  get "/support" => "support_requests#new"
 
   # == Devtools
   get "/fly" => redirect(Rails.configuration.fly_url, redirect: 302)
