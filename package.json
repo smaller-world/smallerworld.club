@@ -79,6 +79,7 @@
     "postcss-calc": "^10.1.1",
     "postcss-cli": "^11.0.1",
     "postcss-custom-properties": "^15.0.1",
+    "postcss-rem-to-responsive-pixel": "^7.0.4",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.4",
     "turnstile-types": "^1.2.3",

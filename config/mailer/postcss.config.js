@@ -10,6 +10,10 @@ export default {
     "@tailwindcss/postcss": {},
     "postcss-custom-properties": { preserve: false },
     "postcss-calc": {},
+    "postcss-rem-to-responsive-pixel": {
+      propList: ["*"],
+      processorStage: "OnceExit",
+    },
     "@csstools/postcss-cascade-layers": {},
     "@csstools/postcss-oklab-function": {
       enableProgressiveCustomProperties: false,
