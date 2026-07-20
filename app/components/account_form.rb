@@ -46,6 +46,7 @@ class Components::AccountForm < Components::Base
             value: email_address_value,
             placeholder: email_address_value || "bobbysue@happytown.life",
             required: true,
+            autocomplete: "email",
           )
           if @user.unconfirmed_email_address? &&
               (current_email_address = @user[:email_address])

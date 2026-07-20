@@ -27,6 +27,7 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class User < ApplicationRecord
   extend FriendlyId
+  include NormalizesText
   include NormalizesPhoneNumber
   include HasTimeZone
   include PgSearch::Model
@@ -133,6 +134,7 @@ class User < ApplicationRecord
 
   # == Normalizations ==
 
+  strips_text :name, :unconfirmed_email_address
   normalizes_phone_number :phone_number
 
   # == Validations ==

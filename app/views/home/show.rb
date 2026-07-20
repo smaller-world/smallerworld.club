@@ -306,6 +306,7 @@ class Views::Home::Show < Views::Base
             form.field(:unconfirmed_email_address).email(
               placeholder: "email@example.com",
               required: true,
+              autocomplete: "email",
             ),
             label: "please give us your email!!",
           )

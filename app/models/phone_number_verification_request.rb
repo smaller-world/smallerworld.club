@@ -16,6 +16,7 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class PhoneNumberVerificationRequest < ApplicationRecord
+  include NormalizesText
   include NormalizesPhoneNumber
 
   # == Configuration ==
@@ -49,6 +50,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Normalizations ==
 
+  strips_text :phone_number
   normalizes_phone_number :phone_number
 
   # == Validations ==
