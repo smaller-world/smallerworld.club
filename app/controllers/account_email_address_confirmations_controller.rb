@@ -28,8 +28,11 @@ class AccountEmailAddressConfirmationsController < ApplicationController
         render Views::AccountEmailAddressConfirmations::Show.new(
           confirmation_token:,
         )
-      rescue ActiveRecord::RecordNotFound
-        redirect_to(root_path, alert: bad_confirmation_token_alert)
+      rescue ActiveSupport::MessageVerifier::InvalidSignature
+        redirect_to(
+          authenticated? ? home_path : root_path,
+          alert: bad_confirmation_token_alert,
+        )
       end
     end
   end
