@@ -261,17 +261,6 @@ class Components::PostForm < Components::Base
               end
             end
           end
-        else
-          Components::Field(
-            orientation: :horizontal,
-            invalid: form.invalid?(:quiet),
-            class: "justify-center",
-          ) do
-            form.Field(:quiet).checkbox
-            form.Field(:quiet).label(class: "post-form-checkbox-label") do
-              "hide post in #{@post_type.label} tab"
-            end
-          end
         end
 
         form.submit(size: :lg) do |button|
