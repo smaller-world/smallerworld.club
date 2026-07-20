@@ -33,7 +33,7 @@
     }
 
     hr {
-      @apply my-6 w-full text-ring/50;
+      @apply my-4 w-full text-ring/50;
     }
 
     ol,
@@ -66,9 +66,11 @@
       }
 
       .horizontal-divider {
-        @apply my-2 py-px;
+        @apply my-1 py-px;
 
         > hr {
+          inline-size: auto;
+
           @apply my-4;
         }
       }
