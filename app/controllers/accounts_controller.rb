@@ -110,7 +110,7 @@ class AccountsController < ApplicationController
               current_user.saved_change_to_unconfirmed_email_address?
             "please check your inbox for a confirmation email! ty <3"
           end
-          refresh_or_redirect_to(
+          redirect_back_or_to(
             home_path,
             status: :see_other,
             notice: "your account settings were saved",

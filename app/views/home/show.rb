@@ -51,8 +51,9 @@ class Views::Home::Show < Views::Base
               "we made an app for you!"
             end
             alert.description do
-              "it looks like you're using smaller world in the browser! to get the " \
-                "best experience, please download our app. thank you!!"
+              plain("it looks like you're using smaller world in the browser! to get the " \
+                "best experience, please download our app. thanks ")
+              span(class: "font-emoji") { "😌" }
             end
             button_link_to(
               "get the app!",
