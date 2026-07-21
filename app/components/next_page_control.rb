@@ -38,7 +38,7 @@ class Components::NextPageControl < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.proc.params(button: Components::Button).void).void }
+  sig { override.params(content: T.proc.void).void }
   def view_template(&content)
     vanish(&content)
     form_with(

@@ -57,6 +57,11 @@ class Components::Form < Superform::Rails::Form
     end
   end
 
+  sig { params(content: T.proc.void).void }
+  def view_template(&content)
+    super
+  end
+
   # == Interface ==
 
   sig do

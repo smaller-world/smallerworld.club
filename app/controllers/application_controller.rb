@@ -6,15 +6,14 @@ class ApplicationController < ActionController::Base
   extend T::Helpers
 
   include Pagy::Method
-  include TaggedLogging
-  include BooleanParams
 
   include Authentication
+  include BooleanParams
   include DeviceTracking
-  include SentryIdentification
-
   include DeviceDetection
+  include SentryIdentification
   include LogStreaming
+  include TaggedLogging
   include ToastStreaming
 
   # == Configuration ==

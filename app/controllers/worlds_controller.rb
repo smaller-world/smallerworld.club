@@ -20,14 +20,14 @@ class WorldsController < ApplicationController
         end
         only_favorited = cast_boolean(params[:only_favorited])
         celebrate = !!flash[:celebrate]
-        open_new_post_dialog = cast_boolean(params[:new_post])
+        new_post_dialog_open = cast_boolean(params[:new_post])
         render Views::Worlds::Show.new(
           current_user:,
           world:,
           only_post_type:,
           only_favorited:,
           celebrate:,
-          open_new_post_dialog:,
+          new_post_dialog_open:,
         )
       end
     end

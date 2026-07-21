@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class Views::Worlds::Show < Views::Base
-  include Phlex::Rails::Helpers::FormWith
-
   # == Initialization ==
 
   sig do
@@ -13,7 +11,7 @@ class Views::Worlds::Show < Views::Base
       only_post_type: T.nilable(PostType),
       only_favorited: T::Boolean,
       celebrate: T::Boolean,
-      open_new_post_dialog: T::Boolean,
+      new_post_dialog_open: T::Boolean,
     ).void
   end
   def initialize(
@@ -22,7 +20,7 @@ class Views::Worlds::Show < Views::Base
     only_post_type:,
     only_favorited:,
     celebrate:,
-    open_new_post_dialog:
+    new_post_dialog_open:
   )
     super()
     @current_user = current_user
@@ -30,7 +28,7 @@ class Views::Worlds::Show < Views::Base
     @only_post_type = only_post_type
     @only_favorited = only_favorited
     @celebrate = celebrate
-    @open_new_post_dialog = open_new_post_dialog
+    @new_post_dialog_open = new_post_dialog_open
 
     @owner = T.let(@world.owner!, User)
   end
@@ -96,7 +94,30 @@ class Views::Worlds::Show < Views::Base
 
           if allowed_to?(:manage?, @world)
             section(class: "flex gap-2 justify-center") do
-              new_post_button
+              Components::NewPostDialog(
+                world: @world,
+                open: @new_post_dialog_open,
+              ) do |dialog|
+                dialog.with_trigger_button(
+                  size: :lg,
+                  class: "world-action-button group/new-post-button relative",
+                  data: {
+                    controller: "post-draft-info",
+                    post_draft_info_world_id_value: @world.id,
+                    action: "user-focus:active@document->post-draft-info#update",
+                  },
+                ) do |button|
+                  button.inline_start_icon(
+                    "huge/quill-write-02",
+                    class: "group-data-draft-available/new-post-button:hidden",
+                  )
+                  button.inline_start_icon(
+                    "huge/more-horizontal-circle-02",
+                    class: "hidden group-data-draft-available/new-post-button:revert-display-layer",
+                  )
+                  span { "new post" }
+                end
+              end
               button_link_to(
                 "your friends",
                 [ @world, :keys ],
@@ -321,146 +342,6 @@ class Views::Worlds::Show < Views::Base
         ) do |button|
           button.inline_start_icon("huge/love-korean-finger")
           span { "enable notifications" }
-        end
-      end
-    end
-  end
-
-  sig { void }
-  def new_post_button
-    Components::Dialog(
-      open: @open_new_post_dialog,
-      data: {
-        controller: "world-new-post-dialog",
-        action: [
-          "open->world-new-post-dialog#updateSearchParams",
-          "close->world-new-post-dialog#updateSearchParams",
-          "cancel->world-new-post-dialog#updateSearchParams",
-        ],
-      },
-    ) do |dialog|
-      dialog.with_trigger_button(
-        size: :lg,
-        class: "world-action-button group/new-post-button relative",
-        data: {
-          controller: "post-draft-info",
-          post_draft_info_world_id_value: @world.id,
-          action: "user-focus:active@document->post-draft-info#update",
-        },
-      ) do |button|
-        button.inline_start_icon(
-          "huge/quill-write-02",
-          class: "group-data-draft-available/new-post-button:hidden",
-        )
-        button.inline_start_icon(
-          "huge/more-horizontal-circle-02",
-          class: "hidden group-data-draft-available/new-post-button:revert-display-layer",
-        )
-        span { "new post" }
-      end
-      dialog.with_content do |dialog_content|
-        dialog_content.header do |dialog_header|
-          dialog_header.title do
-            "what do you want to make?"
-          end
-        end
-
-        Components::ItemGroup(
-          data: {
-            controller: "post-draft-info intersection",
-            post_draft_info_world_id_value: @world.id,
-            action: "intersection:appear->post-draft-info#update",
-          },
-        ) do |item_group|
-          form_with(
-            url: [ :new, @world, :post ],
-            method: :get,
-            class: "hidden group-data-[draft-available]/item-group:revert-display-layer",
-          ) do |form|
-            form.hidden_field(:type_id, data: {
-              post_draft_info_target: "typeIdInput",
-            })
-            form.hidden_field(:restore_draft, value: true)
-            item_group.item(
-              element: :button,
-              type: :submit,
-              size: :sm,
-              class: "bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
-              data: {
-                action: "dialog#close",
-              },
-            ) do |item|
-              item.content do |item_content|
-                item_content.title do
-                  "continue from draft?"
-                end
-                item_content.description(
-                  class: "empty:hidden text-primary-foreground/80 border-l-2 border-border/50 pl-3 italic",
-                  data: {
-                    post_draft_info_target: "descriptionLabel",
-                  },
-                )
-              end
-            end
-          end
-          item_group.separator(
-            class: "hidden [form[data-draft-available]+&]:revert-display-layer",
-          )
-
-          @world.post_types.chronological.each do |post_type|
-            div(class: "flex items-center gap-1") do
-              item_group.item(
-                element: :a,
-                href: url_for([ :new, @world, :post, type_id: post_type.id ]),
-                variant: :outline,
-                size: :sm,
-                data: {
-                  action: "dialog#close",
-                },
-              ) do |item|
-                item.media(variant: :icon) do
-                  Icon(post_type.icon)
-                end
-                item.content do |item_content|
-                  item_content.title do
-                    post_type.label
-                  end
-                end
-              end
-              button_link_to(
-                "edit",
-                [ :edit, post_type ],
-                size: :sm,
-                class: "text-muted-foreground",
-                data: {
-                  controller: "redirect-back-to-self",
-                  action: "redirect-back-to-self#visit dialog#close",
-                },
-              )
-            end
-          end
-
-          div
-
-          item_group.item(
-            element: :a,
-            href: url_for([ :new, @world, :post_type ]),
-            variant: :muted,
-            size: :sm,
-            data: {
-              controller: "redirect-back-to-self",
-              action: "redirect-back-to-self#visit dialog#close",
-            },
-          ) do |item|
-            item.content(class: "gap-0") do |item_content|
-              item_content.title do
-                "something else!"
-              end
-              item_content.description do
-                "create your own post type"
-              end
-            end
-          end
         end
       end
     end

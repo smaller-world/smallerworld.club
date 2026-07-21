@@ -47,14 +47,22 @@ class Views::Posts::Index < Views::Base
         Components::Empty(class: "hidden [ul:empty+&]:revert-display-layer") do |empty|
           empty.header(class: "gap-0") do
             empty.media(variant: :icon) do
-              Icon("huge/message-edit-01")
+              Icon("huge/dashed-line-02", class: "text-muted-foreground")
             end
-            empty.title do
-              "no posts yet!"
+            empty.title(class: "text-muted-foreground") do
+              "you haven't written anything yet..."
             end
             # empty.description do
             #   button_link_to("need some inspo on what to write?")
             # end
+          end
+          empty.content do
+            Components::NewPostDialog(world: @world) do |dialog|
+              dialog.with_trigger_button do |button|
+                button.inline_start_icon("huge/pencil-edit-01")
+                span { "write your first post!" }
+              end
+            end
           end
         end
         div(class: "flex flex-col items-center") do

@@ -103,9 +103,6 @@ module GeneratedUrlHelpersModule
   def new_world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def passkit_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def path_configuration_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -233,6 +230,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def start_pwa_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def support_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_url(*args); end

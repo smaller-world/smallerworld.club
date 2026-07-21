@@ -103,9 +103,6 @@ module GeneratedPathHelpersModule
   def new_world_post_type_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def passkit_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def path_configuration_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -233,6 +230,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def start_pwa_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def support_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_path(*args); end

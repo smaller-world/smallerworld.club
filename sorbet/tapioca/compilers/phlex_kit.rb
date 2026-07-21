@@ -92,15 +92,32 @@ module Tapioca
           unless free_type_args.empty?
             instance_type = "#{instance_type}[#{free_type_args.join(", ")}]"
           end
-          block_type = "T.proc.params(instance: #{instance_type}).void"
-          # If the component's `view_template` requires a block (its block
-          # parameter — the `&` parameter, sometimes named `&content` — is typed
-          # non-nilable), the kit helper's `&content` must also be non-nilable.
-          # Otherwise the block is optional.
-          unless view_template_requires_block?(component)
-            block_type = as_nilable_type(block_type)
+
+          # Mirror the `view_template`'s block onto the kit helper's `&content`:
+          #   - no block on `view_template`      -> no block on the kit helper
+          #   - nilable block on `view_template` -> nilable block on the kit helper
+          #   - required block on `view_template`-> required block on the kit helper
+          # When `view_template`'s block declares its own params (e.g. it yields
+          # a `Components::Dialog`), the kit helper yields those same params;
+          # otherwise it yields the component instance itself.
+          block_info = view_template_block(component)
+          if block_info
+            nilable, proc_type = block_info
+            proc_params = proc_type.arg_types
+            block_params = if proc_params.empty?
+              "instance: #{instance_type}"
+            else
+              proc_params.map do |pname, ptype|
+                resolved =
+                  apply_type_parameter_substitutions(ptype.to_s, substitutions)
+                "#{pname}: #{resolved}"
+              end.join(", ")
+            end
+            block_type = "T.proc.params(#{block_params}).void"
+            block_type = as_nilable_type(block_type) if nilable
+            parameters << create_block_param("content", type: block_type)
           end
-          parameters << create_block_param("content", type: block_type)
+
           comments = source_comments(component)
 
           # Instance method: available inside Phlex templates via include
@@ -121,29 +138,39 @@ module Tapioca
           )
         end
 
-        # Detects whether the component's `view_template` requires a block. Phlex
-        # wraps every `view_template` so its Ruby parameters always report a
-        # `:block` param; the meaningful signal is the Sorbet signature's block
-        # type. A non-nilable block type (e.g. `T.proc...`) means the block is
-        # required; a nilable one (`T.nilable(T.proc...)`) or a missing block
-        # type means it is optional.
-        sig { params(component: T.class_of(::Phlex::SGML)).returns(T::Boolean) }
-        def view_template_requires_block?(component)
-          return false unless component.method_defined?(:view_template) ||
+        # Inspects the component's `view_template` block. Phlex wraps every
+        # `view_template` so its Ruby parameters always report a `:block` param;
+        # the meaningful signal is the Sorbet signature's block type. Returns
+        # `nil` when there is no block type (the kit helper should accept no
+        # block), otherwise `[nilable, proc_type]` where `nilable` is whether
+        # the block is optional (a `T.nilable(T.proc...)` union) and `proc_type`
+        # is the `T::Types::Proc` describing the block's params.
+        sig do
+          params(component: T.class_of(::Phlex::SGML))
+            .returns(T.nilable([ T::Boolean, T::Types::Proc ]))
+        end
+        def view_template_block(component)
+          return unless component.method_defined?(:view_template) ||
             component.private_method_defined?(:view_template)
 
           sig = T::Utils.signature_for_method(
             component.instance_method(:view_template),
           )
           block_type = sig&.block_type
-          return false if block_type.nil?
+          return if block_type.nil?
 
-          nil_type = T::Utils.coerce(NilClass)
           if block_type.is_a?(T::Types::Union)
-            return block_type.types.none?(nil_type)
+            proc_type = block_type.types.find { |t| t.is_a?(T::Types::Proc) }
+            return if proc_type.nil?
+
+            nil_type = T::Utils.coerce(NilClass)
+            nilable = block_type.types.any?(nil_type)
+            return [ nilable, T.cast(proc_type, T::Types::Proc) ]
           end
 
-          true
+          return [ false, block_type ] if block_type.is_a?(T::Types::Proc)
+
+          nil
         end
 
         sig do
