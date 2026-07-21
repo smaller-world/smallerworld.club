@@ -112,11 +112,13 @@ export default class UppyController extends Typed(
       .on("upload", () => {
         this.element.ariaBusy = "true";
       })
-      .on("upload-error", (_file, { message }) => {
-        console.error(`Failed to upload file: ${message}`);
+      .on("upload-error", (_file, { message, details }) => {
+        console.error(`Failed to upload file:`, { message, details });
         this.dispatch("error", {
           detail: {
-            message: `failed to upload file: ${message}`,
+            message: message
+              ? `failed to upload file: ${message}`
+              : "failed to upload file",
           },
         });
       })
