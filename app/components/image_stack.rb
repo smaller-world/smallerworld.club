@@ -46,6 +46,7 @@ class Components::ImageStack < Components::Base
           draggable: false,
           class: class_names(
             "image-stack-image",
+            "cursor-pointer" => @images.one?,
             "touch-none" => @images.size > 1,
           ),
           data: {
@@ -58,6 +59,7 @@ class Components::ImageStack < Components::Base
               "pointerdown->image-stack#startDrag:prevent",
               "pointerup->image-stack#endDrag",
               "pointercancel->image-stack#endDrag",
+              "click->lightbox#open" => @images.one?,
             ),
           },
         )
