@@ -143,6 +143,14 @@ export default class UppyController extends Typed(
           cropperOptions: {
             aspectRatio: this.cropToAspectRatioValue,
             responsive: true,
+            // Cap the output canvas size. iOS Safari silently returns a blank
+            // canvas (or a null blob from toBlob) once a canvas exceeds ~16.7M
+            // px, which aborts the crop-complete flow with no error. Large
+            // iPhone photos (e.g. 48MP → 6048×6048 square) blow past that.
+            croppedCanvasOptions: {
+              maxWidth: 2048,
+              maxHeight: 2048,
+            },
           },
           actions: {
             revert: false,
