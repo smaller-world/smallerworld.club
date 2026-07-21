@@ -31,3 +31,8 @@ sue:
   name: Sue
   phone_number: "+19054997382"
   time_zone_name: America/New_York
+
+jane:
+  name: Jane
+  phone_number: "+16135550118"
+  time_zone_name: America/New_York

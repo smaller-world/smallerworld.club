@@ -84,4 +84,42 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "granted post"
     assert_not_includes response.body, "ungranted post"
   end
+
+  test "a post deselecting one recipient stays visible to the others" do
+    hidden_friend = users(:sue)
+    visible_friend = users(:jane)
+    create_member_key(world: @world, recipient: hidden_friend)
+    create_member_key(world: @world, recipient: visible_friend)
+    post_type = @world.post_types.find_by!(label: "journal entry")
+
+    # The compose UI submits the *selected* recipients (`recipient_ids`). The
+    # model stores the inverse (`hidden_from_ids`) so members added later still
+    # see the post by default. Here the owner deselects `hidden_friend`, keeping
+    # only `visible_friend`. `body` is ActionText rich text, submitted as HTML.
+    sign_in_as(@owner)
+    post world_posts_path(@world), params: {
+      post: {
+        type_id: post_type.id,
+        body: "<div>secret post</div>",
+        recipient_ids: [ visible_friend.id ],
+      },
+    }
+    post = @world.posts.chronological.last!
+    assert_equal [ hidden_friend.id ], post.hidden_from_ids
+    assert_equal "secret post", post.plain_body
+
+    # `hidden_friend` was deselected, so the post is absent from their feed.
+    sign_in_as(hidden_friend)
+    get world_posts_path(@world),
+      headers: { "Turbo-Frame" => "posts" }
+    assert_response :success
+    assert_not_includes response.body, "secret post"
+
+    # `visible_friend` was kept as a recipient, so the post appears in theirs.
+    sign_in_as(visible_friend)
+    get world_posts_path(@world),
+      headers: { "Turbo-Frame" => "posts" }
+    assert_response :success
+    assert_includes response.body, "secret post"
+  end
 end
