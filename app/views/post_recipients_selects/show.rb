@@ -19,7 +19,7 @@ class Views::PostRecipientsSelects::Show < Views::Base
       Components::PostRecipientsSelect(
         post: @post,
         input_id_prefix: "post_recipient_ids",
-        name: "post[recipient_ids]",
+        name: "post[recipient_ids][]",
         value: @post_type.recipient_ids,
       )
     end

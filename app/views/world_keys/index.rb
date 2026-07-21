@@ -142,8 +142,8 @@ class Views::WorldKeys::Index < Views::Base
   sig { void }
   def invitations_item
     Components::Item(variant: :muted, class: "gap-2") do |item|
-      item.content do
-        item.title do
+      item.content do |item_content|
+        item_content.title do
           "these friends don't have access to your world: "
         end
       end

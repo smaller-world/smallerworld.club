@@ -214,7 +214,7 @@ class Components::AppLayout < Components::Base
 
   sig { void }
   def flash_section
-    section(id: :flash, class: "self-center w-full max-w-lg p-4 flex flex-col gap-4 empty:hidden") do
+    section(id: :flash, class: "self-center w-full max-w-lg p-4 flex flex-col gap-2.5 empty:hidden") do
       FLASH_TYPES.each do |type|
         if (message = flash[type])
           Components::AppFlashAlert(message:, type:)

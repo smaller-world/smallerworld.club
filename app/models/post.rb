@@ -142,6 +142,7 @@ class Post < ApplicationRecord
 
   before_validation :chomp_rich_text_body!, if: :body?
   before_save :set_plain_body
+  before_create :set_hidden_from_ids_from_recipient_ids
   after_save :preserve_images_attachments_ordering, if: :images_attachments_changed?
   after_create_commit :create_notifications_for_subscribers!,
     if: :should_create_notifications?
@@ -191,12 +192,16 @@ class Post < ApplicationRecord
 
   sig { returns(T::Array[String]) }
   def recipient_ids
-    type_recipient_ids - hidden_from_ids
+    @recipient_ids || type_recipient_ids - hidden_from_ids
   end
 
   sig { params(value: T::Array[String]).void }
   def recipient_ids=(value)
-    self.hidden_from_ids = type_recipient_ids - value
+    if new_record?
+      @recipient_ids = T.let(value.compact_blank, T.nilable(T::Array[String]))
+    else
+      self.hidden_from_ids = type_recipient_ids - value
+    end
   end
 
   # == Snippets ==
@@ -332,6 +337,13 @@ class Post < ApplicationRecord
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
+  end
+
+  sig { void }
+  def set_hidden_from_ids_from_recipient_ids
+    if @recipient_ids
+      self.hidden_from_ids = type_recipient_ids - @recipient_ids
+    end
   end
 
   sig { void }

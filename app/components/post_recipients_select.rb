@@ -56,6 +56,9 @@ class Components::PostRecipientsSelect < Components::Input
             popover_header.title { "who can see this #{@post_type.label}" }
           end
           Components::CheckboxGroup() do
+            if input_attributes[:name].present?
+              input(type: "hidden", **input_attributes)
+            end
             @post.type_recipients.each_with_index do |recipient, index|
               input_id = self.input_id(index:)
               Components::FieldLabel(for: input_id) do
