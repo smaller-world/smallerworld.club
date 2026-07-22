@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-module DeviceTracking
+module DeviceIdentification
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern

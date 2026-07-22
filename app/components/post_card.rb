@@ -216,14 +216,12 @@ class Components::PostCard < Components::Base
       data: {
         controller: "device-push-token-form",
         action: "turbo:submit-end->frame-reload#reload",
-
       },
     ) do |form|
       form.Field(:push_token).hidden(data: {
         device_push_token_form_target: "input",
       })
       form.submit(
-        class: "hidden",
         data: {
           controller: [
             "notification-permission-bridge",

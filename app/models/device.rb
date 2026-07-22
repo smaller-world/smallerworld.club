@@ -29,8 +29,6 @@
 class Device < ApplicationRecord
   extend Enumerize
 
-  include ActiveSupport::Rescuable
-
   # == Attributes ==
 
   enumerize :platform, in: DeviceDetection::HOTWIRE_NATIVE_PLATFORMS
@@ -57,9 +55,6 @@ class Device < ApplicationRecord
 
   validates :identifier, presence: true, uniqueness: true
   validates :push_token, uniqueness: true, allow_nil: true
-
-  # Remove push token if token is invalid
-  rescue_from ActionPushNative::TokenError, with: :remove_push_token!
 
   # == Hooks ==
 
@@ -91,8 +86,11 @@ class Device < ApplicationRecord
     tag_logger do
       Rails.logger.info("Pushed notification to device #{id}")
     end
-  rescue => error
-    rescue_with_handler(error) || raise
+  rescue ActionPushNative::TokenError => error
+    tag_logger do
+      Rails.logger.warn("Removing push token for device #{id}: #{error.message}")
+    end
+    update!(push_token: nil)
   end
 
   sig { params(world: T.nilable(World)).void }
@@ -122,14 +120,6 @@ class Device < ApplicationRecord
   private
 
   # == Callbacks ==
-
-  sig { params(error: ActionPushNative::TokenError).void }
-  def remove_push_token!(error)
-    tag_logger do
-      Rails.logger.warn("Removing push token for device #{id}: #{error.message}")
-    end
-    update!(push_token: nil)
-  end
 
   sig { void }
   def remove_devices_with_duplicate_push_tokens!
