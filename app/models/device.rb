@@ -110,8 +110,7 @@ class Device < ApplicationRecord
       .with_apple(apple_data)
       .new(
         title: "test notification",
-        body: "this is a test notification. if you are seeing this, then " \
-          "your push notifications are working!",
+        body: "if you are seeing this, then your push notifications are working!",
         thread_id: world&.id,
       )
     notification.deliver_to(self)

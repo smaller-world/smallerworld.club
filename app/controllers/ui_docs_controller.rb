@@ -1,11 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class UiDocsController < ApplicationController
-  # == Configuration ==
-
-  allow_unauthenticated_access
-
+class UiDocsController < PublicController
   # == Actions ==
 
   # GET /ui

@@ -150,7 +150,9 @@ Rails.application.routes.draw do
   end
 
   # == UI Docs
-  resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
+  if Rails.env.development?
+    resources :ui_docs, path: "/ui", only: [ :index, :show ], param: :component
+  end
 
   # == Admin
   if Rails.env.development?
