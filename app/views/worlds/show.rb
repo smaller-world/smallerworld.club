@@ -51,7 +51,7 @@ class Views::Worlds::Show < Views::Base
             # alert.
             own_worlds.size == @current_user.owned_worlds.size
           send_own_world_invitation_alert(own_worlds:)
-        elsif (current_device = @current_device) && !@current_device.push_token?
+        elsif (current_device = Current.device) && !current_device.push_token?
           enable_notifications_alert(current_device:)
         end
 

@@ -61,8 +61,6 @@ class Components::Base < Phlex::HTML
   sig { params(attributes: T.untyped).void }
   def initialize(**attributes)
     super()
-    @current_user = T.let(Current.user, T.nilable(User))
-    @current_device = T.let(Current.device, T.nilable(Device))
     @attributes = attributes
   end
 

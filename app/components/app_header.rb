@@ -38,7 +38,7 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    if @current_device&.push_token?
+    if (current_device = Current.device) && current_device.push_token?
       form_with(url: test_device_push_token_path, data: {
         controller: "haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",
@@ -49,7 +49,7 @@ class Components::AppHeader < Components::Base
         end
       end
       content.separator
-    elsif !hotwire_native_app? && (current_user = @current_user)
+    elsif !hotwire_native_app? && (current_user = Current.user)
       content.link_item_to(:home) do
         Icon("huge/home-01")
         span { "home" }
@@ -63,7 +63,7 @@ class Components::AppHeader < Components::Base
       content.separator
     end
 
-    if @current_user
+    if Current.user
       form_with(url: session_path, method: :delete, data: {
         controller: "haptic-bridge",
         action: "turbo:submit-end->haptic-bridge#vibrate",

@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class Components::AccountForm < Components::Base
-  include Phlex::Rails::Helpers::HiddenFieldTag
-
   # == Initialization ==
 
   sig { params(user: User, attributes: T.untyped).void }
@@ -19,15 +17,7 @@ class Components::AccountForm < Components::Base
     Components::Form(@user, action: account_path, **@attributes) do |form|
       form.Field(:time_zone_name).hidden(data: { controller: "current-time-zone-input" })
 
-      Components::FieldSet(class: "gap-4") do |field_set|
-        if @user.new_record?
-          field_set.legend(
-            class: "mb-0 text-xs text-muted-foreground font-normal text-center",
-          ) do
-            "let's get you set up with an account!"
-          end
-        end
-
+      Components::FieldSet(class: "gap-4") do
         form.wrapped(
           form.field(:name).text(
             placeholder: @user[:name] || "bobby",

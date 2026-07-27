@@ -15,8 +15,8 @@ class Components::WorldPostFiltersForm < Components::Base
   def initialize(world:, currently_showing_favorited:, current_post_type:, **attributes)
     super(**attributes)
     @world = world
-    @current_post_type = current_post_type
     @currently_showing_favorited = currently_showing_favorited
+    @current_post_type = current_post_type
   end
 
   # == Component ==

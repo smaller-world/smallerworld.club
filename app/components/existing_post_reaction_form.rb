@@ -22,9 +22,9 @@ class Components::ExistingPostReactionForm < Components::Base
     @reactions = reactions
     @reactions_count = T.let(reactions.count, Integer)
     @current_user_reaction = T.let(
-      if @current_user
+      if (current_user = Current.user)
         reactions.find do |reaction|
-          reaction.reactor == @current_user
+          reaction.reactor == current_user
         end
       end,
       T.nilable(Reaction),

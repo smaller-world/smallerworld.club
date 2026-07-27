@@ -1,11 +1,12 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class Components::LexxyEditor < Components::Input
   extend Phlex::Rails::HelperMacros
   include NormalizeAttributes
 
-  register_output_helper def rich_textarea_tag(...) = nil
+  sig { params(args: T.untyped, kwargs: T.untyped, block: T.untyped).void }
+  register_output_helper def rich_textarea_tag(*args, **kwargs, &block) = nil
 
   # == Component ==
 

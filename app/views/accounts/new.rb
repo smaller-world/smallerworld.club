@@ -29,13 +29,18 @@ class Views::Accounts::New < Views::Base
 
   sig { void }
   def account_card
-    Components::Card(class: "w-full max-w-90 gap-2.5") do |card|
+    Components::Card(class: "w-full max-w-90 gap-4") do |card|
       card.header(class: "flex flex-col items-center gap-2") do
         image_tag("logo.png", class: "size-10")
-        card.title(class: "text-lg text-center") do
-          plain("welcome to ")
-          span(class: "font-semibold") do
-            Smallerworld.application.site_name
+        div do
+          card.title(class: "text-lg text-center") do
+            plain("welcome to ")
+            span(class: "font-semibold") do
+              Smallerworld.application.site_name
+            end
+          end
+          card.description(class: "text-center text-xs") do
+            "let's get you set up with an account!"
           end
         end
       end

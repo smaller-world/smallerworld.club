@@ -6,8 +6,8 @@ class Components::AccountTimeZoneForm < Components::Base
 
   sig { params(current_user: User, attributes: T.untyped).void }
   def initialize(current_user:, **attributes)
-    @current_user = current_user
     super(**attributes)
+    @current_user = current_user
   end
 
   # == Component ==
@@ -18,7 +18,7 @@ class Components::AccountTimeZoneForm < Components::Base
       @current_user,
       action: account_time_zone_path,
       data: {
-        controller: "submit",
+        controller: "async-submission submit",
         submit_require_page_visible_value: true,
       },
       hidden: true,

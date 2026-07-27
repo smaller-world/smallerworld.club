@@ -22,7 +22,10 @@ export default class DevicePushTokenFormController extends Typed(
 
   setInputValueAndSubmit({ detail }: CustomEvent<{ token: string }>): void {
     const { token } = detail;
+    const previousValue = this.inputTarget.value;
     this.inputTarget.value = token;
-    this.element.requestSubmit();
+    if (token !== previousValue) {
+      this.element.requestSubmit();
+    }
   }
 }

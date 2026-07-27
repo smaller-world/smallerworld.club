@@ -17,6 +17,8 @@ export default class NotificationPermissionBridgeController extends BridgeCompon
         this.dispatch("retrieved", { detail: { permission } });
         if (permission === "indeterminate") {
           this.dispatch("pending-authorization");
+        } else if (permission === "authorized") {
+          this.dispatch("authorized");
         }
       },
     );

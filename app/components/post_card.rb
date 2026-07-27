@@ -132,7 +132,7 @@ class Components::PostCard < Components::Base
               replied: @replied,
             )
           elsif @newly_created &&
-              (current_device = @current_device) && !current_device.push_token?
+              (current_device = Current.device) && !current_device.push_token?
             enable_notifications_button(current_device:)
           end
         end

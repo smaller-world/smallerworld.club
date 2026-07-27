@@ -129,6 +129,10 @@ module Components
   sig { params(attributes: T.untyped).void }
   def DevicePassesForm(**attributes); end
 
+  # workspace://app/components/device_update_push_token_form.rb:4
+  sig { params(current_device: ::Device, attributes: T.untyped).void }
+  def DeviceUpdatePushTokenForm(current_device:, **attributes); end
+
   # workspace://app/components/dialog.rb:4
   sig do
     params(
@@ -634,6 +638,10 @@ module Components
     # workspace://app/components/device_passes_form.rb:4
     sig { params(attributes: T.untyped).void }
     def DevicePassesForm(**attributes); end
+
+    # workspace://app/components/device_update_push_token_form.rb:4
+    sig { params(current_device: ::Device, attributes: T.untyped).void }
+    def DeviceUpdatePushTokenForm(current_device:, **attributes); end
 
     # workspace://app/components/dialog.rb:4
     sig do

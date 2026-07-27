@@ -9,4 +9,8 @@ module Telnyx
     sig { returns(T.untyped) }
     def messages; end
   end
+
+  module Errors
+    class BadRequestError < StandardError; end
+  end
 end

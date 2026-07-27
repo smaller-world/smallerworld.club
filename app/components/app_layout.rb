@@ -133,14 +133,14 @@ class Components::AppLayout < Components::Base
         logs_container
         toasts_container
 
-        if (current_user = @current_user)
+        if (current_user = Current.user)
           # Auto-update user time zone
           Components::AccountTimeZoneForm(current_user:)
         end
-        # if (current_device = @current_device)
-        #   # Auto-register device push token
-        #   Components::DevicePushTokenForm(current_device:)
-        # end
+        if (current_device = Current.device)
+          # Auto-update device push token
+          Components::DeviceUpdatePushTokenForm(current_device:)
+        end
       end
     end
   end
