@@ -12,6 +12,7 @@
 #  email_address_confirmation_sent_at :timestamptz
 #  email_address_confirmed_at         :timestamptz
 #  has_v1_account                     :boolean          default(FALSE), not null
+#  login_code                         :string
 #  name                               :string           not null
 #  phone_number                       :string           not null
 #  time_zone_name                     :string           not null
@@ -189,35 +190,6 @@ class User < ApplicationRecord
     else
       received_notifications
     end
-  end
-
-  # == Test User ==
-
-  sig { returns(String) }
-  def self.test_user_phone_number
-    Smallerworld.application.test_user_phone_number
-  end
-  delegate :test_user_phone_number, to: :class
-
-  sig { returns(User) }
-  def self.test_user
-    find_or_create_by!(phone_number: test_user_phone_number) do |user|
-      user.name = "test user"
-      user.email_address = "testuser@smallerworld.club"
-      user.time_zone_name = "America/Toronto"
-      user.owned_worlds.build(
-        name: "tester's world",
-        icon: {
-          io: Rails.root.join("app/assets/images/yumcat.png").open,
-          filename: "yumcat.png",
-        },
-      )
-    end
-  end
-
-  sig { returns(T::Boolean) }
-  def test_user?
-    phone_number == test_user_phone_number
   end
 
   # sig { returns(T::Boolean) }

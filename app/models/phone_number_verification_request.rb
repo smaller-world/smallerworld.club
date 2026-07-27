@@ -67,7 +67,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Hooks ==
 
-  before_save :set_test_user_verification_code, if: :test_user_phone_number?
+  before_save :set_user_login_code
   after_create_commit :deliver_verification_code, if: :should_deliver_verification_code?
 
   # == Scopes ==
@@ -153,7 +153,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def should_deliver_verification_code?
-    !test_user_phone_number? &&
+    !user_login_code? &&
       (Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false)
   end
 
@@ -176,15 +176,22 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Helpers ==
 
+  sig { returns(T.nilable(String)) }
+  def user_login_code
+    User.where(phone_number:).pick(:login_code)
+  end
+
   sig { returns(T::Boolean) }
-  def test_user_phone_number?
-    phone_number == Smallerworld.application.test_user_phone_number
+  def user_login_code?
+    user_login_code.present?
   end
 
   # == Callbacks ==
 
   sig { void }
-  def set_test_user_verification_code
-    self.verification_code = Smallerworld.application.test_user_verification_code
+  def set_user_login_code
+    if (login_code = user_login_code)
+      self.verification_code = login_code
+    end
   end
 end
