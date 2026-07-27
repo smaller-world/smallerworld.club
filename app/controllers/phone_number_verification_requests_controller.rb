@@ -34,22 +34,30 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           user_agent: request.user_agent,
           **verification_request_params,
         )
-        if verification_request.save
-          tag_logger do
-            logger.info(
-              "Verification code for #{verification_request.phone_number}: " \
-                "#{verification_request.verification_code}",
+        begin
+          if verification_request.save
+            tag_logger do
+              logger.info(
+                "Verification code for #{verification_request.phone_number}: " \
+                  "#{verification_request.verification_code}",
+              )
+            end
+            render(turbo_stream: replace_form(verification_request:))
+          elsif (error = verification_request.errors.full_messages_for(:ip_address).first)
+            alert = "failed to send verification code: #{error}"
+            redirect_to(new_session_path, alert:, status: :see_other)
+          else
+            render(
+              turbo_stream: replace_form(verification_request:),
+              status: :unprocessable_content,
             )
           end
-          render(turbo_stream: replace_form(verification_request:))
-        elsif (error = verification_request.errors.full_messages_for(:ip_address).first)
+        rescue Telnyx::Errors::BadRequestError => error
+          tag_logger do
+            logger.error("Failed to send verification code: #{error}")
+          end
           alert = "failed to send verification code: #{error}"
           redirect_to(new_session_path, alert:, status: :see_other)
-        else
-          render(
-            turbo_stream: replace_form(verification_request:),
-            status: :unprocessable_content,
-          )
         end
       end
     end
