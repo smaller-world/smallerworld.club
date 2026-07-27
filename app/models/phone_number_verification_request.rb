@@ -67,7 +67,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Hooks ==
 
-  before_save :set_user_login_code
+  before_save :override_verification_code, if: :has_override_code?
   after_create_commit :deliver_verification_code, if: :should_deliver_verification_code?
 
   # == Scopes ==
@@ -96,6 +96,27 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     raise "Phone number not verified" unless verified?
 
     generate_token_for(:registration)
+  end
+
+  # == Override Codes ==
+
+  sig { returns(T::Hash[String, String]) }
+  private_class_method def self.override_codes_by_phone_number
+    @override_codes_by_phone_number ||= T.let(
+      if (overrides = Rails.application.credentials.phone_number_verification_code_overrides)
+        overrides
+          .index_by { |override| override.fetch(:phone_number) }
+          .transform_values { |override| override.fetch(:verification_code) }
+      else
+        {}
+      end,
+      T.nilable(T::Hash[String, String]),
+    )
+  end
+
+  sig { params(phone_number: String).returns(T.nilable(String)) }
+  def self.override_code_for(phone_number)
+    override_codes_by_phone_number[phone_number]
   end
 
   # == Methods ==
@@ -153,7 +174,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def should_deliver_verification_code?
-    !user_login_code? &&
+    !has_override_code? &&
       (Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false)
   end
 
@@ -176,22 +197,17 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # == Helpers ==
 
-  sig { returns(T.nilable(String)) }
-  def user_login_code
-    User.where(phone_number:).pick(:login_code)
-  end
-
   sig { returns(T::Boolean) }
-  def user_login_code?
-    user_login_code.present?
+  def has_override_code?
+    self.class.override_code_for(phone_number).present?
   end
 
   # == Callbacks ==
 
   sig { void }
-  def set_user_login_code
-    if (login_code = user_login_code)
-      self.verification_code = login_code
+  def override_verification_code
+    if (override_code = self.class.override_code_for(phone_number))
+      self.verification_code = override_code
     end
   end
 end
