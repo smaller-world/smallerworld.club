@@ -233,7 +233,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "capybara-playwright-driver", require: false
-  gem "playwright-ruby-client", "1.60.0", require: false
+  gem "playwright-ruby-client", "1.61.0", require: false
 end
 
 group :production do

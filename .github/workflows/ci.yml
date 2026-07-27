@@ -114,8 +114,6 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       RAILS_ENV: test
       DATABASE_URL: postgis://supabase_admin:postgres@postgres:5432
@@ -156,6 +154,8 @@ jobs:
         with:
           install_args: ruby bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Playwright
+        run: bunx playwright install
       - name: Install Ruby gems
         run: bundle install
       - name: Install Bun packages
