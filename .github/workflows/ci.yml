@@ -116,13 +116,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgis://supabase_admin:postgres@postgres:5432
+      DATABASE_URL: postgis://supabase_admin:postgres@localhost:5432
     services:
       postgres:
         image: supabase/postgres:17.6.1.016
         env:
           POSTGRES_USER: supabase_admin
           POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
         options:
           --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s
           --health-retries=5 --health-start-period=5s
@@ -134,7 +136,7 @@ jobs:
     steps:
       - name: Install system packages
         # prettier-ignore
-        run: apt-get update && apt-get install --no-install-recommends -y file libpq-dev libvips-dev
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y file libpq-dev libvips-dev
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Prepare gem cache
@@ -154,12 +156,12 @@ jobs:
         with:
           install_args: ruby bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Playwright
-        run: bunx playwright install
       - name: Install Ruby gems
         run: bundle install
       - name: Install Bun packages
         run: bun install
+      - name: Install Playwright browsers
+        run: bun run playwright install --with-deps --only-shell
       - name: Prepare database
         run: bin/rails db:test:prepare
       - id: runTests

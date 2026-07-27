@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_27_224530) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_27_233454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -384,7 +384,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_224530) do
     t.timestamptz "email_address_confirmation_sent_at"
     t.timestamptz "email_address_confirmed_at"
     t.boolean "has_v1_account", default: false, null: false
-    t.string "login_code"
     t.string "name", null: false
     t.string "phone_number", null: false
     t.string "time_zone_name", null: false

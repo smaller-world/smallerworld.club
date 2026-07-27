@@ -1024,51 +1024,6 @@ class User
     sig { void }
     def id_will_change!; end
 
-    sig { returns(T.nilable(::String)) }
-    def login_code; end
-
-    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
-    def login_code=(value); end
-
-    sig { returns(T::Boolean) }
-    def login_code?; end
-
-    sig { returns(T.nilable(::String)) }
-    def login_code_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def login_code_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def login_code_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def login_code_change; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def login_code_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def login_code_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def login_code_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def login_code_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def login_code_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable(::String)) }
-    def login_code_previously_was; end
-
-    sig { returns(T.nilable(::String)) }
-    def login_code_was; end
-
-    sig { void }
-    def login_code_will_change!; end
-
     sig { returns(::String) }
     def name; end
 
@@ -1184,9 +1139,6 @@ class User
     def restore_id_value!; end
 
     sig { void }
-    def restore_login_code!; end
-
-    sig { void }
     def restore_name!; end
 
     sig { void }
@@ -1248,12 +1200,6 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
-    def saved_change_to_login_code; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_login_code?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
@@ -1443,9 +1389,6 @@ class User
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_login_code?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end

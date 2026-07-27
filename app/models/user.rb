@@ -12,7 +12,6 @@
 #  email_address_confirmation_sent_at :timestamptz
 #  email_address_confirmed_at         :timestamptz
 #  has_v1_account                     :boolean          default(FALSE), not null
-#  login_code                         :string
 #  name                               :string           not null
 #  phone_number                       :string           not null
 #  time_zone_name                     :string           not null
@@ -149,7 +148,6 @@ class User < ApplicationRecord
   validates :email_address,
     uniqueness: { case_sensitive: false },
     allow_nil: true
-  validates :unconfirmed_email_address, presence: true, on: :create, unless: :test_user?
   validates :email_address, presence: true, unless: :unconfirmed_email_address?, on: :create
   validates_time_zone_name
 
