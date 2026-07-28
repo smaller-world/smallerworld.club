@@ -64,6 +64,9 @@ module GeneratedPathHelpersModule
   def installation_instructions_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def login_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def logs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

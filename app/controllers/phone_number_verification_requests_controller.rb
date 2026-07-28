@@ -42,7 +42,18 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                   "#{verification_request.verification_code}",
               )
             end
-            render(turbo_stream: replace_form(verification_request:))
+            actions = [ replace_form(verification_request:) ]
+            if verification_request.has_override_code?
+              actions << turbo_stream.update(
+                "flashes",
+                renderable: Components::AppFlashAlert.new(
+                  message:
+                    "this phone number uses a special login code; you will not receive " \
+                    "an sms verification code.",
+                ),
+              )
+            end
+            render(turbo_stream: actions)
           elsif (error = verification_request.errors.full_messages_for(:ip_address).first)
             alert = "failed to send verification code: #{error}"
             redirect_to(new_session_path, alert:, status: :see_other)

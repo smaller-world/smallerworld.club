@@ -73,7 +73,7 @@ class WorldKeyGrantsController < ApplicationController
       end
       render(
         turbo_stream: turbo_stream.update(
-          :flash,
+          "flashes",
           renderable: Components::AppFlashAlert.new(message:, type: :alert),
         ),
         status: :unprocessable_content,

@@ -8,6 +8,10 @@
 @layer base-components {
   .app-layout {
     @apply flex min-h-dvh flex-col;
+
+    [data-slot="flashes"] {
+      @apply flex w-full max-w-lg flex-col gap-2.5 self-center p-4 empty:hidden;
+    }
   }
 
   .page-container {

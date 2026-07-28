@@ -119,6 +119,11 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     override_codes_by_phone_number[phone_number]
   end
 
+  sig { returns(T::Boolean) }
+  def has_override_code?
+    self.class.override_code_for(phone_number).present?
+  end
+
   # == Methods ==
 
   # Creates a verified request for `user` with throwaway transport metadata.
@@ -194,13 +199,6 @@ class PhoneNumberVerificationRequest < ApplicationRecord
   end
 
   private
-
-  # == Helpers ==
-
-  sig { returns(T::Boolean) }
-  def has_override_code?
-    self.class.override_code_for(phone_number).present?
-  end
 
   # == Callbacks ==
 

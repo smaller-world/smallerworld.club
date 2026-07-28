@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   # == Authentication
   resource :session, only: [ :new, :destroy ]
+  get "/login" => redirect("/session/new", status: 302)
   resources :phone_number_verification_requests, only: :create do
     member do
       post :verify

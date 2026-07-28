@@ -19,9 +19,11 @@ class Components::AppFlashAlert < Components::Base
       variant: @type == :alert ? :destructive : :default,
       **mix(
         {
-          class: "overflow-x-auto",
+          class: "overflow-x-auto starting:opacity-0 starting:scale-95",
           data: {
             turbo_temporary: true,
+            controller: "transition",
+            transition_leave: "transition-[scale,opacity] duration-200 ease-out-quart",
           },
         },
         @attributes,
@@ -31,13 +33,13 @@ class Components::AppFlashAlert < Components::Base
       alert.title do
         @message
       end
-      # alert.action do
-      #   Components::Button(variant: :ghost, size: :icon_xs, data: {
-      #     action: "transition#leave",
-      #   }) do
-      #     Icon("huge/cancel-01")
-      #   end
-      # end
+      alert.action do
+        Components::Button(variant: :ghost, size: :icon_xs, data: {
+          action: "transition#leave",
+        }) do
+          Icon("huge/cancel-01")
+        end
+      end
     end
   end
 end

@@ -6,14 +6,9 @@ class Components::AppLayout < Components::Base
   include Phlex::Rails::Helpers::CSPMetaTag
   include Phlex::Rails::Helpers::StyleSheetLinkTag
   include Phlex::Rails::Helpers::JavaScriptIncludeTag
-  include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::AssetPath
   include Phlex::Rails::Helpers::ActionCableMetaTag
   include DeleteFrom
-
-  # == Configuration ==
-
-  FLASH_TYPES = [ :alert, :notice ]
 
   # == Initialization ==
 
@@ -127,7 +122,7 @@ class Components::AppLayout < Components::Base
         if @force_header || !hotwire_native_app?
           Components::AppHeader()
         end
-        flash_section
+        Components::AppFlashes()
         raw(content_html) # rubocop:disable Rails/OutputSafety
         confetti_canvas
         logs_container
@@ -210,17 +205,6 @@ class Components::AppLayout < Components::Base
       meta(name: "twitter:description", content: description)
     end
     meta(name: "twitter:image", content: "/banner.png")
-  end
-
-  sig { void }
-  def flash_section
-    section(id: :flash, class: "self-center w-full max-w-lg p-4 flex flex-col gap-2.5 empty:hidden") do
-      FLASH_TYPES.each do |type|
-        if (message = flash[type])
-          Components::AppFlashAlert(message:, type:)
-        end
-      end
-    end
   end
 
   sig { void }

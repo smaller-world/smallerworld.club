@@ -64,6 +64,9 @@ module GeneratedUrlHelpersModule
   def installation_instructions_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def login_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def logs_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

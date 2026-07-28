@@ -27,11 +27,6 @@ class Views::Home::Show < Views::Base
         .with_world_and_attached_icon,
       WorldInvitation::PrivateRelation,
     )
-
-    @transition_enter = T.let(
-      "transition-[scale,opacity] duration-300 ease-in-quart",
-      String,
-    )
   end
 
   # == View ==
@@ -141,15 +136,7 @@ class Views::Home::Show < Views::Base
   def owned_worlds
     ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
       @owned_worlds.each do |world|
-        li(class: "relative starting:opacity-0 starting:scale-95 hidden", data: {
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: @transition_enter,
-          action: [
-            "transition-group:start->transition#enter",
-            "transition-group:start->transition-group#startNext",
-          ],
-        }) do
+        li(class: "relative starting:opacity-0 starting:scale-95") do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
             span(class: "world-icon-label") do
@@ -188,9 +175,10 @@ class Views::Home::Show < Views::Base
         world = world_key.world!
         badge_count = badge_count_for(world_key)
         li(class: "hidden starting:opacity-0 starting:scale-95", data: {
+          hidden_inline: "",
           transition_group_target: "item",
           controller: "transition",
-          transition_enter: @transition_enter,
+          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
           action: [
             "transition-group:start->transition#enter",
             "transition-group:start->transition-group#startNext",
@@ -218,50 +206,56 @@ class Views::Home::Show < Views::Base
 
       @pending_world_invitations.find_each do |invitation|
         world = invitation.world!
-        link_to(invitation, class: "world-icon-container hover:underline") do
-          div(class: "relative") do
-            image_tag(
-              world.page_icon_variant,
-              class: "world-icon opacity-50",
-              data: { world_icon_size: "sm" },
-            )
-            div(class: "absolute inset-0 flex items-center justify-center") do
-              Icon("huge/key-01", class: "size-8 text-white")
+        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
+          hidden_inline: "",
+          transition_group_target: "item",
+          controller: "transition",
+          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
+          action: [
+            "transition-group:start->transition#enter",
+            "transition-group:start->transition-group#startNext",
+          ],
+        }) do
+          link_to(invitation, class: "world-icon-container hover:underline") do
+            div(class: "relative") do
+              image_tag(
+                world.page_icon_variant,
+                class: "world-icon opacity-50",
+                data: { world_icon_size: "sm" },
+              )
+              div(class: "absolute inset-0 flex items-center justify-center") do
+                Icon("huge/key-01", class: "size-8 text-white")
+              end
             end
-          end
-          span(class: "world-icon-label text-xs text-muted-foreground") do
-            world.name
+            span(class: "world-icon-label text-xs text-muted-foreground") do
+              world.name
+            end
           end
         end
       end
 
       if hotwire_native_app?
-        link_to(
-          "/scan_qr_code",
-          class: [
-            "world-icon-container hover:underline",
-            "hidden starting:scale-95 starting:opacity-0",
-          ],
-          data: {
-            transition_group_target: "item",
-            controller: "transition",
-            transition_enter: @transition_enter,
-            action:
-              "transition-group:start->transition#enter",
-          },
-        ) do
-          Components::Button(
-            element: :div,
-            variant: :outline,
-            class: "world-icon shadow-none border-dashed",
-            data: {
-              world_icon_size: "sm",
-            },
-          ) do
-            Icon("huge/qr-code", class: "size-7 text-muted-foreground")
-          end
-          span(class: "world-icon-label text-xs text-muted-foreground") do
-            "join a friend's world"
+        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
+          hidden_inline: "",
+          transition_group_target: "item",
+          controller: "transition",
+          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
+          action: "transition-group:start->transition#enter",
+        }) do
+          link_to("/scan_qr_code", class: "world-icon-container hover:underline") do
+            Components::Button(
+              element: :div,
+              variant: :outline,
+              class: "world-icon shadow-none border-dashed",
+              data: {
+                world_icon_size: "sm",
+              },
+            ) do
+              Icon("huge/qr-code", class: "size-7 text-muted-foreground")
+            end
+            span(class: "world-icon-label text-xs text-muted-foreground") do
+              "join a friend's world"
+            end
           end
         end
       end

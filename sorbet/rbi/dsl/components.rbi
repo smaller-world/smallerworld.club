@@ -36,6 +36,10 @@ module Components
   sig { params(message: ::String, type: ::Symbol, attributes: T.untyped).void }
   def AppFlashAlert(message:, type: T.unsafe(nil), **attributes); end
 
+  # workspace://app/components/app_flashes.rb:4
+  sig { params(attributes: T.untyped).void }
+  def AppFlashes(**attributes); end
+
   # workspace://app/components/app_header.rb:4
   sig { params(attributes: T.untyped).void }
   def AppHeader(**attributes); end
@@ -545,6 +549,10 @@ module Components
     # workspace://app/components/app_flash_alert.rb:4
     sig { params(message: ::String, type: ::Symbol, attributes: T.untyped).void }
     def AppFlashAlert(message:, type: T.unsafe(nil), **attributes); end
+
+    # workspace://app/components/app_flashes.rb:4
+    sig { params(attributes: T.untyped).void }
+    def AppFlashes(**attributes); end
 
     # workspace://app/components/app_header.rb:4
     sig { params(attributes: T.untyped).void }
