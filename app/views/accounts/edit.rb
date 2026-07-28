@@ -16,8 +16,12 @@ class Views::Accounts::Edit < Views::Base
   def view_template
     Components::AppLayout(title: "your account") do |app_layout|
       app_layout.page_container(
-        class: "flex flex-col gap-6 max-w-md",
+        class: "space-y-6 max-w-md",
       ) do
+        unless hotwire_native_app?
+          button_back_to(:home, variant: :secondary)
+        end
+
         div(class: "flex flex-col gap-0.5") do
           Components::AccountForm(user: @current_user)
           Components::ConfirmDeleteButton(
@@ -28,13 +32,16 @@ class Views::Accounts::Edit < Views::Base
             "delete account"
           end
         end
-        link_to(
-          policies_path,
-          class: "mx-auto text-xs text-muted-foreground underline",
-          target: "_blank",
-          rel: "noopener",
-        ) do
-          "our terms and policies"
+
+        div(class: "text-center") do
+          link_to(
+            policies_path,
+            class: "text-xs text-muted-foreground underline",
+            target: "_blank",
+            rel: "noopener",
+          ) do
+            "view our terms and policies"
+          end
         end
       end
     end
