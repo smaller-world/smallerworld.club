@@ -23,7 +23,9 @@ module DeviceDetection
     helper_method :hotwire_native_platform,
       :hotwire_native_ios?,
       :hotwire_native_android?,
-      :hotwire_native_ios_app_on_mac?
+      :hotwire_native_ios_app_on_mac?,
+      :ios_browser?,
+      :android_browser?
   end
 
   private
@@ -41,6 +43,11 @@ module DeviceDetection
   sig { returns(T::Boolean) }
   def ios_browser?
     client.os_family == "iOS" || emulate_ios_browser?
+  end
+
+  sig { returns(T::Boolean) }
+  def android_browser?
+    client.os_family == "Android"
   end
 
   sig { returns(T::Boolean) }

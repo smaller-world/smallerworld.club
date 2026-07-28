@@ -36,6 +36,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :hotwire_native_ios?
   register_value_helper :hotwire_native_ios_app_on_mac?
   register_value_helper :ios_browser?
+  register_value_helper :android_browser?
 
   # == Errors ==
 

@@ -19,11 +19,13 @@ class Components::AppFlashAlert < Components::Base
       variant: @type == :alert ? :destructive : :default,
       **mix(
         {
-          class: "overflow-x-auto starting:opacity-0 starting:scale-95",
+          class: "overflow-x-auto",
           data: {
             turbo_temporary: true,
-            controller: "transition",
+            controller: "transition dismissable",
             transition_leave: "transition-[scale,opacity] duration-200 ease-out-quart",
+            transition_leave_end: "opacity-0 scale-95",
+            action: "transition:exited->dismissable#dismiss",
           },
         },
         @attributes,

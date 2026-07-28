@@ -92,6 +92,9 @@ class Components::Base
 
   sig { returns(T::Boolean) }
   def ios_browser?; end
+
+  sig { returns(T::Boolean) }
+  def android_browser?; end
 end
 
 class Superform::Rails::Components::Base

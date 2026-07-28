@@ -6,6 +6,7 @@ import {
 } from "@joemasilotti/bridge-components";
 import {
   AlertController,
+  DismissableController,
   IntersectionController,
   UserFocusController,
 } from "stimulus-library";
@@ -112,6 +113,7 @@ application.register("radio-group-item", RadioGroupItemController);
 application.register("radio-toggle", RadioToggleController);
 application.register("redirect-back-to-self", RedirectBackToSelfController);
 application.register("async-submission", AsyncSubmissionController);
+application.register("dismissable", DismissableController);
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
