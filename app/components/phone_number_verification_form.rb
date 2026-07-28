@@ -68,7 +68,7 @@ class Components::PhoneNumberVerificationForm < Components::Base
               data: {
                 controller: "tooltip connection",
                 tooltip_content_value: "code auto-filled in development",
-                action: "connection:connect->tooltip#show",
+                action: token_list("connection:connect->tooltip#show" => Rails.env.development?),
               },
             ),
             label: false,
