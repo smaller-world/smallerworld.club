@@ -65,13 +65,14 @@ class Components::PhoneNumberVerificationForm < Components::Base
               maxlength: 6,
               pattern: "[0-9]{6}",
               value: (@verification_request.verification_code if Rails.env.development?),
+              data: {
+                controller: "tooltip connection",
+                tooltip_content_value: "code auto-filled in development",
+                action: "connection:connect->tooltip#show",
+              },
             ),
             label: false,
-          ) do |row|
-            row.description(class: "text-xs text-center") do
-              "code auto-filled in development"
-            end
-          end
+          )
         end
       end
 
@@ -100,7 +101,16 @@ class Components::PhoneNumberVerificationForm < Components::Base
               button.inline_end_icon("huge/arrow-right-02")
             end
           end
-          if @verification_request.persisted?
+          if @verification_request.new_record?
+            div(class: "text-xs text-muted-foreground text-center text-balance") do
+              plain("by continuing, you agree to receive a ")
+              span(class: "text-foreground/75 whitespace-nowrap") { "one-time" }
+              plain(" sms message from: ")
+              span(class: "text-foreground/75") { application_phone_number }
+              br
+              plain("")
+            end
+          else
             button_link_to(
               "wrong phone number?",
               new_session_path,
@@ -111,5 +121,20 @@ class Components::PhoneNumberVerificationForm < Components::Base
         end
       end
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def application_phone_number
+    @application_phone_number ||= T.let(
+      begin
+        phone_number = Smallerworld.application.telnyx_phone_number
+        Phonelib.parse(phone_number).international(true)
+      end,
+      T.nilable(String),
+    )
   end
 end

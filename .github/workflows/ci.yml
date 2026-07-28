@@ -161,7 +161,7 @@ jobs:
       - name: Install Bun packages
         run: bun install
       - name: Install Playwright browsers
-        run: bun run playwright install --with-deps --only-shell
+        run: bun run playwright install --only-shell --with-deps
       - name: Prepare database
         run: bin/rails db:test:prepare
       - id: runTests
