@@ -54,11 +54,12 @@ class Device < ApplicationRecord
   # == Validations ==
 
   validates :identifier, presence: true, uniqueness: true
-  validates :push_token, uniqueness: true, allow_nil: true
 
   # == Hooks ==
 
-  before_create :remove_devices_with_duplicate_push_tokens!,
+  # A duplicate push token means the same physical device re-registered, so
+  # supersede the stale rows instead of failing the save.
+  before_save :remove_devices_with_duplicate_push_tokens!,
     if: [ :push_token_changed?, :push_token? ]
 
   # == Scopes ==
