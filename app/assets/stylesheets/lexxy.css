@@ -24,6 +24,8 @@
       --lexxy-color-ink-lightest: var(--color-olive-700);
       --lexxy-color-selected: var(--color-olive-600);
       --lexxy-color-selected-hover: var(--color-olive-700);
+      --lexxy-color-canvas: var(--color-olive-700);
+      --lexxy-color-text: var(--foreground);
     }
 
     @apply text-base leading-relaxed md:text-sm;
@@ -45,6 +47,7 @@
   lexxy-editor {
     @apply w-full rounded-2xl border border-transparent bg-input/50 shadow-xs transition-[color,box-shadow,background-color] outline-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
     @apply dark:bg-input/50;
+    @apply flex flex-col-reverse;
 
     --lexxy-toolbar-gap: var(--spacing);
 
@@ -92,7 +95,7 @@
     }
 
     :where(lexxy-toolbar) {
-      @apply border-b-border;
+      @apply border-t border-b-0 border-t-border;
 
       > .lexxy-editor__toolbar-button,
       > .lexxy-editor__toolbar-dropdown
@@ -119,6 +122,11 @@
 
       > .lexxy-editor__toolbar-dropdown > .lexxy-editor__toolbar-button {
         @apply aria-expanded:bg-(--lexxy-color-canvas);
+      }
+
+      > .lexxy-editor__toolbar-dropdown.lexxy-editor__toolbar-dropdown--link
+        input[type="url"] {
+        @apply border border-transparent bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30;
       }
 
       /*> .lexxy-editor__toolbar-dropdown {
