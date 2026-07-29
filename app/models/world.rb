@@ -146,6 +146,7 @@ class World < ApplicationRecord
 
   after_initialize :set_default_name, if: :new_record?
   after_initialize :set_default_post_types, if: :new_record?
+  after_create :create_intro_post!
 
   # == Search ==
 
@@ -183,6 +184,13 @@ class World < ApplicationRecord
     ]
   end
 
+  sig { returns(PostType) }
+  def journal_entry_post_type!
+    post_types.find_or_create_by!(label: "journal entry") do |post_type|
+      post_type.icon = "huge/book-edit"
+    end
+  end
+
   # == Keys ==
 
   sig { params(post_type_ids: T::Array[String]).returns(String) }
@@ -215,5 +223,24 @@ class World < ApplicationRecord
   sig { void }
   def set_default_post_types
     self.post_types = self.class.default_post_types
+  end
+
+  sig { void }
+  def create_intro_post!
+    journal_entry_post_type!.posts.create!(
+      created_at:,
+      emoji: "🌎",
+      title: "welcome to my smaller world!",
+      body: <<~TEXT.squish,
+        <p>hello friends! this is a special space where i'll:</p>
+        <ul>
+          <li value="1">keep you updated about what's <em>actually</em> going on in my life :P</li>
+          <li value="2">share art and ideas and work-in-progress stuff</li>
+          <li value="3">ask for help when i need it!</li>
+          <li value="4">drop links to events i'm going to, so we can do more together irl</li>
+          <p>thanks for joining my world :)</p>
+        </ul>
+      TEXT
+    )
   end
 end
