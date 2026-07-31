@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@37signals/lexxy": "^0.9.25",
+    "@glidejs/glide": "^3.7.1",
     "@gothassos/uppy-activestorage-upload": "^2.0.2",
     "@hotwired/hotwire-native-bridge": "^1.2.2",
     "@hotwired/stimulus": "^3.2.2",
@@ -59,6 +60,7 @@
     "@sentry/cli": "^2.58.6",
     "@tailwindcss/cli": "^4.3.0",
     "@tailwindcss/postcss": "^4.3.2",
+    "@types/glidejs__glide": "^3.6.6",
     "@types/hotwired__turbo": "^8.0.10",
     "@types/hotwired__turbo-rails": "^8.0.0",
     "@types/intl-tel-input": "^18.1.4",

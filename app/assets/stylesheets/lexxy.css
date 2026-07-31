@@ -42,6 +42,10 @@
     ul:not(.lexxy-prompt-menu) {
       @apply ml-8 md:ml-6;
     }
+
+    a {
+      @apply text-muted-foreground;
+    }
   }
 
   lexxy-editor {

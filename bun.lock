@@ -5,6 +5,7 @@
     "": {
       "dependencies": {
         "@37signals/lexxy": "^0.9.25",
+        "@glidejs/glide": "^3.7.1",
         "@gothassos/uppy-activestorage-upload": "^2.0.2",
         "@hotwired/hotwire-native-bridge": "^1.2.2",
         "@hotwired/stimulus": "^3.2.2",
@@ -48,6 +49,7 @@
         "@sentry/cli": "^2.58.6",
         "@tailwindcss/cli": "^4.3.0",
         "@tailwindcss/postcss": "^4.3.2",
+        "@types/glidejs__glide": "^3.6.6",
         "@types/hotwired__turbo": "^8.0.10",
         "@types/hotwired__turbo-rails": "^8.0.0",
         "@types/intl-tel-input": "^18.1.4",
@@ -211,6 +213,8 @@
     "@floating-ui/react-dom": ["@floating-ui/react-dom@2.1.8", "", { "dependencies": { "@floating-ui/dom": "^1.7.6" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-cC52bHwM/n/CxS87FH0yWdngEZrjdtLW/qVruo68qg+prK7ZQ4YGdut2GyDVpoGeAYe/h899rVeOVm6Oi40k2A=="],
 
     "@floating-ui/utils": ["@floating-ui/utils@0.2.11", "", {}, "sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg=="],
+
+    "@glidejs/glide": ["@glidejs/glide@3.7.1", "", {}, "sha512-8he0pZpLSqTesSFYiuWdhBmtdlYSPWxfPUCKtkkiX6ZmT8UdMdmoFPtJaOwLBXv4p2JiGxqbuPdiRGGo2e/htQ=="],
 
     "@gothassos/uppy-activestorage-upload": ["@gothassos/uppy-activestorage-upload@2.0.2", "", { "dependencies": { "@paralleldrive/cuid2": "^2.2.2" }, "peerDependencies": { "@rails/activestorage": "^7.2 || ^8", "@uppy/core": "^5" } }, "sha512-CdLCZbbEFykL6LxdvNt/gIo8cHnoUPylAKrCx1ZMDeCS/PTW/U15gEpytbZ18UO5Yarjb+NV19nzE+95T1AfFA=="],
 
@@ -475,6 +479,8 @@
     "@types/esrecurse": ["@types/esrecurse@4.3.1", "", {}, "sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw=="],
 
     "@types/estree": ["@types/estree@1.0.8", "", {}, "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="],
+
+    "@types/glidejs__glide": ["@types/glidejs__glide@3.6.6", "", {}, "sha512-pSaSBa/NU3SKEBgXXIsdFWziIW1X+vepSN2k657DCSp9RJ7mf3WG93mXPmwPX6+5c21nYoMZoPRe5cm8xsyqUQ=="],
 
     "@types/hotwired__turbo": ["@types/hotwired__turbo@8.0.10", "", {}, "sha512-ZnNDmfE2mwvbpmq55ntbTwP82Y4U+g3lcGMTWvS+Vo5LEuO6YQrWVhCmrTae3IH19/nNcHvzbNuroNWEwRylFg=="],
 

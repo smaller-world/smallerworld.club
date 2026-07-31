@@ -13,12 +13,14 @@ export default class ConnectionController extends Typed(Controller, {
   // == Lifecycle ==
 
   connect(): void {
+    super.connect();
     this.#delayTimeout = setTimeout(() => {
       this.dispatch("connect", { bubbles: false });
     }, this.delayValue);
   }
 
   disconnect(): void {
+    super.disconnect();
     if (this.#delayTimeout) {
       clearTimeout(this.#delayTimeout);
       this.#delayTimeout = null;

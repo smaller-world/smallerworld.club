@@ -142,9 +142,9 @@ class Components::AppLayout < Components::Base
 
   # == Interface ==
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def page_container(**attributes, &content)
-    div(**mix({ class: "page-container" }, **attributes), &content)
+  sig { params(element: Symbol, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def page_container(element: :main, **attributes, &content)
+    public_send(element, **mix({ class: "page-container" }, **attributes), &content)
   end
 
   sig { params(content: T.proc.void).void }

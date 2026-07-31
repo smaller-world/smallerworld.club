@@ -54,6 +54,7 @@ export default class ComboboxController extends Typed(Controller<HTMLElement>, {
   }
 
   disconnect(): void {
+    super.disconnect();
     this.#inputMutationObserver.disconnect();
     this.#clearAnchorOffset();
   }

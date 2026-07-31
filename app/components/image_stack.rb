@@ -59,6 +59,10 @@ class Components::ImageStack < Components::Base
               "pointerdown->image-stack#startDrag:prevent",
               "pointerup->image-stack#endDrag",
               "pointercancel->image-stack#endDrag",
+              # Safety net: if capture is lost without a pointerup/pointercancel
+              # (i.e. the element is re-rendered mid-drag), the image would
+              # otherwise stay stuck in its dragged position.
+              "lostpointercapture->image-stack#endDrag",
               "click->lightbox#open" => @images.one?,
             ),
           },

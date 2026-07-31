@@ -1,0 +1,2 @@
+@import "@glidejs/glide/dist/css/glide.core.min.css" layer(base-components);
+@import "@glidejs/glide/dist/css/glide.theme.min.css" layer(base-components);

@@ -37,6 +37,7 @@ export default class ToasterController extends Typed(Controller<HTMLElement>, {
   }
 
   disconnect(): void {
+    super.disconnect();
     this.unmount();
   }
 

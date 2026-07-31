@@ -142,7 +142,6 @@ export default class ImageStackController extends Typed(
     }
     currentTarget.removeEventListener("pointermove", this.#moveDrag);
     this.#stopDrag(drag);
-    currentTarget.removeEventListener("pointermove", this.#moveDrag);
     const { flipBoundaryValue, clickBoundaryValue } = this;
     if (
       Math.abs(drag.dx) > flipBoundaryValue ||
@@ -152,6 +151,7 @@ export default class ImageStackController extends Typed(
       this.#restack({ animated: true });
     } else {
       if (
+        event.type === "pointerup" &&
         Math.abs(drag.dx) <= clickBoundaryValue &&
         Math.abs(drag.dy) <= clickBoundaryValue
       ) {
@@ -227,11 +227,10 @@ export default class ImageStackController extends Typed(
   }
 
   #cancelDragFrame(): void {
-    if (this.#dragFrame === null) {
-      return;
+    if (this.#dragFrame !== null) {
+      cancelAnimationFrame(this.#dragFrame);
+      this.#dragFrame = null;
     }
-    cancelAnimationFrame(this.#dragFrame);
-    this.#dragFrame = null;
   }
 
   #renderDrag(): void {

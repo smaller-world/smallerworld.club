@@ -30,6 +30,7 @@ export default class CollapseController extends Typed(Controller<HTMLElement>, {
   }
 
   disconnect(): void {
+    super.disconnect();
     this.#resizeObserver.disconnect();
   }
 

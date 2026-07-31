@@ -26,6 +26,7 @@ export default class TurnstileController extends Typed(
   }
 
   disconnect(): void {
+    super.disconnect();
     this.reset();
   }
 

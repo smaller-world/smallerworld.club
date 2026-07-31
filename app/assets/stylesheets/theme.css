@@ -157,6 +157,11 @@
 
   html {
     @apply font-sans;
+
+    /* Transformed elements (i.e. image stack images mid-drag) must never grow
+       the page horizontally. `clip` rather than `hidden` so that the document
+       doesn't become a scroll container. */
+    overflow-x: clip;
   }
 
   body {

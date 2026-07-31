@@ -35,6 +35,7 @@ export default class PhoneNumberInputController extends Typed(
   }
 
   disconnect(): void {
+    super.disconnect();
     this.destroy();
   }
 

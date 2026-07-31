@@ -41,6 +41,7 @@ import FrameReloadController from "./frame_reload_controller";
 import FrameResetController from "./frame_reset_controller";
 import ImageStackController from "./image_stack_controller";
 import InputGroupAddonController from "./input_group_addon_controller";
+import LandingCarouselController from "./landing_carousel_controller";
 import LexxyEditorController from "./lexxy_editor_controller";
 import LightboxController from "./lightbox_controller";
 import MessagingPlatformDropdownController from "./messaging_platform_dropdown_controller";
@@ -175,3 +176,4 @@ application.register(
   "phone-number-verification-form",
   PhoneNumberVerificationFormController,
 );
+application.register("landing-carousel", LandingCarouselController);
