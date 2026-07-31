@@ -262,19 +262,19 @@ class Playwright::APIRequestContext < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:301
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:295
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:295
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:307
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:307
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_request_context.rb:301
   def once(event, callback); end
 
   # Sends HTTP(S) [PATCH](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH) request and returns its response.
@@ -419,32 +419,42 @@ class Playwright::APIResponse < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:83
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:95
   def ok?; end
+
+  # Returns SSL and other security information. Resolves to `null` for non-HTTPS responses. For redirected requests, returns the information for the last request in the redirect chain.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:60
+  def security_details; end
+
+  # Returns the IP address and port of the server. Resolves to `null` if the server address is not available. For redirected requests, returns the information for the last request in the redirect chain.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:66
+  def server_addr; end
 
   # Contains the status code of the response (e.g., 200 for a success).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:60
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:72
   def status; end
 
   # Contains the status text of the response (e.g. usually an "OK" for a success).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:66
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:78
   def status_text; end
 
   # Returns the text representation of response body.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:72
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:84
   def text; end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:88
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:100
   def to_s; end
 
   # Contains the URL of the response.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:78
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/api_response.rb:90
   def url; end
 end
 
@@ -456,10 +466,10 @@ class Playwright::APIResponseImpl
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:7
   def initialize(context, initializer); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:48
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:56
   def body; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:65
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:73
   def dispose; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:34
@@ -468,7 +478,7 @@ class Playwright::APIResponseImpl
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:38
   def headers_array; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:61
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:69
   def json; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:21
@@ -477,13 +487,19 @@ class Playwright::APIResponseImpl
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:24
   def ok?; end
 
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:42
+  def security_details; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:46
+  def server_addr; end
+
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:26
   def status; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:30
   def status_text; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:59
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:67
   def text; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:13
@@ -494,16 +510,16 @@ class Playwright::APIResponseImpl
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:69
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:77
   def _request; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:73
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:81
   def fetch_uid; end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:42
+# pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:50
 class Playwright::AlreadyDisposedError < ::StandardError
-  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:43
+  # pkg:gem/playwright-ruby-client#lib/playwright/api_response_impl.rb:51
   def initialize; end
 end
 
@@ -548,7 +564,7 @@ end
 # pkg:gem/playwright-ruby-client#lib/playwright/api_implementation.rb:4
 module Playwright::ApiImplementation; end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:72
+# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:75
 class Playwright::AssertionError < ::StandardError; end
 
 # A Browser is created via [`method: BrowserType.launch`]. An example of using a `Browser` to create a `Page`:
@@ -653,19 +669,19 @@ class Playwright::Browser < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:226
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:220
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:220
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:232
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:232
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser.rb:226
   def once(event, callback); end
 
   # **NOTE**: This API controls [Chromium Tracing](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) which is a low-level chromium-specific debugging tool. API to control [Playwright Tracing](../trace-viewer) could be found [here](./class-tracing).
@@ -736,7 +752,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # browser_context.add_cookies([cookie_object1, cookie_object2])
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:53
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:60
   def add_cookies(cookies); end
 
   # Adds a script which would be evaluated in one of the following scenarios:
@@ -758,24 +774,24 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # **NOTE**: The order of evaluation of multiple scripts installed via [`method: BrowserContext.addInitScript`] and
   # [`method: Page.addInitScript`] is not defined.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:76
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:83
   def add_init_script(path: T.unsafe(nil), script: T.unsafe(nil)); end
 
   # Returns an empty list.
   #
   # @deprecated Background pages have been removed from Chromium together with Manifest V2 extensions.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:84
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:91
   def background_pages; end
 
   # Gets the browser instance that owns the context. Returns `null` if the context is created outside of normal browser, e.g. Android or Electron.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:90
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:97
   def browser; end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:508
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:500
   def browser=(req); end
 
   # Removes cookies from context. Accepts optional filter.
@@ -790,7 +806,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # context.clear_cookies(name="session-id", domain="my-origin.com")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:106
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:113
   def clear_cookies(domain: T.unsafe(nil), name: T.unsafe(nil), path: T.unsafe(nil)); end
 
   # Clears all permission overrides for the browser context.
@@ -804,7 +820,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # context.clear_permissions()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:121
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:128
   def clear_permissions; end
 
   # Playwright has ability to mock clock and passage of time.
@@ -816,41 +832,47 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   #
   # **NOTE**: The default browser context cannot be closed.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:129
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:136
   def close(reason: T.unsafe(nil)); end
 
   # Indicates that the browser context is in the process of closing or has already been closed.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:237
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:244
   def closed?; end
 
   # If no URLs are specified, this method returns all cookies. If URLs are specified, only cookies that affect those URLs
   # are returned.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:136
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:143
   def cookies(urls: T.unsafe(nil)); end
+
+  # Virtual WebAuthn authenticator for this context. Lets tests seed credentials and intercept
+  # `navigator.credentials.create()` / `navigator.credentials.get()` ceremonies.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:31
+  def credentials; end
 
   # Debugger allows to pause and resume the execution.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:30
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:37
   def debugger; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:374
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:381
   def default_navigation_timeout=(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:384
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:391
   def default_timeout=(timeout); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:513
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:505
   def enable_debug_console!; end
 
   # Performs action and waits for a `ConsoleMessage` to be logged by in the pages in the context. If predicate is provided, it passes
   # `ConsoleMessage` value into the `predicate` function and waits for `predicate(message)` to return a truthy value.
   # Will throw an error if the page is closed before the [`event: BrowserContext.console`] event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:455
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:462
   def expect_console_message(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Waits for event to fire and passes its value into the predicate function. Returns when the predicate returns truthy
@@ -864,14 +886,14 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # page = event_info.value
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:470
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:477
   def expect_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a new `Page` to be created in the context. If predicate is provided, it passes
   # `Page` value into the `predicate` function and waits for `predicate(event)` to return a truthy value.
   # Will throw an error if the context closes before new `Page` is created.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:478
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:485
   def expect_page(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # The method adds a function called `name` on the `window` object of every frame in every page in the context.
@@ -911,7 +933,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   #     run(playwright)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:177
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:184
   def expose_binding(name, callback); end
 
   # The method adds a function called `name` on the `window` object of every frame in every page in the context.
@@ -957,77 +979,77 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   #     run(playwright)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:224
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:231
   def expose_function(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:395
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:402
   def extra_http_headers=(headers); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:411
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:418
   def geolocation=(geolocation); end
 
   # Grants specified permissions to the browser context. Only grants corresponding permissions to the given origin if
   # specified.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:231
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:238
   def grant_permissions(permissions, origin: T.unsafe(nil)); end
 
   # **NOTE**: CDP sessions are only supported on Chromium-based browsers.
   #
   # Returns the newly created session.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:245
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:252
   def new_cdp_session(page); end
 
   # Creates a new page in the browser context.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:251
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:258
   def new_page(&block); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:525
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:526
   def off(event, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:416
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:423
   def offline=(offline); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:519
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:538
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:531
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:532
   def once(event, callback); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:503
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:520
   def options=(req); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:498
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:515
   def owner_page=(req); end
 
   # Returns all open pages in the context.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:257
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:264
   def pages; end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:493
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:510
   def pause; end
 
   # API testing helper associated with this context. Requests made with this API will use context cookies.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:36
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:43
   def request; end
 
   # Routing provides the capability to modify network requests that are made by any page in the browser context. Once route
@@ -1077,14 +1099,14 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   #
   # **NOTE**: Enabling routing disables http cache.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:308
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:315
   def route(url, handler, times: T.unsafe(nil)); end
 
   # If specified the network requests that are made in the context will be served from the HAR file. Read more about [Replaying from HAR](../mock.md#replaying-from-har).
   #
   # Playwright will not serve requests intercepted by Service Worker from the HAR file. See [this](https://github.com/microsoft/playwright/issues/1090) issue. We recommend disabling Service Workers when using request interception by setting `serviceWorkers` to `'block'`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:316
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:323
   def route_from_har(har, notFound: T.unsafe(nil), update: T.unsafe(nil), updateContent: T.unsafe(nil), updateMode: T.unsafe(nil), url: T.unsafe(nil)); end
 
   # This method allows to modify websocket connections that are made by any page in the browser context.
@@ -1109,14 +1131,14 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # context.route_web_socket("/ws", handler)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:348
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:355
   def route_web_socket(url, handler); end
 
   # **NOTE**: Service workers are only supported on Chromium-based browsers.
   #
   # All existing service workers in the context.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:356
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:363
   def service_workers; end
 
   # This setting will change the default maximum navigation time for the following methods and related shortcuts:
@@ -1130,7 +1152,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # **NOTE**: [`method: Page.setDefaultNavigationTimeout`] and [`method: Page.setDefaultTimeout`] take priority over
   # [`method: BrowserContext.setDefaultNavigationTimeout`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:371
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:378
   def set_default_navigation_timeout(timeout); end
 
   # This setting will change the default maximum time for all the methods accepting `timeout` option.
@@ -1138,7 +1160,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # **NOTE**: [`method: Page.setDefaultNavigationTimeout`], [`method: Page.setDefaultTimeout`] and
   # [`method: BrowserContext.setDefaultNavigationTimeout`] take priority over [`method: BrowserContext.setDefaultTimeout`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:381
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:388
   def set_default_timeout(timeout); end
 
   # The extra HTTP headers will be sent with every request initiated by any page in the context. These headers are merged
@@ -1147,7 +1169,7 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   #
   # **NOTE**: [`method: BrowserContext.setExtraHTTPHeaders`] does not guarantee the order of headers in the outgoing requests.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:392
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:399
   def set_extra_http_headers(headers); end
 
   # Sets the context's geolocation. Passing `null` or `undefined` emulates position unavailable.
@@ -1161,10 +1183,10 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # **NOTE**: Consider using [`method: BrowserContext.grantPermissions`] to grant permissions for the browser context pages to read
   # its geolocation.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:408
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:415
   def set_geolocation(geolocation); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:413
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:420
   def set_offline(offline); end
 
   # Clears the existing cookies, local storage and IndexedDB entries for all origins and sets the new storage state.
@@ -1176,29 +1198,29 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # context.set_storage_state("state.json")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:433
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:440
   def set_storage_state(storageState); end
 
   # Returns storage state for this browser context, contains current cookies, local storage snapshot and IndexedDB snapshot.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:420
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:427
   def storage_state(indexedDB: T.unsafe(nil), path: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:436
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:443
   def storage_state=(storageState); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:40
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:47
   def tracing; end
 
   # Removes a route created with [`method: BrowserContext.route`]. When `handler` is not specified, removes all
   # routes for the `url`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:447
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:454
   def unroute(url, handler: T.unsafe(nil)); end
 
   # Removes all routes created with [`method: BrowserContext.route`] and [`method: BrowserContext.routeFromHAR`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:440
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:447
   def unroute_all(behavior: T.unsafe(nil)); end
 
   # **NOTE**: In most cases, you should use [`method: BrowserContext.waitForEvent`].
@@ -1207,12 +1229,12 @@ class Playwright::BrowserContext < ::Playwright::PlaywrightApi
   # event's value into the `predicate` function and waits for `predicate(event)` to return a truthy value.
   # Will throw an error if the browser context is closed before the `event` is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:488
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:495
   def wait_for_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:535
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_context.rb:542
   def event_emitter_proxy; end
 end
 
@@ -1260,11 +1282,11 @@ class Playwright::BrowserType < ::Playwright::PlaywrightApi
   # ```
   #
   # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:52
-  def connect_over_cdp(endpointURL, headers: T.unsafe(nil), isLocal: T.unsafe(nil), noDefaults: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
+  def connect_over_cdp(endpointURL, artifactsDir: T.unsafe(nil), headers: T.unsafe(nil), isLocal: T.unsafe(nil), noDefaults: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # A path where Playwright expects to find a bundled browser executable.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:65
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:66
   def executable_path; end
 
   # Returns the browser instance.
@@ -1295,7 +1317,7 @@ class Playwright::BrowserType < ::Playwright::PlaywrightApi
   # [This article](https://chromium.googlesource.com/chromium/src/+/lkgr/docs/chromium_browser_vs_google_chrome.md)
   # describes some differences for Linux users.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:97
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:98
   def launch(args: T.unsafe(nil), artifactsDir: T.unsafe(nil), channel: T.unsafe(nil), chromiumSandbox: T.unsafe(nil), downloadsPath: T.unsafe(nil), env: T.unsafe(nil), executablePath: T.unsafe(nil), firefoxUserPrefs: T.unsafe(nil), handleSIGHUP: T.unsafe(nil), handleSIGINT: T.unsafe(nil), handleSIGTERM: T.unsafe(nil), headless: T.unsafe(nil), ignoreDefaultArgs: T.unsafe(nil), proxy: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), tracesDir: T.unsafe(nil), &block); end
 
   # Returns the persistent browser context instance.
@@ -1303,35 +1325,35 @@ class Playwright::BrowserType < ::Playwright::PlaywrightApi
   # Launches browser that uses persistent storage located at `userDataDir` and returns the only context. Closing
   # this context will automatically close the browser.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:124
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:125
   def launch_persistent_context(userDataDir, acceptDownloads: T.unsafe(nil), args: T.unsafe(nil), artifactsDir: T.unsafe(nil), baseURL: T.unsafe(nil), bypassCSP: T.unsafe(nil), channel: T.unsafe(nil), chromiumSandbox: T.unsafe(nil), clientCertificates: T.unsafe(nil), colorScheme: T.unsafe(nil), contrast: T.unsafe(nil), deviceScaleFactor: T.unsafe(nil), downloadsPath: T.unsafe(nil), env: T.unsafe(nil), executablePath: T.unsafe(nil), extraHTTPHeaders: T.unsafe(nil), firefoxUserPrefs: T.unsafe(nil), forcedColors: T.unsafe(nil), geolocation: T.unsafe(nil), handleSIGHUP: T.unsafe(nil), handleSIGINT: T.unsafe(nil), handleSIGTERM: T.unsafe(nil), hasTouch: T.unsafe(nil), headless: T.unsafe(nil), httpCredentials: T.unsafe(nil), ignoreDefaultArgs: T.unsafe(nil), ignoreHTTPSErrors: T.unsafe(nil), isMobile: T.unsafe(nil), javaScriptEnabled: T.unsafe(nil), locale: T.unsafe(nil), noViewport: T.unsafe(nil), offline: T.unsafe(nil), permissions: T.unsafe(nil), proxy: T.unsafe(nil), record_har_content: T.unsafe(nil), record_har_mode: T.unsafe(nil), record_har_omit_content: T.unsafe(nil), record_har_path: T.unsafe(nil), record_har_url_filter: T.unsafe(nil), record_video_dir: T.unsafe(nil), record_video_size: T.unsafe(nil), reducedMotion: T.unsafe(nil), screen: T.unsafe(nil), serviceWorkers: T.unsafe(nil), slowMo: T.unsafe(nil), strictSelectors: T.unsafe(nil), timeout: T.unsafe(nil), timezoneId: T.unsafe(nil), tracesDir: T.unsafe(nil), userAgent: T.unsafe(nil), viewport: T.unsafe(nil), &block); end
 
   # Returns browser name. For example: `'chromium'`, `'webkit'` or `'firefox'`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:182
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:183
   def name; end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:194
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:189
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:188
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:201
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:200
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:195
   def once(event, callback); end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:204
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/browser_type.rb:205
   def event_emitter_proxy; end
 end
 
@@ -1365,19 +1387,19 @@ class Playwright::CDPSession < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:42
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:36
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:36
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:48
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:48
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:42
   def once(event, callback); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright_api/cdp_session.rb:30
@@ -1793,13 +1815,13 @@ end
 class Playwright::ChannelOwners::BrowserContext < ::Playwright::ChannelOwner
   include ::Playwright::Utils::PrepareBrowserContextOptions
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:264
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:265
   def add_cookies(cookies); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:326
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:327
   def add_init_script(path: T.unsafe(nil), script: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:212
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:213
   def background_pages; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:6
@@ -1808,49 +1830,52 @@ class Playwright::ChannelOwners::BrowserContext < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:6
   def browser=(_arg0); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:268
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:269
   def clear_cookies(domain: T.unsafe(nil), name: T.unsafe(nil), path: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:309
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:310
   def clear_permissions; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:8
   def clock; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:424
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:425
   def close(reason: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:522
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:523
   def closed?; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:252
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:253
   def cookies(urls: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:436
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:8
+  def credentials; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:437
   def enable_debug_console!; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:478
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:479
   def expect_console_message(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:400
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:401
   def expect_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:486
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:487
   def expect_page(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:340
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:341
   def expose_binding(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:352
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:353
   def expose_function(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:301
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:302
   def grant_permissions(permissions, origin: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:221
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:222
   def new_cdp_session(page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:239
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:240
   def new_page(&block); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:7
@@ -1859,153 +1884,153 @@ class Playwright::ChannelOwners::BrowserContext < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:7
   def owner_page=(_arg0); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:234
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:235
   def pages; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:457
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:458
   def pause; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:8
   def request; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:356
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:357
   def route(url, handler, times: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:375
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:376
   def route_from_har(har, notFound: T.unsafe(nil), update: T.unsafe(nil), updateContent: T.unsafe(nil), updateMode: T.unsafe(nil), url: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:217
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:218
   def service_workers; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:226
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:227
   def set_default_navigation_timeout(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:230
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:231
   def set_default_timeout(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:317
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:318
   def set_extra_http_headers(headers); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:313
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:314
   def set_geolocation(geolocation); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:322
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:323
   def set_offline(offline); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:508
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:509
   def set_storage_state(storageState); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:464
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:465
   def storage_state(path: T.unsafe(nil), indexedDB: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:8
   def tracing; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:368
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:369
   def unroute(url, handler: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:363
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:364
   def unroute_all(behavior: T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:504
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:505
   def _timeout_settings; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:10
   def after_initialize; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:390
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:391
   def async_update_interception_patterns; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:530
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:531
   def base_url; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:569
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:570
   def clock_fast_forward(ticks_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:573
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:574
   def clock_install(time_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:577
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:578
   def clock_pause_at(time_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:581
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:582
   def clock_resume; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:585
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:586
   def clock_run_for(ticks_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:589
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:590
   def clock_set_fixed_time(time_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:593
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:594
   def clock_set_system_time(time_params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:537
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:538
   def create_temp_files(local_directory, files); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:474
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:475
   def effective_close_reason; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:526
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:527
   def has_record_video_option?; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:80
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:81
   def initialize_har_from_options(record_har_path:, record_har_content:, record_har_omit_content:, record_har_url_filter:, record_har_mode:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:139
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:140
   def on_binding(binding_call); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:414
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:415
   def on_close; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:164
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:165
   def on_console_message(message); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:174
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:175
   def on_dialog(dialog); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:97
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:98
   def on_page(page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:189
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:190
   def on_page_error(error, page, location); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:196
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:197
   def on_request(request, page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:146
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:147
   def on_request_failed(request, response_end_timing, failure_text, page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:153
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:154
   def on_request_finished(params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:201
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:202
   def on_response(response, page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:103
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:104
   def on_route(route); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:206
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:207
   def on_service_worker(worker); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:597
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:598
   def register_selector_engine(selector_engine); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:495
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:496
   def remove_page(page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:499
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:500
   def remove_service_worker(worker); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:601
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:602
   def set_test_id_attribute_name(test_id_attribute_name); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:395
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:396
   def update_interception_patterns; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:92
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:93
   def update_options(context_options:, browser_options:); end
 end
 
@@ -2017,7 +2042,7 @@ class Playwright::ChannelOwners::BrowserType < ::Playwright::ChannelOwner
   def connect(endpoint, exposeNetwork: T.unsafe(nil), headers: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:95
-  def connect_over_cdp(endpointURL, headers: T.unsafe(nil), isLocal: T.unsafe(nil), noDefaults: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
+  def connect_over_cdp(endpointURL, artifactsDir: T.unsafe(nil), headers: T.unsafe(nil), isLocal: T.unsafe(nil), noDefaults: T.unsafe(nil), slowMo: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:17
   def executable_path; end
@@ -2036,16 +2061,16 @@ class Playwright::ChannelOwners::BrowserType < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:5
   def after_initialize; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:126
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:127
   def did_create_context(context, context_options = T.unsafe(nil), browser_options = T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:139
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:140
   def playwright_selectors_browser_contexts; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:9
   def update_playwright(playwright); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:130
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_type.rb:131
   def update_with_playwright_selectors_options(options); end
 end
 
@@ -2416,13 +2441,13 @@ class Playwright::ChannelOwners::Frame < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:9
   def after_initialize; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:815
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:834
   def append_child_frame_from_child(frame); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:771
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:790
   def drop_file_payloads(files); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:749
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:768
   def drop_payload_params(payload); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:63
@@ -2434,7 +2459,7 @@ class Playwright::ChannelOwners::Frame < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:97
   def setup_navigation_waiter(wait_name:, timeout_value:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:809
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/frame.rb:828
   def update_page_from_page(page); end
 end
 
@@ -2524,184 +2549,187 @@ class Playwright::ChannelOwners::Page < ::Playwright::ChannelOwner
   include ::Playwright::Utils::Errors::TargetClosedErrorMethods
   include ::Playwright::LocatorUtils
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:959
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:969
   def _assertions(timeout, is_not, message); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:404
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:412
   def add_init_script(path: T.unsafe(nil), script: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:302
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:310
   def add_script_tag(content: T.unsafe(nil), path: T.unsafe(nil), type: T.unsafe(nil), url: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:306
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:314
   def add_style_tag(content: T.unsafe(nil), path: T.unsafe(nil), url: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:683
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:693
   def aria_snapshot(boxes: T.unsafe(nil), depth: T.unsafe(nil), mode: T.unsafe(nil), timeout: T.unsafe(nil), _track: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:399
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:407
   def bring_to_front; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:675
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:685
   def cancel_pick_locator; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:826
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:836
   def check(selector, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:258
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:266
   def checked?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:667
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:677
   def clear_console_messages; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:671
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:681
   def clear_page_errors; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:529
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:539
   def click(selector, button: T.unsafe(nil), clickCount: T.unsafe(nil), delay: T.unsafe(nil), force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil), steps: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:205
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:213
   def clock; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:509
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:517
   def close(runBeforeUnload: T.unsafe(nil), reason: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:525
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:535
   def closed?; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:649
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:659
   def console_messages(filter: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:331
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:339
   def content; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:201
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:209
   def context; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:585
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:595
   def dblclick(selector, button: T.unsafe(nil), delay: T.unsafe(nil), force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil), steps: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:262
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:270
   def disabled?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:282
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:290
   def dispatch_event(selector, type, eventInit: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:559
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:569
   def drag_and_drop(source, target, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), sourcePosition: T.unsafe(nil), strict: T.unsafe(nil), targetPosition: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil), steps: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:266
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:274
   def editable?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:372
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:380
   def emulate_media(colorScheme: T.unsafe(nil), contrast: T.unsafe(nil), forcedColors: T.unsafe(nil), media: T.unsafe(nil), reducedMotion: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:270
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:278
   def enabled?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:294
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:302
   def eval_on_selector(selector, pageFunction, arg: T.unsafe(nil), strict: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:298
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:306
   def eval_on_selector_all(selector, pageFunction, arg: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:286
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:294
   def evaluate(pageFunction, arg: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:290
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:298
   def evaluate_handle(pageFunction, arg: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1024
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1034
   def expect_console_message(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1028
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1038
   def expect_download(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1005
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1015
   def expect_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1032
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1042
   def expect_file_chooser(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1036
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1046
   def expect_navigation(timeout: T.unsafe(nil), url: T.unsafe(nil), waitUntil: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1044
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1054
   def expect_popup(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1048
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1058
   def expect_request(urlOrPredicate, timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1063
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1073
   def expect_request_finished(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1067
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1077
   def expect_response(urlOrPredicate, timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1082
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1092
   def expect_websocket(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1086
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1096
   def expect_worker(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:316
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:324
   def expose_binding(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:310
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:318
   def expose_function(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:633
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:643
   def fill(selector, value, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:715
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:725
   def focus(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:223
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:231
   def frame(name: T.unsafe(nil), url: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:711
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:721
   def frame_locator(selector); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:234
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:242
   def frames; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:731
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:741
   def get_attribute(selector, name, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:360
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:368
   def go_back(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:366
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:374
   def go_forward(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:339
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:347
   def goto(url, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil), referer: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1112
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1122
   def guid; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:274
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:282
   def hidden?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:679
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:689
   def hide_highlight; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:735
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:745
   def hover(selector, force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:727
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:737
   def inner_html(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:723
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:733
   def inner_text(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:779
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:789
   def input_value(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:82
   def keyboard; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:697
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:89
+  def local_storage; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:707
   def locator(selector, has: T.unsafe(nil), hasNot: T.unsafe(nil), hasNotText: T.unsafe(nil), hasText: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:82
@@ -2710,207 +2738,210 @@ class Playwright::ChannelOwners::Page < ::Playwright::ChannelOwner
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:82
   def mouse; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:209
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:217
   def opener; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:9
   def owned_context=(_arg0); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:658
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:668
   def page_errors(filter: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:894
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:904
   def pause; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:898
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:908
   def pdf(displayHeaderFooter: T.unsafe(nil), footerTemplate: T.unsafe(nil), format: T.unsafe(nil), headerTemplate: T.unsafe(nil), height: T.unsafe(nil), landscape: T.unsafe(nil), margin: T.unsafe(nil), pageRanges: T.unsafe(nil), path: T.unsafe(nil), preferCSSPageSize: T.unsafe(nil), printBackground: T.unsafe(nil), scale: T.unsafe(nil), width: T.unsafe(nil), tagged: T.unsafe(nil), outline: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:950
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:960
   def pick_locator; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:809
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:819
   def press(selector, key, delay: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:246
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:254
   def query_selector(selector, strict: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:250
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:258
   def query_selector_all(selector); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:343
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:351
   def reload(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:890
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:900
   def request; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:884
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:894
   def requests; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:418
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:426
   def route(url, handler, times: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:437
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:445
   def route_from_har(har, notFound: T.unsafe(nil), update: T.unsafe(nil), url: T.unsafe(nil), updateContent: T.unsafe(nil), updateMode: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:941
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:951
   def screencast; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:462
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:470
   def screenshot(animations: T.unsafe(nil), caret: T.unsafe(nil), clip: T.unsafe(nil), fullPage: T.unsafe(nil), mask: T.unsafe(nil), maskColor: T.unsafe(nil), omitBackground: T.unsafe(nil), path: T.unsafe(nil), quality: T.unsafe(nil), scale: T.unsafe(nil), style: T.unsafe(nil), timeout: T.unsafe(nil), type: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:756
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:766
   def select_option(selector, element: T.unsafe(nil), index: T.unsafe(nil), value: T.unsafe(nil), label: T.unsafe(nil), force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:864
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:93
+  def session_storage; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:874
   def set_checked(selector, checked, **options); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:335
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:343
   def set_content(html, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:238
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:246
   def set_default_navigation_timeout(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:242
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:250
   def set_default_timeout(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:322
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:330
   def set_extra_http_headers(headers); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:783
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:793
   def set_input_files(selector, files, noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:393
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:401
   def set_viewport_size(viewportSize); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:955
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:965
   def snapshot_for_ai(timeout: T.unsafe(nil), depth: T.unsafe(nil), boxes: T.unsafe(nil), _track: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:976
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:986
   def start_css_coverage(resetOnNavigation: T.unsafe(nil), reportAnonymousScripts: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:963
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:973
   def start_js_coverage(resetOnNavigation: T.unsafe(nil), reportAnonymousScripts: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:984
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:994
   def stop_css_coverage; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:972
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:982
   def stop_js_coverage; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:612
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:622
   def tap_point(selector, force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:719
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:729
   def text_content(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:505
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:513
   def title; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:82
   def touchscreen; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:792
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:802
   def type(selector, text, delay: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:845
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:855
   def uncheck(selector, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:430
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:438
   def unroute(url, handler: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:425
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:433
   def unroute_all(behavior: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:327
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:335
   def url; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:945
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:955
   def video; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:82
   def viewport_size; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:278
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:286
   def visible?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:876
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:886
   def wait_for_function(pageFunction, arg: T.unsafe(nil), polling: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:352
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:360
   def wait_for_load_state(state: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:254
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:262
   def wait_for_selector(selector, state: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:872
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:882
   def wait_for_timeout(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:356
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:364
   def wait_for_url(url, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:880
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:890
   def workers; end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1091
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1101
   def _timeout_settings; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:11
   def after_initialize; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:452
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:460
   def async_update_interception_patterns; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1000
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1010
   def close_error_with_reason; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:217
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:225
   def emit_popup_event_from_browser_context; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1096
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1106
   def has_bindings?(name); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:385
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:393
   def no_override_if_null(target); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:137
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:145
   def on_binding(binding_call); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:151
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:159
   def on_close; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:161
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:169
   def on_crash; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:168
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:176
   def on_download(params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:89
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:97
   def on_frame_attached(frame); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:96
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:104
   def on_frame_detached(frame); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:103
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:111
   def on_route(route); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:180
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:188
   def on_viewport_size_changed(params); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:145
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:153
   def on_worker(worker); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:188
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:196
   def perform_event_emitter_callback(event, callback, args); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1106
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1116
   def remote_connection?; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1101
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:1111
   def remove_worker(worker); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:457
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/page.rb:465
   def update_interception_patterns; end
 end
 
@@ -3486,7 +3517,7 @@ class Playwright::Connection
   # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:39
   def remote?; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:124
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:129
   def send_message_to_server(guid, method, params, metadata: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:68
@@ -3499,29 +3530,29 @@ class Playwright::Connection
 
   # @return [Playwright::ChannelOwner|nil]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:266
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:272
   def create_remote_object(parent_guid:, type:, guid:, initializer:); end
 
   # @param guid [String]
   # @note This method should be used internally. Accessed via .send method from Playwright::ChannelOwner, so keep private!
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:152
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:157
   def delete_object_from_channel_owner(guid); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:156
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:161
   def dispatch(msg); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:223
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:229
   def replace_channels_with_guids(payload); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:243
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:249
   def replace_guids_with_channels(payload); end
 
   # @param guid [String]
   # @param parent [Playwright::ChannelOwner]
   # @note This method should be used internally. Accessed via .send method from Playwright::ChannelOwner, so keep private!
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:146
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:151
   def update_object_from_channel_owner(guid, parent); end
 
   # ```usage
@@ -3530,7 +3561,7 @@ class Playwright::Connection
   # end
   # ````
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:135
+  # pkg:gem/playwright-ruby-client#lib/playwright/connection.rb:140
   def with_generated_id(&block); end
 end
 
@@ -3625,9 +3656,139 @@ class Playwright::CrashedError < ::StandardError
   def initialize; end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:451
+# `Credentials` is a virtual WebAuthn authenticator scoped to a `BrowserContext`. It lets tests
+# register passkeys and answer `navigator.credentials.create()` / `navigator.credentials.get()`
+# ceremonies in the page, without a real authenticator or hardware security key.
+#
+# There are two common ways to use it:
+#
+# **Usage: seed a known credential**
+#
+# ```python sync
+# context = browser.new_context()
+#
+# # A passkey your backend already provisioned for a test user.
+# context.credentials.create(
+#     "example.com",
+#     id=known_credential_id,  # base64url
+#     user_handle=known_user_handle,  # base64url
+#     private_key=known_private_key,  # base64url PKCS#8 (DER)
+#     public_key=known_public_key,  # base64url SPKI (DER)
+# )
+# context.credentials.install()
+#
+# page = context.new_page()
+# page.goto("https://example.com/login")
+# # The page's navigator.credentials.get() is answered with the seeded passkey.
+# ```
+#
+# **Usage: capture a passkey, then reuse it**
+#
+# ```python sync
+# # setup test: let the app register a passkey, then save it.
+# context = browser.new_context()
+# context.credentials.install()
+#
+# page = context.new_page()
+# page.goto("https://example.com/register")
+# page.get_by_role("button", name="Create a passkey").click()
+#
+# # Read back the passkey the page registered — it includes the private key.
+# [credential] = context.credentials.get(rp_id="example.com")
+# with open("playwright/.auth/passkey.json", "w") as f:
+#     json.dump(credential, f)
+# ```
+#
+# ```python sync
+# # later test: seed the captured passkey so the app starts already enrolled.
+# with open("playwright/.auth/passkey.json") as f:
+#     credential = json.load(f)
+# context = browser.new_context()
+# context.credentials.create(
+#     credential["rpId"],
+#     id=credential["id"],
+#     user_handle=credential["userHandle"],
+#     private_key=credential["privateKey"],
+#     public_key=credential["publicKey"],
+# )
+# context.credentials.install()
+#
+# page = context.new_page()
+# page.goto("https://example.com/login")
+# # navigator.credentials.get() resolves the captured passkey — already signed in.
+# ```
+#
+# **Defaults**
+#
+# pkg:gem/playwright-ruby-client#lib/playwright_api/credentials.rb:66
+class Playwright::Credentials < ::Playwright::PlaywrightApi
+  # Seeds a virtual WebAuthn credential and returns it.
+  #
+  # With only `rpId`, generates a fresh **ECDSA P-256** keypair, credential id and user handle. The
+  # seeded credential is discoverable (resident), so the page can resolve it from both
+  # username-then-passkey and usernameless passkey flows. The returned object carries the private and public keys, so it can be persisted to disk and re-seeded in a later test.
+  #
+  # To **import a known credential**, supply all four of `id`, `userHandle`, `privateKey` and
+  # `publicKey` together.
+  #
+  # Call [`method: Credentials.install`] before navigating to a page that uses WebAuthn.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/credentials.rb:92
+  def create(rpId, id: T.unsafe(nil), privateKey: T.unsafe(nil), publicKey: T.unsafe(nil), userHandle: T.unsafe(nil)); end
+
+  # Removes a credential from the authenticator by its id. Works for any credential currently held —
+  # both those seeded with [`method: Credentials.create`] and those the page registered itself by
+  # calling `navigator.credentials.create()`.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/credentials.rb:105
+  def delete(id); end
+
+  # Returns every credential currently held by the authenticator, optionally filtered by `rpId` or
+  # `id`. This includes both credentials seeded with [`method: Credentials.create`] and credentials
+  # the page registered itself by calling `navigator.credentials.create()`.
+  #
+  # Each returned credential includes its private and public keys, so a passkey the app just
+  # registered can be saved and re-seeded into a later test with [`method: Credentials.create`] — see the second example in the class overview.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/credentials.rb:116
+  def get(id: T.unsafe(nil), rpId: T.unsafe(nil)); end
+
+  # Installs the virtual WebAuthn authenticator into the context, overriding
+  # `navigator.credentials.create()` and `navigator.credentials.get()` in all current
+  # and future pages. Call this before the page first touches `navigator.credentials`.
+  #
+  # Required: until [`method: Credentials.install`] is called, no interception is in place and the page sees
+  # the platform's native (or absent) WebAuthn behaviour. Seeding credentials with
+  # [`method: Credentials.create`] without installing populates the authenticator, but the
+  # page will never see those credentials.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/credentials.rb:77
+  def install; end
+end
+
+# pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:3
+class Playwright::CredentialsImpl
+  include ::Playwright::ApiImplementation
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:5
+  def initialize(browser_context); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:14
+  def create(rpId, id: T.unsafe(nil), userHandle: T.unsafe(nil), privateKey: T.unsafe(nil), publicKey: T.unsafe(nil)); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:30
+  def delete(id); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:25
+  def get(id: T.unsafe(nil), rpId: T.unsafe(nil)); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/credentials_impl.rb:9
+  def install; end
+end
+
+# pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:452
 class Playwright::DebugConsoleNotEnabledError < ::StandardError
-  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:452
+  # pkg:gem/playwright-ruby-client#lib/playwright/channel_owners/browser_context.rb:453
   def initialize; end
 end
 
@@ -3687,19 +3848,19 @@ class Playwright::Dialog < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:79
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:73
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:73
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:85
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:85
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/dialog.rb:79
   def once(event, callback); end
 
   # The page that initiated this dialog, if available.
@@ -3849,9 +4010,9 @@ class Playwright::DownloadImpl
   def url; end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:43
+# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:46
 class Playwright::DriverCrashedError < ::StandardError
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:44
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:47
   def initialize; end
 end
 
@@ -4131,19 +4292,19 @@ class Playwright::ElementHandle < ::Playwright::JSHandle
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:585
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:579
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:579
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:591
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:591
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/element_handle.rb:585
   def once(event, callback); end
 
   # Returns the frame containing the given element.
@@ -4366,7 +4527,17 @@ class Playwright::Error < ::StandardError
   # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:27
   def initialize(message:, name: T.unsafe(nil), stack: T.unsafe(nil)); end
 
+  # Error details for `expect` failures (received value, timedOut, customErrorMessage).
+  #
   # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:36
+  def details; end
+
+  # Error details for `expect` failures (received value, timedOut, customErrorMessage).
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:36
+  def details=(_arg0); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:38
   def log=(log); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:34
@@ -4374,6 +4545,9 @@ class Playwright::Error < ::StandardError
 
   # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:34
   def name; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:34
+  def raw_log; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:34
   def stack; end
@@ -4896,7 +5070,7 @@ class Playwright::Frame < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1045
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1050
   def detached=(req); end
 
   # Returns `true` if the frame has been detached, or `false` otherwise.
@@ -4952,7 +5126,7 @@ class Playwright::Frame < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1050
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1045
   def drop(selector, payload, position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns whether the element is [editable](../actionability.md#editable).
@@ -5029,7 +5203,7 @@ class Playwright::Frame < ::Playwright::PlaywrightApi
   # `ElementHandle` instances can be passed as an argument to the [`method: Frame.evaluate`]:
   #
   # ```python sync
-  # body_handle = frame.evaluate("document.body")
+  # body_handle = frame.evaluate_handle("document.body")
   # html = frame.evaluate("([body, suffix]) => body.innerHTML + suffix", [body_handle, "hello"])
   # body_handle.dispose()
   # ```
@@ -5055,14 +5229,14 @@ class Playwright::Frame < ::Playwright::PlaywrightApi
   # A string can also be passed in instead of a function.
   #
   # ```python sync
-  # a_handle = page.evaluate_handle("document") # handle for the "document"
+  # a_handle = frame.evaluate_handle("document") # handle for the "document"
   # ```
   #
   # `JSHandle` instances can be passed as an argument to the [`method: Frame.evaluateHandle`]:
   #
   # ```python sync
-  # a_handle = page.evaluate_handle("document.body")
-  # result_handle = page.evaluate_handle("body => body.innerHTML", a_handle)
+  # a_handle = frame.evaluate_handle("document.body")
+  # result_handle = frame.evaluate_handle("body => body.innerHTML", a_handle)
   # print(result_handle.json_value())
   # result_handle.dispose()
   # ```
@@ -5416,19 +5590,19 @@ class Playwright::Frame < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1077
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1071
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1071
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1083
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1083
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/frame.rb:1077
   def once(event, callback); end
 
   # Returns the page containing this frame.
@@ -6172,19 +6346,19 @@ class Playwright::JSHandle < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:109
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:103
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:103
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:115
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:115
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:109
   def once(event, callback); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright_api/js_handle.rb:79
@@ -6509,7 +6683,7 @@ class Playwright::Locator < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1339
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1329
   def _assertions(timeout, is_not, message); end
 
   # When the locator points to a list of elements, this returns an array of locators, pointing to their respective elements.
@@ -7009,7 +7183,7 @@ class Playwright::Locator < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1334
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1339
   def expect(expression, options, title); end
 
   # Set a value to the input field.
@@ -7454,7 +7628,7 @@ class Playwright::Locator < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1329
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/locator.rb:1334
   def resolve_selector; end
 
   # Take a screenshot of the element matching the locator.
@@ -8774,48 +8948,51 @@ module Playwright::LocatorUtils
 
   private
 
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:45
+  def encode_test_id_attribute_name(test_id_attribute_name); end
+
   # @param text [String]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:125
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:133
   def escape_for_attribute_selector(text, exact); end
 
   # @param text [Regexp|String]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:115
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:123
   def escape_for_attribute_selector_or_regex(text, exact); end
 
   # @param text [String]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:96
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:104
   def escape_for_regex(text); end
 
   # @param text [Regexp|String]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:101
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:109
   def escape_for_text_selector(text, exact); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:49
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:57
   def get_by_alt_text_selector(text, exact:); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:37
   def get_by_attribute_text_selector(attr_name, text, exact: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:45
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:53
   def get_by_label_selector(text, exact:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:57
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:65
   def get_by_placeholder_selector(text, exact:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:65
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:73
   def get_by_role_selector(role, **options); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:41
   def get_by_test_id_selector(test_id_attribute_name, test_id); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:61
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:69
   def get_by_text_selector(text, exact:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:53
+  # pkg:gem/playwright-ruby-client#lib/playwright/locator_utils.rb:61
   def get_by_title_selector(text, exact:); end
 end
 
@@ -8945,7 +9122,7 @@ end
 class Playwright::Page < ::Playwright::PlaywrightApi
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1877
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1884
   def _assertions(timeout, is_not, message); end
 
   # Adds a script which would be evaluated in one of the following scenarios:
@@ -8967,7 +9144,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # **NOTE**: The order of evaluation of multiple scripts installed via [`method: BrowserContext.addInitScript`] and
   # [`method: Page.addInitScript`] is not defined.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:98
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:110
   def add_init_script(path: T.unsafe(nil), script: T.unsafe(nil)); end
 
   # When testing a web page, sometimes unexpected overlays like a "Sign up" dialog appear and block actions you want to automate, e.g. clicking a button. These overlays don't always show up in the same way or at the same time, making them tricky to handle in automated tests.
@@ -9036,35 +9213,35 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.add_locator_handler(page.get_by_label("Close"), handler, times=1)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1221
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1233
   def add_locator_handler(locator, handler, noWaitAfter: T.unsafe(nil), times: T.unsafe(nil)); end
 
   # Adds a `<script>` tag into the page with the desired url or content. Returns the added tag when the script's onload
   # fires or when the script content was injected into frame.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:105
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:117
   def add_script_tag(content: T.unsafe(nil), path: T.unsafe(nil), type: T.unsafe(nil), url: T.unsafe(nil)); end
 
   # Adds a `<link rel="stylesheet">` tag into the page with the desired url or a `<style type="text/css">` tag with the
   # content. Returns the added tag when the stylesheet's onload fires or when the CSS content was injected into frame.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:112
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:124
   def add_style_tag(content: T.unsafe(nil), path: T.unsafe(nil), url: T.unsafe(nil)); end
 
   # Captures the aria snapshot of the page. Read more about [aria snapshots](../aria-snapshots.md).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1484
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1496
   def aria_snapshot(boxes: T.unsafe(nil), depth: T.unsafe(nil), mode: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Brings page to front (activates tab).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:118
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:130
   def bring_to_front; end
 
   # Cancels an ongoing [`method: Page.pickLocator`] call by deactivating pick locator mode.
   # If no pick locator mode is active, this method is a no-op.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:125
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:137
   def cancel_pick_locator; end
 
   # This method checks an element matching `selector` by performing the following steps:
@@ -9078,22 +9255,22 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:140
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:152
   def check(selector, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Returns whether the element is checked. Throws if the element is not a checkbox or radio input.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:904
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:916
   def checked?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Clears all stored console messages from this page. Subsequent calls to [`method: Page.consoleMessages`] will only return messages logged after the clear.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:946
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:958
   def clear_console_messages; end
 
   # Clears all stored page errors from this page. Subsequent calls to [`method: Page.pageErrors`] will only return errors thrown after the clear.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:952
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:964
   def clear_page_errors; end
 
   # This method clicks an element matching `selector` by performing the following steps:
@@ -9106,7 +9283,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:161
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:173
   def click(selector, button: T.unsafe(nil), clickCount: T.unsafe(nil), delay: T.unsafe(nil), force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Playwright has ability to mock clock and passage of time.
@@ -9122,30 +9299,30 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # **NOTE**: if `runBeforeUnload` is passed as true, a `beforeunload` dialog might be summoned and should be handled
   # manually via [`event: Page.dialog`] event.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:184
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:196
   def close(reason: T.unsafe(nil), runBeforeUnload: T.unsafe(nil)); end
 
   # Indicates that the page has been closed.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:910
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:922
   def closed?; end
 
   # Returns up to (currently) 200 last console messages from this page. See [`event: Page.console`] for more details.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:958
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:970
   def console_messages(filter: T.unsafe(nil)); end
 
   # Gets the full HTML contents of the page, including the doctype.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:190
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:202
   def content; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1410
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1422
   def content=(html, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # Get the browser context that the page belongs to.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:196
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:208
   def context; end
 
   # This method double clicks an element matching `selector` by performing the following steps:
@@ -9159,18 +9336,18 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # **NOTE**: `page.dblclick()` dispatches two `click` events and a single `dblclick` event.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:211
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:223
   def dblclick(selector, button: T.unsafe(nil), delay: T.unsafe(nil), force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1427
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1439
   def default_navigation_timeout=(timeout); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1436
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1448
   def default_timeout=(timeout); end
 
   # Returns whether the element is disabled, the opposite of [enabled](../actionability.md#enabled).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:916
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:928
   def disabled?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # The snippet below dispatches the `click` event on the element. Regardless of the visibility state of the element, `click`
@@ -9208,7 +9385,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.dispatch_event("#source", "dragstart", { "dataTransfer": data_transfer })
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:260
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:272
   def dispatch_event(selector, type, eventInit: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # This method drags the source element to the target element.
@@ -9228,12 +9405,12 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # )
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:286
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:298
   def drag_and_drop(source, target, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), sourcePosition: T.unsafe(nil), steps: T.unsafe(nil), strict: T.unsafe(nil), targetPosition: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Returns whether the element is [editable](../actionability.md#editable).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:922
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:934
   def editable?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # This method changes the `CSS media type` through the `media` argument, and/or the `'prefers-colors-scheme'` media feature, using the `colorScheme` argument.
@@ -9267,12 +9444,12 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # # → False
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:331
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:343
   def emulate_media(colorScheme: T.unsafe(nil), contrast: T.unsafe(nil), forcedColors: T.unsafe(nil), media: T.unsafe(nil), reducedMotion: T.unsafe(nil)); end
 
   # Returns whether the element is [enabled](../actionability.md#enabled).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:928
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:940
   def enabled?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # The method finds an element matching the specified selector within the page and passes it as a first argument to
@@ -9290,7 +9467,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # html = page.eval_on_selector(".main-container", "(e, suffix) => e.outer_html + suffix", "hello")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:355
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:367
   def eval_on_selector(selector, expression, arg: T.unsafe(nil), strict: T.unsafe(nil)); end
 
   # The method finds all elements matching the specified selector within the page and passes an array of matched elements as
@@ -9305,7 +9482,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # div_counts = page.eval_on_selector_all("div", "(divs, min) => divs.length >= min", 10)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:371
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:383
   def eval_on_selector_all(selector, expression, arg: T.unsafe(nil)); end
 
   # Returns the value of the `expression` invocation.
@@ -9337,12 +9514,12 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # `ElementHandle` instances can be passed as an argument to the [`method: Page.evaluate`]:
   #
   # ```python sync
-  # body_handle = page.evaluate("document.body")
+  # body_handle = page.evaluate_handle("document.body")
   # html = page.evaluate("([body, suffix]) => body.innerHTML + suffix", [body_handle, "hello"])
   # body_handle.dispose()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:409
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:421
   def evaluate(expression, arg: T.unsafe(nil)); end
 
   # Returns the value of the `expression` invocation as a `JSHandle`.
@@ -9374,21 +9551,21 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # result_handle.dispose()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:442
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:454
   def evaluate_handle(expression, arg: T.unsafe(nil)); end
 
   # Performs action and waits for a `ConsoleMessage` to be logged by in the page. If predicate is provided, it passes
   # `ConsoleMessage` value into the `predicate` function and waits for `predicate(message)` to return a truthy value.
   # Will throw an error if the page is closed before the [`event: Page.console`] event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1595
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1607
   def expect_console_message(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a new `Download`. If predicate is provided, it passes
   # `Download` value into the `predicate` function and waits for `predicate(download)` to return a truthy value.
   # Will throw an error if the page is closed before the download event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1603
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1615
   def expect_download(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Waits for event to fire and passes its value into the predicate function. Returns when the predicate returns truthy
@@ -9402,14 +9579,14 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # frame = event_info.value
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1618
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1630
   def expect_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a new `FileChooser` to be created. If predicate is provided, it passes
   # `FileChooser` value into the `predicate` function and waits for `predicate(fileChooser)` to return a truthy value.
   # Will throw an error if the page is closed before the file chooser is opened.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1626
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1638
   def expect_file_chooser(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Waits for the main frame navigation and returns the main resource response. In case of multiple redirects, the navigation
@@ -9434,14 +9611,14 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # @deprecated This method is inherently racy, please use [`method: Page.waitForURL`] instead.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1711
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1723
   def expect_navigation(timeout: T.unsafe(nil), url: T.unsafe(nil), waitUntil: T.unsafe(nil), &block); end
 
   # Performs action and waits for a popup `Page`. If predicate is provided, it passes
   # [Popup] value into the `predicate` function and waits for `predicate(page)` to return a truthy value.
   # Will throw an error if the page is closed before the popup event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1719
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1731
   def expect_popup(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Waits for the matching request and returns it. See [waiting for event](../events.md#waiting-for-event) for more details about events.
@@ -9459,14 +9636,14 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # second_request = second.value
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1738
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1750
   def expect_request(urlOrPredicate, timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a `Request` to finish loading. If predicate is provided, it passes
   # `Request` value into the `predicate` function and waits for `predicate(request)` to return a truthy value.
   # Will throw an error if the page is closed before the [`event: Page.requestFinished`] event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1746
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1758
   def expect_request_finished(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Returns the matched response. See [waiting for event](../events.md#waiting-for-event) for more details about events.
@@ -9486,21 +9663,21 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # return response.ok
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1767
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1779
   def expect_response(urlOrPredicate, timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a new `WebSocket`. If predicate is provided, it passes
   # `WebSocket` value into the `predicate` function and waits for `predicate(webSocket)` to return a truthy value.
   # Will throw an error if the page is closed before the WebSocket event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1840
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1852
   def expect_websocket(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # Performs action and waits for a new `Worker`. If predicate is provided, it passes
   # `Worker` value into the `predicate` function and waits for `predicate(worker)` to return a truthy value.
   # Will throw an error if the page is closed before the worker event is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1848
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1860
   def expect_worker(predicate: T.unsafe(nil), timeout: T.unsafe(nil), &block); end
 
   # The method adds a function called `name` on the `window` object of every frame in this page. When called, the
@@ -9542,7 +9719,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #     run(playwright)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:485
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:497
   def expose_binding(name, callback); end
 
   # The method adds a function called `name` on the `window` object of every frame in the page. When called, the
@@ -9588,10 +9765,10 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #     run(playwright)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:532
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:544
   def expose_function(name, callback); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1445
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1457
   def extra_http_headers=(headers); end
 
   # This method waits for an element matching `selector`, waits for [actionability](../actionability.md) checks, focuses the element, fills it and triggers an `input` event after filling. Note that you can pass an empty string to clear the input field.
@@ -9600,13 +9777,13 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # To send fine-grained keyboard events, use [`method: Locator.pressSequentially`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:542
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:554
   def fill(selector, value, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # This method fetches an element with `selector` and focuses it. If there's no element matching
   # `selector`, the method waits until a matching element appears in the DOM.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:555
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:567
   def focus(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns frame matching the specified criteria. Either `name` or `url` must be specified.
@@ -9621,7 +9798,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # frame = page.frame(url=r".*domain.*")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:571
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:583
   def frame(name: T.unsafe(nil), url: T.unsafe(nil)); end
 
   # When working with iframes, you can create a frame locator that will enter the iframe and allow selecting elements
@@ -9637,17 +9814,17 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # locator.click()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:588
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:600
   def frame_locator(selector); end
 
   # An array of all frames attached to the page.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:594
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:606
   def frames; end
 
   # Returns element attribute value.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:600
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:612
   def get_attribute(selector, name, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Allows locating elements by their alt text.
@@ -9664,7 +9841,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.get_by_alt_text("Playwright logo").click()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:618
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:630
   def get_by_alt_text(text, exact: T.unsafe(nil)); end
 
   # Allows locating input elements by the text of the associated `<label>` or `aria-labelledby` element, or by the `aria-label` attribute.
@@ -9684,7 +9861,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.get_by_label("Password").fill("secret")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:639
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:651
   def get_by_label(text, exact: T.unsafe(nil)); end
 
   # Allows locating input elements by the placeholder text.
@@ -9703,7 +9880,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.get_by_placeholder("name@example.com").fill("playwright@microsoft.com")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:659
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:671
   def get_by_placeholder(text, exact: T.unsafe(nil)); end
 
   # Allows locating elements by their [ARIA role](https://www.w3.org/TR/wai-aria-1.2/#roles), [ARIA attributes](https://www.w3.org/TR/wai-aria-1.2/#aria-attributes) and [accessible name](https://w3c.github.io/accname/#dfn-accessible-name).
@@ -9737,7 +9914,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # Many html elements have an implicitly [defined role](https://w3c.github.io/html-aam/#html-element-role-mappings) that is recognized by the role selector. You can find all the [supported roles here](https://www.w3.org/TR/wai-aria-1.2/#role_definitions). ARIA guidelines **do not recommend** duplicating implicit roles and attributes by setting `role` and/or `aria-*` attributes to default values.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:694
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:706
   def get_by_role(role, checked: T.unsafe(nil), description: T.unsafe(nil), disabled: T.unsafe(nil), exact: T.unsafe(nil), expanded: T.unsafe(nil), includeHidden: T.unsafe(nil), level: T.unsafe(nil), name: T.unsafe(nil), pressed: T.unsafe(nil), selected: T.unsafe(nil)); end
 
   # Locate element by the test id.
@@ -9760,10 +9937,10 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # By default, the `data-testid` attribute is used as a test id. Use [`method: Selectors.setTestIdAttribute`] to configure a different test id attribute if necessary.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:729
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:741
   def get_by_test_id(testId); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:732
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:744
   def get_by_testid(testId); end
 
   # Allows locating elements that contain given text.
@@ -9804,7 +9981,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # Input elements of the type `button` and `submit` are matched by their `value` instead of the text content. For example, locating by text `"Log in"` matches `<input type=button value="Log in">`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:772
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:784
   def get_by_text(text, exact: T.unsafe(nil)); end
 
   # Allows locating elements by their title attribute.
@@ -9823,7 +10000,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # expect(page.get_by_title("Issues count")).to_have_text("25 issues")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:792
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:804
   def get_by_title(text, exact: T.unsafe(nil)); end
 
   # Returns the main resource response. In case of multiple redirects, the navigation will resolve with the response of the
@@ -9831,7 +10008,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # Navigate to the previous page in history.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:801
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:813
   def go_back(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # Returns the main resource response. In case of multiple redirects, the navigation will resolve with the response of the
@@ -9839,7 +10016,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # Navigate to the next page in history.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:810
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:822
   def go_forward(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # Returns the main resource response. In case of multiple redirects, the navigation will resolve with the first
@@ -9862,22 +10039,22 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # **NOTE**: Headless mode doesn't support navigation to a PDF document. See the
   # [upstream issue](https://bugs.chromium.org/p/chromium/issues/detail?id=761295).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:851
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:863
   def goto(url, referer: T.unsafe(nil), timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1882
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1914
   def guid; end
 
   # Returns whether the element is hidden, the opposite of [visible](../actionability.md#visible).  `selector` that does not match any elements is considered hidden.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:934
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:946
   def hidden?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Hide all locator highlight overlays previously added by [`method: Locator.highlight`] on this page.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:857
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:869
   def hide_highlight; end
 
   # This method hovers over an element matching `selector` by performing the following steps:
@@ -9889,76 +10066,81 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:870
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:882
   def hover(selector, force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Returns `element.innerHTML`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:884
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:896
   def inner_html(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns `element.innerText`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:890
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:902
   def inner_text(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns `input.value` for the selected `<input>` or `<textarea>` or `<select>` element.
   #
   # Throws for non-input elements. However, if the element is inside the `<label>` element that has an associated [control](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control), returns the value of the control.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:898
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:910
   def input_value(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:52
   def keyboard; end
+
+  # Provides access to the page's `localStorage` for the current origin. See `WebStorage`.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:58
+  def local_storage; end
 
   # The method returns an element locator that can be used to perform actions on this page / frame.
   # Locator is resolved to the element immediately before performing an action, so a series of actions on the same locator can in fact be performed on different DOM elements. That would happen if the DOM structure between those actions has changed.
   #
   # [Learn more about locators](../locators.md).
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:973
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:985
   def locator(selector, has: T.unsafe(nil), hasNot: T.unsafe(nil), hasNotText: T.unsafe(nil), hasText: T.unsafe(nil)); end
 
   # The page's main frame. Page is guaranteed to have a main frame which persists during navigations.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:984
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:996
   def main_frame; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:56
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:68
   def mouse; end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1919
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1925
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1913
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1937
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1925
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1931
   def once(event, callback); end
 
   # Returns the opener for popup pages and `null` for others. If the opener has been closed already the returns `null`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:990
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1002
   def opener; end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1887
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1919
   def owned_context=(req); end
 
   # Returns up to (currently) 200 last page errors from this page. See [`event: Page.pageError`] for more details.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:964
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:976
   def page_errors(filter: T.unsafe(nil)); end
 
   # Pauses script execution. Playwright will stop executing the script and wait for the user to either press the 'Resume'
@@ -9969,7 +10151,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # **NOTE**: This method requires Playwright to be started in a headed mode, with a falsy `headless` option.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1002
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1014
   def pause; end
 
   # Returns the PDF buffer.
@@ -10019,7 +10201,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # **NOTE**: `headerTemplate` and `footerTemplate` markup have the following limitations: > 1. Script tags inside
   # templates are not evaluated. > 2. Page styles are not visible inside templates.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1053
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1065
   def pdf(displayHeaderFooter: T.unsafe(nil), footerTemplate: T.unsafe(nil), format: T.unsafe(nil), headerTemplate: T.unsafe(nil), height: T.unsafe(nil), landscape: T.unsafe(nil), margin: T.unsafe(nil), outline: T.unsafe(nil), pageRanges: T.unsafe(nil), path: T.unsafe(nil), preferCSSPageSize: T.unsafe(nil), printBackground: T.unsafe(nil), scale: T.unsafe(nil), tagged: T.unsafe(nil), width: T.unsafe(nil)); end
 
   # Enters pick locator mode where hovering over page elements highlights them and shows the corresponding locator.
@@ -10032,7 +10214,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # print(locator)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1082
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1094
   def pick_locator; end
 
   # Focuses the element, and then uses [`method: Keyboard.down`] and [`method: Keyboard.up`].
@@ -10070,37 +10252,37 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # browser.close()
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1121
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1133
   def press(selector, key, delay: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # The method finds an element matching the specified selector within the page. If no elements match the selector, the
   # return value resolves to `null`. To wait for an element on the page, use [`method: Locator.waitFor`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1134
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1146
   def query_selector(selector, strict: T.unsafe(nil)); end
 
   # The method finds all elements matching the specified selector within the page. If no elements match the selector, the
   # return value resolves to `[]`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1141
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1153
   def query_selector_all(selector); end
 
   # This method reloads the current page, in the same way as if the user had triggered a browser refresh.
   # Returns the main resource response. In case of multiple redirects, the navigation will resolve with the response of the
   # last redirect.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1235
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1247
   def reload(timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # Removes all locator handlers added by [`method: Page.addLocatorHandler`] for a specific locator.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1227
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1239
   def remove_locator_handler(locator); end
 
   # API testing helper associated with this page. This method returns the same instance as
   # [`property: BrowserContext.request`] on the page's context. See [`property: BrowserContext.request`] for more details.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:63
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:75
   def request; end
 
   # Request the page to perform garbage collection. Note that there is no guarantee that all unreachable objects will be collected.
@@ -10116,7 +10298,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # assert page.evaluate("!globalThis.suspectWeakRef.deref()")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:827
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:839
   def request_gc; end
 
   # Returns up to (currently) 100 last network request from this page. See [`event: Page.request`] for more details.
@@ -10125,7 +10307,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # Note that requests reported through the [`event: Page.request`] request are not collected, so there is a trade off between efficient memory usage with [`method: Page.requests`] and the amount of available information reported through [`event: Page.request`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1151
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1163
   def requests; end
 
   # Routing provides the capability to modify network requests that are made by a page.
@@ -10178,14 +10360,14 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # **NOTE**: Enabling routing disables http cache.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1289
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1301
   def route(url, handler, times: T.unsafe(nil)); end
 
   # If specified the network requests that are made in the page will be served from the HAR file. Read more about [Replaying from HAR](../mock.md#replaying-from-har).
   #
   # Playwright will not serve requests intercepted by Service Worker from the HAR file. See [this](https://github.com/microsoft/playwright/issues/1090) issue. We recommend disabling Service Workers when using request interception by setting `serviceWorkers` to `'block'`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1297
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1309
   def route_from_har(har, notFound: T.unsafe(nil), update: T.unsafe(nil), updateContent: T.unsafe(nil), updateMode: T.unsafe(nil), url: T.unsafe(nil)); end
 
   # This method allows to modify websocket connections that are made by the page.
@@ -10207,19 +10389,19 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.route_web_socket("/ws", handler)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1326
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1338
   def route_web_socket(url, handler); end
 
   # `Screencast` object associated with this page.
   #
   # **Usage**
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:71
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:83
   def screencast; end
 
   # Returns the buffer with the captured screenshot.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1332
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1344
   def screenshot(animations: T.unsafe(nil), caret: T.unsafe(nil), clip: T.unsafe(nil), fullPage: T.unsafe(nil), mask: T.unsafe(nil), maskColor: T.unsafe(nil), omitBackground: T.unsafe(nil), path: T.unsafe(nil), quality: T.unsafe(nil), scale: T.unsafe(nil), style: T.unsafe(nil), timeout: T.unsafe(nil), type: T.unsafe(nil)); end
 
   # This method waits for an element matching `selector`, waits for [actionability](../actionability.md) checks, waits until all specified options are present in the `<select>` element and selects these options.
@@ -10241,8 +10423,13 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.select_option("select#colors", value=["red", "green", "blue"])
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1368
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1380
   def select_option(selector, element: T.unsafe(nil), index: T.unsafe(nil), value: T.unsafe(nil), label: T.unsafe(nil), force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
+
+  # Provides access to the page's `sessionStorage` for the current origin. See `WebStorage`.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:64
+  def session_storage; end
 
   # This method checks or unchecks an element matching `selector` by performing the following steps:
   # 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM.
@@ -10256,12 +10443,12 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1393
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1405
   def set_checked(selector, checked, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # This method internally calls [document.write()](https://developer.mozilla.org/en-US/docs/Web/API/Document/write), inheriting all its specific characteristics and behaviors.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1407
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1419
   def set_content(html, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # This setting will change the default maximum navigation time for the following methods and related shortcuts:
@@ -10276,21 +10463,21 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # **NOTE**: [`method: Page.setDefaultNavigationTimeout`] takes priority over [`method: Page.setDefaultTimeout`],
   # [`method: BrowserContext.setDefaultTimeout`] and [`method: BrowserContext.setDefaultNavigationTimeout`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1424
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1436
   def set_default_navigation_timeout(timeout); end
 
   # This setting will change the default maximum time for all the methods accepting `timeout` option.
   #
   # **NOTE**: [`method: Page.setDefaultNavigationTimeout`] takes priority over [`method: Page.setDefaultTimeout`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1433
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1445
   def set_default_timeout(timeout); end
 
   # The extra HTTP headers will be sent with every request the page initiates.
   #
   # **NOTE**: [`method: Page.setExtraHTTPHeaders`] does not guarantee the order of headers in the outgoing requests.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1442
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1454
   def set_extra_http_headers(headers); end
 
   # Sets the value of the file input to these file paths or files. If some of the `filePaths` are relative paths, then they
@@ -10300,7 +10487,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # This method expects `selector` to point to an
   # [input element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input). However, if the element is inside the `<label>` element that has an associated [control](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control), targets the control instead.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1454
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1466
   def set_input_files(selector, files, noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # In the case of multiple pages in a single browser, each page can have its own viewport size. However,
@@ -10317,32 +10504,32 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.goto("https://example.com")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1477
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1489
   def set_viewport_size(viewportSize); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1892
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1894
   def snapshot_for_ai(timeout: T.unsafe(nil), depth: T.unsafe(nil), boxes: T.unsafe(nil), _track: T.unsafe(nil)); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1872
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1889
   def start_css_coverage(resetOnNavigation: T.unsafe(nil), reportAnonymousScripts: T.unsafe(nil)); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1897
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1904
   def start_js_coverage(resetOnNavigation: T.unsafe(nil), reportAnonymousScripts: T.unsafe(nil)); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1907
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1909
   def stop_css_coverage; end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1902
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1899
   def stop_js_coverage; end
 
   # This method taps an element matching `selector` by performing the following steps:
@@ -10354,22 +10541,22 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # **NOTE**: [`method: Page.tap`] the method will throw if `hasTouch` option of the browser context is false.
+  # **NOTE**: [`method: Page.tap`] will throw if the `hasTouch` option of the browser context is false.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1499
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1511
   def tap_point(selector, force: T.unsafe(nil), modifiers: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Returns `element.textContent`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1513
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1525
   def text_content(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns the page's title.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1519
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1531
   def title; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:75
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:87
   def touchscreen; end
 
   # Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text. `page.type` can be used to send
@@ -10381,7 +10568,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # @deprecated In most cases, you should use [`method: Locator.fill`] instead. You only need to press keys one by one if there is special keyboard handling on the page - in this case use [`method: Locator.pressSequentially`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1532
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1544
   def type(selector, text, delay: T.unsafe(nil), noWaitAfter: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # This method unchecks an element matching `selector` by performing the following steps:
@@ -10395,37 +10582,37 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # When all steps combined have not finished during the specified `timeout`, this method throws a
   # `TimeoutError`. Passing zero timeout disables this.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1553
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1565
   def uncheck(selector, force: T.unsafe(nil), noWaitAfter: T.unsafe(nil), position: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil), trial: T.unsafe(nil)); end
 
   # Removes a route created with [`method: Page.route`]. When `handler` is not specified, removes all routes for
   # the `url`.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1573
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1585
   def unroute(url, handler: T.unsafe(nil)); end
 
   # Removes all routes created with [`method: Page.route`] and [`method: Page.routeFromHAR`].
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1566
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1578
   def unroute_all(behavior: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1577
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1589
   def url; end
 
   # Video object associated with this page. Can be used to access the video file when using the `recordVideo` context option.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1583
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1595
   def video; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1587
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1599
   def viewport_size; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1480
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1492
   def viewport_size=(viewportSize); end
 
   # Returns whether the element is [visible](../actionability.md#visible). `selector` that does not match any elements is considered not visible.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:940
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:952
   def visible?(selector, strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # **NOTE**: In most cases, you should use [`method: Page.waitForEvent`].
@@ -10434,7 +10621,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # event's value into the `predicate` function and waits for `predicate(event)` to return a truthy value.
   # Will throw an error if the page is closed before the `event` is fired.
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1867
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1879
   def wait_for_event(event, predicate: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns when the `expression` returns a truthy value. It resolves to a JSHandle of the truthy value.
@@ -10465,7 +10652,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.wait_for_function("selector => !!document.querySelector(selector)", selector)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1658
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1670
   def wait_for_function(expression, arg: T.unsafe(nil), polling: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns when the required load state has been reached.
@@ -10491,7 +10678,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # print(popup.title()) # popup is ready to use.
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1685
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1697
   def wait_for_load_state(state: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Returns when element specified by selector satisfies `state` option. Returns `null` if waiting for `hidden` or
@@ -10526,7 +10713,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #     run(playwright)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1803
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1815
   def wait_for_selector(selector, state: T.unsafe(nil), strict: T.unsafe(nil), timeout: T.unsafe(nil)); end
 
   # Waits for the given `timeout` in milliseconds.
@@ -10541,7 +10728,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.wait_for_timeout(1000)
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1819
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1831
   def wait_for_timeout(timeout); end
 
   # Waits for the main frame to navigate to the given URL.
@@ -10553,7 +10740,7 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   # page.wait_for_url("**/target.html")
   # ```
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1832
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1844
   def wait_for_url(url, timeout: T.unsafe(nil), waitUntil: T.unsafe(nil)); end
 
   # This method returns all of the dedicated [WebWorkers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
@@ -10561,12 +10748,12 @@ class Playwright::Page < ::Playwright::PlaywrightApi
   #
   # **NOTE**: This does not contain ServiceWorkers
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1857
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1869
   def workers; end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1929
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/page.rb:1941
   def event_emitter_proxy; end
 end
 
@@ -10761,19 +10948,19 @@ class Playwright::Playwright < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:114
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:108
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:108
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:120
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:120
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/playwright.rb:114
   def once(event, callback); end
 
   # Exposes API that can be used for the Web API testing.
@@ -10944,7 +11131,7 @@ class Playwright::Request < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:221
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:226
   def apply_fallback_overrides(overrides); end
 
   # Returns the `Response` object if the response has already been received, `null` otherwise.
@@ -10995,7 +11182,7 @@ class Playwright::Request < ::Playwright::PlaywrightApi
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:226
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:221
   def header_values(name); end
 
   # An object with the request HTTP headers. The header names are lower-cased.
@@ -11027,19 +11214,19 @@ class Playwright::Request < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:238
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:232
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:232
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:244
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:244
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/request.rb:238
   def once(event, callback); end
 
   # Request's post body, if any.
@@ -11226,7 +11413,7 @@ class Playwright::Response < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:144
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:138
   def off(event, callback); end
 
   # Contains a boolean stating whether the response was successful (status in the range 200-299) or not.
@@ -11242,13 +11429,13 @@ class Playwright::Response < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:138
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:150
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:150
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/response.rb:144
   def once(event, callback); end
 
   # Returns the matching `Request` object.
@@ -11451,19 +11638,19 @@ class Playwright::Route < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:188
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:182
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:182
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:194
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:194
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/route.rb:188
   def once(event, callback); end
 
   # @nodoc
@@ -11539,14 +11726,14 @@ class Playwright::Screencast
   # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:5
   def initialize(page); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:75
+  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:76
   def hide_actions; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:83
+  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:84
   def hide_overlays; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:66
-  def show_actions(duration: T.unsafe(nil), fontSize: T.unsafe(nil), position: T.unsafe(nil)); end
+  def show_actions(duration: T.unsafe(nil), fontSize: T.unsafe(nil), position: T.unsafe(nil), cursor: T.unsafe(nil)); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:59
   def show_chapter(title, description: T.unsafe(nil), duration: T.unsafe(nil)); end
@@ -11554,7 +11741,7 @@ class Playwright::Screencast
   # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:49
   def show_overlay(html, duration: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:79
+  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:80
   def show_overlays; end
 
   # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:14
@@ -11565,7 +11752,7 @@ class Playwright::Screencast
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:87
+  # pkg:gem/playwright-ruby-client#lib/playwright/screencast.rb:88
   def handle_screencast_frame(event); end
 end
 
@@ -11677,15 +11864,15 @@ class Playwright::SocketError < ::StandardError
   def initialize; end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:55
+# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:58
 class Playwright::TargetClosedError < ::Playwright::Error
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:56
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:59
   def initialize(message: T.unsafe(nil), stack: T.unsafe(nil)); end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:49
+# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:52
 class Playwright::TimeoutError < ::Playwright::Error
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:50
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:53
   def initialize(message:, stack: T.unsafe(nil)); end
 end
 
@@ -11727,7 +11914,7 @@ Playwright::TimeoutSettings::DEFAULT_TIMEOUT = T.let(T.unsafe(nil), Integer)
 class Playwright::Touchscreen < ::Playwright::PlaywrightApi
   # Dispatches a `touchstart` and `touchend` event with a single touch at the position (`x`,`y`).
   #
-  # **NOTE**: [`method: Page.tap`] the method will throw if `hasTouch` option of the browser context is false.
+  # **NOTE**: [`method: Touchscreen.tap`] will throw if the `hasTouch` option of the browser context is false.
   #
   # pkg:gem/playwright-ruby-client#lib/playwright_api/touchscreen.rb:13
   def tap_point(x, y); end
@@ -11789,19 +11976,19 @@ class Playwright::Tracing < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:138
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:132
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:132
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:144
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:144
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/tracing.rb:138
   def once(event, callback); end
 
   # Start tracing.
@@ -12029,68 +12216,65 @@ class Playwright::Waiter
   # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:7
   def initialize(channel_owner, wait_name:); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:80
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:61
   def force_fulfill(result); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:84
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:65
   def force_reject(error); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:136
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:117
   def log(message); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:44
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:25
   def reject_on_event(emitter, event, error_or_proc, predicate: T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:59
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:40
   def reject_on_timeout(timeout_ms, message); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:134
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:115
   def result; end
 
   # @param [Playwright::EventEmitter]
   # @param
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:106
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:87
   def wait_for_event(emitter, event, predicate: T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:71
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:52
   def cleanup; end
 
   # @param logs [Array<String>]
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:155
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:123
   def format_log_recording(logs); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:88
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:69
   def fulfill(result); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:121
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:102
   def register_listener(emitter, event, listener); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:95
+  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:76
   def reject(error); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:31
-  def wait_for_event_info_after(error: T.unsafe(nil)); end
-
   # pkg:gem/playwright-ruby-client#lib/playwright/waiter.rb:18
-  def wait_for_event_info_before; end
+  def send_wait_info(params); end
 end
 
-# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:62
+# pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:65
 class Playwright::WebError
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:63
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:66
   def initialize(error, page, location = T.unsafe(nil)); end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:69
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:72
   def error; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:69
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:72
   def location; end
 
-  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:69
+  # pkg:gem/playwright-ruby-client#lib/playwright/errors.rb:72
   def page; end
 end
 
@@ -12114,19 +12298,19 @@ class Playwright::WebSocket < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:45
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:39
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:39
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:51
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:51
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_socket.rb:45
   def once(event, callback); end
 
   # Contains the URL of the WebSocket.
@@ -12149,6 +12333,71 @@ class Playwright::WebSocket < ::Playwright::PlaywrightApi
   def event_emitter_proxy; end
 end
 
+# WebStorage exposes the page's `localStorage` or `sessionStorage` for the current origin via an async,
+# [browser-consistent](https://developer.mozilla.org/en-US/docs/Web/API/Storage) API.
+#
+# Instances are accessed through [`property: Page.localStorage`] and [`property: Page.sessionStorage`].
+#
+# ```python sync
+# page.goto("https://example.com")
+# page.local_storage.set_item("token", "abc")
+# token = page.local_storage.get_item("token")
+# all = page.local_storage.items()
+# page.local_storage.remove_item("token")
+# page.local_storage.clear()
+# ```
+#
+# pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:16
+class Playwright::WebStorage < ::Playwright::PlaywrightApi
+  # Removes all items from the storage.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:44
+  def clear; end
+
+  # Returns the value for the given `name` if present.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:26
+  def get_item(name); end
+
+  # Returns all items in the storage as name/value pairs.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:20
+  def items; end
+
+  # Removes the item with the given `name`. No-op if the item is absent.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:38
+  def remove_item(name); end
+
+  # Sets the value for the given `name`. Overwrites any existing value for that name.
+  #
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/web_storage.rb:32
+  def set_item(name, value); end
+end
+
+# pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:3
+class Playwright::WebStorageImpl
+  include ::Playwright::ApiImplementation
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:6
+  def initialize(page, kind); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:29
+  def clear; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:15
+  def get_item(name); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:11
+  def items; end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:24
+  def remove_item(name); end
+
+  # pkg:gem/playwright-ruby-client#lib/playwright/web_storage_impl.rb:19
+  def set_item(name, value); end
+end
+
 # The Worker class represents a [WebWorker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API). `worker`
 # event is emitted on the page object to signal a worker creation. `close` event is emitted on the worker object when the
 # worker is gone.
@@ -12169,7 +12418,7 @@ end
 class Playwright::Worker < ::Playwright::PlaywrightApi
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:67
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:72
   def context=(req); end
 
   # Returns the return value of `expression`.
@@ -12214,24 +12463,24 @@ class Playwright::Worker < ::Playwright::PlaywrightApi
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:84
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:78
   def off(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:78
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:90
   def on(event, callback); end
 
   # -- inherited from EventEmitter --
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:90
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:84
   def once(event, callback); end
 
   # @nodoc
   #
-  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:72
+  # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:67
   def page=(req); end
 
   # pkg:gem/playwright-ruby-client#lib/playwright_api/worker.rb:45

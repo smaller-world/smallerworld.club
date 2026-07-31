@@ -510,23 +510,23 @@ end
 # This analyzer relies on the third-party {ruby-vips}[https://github.com/libvips/ruby-vips] gem. Ruby-vips requires
 # the {libvips}[https://libvips.github.io/libvips/] system library.
 #
-# pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:23
+# pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:8
 class ActiveStorage::Analyzer::ImageAnalyzer::Vips < ::ActiveStorage::Analyzer::ImageAnalyzer
   private
 
-  # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:29
+  # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:14
   def read_image; end
 
-  # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:59
+  # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:44
   def rotated_image?(image); end
 
   class << self
-    # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:24
+    # pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:9
     def accept?(blob); end
   end
 end
 
-# pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:58
+# pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:43
 ActiveStorage::Analyzer::ImageAnalyzer::Vips::ROTATIONS = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/activestorage#lib/active_storage/analyzer/null_analyzer.rb:4
@@ -2584,9 +2584,9 @@ class ActiveStorage::Transformers::Transformer
   def process(file, format:); end
 end
 
-# pkg:gem/activestorage#lib/active_storage/transformers/vips.rb:5
+# pkg:gem/activestorage#lib/active_storage/transformers/vips.rb:14
 class ActiveStorage::Transformers::Vips < ::ActiveStorage::Transformers::ImageProcessingTransformer
-  # pkg:gem/activestorage#lib/active_storage/transformers/vips.rb:6
+  # pkg:gem/activestorage#lib/active_storage/transformers/vips.rb:15
   def processor; end
 end
 
@@ -2612,7 +2612,7 @@ ActiveStorage::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveStorage::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/activestorage#lib/active_storage/gem_version.rb:13
-ActiveStorage::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveStorage::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # pkg:gem/activestorage#lib/active_storage/gem_version.rb:15
 ActiveStorage::VERSION::STRING = T.let(T.unsafe(nil), String)
@@ -2620,7 +2620,7 @@ ActiveStorage::VERSION::STRING = T.let(T.unsafe(nil), String)
 # pkg:gem/activestorage#lib/active_storage/gem_version.rb:12
 ActiveStorage::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/activestorage#lib/active_storage/analyzer/image_analyzer/vips.rb:14
+# pkg:gem/activestorage#lib/active_storage/vips.rb:19
 ActiveStorage::VIPS_AVAILABLE = T.let(T.unsafe(nil), TrueClass)
 
 class ActiveStorage::Variant

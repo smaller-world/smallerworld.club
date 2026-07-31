@@ -31,6 +31,9 @@ class ApplicationController
     include ::LocalTimeHelper
 
     sig { returns(T::Boolean) }
+    def android_browser?; end
+
+    sig { returns(T::Boolean) }
     def authenticated?; end
 
     sig { returns(T::Boolean) }
@@ -44,6 +47,9 @@ class ApplicationController
 
     sig { returns(T.nilable(::Symbol)) }
     def hotwire_native_platform; end
+
+    sig { returns(T::Boolean) }
+    def ios_browser?; end
   end
 
   class HelperProxy < ::ActionView::Base
