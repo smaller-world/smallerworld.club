@@ -67,31 +67,31 @@ class World < ApplicationRecord
     attachable.variant(:page_icon, resize_to_fill: [ 255, 256 ])
     attachable.variant(:notification_icon, resize_to_fill: [ 192, 192 ], format: :png)
 
-    attachable.variant(
-      :passkit_logo,
-      passkit_world_icon: [ 50 ],
-      format: :png,
-    )
-    attachable.variant(
-      :passkit_logo_2x,
-      passkit_world_icon: [ 100 ],
-      format: :png,
-    )
-    attachable.variant(
-      :passkit_icon,
-      passkit_world_icon: [ 29 ],
-      format: :png,
-    )
-    attachable.variant(
-      :passkit_icon_2x,
-      passkit_world_icon: [ 58 ],
-      format: :png,
-    )
-    attachable.variant(
-      :passkit_icon_3x,
-      passkit_world_icon: [ 87 ],
-      format: :png,
-    )
+    # attachable.variant(
+    #   :passkit_logo,
+    #   passkit_world_icon: [ 50 ],
+    #   format: :png,
+    # )
+    # attachable.variant(
+    #   :passkit_logo_2x,
+    #   passkit_world_icon: [ 100 ],
+    #   format: :png,
+    # )
+    # attachable.variant(
+    #   :passkit_icon,
+    #   passkit_world_icon: [ 29 ],
+    #   format: :png,
+    # )
+    # attachable.variant(
+    #   :passkit_icon_2x,
+    #   passkit_world_icon: [ 58 ],
+    #   format: :png,
+    # )
+    # attachable.variant(
+    #   :passkit_icon_3x,
+    #   passkit_world_icon: [ 87 ],
+    #   format: :png,
+    # )
   end
 
   sig { returns(ActiveStorage::Attachment) }

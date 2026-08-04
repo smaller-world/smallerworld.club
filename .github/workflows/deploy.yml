@@ -46,16 +46,13 @@ jobs:
       - name: Set up tooling
         uses: jdx/mise-action@v4
         with:
-          install_args: ruby bun
-      - name: Install Ruby gems
-        run: bundle install
+          install_args: bun
       - name: Install Bun packages
         run: bun install
       - name: Build source maps
-        run: bin/rails assets:precompile
+        run: bun run build
         env:
-          RAILS_ENV: production
-          SECRET_KEY_BASE_DUMMY: "1"
+          NODE_ENV: production
       - name: Create Sentry release
         uses: getsentry/action-release@v3
         env:

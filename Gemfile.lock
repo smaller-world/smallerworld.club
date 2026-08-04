@@ -725,7 +725,7 @@ DEPENDENCIES
   prosopite
   puma (~> 8.0)
   rack-canonical-host (~> 1.3)
-  rails (~> 8.1.3)
+  rails (~> 8.1.3.1)
   rails_autolink (~> 1.1)
   resend (~> 1.6)
   rgeo
@@ -1009,4 +1009,4 @@ CHECKSUMS
   zeitwerk (2.8.2) sha256=7212a61311083c604184b1ea2574b9aa05cd14f855a0841c06985cabe9181d12
 
 BUNDLED WITH
-  4.0.3
+  4.0.6
