@@ -16,6 +16,7 @@ class Components::AutoclickingReplyLink < Components::Base
       href: @reply_initiation.reply_url(native: hotwire_native_app?),
       hidden: true,
       data: {
+        turbo: false,
         controller: "autoclick",
         autoclick_once_value: true,
       },
