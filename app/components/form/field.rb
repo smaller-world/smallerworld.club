@@ -54,6 +54,11 @@ class Components::Form
       Input.new(self, **attributes, &content)
     end
 
+    sig { override.params(attributes: T.untyped).returns(Textarea) }
+    def textarea(**attributes)
+      Textarea.new(self, **attributes)
+    end
+
     sig do
       override
         .params(direct_upload: T::Boolean, attributes: T.untyped)

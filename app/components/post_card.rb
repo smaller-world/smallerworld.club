@@ -11,6 +11,7 @@ class Components::PostCard < Components::Base
       current_user: User,
       post: Post,
       replied: T::Boolean,
+      reported: T::Boolean,
       newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[Symbol, T.untyped],
@@ -20,7 +21,8 @@ class Components::PostCard < Components::Base
   def initialize(
     current_user:,
     post:,
-    replied:,
+    replied: post.reply_initiations.exists?(replier: current_user),
+    reported: post.reports.unresolved.any?,
     newly_created: false,
     async_reactions: false,
     frame: {},
@@ -31,6 +33,7 @@ class Components::PostCard < Components::Base
     @post = post
     @newly_created = newly_created
     @replied = replied
+    @reported = reported
     @async_reactions = async_reactions
     @frame_options = frame
     @post_type = T.let(@post.type!, PostType)
@@ -41,7 +44,15 @@ class Components::PostCard < Components::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(@post, :card, target: "_top", **@frame_options) do
-      Components::Card(size: :sm, **mix({ class: "post-card" }, @attributes)) do |card|
+      Components::Card(size: :sm, **mix(
+        {
+          class: "post-card",
+          data: {
+            reported: @reported,
+          },
+        },
+        @attributes,
+      )) do |card|
         card.header do
           card.description do
             div(class: "flex-1 flex items-center gap-x-2 gap-y-1 flex-wrap") do
@@ -80,6 +91,26 @@ class Components::PostCard < Components::Base
 
                 favorite_button
               end
+            else
+              Components::DropdownMenu() do |menu|
+                menu.with_trigger_button(
+                  variant: :ghost,
+                  size: :icon_sm,
+                  class: "w-auto h-auto py-1 rounded-md",
+                ) do
+                  Icon("huge/more-vertical")
+                end
+                menu.with_content(
+                  anchor: [ :bottom, :end ],
+                  class: "min-w-36",
+                ) do |menu_content|
+                  menu_content.link_item_to([ :new, @post, :report ], variant: :destructive) do
+                    Icon("huge/flag-01")
+                    span { "report post" }
+                  end
+                end
+              end
+
             end
           end
           if (title = @post.title)
@@ -120,20 +151,26 @@ class Components::PostCard < Components::Base
         end
 
         card.footer do
-          if @async_reactions
-            Components::AsyncPostReactions(post: @post)
+          if @reported
+            span(class: "text-center text-xs text-destructive text-balance") do
+              "this post has been reported and is pending review from our team."
+            end
           else
-            Components::PostReactions(post: @post)
-          end
+            if @async_reactions
+              Components::AsyncPostReactions(post: @post)
+            else
+              Components::PostReactions(post: @post)
+            end
 
-          if @current_user != @post.world_owner!
-            Components::ReplyInitiationForm(
-              reply_initiation: @post.reply_initiations.build,
-              replied: @replied,
-            )
-          elsif @newly_created &&
-              (current_device = Current.device) && !current_device.push_token?
-            enable_notifications_button(current_device:)
+            if @current_user != @post.world_owner!
+              Components::ReplyInitiationForm(
+                reply_initiation: @post.reply_initiations.build,
+                replied: @replied,
+              )
+            elsif @newly_created &&
+                (current_device = Current.device) && !current_device.push_token?
+              enable_notifications_button(current_device:)
+            end
           end
         end
       end

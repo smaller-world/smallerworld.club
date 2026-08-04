@@ -85,7 +85,7 @@ class Components::Field < Components::Base
     )
   end
 
-  sig { params(attributes: T.untyped, content: T.proc.returns(T.anything)).void }
+  sig { params(attributes: T.untyped, content: T.nilable(T.proc.returns(T.anything))).void }
   def description(**attributes, &content)
     p(
       **mix(

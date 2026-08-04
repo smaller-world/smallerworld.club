@@ -55,7 +55,7 @@ class Views::Pages::Landing < Views::Base
   def app_screenshots
     images = [ "landing-post2.jpg", "landing-post3.jpg", "landing-post1.png" ]
     div(
-      class: "glide max-w-xs sm:max-w-2xl md:max-w-5xl mx-auto",
+      class: "glide max-w-xs mx-auto sm:max-w-2xl md:max-w-5xl md:cursor-default",
       data: {
         controller: "landing-carousel",
       },

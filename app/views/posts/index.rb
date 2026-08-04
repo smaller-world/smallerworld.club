@@ -12,6 +12,7 @@ class Views::Posts::Index < Views::Base
       posts: T::Enumerable[Post],
       pagy: Pagy,
       replied_post_ids: T.nilable(T::Set[String]),
+      reported_post_ids: T.nilable(T::Set[String]),
     ).void
   end
   def initialize(
@@ -20,7 +21,8 @@ class Views::Posts::Index < Views::Base
     post_type:,
     posts:,
     pagy:,
-    replied_post_ids:
+    replied_post_ids:,
+    reported_post_ids:
   )
     super()
     @current_user = current_user
@@ -29,6 +31,7 @@ class Views::Posts::Index < Views::Base
     @posts = posts
     @pagy = pagy
     @replied_post_ids = replied_post_ids
+    @reported_post_ids = reported_post_ids
   end
 
   # == View ==
@@ -42,6 +45,7 @@ class Views::Posts::Index < Views::Base
             current_user: @current_user,
             posts: @posts,
             replied_post_ids: @replied_post_ids,
+            reported_post_ids: @reported_post_ids,
           )
         end
         Components::Empty(class: "hidden [ul:empty+&]:revert-display-layer") do |empty|

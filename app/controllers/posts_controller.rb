@@ -29,8 +29,14 @@ class PostsController < ApplicationController
     end
     pagy, posts = pagy(:countless, posts_scope, limit: 5)
     post_ids = posts.map(&:id)
-    replied_post_ids = if current_user != world.owner!
-      ReplyInitiation
+    if current_user == world.owner!
+      reported_post_ids = Report
+        .unresolved
+        .where(reportable_type: "Post", reportable_id: post_ids)
+        .pluck("DISTINCT reportable_id")
+        .to_set
+    else
+      replied_post_ids = ReplyInitiation
         .where(post_id: post_ids, replier: current_user)
         .pluck("DISTINCT post_id")
         .to_set
@@ -45,6 +51,7 @@ class PostsController < ApplicationController
             posts:,
             pagy:,
             replied_post_ids:,
+            reported_post_ids:,
           )
         end
       end
@@ -55,6 +62,7 @@ class PostsController < ApplicationController
             current_user:,
             posts:,
             replied_post_ids:,
+            reported_post_ids:,
           ),
         )
         replace_next_page_control = turbo_stream.replace(

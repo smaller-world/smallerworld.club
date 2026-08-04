@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_27_233454) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_03_005153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -219,6 +219,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_233454) do
     t.uuid "replier_id", null: false
     t.index ["post_id"], name: "index_reply_initiations_on_post_id"
     t.index ["replier_id"], name: "index_reply_initiations_on_replier_id"
+  end
+
+  create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "category", null: false
+    t.datetime "created_at", null: false
+    t.text "note"
+    t.uuid "reportable_id", null: false
+    t.string "reportable_type", null: false
+    t.uuid "reporter_id", null: false
+    t.timestamptz "resolved_at"
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["resolved_at"], name: "index_reports_on_resolved_at"
   end
 
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -462,6 +476,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_233454) do
   add_foreign_key "reactions", "users", column: "reactor_id"
   add_foreign_key "reply_initiations", "posts"
   add_foreign_key "reply_initiations", "users", column: "replier_id"
+  add_foreign_key "reports", "users", column: "reporter_id"
   add_foreign_key "sessions", "phone_number_verification_requests"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

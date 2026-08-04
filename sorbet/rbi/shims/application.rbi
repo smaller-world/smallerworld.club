@@ -121,6 +121,11 @@ class Current
   def self.user(*args, **kwargs, &block); end
 end
 
+class Report
+  sig { returns(T.nilable(T.all(ActiveRecord::Base, Reportable))) }
+  def reportable; end
+end
+
 class WorldKeyGrant
   sig { returns(T::Array[String]) }
   def granted_post_type_ids; end

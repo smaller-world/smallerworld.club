@@ -62,6 +62,7 @@ import PostTimestampController from "./post_timestamp_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
 import RedirectBackToSelfController from "./redirect_back_to_self_controller";
+import ReportFormController from "./report-form-controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
@@ -168,6 +169,7 @@ application.register("post-draft", PostDraftController);
 application.register("post-draft-info", PostDraftInfoController);
 application.register("post-form-type", PostFormTypeController);
 application.register("post-recipients-select", PostRecipientsSelectcontroller);
+application.register("report-form", ReportFormController);
 application.register(
   "messaging-platform-dropdown",
   MessagingPlatformDropdownController,

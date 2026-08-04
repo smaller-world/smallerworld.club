@@ -52,7 +52,7 @@ class Components::ReplyInitiationForm < Components::Base
             span { "reply via" }
           end
 
-          menu.with_content(anchor: [ :bottom ]) do |menu_content|
+          menu.with_content(anchor: [ :bottom, :end ]) do |menu_content|
             ReplyInitiation.platform.values.each do |platform|
               menu_content.button_item(data: {
                 action: "messaging-platform-dropdown#setInputValue",

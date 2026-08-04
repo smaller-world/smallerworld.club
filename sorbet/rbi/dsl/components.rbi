@@ -316,13 +316,14 @@ module Components
       current_user: ::User,
       post: ::Post,
       replied: T::Boolean,
+      reported: T::Boolean,
       newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped
     ).void
   end
-  def PostCard(current_user:, post:, replied:, newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+  def PostCard(current_user:, post:, replied: T.unsafe(nil), reported: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
@@ -387,6 +388,10 @@ module Components
   sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }
   def ReplyInitiationForm(reply_initiation:, replied:, **attributes); end
 
+  # workspace://app/components/report_form.rb:4
+  sig { params(report: ::Report, attributes: T.untyped).void }
+  def ReportForm(report:, **attributes); end
+
   # workspace://app/components/select.rb:4
   sig do
     params(
@@ -431,8 +436,14 @@ module Components
   def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
 
   # workspace://app/components/textarea.rb:4
-  sig { params(invalid: T::Boolean, attributes: T.untyped).void }
-  def Textarea(invalid: T.unsafe(nil), **attributes); end
+  sig do
+    params(
+      invalid: T::Boolean,
+      attributes: T.untyped,
+      content: T.nilable(T.proc.params(instance: Components::Textarea).void)
+    ).void
+  end
+  def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/uppy.rb:4
   sig do
@@ -510,10 +521,11 @@ module Components
     params(
       current_user: ::User,
       posts: T::Enumerable[::Post],
-      replied_post_ids: T.nilable(T::Set[::String])
+      replied_post_ids: T.nilable(T::Set[::String]),
+      reported_post_ids: T.nilable(T::Set[::String])
     ).void
   end
-  def WorldPostItems(current_user:, posts:, replied_post_ids:); end
+  def WorldPostItems(current_user:, posts:, replied_post_ids:, reported_post_ids:); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
@@ -830,13 +842,14 @@ module Components
         current_user: ::User,
         post: ::Post,
         replied: T::Boolean,
+        reported: T::Boolean,
         newly_created: T::Boolean,
         async_reactions: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped
       ).void
     end
-    def PostCard(current_user:, post:, replied:, newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+    def PostCard(current_user:, post:, replied: T.unsafe(nil), reported: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }
@@ -901,6 +914,10 @@ module Components
     sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }
     def ReplyInitiationForm(reply_initiation:, replied:, **attributes); end
 
+    # workspace://app/components/report_form.rb:4
+    sig { params(report: ::Report, attributes: T.untyped).void }
+    def ReportForm(report:, **attributes); end
+
     # workspace://app/components/select.rb:4
     sig do
       params(
@@ -945,8 +962,14 @@ module Components
     def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
 
     # workspace://app/components/textarea.rb:4
-    sig { params(invalid: T::Boolean, attributes: T.untyped).void }
-    def Textarea(invalid: T.unsafe(nil), **attributes); end
+    sig do
+      params(
+        invalid: T::Boolean,
+        attributes: T.untyped,
+        content: T.nilable(T.proc.params(instance: Components::Textarea).void)
+      ).void
+    end
+    def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/uppy.rb:4
     sig do
@@ -1031,10 +1054,11 @@ module Components
       params(
         current_user: ::User,
         posts: T::Enumerable[::Post],
-        replied_post_ids: T.nilable(T::Set[::String])
+        replied_post_ids: T.nilable(T::Set[::String]),
+        reported_post_ids: T.nilable(T::Set[::String])
       ).void
     end
-    def WorldPostItems(current_user:, posts:, replied_post_ids:); end
+    def WorldPostItems(current_user:, posts:, replied_post_ids:, reported_post_ids:); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }

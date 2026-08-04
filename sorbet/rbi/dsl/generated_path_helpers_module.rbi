@@ -82,6 +82,9 @@ module GeneratedPathHelpersModule
   def new_account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def new_post_report_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def new_rails_conductor_inbound_email_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -128,6 +131,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def post_reply_initiations_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def post_reports_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def post_type_path(*args); end
@@ -215,6 +221,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def reaction_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def report_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def resend_account_email_address_confirmation_path(*args); end

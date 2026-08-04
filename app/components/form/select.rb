@@ -47,12 +47,14 @@ class Components::Form
         input(type: "hidden", name: hidden_name, value: "")
       end
 
+      attributes = self.attributes
+      placeholder = attributes.delete(:placeholder)
       Components::Select(**attributes) do |select|
         if @trigger_block
           @trigger_block.call(select)
         else
           select.with_trigger do
-            field.human_attribute_name.humanize(capitalize: false)
+            placeholder || field.human_attribute_name.humanize(capitalize: false)
           end
         end
         if @content_block
@@ -127,6 +129,10 @@ class Components::Form
               id = attributes.delete(primary_key)
               select_content.item(value: id) do
                 attributes.values.join(" ")
+              end
+            elsif value.is_a?(Enumerize::Value)
+              select_content.item(value:) do
+                value.text
               end
             else
               select_content.item(value:) do

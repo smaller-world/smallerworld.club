@@ -2,6 +2,14 @@
   .post-card {
     @apply overflow-visible shadow-sm;
 
+    &[data-reported] {
+      @apply border border-dashed border-destructive pb-2 ring-0;
+
+      [data-slot="card-footer"] {
+        @apply justify-center;
+      }
+    }
+
     /*&[data-quiet] {
       @apply border border-dashed border-foreground/10 bg-background shadow-none ring-0;
 

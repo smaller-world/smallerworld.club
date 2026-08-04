@@ -499,6 +499,20 @@ class Post
     sig { params(value: T::Enumerable[::ReplyInitiation]).void }
     def reply_initiations=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def report_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def report_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :reports`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Report::PrivateCollectionProxy) }
+    def reports; end
+
+    sig { params(value: T::Enumerable[::Report]).void }
+    def reports=(value); end
+
     sig { void }
     def reset_rich_text_body; end
 

@@ -121,13 +121,17 @@ Rails.application.routes.draw do
     resources :reactions, only: [ :index, :create ]
     resources :reply_initiations, only: :create
   end
-  resource :post_card, path: "posts/:post_id/card", only: :show
+  resource :post_card, path: "/posts/:post_id/card", only: :show
   resource :post_draft, only: [] do
     post :restore
   end
+  resources :post_reports, path: "/posts/:post_id/reports", only: [ :new, :create ]
 
   # == Reactions
   resources :reactions, only: :destroy
+
+  # == Reports
+  resources :reports, only: [ :update, :destroy ]
 
   # == Installation Instructions
   resource :installation_instructions, path: "/install", only: :show

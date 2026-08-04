@@ -38,6 +38,7 @@ class Post < ApplicationRecord
   include ReplyUrl
   include WorldItemBroadcasts
   include V1Importing
+  include Reportable
 
   # == Configuration ==
 
@@ -150,18 +151,19 @@ class Post < ApplicationRecord
 
   # == Scopes ==
 
-  # scope :loud, -> { where(quiet: false) }
-  # scope :quiet, -> { where(quiet: true) }
   scope :visible_to, ->(user) {
-    owned = PostType.where(world: World.where(owner: user))
+    authored = PostType.where(world: World.where(owner: user))
     granted = PostTypeGrant
       .where("post_type_grants.world_key_id = world_keys.id")
       .where("post_type_grants.post_type_id = post_types.id")
     received = PostType.joins(:world_keys)
       .where(world_keys: { recipient: user })
       .where(granted.arel.exists)
-    where(type: owned)
-      .or(where(type: received))
+    reported = Report.unresolved
+      .where(reportable_type: "Post")
+      .where("reports.reportable_id = posts.id")
+    where(type: authored)
+      .or(where(type: received).where.not(reported.arel.exists))
       .where.not(":user_id = ANY(posts.hidden_from_ids)", user_id: user.id)
   }
   scope :favorited, -> { where.not(favorited_at: nil) }
@@ -276,7 +278,8 @@ class Post < ApplicationRecord
 
   sig { params(user: User).returns(T::Boolean) }
   def visible_to?(user)
-    !!(user == world_owner! || recipient_ids.include?(user.id))
+    user == world_owner! ||
+      (recipient_ids.include?(user.id) && reports.unresolved.none?)
   end
 
   # == Methods ==

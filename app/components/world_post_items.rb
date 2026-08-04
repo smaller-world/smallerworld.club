@@ -9,13 +9,15 @@ class Components::WorldPostItems < Components::Base
       current_user: User,
       posts: T::Enumerable[Post],
       replied_post_ids: T.nilable(T::Set[String]),
+      reported_post_ids: T.nilable(T::Set[String]),
     ).void
   end
-  def initialize(current_user:, posts:, replied_post_ids:)
+  def initialize(current_user:, posts:, replied_post_ids:, reported_post_ids:)
     super()
     @current_user = current_user
     @posts = posts
     @replied_post_ids = replied_post_ids
+    @reported_post_ids = reported_post_ids
   end
 
   # == Component ==
@@ -28,6 +30,7 @@ class Components::WorldPostItems < Components::Base
           current_user: @current_user,
           post:,
           replied: @replied_post_ids&.include?(post.id) || false,
+          reported: @reported_post_ids&.include?(post.id) || false,
           async_reactions: true,
         )
       end

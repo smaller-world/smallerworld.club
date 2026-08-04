@@ -27,10 +27,11 @@
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class User < ApplicationRecord
   extend FriendlyId
+  include PgSearch::Model
   include NormalizesText
   include NormalizesPhoneNumber
   include HasTimeZone
-  include PgSearch::Model
+  include Reportable
 
   # == Constants ==
 

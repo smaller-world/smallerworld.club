@@ -14,7 +14,12 @@ class Components::AccountForm < Components::Base
 
   sig { override.void }
   def view_template
-    Components::Form(@user, action: account_path, **@attributes) do |form|
+    Components::Form(
+      @user,
+      action: account_path,
+      vibrate_on_submit: true,
+      **@attributes,
+    ) do |form|
       form.Field(:time_zone_name).hidden(data: { controller: "current-time-zone-input" })
 
       Components::FieldSet(class: "gap-4") do
