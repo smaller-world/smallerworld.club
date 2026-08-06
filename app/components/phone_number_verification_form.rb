@@ -66,7 +66,7 @@ class Components::PhoneNumberVerificationForm < Components::Base
               pattern: "[0-9]{6}",
               value: (@verification_request.verification_code if Rails.env.development?),
               data: {
-                controller: "tooltip connection",
+                controller: token_list("tooltip connection" => Rails.env.development?),
                 tooltip_content_value: "code auto-filled in development",
                 action: token_list("connection:connect->tooltip#show" => Rails.env.development?),
               },
@@ -131,7 +131,7 @@ class Components::PhoneNumberVerificationForm < Components::Base
   def application_phone_number
     @application_phone_number ||= T.let(
       begin
-        phone_number = Smallerworld.application.telnyx_phone_number
+        phone_number = SmallerWorld.application.telnyx_phone_number
         Phonelib.parse(phone_number).international(true)
       end,
       T.nilable(String),

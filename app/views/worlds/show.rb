@@ -204,6 +204,7 @@ class Views::Worlds::Show < Views::Base
           data: {
             controller: "button-bridge",
             bridge_ios_image: "gearshape.fill",
+            bridge_android_image: "settings",
           },
         )
       end
@@ -417,7 +418,7 @@ class Views::Worlds::Show < Views::Base
   #     data: {
   #       controller: "pass-bridge",
   #       pass_bridge_pass_type_identifier_value:
-  #         Smallerworld.application.passkit_pass_type_identifier,
+  #         SmallerWorld.application.passkit_pass_type_identifier,
   #       pass_bridge_serial_number_value: card.pass!.serial_number,
   #       action: "pass-bridge#open",
   #     },

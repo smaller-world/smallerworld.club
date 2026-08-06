@@ -20,7 +20,6 @@ class ReplyInitiationsController < ApplicationController
           render turbo_stream: replace_form(
             current_user:,
             reply_initiation:,
-            method: :morph,
           )
         else
           message = "Failed to create reply initiation"

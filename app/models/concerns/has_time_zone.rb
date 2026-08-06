@@ -58,7 +58,7 @@ module HasTimeZone
   sig { void }
   def validate_time_zone_name
     unless ActiveSupport::TimeZone.new(time_zone_name)
-      errors.add(:time_zone_name, :invalid, message: "invalid time zone")
+      errors.add(:time_zone_name, :invalid)
     end
   end
 end

@@ -96,6 +96,10 @@ class Post < ApplicationRecord
 
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
+  has_many :reports,
+    as: :reportable,
+    dependent: :destroy,
+    after_add: :broadcast_world_item_update
 
   sig { returns(PostType) }
   def type!

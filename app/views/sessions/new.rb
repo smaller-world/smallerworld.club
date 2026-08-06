@@ -39,7 +39,7 @@ class Views::Sessions::New < Views::Base
               card.title(class: "text-lg text-center") do
                 plain("sign in to ")
                 span(class: "font-semibold") do
-                  Smallerworld.application.site_name
+                  SmallerWorld.application.site_name
                 end
               end
             end

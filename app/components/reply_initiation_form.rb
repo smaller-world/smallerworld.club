@@ -18,6 +18,8 @@ class Components::ReplyInitiationForm < Components::Base
     @post = T.let(@reply_initiation.post!, Post)
   end
 
+  # == Component ==
+
   sig { override.void }
   def view_template
     Components::Form(

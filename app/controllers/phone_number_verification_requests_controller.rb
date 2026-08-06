@@ -58,8 +58,9 @@ class PhoneNumberVerificationRequestsController < ApplicationController
             alert = "failed to send verification code: #{error}"
             redirect_to(new_session_path, alert:, status: :see_other)
           else
+            actions = [ replace_form(verification_request:) ]
             render(
-              turbo_stream: replace_form(verification_request:),
+              turbo_stream: actions,
               status: :unprocessable_content,
             )
           end
@@ -85,11 +86,11 @@ class PhoneNumberVerificationRequestsController < ApplicationController
             phone_number_owner: [ :time_zone_name ],
           ])
         verification_code = verification_request_params.delete(:verification_code)
-        if verification_request.verify(verification_code)
+        begin
+          verification_request.verify!(verification_code)
           if (phone_number_owner = verification_request.phone_number_owner)
-            phone_number_owner.update!(
-              **verification_request_params.fetch(:phone_number_owner),
-            )
+            phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
+            phone_number_owner.update!(**phone_number_owner_params)
             start_new_session_for(
               phone_number_owner,
               phone_number_verification_request: verification_request,
@@ -100,9 +101,18 @@ class PhoneNumberVerificationRequestsController < ApplicationController
               verification_request.generate_registration_token
             redirect_to(new_account_path, status: :see_other)
           end
-        else
+        rescue ActiveRecord::RecordInvalid => error
           render(
-            turbo_stream: replace_form(verification_request:),
+            turbo_stream: [
+              replace_form(verification_request:),
+              turbo_stream.update(
+                "flashes",
+                renderable: Components::AppFlashAlert.new(
+                  type: :alert,
+                  message: error.message,
+                ),
+              ),
+            ],
             status: :unprocessable_content,
           )
         end
@@ -138,7 +148,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   def verify_turnstile_request
     if (response = params["cf-turnstile-response"].presence)
       begin
-        Smallerworld.application.turnstile_client.verify(
+        SmallerWorld.application.turnstile_client.verify(
           response:,
           remoteip: request.remote_ip,
         )

@@ -245,7 +245,7 @@ class Views::Home::Show < Views::Base
           transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
           action: "transition-group:start->transition#enter",
         }) do
-          link_to("/scan_qr_code", class: "world-icon-container hover:underline") do
+          link_to("/native/scan_qr_code", class: "world-icon-container hover:underline") do
             Components::Button(
               element: :div,
               variant: :outline,

@@ -19,7 +19,7 @@ RubyLLM.configure do |config|
   config.use_new_acts_as = true
 end
 
-module Smallerworld
+module SmallerWorld
   extend T::Sig
 
   class Application < Rails::Application
@@ -32,7 +32,7 @@ module Smallerworld
 
     # Site title and tagline
     config.x.site.name = "smaller world"
-    config.x.site.tagline = "share your inner world with close friends"
+    config.x.site.tagline = "a new way to share your feelings with old friends."
 
     # Cloudflare Turnstile server-side test secret keys.
     # See: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
@@ -92,8 +92,8 @@ module Smallerworld
     config.action_mailer.asset_host = "http://localhost:3000"
   end
 
-  sig { returns(Smallerworld::Application) }
+  sig { returns(SmallerWorld::Application) }
   def self.application
-    T.cast(Rails.application, Smallerworld::Application)
+    T.cast(Rails.application, SmallerWorld::Application)
   end
 end

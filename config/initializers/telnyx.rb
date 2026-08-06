@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Smallerworld::Application
+class SmallerWorld::Application
   sig { returns(Telnyx::Client) }
   def telnyx_client
     @telnyx_client ||= T.let(

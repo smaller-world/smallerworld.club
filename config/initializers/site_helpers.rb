@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Smallerworld::Application
+class SmallerWorld::Application
   sig { returns(String) }
   def site_name
     Rails.configuration.x.site.name

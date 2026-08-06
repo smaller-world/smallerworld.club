@@ -38,6 +38,7 @@ class Views::WorldKeys::Index < Views::Base
             data: {
               controller: "button-bridge",
               bridge_ios_image: "person.crop.circle.fill.badge.plus",
+              bridge_android_image: "person_add",
             },
           )
         end

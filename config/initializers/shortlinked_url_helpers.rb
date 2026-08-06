@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Smallerworld::Application
+class SmallerWorld::Application
   sig { params(fallback_url_options: T::Hash[Symbol, T.untyped]).returns(UrlHelpers) }
   def shortlinked_url_helpers(fallback_url_options = default_url_options)
     if Rails.env.production?

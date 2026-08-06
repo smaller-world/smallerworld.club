@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Smallerworld::Application
+class SmallerWorld::Application
   sig { returns(String) }
   def passkit_pass_type_identifier
     credentials.passkit!.pass_type_identifier!

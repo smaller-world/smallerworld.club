@@ -52,8 +52,8 @@ module Post::WorldItemBroadcasts
     )
   end
 
-  sig { void }
-  def broadcast_world_item_update
+  sig { params(args: T.untyped).void }
+  def broadcast_world_item_update(*args)
     broadcast_replace_to(
       self,
       target: dom_id(self, :item),

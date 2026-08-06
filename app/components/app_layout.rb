@@ -65,7 +65,7 @@ class Components::AppLayout < Components::Base
         meta(charset: "UTF-8")
         meta(name: "viewport", content: "width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
         meta(name: "apple-mobile-web-app-capable", content: "yes")
-        meta(name: "application-name", content: Smallerworld.application.site_name)
+        meta(name: "application-name", content: SmallerWorld.application.site_name)
         meta(name: "mobile-web-app-capable", content: "yes")
         meta(name: "view-transition", content: "same-origin")
 
@@ -170,7 +170,7 @@ class Components::AppLayout < Components::Base
         if hotwire_native_app?
           @page_title
         else
-          [ @page_title, Smallerworld.application.site_name ]
+          [ @page_title, SmallerWorld.application.site_name ]
             .compact
             .join(" | ")
         end,

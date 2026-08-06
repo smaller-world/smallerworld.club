@@ -9,7 +9,7 @@ class Views::SupportRequests::New < Views::Base
     super
     @email_address = T.let(
       ActionMailer::Base.email_address_with_name(
-        Smallerworld.application.contact_email,
+        SmallerWorld.application.contact_email,
         "smaller world team",
       ),
       String,

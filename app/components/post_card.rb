@@ -152,7 +152,7 @@ class Components::PostCard < Components::Base
 
         card.footer do
           if @reported
-            span(class: "text-center text-xs text-destructive text-balance") do
+            span(class: "text-xs text-destructive") do
               "this post has been reported and is pending review from our team."
             end
           else

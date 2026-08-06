@@ -9,8 +9,8 @@
     },
     {
       "patterns": [
-        "\/new$",
-        "\/edit$",
+        "\/new(\\?.*)?$",
+        "\/edit(\\?.*)?$",
         "^\/world_key_grants\/.+$",
         "^\/world_cards\/[\\w-]+\/key_grant$",
         "\/settings$",
@@ -22,7 +22,7 @@
       }
     },
     {
-      "patterns": ["^\/session\/new$"],
+      "patterns": ["^\/session\/new(\\?.*)?$"],
       "properties": {
         "context": "default",
         "presentation": "replace_root",
@@ -30,23 +30,14 @@
       }
     },
     {
-      "patterns": ["^\/worlds\/new$", "^\/worlds\/[\\w-]+\/edit$"],
+      "patterns": ["\/posts\/new(\\?.*)?$", "^\/posts\/[\\w-]+\/edit$"],
       "properties": {
-        "modal_style": "full"
-      }
-    },
-    {
-      "patterns": ["\/posts\/new$", "^\/posts\/[\\w-]+\/edit$"],
-      "properties": {
-        "modal_style": "page_sheet",
-        "modal_dismiss_gesture_enabled": false,
         "query_string_presentation": "replace"
       }
     },
     {
-      "patterns": ["^\/worlds\/[\\w-]+$"],
+      "patterns": ["^\/worlds\/[\\w-]+(\\?.*)?$"],
       "properties": {
-        "interactive_content_pop_gesture_enabled": false,
         "query_string_presentation": "replace"
       }
     },
@@ -57,14 +48,13 @@
         "^\/post_types\/[\\w-]+\/edit$"
       ],
       "properties": {
-        "modal_style": "medium"
+        "uri": "hotwire://fragment/web/modal/sheet"
       }
     },
     {
       "patterns": ["^\/native\/scan_qr_code$"],
       "properties": {
-        "view_controller": "qr_code_scanner",
-        "context": "modal"
+        "native_screen": "qr_code_scanner"
       }
     },
     {

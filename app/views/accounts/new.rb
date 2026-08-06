@@ -36,7 +36,7 @@ class Views::Accounts::New < Views::Base
           card.title(class: "text-lg text-center") do
             plain("welcome to ")
             span(class: "font-semibold") do
-              Smallerworld.application.site_name
+              SmallerWorld.application.site_name
             end
           end
           card.description(class: "text-center text-xs") do

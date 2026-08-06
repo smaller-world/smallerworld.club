@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Smallerworld::Application
+class SmallerWorld::Application
   sig { returns(String) }
   def turnstile_site_key
     if Rails.env.production?
@@ -36,5 +36,5 @@ end
 
 # Invalidate memoized value after hot-reload
 Rails.application.reloader.to_complete do
-  Smallerworld.application.invalidate_turnstile_client
+  SmallerWorld.application.invalidate_turnstile_client
 end

@@ -76,7 +76,7 @@ class Views::InstallationInstructions::Show < Views::Base
                     end
                     button_link_to(
                       "open smaller world on testflight",
-                      Smallerworld.application.testflight_url,
+                      SmallerWorld.application.testflight_url,
                       variant: :default,
                       icon: "huge/link-square-01",
                     )
@@ -104,7 +104,7 @@ class Views::InstallationInstructions::Show < Views::Base
                       class:  "installation-instructions-testflight-button",
                       data: {
                         controller: "click-tracking alert",
-                        alert_message_value: "testflight is a little confusing, make sure you read the instructions on this page!",
+                        alert_message_value: "make sure you RETURN TO THIS PAGE when asked for an invite code!",
                         action: "transition-group#start click-tracking#track alert#alert",
                       },
                     )
@@ -121,7 +121,7 @@ class Views::InstallationInstructions::Show < Views::Base
                       end
                       button_link_to(
                         "open smaller world on testflight",
-                        Smallerworld.application.testflight_url,
+                        SmallerWorld.application.testflight_url,
                         variant: :default,
                         icon: "huge/link-square-01",
                         class: "self-center",

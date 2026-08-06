@@ -15,7 +15,7 @@ class Components::HintAlert < Components::Base
     div(class: "flex gap-2 items-center justify-center") do
       image_tag(
         "logo.png",
-        alt: [ Smallerworld.application.site_name, "logo" ].join(" "),
+        alt: [ SmallerWorld.application.site_name, "logo" ].join(" "),
         class: "size-7",
       )
       Components::Alert(class: "border-dashed py-1.5 px-2 w-auto") do |alert|

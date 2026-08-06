@@ -169,7 +169,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { void }
   def deliver_verification_code
-    application = Smallerworld.application
+    application = SmallerWorld.application
     application.telnyx_client.messages.send_long_code(
       from: application.telnyx_phone_number,
       to: phone_number,
@@ -184,7 +184,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
   end
 
   sig { params(code: String).returns(T::Boolean) }
-  def verify(code)
+  def verify!(code)
     if expired?
       errors.add(:verification_code, :invalid, message: "has expired")
       return false
@@ -195,7 +195,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
       return false
     end
 
-    update(verified_at: Time.current)
+    update!(verified_at: Time.current)
   end
 
   private

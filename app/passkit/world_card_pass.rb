@@ -183,7 +183,7 @@ module Passkit
     # TODO: Enable these card attributes when the app is live on the store.
     # sig { override.returns(T::Array[Integer]) }
     # def associated_store_identifiers
-    #   [ Smallerworld.application.ios_store_identifier ]
+    #   [ SmallerWorld.application.ios_store_identifier ]
     # end
     # sig { override.returns(T.nilable(String)) }
     # def app_launch_url
@@ -196,7 +196,7 @@ module Passkit
 
     sig { returns(UrlHelpers) }
     def shortlinked_url_helpers
-      Smallerworld.application.shortlinked_url_helpers
+      SmallerWorld.application.shortlinked_url_helpers
     end
 
     sig { returns(String) }

@@ -15,7 +15,7 @@ class Views::Pages::Landing < Views::Base
               "hi. welcome to smaller world!"
             end
             p(class: "text-balance text-muted-foreground max-w-xs") do
-              "smaller world is a new place to share your inner world with old friends :)"
+              "smaller world is a new way to share your feelings with old friends."
             end
           end
         end
@@ -31,7 +31,7 @@ class Views::Pages::Landing < Views::Base
 
         div(class: "w-full px-4 space-y-2") do
           p(class: "text-xs text-muted-foreground text-center text-balance max-w-xs mx-auto sm:max-w-none") do
-            "see and share posts like these... alongside the people already in your life today..."
+            "see and share posts like these, alongside the people already in your life today."
           end
           app_screenshots
         end
@@ -69,7 +69,7 @@ class Views::Pages::Landing < Views::Base
         ul(class: "glide__slides") do
           images.each do |filename|
             li(class: "glide__slide") do
-              image_tag(filename)
+              image_tag(filename, class: "rounded-xl")
             end
           end
         end

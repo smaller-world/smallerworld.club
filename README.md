@@ -1,6 +1,6 @@
 # smallerworld.club
 
-_share your inner world with close friends_
+_a new way to share your feelings with old friends._
 
 ## setup
 

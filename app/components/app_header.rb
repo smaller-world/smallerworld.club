@@ -12,7 +12,7 @@ class Components::AppHeader < Components::Base
     root_element(:header, id: :app_header, class: "relative flex justify-center py-2") do
       Components::DropdownMenu() do |menu|
         menu.with_trigger_button(variant: :ghost, class: "gap-x-1.5") do
-          site_name = Smallerworld.application.site_name
+          site_name = SmallerWorld.application.site_name
           image_tag(
             "logo.png",
             alt: [ site_name, "logo" ].join(" "),
