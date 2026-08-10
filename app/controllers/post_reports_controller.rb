@@ -31,6 +31,7 @@ class PostReportsController < ApplicationController
           redirect_to(
             world,
             notice: "your report has been submitted and will be reviewed by our team.",
+            status: :see_other,
           )
         else
           render(

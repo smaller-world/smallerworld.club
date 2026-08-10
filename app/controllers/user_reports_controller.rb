@@ -28,10 +28,18 @@ class UserReportsController < ApplicationController
         report_params = params.expect(report: [ :category, :note ])
         report = user.reports.build(reporter: current_user, **report_params)
         if report.save
-          redirect_to(
-            home_path,
-            notice: "your report has been submitted and will be reviewed by our team.",
-          )
+          if hotwire_native_ios?
+            redirect_to(
+              home_path(report_notice: true),
+              status: :see_other,
+            )
+          else
+            redirect_to(
+              home_path,
+              notice: "your report has been submitted and will be reviewed by our team.",
+              status: :see_other,
+            )
+          end
         else
           render(
             Views::UserReports::New.new(user:, report:),

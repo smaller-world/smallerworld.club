@@ -177,11 +177,15 @@ class User < ApplicationRecord
       :saved_change_to_unconfirmed_email_address?,
     ]
 
+  # After a user is reported, remove any world keys between the reporter and the reported
+  # user.
   sig { override.params(report: Report).void }
   def after_reported(report)
+    reporter_id = report.reporter_id
     WorldKey
-      .where(world: owned_worlds)
-      .destroy_by(recipient_id: report.reporter_id)
+      .where(world: World.where(owner_id: id), recipient_id: reporter_id)
+      .or(WorldKey.where(world: World.where(owner_id: reporter_id), recipient_id: id))
+      .destroy_all
   end
 
   # == Search ==
