@@ -28,6 +28,18 @@ module GeneratedPathHelpersModule
   def account_time_zone_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def admin_dashboard_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def admin_mission_control_jobs_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def admin_report_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def admin_reports_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def apple_app_site_association_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -76,9 +88,6 @@ module GeneratedPathHelpersModule
   def metrics_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def mission_control_jobs_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def new_account_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -92,6 +101,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_session_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_user_report_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_invitation_path(*args); end
@@ -223,10 +235,10 @@ module GeneratedPathHelpersModule
   def reaction_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def report_path(*args); end
+  def resend_account_email_address_confirmation_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def resend_account_email_address_confirmation_path(*args); end
+  def resolve_admin_report_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def restore_post_draft_path(*args); end
@@ -272,6 +284,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def user_reports_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def verify_phone_number_verification_request_path(*args); end

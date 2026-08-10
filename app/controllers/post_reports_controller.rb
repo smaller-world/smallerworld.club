@@ -4,7 +4,7 @@
 class PostReportsController < ApplicationController
   # == Actions ==
 
-  # GET /posts/:post_id/reports
+  # GET /posts/:post_id/reports/new
   def new
     respond_to do |format|
       format.html do
@@ -24,7 +24,7 @@ class PostReportsController < ApplicationController
         current_user = Current.user!
         post = find_post
         world = post.world!
-        authorize!(post, to: :show?)
+        authorize!(post, to: :report?)
         report_params = params.expect(report: [ :category, :note ])
         report = post.reports.build(reporter: current_user, **report_params)
         if report.save

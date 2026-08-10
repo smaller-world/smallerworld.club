@@ -1,0 +1,72 @@
+# typed: true
+# frozen_string_literal: true
+
+require "test_helper"
+
+class ReportTest < ActiveSupport::TestCase
+  include ActionMailer::TestHelper
+
+  setup do
+    @owner = users(:bob)
+    @reporter = users(:sue)
+    @admin = users(:jane)
+    @world = create_world(owner: @owner)
+    @post = create_post(world: @world)
+  end
+
+  test "an unresolved report suppresses its reportable" do
+    report = build_report
+    assert_includes Report.not_dismissed, report
+  end
+
+  test "an upheld report suppresses its reportable" do
+    report = build_report
+    with_admins(@admin) do
+      report.resolve!(resolution: "upheld", moderator: @admin)
+    end
+    assert_includes Report.not_dismissed, report
+  end
+
+  test "a dismissed report does not suppress its reportable" do
+    report = build_report
+    report.resolve!(resolution: "dismissed", moderator: @admin)
+    assert_not_includes Report.not_dismissed, report
+  end
+
+  test "resolving records the resolution, moderator and timestamp" do
+    report = build_report
+    report.resolve!(resolution: "upheld", moderator: @admin)
+
+    assert_equal "upheld", report.resolution
+    assert_equal @admin, report.moderator
+    assert_not_nil report.resolved_at
+  end
+
+  test "resolving is idempotent and can reverse a decision" do
+    report = build_report
+    report.resolve!(resolution: "upheld", moderator: @admin)
+    report.resolve!(resolution: "dismissed", moderator: @admin)
+
+    assert_equal "dismissed", report.reload.resolution
+    assert_not_includes Report.not_dismissed, report
+  end
+
+  test "an unknown resolution is rejected" do
+    report = build_report
+    report.resolution = "banished"
+    assert_not report.valid?
+    assert_includes report.errors.attribute_names, :resolution
+  end
+
+  test "creating a report emails support" do
+    assert_enqueued_emails 1 do
+      build_report
+    end
+  end
+
+  private
+
+  def build_report
+    @post.reports.create!(reporter: @reporter, category: "spam")
+  end
+end

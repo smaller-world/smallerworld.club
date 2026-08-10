@@ -10,8 +10,8 @@ class Components::PostCard < Components::Base
     params(
       current_user: User,
       post: Post,
+      active_report: T.nilable(Report),
       replied: T::Boolean,
-      reported: T::Boolean,
       newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[Symbol, T.untyped],
@@ -21,8 +21,8 @@ class Components::PostCard < Components::Base
   def initialize(
     current_user:,
     post:,
+    active_report: post.reports.not_dismissed.chronological.last,
     replied: post.reply_initiations.exists?(replier: current_user),
-    reported: post.reports.unresolved.any?,
     newly_created: false,
     async_reactions: false,
     frame: {},
@@ -31,9 +31,9 @@ class Components::PostCard < Components::Base
     super(**attributes)
     @current_user = current_user
     @post = post
-    @newly_created = newly_created
+    @active_report = active_report
     @replied = replied
-    @reported = reported
+    @newly_created = newly_created
     @async_reactions = async_reactions
     @frame_options = frame
     @post_type = T.let(@post.type!, PostType)
@@ -48,7 +48,7 @@ class Components::PostCard < Components::Base
         {
           class: "post-card",
           data: {
-            reported: @reported,
+            reported: @active_report.present?,
           },
         },
         @attributes,
@@ -91,7 +91,7 @@ class Components::PostCard < Components::Base
 
                 favorite_button
               end
-            else
+            elsif allowed_to?(:show?, @post)
               Components::DropdownMenu() do |menu|
                 menu.with_trigger_button(
                   variant: :ghost,
@@ -151,9 +151,13 @@ class Components::PostCard < Components::Base
         end
 
         card.footer do
-          if @reported
+          if @active_report
             span(class: "text-xs text-destructive") do
-              "this post has been reported and is pending review from our team."
+              if @active_report.resolution == "upheld"
+                plain("this post has been removed by our team (#{@active_report.category})")
+              else
+                plain("this post has been reported and is pending review from our team.")
+              end
             end
           else
             if @async_reactions
@@ -194,8 +198,8 @@ class Components::PostCard < Components::Base
         type: :submit,
         variant: :ghost,
         size: :icon_xs,
-        class: "post-card-favorite-button",
         data: {
+          slot: "post-card-favorite-button",
           favorited: ("" if @post.favorited?),
         },
       ) do

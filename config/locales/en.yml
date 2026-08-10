@@ -30,15 +30,18 @@
 en:
   activerecord:
     models:
-      user: "user"
-      post: "post"
+      user: user
+      post: post
   enumerize:
     report:
       category:
-        violence: "threats or incitement of violence"
-        sexual_abuse: "sexual exploitation or abuse"
-        fraud: "fraud or scam"
-        illegal_activity: "illegal activity"
-        privacy_violation: "sharing someone's private information"
-        spam: "spam"
-        other: "other"
+        violence: threats or incitement of violence
+        sexual_abuse: sexual exploitation or abuse
+        fraud: fraud or scam
+        illegal_activity: illegal activity
+        privacy_violation: sharing someone's private information
+        spam: spam
+        other: other
+      resolution:
+        upheld: upheld
+        dismissed: dismissed

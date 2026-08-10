@@ -7,7 +7,7 @@ gem "rails", "~> 8.1.3.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.5"
+gem "pg", "~> 1.6"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 8.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -189,7 +189,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Generate Sorbet types from Rails code
-  gem "tapioca", ">= 0.19.1", require: false
+  gem "tapioca", ">= 0.19.2", require: false
 
   # Auto-detect and warn about N+1 queries
   gem "prosopite"

@@ -14,6 +14,9 @@ class Report
   sig { returns(Enumerize::Value) }
   def category; end
 
+  sig { returns(T.nilable(Enumerize::Value)) }
+  def resolution; end
+
   private
 
   sig { returns(NilClass) }
@@ -25,6 +28,9 @@ class Report
 
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::Report).void)).returns(::Report) }
     def new(attributes = nil, &block); end
+
+    sig { returns(Enumerize::Attribute) }
+    def resolution; end
   end
 
   module CommonRelationMethods
@@ -368,13 +374,37 @@ class Report
 
   module GeneratedAssociationMethods
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def build_moderator(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_reporter(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_moderator(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
+    def create_moderator!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_reporter(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_reporter!(*args, &blk); end
+
+    sig { returns(T.nilable(::User)) }
+    def moderator; end
+
+    sig { params(value: T.nilable(::User)).void }
+    def moderator=(value); end
+
+    sig { returns(T::Boolean) }
+    def moderator_changed?; end
+
+    sig { returns(T::Boolean) }
+    def moderator_previously_changed?; end
+
+    sig { returns(T.nilable(::User)) }
+    def reload_moderator; end
 
     sig { returns(T.untyped) }
     def reload_reportable; end
@@ -407,6 +437,9 @@ class Report
     def reporter_previously_changed?; end
 
     sig { void }
+    def reset_moderator; end
+
+    sig { void }
     def reset_reportable; end
 
     sig { void }
@@ -431,6 +464,9 @@ class Report
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def create_with(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def dismissed(*args, &blk); end
 
     sig { params(value: T::Boolean).returns(PrivateAssociationRelation) }
     def distinct(value = true); end
@@ -490,6 +526,9 @@ class Report
     def none(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def not_dismissed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def null_relation?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -506,6 +545,9 @@ class Report
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def order(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def pending_first(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
@@ -559,6 +601,9 @@ class Report
     sig { returns(PrivateAssociationRelation) }
     sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
     def unscoped(&block); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def upheld(*args, &blk); end
 
     sig { returns(PrivateAssociationRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateAssociationRelation) }
@@ -756,6 +801,51 @@ class Report
     def id_will_change!; end
 
     sig { returns(T.nilable(::String)) }
+    def moderator_id; end
+
+    sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
+    def moderator_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def moderator_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def moderator_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def moderator_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def moderator_id_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def moderator_id_change; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def moderator_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def moderator_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def moderator_id_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def moderator_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def moderator_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def moderator_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def moderator_id_was; end
+
+    sig { void }
+    def moderator_id_will_change!; end
+
+    sig { returns(T.nilable(::String)) }
     def note; end
 
     sig { params(value: T.nilable(::String)).returns(T.nilable(::String)) }
@@ -935,6 +1025,51 @@ class Report
     sig { void }
     def reporter_id_will_change!; end
 
+    sig { returns(T.untyped) }
+    def resolution; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def resolution=(value); end
+
+    sig { returns(T::Boolean) }
+    def resolution?; end
+
+    sig { returns(T.untyped) }
+    def resolution_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def resolution_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def resolution_came_from_user?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def resolution_change; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def resolution_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def resolution_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def resolution_in_database; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def resolution_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def resolution_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def resolution_previously_was; end
+
+    sig { returns(T.untyped) }
+    def resolution_was; end
+
+    sig { void }
+    def resolution_will_change!; end
+
     sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
     def resolved_at; end
 
@@ -993,6 +1128,9 @@ class Report
     def restore_id_value!; end
 
     sig { void }
+    def restore_moderator_id!; end
+
+    sig { void }
     def restore_note!; end
 
     sig { void }
@@ -1003,6 +1141,9 @@ class Report
 
     sig { void }
     def restore_reporter_id!; end
+
+    sig { void }
+    def restore_resolution!; end
 
     sig { void }
     def restore_resolved_at!; end
@@ -1035,6 +1176,12 @@ class Report
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
+    def saved_change_to_moderator_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_moderator_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_note; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1057,6 +1204,12 @@ class Report
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_reporter_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def saved_change_to_resolution; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_resolution?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
     def saved_change_to_resolved_at; end
@@ -1128,6 +1281,9 @@ class Report
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_moderator_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_note?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1138,6 +1294,9 @@ class Report
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_reporter_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_resolution?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_resolved_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1164,6 +1323,9 @@ class Report
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def create_with(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def dismissed(*args, &blk); end
 
     sig { params(value: T::Boolean).returns(PrivateRelation) }
     def distinct(value = true); end
@@ -1223,6 +1385,9 @@ class Report
     def none(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def not_dismissed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def null_relation?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1239,6 +1404,9 @@ class Report
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def order(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def pending_first(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end
@@ -1292,6 +1460,9 @@ class Report
     sig { returns(PrivateRelation) }
     sig { type_parameters(:U).params(block: T.proc.returns(T.type_parameter(:U))).returns(T.type_parameter(:U)) }
     def unscoped(&block); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def upheld(*args, &blk); end
 
     sig { returns(PrivateRelationWhereChain) }
     sig { params(args: T.untyped).returns(PrivateRelation) }

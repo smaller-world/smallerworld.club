@@ -11,6 +11,7 @@ class Views::WorldKeys::Show < Views::Base
     super()
     @world_key = world_key
     @world = T.let(world_key.world!, World)
+    @owner = T.let(@world.owner!, User)
   end
 
   # == View ==
@@ -68,6 +69,14 @@ class Views::WorldKeys::Show < Views::Base
               end
             end
           end
+        end
+
+        div(class: "flex flex-col items-center") do
+          button_link_to(
+            "report #{@owner.name}",
+            new_user_report_path(@owner, world_id: @world.id),
+            class: "text-destructive",
+          )
         end
       end
     end

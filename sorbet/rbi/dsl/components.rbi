@@ -315,15 +315,15 @@ module Components
     params(
       current_user: ::User,
       post: ::Post,
+      active_report: T.nilable(::Report),
       replied: T::Boolean,
-      reported: T::Boolean,
       newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped
     ).void
   end
-  def PostCard(current_user:, post:, replied: T.unsafe(nil), reported: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+  def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
@@ -522,10 +522,10 @@ module Components
       current_user: ::User,
       posts: T::Enumerable[::Post],
       replied_post_ids: T.nilable(T::Set[::String]),
-      reported_post_ids: T.nilable(T::Set[::String])
+      active_reports_by_post_id: T.nilable(T::Hash[::String, ::Report])
     ).void
   end
-  def WorldPostItems(current_user:, posts:, replied_post_ids:, reported_post_ids:); end
+  def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
 
   # workspace://app/components/world_v1_posts_import_alert.rb:4
   sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
@@ -841,15 +841,15 @@ module Components
       params(
         current_user: ::User,
         post: ::Post,
+        active_report: T.nilable(::Report),
         replied: T::Boolean,
-        reported: T::Boolean,
         newly_created: T::Boolean,
         async_reactions: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped
       ).void
     end
-    def PostCard(current_user:, post:, replied: T.unsafe(nil), reported: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+    def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }
@@ -1055,10 +1055,10 @@ module Components
         current_user: ::User,
         posts: T::Enumerable[::Post],
         replied_post_ids: T.nilable(T::Set[::String]),
-        reported_post_ids: T.nilable(T::Set[::String])
+        active_reports_by_post_id: T.nilable(T::Hash[::String, ::Report])
       ).void
     end
-    def WorldPostItems(current_user:, posts:, replied_post_ids:, reported_post_ids:); end
+    def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
 
     # workspace://app/components/world_v1_posts_import_alert.rb:4
     sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }

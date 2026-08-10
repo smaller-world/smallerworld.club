@@ -712,7 +712,7 @@ DEPENDENCIES
   mission_control-jobs
   pagy (~> 43.5)
   passkit (~> 0.7.0)
-  pg (~> 1.5)
+  pg (~> 1.6)
   pg_query
   pg_search (~> 2.3)
   phlex-icons
@@ -752,7 +752,7 @@ DEPENDENCIES
   standardwebhooks (~> 1.1)
   stimulus-rails
   superform (~> 0.7.0)
-  tapioca (>= 0.19.1)
+  tapioca (>= 0.19.2)
   telnyx (~> 5.147)
   thruster
   turbo-rails

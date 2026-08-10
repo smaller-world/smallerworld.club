@@ -10,6 +10,8 @@ class PostPolicy < ApplicationPolicy
     post.visible_to?(user)
   end
 
+  alias_rule :report?, to: :show?
+
   # World owner can manage post
   def manage?
     post = T.let(record, Post)

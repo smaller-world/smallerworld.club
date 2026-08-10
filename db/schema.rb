@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_03_005153) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -224,14 +224,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_005153) do
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", null: false
+    t.uuid "moderator_id"
     t.text "note"
     t.uuid "reportable_id", null: false
     t.string "reportable_type", null: false
     t.uuid "reporter_id", null: false
+    t.string "resolution"
     t.timestamptz "resolved_at"
     t.datetime "updated_at", null: false
+    t.index ["moderator_id"], name: "index_reports_on_moderator_id"
     t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
     t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["resolution"], name: "index_reports_on_resolution"
     t.index ["resolved_at"], name: "index_reports_on_resolved_at"
   end
 
@@ -476,6 +480,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_005153) do
   add_foreign_key "reactions", "users", column: "reactor_id"
   add_foreign_key "reply_initiations", "posts"
   add_foreign_key "reply_initiations", "users", column: "replier_id"
+  add_foreign_key "reports", "users", column: "moderator_id"
   add_foreign_key "reports", "users", column: "reporter_id"
   add_foreign_key "sessions", "phone_number_verification_requests"
   add_foreign_key "sessions", "users"

@@ -45,7 +45,7 @@ class Components::ReportForm < Components::Base
             select.default_item_group(select_content:)
           end
         end,
-        label: "what's wrong with this #{reportable_label}?",
+        label: category_label,
       )
 
       Components::Field(
@@ -104,6 +104,21 @@ class Components::ReportForm < Components::Base
 
   sig { returns(String) }
   def reportable_label
-    @reportable.model_name.human
+    case @reportable
+    when User
+      "account"
+    else
+      @reportable.model_name.human
+    end
+  end
+
+  sig { returns(String) }
+  def category_label
+    case @reportable
+    when User
+      "what are you reporting #{@reportable.name} for?"
+    else
+      "what's wrong with this #{reportable_label}?"
+    end
   end
 end

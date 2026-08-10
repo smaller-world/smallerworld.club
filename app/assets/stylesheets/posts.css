@@ -4,10 +4,6 @@
 
     &[data-reported] {
       @apply border border-dashed border-destructive pb-2 ring-0;
-
-      [data-slot="card-footer"] {
-        @apply justify-center;
-      }
     }
 
     /*&[data-quiet] {
@@ -37,6 +33,16 @@
 
     [data-slot="card-footer"] {
       @apply flex items-end gap-6;
+    }
+
+    [data-slot="post-card-favorite-button"] {
+      &[data-favorited] {
+        @apply text-primary;
+
+        > svg {
+          @apply fill-primary;
+        }
+      }
     }
   }
 
@@ -112,15 +118,5 @@
 
   .post-reactions {
     @apply flex flex-1 flex-wrap gap-1;
-  }
-
-  .post-card-favorite-button {
-    &[data-favorited] {
-      @apply text-primary;
-
-      > svg {
-        @apply fill-primary;
-      }
-    }
   }
 }

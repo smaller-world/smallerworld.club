@@ -34,6 +34,15 @@ class WorldTest < ActiveSupport::TestCase
     assert_predicate world.icon, :attached?
   end
 
+  test "creates an intro post on create" do
+    world = create_world(owner: users(:sue), name: "Intro World")
+
+    post = world.posts.sole
+    assert_equal "welcome to my smaller world!", post.title
+    assert_equal "🌎", post.emoji
+    assert_equal "journal entry", post.type!.label
+  end
+
   test "defaults its name from the owner's first name" do
     world = users(:bob).owned_worlds.build
 

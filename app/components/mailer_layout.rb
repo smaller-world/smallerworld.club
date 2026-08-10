@@ -102,7 +102,7 @@ class Components::MailerLayout < Components::Base
                             class: "text-sm underline!",
                           )
                           br
-                          plain("a new way to share your feelings with old friends.")
+                          plain("a place share your feelings with friends.")
                         end
                       end
                     end

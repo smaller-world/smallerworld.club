@@ -15,7 +15,7 @@ class Views::Pages::Landing < Views::Base
               "hi. welcome to smaller world!"
             end
             p(class: "text-balance text-muted-foreground max-w-xs") do
-              "smaller world is a new way to share your feelings with old friends."
+              "smaller world is a place to share your feelings with friends."
             end
           end
         end

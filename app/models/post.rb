@@ -89,17 +89,12 @@ class Post < ApplicationRecord
     source: :recipients
 
   has_one :world, through: :type
-  has_many :world_cards, through: :world, source: :cards
   has_many :world_keys, through: :world, source: :keys
   has_many :world_post_types, through: :world, source: :post_types
   has_one :world_owner, through: :world, source: :owner
 
   has_many :reactions, dependent: :destroy
   has_many :reply_initiations, dependent: :destroy
-  has_many :reports,
-    as: :reportable,
-    dependent: :destroy,
-    after_add: :broadcast_world_item_update
 
   sig { returns(PostType) }
   def type!
@@ -153,6 +148,11 @@ class Post < ApplicationRecord
     if: :should_create_notifications?
   broadcasts_world_items
 
+  sig { override.params(report: Report).void }
+  def after_reported(report)
+    broadcast_world_item_update
+  end
+
   # == Scopes ==
 
   scope :visible_to, ->(user) {
@@ -163,7 +163,7 @@ class Post < ApplicationRecord
     received = PostType.joins(:world_keys)
       .where(world_keys: { recipient: user })
       .where(granted.arel.exists)
-    reported = Report.unresolved
+    reported = Report.not_dismissed
       .where(reportable_type: "Post")
       .where("reports.reportable_id = posts.id")
     where(type: authored)
@@ -283,7 +283,7 @@ class Post < ApplicationRecord
   sig { params(user: User).returns(T::Boolean) }
   def visible_to?(user)
     user == world_owner! ||
-      (recipient_ids.include?(user.id) && reports.unresolved.none?)
+      (recipient_ids.include?(user.id) && reports.not_dismissed.none?)
   end
 
   # == Methods ==

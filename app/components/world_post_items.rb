@@ -9,15 +9,15 @@ class Components::WorldPostItems < Components::Base
       current_user: User,
       posts: T::Enumerable[Post],
       replied_post_ids: T.nilable(T::Set[String]),
-      reported_post_ids: T.nilable(T::Set[String]),
+      active_reports_by_post_id: T.nilable(T::Hash[String, Report]),
     ).void
   end
-  def initialize(current_user:, posts:, replied_post_ids:, reported_post_ids:)
+  def initialize(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:)
     super()
     @current_user = current_user
     @posts = posts
     @replied_post_ids = replied_post_ids
-    @reported_post_ids = reported_post_ids
+    @active_reports_by_post_id = active_reports_by_post_id
   end
 
   # == Component ==
@@ -26,11 +26,14 @@ class Components::WorldPostItems < Components::Base
   def view_template
     @posts.each do |post|
       li(id: dom_id(post, :item)) do
+        active_report = if @active_reports_by_post_id
+          @active_reports_by_post_id[post.id]
+        end
         Components::PostCard(
           current_user: @current_user,
           post:,
+          active_report:,
           replied: @replied_post_ids&.include?(post.id) || false,
-          reported: @reported_post_ids&.include?(post.id) || false,
           async_reactions: true,
         )
       end

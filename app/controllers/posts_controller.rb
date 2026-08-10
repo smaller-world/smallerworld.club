@@ -30,11 +30,12 @@ class PostsController < ApplicationController
     pagy, posts = pagy(:countless, posts_scope, limit: 5)
     post_ids = posts.map(&:id)
     if current_user == world.owner!
-      reported_post_ids = Report
-        .unresolved
+      active_reports = Report
+        .not_dismissed
         .where(reportable_type: "Post", reportable_id: post_ids)
-        .pluck("DISTINCT reportable_id")
-        .to_set
+        .select("DISTINCT ON (reportable_id) reports.*")
+        .order(:reportable_id, created_at: :desc)
+      active_reports_by_post_id = active_reports.index_by(&:reportable_id)
     else
       replied_post_ids = ReplyInitiation
         .where(post_id: post_ids, replier: current_user)
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
             posts:,
             pagy:,
             replied_post_ids:,
-            reported_post_ids:,
+            active_reports_by_post_id:,
           )
         end
       end
@@ -62,7 +63,7 @@ class PostsController < ApplicationController
             current_user:,
             posts:,
             replied_post_ids:,
-            reported_post_ids:,
+            active_reports_by_post_id:,
           ),
         )
         replace_next_page_control = turbo_stream.replace(

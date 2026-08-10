@@ -18,4 +18,7 @@ module Reportable
 
     has_many :reports, as: :reportable, dependent: :destroy
   end
+
+  sig { overridable.params(report: Report).void }
+  def after_reported(report); end
 end

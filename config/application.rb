@@ -32,7 +32,7 @@ module SmallerWorld
 
     # Site title and tagline
     config.x.site.name = "smaller world"
-    config.x.site.tagline = "a new way to share your feelings with old friends."
+    config.x.site.tagline = "a place to share your feelings with friends."
 
     # Cloudflare Turnstile server-side test secret keys.
     # See: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
@@ -70,8 +70,11 @@ module SmallerWorld
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Disable HTTP basic auth for the jobs dashboard
+    # Disable HTTP basic auth for the jobs dashboard; access is instead gated
+    # by `Admin::AdminController#verify_admin!`, inherited via the base
+    # controller below.
     config.mission_control.jobs.http_basic_auth_enabled = false
+    config.mission_control.jobs.base_controller_class = "Admin::EngineController"
 
     # Set a PID file
     config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")

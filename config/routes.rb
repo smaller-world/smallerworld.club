@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   # == Home
   get :home, to: "home#show"
 
+  # == Users
+  resources :user_reports, path: "/users/:user_id/reports", only: [ :new, :create ]
+
   # == Worlds
   resources :worlds, except: :index do
     resources :posts, only: [ :index, :new, :create ]
@@ -131,7 +134,9 @@ Rails.application.routes.draw do
   resources :reactions, only: :destroy
 
   # == Reports
-  resources :reports, only: [ :update, :destroy ]
+  #
+  # NOTE: `/reports` is reserved for the reporter-facing view of one's own
+  # submitted reports. Admin moderation lives under `/admin/reports`.
 
   # == Installation Instructions
   resource :installation_instructions, path: "/install", only: :show
@@ -160,8 +165,18 @@ Rails.application.routes.draw do
   end
 
   # == Admin
-  if Rails.env.development?
+  #
+  # Gated by `Admin::AdminController#verify_admin!`, which 404s for everyone
+  # else. Mission Control is gated by the same filter via its
+  # `base_controller_class` (see `config/application.rb`).
+  namespace :admin do
     mount MissionControl::Jobs::Engine, at: "/jobs"
+    get "/" => "dashboard#show", as: :dashboard
+    resources :reports, only: [ :index, :show ] do
+      member do
+        post :resolve
+      end
+    end
   end
 
   # == Testing

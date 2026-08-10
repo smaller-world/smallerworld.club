@@ -45,6 +45,11 @@ class User < ApplicationRecord
 
   friendly_id :phone_number, use: :slugged, slug_column: :phone_number
 
+  sig { override.returns(String) }
+  def to_param
+    id
+  end
+
   # == Attributes ==
 
   sig { returns(Phonelib::Phone) }
@@ -61,6 +66,13 @@ class User < ApplicationRecord
   def unconfirmed_email_address!
     unconfirmed_email_address or
       raise ApplicationError, "Missing unconfirmed email address"
+  end
+
+  # == Admin ==
+
+  sig { returns(T::Boolean) }
+  def admin?
+    SmallerWorld.application.admin_phone_numbers.include?(phone_number)
   end
 
   # == Associations ==
@@ -164,6 +176,13 @@ class User < ApplicationRecord
       :unconfirmed_email_address?,
       :saved_change_to_unconfirmed_email_address?,
     ]
+
+  sig { override.params(report: Report).void }
+  def after_reported(report)
+    WorldKey
+      .where(world: owned_worlds)
+      .destroy_by(recipient_id: report.reporter_id)
+  end
 
   # == Search ==
 
@@ -329,9 +348,4 @@ class User < ApplicationRecord
     self.email_address_confirmation_sent_at = nil
     self.email_address_confirmed_at = nil
   end
-
-  # sig { void }
-  # def touch_world_cards
-  #   world_cards.find_each(&:touch)
-  # end
 end

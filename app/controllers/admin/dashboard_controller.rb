@@ -7,6 +7,7 @@ module Admin
     def show
       respond_to do |format|
         format.html do
+          authorize!(:dashboard, with: AdminPolicy, to: :show?)
           render Views::Admin::Dashboard::Show
         end
       end

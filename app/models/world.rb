@@ -49,7 +49,7 @@ class World < ApplicationRecord
   belongs_to :owner, class_name: "User"
   has_many :post_types, dependent: :destroy
   has_many :posts, through: :post_types
-  # has_many :cards, class_name: "WorldCard", dependent: :destroy
+  has_many :cards, class_name: "WorldCard", dependent: :destroy
 
   has_many :keys, class_name: "WorldKey", dependent: :destroy
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient

@@ -12,6 +12,7 @@
 # here.
 
 class ActiveSupport::TestCase
+  include AdminTestHelper
   include WorldTestHelper
 end
 
