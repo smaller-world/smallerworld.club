@@ -73,7 +73,7 @@ class Views::WorldKeys::Show < Views::Base
 
         div(class: "flex flex-col items-center") do
           button_link_to(
-            "report #{@owner.name}",
+            "report #{@owner.name} and leave world",
             new_user_report_path(@owner, world_id: @world.id),
             class: "text-destructive",
           )
