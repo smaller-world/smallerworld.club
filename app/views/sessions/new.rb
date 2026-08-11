@@ -32,22 +32,20 @@ class Views::Sessions::New < Views::Base
       end
 
       main(class: "flex-1 flex flex-col items-center justify-center") do
-        app_layout.page_container(class: "flex flex-col items-center justify-center gap-6") do
-          Components::Card(class: "w-full max-w-90 overflow-visible") do |card|
-            card.header(class: "flex flex-col items-center gap-y-3") do
-              image_tag("logo.png", class: "size-10")
-              card.title(class: "text-lg text-center") do
-                plain("sign in to ")
-                span(class: "font-semibold") do
-                  SmallerWorld.application.site_name
-                end
+        Components::Card(class: "w-full max-w-90 overflow-visible") do |card|
+          card.header(class: "flex flex-col items-center gap-y-3") do
+            image_tag("logo.png", class: "size-10")
+            card.title(class: "text-lg text-center") do
+              plain("sign in to ")
+              span(class: "font-semibold") do
+                SmallerWorld.application.site_name
               end
             end
-            card.content do
-              Components::PhoneNumberVerificationForm(
-                verification_request: @verification_request,
-              )
-            end
+          end
+          card.content do
+            Components::PhoneNumberVerificationForm(
+              verification_request: @verification_request,
+            )
           end
         end
       end

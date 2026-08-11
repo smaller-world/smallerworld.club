@@ -4,21 +4,16 @@
 class PhoneNumberVerificationRequestsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access
-  skip_verify_authorized
-  # rate_limit to: 3,
-  #   within: 3.minutes,
-  #   only: :create,
-  #   with: :handle_rate_limit_exceeded if Rails.env.production?
+  allow_unauthenticated_access only: [ :create, :verify ]
+  skip_verify_authorized only: [ :create, :verify ]
+  rate_limit to: 3,
+    within: 3.minutes,
+    only: :create,
+    with: :handle_rate_limit_exceeded if Rails.env.production?
+
+  # == Filters ==
+
   before_action :verify_turnstile_request, only: :create
-  rate_limit to: 10,
-    within: 5.minutes,
-    only: :verify,
-    by: -> {
-      T.bind(self, PhoneNumberVerificationRequestsController)
-      params.fetch(:id)
-    },
-    with: :handle_verify_rate_limit_exceeded if Rails.env.production?
 
   # == Actions ==
 

@@ -2,13 +2,15 @@
 # frozen_string_literal: true
 
 module Admin
-  class DashboardController < AdminController
+  class DashboardsController < AdminController
+    # == Actions ==
+
     # GET /admin
     def show
       respond_to do |format|
         format.html do
-          authorize!(:dashboard, with: AdminPolicy, to: :show?)
-          render Views::Admin::Dashboard::Show
+          authorize!(with: DashboardPolicy)
+          render Views::Admin::Dashboards::Show
         end
       end
     end

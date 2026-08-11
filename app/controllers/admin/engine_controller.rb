@@ -10,10 +10,29 @@ module Admin
   #
   # The engine declares its own layout, which takes precedence over the
   # `layout false` inherited from `ApplicationController`.
-  class EngineController < AdminController
-    # == Configuration ==
+  class EngineController < ActionController::Base # rubocop:disable Rails/ApplicationController
+    extend T::Sig
+    include Authentication
 
-    skip_verify_authorized
-    skip_around_action :n_plus_one_detection
+    # == Action Policy ==
+
+    verify_authorized
+    authorize :user, through: -> { Current.user }
+    authorize :device, through: -> { Current.device }
+
+    # == Filters ==
+
+    before_action :authorize_admins!
+
+    private
+
+    # == Callbacks ==
+
+    sig { void }
+    def authorize_admins!
+      unless Rails.env.development? || Current.user!.admin?
+        redirect_to(root_path, alert: "you don't have access to this page :(")
+      end
+    end
   end
 end

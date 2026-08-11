@@ -27,6 +27,8 @@ class Views::WorldKeys::Index < Views::Base
   def view_template
     Components::AppLayout(page_title: "your friends") do |app_layout|
       app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+        turbo_stream_from(@world, :keys, hidden: true)
+
         div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
           button_back_to(@world.name, @world, variant: :secondary)
           button_link_to(
@@ -54,7 +56,7 @@ class Views::WorldKeys::Index < Views::Base
         end
 
         Components::Empty(
-          class: "hidden [:has([role=list]:empty)+&]:revert-display-layer",
+          class: "hidden [[role=list]:empty+&]:revert-display-layer",
         ) do |empty|
           empty.header(class: "gap-0") do
             empty.media do

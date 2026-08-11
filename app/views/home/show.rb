@@ -227,7 +227,7 @@ class Views::Home::Show < Views::Base
                 data: { world_icon_size: "sm" },
               )
               div(class: "absolute inset-0 flex items-center justify-center") do
-                Icon("huge/key-01", class: "size-8 text-white")
+                Icon("huge/key-01", class: "size-10 text-white")
               end
             end
             span(class: "world-icon-label text-xs text-muted-foreground") do

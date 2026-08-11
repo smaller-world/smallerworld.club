@@ -80,6 +80,7 @@ class WorldKey < ApplicationRecord
 
   after_initialize :set_invitation, unless: :invitation_id?
   after_create_commit :create_notification_for_world_owner!
+  after_create_commit :broadcast_world_keys_page_refresh
 
   # == Scopes ==
 
@@ -192,6 +193,11 @@ class WorldKey < ApplicationRecord
   sig { void }
   def create_notification_for_world_owner!
     notifications.create!(recipient: world_owner!)
+  end
+
+  sig { void }
+  def broadcast_world_keys_page_refresh
+    broadcast_refresh_to(world!, :keys)
   end
 
   # sig { void }

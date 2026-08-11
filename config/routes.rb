@@ -171,7 +171,7 @@ Rails.application.routes.draw do
   # `base_controller_class` (see `config/application.rb`).
   namespace :admin do
     mount MissionControl::Jobs::Engine, at: "/jobs"
-    get "/" => "dashboard#show", as: :dashboard
+    get "/" => "dashboards#show", as: :dashboard
     resources :reports, only: [ :index, :show ] do
       member do
         post :resolve

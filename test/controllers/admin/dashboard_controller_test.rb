@@ -24,7 +24,7 @@ module Admin
       with_admins(@admin) do
         get admin_dashboard_path
       end
-      assert_response :not_authorized
+      assert_response :forbidden
     end
 
     test "mission control is gated by the admin filter" do
@@ -32,7 +32,7 @@ module Admin
       with_admins(@admin) do
         get admin_mission_control_jobs_path
       end
-      assert_response :not_authorized
+      assert_redirected_to root_path
     end
 
     test "an admin can load mission control" do

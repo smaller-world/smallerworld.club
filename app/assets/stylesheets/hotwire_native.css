@@ -33,9 +33,3 @@
     @slot;
   }
 }
-
-@custom-variant with-pass-bridge {
-  html[data-bridge-components~="pass"] & {
-    @slot;
-  }
-}

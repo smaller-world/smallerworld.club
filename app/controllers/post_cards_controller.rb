@@ -2,10 +2,6 @@
 # frozen_string_literal: true
 
 class PostCardsController < ApplicationController
-  # == Filters ==
-
-  rescue_from ActionPolicy::Unauthorized, with: :head_unauthorized
-
   # == Actions ==
 
   # GET /posts/:post_id/card[?newly_created=1]
@@ -31,11 +27,5 @@ class PostCardsController < ApplicationController
   sig { params(scope: Post::PrivateRelation).returns(Post) }
   def find_post(scope: Post.all)
     scope.find(params.fetch(:post_id))
-  end
-
-  # == Callbacks ==
-  sig { params(error: ActionPolicy::Unauthorized).void }
-  def head_unauthorized(error)
-    head(:unauthorized)
   end
 end

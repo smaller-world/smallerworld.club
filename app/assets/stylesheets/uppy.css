@@ -21,12 +21,12 @@
     }
 
     &[aria-busy="true"] {
-      [data-slot="uppy-drozone"] {
+      [data-slot="uppy-dropzone"] {
         .uppy-DragDrop-inner {
           @apply relative;
 
           &::before {
-            @apply absolute inset-0 bg-background/70 backdrop-blur-sm;
+            @apply absolute inset-0 bg-background/70 backdrop-blur-[2px];
 
             content: "";
             border-radius: inherit;

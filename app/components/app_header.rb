@@ -50,12 +50,12 @@ class Components::AppHeader < Components::Base
       end
       content.separator
     elsif !hotwire_native_app? && (current_user = Current.user)
-      content.link_item_to(:home) do
+      content.link_item_to(home_path) do
         Icon("huge/home-01")
         span { "home" }
       end
       if (world = current_user.owned_worlds.chronological.first)
-        content.link_item_to(world) do
+        content.link_item_to(world_path(world)) do
           Icon("huge/earth")
           span { world.name }
         end

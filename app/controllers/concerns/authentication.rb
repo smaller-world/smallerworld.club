@@ -5,14 +5,14 @@ module Authentication
   extend T::Sig
   extend T::Helpers
 
-  requires_ancestor { ApplicationController }
+  requires_ancestor { ActionController::Base }
 
   extend ActiveSupport::Concern
 
   included do
     extend T::Sig
 
-    T.bind(self, T.class_of(ApplicationController))
+    T.bind(self, T.class_of(ActionController::Base))
 
     # == Configuration ==
 
@@ -28,7 +28,7 @@ module Authentication
     extend T::Sig
     extend T::Helpers
 
-    requires_ancestor { T.class_of(ApplicationController) }
+    requires_ancestor { T.class_of(ActionController::Base) }
 
     # == Macros ==
 
@@ -61,17 +61,16 @@ module Authentication
     elsif (referer = request.referer)
       session[:return_to_after_authenticating] = referer
     end
-    redirect_path = if respond_to?(:main_app)
-      public_send(:main_app).new_session_path
-    else
-      new_session_path
-    end
-    redirect_to(redirect_path, notice: "please sign in to continue")
+    redirect_to(
+      Rails.application.routes.url_helpers.new_session_path,
+      notice: "please sign in to continue",
+    )
   end
 
   sig { returns(String) }
   def after_authentication_url
-    session.delete(:return_to_after_authenticating) || home_path
+    session.delete(:return_to_after_authenticating) ||
+      Rails.application.routes.url_helpers.home_path
   end
 
   sig do
@@ -91,7 +90,7 @@ module Authentication
     end
   end
 
-  sig { returns(T.nilable(String)) }
+  sig { void }
   def terminate_session
     Current.session&.destroy
     cookies.delete(:session_id)

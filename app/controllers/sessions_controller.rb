@@ -4,13 +4,8 @@
 class SessionsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access only: [ :new ]
+  allow_unauthenticated_access only: :new
   skip_verify_authorized
-
-  # rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
-  #   T.bind(self, SessionsController)
-  #   redirect_to(new_session_path, alert: "try again later.")
-  # }
 
   # == Actions ==
 
@@ -35,6 +30,6 @@ class SessionsController < ApplicationController
   # DELETE /session
   def destroy
     terminate_session
-    redirect_to(home_path, status: :see_other)
+    redirect_to(root_path, notice: "bye! see ya next time.", status: :see_other)
   end
 end

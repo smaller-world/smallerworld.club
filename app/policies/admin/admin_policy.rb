@@ -25,7 +25,7 @@ module Admin
 
     sig { returns(T::Boolean) }
     def admin?
-      user!.admin?
+      Rails.env.development? || user!.admin?
     end
   end
 end

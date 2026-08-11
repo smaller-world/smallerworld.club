@@ -18,43 +18,45 @@ class Views::Admin::Reports::Index < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: [ "admin", "reports" ]) do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        unless hotwire_native_app?
-          div(class: "flex gap-2 justify-between items-center") do
-            button_back_to(
-              "admin dashboard",
-              [ :admin, :dashboard ],
-              variant: :secondary,
-            )
-            span(class: "text-sm text-muted-foreground") do
-              pluralize(@pagy.count, "report")
+      main do
+        app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+          unless hotwire_native_app?
+            div(class: "flex gap-2 justify-between items-center") do
+              button_back_to(
+                "admin dashboard",
+                [ :admin, :dashboard ],
+                variant: :secondary,
+              )
+              span(class: "text-sm text-muted-foreground") do
+                pluralize(@pagy.count, "report")
+              end
             end
           end
-        end
 
-        Components::ItemGroup(class: "empty:hidden gap-3") do
-          @reports.each do |report|
-            report_item(report)
-          end
-        end
-
-        Components::Empty(
-          class: "hidden [:has([role=list]:empty)+&]:revert-display-layer",
-        ) do |empty|
-          empty.header(class: "gap-0") do
-            empty.media(variant: :icon) do
-              Icon("huge/flag-01", class: "text-muted-foreground")
-            end
-            empty.title(class: "text-muted-foreground") do
-              "no reports yet!"
+          Components::ItemGroup(class: "empty:hidden gap-3") do
+            @reports.each do |report|
+              report_item(report)
             end
           end
-        end
 
-        if @pagy.last > 1
-          div(class: "flex justify-center") do
-            # Pagy builds this markup itself; no user input reaches it.
-            raw(safe(@pagy.series_nav)) # rubocop:disable Rails/OutputSafety
+          Components::Empty(
+            class: "hidden [[role=list]:empty+&]:revert-display-layer",
+          ) do |empty|
+            empty.header(class: "gap-0") do
+              empty.media(variant: :icon) do
+                Icon("huge/flag-01")
+              end
+              empty.title do
+                "no reports yet!"
+              end
+            end
+          end
+
+          if @pagy.last > 1
+            div(class: "flex justify-center") do
+              # Pagy builds this markup itself; no user input reaches it.
+              raw(safe(@pagy.series_nav)) # rubocop:disable Rails/OutputSafety
+            end
           end
         end
       end

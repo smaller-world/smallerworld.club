@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  # == Filters ==
+
+  rescue_from ActionPolicy::Unauthorized, with: :render_forbidden
+
   # == Action Policy ==
 
   verify_authorized
@@ -40,5 +44,14 @@ class ApplicationController < ActionController::Base
     ensure
       Prosopite.finish
     end
+  end
+
+  private
+
+  # == Callbacks ==
+
+  sig { params(error: ActionPolicy::Unauthorized).void }
+  def render_forbidden(error)
+    render Views::Errors::Forbidden.new, layout: false, status: :forbidden
   end
 end
