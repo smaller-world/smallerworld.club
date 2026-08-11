@@ -23,7 +23,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { @user.sessions.count }, -1 do
       delete session_path
     end
-    assert_redirected_to home_path
+    assert_redirected_to root_path
 
     assert_empty cookies[:session_id]
   end
