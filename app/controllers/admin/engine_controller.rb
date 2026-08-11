@@ -14,12 +14,6 @@ module Admin
     extend T::Sig
     include Authentication
 
-    # == Action Policy ==
-
-    verify_authorized
-    authorize :user, through: -> { Current.user }
-    authorize :device, through: -> { Current.device }
-
     # == Filters ==
 
     before_action :authorize_admins!
