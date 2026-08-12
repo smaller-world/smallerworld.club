@@ -13,18 +13,15 @@ class Components::Dialog::Content < Components::Base
 
   sig do
     params(
-      dialog_id: String,
       show_close_button: T::Boolean,
       attributes: T.untyped,
     ).void
   end
   def initialize(
-    dialog_id:,
     show_close_button: true,
     **attributes
   )
     super(**attributes)
-    @dialog_id = dialog_id
     @show_close_button = show_close_button
   end
 
@@ -37,7 +34,6 @@ class Components::Dialog::Content < Components::Base
 
     dialog(**mix(
       {
-        id: @dialog_id,
         data: {
           dialog_target: "content",
         },
@@ -65,13 +61,12 @@ class Components::Dialog::Content < Components::Base
         if @show_close_button
           Components::Button(
             type: "button",
-            command: "close",
-            commandfor: @dialog_id,
             variant: :ghost,
             size: :icon_sm,
             class: "dialog-close",
             data: {
               slot: "dialog-close",
+              action: "dialog#close",
             },
           ) do
             Icon("huge/cancel-01")
@@ -130,8 +125,9 @@ class Components::Dialog::Content < Components::Base
     Components::Button(
       type: :button,
       variant: :outline,
-      command: "close",
-      commandfor: @dialog_id,
+      data: {
+        action: "dialog#close",
+      },
       **attributes,
     ) do |button|
       if block_given?

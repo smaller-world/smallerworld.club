@@ -8,9 +8,10 @@ import {
   AlertController,
   DismissableController,
   IntersectionController,
-  UserFocusController,
 } from "stimulus-library";
+import { VisibilityController } from "stimulus-use";
 
+import AppSettingsBridgeController from "./app_settings_bridge_controller";
 import { application } from "./application";
 import AsyncItemController from "./async_item_controller";
 import AsyncSubmissionController from "./async_submission_controller";
@@ -48,8 +49,8 @@ import MessagingPlatformDropdownController from "./messaging_platform_dropdown_c
 import NotificationBadgeCountBridgeController from "./notification_badge_count_bridge_controller";
 import NotificationPermissionBridgeController from "./notification_permission_bridge_controller";
 import NotificationTokenBridgeController from "./notification_token_bridge_controller";
+import NotificationsStatusController from "./notifications_status_controller";
 import PageLoadBridgeController from "./page_load_bridge_controller";
-import PageReloadController from "./page_reload_controller";
 import PassBridgeController from "./pass_bridge_controller";
 import PassesBridgeController from "./passes_bridge_controller";
 import PhoneNumberInputController from "./phone_number_input_controller";
@@ -63,6 +64,7 @@ import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
 import RedirectBackToSelfController from "./redirect_back_to_self_controller";
 import ReportFormController from "./report-form-controller";
+import SelectAllController from "./select_all_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
 import StreamedToastController from "./streamed_toast_controller";
@@ -104,7 +106,6 @@ application.register("confetti", ConfettiController);
 application.register("transition-group", TransitionGroupController);
 application.register("transition", TransitionController); // eslint-disable-line @typescript-eslint/no-unsafe-argument
 application.register("async-item", AsyncItemController);
-application.register("user-focus", UserFocusController);
 application.register("field-error", FieldErrorController);
 application.register("collapse", CollapseController);
 application.register("event", EventController);
@@ -116,6 +117,9 @@ application.register("radio-toggle", RadioToggleController);
 application.register("redirect-back-to-self", RedirectBackToSelfController);
 application.register("async-submission", AsyncSubmissionController);
 application.register("dismissable", DismissableController);
+application.register("notifications-status", NotificationsStatusController);
+application.register("page-visibility", VisibilityController);
+application.register("select-all", SelectAllController);
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -138,9 +142,9 @@ application.register(
   "notification-badge-count-bridge",
   NotificationBadgeCountBridgeController,
 );
+application.register("app-settings-bridge", AppSettingsBridgeController);
 
 // == General components
-application.register("page-reload", PageReloadController);
 application.register("clearable-file-input", ClearableFileInputController);
 application.register("current-time-zone-input", CurrentTimeZoneInputController);
 application.register("emoji-select", EmojiSelectController);

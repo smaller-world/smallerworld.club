@@ -28,7 +28,7 @@ class Components::AsyncWorldPostItem < Components::Base
         @post,
         :card,
         target: "_top",
-        src: [ @post, :card, newly_created: (true if @newly_created) ],
+        src: [ @post, :card ],
         data: {
           action: token_list(
             "turbo:frame-load->async-item#show",

@@ -32,7 +32,7 @@ class Components::WorldV1PostsImportAlert < Components::Base
             data: {
               variant!: (:destructive if @import_job&.failed?),
               action: token_list(
-                "user-focus:active@document->frame-reload#reload" => @import_job.present?,
+                "page-visibility:visible@document->frame-reload#reload" => @import_job.present?,
               ),
             },
           },

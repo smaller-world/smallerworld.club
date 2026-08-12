@@ -77,4 +77,8 @@
       }
     }
   }
+
+  .world-enable-notifications-alert {
+    @apply gap-2;
+  }
 }

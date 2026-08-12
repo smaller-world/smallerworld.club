@@ -8,14 +8,12 @@ class Components::Dialog < Components::Base
 
   sig do
     params(
-      dialog_id: String,
       open: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(dialog_id: generate_dialog_id, open: false, **attributes)
+  def initialize(open: false, **attributes)
     super(**attributes)
-    @dialog_id = dialog_id
     @open = open
     @trigger_block = T.let(nil, T.nilable(T.proc.void))
     @content_block = T.let(nil, T.nilable(T.proc.void))
@@ -44,11 +42,6 @@ class Components::Dialog < Components::Base
 
   # == Interface ==
 
-  sig { returns(String) }
-  def generate_dialog_id
-    "dialog_#{SecureRandom.uuid}"
-  end
-
   sig do
     params(
       variant: Symbol,
@@ -73,8 +66,9 @@ class Components::Dialog < Components::Base
         invalid:,
         **mix(
           {
-            command: "show-modal",
-            commandfor: @dialog_id,
+            data: {
+              action: "dialog#open",
+            },
           },
           attributes,
         ),
@@ -98,7 +92,6 @@ class Components::Dialog < Components::Base
   def with_content(show_close_button: true, **attributes, &content)
     @content_block = ->() {
       render Components::Dialog::Content.new(
-        dialog_id: @dialog_id,
         show_close_button:,
         **attributes,
         &content

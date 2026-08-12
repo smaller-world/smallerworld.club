@@ -42,17 +42,36 @@ class Views::Worlds::Show < Views::Base
         navigation_buttons
 
         if @current_user == @owner
-          v1_post_import_frame
-        elsif (own_worlds = @current_user
-            .owned_worlds_without_key_or_invitation_for(@owner)
-            .to_a
-            .presence) &&
-            # If the owner is already invited to one of the user's worlds, don't show this
-            # alert.
-            own_worlds.size == @current_user.owned_worlds.size
-          send_own_world_invitation_alert(own_worlds:)
-        elsif (current_device = Current.device) && !current_device.push_token?
-          enable_notifications_alert(current_device:)
+          div(class: "flex flex-col gap-3") do
+            v1_post_import_frame
+            if (current_device = Current.device)
+              Components::WorldEnableNotificationsAlert(
+                current_device:,
+                title: "know when friends react to your posts :)",
+                class: "hidden notifications-disabled:revert-display-layer",
+              )
+            end
+          end
+        else
+          if (current_device = Current.device)
+            Components::WorldEnableNotificationsAlert(
+              current_device:,
+              title: "hear abt new posts from #{@owner.name}!!",
+              class: "hidden notifications-disabled:revert-display-layer",
+            )
+          end
+          if (own_worlds = @current_user
+              .owned_worlds_without_key_or_invitation_for(@owner)
+              .to_a
+              .presence) &&
+              # If the owner is already invited to one of the user's worlds, don't show this
+              # alert.
+              own_worlds.size == @current_user.owned_worlds.size
+            send_own_world_invitation_alert(
+              own_worlds:,
+              class: class_names("notifications-disabled:hidden" => Current.device.present?),
+            )
+          end
         end
 
         div(class: "flex flex-col gap-6") do
@@ -104,7 +123,7 @@ class Views::Worlds::Show < Views::Base
                   data: {
                     controller: "post-draft-info",
                     post_draft_info_world_id_value: @world.id,
-                    action: "user-focus:active@document->post-draft-info#update",
+                    action: "page-visibility:visible@document->post-draft-info#update",
                   },
                 ) do |button|
                   button.inline_start_icon(
@@ -219,16 +238,16 @@ class Views::Worlds::Show < Views::Base
         src: [ @world, :v1_posts_import ],
         class: "empty:hidden pb-2",
         data: {
-          controller: "frame-reload frame-reset user-focus",
+          controller: "frame-reload frame-reset",
         },
       )
       turbo_stream_from(@world, :v1_posts_import, hidden: true)
     end
   end
 
-  sig { params(own_worlds: T::Array[World]).void }
-  def send_own_world_invitation_alert(own_worlds:)
-    Components::Alert(class: "flex flex-col") do |alert|
+  sig { params(own_worlds: T::Array[World], attributes: T.untyped).void }
+  def send_own_world_invitation_alert(own_worlds:, **attributes)
+    Components::Alert(**mix({ class: "flex flex-col" }, attributes)) do |alert|
       alert.title do
         "you can see #{@owner.name}'s posts, but #{@owner.name} can't see yours!"
       end
@@ -305,44 +324,6 @@ class Views::Worlds::Show < Views::Base
               end
             end
           end
-        end
-      end
-    end
-  end
-
-  sig { params(current_device: Device).void }
-  def enable_notifications_alert(current_device:)
-    Components::Alert(class: "gap-2") do |alert|
-      Icon("huge/notification-01")
-      alert.title do
-        "get notified with #{@owner.name} posts!!"
-      end
-      Components::Form(
-        current_device,
-        action: device_push_token_path,
-        method: :put,
-        class: "flex flex-col items-end",
-        data: {
-          controller: "device-push-token-form",
-        },
-      ) do |form|
-        form.Field(:push_token).hidden(data: {
-          device_push_token_form_target: "input",
-        })
-        form.submit(
-          data: {
-            controller: [
-              "notification-permission-bridge",
-              "notification-token-bridge",
-            ],
-            action: [
-              "notification-token-bridge#request:prevent",
-              "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
-            ],
-          },
-        ) do |button|
-          button.inline_start_icon("huge/love-korean-finger")
-          span { "enable notifications" }
         end
       end
     end

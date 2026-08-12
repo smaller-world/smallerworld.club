@@ -36,7 +36,9 @@ declare module "@hotwired/hotwire-native-bridge" {
     readonly platform: string | undefined;
   }
 
-  export class BridgeComponent extends Controller {
+  export class BridgeComponent<
+    ElementType extends Element = Element,
+  > extends Controller<ElementType> {
     static component: string;
     static readonly shouldLoad: boolean;
 

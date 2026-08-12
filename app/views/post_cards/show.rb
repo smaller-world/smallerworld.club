@@ -4,13 +4,12 @@
 class Views::PostCards::Show < Views::Base
   # == Initialization ==
 
-  sig { params(current_user: User, post: Post, replied: T::Boolean, newly_created: T::Boolean).void }
-  def initialize(current_user:, post:, replied:, newly_created:)
+  sig { params(current_user: User, post: Post, replied: T::Boolean).void }
+  def initialize(current_user:, post:, replied:)
     super()
     @current_user = current_user
     @post = post
     @replied = replied
-    @newly_created = newly_created
   end
 
   # == View ==
@@ -21,7 +20,6 @@ class Views::PostCards::Show < Views::Base
       current_user: @current_user,
       post: @post,
       replied: @replied,
-      newly_created: @newly_created,
     )
   end
 end

@@ -53,4 +53,8 @@ export default class EmojiSelectController extends Typed(
   requestPickerFocusSearch(): void {
     this.dispatch("request-picker-focus-search", { target: this.pickerTarget });
   }
+
+  focusInput(): void {
+    this.inputTarget.focus();
+  }
 }

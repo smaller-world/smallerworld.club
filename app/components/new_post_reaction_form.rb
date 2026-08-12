@@ -41,7 +41,9 @@ class Components::NewPostReactionForm < Components::Base
         action: "change->submit#request",
       })
 
-      Components::Dialog() do |dialog|
+      Components::Dialog(data: {
+        action: "dialog:opened->emoji-select#requestPickerFocusSearch",
+      }) do |dialog|
         dialog.with_trigger_button(
           variant: existing_reactions? ? :ghost : :outline,
           size: :icon,
@@ -62,8 +64,10 @@ class Components::NewPostReactionForm < Components::Base
         end
         dialog.with_content(show_close_button: false, class: "p-0 w-min") do
           div(data: {
+            emoji_select_target: "picker",
             controller: "emoji-mart",
             action: [
+              "emoji-select:request-picker-focus-search->emoji-mart#focusSearch",
               "emoji-mart:select->emoji-select#receiveSelection",
               "emoji-mart:select->dialog#close",
             ],

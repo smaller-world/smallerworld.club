@@ -4,7 +4,7 @@
 class PostCardsController < ApplicationController
   # == Actions ==
 
-  # GET /posts/:post_id/card[?newly_created=1]
+  # GET /posts/:post_id/card
   def show
     respond_to do |format|
       if turbo_frame_request?
@@ -12,9 +12,8 @@ class PostCardsController < ApplicationController
           current_user = Current.user!
           post = find_post(scope: Post.includes(:reactions))
           authorize!(post)
-          newly_created = cast_boolean(params[:newly_created])
           replied = post.reply_initiations.exists?(replier: current_user)
-          render Views::PostCards::Show.new(current_user:, post:, replied:, newly_created:)
+          render Views::PostCards::Show.new(current_user:, post:, replied:)
         end
       end
     end

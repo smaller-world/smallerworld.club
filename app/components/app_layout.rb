@@ -114,7 +114,17 @@ class Components::AppLayout < Components::Base
         {
           class: "app-layout",
           data: {
-            controller: "page-load-bridge page-reload",
+            controller: [
+              "page-load-bridge",
+              "notification-permission-bridge",
+              "notifications-status",
+              "page-visibility",
+            ],
+            notifications_status_push_token_saved_value: Current.device&.push_token?,
+            action: [
+              "notification-permission-bridge:retrieved->notifications-status#update",
+              "page-visibility:visible->notification-permission-bridge#get",
+            ],
           },
         },
         body_attributes,
@@ -131,10 +141,6 @@ class Components::AppLayout < Components::Base
         if (current_user = Current.user)
           # Auto-update user time zone
           Components::AccountTimeZoneForm(current_user:)
-        end
-        if (current_device = Current.device)
-          # Auto-update device push token
-          Components::DeviceUpdatePushTokenForm(current_device:)
         end
       end
     end

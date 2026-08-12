@@ -12,7 +12,6 @@ class Components::PostCard < Components::Base
       post: Post,
       active_report: T.nilable(Report),
       replied: T::Boolean,
-      newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
@@ -23,7 +22,6 @@ class Components::PostCard < Components::Base
     post:,
     active_report: post.reports.not_dismissed.chronological.last,
     replied: post.reply_initiations.exists?(replier: current_user),
-    newly_created: false,
     async_reactions: false,
     frame: {},
     **attributes
@@ -33,7 +31,6 @@ class Components::PostCard < Components::Base
     @post = post
     @active_report = active_report
     @replied = replied
-    @newly_created = newly_created
     @async_reactions = async_reactions
     @frame_options = frame
     @post_type = T.let(@post.type!, PostType)
@@ -171,9 +168,6 @@ class Components::PostCard < Components::Base
                 reply_initiation: @post.reply_initiations.build,
                 replied: @replied,
               )
-            elsif @newly_created &&
-                (current_device = Current.device) && !current_device.push_token?
-              enable_notifications_button(current_device:)
             end
           end
         end
@@ -247,48 +241,4 @@ class Components::PostCard < Components::Base
   #     end
   #   end
   # end
-
-  sig { params(current_device: Device).void }
-  def enable_notifications_button(current_device:)
-    Components::Form(
-      current_device,
-      action: device_push_token_path,
-      method: :put,
-      data: {
-        controller: "device-push-token-form",
-        action: "turbo:submit-end->frame-reload#reload",
-      },
-    ) do |form|
-      form.Field(:push_token).hidden(data: {
-        device_push_token_form_target: "input",
-      })
-      form.submit(
-        data: {
-          controller: [
-            "notification-permission-bridge",
-            "notification-token-bridge",
-            "transition",
-            "tooltip",
-            "connection",
-          ],
-          transition_enter: "transition-[opacity,scale] ease-in-quart duration-200",
-          transition_enter_start: "scale-95 opacity-0",
-          tooltip_content_value: "get notified when friends react!",
-          tooltip_trigger_value: "manual",
-          tooltip_placement_value: "bottom-start",
-          tooltip_flash_duration_value: 5000,
-          tooltip_flash_delay_value: 1000,
-          action: [
-            "notification-token-bridge#request:prevent",
-            "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
-            "notification-token-bridge:retrieved->transition#enter",
-            "transition:entered->tooltip#flash",
-          ],
-        },
-      ) do |button|
-        button.inline_start_icon("huge/notification-01")
-        span { "enable notifications" }
-      end
-    end
-  end
 end

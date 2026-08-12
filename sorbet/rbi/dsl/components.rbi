@@ -140,13 +140,12 @@ module Components
   # workspace://app/components/dialog.rb:4
   sig do
     params(
-      dialog_id: ::String,
       open: T::Boolean,
       attributes: T.untyped,
       content: T.proc.params(instance: Components::Dialog).void
     ).void
   end
-  def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &content); end
+  def Dialog(open: T.unsafe(nil), **attributes, &content); end
 
   # workspace://app/components/dropdown_menu.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
@@ -317,13 +316,12 @@ module Components
       post: ::Post,
       active_report: T.nilable(::Report),
       replied: T::Boolean,
-      newly_created: T::Boolean,
       async_reactions: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped
     ).void
   end
-  def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+  def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
   # workspace://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
@@ -476,6 +474,10 @@ module Components
     ).void
   end
   def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes); end
+
+  # workspace://app/components/world_enable_notifications_alert.rb:4
+  sig { params(current_device: ::Device, title: ::String, attributes: T.untyped).void }
+  def WorldEnableNotificationsAlert(current_device:, title:, **attributes); end
 
   # workspace://app/components/world_form.rb:4
   sig { params(world: ::World, attributes: T.untyped).void }
@@ -666,13 +668,12 @@ module Components
     # workspace://app/components/dialog.rb:4
     sig do
       params(
-        dialog_id: ::String,
         open: T::Boolean,
         attributes: T.untyped,
         content: T.proc.params(instance: Components::Dialog).void
       ).void
     end
-    def Dialog(dialog_id: T.unsafe(nil), open: T.unsafe(nil), **attributes, &content); end
+    def Dialog(open: T.unsafe(nil), **attributes, &content); end
 
     # workspace://app/components/dropdown_menu.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
@@ -843,13 +844,12 @@ module Components
         post: ::Post,
         active_report: T.nilable(::Report),
         replied: T::Boolean,
-        newly_created: T::Boolean,
         async_reactions: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped
       ).void
     end
-    def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), newly_created: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+    def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
     # workspace://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }
@@ -1002,6 +1002,10 @@ module Components
       ).void
     end
     def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes); end
+
+    # workspace://app/components/world_enable_notifications_alert.rb:4
+    sig { params(current_device: ::Device, title: ::String, attributes: T.untyped).void }
+    def WorldEnableNotificationsAlert(current_device:, title:, **attributes); end
 
     # workspace://app/components/world_form.rb:4
     sig { params(world: ::World, attributes: T.untyped).void }

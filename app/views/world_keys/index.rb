@@ -147,7 +147,7 @@ class Views::WorldKeys::Index < Views::Base
     Components::Item(variant: :muted, class: "gap-2") do |item|
       item.content do |item_content|
         item_content.title do
-          "these friends don't have access to your world: "
+          "these friends don't have access (yet) to your world: "
         end
       end
       item.footer(class: "justify-start") do

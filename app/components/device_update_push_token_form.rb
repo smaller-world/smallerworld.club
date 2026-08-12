@@ -24,8 +24,9 @@ class Components::DeviceUpdatePushTokenForm < Components::Base
     ) do |form|
       form.Field(:push_token).hidden(data: {
         device_push_token_form_target: "input",
-        controller: "notification-permission-bridge notification-token-bridge",
+        controller: "connection notification-permission-bridge notification-token-bridge",
         action: [
+          "connection:connect->notification-permission-bridge:get",
           "notification-permission-bridge:authorized->notification-token-bridge#request",
           "notification-token-bridge:retrieved->device-push-token-form#setInputValueAndSubmit",
         ],

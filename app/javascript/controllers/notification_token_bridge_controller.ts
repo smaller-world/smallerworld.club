@@ -49,18 +49,13 @@ export default class NotificationTokenBridgeController extends Typed(
         // (not `error`) — denial is not an error on iOS.
         if (permission === "denied") {
           this.dispatch("denied");
-          this.toast(
-            "error",
-            "couldn't enable notifications :(",
-            "you'll have to go to settings > smaller world to enable notifications! tysmm",
-          );
         } else {
           console.error("Failed to enable notifications", data);
           this.dispatch("failed", { detail: { error } });
           this.toast(
             "error",
             "failed to enable notifications",
-            error ?? "something went wrong setting up notifications :(",
+            error ?? "something went wrong while setting up notifications :(",
           );
         }
       },

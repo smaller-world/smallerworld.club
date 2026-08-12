@@ -1,0 +1,11 @@
+@custom-variant notifications-enabled {
+  body[data-notifications="enabled"] & {
+    @slot;
+  }
+}
+
+@custom-variant notifications-disabled {
+  body[data-notifications="disabled"] & {
+    @slot;
+  }
+}

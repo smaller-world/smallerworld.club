@@ -281,7 +281,11 @@ class Views::Pages::Policies < Views::Base
 
   sig { returns(String) }
   def contact_href
-    subject = ERB::Util.url_encode("Terms of Use & Privacy Policy")
-    "mailto:hello@smallerworld.club?subject=#{subject}"
+    encoded_subject = ERB::Util.url_encode("Terms of Use & Privacy Policy")
+    email_address = ActionMailer::Base.email_address_with_name(
+      SmallerWorld.application.contact_email,
+      "smaller world team",
+    )
+    "mailto:#{email_address}?subject=#{encoded_subject}"
   end
 end

@@ -11,6 +11,7 @@
 
 @import "./hotwire_native.css";
 @import "./theme.css";
+@import "./notifications.css";
 
 @import "./tippy.css";
 @import "./pagy.css";
