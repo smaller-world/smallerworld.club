@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Views::Admin::Dashboards::Show < Views::Base
+  # == View ==
+
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "admin") do |app_layout|
