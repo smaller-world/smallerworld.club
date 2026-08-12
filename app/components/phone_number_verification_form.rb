@@ -30,7 +30,7 @@ class Components::PhoneNumberVerificationForm < Components::Base
       method: :post,
       vibrate_on_submit: @verification_request.persisted?,
       id: "phone_number_verification_form",
-      class: "gap-4",
+      class: "gap-3",
       data: {
         controller: "phone-number-verification-form",
       },
@@ -76,48 +76,46 @@ class Components::PhoneNumberVerificationForm < Components::Base
         end
       end
 
-      div(class: "space-y-2") do
-        if @verification_request.new_record?
-          div(class: "rounded-xl ring-1 ring-foreground/10 overflow-hidden h-[61px] bg-card") do
-            turnstile_tag(class: "-m-[2px]", data: {
-              size: "flexible",
-              action: "turnstile:success->phone-number-verification-form#enableSubmitButton",
-            })
+      if @verification_request.new_record?
+        div(class: "rounded-xl ring-1 ring-foreground/10 overflow-hidden h-[61px] bg-card") do
+          turnstile_tag(class: "-m-[2px]", data: {
+            size: "flexible",
+            action: "turnstile:success->phone-number-verification-form#enableSubmitButton",
+          })
+        end
+      end
+
+      div(class: "flex flex-col gap-1") do
+        form.submit(
+          disabled: @verification_request.new_record?,
+          data: {
+            phone_number_verification_form_target: "submitButton",
+          },
+        ) do |button|
+          if @verification_request.new_record?
+            button.inline_start_icon("huge/sms-code")
+            span { "send verification code" }
+          else
+            span { "complete login" }
+            button.inline_end_icon("huge/arrow-right-02")
           end
         end
-
-        div(class: "flex flex-col gap-1") do
-          form.submit(
-            disabled: @verification_request.new_record?,
-            data: {
-              phone_number_verification_form_target: "submitButton",
-            },
-          ) do |button|
-            if @verification_request.new_record?
-              button.inline_start_icon("huge/sms-code")
-              span { "send verification code" }
-            else
-              span { "complete login" }
-              button.inline_end_icon("huge/arrow-right-02")
-            end
+        if @verification_request.new_record?
+          div(class: "text-xs text-muted-foreground text-center text-balance") do
+            plain("by continuing, you agree to receive a ")
+            span(class: "text-foreground/75 whitespace-nowrap") { "one-time" }
+            plain(" sms message from: ")
+            span(class: "text-foreground/75") { application_phone_number }
+            br
+            plain("")
           end
-          if @verification_request.new_record?
-            div(class: "text-xs text-muted-foreground text-center text-balance") do
-              plain("by continuing, you agree to receive a ")
-              span(class: "text-foreground/75 whitespace-nowrap") { "one-time" }
-              plain(" sms message from: ")
-              span(class: "text-foreground/75") { application_phone_number }
-              br
-              plain("")
-            end
-          else
-            button_link_to(
-              "wrong phone number?",
-              new_session_path,
-              size: :xs,
-              class: "self-center text-muted-foreground",
-            )
-          end
+        else
+          button_link_to(
+            "wrong phone number?",
+            new_session_path,
+            size: :xs,
+            class: "self-center text-muted-foreground",
+          )
         end
       end
     end
