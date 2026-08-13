@@ -30,6 +30,23 @@ class SessionsController < ApplicationController
   # DELETE /session
   def destroy
     terminate_session
-    redirect_to(root_path, notice: "bye! see ya next time.", status: :see_other)
+    redirect_to(
+      after_sign_out_url,
+      notice: "bye! see ya next time.",
+      status: :see_other,
+    )
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def after_sign_out_url
+    if hotwire_native_app?
+      home_path
+    else
+      root_path
+    end
   end
 end
