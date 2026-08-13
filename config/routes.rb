@@ -147,11 +147,12 @@ Rails.application.routes.draw do
   # == Support
   get "/support" => "support_requests#new"
 
-  # == Devtools
+  # == Tools
   get "/fly" => redirect(Rails.configuration.fly_url, redirect: 302)
   get "/logs" => redirect(Rails.configuration.logs_url, status: 302)
   get "/metrics" => redirect(Rails.configuration.metrics_url, status: 302)
   get "/sentry" => redirect(Rails.configuration.sentry_url, status: 302)
+  get "/ci" => redirect(Rails.configuration.ci_url, status: 302)
 
   # == V1 Redirects
   scope controller: "v1_redirects" do

@@ -46,6 +46,7 @@ module SmallerWorld
     config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
     config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
     config.testflight_url = "https://testflight.apple.com/join/n6v7J3Nd"
+    config.ci_url = "https://github.com/smallerworld-club/smallerworld.club/actions"
 
     config.v1_url = "https://old.smallerworld.club"
     config.v1_posts_import_limit = 20
