@@ -14,6 +14,12 @@ class SmallerWorld::Application
 
   sig { returns(String) }
   def telnyx_phone_number
-    credentials.telnyx!.phone_number!
+    @telnyx_phone_number ||= T.let(
+      begin
+        number = credentials.telnyx!.phone_number!
+        Phonelib::Phone.new(number).to_s
+      end,
+      T.nilable(String),
+    )
   end
 end
