@@ -51,4 +51,13 @@ class Views::Sessions::New < Views::Base
       end
     end
   end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(text: String).void }
+  def highlighted(text)
+    span(class: "text-foreground/75 text-nowrap") { text }
+  end
 end

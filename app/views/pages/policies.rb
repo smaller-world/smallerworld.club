@@ -80,6 +80,22 @@ class Views::Pages::Policies < Views::Base
         },
       },
       {
+        friendly_title: "Your phone number stays private.",
+        friendly: -> {
+          plain("We use your phone number to help you sign in. We don't sell it " \
+            "or share your agreement to receive texts for advertising.")
+        },
+        legal_title: "SMS Data Privacy",
+        legal: -> {
+          plain("Smaller World does not sell, rent, or share mobile phone " \
+            "numbers, SMS opt-in data, or SMS consent with third parties for " \
+            "their promotional or marketing purposes. We may share this " \
+            "information only with service providers that help us provide the " \
+            "Service, including phone carriers and messaging providers, and " \
+            "only as necessary to deliver login verification messages.")
+        },
+      },
+      {
         friendly_title: "You can leave anytime.",
         friendly: -> {
           plain("Delete your account and we'll delete your data.")
@@ -92,16 +108,25 @@ class Views::Pages::Policies < Views::Base
         },
       },
       {
-        friendly_title: "We might message you.",
+        friendly_title: "About text messages.",
         friendly: -> {
-          plain("We'll sometimes send updates or announcements. You can opt " \
-            "out of most messages.")
+          plain("We only text you when someone requests a login code using your " \
+            "phone number. We send one code for each login attempt. Message " \
+            "and data rates may apply. Reply STOP to stop texts, START to " \
+            "receive them again, or HELP for help.")
         },
-        legal_title: "Communications",
+        legal_title: "SMS Login Verification",
         legal: -> {
-          plain("By using the Service, you consent to receive service-related " \
-            "and promotional communications. You may opt out of promotional " \
-            "communications, but not essential updates related to account usage.")
+          plain("By providing your phone number and requesting a login code, you " \
+            "agree to receive one SMS verification code from Smaller World for " \
+            "each login attempt. Message and data rates may apply. Reply STOP to " \
+            "opt out of SMS messages, START to opt back in, or HELP for help. " \
+            "Smaller World does not send marketing text messages through this " \
+            "program. For support, ")
+          a(href: contact_href, class: contact_link_class) do
+            "please contact us by email"
+          end
+          plain(".")
         },
       },
       {
@@ -183,7 +208,8 @@ class Views::Pages::Policies < Views::Base
         },
         legal_title: "Contact",
         legal: -> {
-          plain("For questions regarding these terms or our privacy practices, ")
+          plain("For questions regarding these terms, our privacy practices, or " \
+            "SMS login verification, ")
           a(href: contact_href, class: contact_link_class) do
             "please contact us by email"
           end

@@ -101,13 +101,17 @@ class Components::PhoneNumberVerificationForm < Components::Base
           end
         end
         if @verification_request.new_record?
-          div(class: "text-xs text-muted-foreground text-center text-balance") do
-            plain("by continuing, you agree to receive a ")
-            span(class: "text-foreground/75 whitespace-nowrap") { "one-time" }
-            plain(" sms message from: ")
-            span(class: "text-foreground/75") { application_phone_number }
-            br
-            plain("")
+          div(class: "text-xs text-muted-foreground *:mt-2") do
+            p(class: "text-center text-balance") do
+              plain("by continuing, you agree to receive one sms verification code from ")
+              span(class: "text-foreground/75 text-nowrap") { "smaller world" }
+              plain(" for each login attempt. message and data rates may apply.")
+            end
+            p(class: "text-center text-balance") do
+              plain("reply STOP to opt out, START to opt back in, or HELP for help. see our ")
+              link_to("terms and policies", policies_path, class: "text-foreground/75 underline")
+              plain(".")
+            end
           end
         else
           button_link_to(
@@ -119,20 +123,5 @@ class Components::PhoneNumberVerificationForm < Components::Base
         end
       end
     end
-  end
-
-  private
-
-  # == Helpers ==
-
-  sig { returns(String) }
-  def application_phone_number
-    @application_phone_number ||= T.let(
-      begin
-        phone_number = SmallerWorld.application.telnyx_phone_number
-        Phonelib.parse(phone_number).international(true)
-      end,
-      T.nilable(String),
-    )
   end
 end

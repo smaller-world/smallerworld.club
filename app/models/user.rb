@@ -177,7 +177,7 @@ class User < ApplicationRecord
       :saved_change_to_unconfirmed_email_address?,
     ]
 
-  # After a user is reported, remove any world keys between the reporter and the reported
+  # After a user is reported, remove all world keys between the reporter and the reported
   # user.
   sig { override.params(report: Report).void }
   def after_reported(report)

@@ -87,5 +87,11 @@ class Components::AppHeader < Components::Base
         span { "sign in" }
       end
     end
+
+    content.separator
+    content.link_item_to(support_path) do
+      Icon("huge/mail-01")
+      span { "contact us" }
+    end
   end
 end
