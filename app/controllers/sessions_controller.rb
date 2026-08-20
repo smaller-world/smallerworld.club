@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
   sig { returns(String) }
   def after_sign_out_url
     if hotwire_native_app?
-      home_path
+      start_path
     else
       root_path
     end

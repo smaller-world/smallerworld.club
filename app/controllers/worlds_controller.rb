@@ -15,7 +15,6 @@ class WorldsController < ApplicationController
         current_user = Current.user!
         world = find_world
         authorize!(world)
-        flash.now[:notice] = "hi"
         only_post_type = if (type_id = params[:post_type_id])
           world.post_types.find(type_id)
         end

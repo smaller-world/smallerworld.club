@@ -4,7 +4,6 @@
 class HomeController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access
   skip_verify_authorized
 
   # == Actions ==

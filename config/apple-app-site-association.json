@@ -6,6 +6,8 @@
         "components": [
           { "/": "/", "exclude": true },
           { "/": "/install", "exclude": true },
+          { "/": "/policies", "exclude": true },
+          { "/": "/support", "exclude": true },
           { "/": "/*" }
         ]
       }

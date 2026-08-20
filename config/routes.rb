@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :media_previews, only: [ :show ], param: :signed_id
 
   # == Start (for native)
-  get "/start" => "start#show"
+  get "/start" => "start#show", as: :start
 
   # == Pages
   scope controller: :pages do
