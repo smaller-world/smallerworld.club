@@ -21,7 +21,7 @@ class Views::Pages::Landing < Views::Base
         end
 
         button_link_to(
-          "get the ios app!",
+          "get the app!",
           install_path,
           variant: :default,
           size: :xl,

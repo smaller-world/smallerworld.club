@@ -53,7 +53,7 @@ class Views::Home::Show < Views::Base
                 end
               end
               button_link_to(
-                "try the ios app!",
+                "try the app!",
                 install_path,
                 variant: :default,
                 icon: "huge/app-store",
