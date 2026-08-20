@@ -46,6 +46,9 @@ module GeneratedUrlHelpersModule
   def ci_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def contact_request_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -76,7 +79,7 @@ module GeneratedUrlHelpersModule
   def home_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def installation_instructions_url(*args); end
+  def install_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def login_url(*args); end
@@ -92,6 +95,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_account_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_contact_request_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_post_report_url(*args); end

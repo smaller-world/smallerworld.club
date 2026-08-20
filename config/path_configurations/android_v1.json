@@ -12,9 +12,10 @@
         "\/new(\\?.*)?$",
         "\/edit(\\?.*)?$",
         "^\/world_key_grants\/.+$",
-        "^\/world_cards\/[\\w-]+\/key_grant$",
-        "\/settings$",
-        "\/policies$"
+        "^\/world_cards\/[\\w-]+\/key_grant(\\?.*)?$",
+        "\/settings(\\?.*)?$",
+        "\/policies(\\?.*)?$",
+        "\/contact(\\?.*)?$"
       ],
       "properties": {
         "context": "modal",

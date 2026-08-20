@@ -115,7 +115,6 @@ class Components::AppLayout < Components::Base
 
       body(**mix(
         {
-          id: "app_layout",
           class: "app-layout",
           data: {
             controller: [

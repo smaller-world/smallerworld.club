@@ -46,6 +46,9 @@ module GeneratedPathHelpersModule
   def ci_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def contact_request_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def device_push_token_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -76,7 +79,7 @@ module GeneratedPathHelpersModule
   def home_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def installation_instructions_path(*args); end
+  def install_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def login_path(*args); end
@@ -92,6 +95,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_account_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_contact_request_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_post_report_path(*args); end

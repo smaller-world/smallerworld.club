@@ -8,6 +8,7 @@
           { "/": "/install", "exclude": true },
           { "/": "/policies", "exclude": true },
           { "/": "/support", "exclude": true },
+          { "/": "/contact", "exclude": true },
           { "/": "/*" }
         ]
       }

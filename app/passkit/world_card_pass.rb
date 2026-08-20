@@ -91,7 +91,7 @@ module Passkit
         {
           key: "installation_instructions",
           label: "install the smaller world app 👇 to get started",
-          value: "🔗 #{app_hostname}",
+          value: "🔗 #{app_hostname}/install",
         }
       end
       [ field ]

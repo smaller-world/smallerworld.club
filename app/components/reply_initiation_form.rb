@@ -25,6 +25,7 @@ class Components::ReplyInitiationForm < Components::Base
     Components::Form(
       @reply_initiation,
       action: [ @post, :reply_initiations ],
+      method: :post,
       id: dom_id(@post, :reply_initiation_form),
       data: {
         controller: "messaging-platform-dropdown haptic-bridge",

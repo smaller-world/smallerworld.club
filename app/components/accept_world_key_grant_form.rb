@@ -77,7 +77,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
           if invitation_accepted?
             button_link_to(
               "next, download the app!",
-              installation_instructions_path,
+              install_path,
               variant: :default,
               icon: "huge/app-store",
               class: "self-center mt-2",

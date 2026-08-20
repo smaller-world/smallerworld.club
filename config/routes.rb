@@ -141,14 +141,18 @@ Rails.application.routes.draw do
   # NOTE: `/reports` is reserved for the reporter-facing view of one's own
   # submitted reports. Admin moderation lives under `/admin/reports`.
 
-  # == Installation Instructions
-  resource :installation_instructions, path: "/install", only: :show
+  # == Installation
+  get "/install",
+    to: redirect(Rails.configuration.install_url, status: 302),
+    as: :install
 
   # == Passkit
   # mount Passkit::Engine => "/passkit", as: "passkit"
 
-  # == Support
-  get "/support" => "support_requests#new"
+  # == Contact Us
+  resource :contact_request, path: "/contact", only: :create
+  get "/contact", to: "contact_requests#new", as: :new_contact_request
+  get "/support" => redirect("/contact", status: 302)
 
   # == Tools
   get "/fly" => redirect(Rails.configuration.fly_url, redirect: 302)

@@ -22,7 +22,7 @@ class Views::Pages::Landing < Views::Base
 
         button_link_to(
           "get the ios app!",
-          installation_instructions_path,
+          install_path,
           variant: :default,
           size: :xl,
           icon: "huge/app-store",

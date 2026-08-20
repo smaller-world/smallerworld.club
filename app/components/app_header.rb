@@ -52,13 +52,13 @@ class Components::AppHeader < Components::Base
       end
       content.separator
     else
-      unless current_page?(controller: "sessions", action: "new")
+      unless current_page?(controller: "/sessions", action: "new")
         content.link_item_to(new_session_path) do
           Icon("huge/door-01")
           span { "sign in" }
         end
       end
-      unless current_page?(controller: "pages", action: "landing")
+      unless current_page?(controller: "/pages", action: "landing")
         content.link_item_to(root_path) do
           image_tag("logo.png", class: "size-4")
           span { "about smaller world" }
@@ -89,10 +89,12 @@ class Components::AppHeader < Components::Base
       end
     end
 
-    content.separator
-    content.link_item_to(support_path, data: { turbo_stream: true }) do
-      Icon("huge/mail-01")
-      span { "contact us" }
+    unless current_page?(controller: "/contact_requests", action: "new")
+      content.separator
+      content.link_item_to(new_contact_request_path, data: { turbo_stream: true }) do
+        Icon("huge/mail-01")
+        span { "contact us" }
+      end
     end
   end
 end

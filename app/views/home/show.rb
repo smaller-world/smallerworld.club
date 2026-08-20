@@ -38,40 +38,38 @@ class Views::Home::Show < Views::Base
       force_header: true,
     ) do |app_layout|
       show_alert = !hotwire_native_app? && !android_browser?
+      if show_alert
+        app_layout.with_alert do
+          Components::Alert(class: "px-3 flex flex-row gap-4") do |alert|
+            image_tag("app_on_homescreen-square.png", class: "size-20 rounded-lg")
+            div(class: "flex-1 flex flex-col items-start gap-1.5") do
+              div do
+                alert.title(class: "leading-tight") do
+                  "we made an app for you!"
+                end
+                alert.description do
+                  plain("hi this is kai the developer... will u try my app? ")
+                  span(class: "font-emoji text-base leading-none") { "🥺 👉 👈" }
+                end
+              end
+              button_link_to(
+                "try the ios app!",
+                install_path,
+                variant: :default,
+                icon: "huge/app-store",
+              )
+            end
+          end
+        end
+      end
 
-      main do
+      main(class: "flex flex-col flex-1") do
         app_layout.page_container(
           element: :div,
           class: "flex-1 max-w-lg flex flex-col",
         ) do
-          if show_alert
-            Components::Alert(class: "px-3 flex flex-row gap-4 mb-10") do |alert|
-              image_tag("app_on_homescreen-square.png", class: "size-20 rounded-lg")
-              div(class: "flex-1 flex flex-col items-start gap-1.5") do
-                div do
-                  alert.title(class: "leading-tight") do
-                    "we made an app for you!"
-                  end
-                  alert.description do
-                    plain("hi this is kai the developer... will u try my app? ")
-                    span(class: "font-emoji text-base leading-none") { "🥺 👉 👈" }
-                  end
-                end
-                button_link_to(
-                  "try the ios app!",
-                  installation_instructions_path,
-                  variant: :default,
-                  icon: "huge/app-store",
-                )
-              end
-            end
-          end
-
           div(
-            class: class_names(
-              "flex-1 flex flex-col gap-8 justify-center",
-              "mt-4" => !show_alert,
-            ),
+            class:  "flex-1 flex flex-col gap-8 justify-center",
             data: {
               controller: "transition-group connection",
               transition_group_item_delay_value: 100,
@@ -81,10 +79,10 @@ class Views::Home::Show < Views::Base
             owned_worlds
             accessible_worlds
           end
+        end
 
-          if show_alert
-            div(class: "flex-1 max-h-40 min-h-0 shrink")
-          end
+        if show_alert
+          div(class: "flex-1 max-h-40 min-h-0 shrink")
         end
 
         div(class: [

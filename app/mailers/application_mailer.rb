@@ -8,7 +8,7 @@ class ApplicationMailer < ActionMailer::Base
 
   default from: "smaller world <app@smallerworld.club>",
     reply_to: ActionMailer::Base.email_address_with_name(
-      SmallerWorld.application.contact_email,
+      SmallerWorld.application.contact_email_address,
       "smaller world team",
     )
   layout false

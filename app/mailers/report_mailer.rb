@@ -9,7 +9,7 @@ class ReportMailer < ApplicationMailer
     render_email(
       Views::Mailers::Reports::Created.new(report:),
       subject: "new #{report.category.text} report",
-      to: SmallerWorld.application.support_email,
+      to: SmallerWorld.application.support_email_address_with_name,
     )
   end
 end

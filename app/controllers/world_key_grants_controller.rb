@@ -100,7 +100,7 @@ class WorldKeyGrantsController < ApplicationController
           status: :see_other,
         )
       else
-        redirect_to(installation_instructions_path)
+        redirect_to(install_path)
       end
     else
       render(
