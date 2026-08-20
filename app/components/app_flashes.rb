@@ -12,7 +12,7 @@ class Components::AppFlashes < Components::Base
 
   sig { override.void }
   def view_template
-    root_element(:section, id: "flashes", data: { slot: "flashes" }) do
+    root_element(:div, id: "flashes", class: "contents") do
       FLASH_TYPES.each do |type|
         if (message = flash[type])
           Components::AppFlashAlert(message:, type:)

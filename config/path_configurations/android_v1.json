@@ -22,7 +22,7 @@
       }
     },
     {
-      "patterns": ["^\/session\/new(\\?.*)?$"],
+      "patterns": ["^\/session\/new(\\?.*)?$", "^\/account\/new(\\?.*)?$"],
       "properties": {
         "context": "default",
         "presentation": "replace_root",

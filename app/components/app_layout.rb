@@ -40,6 +40,9 @@ class Components::AppLayout < Components::Base
     @title = title
     @force_header = force_header
     @disable_cache = disable_cache
+
+    @head_block = T.let(nil, T.nilable(T.proc.void))
+    @alert_blocks = T.let([], T::Array[T.proc.void])
   end
 
   # == Component ==
@@ -107,7 +110,7 @@ class Components::AppLayout < Components::Base
         twitter_tags
 
         # == Head
-        @head&.call
+        @head_block&.call
       end
 
       body(**mix(
@@ -133,7 +136,10 @@ class Components::AppLayout < Components::Base
         if @force_header || !hotwire_native_app?
           Components::AppHeader()
         end
-        Components::AppFlashes()
+        section(data: { slot: "alerts-container" }) do
+          Components::AppFlashes()
+          @alert_blocks.each(&:call)
+        end
         raw(content_html) # rubocop:disable Rails/OutputSafety
         confetti_canvas
         logs_container
@@ -149,14 +155,26 @@ class Components::AppLayout < Components::Base
 
   # == Interface ==
 
-  sig { params(element: Symbol, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def page_container(element: :main, **attributes, &content)
-    public_send(element, **mix({ class: "page-container" }, **attributes), &content)
+  sig { params(content: T.proc.void).void }
+  def with_head(&content)
+    @head_block = content
   end
 
   sig { params(content: T.proc.void).void }
-  def with_head(&content)
-    @head = T.let(content, T.nilable(T.proc.void))
+  def with_alert(&content)
+    @alert_blocks << content
+  end
+
+  sig { params(element: Symbol, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  def page_container(element: :main, **attributes, &content)
+    public_send(
+      element,
+      **mix(
+        { data: { slot: "page-container" } },
+        **attributes,
+      ),
+      &content
+    )
   end
 
   private

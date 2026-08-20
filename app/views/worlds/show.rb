@@ -38,41 +38,47 @@ class Views::Worlds::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: @world.name) do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        navigation_buttons
-
-        if @current_user == @owner
-          div(class: "flex flex-col gap-3") do
-            v1_post_import_frame
-            if (current_device = Current.device)
-              Components::WorldEnableNotificationsAlert(
-                current_device:,
-                title: "know when friends react to your posts :)",
-                class: "hidden notifications-disabled:revert-display-layer",
-              )
-            end
+      if @current_user == @owner
+        if (current_device = Current.device)
+          app_layout.with_alert do
+            Components::WorldEnableNotificationsAlert(
+              current_device:,
+              title: "know when friends react to your posts :)",
+              class: "hidden notifications-disabled:revert-display-layer",
+            )
           end
-        else
-          if (current_device = Current.device)
+        end
+        app_layout.with_alert do
+          v1_post_import_frame
+        end
+      else
+        if (current_device = Current.device)
+          app_layout.with_alert do
             Components::WorldEnableNotificationsAlert(
               current_device:,
               title: "hear abt new posts from #{@owner.name}!!",
               class: "hidden notifications-disabled:revert-display-layer",
             )
           end
-          if (own_worlds = @current_user
-              .owned_worlds_without_key_or_invitation_for(@owner)
-              .to_a
-              .presence) &&
-              # If the owner is already invited to one of the user's worlds, don't show this
-              # alert.
-              own_worlds.size == @current_user.owned_worlds.size
+        end
+        if (own_worlds = @current_user
+            .owned_worlds_without_key_or_invitation_for(@owner)
+            .to_a
+            .presence) &&
+            # If the owner is already invited to one of the user's worlds, don't show this
+            # alert.
+            own_worlds.size == @current_user.owned_worlds.size
+          app_layout.with_alert do
             send_own_world_invitation_alert(
               own_worlds:,
-              class: class_names("notifications-disabled:hidden" => Current.device.present?),
+              class: "notifications-disabled:hidden",
             )
           end
         end
+      end
+
+      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
+        navigation_buttons
 
         div(class: "flex flex-col gap-6") do
           section(class: "flex flex-col items-center gap-2") do
@@ -236,7 +242,6 @@ class Views::Worlds::Show < Views::Base
       turbo_frame_tag(
         :v1_posts_import,
         src: [ @world, :v1_posts_import ],
-        class: "empty:hidden pb-2",
         data: {
           controller: "frame-reload frame-reset",
         },

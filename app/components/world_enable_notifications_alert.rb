@@ -29,7 +29,7 @@ class Components::WorldEnableNotificationsAlert < Components::Base
     )) do |alert|
       Icon("huge/notification-01")
       alert.title do
-        plain(@title)
+        @title
       end
       Components::Dialog(data: {
         action: "notification-permission-bridge:authorized@document->dialog#close",

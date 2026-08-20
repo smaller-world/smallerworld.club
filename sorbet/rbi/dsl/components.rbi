@@ -66,12 +66,8 @@ module Components
   def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes); end
 
   # workspace://app/components/autoclicking_link.rb:4
-  sig { params(attributes: T.untyped).void }
-  def AutoclickingLink(**attributes); end
-
-  # workspace://app/components/autoclicking_reply_link.rb:4
-  sig { params(reply_initiation: ::ReplyInitiation, attributes: T.untyped).void }
-  def AutoclickingReplyLink(reply_initiation:, **attributes); end
+  sig { params(href: ::String, attributes: T.untyped).void }
+  def AutoclickingLink(href:, **attributes); end
 
   # workspace://app/components/badge.rb:4
   sig do
@@ -598,12 +594,8 @@ module Components
     def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes); end
 
     # workspace://app/components/autoclicking_link.rb:4
-    sig { params(attributes: T.untyped).void }
-    def AutoclickingLink(**attributes); end
-
-    # workspace://app/components/autoclicking_reply_link.rb:4
-    sig { params(reply_initiation: ::ReplyInitiation, attributes: T.untyped).void }
-    def AutoclickingReplyLink(reply_initiation:, **attributes); end
+    sig { params(href: ::String, attributes: T.untyped).void }
+    def AutoclickingLink(href:, **attributes); end
 
     # workspace://app/components/badge.rb:4
     sig do

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   # == Media previews
   resources :media_previews, only: [ :show ], param: :signed_id
 
+  # == Start (for native)
+  get "/start" => "start#show"
+
   # == Pages
   scope controller: :pages do
     root action: :landing
