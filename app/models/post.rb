@@ -18,6 +18,7 @@
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  type_id                       :uuid             not null
+#  world_id                      :uuid             not null
 #
 # Indexes
 #
@@ -25,10 +26,12 @@
 #  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
 #  index_posts_on_quiet                   (quiet)
 #  index_posts_on_type_id_and_created_at  (type_id,created_at)
+#  index_posts_on_world_id                (world_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (type_id => post_types.id)
+#  fk_rails_...  (world_id => worlds.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class Post < ApplicationRecord
@@ -88,7 +91,7 @@ class Post < ApplicationRecord
     through: :type,
     source: :recipients
 
-  has_one :world, through: :type
+  belongs_to :world
   has_many :world_keys, through: :world, source: :keys
   has_many :world_post_types, through: :world, source: :post_types
   has_one :world_owner, through: :world, source: :owner
@@ -126,6 +129,7 @@ class Post < ApplicationRecord
 
   # == Validations ==
 
+  validates :type, inclusion: { in: :world_post_types }
   validates :emoji, emoji: true, allow_nil: true
   validates :body, presence: true
   validates :images,

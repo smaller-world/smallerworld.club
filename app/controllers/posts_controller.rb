@@ -108,11 +108,17 @@ class PostsController < ApplicationController
         world = find_world
         authorize!(world, to: :post?)
         post_params = params.expect(
-          post: [ :type_id, :emoji, :title, :body, :quiet, images: [], recipient_ids: [] ],
+          post: [
+            :type_id,
+            :emoji,
+            :title,
+            :body,
+            :quiet,
+            images: [],
+            recipient_ids: [],
+          ],
         )
-        post_type_id = post_params.delete(:type_id)
-        post_type = world.post_types.find(post_type_id)
-        post = post_type.posts.build(**post_params)
+        post = world.posts.build(**post_params)
         if post.save
           refresh_or_redirect_to([ world, anchor: helpers.dom_id(post, :card) ])
         else

@@ -37,7 +37,11 @@ module WorldTestHelper
     ).returns(Post)
   end
   def create_post(world:, type_label: "journal entry", body: "hello world", **attributes)
-    post_type_for(world, type_label).posts.create!(body:, **attributes)
+    world.posts.create!(
+      type: post_type_for(world, type_label),
+      body:,
+      **attributes,
+    )
   end
 
   # Creates a world key for `recipient`, granting access to all of `world`'s

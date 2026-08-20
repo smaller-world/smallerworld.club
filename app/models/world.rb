@@ -48,7 +48,7 @@ class World < ApplicationRecord
 
   belongs_to :owner, class_name: "User"
   has_many :post_types, dependent: :destroy
-  has_many :posts, through: :post_types
+  has_many :posts, dependent: :destroy
   has_many :cards, class_name: "WorldCard", dependent: :destroy
 
   has_many :keys, class_name: "WorldKey", dependent: :destroy
@@ -227,7 +227,8 @@ class World < ApplicationRecord
 
   sig { void }
   def create_intro_post!
-    journal_entry_post_type!.posts.create!(
+    posts.create!(
+      type: journal_entry_post_type!,
       created_at:,
       emoji: "🌎",
       title: "welcome to my smaller world!",

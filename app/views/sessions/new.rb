@@ -58,6 +58,8 @@ class Views::Sessions::New < Views::Base
 
   sig { params(text: String).void }
   def highlighted(text)
-    span(class: "text-foreground/75 text-nowrap") { text }
+    span(class: "text-foreground/75 text-nowrap") do
+      text
+    end
   end
 end

@@ -43,6 +43,9 @@ module GeneratedUrlHelpersModule
   def apple_app_site_association_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def ci_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def device_push_token_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

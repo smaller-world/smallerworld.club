@@ -3,6 +3,37 @@
 
 require "test_helper"
 
+# rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
+# == Schema Information
+#
+# Table name: reports
+#
+#  id              :uuid             not null, primary key
+#  category        :string           not null
+#  note            :text
+#  reportable_type :string           not null
+#  resolution      :string
+#  resolved_at     :timestamptz
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  moderator_id    :uuid
+#  reportable_id   :uuid             not null
+#  reporter_id     :uuid             not null
+#
+# Indexes
+#
+#  index_reports_on_moderator_id  (moderator_id)
+#  index_reports_on_reportable    (reportable_type,reportable_id)
+#  index_reports_on_reporter_id   (reporter_id)
+#  index_reports_on_resolution    (resolution)
+#  index_reports_on_resolved_at   (resolved_at)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (moderator_id => users.id)
+#  fk_rails_...  (reporter_id => users.id)
+#
+# rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class ReportTest < ActiveSupport::TestCase
   include ActionMailer::TestHelper
 

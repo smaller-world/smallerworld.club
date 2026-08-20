@@ -38,31 +38,6 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    if (current_device = Current.device) && current_device.push_token?
-      form_with(url: test_device_push_token_path, data: {
-        controller: "haptic-bridge",
-        action: "turbo:submit-end->haptic-bridge#vibrate",
-      }) do
-        content.button_item(type: :submit) do
-          Icon("huge/notification-01")
-          span { "send test notification" }
-        end
-      end
-      content.separator
-    elsif !hotwire_native_app? && (current_user = Current.user)
-      content.link_item_to(home_path) do
-        Icon("huge/home-01")
-        span { "home" }
-      end
-      if (world = current_user.owned_worlds.chronological.first)
-        content.link_item_to(world_path(world)) do
-          Icon("huge/earth")
-          span { world.name }
-        end
-      end
-      content.separator
-    end
-
     if Current.user
       form_with(url: session_path, method: :delete, data: {
         controller: "haptic-bridge",
@@ -75,21 +50,47 @@ class Components::AppHeader < Components::Base
           span { "sign out" }
         end
       end
+      content.separator
     else
+      unless current_page?(controller: "sessions", action: "new")
+        content.link_item_to(new_session_path) do
+          Icon("huge/door-01")
+          span { "sign in" }
+        end
+      end
       unless current_page?(controller: "pages", action: "landing")
         content.link_item_to(root_path) do
           image_tag("logo.png", class: "size-4")
           span { "about smaller world" }
         end
       end
-      content.link_item_to(new_session_path) do
-        Icon("huge/door-01")
-        span { "sign in" }
+    end
+
+    if (current_device = Current.device) && current_device.push_token?
+      form_with(url: test_device_push_token_path, data: {
+        controller: "haptic-bridge",
+        action: "turbo:submit-end->haptic-bridge#vibrate",
+      }) do
+        content.button_item(type: :submit) do
+          Icon("huge/notification-01")
+          span { "send test notification" }
+        end
+      end
+    elsif !hotwire_native_app? && (current_user = Current.user)
+      content.link_item_to(home_path) do
+        Icon("huge/home-01")
+        span { "home" }
+      end
+      if (world = current_user.owned_worlds.chronological.first)
+        content.link_item_to(world_path(world)) do
+          Icon("huge/earth")
+          span { world.name }
+        end
       end
     end
 
     content.separator
-    content.link_item_to(support_path) do
+    content.link_item_to(support_path, data: { turbo_stream: true }) do
       Icon("huge/mail-01")
       span { "contact us" }
     end

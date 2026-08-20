@@ -18,6 +18,7 @@
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  type_id                       :uuid             not null
+#  world_id                      :uuid             not null
 #
 # Indexes
 #
@@ -25,10 +26,12 @@
 #  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
 #  index_posts_on_quiet                   (quiet)
 #  index_posts_on_type_id_and_created_at  (type_id,created_at)
+#  index_posts_on_world_id                (world_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (type_id => post_types.id)
+#  fk_rails_...  (world_id => worlds.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 require "test_helper"

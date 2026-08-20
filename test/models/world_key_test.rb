@@ -52,4 +52,18 @@ class WorldKeyTest < ActiveSupport::TestCase
     assert_not_predicate key, :valid?
     assert_includes key.errors, :recipient
   end
+
+  test "orders keys by their latest visible post" do
+    older_key = create_member_key(world: @world, recipient: @recipient)
+    create_post(world: @world)
+
+    newer_world = create_world(owner: users(:bob), name: "Newer Key Test World")
+    newer_key = create_member_key(world: newer_world, recipient: @recipient)
+    travel_to 1.minute.from_now do
+      create_post(world: newer_world)
+
+      assert_equal [ newer_key.id, older_key.id ],
+        @recipient.world_keys.order_by_latest_visible_post.to_a.map(&:id)
+    end
+  end
 end

@@ -70,7 +70,9 @@ class Components::ReplyInitiationForm < Components::Base
     end
 
     if @reply_initiation.previously_new_record?
-      Components::AutoclickingReplyLink(reply_initiation: @reply_initiation)
+      Components::AutoclickingLink(
+        href: @reply_initiation.reply_url(native: hotwire_native_app?),
+      )
     end
   end
 

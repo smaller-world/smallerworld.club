@@ -38,7 +38,12 @@ class Views::Pages::Landing < Views::Base
 
         div(class: "flex flex-col gap-1 text-center") do
           link_to("see our terms and policies", policies_path, class: "link text-xs")
-          link_to("contact us", support_path, class: "link text-xs")
+          link_to(
+            "contact us",
+            support_path,
+            class: "link text-xs",
+            data: { turbo_stream: true },
+          )
         end
       end
     end

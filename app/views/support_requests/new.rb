@@ -4,16 +4,11 @@
 class Views::SupportRequests::New < Views::Base
   # == Initialization ==
 
-  sig { void }
-  def initialize
-    super
-    @email_address = T.let(
-      ActionMailer::Base.email_address_with_name(
-        SmallerWorld.application.contact_email,
-        "smaller world team",
-      ),
-      String,
-    )
+  sig { params(email_address: String).void }
+  def initialize(email_address:)
+    super()
+    @email_address = email_address
+    @mailto_url = T.let("mailto:#{@email_address}", String)
   end
 
   # == View ==
@@ -25,8 +20,11 @@ class Views::SupportRequests::New < Views::Base
       head do
         meta(
           http_equiv: safe("refresh"),
-          content: "0; url=mailto:#{@email_address}",
+          content: "0; url=#{@mailto_url}",
         )
+      end
+      body do
+        link_to(@mailto_url, "contact the smaller world team")
       end
     end
   end

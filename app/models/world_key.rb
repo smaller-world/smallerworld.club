@@ -88,7 +88,7 @@ class WorldKey < ApplicationRecord
     latest_post_at = Arel::Nodes::Grouping.new(
       Post
         .joins(:type)
-        .where("post_types.world_id = world_id")
+        .where("post_types.world_id = posts.world_id")
         .where(
           PostTypeGrant
             .where("post_type_grants.world_key_id = world_keys.id")

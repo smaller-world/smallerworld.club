@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -196,10 +196,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
     t.uuid "type_id", null: false
     t.datetime "updated_at", null: false
     t.jsonb "v1_attributes"
+    t.uuid "world_id", null: false
     t.index ["favorited_at"], name: "index_posts_on_favorited_at"
     t.index ["hidden_from_ids"], name: "index_posts_on_hidden_from_ids", using: :gin
     t.index ["quiet"], name: "index_posts_on_quiet"
     t.index ["type_id", "created_at"], name: "index_posts_on_type_id_and_created_at"
+    t.index ["world_id"], name: "index_posts_on_world_id"
   end
 
   create_table "reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -476,6 +478,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
   add_foreign_key "post_type_grants", "world_keys"
   add_foreign_key "post_types", "worlds"
   add_foreign_key "posts", "post_types", column: "type_id"
+  add_foreign_key "posts", "worlds"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
   add_foreign_key "reply_initiations", "posts"

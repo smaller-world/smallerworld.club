@@ -494,8 +494,8 @@ class World
     sig { params(value: T::Enumerable[::PostType]).void }
     def post_types=(value); end
 
-    # This method is created by ActiveRecord on the `World` class because it declared `has_many :posts, through: :post_types`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    # This method is created by ActiveRecord on the `World` class because it declared `has_many :posts`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
     sig { returns(::Post::PrivateCollectionProxy) }
     def posts; end
 
