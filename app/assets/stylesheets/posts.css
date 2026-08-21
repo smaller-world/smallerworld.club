@@ -94,7 +94,7 @@
   }
 
   .post-form {
-    @apply data-restoring-draft:loading;
+    @apply data-post-draft-restoring-value:loading;
 
     [name="post[type_id]"] {
       [data-slot="select-trigger"] {

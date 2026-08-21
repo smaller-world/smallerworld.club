@@ -250,7 +250,7 @@ module GeneratedPathHelpersModule
   def resolve_admin_report_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def restore_post_draft_path(*args); end
+  def restore_world_post_draft_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def root_path(*args); end

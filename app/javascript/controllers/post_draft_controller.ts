@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import type { TurboSubmitEndEvent } from "@hotwired/turbo";
 import { Typed } from "stimulus-typescript";
 import { useDebounce } from "stimulus-use";
 
@@ -8,6 +9,7 @@ const targets = {
 
 const values = {
   worldId: String,
+  restoring: Boolean,
 };
 
 export default class PostDraftController extends Typed(
@@ -85,8 +87,16 @@ export default class PostDraftController extends Typed(
     });
   }
 
-  clear(): void {
-    localStorage.removeItem(this.#localStorageKey);
+  // Clear the draft from local storage IF:
+  // - Draft was not restored successfully
+  // - Post was submitted successfully
+  clear(event: TurboSubmitEndEvent): void {
+    if (
+      (this.restoringValue && !event.detail.success) ||
+      (!this.restoringValue && event.detail.success)
+    ) {
+      localStorage.removeItem(this.#localStorageKey);
+    }
   }
 
   // == Helpers ==

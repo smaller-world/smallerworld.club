@@ -24,19 +24,18 @@ class Components::PostForm < Components::Base
   sig { override.void }
   def view_template
     action = if @restore_draft
-      restore_post_draft_path
+      [ :restore, @world, :post_draft ]
     else
       @post.new_record? ? [ @world, @post ] : @post
     end
     Components::Form(
       @post,
-      action:,
       id: "post_form",
+      action:,
       **mix(
         {
           class: "post-form",
           data: {
-            restoring_draft: (true if @restore_draft),
             controller: token_list(
               "post-form-type submit haptic-bridge",
               "post-draft" => @post.new_record?,
@@ -45,10 +44,11 @@ class Components::PostForm < Components::Base
             post_form_type_recipients_select_frame_url_template_value:
               post_recipients_select_path(":post_type_id"),
             post_draft_world_id_value: (@world.id if @post.new_record?),
+            post_draft_restoring_value: @restore_draft,
             action: token_list(
               "turbo:submit-end->haptic-bridge#vibrate" => !@restore_draft,
-              "turbo:submit-end->post-draft#clear" => @post.new_record? && !@restore_draft,
-              "turbo:load@document->post-draft#restore" => @post.new_record? && @restore_draft,
+              "turbo:submit-end->post-draft#clear" => @post.new_record?,
+              "turbo:load@document->post-draft#restore:once" => @post.new_record? && @restore_draft,
             ),
           },
         },

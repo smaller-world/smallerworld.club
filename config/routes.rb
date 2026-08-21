@@ -74,6 +74,9 @@ Rails.application.routes.draw do
   resources :worlds, except: :index do
     resources :posts, only: [ :index, :new, :create ]
     resources :post_types, only: [ :new, :create ]
+    resource :post_draft, only: [] do
+      post :restore
+    end
   end
   resources :world_keys, path: "/world/:world_id/keys", only: :index
   resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
@@ -128,9 +131,6 @@ Rails.application.routes.draw do
     resources :reply_initiations, only: :create
   end
   resource :post_card, path: "/posts/:post_id/card", only: :show
-  resource :post_draft, only: [] do
-    post :restore
-  end
   resources :post_reports, path: "/posts/:post_id/reports", only: [ :new, :create ]
 
   # == Reactions

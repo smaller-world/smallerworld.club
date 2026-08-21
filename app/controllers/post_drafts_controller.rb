@@ -4,16 +4,16 @@
 class PostDraftsController < ApplicationController
   # == Actions ==
 
-  # POST /post_draft/restore
+  # POST /worlds/:world_id/post_draft/restore
   def restore
     respond_to do |format|
       format.turbo_stream do
+        world = find_world
         post_params = params.expect(post: [
           :type_id, :emoji, :title, :body, :quiet, images: [],
         ])
-        post_type = PostType.find(post_params.fetch(:type_id))
-        authorize!(post_type, to: :show?)
-        post = post_type.posts.build(**post_params)
+        authorize!(world, to: :manage?)
+        post = world.posts.build(**post_params)
         render turbo_stream: turbo_stream.replace(
           :post_form,
           renderable: Components::PostForm.new(post:),
@@ -26,9 +26,9 @@ class PostDraftsController < ApplicationController
 
   # == Helpers ==
 
-  sig { params(scope: Post::PrivateRelation).returns(Post) }
-  def find_post(scope: Post.all)
-    scope.find(params.fetch(:post_id))
+  sig { params(scope: World::PrivateRelation).returns(World) }
+  def find_world(scope: World.all)
+    scope.friendly.find(params.fetch(:world_id))
   end
 
   # == Callbacks ==

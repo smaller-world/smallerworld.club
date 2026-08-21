@@ -81,9 +81,8 @@ class PostsController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :post?)
-        type_id = params.require(:type_id)
-        post_type = world.post_types.find(type_id)
-        post = post_type.posts.build
+        post_params = params.permit(:type_id)
+        post = world.posts.build(**post_params)
         restore_draft = cast_boolean(params[:restore_draft])
         render Views::Posts::New.new(post:, restore_draft:)
       end
