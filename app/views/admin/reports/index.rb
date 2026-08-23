@@ -18,20 +18,18 @@ class Views::Admin::Reports::Index < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: [ "admin", "reports" ]) do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        unless hotwire_native_app?
-          div(class: "flex gap-2 justify-between items-center") do
-            button_back_to(
-              "admin dashboard",
-              [ :admin, :dashboard ],
-              variant: :secondary,
-            )
-            span(class: "text-sm text-muted-foreground") do
-              pluralize(@pagy.count, "report")
-            end
-          end
+      app_layout.with_navigation do
+        button_back_to(
+          "admin dashboard",
+          [ :admin, :dashboard ],
+          variant: :secondary,
+        )
+        span(class: "text-sm text-muted-foreground") do
+          pluralize(@pagy.count, "report")
         end
+      end
 
+      app_layout.page_container do
         Components::ItemGroup(class: "empty:hidden gap-3") do
           @reports.each do |report|
             report_item(report)

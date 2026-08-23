@@ -9,7 +9,7 @@ class Components::AppHeader < Components::Base
 
   sig { override.void }
   def view_template
-    root_element(:header, id: :app_header, class: "relative flex justify-center py-2") do
+    root_element(:header, id: :app_header, class: "app-header") do
       Components::DropdownMenu() do |menu|
         menu.with_trigger_button(variant: :ghost, class: "gap-x-1.5") do
           site_name = SmallerWorld.application.site_name
@@ -85,6 +85,12 @@ class Components::AppHeader < Components::Base
         content.link_item_to(world_path(world)) do
           Icon("huge/earth")
           span { world.name }
+        end
+      end
+      if current_user.admin?
+        content.link_item_to(admin_dashboard_path) do
+          Icon("huge/dashboard-square-02")
+          span { "admin" }
         end
       end
     end

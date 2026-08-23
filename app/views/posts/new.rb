@@ -17,11 +17,15 @@ class Views::Posts::New < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "new post") do |app_layout|
-      app_layout.page_container(class: "max-w-lg space-y-6") do
-        unless hotwire_native_app?
-          button_back_to(@world.name, @world, variant: :secondary)
-        end
+      app_layout.with_navigation do
+        button_back_to(
+          @world.name,
+          @world,
+          variant: :secondary,
+        )
+      end
 
+      app_layout.page_container do
         Components::HintAlert(
           message: "a good post is one that feels good to write!",
         )

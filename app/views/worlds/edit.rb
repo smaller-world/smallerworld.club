@@ -15,11 +15,11 @@ class Views::Worlds::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "edit world") do |app_layout|
-      app_layout.page_container(class: "max-w-lg space-y-6") do
-        unless hotwire_native_app?
-          button_back_to("world", @world, variant: :secondary)
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to("world", @world, variant: :secondary)
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         div(class: "flex flex-col gap-0.5") do
           Components::WorldForm(world: @world)
           Components::ConfirmDeleteButton(

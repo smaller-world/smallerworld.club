@@ -18,8 +18,12 @@ class AccountsController < ApplicationController
           tag_logger do
             logger.warn("Missing phone number verification token")
           end
-          redirect_to(new_session_path)
-          return
+          redirect_url = if authenticated?
+            home_path
+          else
+            new_session_path
+          end
+          redirect_to(redirect_url) and return
         end
 
         verification_request = PhoneNumberVerificationRequest
@@ -28,8 +32,7 @@ class AccountsController < ApplicationController
           tag_logger do
             logger.warn("Invalid phone number verification token")
           end
-          redirect_to(new_session_path)
-          return
+          redirect_to(new_session_path) and return
         end
 
         user = User.new

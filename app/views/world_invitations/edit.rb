@@ -17,16 +17,11 @@ class Views::WorldInvitations::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "edit invitation") do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        unless hotwire_native_app?
-          button_back_to(
-            "your friends",
-            [ @world, :keys ],
-            variant: :secondary,
-            class: "self-start",
-          )
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to("your friends", [ @world, :keys ], variant: :secondary)
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         Components::Item(
           variant: :muted,
           size: :xs,

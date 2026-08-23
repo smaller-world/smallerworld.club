@@ -17,11 +17,11 @@ class Views::UserReports::New < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "report #{@user.name}") do |app_layout|
-      app_layout.page_container(class: "max-w-md space-y-6") do
-        unless hotwire_native_app?
-          button_back_to(@world.name, @world, variant: :secondary)
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to(@world.name, @world, variant: :secondary)
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         Components::ReportForm(report: @report)
       end
     end

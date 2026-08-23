@@ -63,22 +63,18 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      main(class: "flex flex-col flex-1") do
+      section(class: "flex flex-col flex-1") do
         app_layout.page_container(
           element: :div,
-          class: "flex-1 max-w-lg flex flex-col",
+          class: "flex-1 gap-8 justify-center",
+          data: {
+            controller: "transition-group connection",
+            transition_group_item_delay_value: 100,
+            action: "connection:connect->transition-group#start",
+          },
         ) do
-          div(
-            class:  "flex-1 flex flex-col gap-8 justify-center",
-            data: {
-              controller: "transition-group connection",
-              transition_group_item_delay_value: 100,
-              action: "connection:connect->transition-group#start",
-            },
-          ) do
-            owned_worlds
-            accessible_worlds
-          end
+          owned_worlds
+          accessible_worlds
         end
 
         if show_alert

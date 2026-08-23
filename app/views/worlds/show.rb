@@ -38,6 +38,10 @@ class Views::Worlds::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: @world.name) do |app_layout|
+      app_layout.with_navigation(class: "max-w-lg") do
+        navigation_buttons
+      end
+
       if @current_user == @owner
         if (current_device = Current.device)
           app_layout.with_alert do
@@ -77,9 +81,7 @@ class Views::Worlds::Show < Views::Base
         end
       end
 
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        navigation_buttons
-
+      app_layout.page_container(class: "max-w-lg") do
         div(class: "flex flex-col gap-6") do
           section(class: "flex flex-col items-center gap-2") do
             div(class: "relative") do
@@ -207,32 +209,30 @@ class Views::Worlds::Show < Views::Base
 
   sig { void }
   def navigation_buttons
-    div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
-      button_back_to(:home, variant: :secondary)
+    button_back_to(:home, variant: :secondary)
 
-      if allowed_to?(:manage?, @world)
-        button_link_to(
-          "edit",
-          [ :edit, @world ],
-          icon: "huge/pencil-edit-01",
-          variant: :secondary,
-          data: {
-            controller: "button-bridge",
-          },
-        )
-      elsif (world_key = self.world_key)
-        button_link_to(
-          "settings",
-          world_key,
-          variant: :secondary,
-          icon: "huge/settings-01",
-          data: {
-            controller: "button-bridge",
-            bridge_ios_image: "gearshape.fill",
-            bridge_android_image: "settings",
-          },
-        )
-      end
+    if allowed_to?(:manage?, @world)
+      button_link_to(
+        "edit",
+        [ :edit, @world ],
+        icon: "huge/pencil-edit-01",
+        variant: :secondary,
+        data: {
+          controller: "button-bridge",
+        },
+      )
+    elsif (world_key = self.world_key)
+      button_link_to(
+        "settings",
+        world_key,
+        variant: :secondary,
+        icon: "huge/settings-01",
+        data: {
+          controller: "button-bridge",
+          bridge_ios_image: "gearshape.fill",
+          bridge_android_image: "settings",
+        },
+      )
     end
   end
 

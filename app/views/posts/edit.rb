@@ -16,24 +16,22 @@ class Views::Posts::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "edit post") do |app_layout|
-      app_layout.page_container(class: "max-w-lg space-y-6") do
-        unless hotwire_native_app?
-          button_back_to(
-            @world.name,
-            @world,
-            variant: :secondary,
-          )
-        end
+      app_layout.with_navigation do
+        button_back_to(
+          @world.name,
+          @world,
+          variant: :secondary,
+        )
+      end
 
-        div(class: "flex flex-col gap-0.5") do
-          Components::PostForm(post: @post)
-          Components::ConfirmDeleteButton(
-            url: @post,
-            variant: :link,
-            class: "self-center text-muted-foreground",
-          ) do
-            "delete post"
-          end
+      app_layout.page_container(class: "gap-0.5") do
+        Components::PostForm(post: @post)
+        Components::ConfirmDeleteButton(
+          url: @post,
+          variant: :link,
+          class: "self-center text-muted-foreground",
+        ) do
+          "delete post"
         end
       end
     end

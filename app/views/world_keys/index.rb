@@ -26,25 +26,25 @@ class Views::WorldKeys::Index < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(page_title: "your friends") do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        turbo_stream_from(@world, :keys, hidden: true)
+      turbo_stream_from(@world, :keys, hidden: true)
 
-        div(class: "flex gap-6 justify-between", hidden: hotwire_native_app?) do
-          button_back_to(@world.name, @world, variant: :secondary)
-          button_link_to(
-            "give a key to a new friend",
-            [ :new, @world, :key_grant ],
-            variant: :default,
-            icon: "huge/user-add-01",
-            class: "self-center",
-            data: {
-              controller: "button-bridge",
-              bridge_ios_image: "person.crop.circle.fill.badge.plus",
-              bridge_android_image: "person_add",
-            },
-          )
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to(@world.name, @world, variant: :secondary)
+        button_link_to(
+          "give a key to a new friend",
+          [ :new, @world, :key_grant ],
+          variant: :default,
+          icon: "huge/user-add-01",
+          class: "self-center",
+          data: {
+            controller: "button-bridge",
+            bridge_ios_image: "person.crop.circle.fill.badge.plus",
+            bridge_android_image: "person_add",
+          },
+        )
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         if @invitable_users.any?
           invitations_item
         end

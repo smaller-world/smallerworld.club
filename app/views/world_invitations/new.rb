@@ -20,18 +20,18 @@ class Views::WorldInvitations::New < Views::Base
     Components::AppLayout(
       page_title: "invite #{@recipient.name} to your world",
     ) do |app_layout|
-      app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
-        unless hotwire_native_app?
-          button_link_to(
-            @previous_url || [ @world, :keys ],
-            variant: :secondary,
-            icon: "huge/link-backward",
-            class: "self-start",
-          ) do
-            @previous_url ? "back" : "back to your friends"
-          end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_link_to(
+          @previous_url || [ @world, :keys ],
+          variant: :secondary,
+          icon: "huge/link-backward",
+          class: "self-start",
+        ) do
+          @previous_url ? "back" : "back to your friends"
         end
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         div(class: "relative self-center") do
           image_tag(
             @world.page_icon_variant,

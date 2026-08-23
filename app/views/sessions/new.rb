@@ -31,8 +31,8 @@ class Views::Sessions::New < Views::Base
         )
       end
 
-      main(class: "flex-1 flex flex-col items-center justify-center") do
-        Components::Card(class: "w-full max-w-90 overflow-visible") do |card|
+      app_layout.page_container(class: "flex-1 w-full max-w-90 justify-center") do
+        Components::Card(class: "overflow-visible") do |card|
           card.header(class: "flex flex-col items-center gap-y-3") do
             image_tag("logo.png", class: "size-10")
             card.title(class: "text-lg text-center") do

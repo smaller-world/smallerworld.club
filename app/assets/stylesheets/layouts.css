@@ -9,8 +9,17 @@
   .app-layout {
     @apply flex min-h-dvh flex-col;
 
-    [data-slot="alerts-container"] {
-      @apply hidden w-full max-w-lg flex-col gap-2.5 self-center p-4;
+    main {
+      @apply flex flex-1 flex-col gap-6 p-4;
+      @apply has-data-[slot="navigation"]:pt-1;
+    }
+
+    [data-slot="navigation"] {
+      @apply flex w-full max-w-lg items-center justify-between gap-4 self-center;
+    }
+
+    [data-slot="alerts"] {
+      @apply hidden w-full max-w-lg flex-col gap-2.5 self-center;
 
       &:has([role="alert"]:not(.hidden)) {
         @apply flex;
@@ -18,8 +27,12 @@
     }
 
     [data-slot="page-container"] {
-      @apply mx-auto w-full max-w-2xl self-center p-4;
+      @apply flex w-full max-w-lg flex-col gap-6 self-center;
     }
+  }
+
+  .app-header {
+    @apply flex justify-center px-4 py-2;
   }
 }
 

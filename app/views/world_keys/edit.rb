@@ -19,11 +19,11 @@ class Views::WorldKeys::Edit < Views::Base
     Components::AppLayout(
       page_title: "edit #{@recipient.name}'s key",
     ) do |app_layout|
-      app_layout.page_container(class: "max-w-lg space-y-6") do
-        unless hotwire_native_app?
-          button_back_to("your friends", [ @world, :keys ], variant: :secondary)
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to("your friends", [ @world, :keys ], variant: :secondary)
+      end
 
+      app_layout.page_container(class: "max-w-md") do
         Components::Item(
           variant: :muted,
           size: :xs,

@@ -42,6 +42,7 @@ class Components::AppLayout < Components::Base
     @disable_cache = disable_cache
 
     @head_block = T.let(nil, T.nilable(T.proc.void))
+    @navigation_block = T.let(nil, T.nilable(T.proc.void))
     @alert_blocks = T.let([], T::Array[T.proc.void])
   end
 
@@ -135,11 +136,16 @@ class Components::AppLayout < Components::Base
         if @force_header || !hotwire_native_app?
           Components::AppHeader()
         end
-        section(data: { slot: "alerts-container" }) do
-          Components::AppFlashes()
-          @alert_blocks.each(&:call)
+        main do
+          if @navigation_block && !hotwire_native_app?
+            @navigation_block.call
+          end
+          section(data: { slot: "alerts" }) do
+            Components::AppFlashes()
+            @alert_blocks.each(&:call)
+          end
+          raw(content_html) # rubocop:disable Rails/OutputSafety
         end
-        raw(content_html) # rubocop:disable Rails/OutputSafety
         confetti_canvas
         logs_container
         toasts_container
@@ -159,13 +165,20 @@ class Components::AppLayout < Components::Base
     @head_block = content
   end
 
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
+  def with_navigation(**attributes, &content)
+    @navigation_block = ->() {
+      section(**mix({ data: { slot: "navigation" } }, attributes), &content)
+    }
+  end
+
   sig { params(content: T.proc.void).void }
   def with_alert(&content)
     @alert_blocks << content
   end
 
   sig { params(element: Symbol, attributes: T.untyped, content: T.nilable(T.proc.void)).void }
-  def page_container(element: :main, **attributes, &content)
+  def page_container(element: :section, **attributes, &content)
     public_send(
       element,
       **mix(

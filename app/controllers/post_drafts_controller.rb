@@ -14,10 +14,7 @@ class PostDraftsController < ApplicationController
         ])
         authorize!(world, to: :manage?)
         post = world.posts.build(**post_params)
-        render turbo_stream: turbo_stream.replace(
-          :post_form,
-          renderable: Components::PostForm.new(post:),
-        )
+        render turbo_stream: replace_post_form(post:)
       end
     end
   end
@@ -29,6 +26,14 @@ class PostDraftsController < ApplicationController
   sig { params(scope: World::PrivateRelation).returns(World) }
   def find_world(scope: World.all)
     scope.friendly.find(params.fetch(:world_id))
+  end
+
+  sig { params(post: Post).returns(ActiveSupport::SafeBuffer) }
+  def replace_post_form(post:)
+    turbo_stream.replace(
+      :post_form,
+      renderable: Components::PostForm.new(post:),
+    )
   end
 
   # == Callbacks ==

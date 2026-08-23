@@ -15,13 +15,11 @@ class Views::Accounts::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(title: "your account") do |app_layout|
-      app_layout.page_container(
-        class: "max-w-md flex-1 flex flex-col gap-6",
-      ) do
-        unless hotwire_native_app?
-          button_back_to(:home, variant: :secondary)
-        end
+      app_layout.with_navigation(class: "max-w-md") do
+        button_back_to(:home, variant: :secondary)
+      end
 
+      app_layout.page_container(class: "max-w-md flex-1") do
         div(class: "flex-1 flex flex-col gap-0.5") do
           Components::AccountForm(user: @current_user)
           Components::ConfirmDeleteButton(
