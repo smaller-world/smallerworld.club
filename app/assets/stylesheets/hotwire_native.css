@@ -16,12 +16,6 @@
   }
 }
 
-@custom-variant ios-app-on-mac {
-  html[data-hotwire-native-platform="ios-app-on-mac"] & {
-    @slot;
-  }
-}
-
 /*@custom-variant with-button-bridge {
   html[data-bridge-components~="button"] & {
     @slot;
@@ -30,6 +24,12 @@
 
 @custom-variant with-notification-token-bridge {
   html[data-bridge-components~="notification-token"] & {
+    @slot;
+  }
+}
+
+@custom-variant with-app-settings-bridge {
+  html[data-bridge-components~="app-settings"] & {
     @slot;
   }
 }

@@ -45,7 +45,7 @@ class Views::Accounts::Edit < Views::Base
         Components::Card() do |card|
           card.header do
             card.title(class: "font-mono text-xs text-center") do
-              "smaller world #{hotwire_native_platform}"
+              native_client_identifier
             end
           end
           card.content(class: "space-y-4") do

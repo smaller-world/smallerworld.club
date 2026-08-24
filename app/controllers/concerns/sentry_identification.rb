@@ -5,7 +5,6 @@ module SentryIdentification
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
-  include DeviceDetection
 
   requires_ancestor { ActionController::Base }
 

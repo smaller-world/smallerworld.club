@@ -79,6 +79,21 @@ class Components::Base
   sig { returns(T::Boolean) }
   def authenticated?; end
 
+  sig { returns(T::Boolean) }
+  def ios_browser?; end
+
+  sig { returns(T::Boolean) }
+  def android_browser?; end
+
+  sig { returns(String) }
+  def native_client_name; end
+
+  sig { returns(T.nilable(String)) }
+  def native_client_version; end
+
+  sig { returns(String) }
+  def native_client_identifier; end
+
   sig { returns(Symbol) }
   def hotwire_native_platform; end
 
@@ -86,16 +101,10 @@ class Components::Base
   def hotwire_native_app?; end
 
   sig { returns(T::Boolean) }
-  def hotwire_native_ios?; end
+  def hotwire_native_ios; end
 
   sig { returns(T::Boolean) }
-  def hotwire_native_ios_app_on_mac?; end
-
-  sig { returns(T::Boolean) }
-  def ios_browser?; end
-
-  sig { returns(T::Boolean) }
-  def android_browser?; end
+  def hotwire_native_android?; end
 end
 
 class Superform::Rails::Components::Base

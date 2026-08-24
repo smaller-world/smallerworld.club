@@ -151,10 +151,6 @@
 }
 
 @layer base {
-  /*html[data-hotwire-native-platform="ios-app-on-mac"] {
-    font-size: 18px;
-  }*/
-
   html {
     @apply font-sans;
 

@@ -31,7 +31,7 @@ class Device < ApplicationRecord
 
   # == Attributes ==
 
-  enumerize :platform, in: DeviceDetection::HOTWIRE_NATIVE_PLATFORMS
+  enumerize :platform, in: [ :ios, :android ]
 
   sig { returns(String) }
   def push_token!
@@ -68,21 +68,11 @@ class Device < ApplicationRecord
 
   # == Methods ==
 
-  sig { returns(Symbol) }
-  def action_push_native_platform
-    case platform
-    when "ios", "ios_app_on_mac"
-      :apple
-    else
-      platform.to_sym
-    end
-  end
-
   sig { params(notification: DevicePushNotification).void }
   def push(notification)
     notification.token = push_token!
     ActionPushNative
-      .service_for(action_push_native_platform, notification)
+      .service_for(platform, notification)
       .push(notification)
     tag_logger do
       Rails.logger.info("Pushed notification to device #{id}")

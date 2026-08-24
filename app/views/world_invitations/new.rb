@@ -25,7 +25,6 @@ class Views::WorldInvitations::New < Views::Base
           @previous_url || [ @world, :keys ],
           variant: :secondary,
           icon: "huge/link-backward",
-          class: "self-start",
         ) do
           @previous_url ? "back" : "back to your friends"
         end

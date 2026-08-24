@@ -31,12 +31,15 @@ class Components::Base < Phlex::HTML
   register_value_helper :authenticated?
   register_value_helper :allowed_to?
   register_value_helper :authorized_scope
+  register_value_helper :ios_browser?
+  register_value_helper :android_browser?
   register_value_helper :hotwire_native_platform
   register_value_helper :hotwire_native_app?
   register_value_helper :hotwire_native_ios?
-  register_value_helper :hotwire_native_ios_app_on_mac?
-  register_value_helper :ios_browser?
-  register_value_helper :android_browser?
+  register_value_helper :hotwire_native_android?
+  register_value_helper :native_client_name
+  register_value_helper :native_client_version
+  register_value_helper :native_client_identifier
 
   # == Errors ==
 

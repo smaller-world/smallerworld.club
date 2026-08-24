@@ -60,11 +60,11 @@ class Components::WorldEnableNotificationsAlert < Components::Base
             ) do |button|
               button.inline_start_icon(
                 "huge/love-korean-finger",
-                class: "[body[data-notification-permission=denied]_&]:hidden",
+                class: "notification-permission-denied:hidden",
               )
               button.inline_start_icon(
                 "huge/settings-01",
-                class: "hidden [body[data-notification-permission=denied]_&]:revert-display-layer",
+                class: "hidden notification-permission-denied:revert-display-layer",
               )
               span { "enable notifications" }
             end
@@ -77,7 +77,7 @@ class Components::WorldEnableNotificationsAlert < Components::Base
             end
           end
           div(class: "flex flex-col gap-4") do
-            div(class: "flex flex-col gap-2 my-4") do
+            div(class: "hidden with-app-settings-bridge:flex flex-col gap-2 my-4") do
               Components::Button(size: :lg, class: "self-center", data: {
                 controller: "app-settings-bridge",
                 action: "app-settings-bridge#open",

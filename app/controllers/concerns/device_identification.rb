@@ -5,7 +5,7 @@ module DeviceIdentification
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern
-  include DeviceDetection
+  include ClientDetection
 
   requires_ancestor { ActionController::Base }
 

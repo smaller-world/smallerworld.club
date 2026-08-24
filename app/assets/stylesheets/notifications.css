@@ -9,3 +9,9 @@
     @slot;
   }
 }
+
+@custom-variant notification-permission-denied {
+  body[data-notification-permission="denied"] & {
+    @slot;
+  }
+}

@@ -42,14 +42,20 @@ class ApplicationController
     sig { returns(T::Boolean) }
     def hotwire_native_ios?; end
 
-    sig { returns(T::Boolean) }
-    def hotwire_native_ios_app_on_mac?; end
-
     sig { returns(T.nilable(::Symbol)) }
     def hotwire_native_platform; end
 
     sig { returns(T::Boolean) }
     def ios_browser?; end
+
+    sig { returns(T.nilable(::String)) }
+    def native_client_identifier; end
+
+    sig { returns(T.nilable(::String)) }
+    def native_client_name; end
+
+    sig { returns(T.nilable(::String)) }
+    def native_client_version; end
   end
 
   class HelperProxy < ::ActionView::Base

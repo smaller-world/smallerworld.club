@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   include Authentication
   include BooleanParams
-  include DeviceDetection
+  include ClientDetection
   include DeviceIdentification
   include SentryIdentification
   include LogStreaming
