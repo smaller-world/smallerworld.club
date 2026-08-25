@@ -16,9 +16,11 @@ export default class NotificationsStatusController extends Typed(
   // == Actions ==
 
   update({ detail }: CustomEvent<{ permission: NotificationPermission }>) {
-    this.element.dataset.notifications =
+    const status =
       detail.permission === "authorized" && this.pushTokenSavedValue
         ? "enabled"
         : "disabled";
+    this.element.dataset.notifications = status;
+    this.dispatch("change", { detail: { status } });
   }
 }

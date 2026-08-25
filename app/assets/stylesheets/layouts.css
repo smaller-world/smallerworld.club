@@ -21,7 +21,7 @@
     [data-slot="alerts"] {
       @apply hidden w-full max-w-lg flex-col gap-2.5 self-center;
 
-      &:has([role="alert"]:not(.hidden)) {
+      &:has([role="alert"]:not([hidden])) {
         @apply flex;
       }
     }

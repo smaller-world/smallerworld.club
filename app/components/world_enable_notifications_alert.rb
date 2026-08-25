@@ -19,12 +19,19 @@ class Components::WorldEnableNotificationsAlert < Components::Base
     @title = title
   end
 
-  # == View ==
+  # == Component ==
 
   sig { override.void }
   def view_template
     Components::Alert(**mix(
-      { class: "world-enable-notifications-alert" },
+      {
+        class: "world-enable-notifications-alert",
+        hidden: !@current_device.push_token?,
+        data: {
+          controller: "world-enable-notifications-alert",
+          action: "notifications-status:change@document->world-enable-notifications-alert#update",
+        },
+      },
       @attributes,
     )) do |alert|
       Icon("huge/notification-01")

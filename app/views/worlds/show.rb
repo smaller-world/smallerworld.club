@@ -48,7 +48,6 @@ class Views::Worlds::Show < Views::Base
             Components::WorldEnableNotificationsAlert(
               current_device:,
               title: "know when friends react to your posts :)",
-              class: "hidden notifications-disabled:revert-display-layer",
             )
           end
         end
@@ -61,7 +60,6 @@ class Views::Worlds::Show < Views::Base
             Components::WorldEnableNotificationsAlert(
               current_device:,
               title: "hear abt new posts from #{@owner.name}!!",
-              class: "hidden notifications-disabled:revert-display-layer",
             )
           end
         end
@@ -242,6 +240,7 @@ class Views::Worlds::Show < Views::Base
       turbo_frame_tag(
         :v1_posts_import,
         src: [ @world, :v1_posts_import ],
+        class: "contents",
         data: {
           controller: "frame-reload frame-reset",
         },

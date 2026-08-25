@@ -68,7 +68,6 @@ class Components::AppHeader < Components::Base
         end
       end
     end
-
     content.separator
 
     # User links:
@@ -93,9 +92,11 @@ class Components::AppHeader < Components::Base
     end
 
     # General pages:
-    content.link_item_to(root_path) do
-      image_tag("logo.png", class: "size-4")
-      span { "about smaller world" }
+    unless hotwire_native_app?
+      content.link_item_to(root_path) do
+        image_tag("logo.png", class: "size-4")
+        span { "about smaller world" }
+      end
     end
     content.link_item_to(new_contact_request_path) do
       Icon("huge/mail-01")

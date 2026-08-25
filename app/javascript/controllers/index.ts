@@ -77,6 +77,7 @@ import TransitionGroupController from "./transition_group_controller";
 import TurnstileController from "./turnstile_controller";
 import UppyController from "./uppy_controller";
 import UppyGroupController from "./uppy_group_controller";
+import WorldEnableNotificationsAlertController from "./world_enable_notifications_alert_controller";
 import WorldNewPostDialogController from "./world_new_post_dialog_controller";
 import WorldPostFiltersFormController from "./world_post_filters_form_controller";
 
@@ -183,3 +184,7 @@ application.register(
   PhoneNumberVerificationFormController,
 );
 application.register("landing-carousel", LandingCarouselController);
+application.register(
+  "world-enable-notifications-alert",
+  WorldEnableNotificationsAlertController,
+);
