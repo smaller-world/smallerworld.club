@@ -137,9 +137,7 @@ class Components::AppLayout < Components::Base
           Components::AppHeader()
         end
         main do
-          if @navigation_block && !hotwire_native_app?
-            @navigation_block.call
-          end
+          @navigation_block&.call
           section(data: { slot: "alerts" }) do
             Components::AppFlashes()
             @alert_blocks.each(&:call)
@@ -168,7 +166,11 @@ class Components::AppLayout < Components::Base
   sig { params(attributes: T.untyped, content: T.proc.void).void }
   def with_navigation(**attributes, &content)
     @navigation_block = ->() {
-      section(**mix({ data: { slot: "navigation" } }, attributes), &content)
+      section(
+        hidden: hotwire_native_app?,
+        **mix({ data: { slot: "navigation" } }, attributes),
+        &content
+      )
     }
   end
 
