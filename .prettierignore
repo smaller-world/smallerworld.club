@@ -22,9 +22,3 @@ Gemfile.lock
 
 # == Agents
 .agents/skills/
-.codex/skills/
-.cursor/
-.gemini/
-.opencode/
-opencode.json
-.mcp.json

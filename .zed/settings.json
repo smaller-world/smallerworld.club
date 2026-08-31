@@ -1,7 +1,10 @@
 {
   "context_servers": {
-    "smallerworld_supabase": {
+    "supabase": {
       "url": "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=docs%2Cdatabase"
+    },
+    "sentry": {
+      "url": "https://mcp.sentry.dev/mcp/smallerworld/smallerworld_v2"
     }
   },
   "file_types": {
