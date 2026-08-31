@@ -100,8 +100,8 @@ module V1
 
     sig { params(world: ::World).returns(TrueClass) }
     def import_to!(world)
-      post_type = post_type_on!(world)
-      post = ::Post.find_or_initialize_by(id:, type: post_type)
+      post = ::Post.find_or_initialize_by(id:, world:)
+      post.type = post_type_on!(world)
       images = import_ordered_images
       post.transaction do
         post.update_from_v1_post!(self, images:)
