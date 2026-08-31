@@ -34,9 +34,9 @@ class WorldKeyGrantsController < ApplicationController
       format.turbo_stream do
         verified_grant = verify_grant_message
         if (current_user = Current.user)
-          accept_world_key(current_user:, verified_grant:)
+          accept_key(current_user:, verified_grant:)
         else
-          accept_world_invitation(verified_grant:)
+          accept_invitation(verified_grant:)
         end
       end
     end
@@ -57,7 +57,7 @@ class WorldKeyGrantsController < ApplicationController
   end
 
   sig { params(current_user: User, verified_grant: VerifiedWorldKeyGrant).void }
-  def accept_world_key(current_user:, verified_grant:)
+  def accept_key(current_user:, verified_grant:)
     world = verified_grant.world
     world_key = current_user.world_keys.build(
       world:,
@@ -82,37 +82,45 @@ class WorldKeyGrantsController < ApplicationController
   end
 
   sig { params(verified_grant: VerifiedWorldKeyGrant).void }
-  def accept_world_invitation(verified_grant:)
+  def accept_invitation(verified_grant:)
     world = verified_grant.world
-    world_invitation_params = params.expect(
-      world_invitation: [ :recipient_phone_number ],
-    )
+    invitation_params = params.expect(world_invitation: [ :recipient_phone_number ])
     recipient_phone_number = WorldInvitation.normalize_value_for(
       :recipient_phone_number,
-      world_invitation_params.fetch(:recipient_phone_number),
+      invitation_params.fetch(:recipient_phone_number),
     )
-    world_invitation = world.invitations
-      .find_or_initialize_by(recipient_phone_number:)
-    if world_invitation.update(granted_post_type_ids: verified_grant.post_type_ids)
+    invitation = world.invitations.find_or_initialize_by(recipient_phone_number:)
+    if invitation.update(granted_post_type_ids: verified_grant.post_type_ids)
       if hotwire_native_app?
-        resume_or_redirect_to(
-          new_session_path(phone_number: recipient_phone_number),
+        redirect_to(
+          new_session_path(
+            phone_number: recipient_phone_number,
+            redirect_to: world_invitation_path(invitation),
+          ),
           status: :see_other,
         )
       else
-        redirect_to(install_path)
+        render(turbo_stream: replace_form(verified_grant:, invitation:))
       end
     else
       render(
-        turbo_stream: turbo_stream.replace(
-          "accept_world_key_grant_form",
-          renderable: Components::AcceptWorldKeyGrantForm.new(
-            verified_grant:,
-            invitation: world_invitation,
-          ),
-        ),
+        turbo_stream: replace_form(verified_grant:, invitation:),
         status: :unprocessable_content,
       )
     end
+  end
+
+  sig do
+    params(verified_grant: VerifiedWorldKeyGrant, invitation: WorldInvitation)
+      .returns(ActiveSupport::SafeBuffer)
+  end
+  def replace_form(verified_grant:, invitation:)
+    turbo_stream.replace(
+      "accept_world_key_grant_form",
+      renderable: Components::AcceptWorldKeyGrantForm.new(
+        verified_grant:,
+        invitation: invitation,
+      ),
+    )
   end
 end

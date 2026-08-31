@@ -138,7 +138,7 @@ class WorldInvitation < ApplicationRecord
     if (recipient_id = self.recipient_id) && recipient_id == world!.owner_id
       errors.add(:recipient, "cannot be the world owner")
     elsif recipient_phone_number == world_owner!.phone_number
-      errors.add(:recipient_phone_number, "cannot be the world owner")
+      errors.add(:recipient_phone_number, "cannot be the world owner's number")
     end
   end
 

@@ -71,6 +71,7 @@ class Views::Posts::Index < Views::Base
         end
         div(class: "flex flex-col items-center") do
           Components::WorldNextPageControl(
+            id: "next_page_control",
             world: @world,
             post_type: @post_type,
             pagy: @pagy,

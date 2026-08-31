@@ -9,13 +9,16 @@ class SessionsController < ApplicationController
 
   # == Actions ==
 
-  # GET /session/new[?phone_number=...]
+  # GET /session/new[?phone_number=...][&redirect_to=...]
   def new
     respond_to do |format|
       format.html do
         if authenticated?
           redirect_to(after_authentication_url, notice: "you are already signed in!")
         else
+          if (redirect_to = params[:redirect_to])
+            session[:return_to_after_authenticating] = redirect_to
+          end
           phone_number = if (phone_number = params[:phone_number])
             PhoneNumberVerificationRequest
               .normalize_value_for(:phone_number, phone_number)

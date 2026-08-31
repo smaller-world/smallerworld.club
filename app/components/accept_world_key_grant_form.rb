@@ -48,7 +48,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
             form.wrapped(
               form.field(:recipient_phone_number).phone_number(
                 placeholder: "your phone #",
-                class: "max-w-72 mx-auto",
+                disabled: @invitation.persisted?,
               ),
               label: false,
               error: { class: "text-center" },
@@ -56,20 +56,21 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
           end
 
           if invitation_accepted?
-            span(class: "text-muted-foreground text-center") do
-              "your invitation has been saved."
+            p(class: "text-center text-balance leading-tight") do
+              "thanks! your invitation has been saved to your account."
             end
           else
-            form.submit(
-              size: Current.user ? :lg : :default,
-              class: "self-center",
-            ) do |button|
+            div(class: "flex flex-col items-center") do
               if Current.user
-                button.inline_start_icon("huge/door-01")
-                span { "enter #{@world.name}" }
+                form.submit(size: :lg) do |button|
+                  button.inline_start_icon("huge/door-01")
+                  span { "enter #{@world.name}" }
+                end
               else
-                button.inline_start_icon("huge/bookmark-02")
-                span { "save my invitation!" }
+                form.submit do |button|
+                  button.inline_start_icon("huge/bookmark-02")
+                  span { "save my invitation to my account!" }
+                end
               end
             end
           end
@@ -79,8 +80,11 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
               "next, download the app!",
               install_path,
               variant: :default,
-              icon: "huge/app-store",
-              class: "self-center mt-2",
+              icon: "huge/download-square-02",
+              class: "self-center",
+              data: {
+                turbo: false,
+              },
             )
           end
         end

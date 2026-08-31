@@ -23,12 +23,14 @@ class Components::WorldNextPageControl < Components::Base
 
   sig { override.void }
   def view_template
-    Components::NextPageControl(**T.unsafe({
-      target: [ @world, :posts ],
-      pagy: @pagy,
-      autoclick: true,
-      **@attributes,
-    })) do |control|
+    Components::NextPageControl(
+      **T.unsafe({
+        target: [ @world, :posts ],
+        pagy: @pagy,
+        autoclick: true,
+        **@attributes,
+      }),
+    ) do |control|
       if @post_type
         control.with_param(name: "type_id", value: @post_type.id)
       end

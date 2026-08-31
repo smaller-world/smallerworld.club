@@ -19,10 +19,7 @@ class ContactRequestsController < PublicController
       format.turbo_stream do
         purpose = params[:purpose]
         email_address = contact_email_address(purpose:)
-        render turbo_stream: turbo_stream.append(
-          "contact_links",
-          renderable: Components::AutoclickingLink.new(href: "mailto:#{email_address}"),
-        )
+        render turbo_stream: append_contact_link(email_address:)
       end
     end
   end
@@ -39,5 +36,13 @@ class ContactRequestsController < PublicController
     else
       SmallerWorld.application.contact_email_address_with_name
     end
+  end
+
+  sig { params(email_address: String).returns(ActiveSupport::SafeBuffer) }
+  def append_contact_link(email_address:)
+    turbo_stream.append(
+      "contact_links",
+      renderable: Components::AutoclickingLink.new(href: "mailto:#{email_address}"),
+    )
   end
 end
