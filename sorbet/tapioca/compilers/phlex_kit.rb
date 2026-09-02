@@ -182,7 +182,7 @@ module Tapioca
 
           path, line = location
           relative_path = Pathname.new(path).relative_path_from(Rails.root).to_s
-          [ RBI::Comment.new("workspace://#{relative_path}:#{line}") ]
+          [ RBI::Comment.new("source://#{relative_path}:#{line}") ]
         end
 
         # Inspects the component's Sorbet type members and returns:

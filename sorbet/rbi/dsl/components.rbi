@@ -6,23 +6,23 @@
 
 
 module Components
-  # workspace://app/components/accept_world_key_grant_form.rb:4
+  # source://app/components/accept_world_key_grant_form.rb:4
   sig { params(verified_grant: ::VerifiedWorldKeyGrant, invitation: ::WorldInvitation, attributes: T.untyped).void }
   def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes); end
 
-  # workspace://app/components/account_app_visit_form.rb:4
+  # source://app/components/account_app_visit_form.rb:4
   sig { params(current_user: ::User, attributes: T.untyped).void }
   def AccountAppVisitForm(current_user:, **attributes); end
 
-  # workspace://app/components/account_form.rb:4
+  # source://app/components/account_form.rb:4
   sig { params(user: ::User, attributes: T.untyped).void }
   def AccountForm(user:, **attributes); end
 
-  # workspace://app/components/account_time_zone_form.rb:4
+  # source://app/components/account_time_zone_form.rb:4
   sig { params(current_user: ::User, attributes: T.untyped).void }
   def AccountTimeZoneForm(current_user:, **attributes); end
 
-  # workspace://app/components/alert.rb:4
+  # source://app/components/alert.rb:4
   sig do
     params(
       variant: ::Symbol,
@@ -32,19 +32,19 @@ module Components
   end
   def Alert(variant: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/app_flash_alert.rb:4
+  # source://app/components/app_flash_alert.rb:4
   sig { params(message: ::String, type: ::Symbol, attributes: T.untyped).void }
   def AppFlashAlert(message:, type: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/app_flashes.rb:4
+  # source://app/components/app_flashes.rb:4
   sig { params(attributes: T.untyped).void }
   def AppFlashes(**attributes); end
 
-  # workspace://app/components/app_header.rb:4
+  # source://app/components/app_header.rb:4
   sig { params(attributes: T.untyped).void }
   def AppHeader(**attributes); end
 
-  # workspace://app/components/app_layout.rb:4
+  # source://app/components/app_layout.rb:4
   sig do
     params(
       page_title: T.nilable(T.any(::String, T::Array[::String])),
@@ -57,19 +57,19 @@ module Components
   end
   def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/async_post_reactions.rb:4
+  # source://app/components/async_post_reactions.rb:4
   sig { params(post: ::Post, attributes: T.untyped).void }
   def AsyncPostReactions(post:, **attributes); end
 
-  # workspace://app/components/async_world_post_item.rb:4
+  # source://app/components/async_world_post_item.rb:4
   sig { params(post: ::Post, newly_created: T::Boolean, attributes: T.untyped).void }
   def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/autoclicking_link.rb:4
+  # source://app/components/autoclicking_link.rb:4
   sig { params(href: ::String, attributes: T.untyped).void }
   def AutoclickingLink(href:, **attributes); end
 
-  # workspace://app/components/badge.rb:4
+  # source://app/components/badge.rb:4
   sig do
     params(
       variant: ::Symbol,
@@ -79,7 +79,7 @@ module Components
   end
   def Badge(variant: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/button.rb:4
+  # source://app/components/button.rb:4
   sig do
     params(
       variant: ::Symbol,
@@ -91,7 +91,7 @@ module Components
   end
   def Button(variant: T.unsafe(nil), size: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/card.rb:4
+  # source://app/components/card.rb:4
   sig do
     params(
       size: ::Symbol,
@@ -101,23 +101,23 @@ module Components
   end
   def Card(size: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/checkbox.rb:4
+  # source://app/components/checkbox.rb:4
   sig { params(checked: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
   def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/checkbox_group.rb:4
+  # source://app/components/checkbox_group.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
   def CheckboxGroup(**attributes, &content); end
 
-  # workspace://app/components/clearable_file_input.rb:4
+  # source://app/components/clearable_file_input.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def ClearableFileInput(invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/combobox.rb:4
+  # source://app/components/combobox.rb:4
   sig { params(attributes: T.untyped).void }
   def Combobox(**attributes); end
 
-  # workspace://app/components/confirm_delete_button.rb:4
+  # source://app/components/confirm_delete_button.rb:4
   sig do
     params(
       url: ::Object,
@@ -129,15 +129,15 @@ module Components
   end
   def ConfirmDeleteButton(url:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/device_passes_form.rb:4
+  # source://app/components/device_passes_form.rb:4
   sig { params(attributes: T.untyped).void }
   def DevicePassesForm(**attributes); end
 
-  # workspace://app/components/device_update_push_token_form.rb:4
+  # source://app/components/device_update_push_token_form.rb:4
   sig { params(current_device: ::Device, attributes: T.untyped).void }
   def DeviceUpdatePushTokenForm(current_device:, **attributes); end
 
-  # workspace://app/components/dialog.rb:4
+  # source://app/components/dialog.rb:4
   sig do
     params(
       open: T::Boolean,
@@ -147,23 +147,23 @@ module Components
   end
   def Dialog(open: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/dropdown_menu.rb:4
+  # source://app/components/dropdown_menu.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
   def DropdownMenu(**attributes, &content); end
 
-  # workspace://app/components/emoji_select.rb:4
+  # source://app/components/emoji_select.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/empty.rb:4
+  # source://app/components/empty.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Empty).void).void }
   def Empty(**attributes, &content); end
 
-  # workspace://app/components/existing_post_reaction_form.rb:4
+  # source://app/components/existing_post_reaction_form.rb:4
   sig { params(post: ::Post, emoji: ::String, reactions: T::Array[::Reaction], attributes: T.untyped).void }
   def ExistingPostReactionForm(post:, emoji:, reactions:, **attributes); end
 
-  # workspace://app/components/field.rb:4
+  # source://app/components/field.rb:4
   sig do
     params(
       orientation: ::Symbol,
@@ -174,7 +174,7 @@ module Components
   end
   def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/field_error.rb:4
+  # source://app/components/field_error.rb:4
   sig do
     params(
       messages: T.nilable(T::Array[::String]),
@@ -184,23 +184,23 @@ module Components
   end
   def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/field_group.rb:4
+  # source://app/components/field_group.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldGroup).void).void }
   def FieldGroup(**attributes, &content); end
 
-  # workspace://app/components/field_label.rb:4
+  # source://app/components/field_label.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldLabel).void).void }
   def FieldLabel(**attributes, &content); end
 
-  # workspace://app/components/field_set.rb:4
+  # source://app/components/field_set.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldSet).void).void }
   def FieldSet(**attributes, &content); end
 
-  # workspace://app/components/file_input.rb:4
+  # source://app/components/file_input.rb:4
   sig { params(direct_upload: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
   def FileInput(direct_upload: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/form.rb:4
+  # source://app/components/form.rb:4
   sig do
     type_parameters(:U)
       .params(
@@ -214,11 +214,11 @@ module Components
   end
   def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/hint_alert.rb:4
+  # source://app/components/hint_alert.rb:4
   sig { params(message: ::String, attributes: T.untyped).void }
   def HintAlert(message:, **attributes); end
 
-  # workspace://app/components/image_stack.rb:4
+  # source://app/components/image_stack.rb:4
   sig do
     params(
       images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
@@ -229,15 +229,15 @@ module Components
   end
   def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/input.rb:4
+  # source://app/components/input.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def Input(invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/input_group.rb:4
+  # source://app/components/input_group.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::InputGroup).void).void }
   def InputGroup(**attributes, &content); end
 
-  # workspace://app/components/item.rb:4
+  # source://app/components/item.rb:4
   sig do
     params(
       variant: ::Symbol,
@@ -248,23 +248,23 @@ module Components
   end
   def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/item_group.rb:4
+  # source://app/components/item_group.rb:4
   sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)).void }
   def ItemGroup(**attributes, &content); end
 
-  # workspace://app/components/label.rb:4
+  # source://app/components/label.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Label).void).void }
   def Label(**attributes, &content); end
 
-  # workspace://app/components/lexxy_editor.rb:4
+  # source://app/components/lexxy_editor.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def LexxyEditor(invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/mailer_layout.rb:4
+  # source://app/components/mailer_layout.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::MailerLayout).void).void }
   def MailerLayout(**attributes, &content); end
 
-  # workspace://app/components/new_post_dialog.rb:4
+  # source://app/components/new_post_dialog.rb:4
   sig do
     params(
       world: ::World,
@@ -275,11 +275,11 @@ module Components
   end
   def NewPostDialog(world:, open: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/new_post_reaction_form.rb:4
+  # source://app/components/new_post_reaction_form.rb:4
   sig { params(reaction: ::Reaction, attributes: T.untyped).void }
   def NewPostReactionForm(reaction:, **attributes); end
 
-  # workspace://app/components/next_page_control.rb:4
+  # source://app/components/next_page_control.rb:4
   sig do
     params(
       target: ::Object,
@@ -293,23 +293,23 @@ module Components
   end
   def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), id: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/phone_number_input.rb:4
+  # source://app/components/phone_number_input.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def PhoneNumberInput(invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/phone_number_verification_form.rb:4
+  # source://app/components/phone_number_verification_form.rb:4
   sig { params(verification_request: ::PhoneNumberVerificationRequest, attributes: T.untyped).void }
   def PhoneNumberVerificationForm(verification_request:, **attributes); end
 
-  # workspace://app/components/polymorphic.rb:4
+  # source://app/components/polymorphic.rb:4
   sig { params(element: T.nilable(::Symbol), attributes: T.untyped).void }
   def Polymorphic(element: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/popover.rb:4
+  # source://app/components/popover.rb:4
   sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
   def Popover(popover_id: T.unsafe(nil), &content); end
 
-  # workspace://app/components/post_card.rb:4
+  # source://app/components/post_card.rb:4
   sig do
     params(
       current_user: ::User,
@@ -323,15 +323,15 @@ module Components
   end
   def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/post_card_skeleton.rb:4
+  # source://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
   def PostCardSkeleton(**attributes); end
 
-  # workspace://app/components/post_form.rb:4
+  # source://app/components/post_form.rb:4
   sig { params(post: ::Post, restore_draft: T::Boolean, attributes: T.untyped).void }
   def PostForm(post:, restore_draft: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/post_reactions.rb:4
+  # source://app/components/post_reactions.rb:4
   sig do
     params(
       post: ::Post,
@@ -343,7 +343,7 @@ module Components
   end
   def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/post_recipients_select.rb:4
+  # source://app/components/post_recipients_select.rb:4
   sig do
     params(
       post: ::Post,
@@ -355,11 +355,11 @@ module Components
   end
   def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/post_type_form.rb:4
+  # source://app/components/post_type_form.rb:4
   sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }
   def PostTypeForm(post_type:, previous_url:, **attributes); end
 
-  # workspace://app/components/radio_group.rb:4
+  # source://app/components/radio_group.rb:4
   sig do
     params(
       toggleable: T::Boolean,
@@ -370,7 +370,7 @@ module Components
   end
   def RadioGroup(toggleable: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/radio_group_item.rb:4
+  # source://app/components/radio_group_item.rb:4
   sig do
     params(
       value: T.nilable(T.any(::String, T::Boolean)),
@@ -382,15 +382,15 @@ module Components
   end
   def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/reply_initiation_form.rb:4
+  # source://app/components/reply_initiation_form.rb:4
   sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }
   def ReplyInitiationForm(reply_initiation:, replied:, **attributes); end
 
-  # workspace://app/components/report_form.rb:4
+  # source://app/components/report_form.rb:4
   sig { params(report: ::Report, attributes: T.untyped).void }
   def ReportForm(report:, **attributes); end
 
-  # workspace://app/components/select.rb:4
+  # source://app/components/select.rb:4
   sig do
     params(
       value: T.nilable(::String),
@@ -402,15 +402,15 @@ module Components
   end
   def Select(value: T.unsafe(nil), disabled: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/separator.rb:4
+  # source://app/components/separator.rb:4
   sig { params(orientation: ::Symbol, decorative: T::Boolean, attributes: T.untyped).void }
   def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/spinner.rb:4
+  # source://app/components/spinner.rb:4
   sig { params(attributes: T.untyped).void }
   def Spinner(**attributes); end
 
-  # workspace://app/components/streamed_log_message.rb:6
+  # source://app/components/streamed_log_message.rb:6
   sig do
     params(
       message: ::String,
@@ -422,7 +422,7 @@ module Components
   end
   def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/streamed_toast.rb:6
+  # source://app/components/streamed_toast.rb:6
   sig do
     params(
       message: ::String,
@@ -433,7 +433,7 @@ module Components
   end
   def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/textarea.rb:4
+  # source://app/components/textarea.rb:4
   sig do
     params(
       invalid: T::Boolean,
@@ -443,7 +443,7 @@ module Components
   end
   def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/uppy.rb:4
+  # source://app/components/uppy.rb:4
   sig do
     params(
       group: T.nilable(::Components::UppyGroup),
@@ -460,7 +460,7 @@ module Components
   end
   def Uppy(group: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
-  # workspace://app/components/uppy_group.rb:4
+  # source://app/components/uppy_group.rb:4
   sig do
     params(
       value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
@@ -475,39 +475,39 @@ module Components
   end
   def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/world_enable_notifications_alert.rb:4
+  # source://app/components/world_enable_notifications_alert.rb:4
   sig { params(current_device: ::Device, title: ::String, attributes: T.untyped).void }
   def WorldEnableNotificationsAlert(current_device:, title:, **attributes); end
 
-  # workspace://app/components/world_form.rb:4
+  # source://app/components/world_form.rb:4
   sig { params(world: ::World, attributes: T.untyped).void }
   def WorldForm(world:, **attributes); end
 
-  # workspace://app/components/world_invitation_form.rb:4
+  # source://app/components/world_invitation_form.rb:4
   sig { params(invitation: ::WorldInvitation, previous_url: T.nilable(::String), attributes: T.untyped).void }
   def WorldInvitationForm(invitation:, previous_url: T.unsafe(nil), **attributes); end
 
-  # workspace://app/components/world_key_form.rb:4
+  # source://app/components/world_key_form.rb:4
   sig { params(world_key: ::WorldKey, attributes: T.untyped).void }
   def WorldKeyForm(world_key:, **attributes); end
 
-  # workspace://app/components/world_key_grant_form.rb:4
+  # source://app/components/world_key_grant_form.rb:4
   sig { params(grant: ::WorldKeyGrant, attributes: T.untyped).void }
   def WorldKeyGrantForm(grant:, **attributes); end
 
-  # workspace://app/components/world_key_grant_icon_button.rb:4
+  # source://app/components/world_key_grant_icon_button.rb:4
   sig { params(world: ::World, attributes: T.untyped).void }
   def WorldKeyGrantIconButton(world:, **attributes); end
 
-  # workspace://app/components/world_key_world_visit_form.rb:4
+  # source://app/components/world_key_world_visit_form.rb:4
   sig { params(world_key: ::WorldKey, attributes: T.untyped).void }
   def WorldKeyWorldVisitForm(world_key:, **attributes); end
 
-  # workspace://app/components/world_next_page_control.rb:4
+  # source://app/components/world_next_page_control.rb:4
   sig { params(world: ::World, post_type: T.nilable(::PostType), pagy: T.nilable(::Pagy), attributes: T.untyped).void }
   def WorldNextPageControl(world:, post_type:, pagy:, **attributes); end
 
-  # workspace://app/components/world_post_filters_form.rb:4
+  # source://app/components/world_post_filters_form.rb:4
   sig do
     params(
       world: ::World,
@@ -518,7 +518,7 @@ module Components
   end
   def WorldPostFiltersForm(world:, currently_showing_favorited:, current_post_type:, **attributes); end
 
-  # workspace://app/components/world_post_items.rb:4
+  # source://app/components/world_post_items.rb:4
   sig do
     params(
       current_user: ::User,
@@ -529,28 +529,28 @@ module Components
   end
   def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
 
-  # workspace://app/components/world_v1_posts_import_alert.rb:4
+  # source://app/components/world_v1_posts_import_alert.rb:4
   sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
   def WorldV1PostsImportAlert(world:, import_job:, **attributes); end
 
   class << self
-    # workspace://app/components/accept_world_key_grant_form.rb:4
+    # source://app/components/accept_world_key_grant_form.rb:4
     sig { params(verified_grant: ::VerifiedWorldKeyGrant, invitation: ::WorldInvitation, attributes: T.untyped).void }
     def AcceptWorldKeyGrantForm(verified_grant:, invitation:, **attributes); end
 
-    # workspace://app/components/account_app_visit_form.rb:4
+    # source://app/components/account_app_visit_form.rb:4
     sig { params(current_user: ::User, attributes: T.untyped).void }
     def AccountAppVisitForm(current_user:, **attributes); end
 
-    # workspace://app/components/account_form.rb:4
+    # source://app/components/account_form.rb:4
     sig { params(user: ::User, attributes: T.untyped).void }
     def AccountForm(user:, **attributes); end
 
-    # workspace://app/components/account_time_zone_form.rb:4
+    # source://app/components/account_time_zone_form.rb:4
     sig { params(current_user: ::User, attributes: T.untyped).void }
     def AccountTimeZoneForm(current_user:, **attributes); end
 
-    # workspace://app/components/alert.rb:4
+    # source://app/components/alert.rb:4
     sig do
       params(
         variant: ::Symbol,
@@ -560,19 +560,19 @@ module Components
     end
     def Alert(variant: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/app_flash_alert.rb:4
+    # source://app/components/app_flash_alert.rb:4
     sig { params(message: ::String, type: ::Symbol, attributes: T.untyped).void }
     def AppFlashAlert(message:, type: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/app_flashes.rb:4
+    # source://app/components/app_flashes.rb:4
     sig { params(attributes: T.untyped).void }
     def AppFlashes(**attributes); end
 
-    # workspace://app/components/app_header.rb:4
+    # source://app/components/app_header.rb:4
     sig { params(attributes: T.untyped).void }
     def AppHeader(**attributes); end
 
-    # workspace://app/components/app_layout.rb:4
+    # source://app/components/app_layout.rb:4
     sig do
       params(
         page_title: T.nilable(T.any(::String, T::Array[::String])),
@@ -585,19 +585,19 @@ module Components
     end
     def AppLayout(page_title: T.unsafe(nil), title: T.unsafe(nil), force_header: T.unsafe(nil), disable_cache: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/async_post_reactions.rb:4
+    # source://app/components/async_post_reactions.rb:4
     sig { params(post: ::Post, attributes: T.untyped).void }
     def AsyncPostReactions(post:, **attributes); end
 
-    # workspace://app/components/async_world_post_item.rb:4
+    # source://app/components/async_world_post_item.rb:4
     sig { params(post: ::Post, newly_created: T::Boolean, attributes: T.untyped).void }
     def AsyncWorldPostItem(post:, newly_created: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/autoclicking_link.rb:4
+    # source://app/components/autoclicking_link.rb:4
     sig { params(href: ::String, attributes: T.untyped).void }
     def AutoclickingLink(href:, **attributes); end
 
-    # workspace://app/components/badge.rb:4
+    # source://app/components/badge.rb:4
     sig do
       params(
         variant: ::Symbol,
@@ -607,7 +607,7 @@ module Components
     end
     def Badge(variant: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/button.rb:4
+    # source://app/components/button.rb:4
     sig do
       params(
         variant: ::Symbol,
@@ -619,7 +619,7 @@ module Components
     end
     def Button(variant: T.unsafe(nil), size: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/card.rb:4
+    # source://app/components/card.rb:4
     sig do
       params(
         size: ::Symbol,
@@ -629,23 +629,23 @@ module Components
     end
     def Card(size: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/checkbox.rb:4
+    # source://app/components/checkbox.rb:4
     sig { params(checked: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
     def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/checkbox_group.rb:4
+    # source://app/components/checkbox_group.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
     def CheckboxGroup(**attributes, &content); end
 
-    # workspace://app/components/clearable_file_input.rb:4
+    # source://app/components/clearable_file_input.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def ClearableFileInput(invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/combobox.rb:4
+    # source://app/components/combobox.rb:4
     sig { params(attributes: T.untyped).void }
     def Combobox(**attributes); end
 
-    # workspace://app/components/confirm_delete_button.rb:4
+    # source://app/components/confirm_delete_button.rb:4
     sig do
       params(
         url: ::Object,
@@ -657,15 +657,15 @@ module Components
     end
     def ConfirmDeleteButton(url:, description: T.unsafe(nil), confirm_label: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/device_passes_form.rb:4
+    # source://app/components/device_passes_form.rb:4
     sig { params(attributes: T.untyped).void }
     def DevicePassesForm(**attributes); end
 
-    # workspace://app/components/device_update_push_token_form.rb:4
+    # source://app/components/device_update_push_token_form.rb:4
     sig { params(current_device: ::Device, attributes: T.untyped).void }
     def DeviceUpdatePushTokenForm(current_device:, **attributes); end
 
-    # workspace://app/components/dialog.rb:4
+    # source://app/components/dialog.rb:4
     sig do
       params(
         open: T::Boolean,
@@ -675,23 +675,23 @@ module Components
     end
     def Dialog(open: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/dropdown_menu.rb:4
+    # source://app/components/dropdown_menu.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
     def DropdownMenu(**attributes, &content); end
 
-    # workspace://app/components/emoji_select.rb:4
+    # source://app/components/emoji_select.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/empty.rb:4
+    # source://app/components/empty.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Empty).void).void }
     def Empty(**attributes, &content); end
 
-    # workspace://app/components/existing_post_reaction_form.rb:4
+    # source://app/components/existing_post_reaction_form.rb:4
     sig { params(post: ::Post, emoji: ::String, reactions: T::Array[::Reaction], attributes: T.untyped).void }
     def ExistingPostReactionForm(post:, emoji:, reactions:, **attributes); end
 
-    # workspace://app/components/field.rb:4
+    # source://app/components/field.rb:4
     sig do
       params(
         orientation: ::Symbol,
@@ -702,7 +702,7 @@ module Components
     end
     def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/field_error.rb:4
+    # source://app/components/field_error.rb:4
     sig do
       params(
         messages: T.nilable(T::Array[::String]),
@@ -712,23 +712,23 @@ module Components
     end
     def FieldError(messages: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/field_group.rb:4
+    # source://app/components/field_group.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldGroup).void).void }
     def FieldGroup(**attributes, &content); end
 
-    # workspace://app/components/field_label.rb:4
+    # source://app/components/field_label.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldLabel).void).void }
     def FieldLabel(**attributes, &content); end
 
-    # workspace://app/components/field_set.rb:4
+    # source://app/components/field_set.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::FieldSet).void).void }
     def FieldSet(**attributes, &content); end
 
-    # workspace://app/components/file_input.rb:4
+    # source://app/components/file_input.rb:4
     sig { params(direct_upload: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
     def FileInput(direct_upload: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/form.rb:4
+    # source://app/components/form.rb:4
     sig do
       type_parameters(:U)
         .params(
@@ -742,11 +742,11 @@ module Components
     end
     def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/hint_alert.rb:4
+    # source://app/components/hint_alert.rb:4
     sig { params(message: ::String, attributes: T.untyped).void }
     def HintAlert(message:, **attributes); end
 
-    # workspace://app/components/image_stack.rb:4
+    # source://app/components/image_stack.rb:4
     sig do
       params(
         images: T::Enumerable[T.any(::ActiveStorage::Blob, ::ActiveStorage::VariantWithRecord)],
@@ -757,15 +757,15 @@ module Components
     end
     def ImageStack(images:, max_height: T.unsafe(nil), flip_boundary: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/input.rb:4
+    # source://app/components/input.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def Input(invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/input_group.rb:4
+    # source://app/components/input_group.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::InputGroup).void).void }
     def InputGroup(**attributes, &content); end
 
-    # workspace://app/components/item.rb:4
+    # source://app/components/item.rb:4
     sig do
       params(
         variant: ::Symbol,
@@ -776,23 +776,23 @@ module Components
     end
     def Item(variant: T.unsafe(nil), size: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/item_group.rb:4
+    # source://app/components/item_group.rb:4
     sig { params(attributes: T.untyped, content: T.nilable(T.proc.params(instance: Components::ItemGroup).void)).void }
     def ItemGroup(**attributes, &content); end
 
-    # workspace://app/components/label.rb:4
+    # source://app/components/label.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::Label).void).void }
     def Label(**attributes, &content); end
 
-    # workspace://app/components/lexxy_editor.rb:4
+    # source://app/components/lexxy_editor.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def LexxyEditor(invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/mailer_layout.rb:4
+    # source://app/components/mailer_layout.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::MailerLayout).void).void }
     def MailerLayout(**attributes, &content); end
 
-    # workspace://app/components/new_post_dialog.rb:4
+    # source://app/components/new_post_dialog.rb:4
     sig do
       params(
         world: ::World,
@@ -803,11 +803,11 @@ module Components
     end
     def NewPostDialog(world:, open: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/new_post_reaction_form.rb:4
+    # source://app/components/new_post_reaction_form.rb:4
     sig { params(reaction: ::Reaction, attributes: T.untyped).void }
     def NewPostReactionForm(reaction:, **attributes); end
 
-    # workspace://app/components/next_page_control.rb:4
+    # source://app/components/next_page_control.rb:4
     sig do
       params(
         target: ::Object,
@@ -821,23 +821,23 @@ module Components
     end
     def NextPageControl(target:, pagy:, autoclick: T.unsafe(nil), id: T.unsafe(nil), disable_for: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/phone_number_input.rb:4
+    # source://app/components/phone_number_input.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def PhoneNumberInput(invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/phone_number_verification_form.rb:4
+    # source://app/components/phone_number_verification_form.rb:4
     sig { params(verification_request: ::PhoneNumberVerificationRequest, attributes: T.untyped).void }
     def PhoneNumberVerificationForm(verification_request:, **attributes); end
 
-    # workspace://app/components/polymorphic.rb:4
+    # source://app/components/polymorphic.rb:4
     sig { params(element: T.nilable(::Symbol), attributes: T.untyped).void }
     def Polymorphic(element: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/popover.rb:4
+    # source://app/components/popover.rb:4
     sig { params(popover_id: ::String, content: T.proc.params(instance: Components::Popover).void).void }
     def Popover(popover_id: T.unsafe(nil), &content); end
 
-    # workspace://app/components/post_card.rb:4
+    # source://app/components/post_card.rb:4
     sig do
       params(
         current_user: ::User,
@@ -851,15 +851,15 @@ module Components
     end
     def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/post_card_skeleton.rb:4
+    # source://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }
     def PostCardSkeleton(**attributes); end
 
-    # workspace://app/components/post_form.rb:4
+    # source://app/components/post_form.rb:4
     sig { params(post: ::Post, restore_draft: T::Boolean, attributes: T.untyped).void }
     def PostForm(post:, restore_draft: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/post_reactions.rb:4
+    # source://app/components/post_reactions.rb:4
     sig do
       params(
         post: ::Post,
@@ -871,7 +871,7 @@ module Components
     end
     def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/post_recipients_select.rb:4
+    # source://app/components/post_recipients_select.rb:4
     sig do
       params(
         post: ::Post,
@@ -883,11 +883,11 @@ module Components
     end
     def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/post_type_form.rb:4
+    # source://app/components/post_type_form.rb:4
     sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }
     def PostTypeForm(post_type:, previous_url:, **attributes); end
 
-    # workspace://app/components/radio_group.rb:4
+    # source://app/components/radio_group.rb:4
     sig do
       params(
         toggleable: T::Boolean,
@@ -898,7 +898,7 @@ module Components
     end
     def RadioGroup(toggleable: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/radio_group_item.rb:4
+    # source://app/components/radio_group_item.rb:4
     sig do
       params(
         value: T.nilable(T.any(::String, T::Boolean)),
@@ -910,15 +910,15 @@ module Components
     end
     def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/reply_initiation_form.rb:4
+    # source://app/components/reply_initiation_form.rb:4
     sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }
     def ReplyInitiationForm(reply_initiation:, replied:, **attributes); end
 
-    # workspace://app/components/report_form.rb:4
+    # source://app/components/report_form.rb:4
     sig { params(report: ::Report, attributes: T.untyped).void }
     def ReportForm(report:, **attributes); end
 
-    # workspace://app/components/select.rb:4
+    # source://app/components/select.rb:4
     sig do
       params(
         value: T.nilable(::String),
@@ -930,15 +930,15 @@ module Components
     end
     def Select(value: T.unsafe(nil), disabled: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/separator.rb:4
+    # source://app/components/separator.rb:4
     sig { params(orientation: ::Symbol, decorative: T::Boolean, attributes: T.untyped).void }
     def Separator(orientation: T.unsafe(nil), decorative: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/spinner.rb:4
+    # source://app/components/spinner.rb:4
     sig { params(attributes: T.untyped).void }
     def Spinner(**attributes); end
 
-    # workspace://app/components/streamed_log_message.rb:6
+    # source://app/components/streamed_log_message.rb:6
     sig do
       params(
         message: ::String,
@@ -950,7 +950,7 @@ module Components
     end
     def StreamedLogMessage(message:, controller_name:, action_name:, log_level: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/streamed_toast.rb:6
+    # source://app/components/streamed_toast.rb:6
     sig do
       params(
         message: ::String,
@@ -961,7 +961,7 @@ module Components
     end
     def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/textarea.rb:4
+    # source://app/components/textarea.rb:4
     sig do
       params(
         invalid: T::Boolean,
@@ -971,7 +971,7 @@ module Components
     end
     def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/uppy.rb:4
+    # source://app/components/uppy.rb:4
     sig do
       params(
         group: T.nilable(::Components::UppyGroup),
@@ -988,7 +988,7 @@ module Components
     end
     def Uppy(group: T.unsafe(nil), value: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), allowed_file_types: T.unsafe(nil), crop_to_aspect_ratio: T.unsafe(nil), preview_fit: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes, &content); end
 
-    # workspace://app/components/uppy_group.rb:4
+    # source://app/components/uppy_group.rb:4
     sig do
       params(
         value: T.nilable(T::Enumerable[::ActiveStorage::Blob]),
@@ -1003,35 +1003,35 @@ module Components
     end
     def UppyGroup(value: T.unsafe(nil), max_number_of_files: T.unsafe(nil), required: T.unsafe(nil), invalid: T.unsafe(nil), preview_fit: T.unsafe(nil), allowed_file_types: T.unsafe(nil), dropzone_class: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/world_enable_notifications_alert.rb:4
+    # source://app/components/world_enable_notifications_alert.rb:4
     sig { params(current_device: ::Device, title: ::String, attributes: T.untyped).void }
     def WorldEnableNotificationsAlert(current_device:, title:, **attributes); end
 
-    # workspace://app/components/world_form.rb:4
+    # source://app/components/world_form.rb:4
     sig { params(world: ::World, attributes: T.untyped).void }
     def WorldForm(world:, **attributes); end
 
-    # workspace://app/components/world_invitation_form.rb:4
+    # source://app/components/world_invitation_form.rb:4
     sig { params(invitation: ::WorldInvitation, previous_url: T.nilable(::String), attributes: T.untyped).void }
     def WorldInvitationForm(invitation:, previous_url: T.unsafe(nil), **attributes); end
 
-    # workspace://app/components/world_key_form.rb:4
+    # source://app/components/world_key_form.rb:4
     sig { params(world_key: ::WorldKey, attributes: T.untyped).void }
     def WorldKeyForm(world_key:, **attributes); end
 
-    # workspace://app/components/world_key_grant_form.rb:4
+    # source://app/components/world_key_grant_form.rb:4
     sig { params(grant: ::WorldKeyGrant, attributes: T.untyped).void }
     def WorldKeyGrantForm(grant:, **attributes); end
 
-    # workspace://app/components/world_key_grant_icon_button.rb:4
+    # source://app/components/world_key_grant_icon_button.rb:4
     sig { params(world: ::World, attributes: T.untyped).void }
     def WorldKeyGrantIconButton(world:, **attributes); end
 
-    # workspace://app/components/world_key_world_visit_form.rb:4
+    # source://app/components/world_key_world_visit_form.rb:4
     sig { params(world_key: ::WorldKey, attributes: T.untyped).void }
     def WorldKeyWorldVisitForm(world_key:, **attributes); end
 
-    # workspace://app/components/world_next_page_control.rb:4
+    # source://app/components/world_next_page_control.rb:4
     sig do
       params(
         world: ::World,
@@ -1042,7 +1042,7 @@ module Components
     end
     def WorldNextPageControl(world:, post_type:, pagy:, **attributes); end
 
-    # workspace://app/components/world_post_filters_form.rb:4
+    # source://app/components/world_post_filters_form.rb:4
     sig do
       params(
         world: ::World,
@@ -1053,7 +1053,7 @@ module Components
     end
     def WorldPostFiltersForm(world:, currently_showing_favorited:, current_post_type:, **attributes); end
 
-    # workspace://app/components/world_post_items.rb:4
+    # source://app/components/world_post_items.rb:4
     sig do
       params(
         current_user: ::User,
@@ -1064,7 +1064,7 @@ module Components
     end
     def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
 
-    # workspace://app/components/world_v1_posts_import_alert.rb:4
+    # source://app/components/world_v1_posts_import_alert.rb:4
     sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
     def WorldV1PostsImportAlert(world:, import_job:, **attributes); end
   end
