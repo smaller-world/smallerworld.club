@@ -15,7 +15,10 @@ class Views::WorldKeyGrants::New < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "share a key to your world") do |app_layout|
+    Components::AppLayout(
+      page_title: "share a key to your world",
+      disable_cache: true,
+    ) do |app_layout|
       app_layout.with_navigation(class: "max-w-md") do
         button_back_to("your friends", [ @world, :keys ], variant: :secondary)
       end

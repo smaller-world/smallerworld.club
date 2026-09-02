@@ -49,11 +49,13 @@ class Components::WorldPostFiltersForm < Components::Base
             span do
               choice.item.label
             end
-            button_link_to([ :edit, choice.item ], size: :icon_xs, data: {
-              controller: "event redirect-back-to-self",
-              action: "event#stopPropagation redirect-back-to-self#visit",
-            }) do
-              Icon("huge/settings-01")
+            if allowed_to?(:edit?, choice.item)
+              button_link_to([ :edit, choice.item ], size: :icon_xs, data: {
+                controller: "event redirect-back-to-self",
+                action: "event#stopPropagation redirect-back-to-self#visit",
+              }) do
+                Icon("huge/settings-01")
+              end
             end
             choice.input(
               name: "type_id",

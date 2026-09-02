@@ -1,5 +1,5 @@
 [mcp_servers.supabase]
-  url = "https://mcp.supabase.com/mcp?project_ref=tttkkdzhzvelxmbcqvlg&read_only=true&features=docs%2Cdatabase"
+  url = "https://mcp.supabase.com/mcp?project_ref=ijcocumeslxoujvtjflf&features=docs%2Cdatabase%2Cdebugging"
 
 [mcp_servers.sentry]
   url = "https://mcp.sentry.dev/mcp/smallerworld/smallerworld_v2"
