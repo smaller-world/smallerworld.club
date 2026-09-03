@@ -72,7 +72,7 @@ class Device < ApplicationRecord
   def push(notification)
     notification.token = push_token!
     ActionPushNative
-      .service_for(platform, notification)
+      .service_for(action_push_native_platform, notification)
       .push(notification)
     tag_logger do
       Rails.logger.info("Pushed notification to device #{id}")
@@ -108,6 +108,20 @@ class Device < ApplicationRecord
   end
 
   private
+  
+  # == Helpers ==
+  
+  sig { returns(Symbol) }
+  def action_push_native_platform
+    case platform
+    when "ios"
+      :apple
+    when "android"
+      :android
+    else
+      raise ApplicationError, "Unknown Action Native Push platform: #{platform}"
+    end
+  end
 
   # == Callbacks ==
 
