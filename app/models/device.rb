@@ -108,9 +108,9 @@ class Device < ApplicationRecord
   end
 
   private
-  
+
   # == Helpers ==
-  
+
   sig { returns(Symbol) }
   def action_push_native_platform
     case platform
