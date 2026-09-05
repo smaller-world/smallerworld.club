@@ -44,7 +44,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
       - name: Set up tooling
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v3
         with:
           install_args: bun
       - name: Install Bun packages
