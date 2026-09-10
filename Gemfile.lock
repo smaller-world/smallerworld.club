@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/coorasse/passkit.git
+  revision: 7b8aed0f822a72113bc3b3fa3892afd53bfbe241
+  tag: 0.8.0
+  specs:
+    passkit (0.8.0)
+      rails (>= 5)
+      rubyzip (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -371,9 +380,6 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
-    passkit (0.7.0)
-      rails (>= 5)
-      rubyzip (~> 2.0)
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
     pg_query (6.2.2)
@@ -711,7 +717,7 @@ DEPENDENCIES
   minitest-mock (~> 5.27)
   mission_control-jobs
   pagy (~> 43.5)
-  passkit (~> 0.7.0)
+  passkit!
   pg (~> 1.6)
   pg_query
   pg_search (~> 2.3)
@@ -901,7 +907,7 @@ CHECKSUMS
   pagy (43.5.6) sha256=4d46d262826e055d69713fbbd2c42257cc1d0e87c13a1221764c15d30e46ff85
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
-  passkit (0.7.0) sha256=dc8c8f8b7a00f0562d615120c952b16147b4ae5c792083ff95554b6dddb6f86f
+  passkit (0.8.0)
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
   pg (1.6.3-x86_64-linux) sha256=5d9e188c8f7a0295d162b7b88a768d8452a899977d44f3274d1946d67920ae8d
   pg_query (6.2.2) sha256=316c194160ccfac8af9a7aff55cdc5b2d13bdd8bd8734976c6bddc477e779b6f

@@ -53,6 +53,7 @@ class Views::Posts::Show < Views::Base
         Components::PostCard(
           post: @post,
           active_report: @active_report,
+          auto_collapse: false,
         )
       end
     end

@@ -12,6 +12,7 @@ class Components::PostCard < Components::Base
       active_report: T.nilable(Report),
       replied: T::Boolean,
       async_reactions: T::Boolean,
+      auto_collapse: T::Boolean,
       frame: T::Hash[Symbol, T.untyped],
       attributes: T.untyped,
     ).void
@@ -25,6 +26,7 @@ class Components::PostCard < Components::Base
                false
              end,
     async_reactions: false,
+    auto_collapse: true,
     frame: {},
     **attributes
   )
@@ -33,6 +35,7 @@ class Components::PostCard < Components::Base
     @active_report = active_report
     @replied = replied
     @async_reactions = async_reactions
+    @auto_collapse = auto_collapse
     @frame_options = frame
     @post_type = T.let(@post.type!, PostType)
   end
@@ -120,7 +123,7 @@ class Components::PostCard < Components::Base
             class: "post-card-body",
             data: {
               slot: "post-card-body",
-              controller: "collapse",
+              controller: ("collapse" if @auto_collapse),
             },
           ) do
             div(data: {
