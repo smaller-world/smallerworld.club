@@ -28,7 +28,7 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy on Fly
         # prettier-ignore
-        run: flyctl deploy --remote-only --ha=false --build-arg SENTRY_RELEASE="${{ github.event.workflow_run.head_sha }}"
+        run: flyctl deploy --local-only --ha=false --build-arg SENTRY_RELEASE="${{ github.event.workflow_run.head_sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.V2_FLY_API_TOKEN }}
 
