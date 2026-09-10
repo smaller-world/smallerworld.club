@@ -63,7 +63,8 @@
         "^\/worlds$",
         "^\/world_key_grants$",
         "^\/world_cards$",
-        "^\/world_cards\/[\\w-]+$"
+        "^\/world_cards\/[\\w-]+$",
+        "^\/posts$"
       ],
       "properties": {
         "unroutable": true
