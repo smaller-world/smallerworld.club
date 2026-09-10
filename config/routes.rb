@@ -78,13 +78,13 @@ Rails.application.routes.draw do
       post :restore
     end
   end
-  resources :world_keys, path: "/world/:world_id/keys", only: :index
-  resources :world_key_grants, path: "/world/:world_id/key_grants", only: :new
+  resources :world_keys, path: "/worlds/:world_id/keys", only: :index
+  resources :world_key_grants, path: "/worlds/:world_id/key_grants", only: :new
   resources :world_invitations,
-    path: "/world/:world_id/invitations",
+    path: "/worlds/:world_id/invitations",
     only: [ :new, :create ]
   resource :world_v1_posts_import,
-    path: "/world/:world_id/v1_posts_import",
+    path: "/worlds/:world_id/v1_posts_import",
     only: [ :show, :create ]
 
   # == World Invitations
