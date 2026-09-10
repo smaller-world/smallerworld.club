@@ -31,6 +31,10 @@ class Views::Worlds::Show < Views::Base
     @new_post_dialog_open = new_post_dialog_open
 
     @owner = T.let(@world.owner!, User)
+    @world_key = T.let(
+      @world.keys.find_by(recipient: @current_user),
+      T.nilable(WorldKey),
+    )
   end
 
   # == View ==
@@ -197,14 +201,6 @@ class Views::Worlds::Show < Views::Base
 
   # == Helpers ==
 
-  sig { returns(T.nilable(WorldKey)) }
-  def world_key
-    @world_key = T.let(
-      @world.keys.find_by(recipient: @current_user),
-      T.nilable(WorldKey),
-    )
-  end
-
   sig { void }
   def navigation_buttons
     button_back_to(:home, variant: :secondary)
@@ -219,10 +215,10 @@ class Views::Worlds::Show < Views::Base
           controller: "button-bridge",
         },
       )
-    elsif (world_key = self.world_key)
+    elsif @world_key
       button_link_to(
         "settings",
-        world_key,
+        @world_key,
         variant: :secondary,
         icon: "huge/settings-01",
         data: {
