@@ -2,6 +2,11 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  # == Configuration ==
+
+  allow_unauthenticated_access only: :show
+  skip_verify_authorized only: :show
+
   # == Actions ==
 
   # GET /world/:world_id/posts[?type_id=...][&favorited=1]
@@ -71,6 +76,16 @@ class PostsController < ApplicationController
           renderable: Components::WorldNextPageControl.new(world:, post_type:, pagy:),
         )
         render turbo_stream: [ append_post_items, replace_next_page_control ]
+      end
+    end
+  end
+
+  # GET /posts/:id
+  def show
+    respond_to do |format|
+      format.html do
+        post = find_post(scope: Post.includes(:reports, world: :owner))
+        render Views::Posts::Show.new(post:)
       end
     end
   end
@@ -158,14 +173,12 @@ class PostsController < ApplicationController
   def favorite
     respond_to do |format|
       format.turbo_stream do
-        current_user = Current.user!
         post = find_post
         authorize!(post)
         if post.favorite
           render turbo_stream: turbo_stream.replace(
             helpers.dom_id(post, :card),
             renderable: Components::PostCard.new(
-              current_user:,
               post:,
               replied: false,
             ),
@@ -186,17 +199,12 @@ class PostsController < ApplicationController
   def unfavorite
     respond_to do |format|
       format.turbo_stream do
-        current_user = Current.user!
         post = find_post
         authorize!(post)
         if post.unfavorite
           render turbo_stream: turbo_stream.replace(
             helpers.dom_id(post, :card),
-            renderable: Components::PostCard.new(
-              current_user:,
-              post:,
-              replied: false,
-            ),
+            renderable: Components::PostCard.new(post:, replied: false),
           )
         else
           message = "failed to unfavorite post"
@@ -227,9 +235,9 @@ class PostsController < ApplicationController
 
   # == Helpers ==
 
-  sig { returns(Post) }
-  def find_post
-    Post.find(params.fetch(:id))
+  sig { params(scope: ActiveRecord::Relation).returns(Post) }
+  def find_post(scope: Post.all)
+    scope.find(params.fetch(:id))
   end
 
   sig { returns(World) }

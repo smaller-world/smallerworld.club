@@ -17,7 +17,7 @@ else
   trap "rm ./tmp/pids/postgres.cid" EXIT
   docker run --rm --cidfile ./tmp/pids/postgres.cid \
     -p 5432:5432 \
-    -v ./tmp/postgres:/var/lib/postgresql/data \
+    -v smallerworld_postgres:/var/lib/postgresql/data \
     -e POSTGRES_USER=supabase_admin \
     -e POSTGRES_PASSWORD=postgres \
     supabase/postgres:17.6.1.016

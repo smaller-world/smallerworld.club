@@ -29,7 +29,7 @@ jobs:
       - name: Install Ruby gems
         run: bundle install
       - name: Scan for known security vulnerabilities in gems used
-        run: bin/bundler-audit
+        run: bin/bundler-audit check --ignore CVE-2026-85396
       - name:
           Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager

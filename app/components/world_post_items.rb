@@ -30,7 +30,6 @@ class Components::WorldPostItems < Components::Base
           @active_reports_by_post_id[post.id]
         end
         Components::PostCard(
-          current_user: @current_user,
           post:,
           active_report:,
           replied: @replied_post_ids&.include?(post.id) || false,

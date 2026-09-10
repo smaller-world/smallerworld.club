@@ -119,7 +119,7 @@ class Views::Admin::Reports::Show < Views::Base
 
   sig { params(post: Post).void }
   def reported_post(post)
-    Components::PostCard(current_user: @current_user, post:)
+    Components::PostCard(post:)
   end
 
   sig { params(user: User).void }

@@ -125,10 +125,10 @@ class Components::Dialog::Content < Components::Base
     Components::Button(
       type: :button,
       variant: :outline,
-      data: {
-        action: "dialog#close",
-      },
-      **attributes,
+      **mix(
+        { data: { action: "dialog#close" } },
+        attributes,
+      ),
     ) do |button|
       if block_given?
         yield(button)

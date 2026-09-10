@@ -8,7 +8,6 @@ class Components::PostCard < Components::Base
 
   sig do
     params(
-      current_user: User,
       post: Post,
       active_report: T.nilable(Report),
       replied: T::Boolean,
@@ -18,16 +17,18 @@ class Components::PostCard < Components::Base
     ).void
   end
   def initialize(
-    current_user:,
     post:,
     active_report: post.reports.not_dismissed.chronological.last,
-    replied: post.reply_initiations.exists?(replier: current_user),
+    replied: if (current_user = Current.user)
+               post.reply_initiations.exists?(replier: current_user)
+             else
+               false
+             end,
     async_reactions: false,
     frame: {},
     **attributes
   )
     super(**attributes)
-    @current_user = current_user
     @post = post
     @active_report = active_report
     @replied = replied
@@ -85,8 +86,8 @@ class Components::PostCard < Components::Base
                   size: :xs,
                   icon: "huge/pencil-edit-01",
                 )
-
                 favorite_button
+                copy_link_button
               end
             elsif allowed_to?(:show?, @post)
               Components::DropdownMenu() do |menu|
@@ -163,7 +164,7 @@ class Components::PostCard < Components::Base
               Components::PostReactions(post: @post)
             end
 
-            if @current_user != @post.world_owner!
+            if allowed_to?(:reply?, @post)
               Components::ReplyInitiationForm(
                 reply_initiation: @post.reply_initiations.build,
                 replied: @replied,
@@ -199,6 +200,23 @@ class Components::PostCard < Components::Base
       ) do
         Icon("huge/star")
       end
+    end
+  end
+
+  sig { void }
+  def copy_link_button
+    Components::Button(
+      variant: :ghost,
+      size: :icon_xs,
+      data: {
+        controller: "clipboard tooltip",
+        clipboard_copy_value: post_url(@post),
+        tooltip_content_value: "secret link copied!",
+        tooltip_trigger_value: "manual",
+        action: "clipboard#copy clipboard:copied->tooltip#flash",
+      },
+    ) do
+      Icon("huge/link-01")
     end
   end
 

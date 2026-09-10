@@ -312,7 +312,6 @@ module Components
   # source://app/components/post_card.rb:4
   sig do
     params(
-      current_user: ::User,
       post: ::Post,
       active_report: T.nilable(::Report),
       replied: T::Boolean,
@@ -321,7 +320,7 @@ module Components
       attributes: T.untyped
     ).void
   end
-  def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+  def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
   # source://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
@@ -840,7 +839,6 @@ module Components
     # source://app/components/post_card.rb:4
     sig do
       params(
-        current_user: ::User,
         post: ::Post,
         active_report: T.nilable(::Report),
         replied: T::Boolean,
@@ -849,7 +847,7 @@ module Components
         attributes: T.untyped
       ).void
     end
-    def PostCard(current_user:, post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+    def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
     # source://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }
