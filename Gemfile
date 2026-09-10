@@ -79,7 +79,7 @@ gem "rack-canonical-host", "~> 1.3"
 gem "mission_control-jobs"
 
 # Paginate with Pagy
-gem "pagy", "~> 43.5"
+gem "pagy", "~> 43.6"
 
 # Interact with LLMs using RubyLLM
 gem "ruby_llm", "~> 1.13"
