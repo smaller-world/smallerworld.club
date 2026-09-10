@@ -1,4 +1,12 @@
 # See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+# Ignore agent dirs.
+/agents/
+/.codex/
+/.kamal/
+
+# Ignore IDE configs
+/.vscode/
+/.zed/
 
 # Ignore git directory.
 /.git/
