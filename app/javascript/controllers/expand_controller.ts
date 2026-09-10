@@ -7,7 +7,7 @@ const targets = {
   content: HTMLElement,
 };
 
-export default class CollapseController extends Typed(Controller<HTMLElement>, {
+export default class ExpandController extends Typed(Controller<HTMLElement>, {
   targets,
 }) {
   #resizeObserver = new ResizeObserver(() => {

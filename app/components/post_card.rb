@@ -123,11 +123,13 @@ class Components::PostCard < Components::Base
             class: "post-card-body",
             data: {
               slot: "post-card-body",
-              controller: ("collapse" if @auto_collapse),
+              controller: "expand",
+              collapsed: ("false" unless @auto_collapse),
+              user_expanded: (true unless @auto_collapse),
             },
           ) do
             div(data: {
-              collapse_target: "content",
+              expand_target: "content",
               slot: "expand-content",
             }) do
               @post.body.to_s
@@ -137,8 +139,8 @@ class Components::PostCard < Components::Base
                 variant: :ghost,
                 size: :sm,
                 data: {
-                  collapse_target: "control",
-                  action: "collapse#trigger",
+                  expand_target: "control",
+                  action: "expand#trigger",
                 },
               ) do |button|
                 button.inline_start_icon("huge/unfold-more")
