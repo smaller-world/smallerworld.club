@@ -16,7 +16,7 @@ class Views::WorldKeyGrants::Show < Views::Base
 
   sig { override.void }
   def view_template
-    Components::AppLayout(page_title: "you're invited!") do |app_layout|
+    Components::AppLayout(page_title:) do |app_layout|
       app_layout.page_container(class: "max-w-sm") do
         span(class: "text-lg font-semibold text-center") do
           "you've been invited to:"
@@ -33,6 +33,19 @@ class Views::WorldKeyGrants::Show < Views::Base
           invitation: @invitation,
         )
       end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def page_title
+    if hotwire_native_app?
+      "you're invited!"
+    else
+      "you're invited to #{@world.name}"
     end
   end
 end
