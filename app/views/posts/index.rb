@@ -54,17 +54,23 @@ class Views::Posts::Index < Views::Base
               Icon("huge/dashed-line-02", class: "text-muted-foreground")
             end
             empty.title(class: "text-muted-foreground") do
-              "you haven't written anything yet..."
+              if allowed_to?(:post?, @world)
+                plain("you haven't written anything yet...")
+              else
+                plain("#{@world} doesn't have any #{post_type_plural}")
+              end
             end
             # empty.description do
             #   button_link_to("need some inspo on what to write?")
             # end
           end
-          empty.content do
-            Components::NewPostDialog(world: @world) do |dialog|
-              dialog.with_trigger_button do |button|
-                button.inline_start_icon("huge/pencil-edit-01")
-                span { "write your first post!" }
+          if allowed_to?(:post?, @world)
+            empty.content do
+              Components::NewPostDialog(world: @world) do |dialog|
+                dialog.with_trigger_button do |button|
+                  button.inline_start_icon("huge/pencil-edit-01")
+                  span { "write your first post!" }
+                end
               end
             end
           end
@@ -80,6 +86,19 @@ class Views::Posts::Index < Views::Base
       end
 
       turbo_stream_from(@world, :posts, hidden: true)
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(String) }
+  def post_type_plural
+    if @post_type
+      @post_type.label.pluralize
+    else
+      "posts"
     end
   end
 end
