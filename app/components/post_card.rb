@@ -56,7 +56,7 @@ class Components::PostCard < Components::Base
       )) do |card|
         card.header do
           card.description do
-            div(class: "flex-1 flex items-center gap-x-2 gap-y-1 flex-wrap") do
+            div(class: "flex-1 flex items-start gap-x-2 gap-y-1 flex-wrap") do
               Components::Badge(variant: :outline, class: "text-muted-foreground") do |badge|
                 if (emoji = @post.emoji)
                   div(

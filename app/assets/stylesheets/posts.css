@@ -73,8 +73,8 @@
       &::after {
         content: "";
 
-        @apply absolute right-0 bottom-0 left-0 h-20;
-        @apply bg-linear-to-t from-card from-10% to-transparent;
+        @apply absolute right-0 bottom-0 left-0 h-30;
+        @apply bg-linear-to-t from-card from-25% to-transparent;
       }
     }
 
