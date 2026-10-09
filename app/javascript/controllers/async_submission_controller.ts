@@ -24,12 +24,27 @@ export default class AsyncSubmissionController extends Controller<HTMLFormElemen
         ({ error, ...payload }) => {
           if (typeof error === "string") {
             console.error(`Submission to ${action} failed:`, error);
+            this.dispatch("error", {
+              detail: {
+                error,
+              },
+            });
           } else {
             console.debug(`Submission to ${action} completed with:`, payload);
+            this.dispatch("success", {
+              detail: {
+                payload,
+              },
+            });
           }
         },
         (error) => {
           console.error("Error during submission:", error);
+          this.dispatch("failure", {
+            detail: {
+              error,
+            },
+          });
         },
       );
   }

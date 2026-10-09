@@ -214,26 +214,23 @@ class User < ApplicationRecord
     end
   end
 
-  # sig { returns(T::Boolean) }
-  # def has_pending_notifications?
-  #   notifications_received_since_app_last_visited.any?
-  # end
+  sig { returns(T::Boolean) }
+  def has_pending_notifications?
+    notifications_received_since_app_last_visited.any?
+  end
 
-  # sig { void }
-  # def send_badge_count_notifications
-  #   notification = DevicePushNotification.new(
-  #     badge: notifications_received_since_app_last_visited.count,
-  #     high_priority: false,
-  #   )
-  #   devices.find_each do |device|
-  #     device.push(notification)
-  #   end
-  # end
+  sig { void }
+  def clear_badge_counts
+    notification = DevicePushNotification.new(badge: 0, high_priority: false)
+    devices.notifiable.find_each do |device|
+      device.push(notification)
+    end
+  end
 
-  # sig { returns(T.any(SendUserBadgeCountNotificationsJob, FalseClass)) }
-  # def send_badge_count_notifications_later
-  #   SendUserBadgeCountNotificationsJob.perform_later(self)
-  # end
+  sig { returns(T.any(ClearUserBadgeCountsJob, FalseClass)) }
+  def clear_badge_counts_later
+    ClearUserBadgeCountsJob.perform_later(self)
+  end
 
   # == Email Address Confirmation ==
 
@@ -321,7 +318,10 @@ class User < ApplicationRecord
 
   sig { returns(TrueClass) }
   def record_app_visit!
-    update!(app_last_visited_at: Time.current)
+    has_badge_count = has_pending_notifications?
+    update!(app_last_visited_at: Time.current).tap do
+      clear_badge_counts_later if has_badge_count
+    end
   end
 
   sig { returns(T.nilable(V1::User)) }

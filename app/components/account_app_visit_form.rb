@@ -25,8 +25,8 @@ class Components::AccountAppVisitForm < Components::Base
         controller: "async-submission submit notification-badge-count-bridge",
         submit_require_page_visible_value: true,
         action: token_list(
-          "turbo:submit-end->notification-badge-count-bridge#clear",
           "turbo:load@document->submit#request:once",
+          "async-submission:success->notification-badge-count-bridge#clear",
         ),
       },
       html: {

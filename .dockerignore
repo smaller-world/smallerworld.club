@@ -2,11 +2,14 @@
 # Ignore agent dirs.
 /agents/
 /.codex/
-/.kamal/
+/.delta/
 
 # Ignore IDE configs
 /.vscode/
 /.zed/
+
+# Kamal deploy
+/.kamal/
 
 # Ignore git directory.
 /.git/

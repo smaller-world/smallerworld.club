@@ -28,8 +28,19 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   setup do
     @user = users(:bob) # phone_number +14165558323
+  end
+
+  test "record_app_visit! saves the visit and enqueues a badge update" do
+    freeze_time do
+      assert_enqueued_with(job: ClearUserBadgeCountsJob, args: [ @user ]) do
+        assert @user.record_app_visit!
+      end
+      assert_equal Time.current, @user.reload.app_last_visited_at
+    end
   end
 
   test "dm_url builds an sms link" do

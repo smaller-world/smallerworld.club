@@ -22,3 +22,6 @@ Gemfile.lock
 
 # == Agents
 .agents/skills/
+
+# == Delta
+.delta/

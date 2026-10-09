@@ -316,11 +316,12 @@ module Components
       active_report: T.nilable(::Report),
       replied: T::Boolean,
       async_reactions: T::Boolean,
+      auto_collapse: T::Boolean,
       frame: T::Hash[::Symbol, T.untyped],
       attributes: T.untyped
     ).void
   end
-  def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+  def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), auto_collapse: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
   # source://app/components/post_card_skeleton.rb:4
   sig { params(attributes: T.untyped).void }
@@ -843,11 +844,12 @@ module Components
         active_report: T.nilable(::Report),
         replied: T::Boolean,
         async_reactions: T::Boolean,
+        auto_collapse: T::Boolean,
         frame: T::Hash[::Symbol, T.untyped],
         attributes: T.untyped
       ).void
     end
-    def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
+    def PostCard(post:, active_report: T.unsafe(nil), replied: T.unsafe(nil), async_reactions: T.unsafe(nil), auto_collapse: T.unsafe(nil), frame: T.unsafe(nil), **attributes); end
 
     # source://app/components/post_card_skeleton.rb:4
     sig { params(attributes: T.untyped).void }

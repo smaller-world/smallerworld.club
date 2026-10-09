@@ -2,6 +2,7 @@
 --enable-experimental-requires-ancestor
 --cache-dir=./tmp/sorbet
 --dir=.
+--ignore=/.delta/
 --ignore=/node_modules/
 --ignore=/vendor/
 --ignore=/tmp/
