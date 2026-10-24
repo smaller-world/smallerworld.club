@@ -8,7 +8,20 @@ _a place to share your feelings with friends._
 >
 > ensure you have [`mise`](https://mise.jdx.dev) installed on your machine.
 
+local development uses podman for postgresql; rails and bun run on your host. on
+macos, install [podman desktop](https://podman-desktop.io/), complete its
+onboarding to install the podman cli and create a machine. start the machine
+yourself with `podman machine start` or through podman desktop before running
+setup or development. on linux, install podman. ensure `podman info` succeeds
+before continuing.
+
+database data persists in the `smallerworld_postgres` podman volume across
+container restarts. postgresql is available at `127.0.0.1:5432`.
+
 ```bash
+# Make sure you have the required system dependencies:
+brew install tmux libpq libvips
+
 # Install dev tools and dependencies:
 mise install
 

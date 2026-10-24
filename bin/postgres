@@ -5,20 +5,24 @@ set -e
 # Operate from root directory
 cd "${BASH_SOURCE%/*}/.."
 
-# Boot Docker
-./bin/boot-docker
+if ! podman info > /dev/null 2>&1; then
+  echo "Podman isn't available. Start your Podman machine and ensure podman info succeeds before trying again." >&2
+  exit 1
+fi
+
+mkdir -p ./tmp/pids
 
 # Tail logs if Postgres already running; else run Postgres
 if ./bin/container-running postgres; then
   echo "Postgres is already running; tailing logs..." >&2
   trap "exit 0" INT
-  docker logs -f $(cat ./tmp/pids/postgres.cid)
+  podman logs -f "$(cat ./tmp/pids/postgres.cid)"
 else
-  trap "rm ./tmp/pids/postgres.cid" EXIT
-  docker run --rm --cidfile ./tmp/pids/postgres.cid \
-    -p 5432:5432 \
+  trap 'rm -f ./tmp/pids/postgres.cid' EXIT
+  podman run --rm --cidfile ./tmp/pids/postgres.cid \
+    -p 127.0.0.1:5432:5432 \
     -v smallerworld_postgres:/var/lib/postgresql/data \
     -e POSTGRES_USER=supabase_admin \
     -e POSTGRES_PASSWORD=postgres \
-    supabase/postgres:17.6.1.016
+    docker.io/supabase/postgres:17.6.1.016
 fi
