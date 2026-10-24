@@ -15,4 +15,4 @@ if [ -e "$OVERMIND_SOCKET" ]; then
   rm "$OVERMIND_SOCKET"
 fi
 
-./bin/overmind start -f ./Procfile.dev --no-port "$@"
+exec ./bin/overmind start -f ./Procfile.dev --no-port "$@"

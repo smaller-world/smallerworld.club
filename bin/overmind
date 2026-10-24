@@ -10,4 +10,4 @@ export OVERMIND_SOCKET="./tmp/sockets/overmind.${RAILS_ENV:-development}.sock"
 export OVERMIND_SKIP_ENV=1
 export OVERMIND_NO_PORT=1
 export OVERMIND_SHELL=bash
-mise x -- overmind $@
+exec mise x -- overmind "$@"
