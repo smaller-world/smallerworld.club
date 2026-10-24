@@ -10,9 +10,9 @@
   },
   "scripts": {
     "build": "bun bun.config.js",
-    "build:css:app": "bunx -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify",
-    "build:css:mailer": "bunx -p postcss-cli postcss ./app/assets/stylesheets/mailer.css --config ./config/mailer/ -o ./app/assets/builds/mailer.css",
-    "build:css": "bunx -p npm-run-all2 run-p 'build:css:*'"
+    "build:css:app": "bunx --bun -p @tailwindcss/cli tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify",
+    "build:css:mailer": "bunx --bun -p postcss-cli postcss ./app/assets/stylesheets/mailer.css --config ./config/mailer/ -o ./app/assets/builds/mailer.css",
+    "build:css": "bunx --bun -p npm-run-all2 run-p --npm-path bun 'build:css:*'"
   },
   "dependencies": {
     "@37signals/lexxy": "^0.9.25",

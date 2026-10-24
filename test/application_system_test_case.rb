@@ -9,6 +9,7 @@ Capybara.register_driver(:playwright) do |app|
     app,
     browser_type: :chromium,
     headless: true,
+    playwright_cli_executable_path: "bunx --bun playwright",
   )
 end
 
