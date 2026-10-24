@@ -9,16 +9,6 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Configure RubyLLM before Rails::Application is inherited
-#
-# See: https://rubyllm.com/configuration/#initializer-load-timing-issue-with-use_new_acts_as
-#
-# TODO: Remove after upgrading to RubyLLM 2.0 (currently unreleased as of
-# 2026-03-06)
-RubyLLM.configure do |config|
-  config.use_new_acts_as = true
-end
-
 module SmallerWorld
   extend T::Sig
 

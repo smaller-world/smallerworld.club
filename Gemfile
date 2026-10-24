@@ -81,9 +81,6 @@ gem "mission_control-jobs"
 # Paginate with Pagy
 gem "pagy", "~> 43.5"
 
-# Interact with LLMs using RubyLLM
-gem "ruby_llm", "~> 1.13"
-
 # Parse and format phone numbers with phonelib
 gem "phonelib", "~> 0.10.16"
 
