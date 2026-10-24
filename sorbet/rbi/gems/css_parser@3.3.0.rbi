@@ -97,10 +97,10 @@ CssParser::BOX_MODEL_UNITS_RX = T.let(T.unsafe(nil), Regexp)
 
 # Exception class used if a request is made to load a CSS file more than once.
 #
-# pkg:gem/css_parser#lib/css_parser/parser.rb:10
+# pkg:gem/css_parser#lib/css_parser/parser.rb:15
 class CssParser::CircularReferenceError < ::StandardError; end
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:98
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:105
 CssParser::ELEMENTS_AND_PSEUDO_ELEMENTS_RX_NC = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:59
@@ -112,14 +112,19 @@ CssParser::FONT_UNITS_RX = T.let(T.unsafe(nil), Regexp)
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:36
 CssParser::IMPORTANT_IN_PROPERTY_RX = T.let(T.unsafe(nil), Regexp)
 
+# Exception class used when a fetched remote file fails Subresource Integrity verification.
+#
+# pkg:gem/css_parser#lib/css_parser/parser.rb:12
+class CssParser::IntegrityError < ::CssParser::RemoteFileError; end
+
 # Colours
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:109
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:116
 CssParser::NAMED_COLOURS = T.let(T.unsafe(nil), Array)
 
 # Patterns for specificity calculations
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:80
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:87
 CssParser::NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX_NC = T.let(T.unsafe(nil), Regexp)
 
 # == Parser class
@@ -133,12 +138,12 @@ CssParser::NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX_NC = T.let(T.unsafe(nil), Reg
 # [<tt>allow_local_network</tt>] Permit http(s) fetches against loopback / private / link-local / cloud-metadata addresses. Boolean, default is <tt>false</tt>. When <tt>false</tt> (the default), outbound HTTP requests are routed through <tt>ssrf_filter</tt>, which resolves the host and rejects unsafe IP ranges. Set to <tt>true</tt> only when the destination is known to be safe (e.g. local fixture servers in tests). Independent of <tt>allow_file_uris</tt>.
 # [<tt>allow_file_uris</tt>] Permit <tt>file://</tt> URIs via <tt>load_uri!</tt>. Boolean, default is <tt>false</tt>. When <tt>false</tt> (the default), a caller that passes a <tt>file://</tt> URI to <tt>load_uri!</tt> — directly or via a CSS <tt>@import</tt> resolved against a <tt>file://</tt> base_uri — is refused, closing the local-file-disclosure vector when the URI is influenced by user input. <tt>load_file!</tt> is unaffected: it is the explicit local-file API and takes a caller-supplied path. Independent of <tt>allow_local_network</tt>.
 #
-# pkg:gem/css_parser#lib/css_parser/parser.rb:22
+# pkg:gem/css_parser#lib/css_parser/parser.rb:27
 class CssParser::Parser
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:43
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:57
   def initialize(options = T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:88
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:102
   def [](selector, media_types = T.unsafe(nil)); end
 
   # Add a raw block of CSS.
@@ -162,7 +167,7 @@ class CssParser::Parser
   #   parser = CssParser::Parser.new
   #   parser.add_block!(css)
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:126
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:140
   def add_block!(block, options = T.unsafe(nil)); end
 
   # Add a CSS rule by setting the +selectors+, +declarations+
@@ -174,14 +179,14 @@ class CssParser::Parser
   # +filename+ can be a string or uri pointing to the file or url location.
   # +offset+ should be Range object representing the start and end byte locations where the rule was found in the file.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:181
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:210
   def add_rule!(*args, selectors: T.unsafe(nil), block: T.unsafe(nil), filename: T.unsafe(nil), offset: T.unsafe(nil), media_types: T.unsafe(nil)); end
 
   # Add a CssParser RuleSet object.
   #
   # +media_types+ can be a symbol or an array of symbols.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:229
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:258
   def add_rule_set!(ruleset, media_types = T.unsafe(nil)); end
 
   # Add a CSS rule by setting the +selectors+, +declarations+, +filename+, +offset+ and +media_types+.
@@ -190,19 +195,19 @@ class CssParser::Parser
   # +offset+ should be Range object representing the start and end byte locations where the rule was found in the file.
   # +media_types+ can be a symbol or an array of symbols.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:218
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:247
   def add_rule_with_offsets!(selectors, declarations, filename, offset, media_types = T.unsafe(nil)); end
 
   # Merge declarations with the same selector.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:347
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:376
   def compact!; end
 
   # Iterate through RuleSet objects.
   #
   # +media_types+ can be a symbol or an array of symbols.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:254
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:283
   def each_rule_set(media_types = T.unsafe(nil)); end
 
   # Iterate through CSS selectors.
@@ -210,7 +215,7 @@ class CssParser::Parser
   # +media_types+ can be a symbol or an array of symbols.
   # See RuleSet#each_selector for +options+.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:290
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:319
   def each_selector(all_media_types = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Get declarations by selector.
@@ -230,63 +235,71 @@ class CssParser::Parser
   #
   # Returns an array of declarations.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:81
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:95
   def find_by_selector(selector, media_types = T.unsafe(nil)); end
 
   # Finds the rule sets that match the given selectors
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:91
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:105
   def find_rule_sets(selectors, media_types = T.unsafe(nil)); end
 
   # Load a local CSS file.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:549
+  # +from_import+ (internal) marks a load whose +file_name+ originates
+  # from an @import rule in parsed CSS rather than from the caller. Such
+  # a path is attacker-influenced, so it is contained within the import
+  # root (+import_root+, the top-level +base_dir+): absolute paths and
+  # `..` traversal that escape the root are refused (raising
+  # RemoteFileError when io_exceptions are on, otherwise a silent no-op).
+  # Direct callers (the default, +from_import: false+) are unaffected --
+  # load_file! remains the explicit, trusted local-file API and may load
+  # any readable path.
+  #
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:586
   def load_file!(file_name, options = T.unsafe(nil), deprecated = T.unsafe(nil)); end
 
   # Load a local CSS string.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:574
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:633
   def load_string!(src, options = T.unsafe(nil), deprecated = T.unsafe(nil)); end
 
   # Load a remote CSS file.
   #
   # You can also pass in file://test.css
   #
-  # See add_block! for options.
+  # See add_block! for options and integrity_matches? for integrity
   #
-  # Deprecated: originally accepted three params: `uri`, `base_uri` and `media_types`
-  #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:498
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:525
   def load_uri!(uri, options = T.unsafe(nil), deprecated = T.unsafe(nil)); end
 
   # Array of CSS files that have been loaded.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:41
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:55
   def loaded_uris; end
 
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:351
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:380
   def parse_block_into_rule_sets!(block, options = T.unsafe(nil)); end
 
   # Remove a CssParser RuleSet object.
   #
   # +media_types+ can be a symbol or an array of symbols.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:241
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:270
   def remove_rule_set!(ruleset, media_types = T.unsafe(nil)); end
 
   # A hash of { :media_query => rule_sets }
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:332
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:361
   def rules_by_media_query; end
 
   # Output all CSS rules as a Hash
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:266
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:295
   def to_h(which_media = T.unsafe(nil)); end
 
   # Output all CSS rules as a single stylesheet.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:301
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:330
   def to_s(which_media = T.unsafe(nil)); end
 
   protected
@@ -297,35 +310,46 @@ class CssParser::Parser
   # otherwise returns true/false.
   # TODO: fix rubocop
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:596
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:655
   def circular_reference_check(path); end
 
   # Strip comments and clean up blank lines from a block of CSS.
   #
   # Returns a string.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:622
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:681
   def cleanup_block(block, options = T.unsafe(nil)); end
 
   # Net::HTTP path used only when `allow_local_network: true`. Validates
   # the URI scheme on every redirect hop so a `Location: file://...`
   # cannot be followed even on this opt-in code path.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:729
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:822
   def fetch_via_net_http(uri, redirect_count = T.unsafe(nil)); end
 
   # Remove a pattern from a given string
   #
   # Returns a string.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:611
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:670
   def ignore_pattern(css, regex, options); end
+
+  # Verifies +body+ (raw response bytes, not yet charset-decoded) against a
+  # Subresource Integrity value -- a `<algorithm>-<base64 digest>` token, or
+  # several whitespace-separated tokens (https://www.w3.org/TR/SRI/#the-integrity-attribute).
+  #
+  # - Tokens using an algorithm this library doesn't recognize are ignored
+  # - Multiple recognized algorithms only check the strongest one is checked
+  # - Value containing no recognized algorithm is treated as unverifiable and matches by default
+  #
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:804
+  def integrity_matches?(body, integrity); end
 
   # Read a local file:// URI. Called only from `load_uri!` — never
   # from the remote read path — so an HTTP redirect cannot reach this
   # branch (GHSA-9pmc-p236-855h).
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:640
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:699
   def read_local_file(uri); end
 
   # Download a remote http(s) file into a string.
@@ -347,36 +371,47 @@ class CssParser::Parser
   # is still validated on every redirect hop, so cross-scheme
   # redirect to `file://` (the original GHSA-9pmc-p236-855h sink)
   # remains closed even on this opt-in path.
+  #
+  # `integrity:`, when given, is verified against the raw response body
+  # (before charset decoding, matching Subresource Integrity semantics)
+  # -- see `integrity_matches?` and `load_uri!`'s documentation.
   # --
   # TODO: add option to fail silently or throw and exception on a 404
   # ++
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:683
-  def read_remote_file(uri); end
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:746
+  def read_remote_file(uri, integrity: T.unsafe(nil)); end
 
   private
 
   # recurse through nested nodes and return them as Hashes nested in
   # passed hash
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:778
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:871
   def css_node_to_h(hash, key, val); end
 
   # Retrieve a folded declaration block from the internal cache.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:765
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:858
   def get_folded_declaration(block_hash); end
 
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:769
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:862
   def reset!; end
 
   # Save a folded declaration block to the internal cache.
   #
-  # pkg:gem/css_parser#lib/css_parser/parser.rb:760
+  # pkg:gem/css_parser#lib/css_parser/parser.rb:853
   def save_folded_declaration(block_hash, folded_declaration); end
 end
 
-# pkg:gem/css_parser#lib/css_parser/parser.rb:31
+# Subresource Integrity hash algorithms this library can verify, strongest first.
+# Mirrors the SRI spec's "agility" rule (https://www.w3.org/TR/SRI/#agility):
+#   if `integrity` lists multiple algorithms, only the strongest is checked.
+#
+# pkg:gem/css_parser#lib/css_parser/parser.rb:48
+CssParser::Parser::INTEGRITY_ALGORITHMS = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/css_parser#lib/css_parser/parser.rb:36
 CssParser::Parser::MAX_REDIRECTS = T.let(T.unsafe(nil), Integer)
 
 # Schemes accepted by `read_remote_file`. `file://` is intentionally
@@ -385,24 +420,24 @@ CssParser::Parser::MAX_REDIRECTS = T.let(T.unsafe(nil), Integer)
 # closes the cross-scheme redirect (HTTP 3xx → `file://`) vector that
 # was GHSA-9pmc-p236-855h.
 #
-# pkg:gem/css_parser#lib/css_parser/parser.rb:38
+# pkg:gem/css_parser#lib/css_parser/parser.rb:43
 CssParser::Parser::REMOTE_ALLOWED_SCHEMES = T.let(T.unsafe(nil), Array)
 
 # Initial parsing
 #
-# pkg:gem/css_parser#lib/css_parser/parser.rb:29
+# pkg:gem/css_parser#lib/css_parser/parser.rb:34
 CssParser::Parser::RE_AT_IMPORT_RULE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/parser.rb:24
+# pkg:gem/css_parser#lib/css_parser/parser.rb:29
 CssParser::Parser::RULESET_TOKENIZER_RX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/parser.rb:25
+# pkg:gem/css_parser#lib/css_parser/parser.rb:30
 CssParser::Parser::STRIP_CSS_COMMENTS_RX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/parser.rb:26
+# pkg:gem/css_parser#lib/css_parser/parser.rb:31
 CssParser::Parser::STRIP_HTML_COMMENTS_RX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/parser.rb:23
+# pkg:gem/css_parser#lib/css_parser/parser.rb:28
 CssParser::Parser::USER_AGENT = T.let(T.unsafe(nil), String)
 
 # Initial parsing
@@ -422,30 +457,32 @@ CssParser::RE_BORDER_STYLE = T.let(T.unsafe(nil), Regexp)
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:61
 CssParser::RE_BORDER_UNITS = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:268
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:275
 CssParser::RE_COLOUR = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:266
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:273
 CssParser::RE_COLOUR_HEX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:267
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:274
 CssParser::RE_COLOUR_NAMED = T.let(T.unsafe(nil), Regexp)
 
 # CSS <number> allows the integer part to be omitted (e.g. `.1`), per CSS Values & Units.
 # `(?:\d*\.)?\d+` accepts `1`, `1.5`, and `.5` while still rejecting bare `1.`.
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:264
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:271
 CssParser::RE_COLOUR_NUMERIC = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:265
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:272
 CssParser::RE_COLOUR_NUMERIC_ALPHA = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:13
 CssParser::RE_ESCAPE = T.let(T.unsafe(nil), Regexp)
 
 # Functions like calc, var, clamp, etc.
+# Possessive quantifiers + recursion-first alternation avoid exponential
+# backtracking on unclosed functions, the timeout is a backstop.
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:64
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:66
 CssParser::RE_FUNCTIONS = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:26
@@ -511,7 +548,7 @@ CssParser::RE_URI = T.let(T.unsafe(nil), Regexp)
 
 # Exception class used for any errors encountered while downloading remote files.
 #
-# pkg:gem/css_parser#lib/css_parser/parser.rb:7
+# pkg:gem/css_parser#lib/css_parser/parser.rb:9
 class CssParser::RemoteFileError < ::IOError; end
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:6

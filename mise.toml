@@ -12,6 +12,7 @@ overmind = "latest"
 [tasks]
 # == Development flow
 setup = { run = "bin/setup" }
+ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
 dev = { run = "bin/dev" }
 restart = { run = "bin/overmind restart" }
 
@@ -19,7 +20,7 @@ restart = { run = "bin/overmind restart" }
 rc = { run = "bin/rails console" }
 rr = { run = "bin/rails restart" }
 rk = { run = "bin/rails kill" }
-db = { run = "bin/rails db"}
+db = { run = "bin/rails db" }
 
 # == Production access
 "fly:ssh" = { run = "fly ssh console" }
@@ -54,6 +55,19 @@ flag "-S --step <step>" help="Run only specific step(s)"
 arg "[files]..." var=#true help="Run on specific files"
 '''
 run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
+
+# == Security ==
+
+[tasks."audit:ruby"]
+description = "Scan Ruby dependencies and code for security issues"
+run = [
+  "bin/bundler-audit check --ignore CVE-2026-85396",
+  "bin/brakeman --no-pager",
+]
+
+[tasks."audit:js"]
+description = "Scan JavaScript dependencies for security issues"
+run = "bun audit --audit-level high"
 
 # == Testing ==
 

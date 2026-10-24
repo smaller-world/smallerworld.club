@@ -1,26 +1,42 @@
-# typed: strict
+# rubocop:disable Rails/Output, Lint/MissingCopEnableDirective
+# typed: false # rubocop:disable Sorbet/TrueSigil
 # frozen_string_literal: true
 
-# Run using bin/ci
+# Run using mise ci (or bin/ci).
 
-ActiveSupport::ContinuousIntegration.run do
-  step "Setup", "bin/setup"
+def system!(*args)
+  system(*args, exception: true)
+end
 
-  step "Style: Ruby", "bin/rubocop"
+postgres_pid = nil
+if !system("bin/container-running", "postgres")
+  puts "Starting Postgres for CI..."
+  postgres_pid = Process.spawn(
+    "bin/postgres",
+    out: File::NULL,
+    err: File::NULL,
+    pgroup: true,
+  )
+  system!("bin/postgres-await")
+  puts "* PID: #{postgres_pid}"
+else
+  system!("bin/postgres-await")
+end
 
-  step "Security: Gem audit", "bin/bundler-audit"
-  step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
-  step "Tests: Rails", "bin/rails test"
-  step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
-
-  # Optional: Run system tests
-  # step "Tests: System", "bin/rails test:system"
-
-  # Optional: set a green GitHub commit status to unblock PR merge.
-  # Requires the `gh` CLI and `gh extension install basecamp/gh-signoff`.
-  # if success?
-  #   step "Signoff: All systems go. Ready for merge and deploy.", "gh signoff"
-  # else
-  #   failure "Signoff: CI failed. Do not merge or deploy.", "Fix the issues and try again."
-  # end
+begin
+  ActiveSupport::ContinuousIntegration.run do
+    step("Security: Ruby", "mise run audit:ruby")
+    step("Security: JavaScript", "mise run audit:js")
+    step("Code checks", "mise run check --all")
+    step("Tests", "mise run test:all -v")
+  end
+ensure
+  if postgres_pid
+    begin
+      Process.kill("INT", -postgres_pid)
+    rescue Errno::ESRCH
+      # The process may have already exited after a startup failure.
+    end
+    Process.wait(postgres_pid)
+  end
 end

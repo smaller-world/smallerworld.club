@@ -34,6 +34,27 @@ mise setup
 mise dev
 ```
 
+## verification
+
+run setup and all ci checks with rails' step-by-step output:
+
+```bash
+mise ci
+```
+
+ensure podman is running and playwright browsers are installed first
+(`bunx --bun playwright install --only-shell`). ci starts postgres if needed and
+stops it afterward only if ci started it. an already-running database is left
+running. the checks use the same tasks as github actions and can also run
+individually:
+
+```bash
+mise run audit:ruby
+mise run audit:js
+mise run check --all
+mise run test:all -v
+```
+
 ## TODOs
 
 - [x] auto-detect timezone changes on any user-authenticated page

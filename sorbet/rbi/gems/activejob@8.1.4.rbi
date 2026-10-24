@@ -29,7 +29,7 @@ module ActiveJob
     # Queue adapters may communicate the enqueue status of each job by setting
     # successfully_enqueued and/or enqueue_error on the passed-in job instances.
     #
-    # pkg:gem/activejob#lib/active_job/enqueuing.rb:14
+    # pkg:gem/activejob#lib/active_job.rb:66
     def perform_all_later(*jobs); end
 
     # pkg:gem/activejob#lib/active_job.rb:60
@@ -1207,7 +1207,7 @@ class ActiveJob::Continuation::Interrupt < ::Exception; end
 class ActiveJob::Continuation::InvalidStepError < ::ActiveJob::Continuation::Error; end
 
 # Raised when a job has reached its limit of the number of resumes.
-# The limit is defined by the +max_resumes+ class attribute.
+# The limit is defined by the +max_resumptions+ class attribute.
 #
 # pkg:gem/activejob#lib/active_job/continuation.rb:210
 class ActiveJob::Continuation::ResumeLimitError < ::ActiveJob::Continuation::Error; end
@@ -1594,7 +1594,7 @@ end
 # pkg:gem/activejob#lib/active_job/enqueuing.rb:8
 class ActiveJob::EnqueueError < ::StandardError; end
 
-# pkg:gem/activejob#lib/active_job/enqueuing.rb:40
+# pkg:gem/activejob#lib/active_job/enqueuing.rb:10
 module ActiveJob::Enqueuing
   extend ::ActiveSupport::Concern
   include GeneratedInstanceMethods
@@ -1618,15 +1618,15 @@ module ActiveJob::Enqueuing
   #    my_job_instance.enqueue wait_until: Date.tomorrow.midnight
   #    my_job_instance.enqueue priority: 10
   #
-  # pkg:gem/activejob#lib/active_job/enqueuing.rb:112
+  # pkg:gem/activejob#lib/active_job/enqueuing.rb:82
   def enqueue(options = T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/activejob#lib/active_job/enqueuing.rb:132
+  # pkg:gem/activejob#lib/active_job/enqueuing.rb:103
   def _raw_enqueue; end
 
-  # pkg:gem/activejob#lib/active_job/enqueuing.rb:126
+  # pkg:gem/activejob#lib/active_job/enqueuing.rb:97
   def raw_enqueue; end
 
   module GeneratedClassMethods
@@ -1639,7 +1639,7 @@ end
 
 # Includes the +perform_later+ method for job initialization.
 #
-# pkg:gem/activejob#lib/active_job/enqueuing.rb:57
+# pkg:gem/activejob#lib/active_job/enqueuing.rb:27
 module ActiveJob::Enqueuing::ClassMethods
   # Push a job onto the queue. By default the arguments must be either String,
   # Integer, Float, NilClass, TrueClass, FalseClass, BigDecimal, Symbol, Date,
@@ -1665,12 +1665,12 @@ module ActiveJob::Enqueuing::ClassMethods
   #    self.enqueue_after_transaction_commit = false
   #  end
   #
-  # pkg:gem/activejob#lib/active_job/enqueuing.rb:81
+  # pkg:gem/activejob#lib/active_job/enqueuing.rb:51
   def perform_later(*_arg0, **_arg1, &_arg2); end
 
   private
 
-  # pkg:gem/activejob#lib/active_job/enqueuing.rb:91
+  # pkg:gem/activejob#lib/active_job/enqueuing.rb:61
   def job_or_instantiate(*args, **_arg1, &_arg2); end
 end
 
@@ -3530,7 +3530,7 @@ ActiveJob::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveJob::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/activejob#lib/active_job/gem_version.rb:13
-ActiveJob::VERSION::PRE = T.let(T.unsafe(nil), String)
+ActiveJob::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
 
 # pkg:gem/activejob#lib/active_job/gem_version.rb:15
 ActiveJob::VERSION::STRING = T.let(T.unsafe(nil), String)

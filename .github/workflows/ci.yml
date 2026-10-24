@@ -28,11 +28,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Ruby gems
         run: bundle install
-      - name: Scan for known security vulnerabilities in gems used
-        run: bin/bundler-audit check --ignore CVE-2026-85396
-      - name:
-          Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Scan Ruby security issues
+        run: mise run audit:ruby
 
   scan_js:
     name: Scan for JavaScript security issues
@@ -54,7 +51,7 @@ jobs:
       - name: Install Bun packages
         run: bun install
       - name: Scan for known security vulnerabilities in packages used
-        run: bun audit --audit-level high
+        run: mise run audit:js
 
   check:
     name: Check code issues
@@ -95,7 +92,7 @@ jobs:
           key: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
           restore-keys: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
       - name: Check code issues
-        run: mise check --all
+        run: mise run check --all
         env:
           MISE_VERBOSE: "1"
       - name: Dump hk output log on failure
@@ -166,7 +163,7 @@ jobs:
         run: bin/rails db:test:prepare
       - id: runTests
         name: Run tests
-        run: mise test:all -v
+        run: mise run test:all -v
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       - name: Keep screenshots from failed system tests
