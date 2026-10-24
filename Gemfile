@@ -145,7 +145,7 @@ gem "action_push_native", "~> 0.3.1"
 gem "device_detector", "~> 1.1"
 
 # Generate Apple Wallet passes
-gem "passkit", "~> 0.7.0"
+gem "passkit", "~> 0.8.3"
 
 # Concurrent operations
 gem "concurrent-ruby", "~> 1.3"

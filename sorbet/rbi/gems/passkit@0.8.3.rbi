@@ -17,6 +17,9 @@ module Passkit
     # pkg:gem/passkit#lib/passkit.rb:18
     def configure; end
 
+    # pkg:gem/passkit#lib/passkit.rb:24
+    def configured?; end
+
     # pkg:gem/passkit#lib/passkit/engine.rb:5
     def railtie_helpers_paths; end
 
@@ -57,7 +60,7 @@ class Passkit::Api::V1::PassesController < ::ActionController::API
   private
 
   def decrypt_payload; end
-  def fetch_pass(payload); end
+  def set_generator; end
 
   class << self
     private
@@ -105,13 +108,13 @@ class Passkit::BasePass
 
   # After base files are copied this is called to allow for adding custom images
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:85
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:99
   def add_other_files(path); end
 
   # URL to launch the associated app (nil by default)
   # Returns a String
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:94
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:109
   def app_launch_url; end
 
   # pkg:gem/passkit#lib/passkit/base_pass.rb:11
@@ -122,91 +125,87 @@ class Passkit::BasePass
   # device is picked.
   # Returns an array of numbers
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:101
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:116
   def associated_store_identifiers; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:223
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:222
   def auxiliary_fields; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:227
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:226
   def back_fields; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:55
+  # The background color, used for the background of the front and back of the pass.
+  # If you provide a background image, any background color is ignored.
+  #
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:62
   def background_color; end
 
   # QRCode by default
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:192
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:191
   def barcode; end
 
   # An array of barcodes, the first one that can
   # be displayed on the device is picked.
   # Returns an array of hashes representing Pass.Barcodes
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:108
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:123
   def barcodes; end
 
   # List of iBeacon identifiers to identify when the
   # pass should be displayed.
   # Returns an array of hashes representing Pass.Beacons
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:115
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:130
   def beacons; end
 
   # Information specific to a boarding pass
   # Returns a hash representing Pass.BoardingPass
+  # https://developer.apple.com/documentation/walletpasses/pass/boardingpass
+  # i.e {transitType: 'PKTransitTypeGeneric'}
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:121
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:138
   def boarding_pass; end
 
-  # Information specific to a coupon
-  # Returns a hash representing Pass.Coupon
+  # The description lets VoiceOver make your pass accessible to blind and low-vision users. The value for the
+  # description key in the pass specifies the description.
+  # @see https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/PassKit_PG/Creating.html
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:126
-  def coupon; end
-
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:69
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:83
   def description; end
-
-  # Information specific to an event ticket
-  # Returns a hash representing Pass.EventTicket
-  #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:131
-  def event_ticket; end
 
   # Date and time the pass expires, must include
   # days, hours and minutes (seconds are optional)
-  # Returns a String representing the date and time in W3C format
+  # Returns a String representing the date and time in W3C format ('%Y-%m-%dT%H:%M:%S%:z')
+  # For example, 1980-05-07T10:30-05:00.
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:137
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:146
   def expiration_date; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:187
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:186
   def file_name; end
 
+  # The foreground color, used for the values of fields shown on the front of the pass.
+  #
   # pkg:gem/passkit#lib/passkit/base_pass.rb:50
   def foreground_color; end
 
   # pkg:gem/passkit#lib/passkit/base_pass.rb:7
   def format_version; end
 
-  # Information specific to a generic pass
-  # Returns a hash representing Pass.Generic
-  #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:142
-  def generic; end
-
   # A key to identify group multiple passes together
   # (e.g. a number of boarding passes for the same trip)
   # Returns a String
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:148
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:152
   def grouping_identifier; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:211
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:210
   def header_fields; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:60
+  # The label color, used for the labels of fields shown on the front of the pass.
+  #
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:68
   def label_color; end
 
   # pkg:gem/passkit#lib/passkit/base_pass.rb:19
@@ -215,11 +214,11 @@ class Passkit::BasePass
   # pkg:gem/passkit#lib/passkit/base_pass.rb:23
   def last_update; end
 
-  # A pass can have up to ten relevant locations
+  # An array of up to 10 latitudes and longitudes. iOS uses these locations to determine when to display the pass on the lock screen
   #
   # @see https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/PassKit_PG/Creating.html
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:76
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:90
   def locations; end
 
   # Barcode example
@@ -230,22 +229,27 @@ class Passkit::BasePass
   #     altText: '12345' }
   # end
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:207
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:206
   def logo_text; end
 
-  # Distance in meters from locations; if blank uses pass default
+  # Distance in meters from locations; if blank uses pass default.
+  # The system uses the smaller of either this distance or the default distance.
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:89
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:104
   def max_distance; end
 
   # Information specific to Value Added Service Protocol
   # transactions
   # Returns a hash representing Pass.NFC
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:154
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:158
   def nfc; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:65
+  # The organization name is displayed on the lock screen when your pass is relevant and by apps such as Mail which
+  # act as a conduit for passes. The value for the organizationName key in the pass specifies the organization name.
+  # Choose a name that users recognize and associate with your organization or company.
+  #
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:76
   def organization_name; end
 
   # pkg:gem/passkit#lib/passkit/base_pass.rb:27
@@ -257,50 +261,49 @@ class Passkit::BasePass
   # pkg:gem/passkit#lib/passkit/base_pass.rb:15
   def pass_type_identifier; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:215
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:214
   def primary_fields; end
 
   # Date and time when the pass becomes relevant and should be
   # displayed, must include days, hours and minutes
   # (seconds are optional)
-  # Returns a String representing the date and time in W3C format
+  # Returns a String representing the date and time in W3C format ('%Y-%m-%dT%H:%M:%S%:z')
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:161
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:165
   def relevant_date; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:219
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:218
   def secondary_fields; end
 
   # Machine readable metadata that the device can use
   # to suggest actions
   # Returns a hash representing SemanticTags
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:167
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:171
   def semantics; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:231
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:230
   def sharing_prohibited; end
 
-  # Information specific to a store card
-  # Returns a hash representing Pass.StoreCard
+  # The strip color, used to print the text over the background image.
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:172
-  def store_card; end
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:56
+  def strip_color; end
 
   # Display the strip image without a shine effect
   # Returns a boolean
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:177
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:176
   def suppress_strip_shine; end
 
   # JSON dictionary to display custom information for
   # companion apps. Data isn't displayed to the user. e.g.
   # a machine readable version of the user's favourite coffee
   #
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:184
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:183
   def user_info; end
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:80
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:94
   def voided; end
 
   # pkg:gem/passkit#lib/passkit/base_pass.rb:45
@@ -308,63 +311,96 @@ class Passkit::BasePass
 
   private
 
-  # pkg:gem/passkit#lib/passkit/base_pass.rb:237
+  # pkg:gem/passkit#lib/passkit/base_pass.rb:236
   def folder_name; end
 end
 
-# pkg:gem/passkit#lib/passkit.rb:23
+# pkg:gem/passkit#lib/passkit.rb:28
 class Passkit::Configuration
-  # pkg:gem/passkit#lib/passkit.rb:42
+  # pkg:gem/passkit#lib/passkit.rb:60
   def initialize; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def apple_intermediate_certificate; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def apple_intermediate_certificate=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def apple_team_identifier; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def apple_team_identifier=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:37
+  # pkg:gem/passkit#lib/passkit.rb:55
   def authenticate_dashboard_with(&block); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def available_passes; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def available_passes=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def certificate_key; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def certificate_key=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:77
+  def configured?; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def dashboard_password; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def dashboard_password=(_arg0); end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def dashboard_username; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def dashboard_username=(_arg0); end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def format_version; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def format_version=(_arg0); end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
   def pass_type_identifier; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def pass_type_identifier=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def private_p12_certificate; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def private_p12_certificate=(_arg0); end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def skip_verification; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
+  def skip_verification=(_arg0); end
+
+  # pkg:gem/passkit#lib/passkit.rb:81
+  def verify!; end
+
+  # pkg:gem/passkit#lib/passkit.rb:29
   def web_service_host; end
 
-  # pkg:gem/passkit#lib/passkit.rb:24
+  # pkg:gem/passkit#lib/passkit.rb:29
   def web_service_host=(_arg0); end
 end
 
-# pkg:gem/passkit#lib/passkit.rb:32
+# pkg:gem/passkit#lib/passkit.rb:50
 Passkit::Configuration::DEFAULT_AUTHENTICATION = T.let(T.unsafe(nil), Proc)
+
+# pkg:gem/passkit#lib/passkit.rb:41
+Passkit::Configuration::REQUIRED_ATTRIBUTES = T.let(T.unsafe(nil), Array)
 
 module Passkit::Dashboard; end
 
@@ -505,13 +541,10 @@ end
 
 # pkg:gem/passkit#lib/passkit/example_store_card.rb:2
 class Passkit::ExampleStoreCard < ::Passkit::BasePass
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:61
-  def app_launch_url; end
-
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:110
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:106
   def auxiliary_fields; end
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:92
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:88
   def back_fields; end
 
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:12
@@ -525,7 +558,7 @@ class Passkit::ExampleStoreCard < ::Passkit::BasePass
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:20
   def description; end
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:69
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:65
   def expiration_date; end
 
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:35
@@ -534,7 +567,7 @@ class Passkit::ExampleStoreCard < ::Passkit::BasePass
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:8
   def foreground_color; end
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:83
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:79
   def header_fields; end
 
   # A pass can have up to ten relevant locations
@@ -561,10 +594,10 @@ class Passkit::ExampleStoreCard < ::Passkit::BasePass
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:3
   def pass_type; end
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:65
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:61
   def relevant_date; end
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:74
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:70
   def semantics; end
 
   # pkg:gem/passkit#lib/passkit/example_store_card.rb:31
@@ -572,14 +605,16 @@ class Passkit::ExampleStoreCard < ::Passkit::BasePass
 
   private
 
-  # pkg:gem/passkit#lib/passkit/example_store_card.rb:130
+  # pkg:gem/passkit#lib/passkit/example_store_card.rb:126
   def folder_name; end
 end
 
 # pkg:gem/passkit#lib/passkit/factory.rb:2
 class Passkit::Factory
   class << self
-    # pkg:gem/passkit#lib/passkit/factory.rb:4
+    # generator is an optional ActiveRecord object, the application data for the pass
+    #
+    # pkg:gem/passkit#lib/passkit/factory.rb:5
     def create_pass(pass_class, generator = T.unsafe(nil)); end
   end
 end
@@ -594,43 +629,45 @@ class Passkit::Generator
 
   private
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:28
+  # pkg:gem/passkit#lib/passkit/generator.rb:125
+  def certificate_path; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:41
   def check_necessary_files; end
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:43
+  # pkg:gem/passkit#lib/passkit/generator.rb:56
   def clean_ds_store_files; end
 
   # :nocov:
   #
-  # pkg:gem/passkit#lib/passkit/generator.rb:137
+  # pkg:gem/passkit#lib/passkit/generator.rb:149
   def compress_pass_file; end
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:39
+  # pkg:gem/passkit#lib/passkit/generator.rb:52
   def copy_pass_to_tmp_location; end
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:32
+  # pkg:gem/passkit#lib/passkit/generator.rb:45
   def create_temporary_directory; end
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:107
+  # pkg:gem/passkit#lib/passkit/generator.rb:115
   def generate_json_manifest; end
 
-  # pkg:gem/passkit#lib/passkit/generator.rb:47
+  # pkg:gem/passkit#lib/passkit/generator.rb:60
   def generate_json_pass; end
+
+  # pkg:gem/passkit#lib/passkit/generator.rb:129
+  def intermediate_certificate_path; end
 
   # :nocov:
   #
-  # pkg:gem/passkit#lib/passkit/generator.rb:122
+  # pkg:gem/passkit#lib/passkit/generator.rb:134
   def sign_manifest; end
+
+  class << self
+    # pkg:gem/passkit#lib/passkit/generator.rb:26
+    def compress_passes_files(files); end
+  end
 end
-
-# pkg:gem/passkit#lib/passkit/generator.rb:117
-Passkit::Generator::CERTIFICATE = T.let(T.unsafe(nil), Pathname)
-
-# pkg:gem/passkit#lib/passkit/generator.rb:119
-Passkit::Generator::CERTIFICATE_PASSWORD = T.let(T.unsafe(nil), String)
-
-# pkg:gem/passkit#lib/passkit/generator.rb:118
-Passkit::Generator::INTERMEDIATE_CERTIFICATE = T.let(T.unsafe(nil), Pathname)
 
 # pkg:gem/passkit#lib/passkit/generator.rb:5
 Passkit::Generator::TMP_FOLDER = T.let(T.unsafe(nil), Pathname)
@@ -672,14 +709,11 @@ class Passkit::Pass < ::ActiveRecord::Base
   def barcodes(*_arg0, **_arg1, &_arg2); end
   def beacons(*_arg0, **_arg1, &_arg2); end
   def boarding_pass(*_arg0, **_arg1, &_arg2); end
-  def coupon(*_arg0, **_arg1, &_arg2); end
   def description(*_arg0, **_arg1, &_arg2); end
-  def event_ticket(*_arg0, **_arg1, &_arg2); end
   def expiration_date(*_arg0, **_arg1, &_arg2); end
   def file_name(*_arg0, **_arg1, &_arg2); end
   def foreground_color(*_arg0, **_arg1, &_arg2); end
   def format_version(*_arg0, **_arg1, &_arg2); end
-  def generic(*_arg0, **_arg1, &_arg2); end
   def grouping_identifier(*_arg0, **_arg1, &_arg2); end
   def header_fields(*_arg0, **_arg1, &_arg2); end
   def instance; end
@@ -699,7 +733,7 @@ class Passkit::Pass < ::ActiveRecord::Base
   def secondary_fields(*_arg0, **_arg1, &_arg2); end
   def semantics(*_arg0, **_arg1, &_arg2); end
   def sharing_prohibited(*_arg0, **_arg1, &_arg2); end
-  def store_card(*_arg0, **_arg1, &_arg2); end
+  def strip_color(*_arg0, **_arg1, &_arg2); end
   def suppress_strip_shine(*_arg0, **_arg1, &_arg2); end
   def user_info(*_arg0, **_arg1, &_arg2); end
   def validate_associated_records_for_devices(*args); end
@@ -744,10 +778,10 @@ module Passkit::Pass::GeneratedAttributeMethods; end
 class Passkit::PayloadGenerator
   class << self
     # pkg:gem/passkit#lib/passkit/payload_generator.rb:5
-    def encrypted(pass_class, generator = T.unsafe(nil)); end
+    def encrypted(pass_class, generator = T.unsafe(nil), collection_name = T.unsafe(nil)); end
 
     # pkg:gem/passkit#lib/passkit/payload_generator.rb:9
-    def hash(pass_class, generator = T.unsafe(nil)); end
+    def hash(pass_class, generator = T.unsafe(nil), collection_name = T.unsafe(nil)); end
   end
 end
 
@@ -824,7 +858,7 @@ class Passkit::UrlGenerator
   include ::ActionDispatch::Routing::UrlFor
 
   # pkg:gem/passkit#lib/passkit/url_generator.rb:5
-  def initialize(pass_class, generator = T.unsafe(nil)); end
+  def initialize(pass_class, generator = T.unsafe(nil), collection_name = T.unsafe(nil)); end
 
   # @see https://walletpasses.io/developer/
   #
