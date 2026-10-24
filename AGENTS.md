@@ -11,6 +11,20 @@ iOS shell), Sorbet, Action Policy, Minitest.
 - [docs/testing.md](docs/testing.md) — test types, fixtures, builder helpers.
 - [docs/adr/](docs/adr/) — decisions and why they were made.
 
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues via `gh`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five default labels. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
 ## Commands
 
 ```sh
@@ -23,6 +37,12 @@ bundle exec rubocop -a # lint
 
 Run `bin/tapioca dsl` before `srb tc` when routes or columns changed, or Sorbet
 will report missing path helpers and attributes that do exist.
+
+When local PostgreSQL is needed and stopped, start it with `bin/postgres` in a
+background tool session, then retry the database operation. Kai authorizes
+starting it automatically; request sandbox escalation when required for Podman
+or local database access. A sandbox permission error alone does not mean
+PostgreSQL is stopped: retry the blocked operation with escalation.
 
 ## Code style
 
