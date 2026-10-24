@@ -34,9 +34,35 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:bob) # phone_number +14165558323
   end
 
-  test "record_app_visit! saves the visit and enqueues a badge update" do
+  test "record_app_visit! saves the visit and enqueues a badge update with pending notifications" do
     freeze_time do
+      @user.update!(app_last_visited_at: 1.minute.ago)
+      post = create_post(world: create_world(owner: users(:sue)), quiet: true)
+      post.notifications.create!(recipient: @user)
+
       assert_enqueued_with(job: ClearUserBadgeCountsJob, args: [ @user ]) do
+        assert @user.record_app_visit!
+      end
+      assert_equal Time.current, @user.reload.app_last_visited_at
+    end
+  end
+
+  test "record_app_visit! saves the visit without a badge update when there are no notifications" do
+    freeze_time do
+      assert_no_enqueued_jobs(only: ClearUserBadgeCountsJob) do
+        assert @user.record_app_visit!
+      end
+      assert_equal Time.current, @user.reload.app_last_visited_at
+    end
+  end
+
+  test "record_app_visit! skips the badge update for notifications from before the previous visit" do
+    freeze_time do
+      @user.update!(app_last_visited_at: 1.minute.ago)
+      post = create_post(world: create_world(owner: users(:sue)), quiet: true)
+      post.notifications.create!(recipient: @user, created_at: 2.minutes.ago)
+
+      assert_no_enqueued_jobs(only: ClearUserBadgeCountsJob) do
         assert @user.record_app_visit!
       end
       assert_equal Time.current, @user.reload.app_last_visited_at
