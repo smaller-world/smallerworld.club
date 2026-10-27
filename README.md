@@ -29,6 +29,7 @@ mise install
 
 # Set up local dev environment:
 mise setup
+mise setup:actual_db_schema
 
 # Run the development server:
 mise dev

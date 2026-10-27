@@ -1,0 +1,48 @@
+# typed: true
+# frozen_string_literal: true
+
+# ActualDbSchema initializer
+# Adjust the configuration as needed.
+
+return unless defined?(ActualDbSchema)
+
+ActualDbSchema.configure do |config|
+  # Enable the gem.
+  config.enabled = Rails.env.development?
+
+  # Disable automatic rollback of phantom migrations.
+  # config.auto_rollback_disabled = true
+  config.auto_rollback_disabled = ENV["ACTUAL_DB_SCHEMA_AUTO_ROLLBACK_DISABLED"].present?
+
+  # Enable the UI for managing migrations.
+  config.ui_enabled = Rails.env.development? || ENV["ACTUAL_DB_SCHEMA_UI_ENABLED"].present?
+
+  # Enable automatic phantom migration rollback on branch switch.
+  # config.git_hooks_enabled = true
+  git_hook_enabled_env = ENV["ACTUAL_DB_SCHEMA_GIT_HOOKS_ENABLED"]
+  config.git_hooks_enabled = git_hook_enabled_env.nil? ? true : git_hook_enabled_env.present?
+
+  # If your application leverages multiple schemas for multi-tenancy, define the active schemas.
+  # config.multi_tenant_schemas = -> { ["public", "tenant1", "tenant2"] }
+
+  # Enable console migrations.
+  # config.console_migrations_enabled = true
+  config.console_migrations_enabled = ENV["ACTUAL_DB_SCHEMA_CONSOLE_MIGRATIONS_ENABLED"].present?
+
+  # Define the migrated folder location.
+  # config.migrated_folder = Rails.root.join("custom", "migrated")
+  config.migrated_folder = Rails.root.join("tmp/migrated")
+
+  # Choose where to store migrated files: :file or :db.
+  # config.migrations_storage = :db
+  config.migrations_storage = :file
+end
+
+# Subscribe to rollback events to persist stats (optional).
+# Uncomment the following to track rollback statistics in the database:
+#
+# ActiveSupport::Notifications.subscribe(
+#   ActualDbSchema::Instrumentation::ROLLBACK_EVENT
+# ) do |_name, _start, _finish, _id, payload|
+#   ActualDbSchema::RollbackStatsRepository.record(payload)
+# end

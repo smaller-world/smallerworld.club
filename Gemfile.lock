@@ -95,6 +95,11 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
+    actual_db_schema (0.10.0)
+      activerecord
+      activesupport
+      csv
+      prism
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     after_attached (0.1.1)
@@ -658,6 +663,7 @@ DEPENDENCIES
   active_storage_validations (~> 3.0)
   activerecord-postgis-adapter
   activerecord-typedstore (~> 1.6)
+  actual_db_schema
   after_attached (~> 0.1.1)
   after_party
   annotaterb
@@ -762,6 +768,7 @@ CHECKSUMS
   activerecord-typedstore (1.6.0) sha256=c94036c0a55e27aca048f9605b2a3c6503c3a33e76ef43050d82cbdba61c1a40
   activestorage (8.1.4) sha256=f4956f3ec9ee63e5e0b332b57c877cb627f82b56f4cc902279310d2aa285c7a8
   activesupport (8.1.4) sha256=891dd3fe43c4fc8391934b237b1189bb1f661c932a84a840043db9d46a4e80df
+  actual_db_schema (0.10.0) sha256=82a165c30f6afcb780597e152199a6a89c0c41f6cdbc170718877cb9e2ceb2c6
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
   after_attached (0.1.1) sha256=5b3c5483dcaae7522c5431e80ac01b4062b0ab3bd2cc8145b974ba702769ee79
   after_party (2.1.0) sha256=d81ba71272f7204eec3e683958fad13c8539c79c2c6914ecec85bc08de5f5e1e

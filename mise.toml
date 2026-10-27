@@ -12,6 +12,7 @@ overmind = "latest"
 [tasks]
 # == Development flow
 setup = { run = "bin/setup" }
+"setup:actual_db_schema" = { run = "bin/rails actual_db_schema:install_git_hooks" }
 ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
 dev = { run = "bin/dev" }
 restart = { run = "bin/overmind restart" }

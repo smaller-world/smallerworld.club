@@ -107,9 +107,6 @@ gem "rgeo"
 # Validate email addresses
 gem "email_validator", "~> 2.2"
 
-# Sign in with Apple
-# gem "apple_id", "~> 1.6"
-
 # Render inline SVGs in views
 gem "inline_svg", "~> 1.10"
 
@@ -224,6 +221,9 @@ group :development do
 
   # Preview Action Mailer emails sent in development
   gem "letter_opener"
+
+  # Keep database in sync with Git branches
+  gem "actual_db_schema"
 end
 
 group :test do
