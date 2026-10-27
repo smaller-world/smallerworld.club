@@ -4,7 +4,9 @@
 class SmallerWorld::Application
   sig { returns(String) }
   def contact_email_address
-    credentials.contact!.email!
+    with_fallback_email_for_ci do
+      credentials.contact!.email!
+    end
   end
 
   sig { returns(String) }
@@ -17,7 +19,9 @@ class SmallerWorld::Application
 
   sig { returns(String) }
   def support_email_address
-    credentials.contact!.support_email!
+    with_fallback_email_for_ci do
+      credentials.contact!.support_email!
+    end
   end
 
   sig { returns(String) }
@@ -26,5 +30,16 @@ class SmallerWorld::Application
       support_email_address,
       "smaller world support",
     )
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { params(block: T.proc.returns(String)).returns(String) }
+  def with_fallback_email_for_ci(&block)
+    yield
+  rescue KeyError
+    "email@example.com"
   end
 end
