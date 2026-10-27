@@ -184,18 +184,20 @@ class PhoneNumberVerificationRequest < ApplicationRecord
   end
 
   sig { params(code: String).returns(T::Boolean) }
-  def verify!(code)
-    if expired?
-      errors.add(:verification_code, :invalid, message: "has expired")
-      return false
-    end
+  def verify(code)
+    with_lock do
+      if expired?
+        errors.add(:verification_code, :invalid, message: "has expired")
+        return false
+      end
 
-    if verified? || code != verification_code
-      errors.add(:verification_code, :invalid)
-      return false
-    end
+      if verified? || code != verification_code
+        errors.add(:verification_code, :invalid)
+        return false
+      end
 
-    update!(verified_at: Time.current)
+      update(verified_at: Time.current)
+    end
   end
 
   private

@@ -82,19 +82,26 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           ])
         verification_code = verification_request_params.delete(:verification_code)
         begin
-          verification_request.verify!(verification_code)
-          if (phone_number_owner = verification_request.phone_number_owner)
-            phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
-            phone_number_owner.update!(**phone_number_owner_params)
-            start_new_session_for(
-              phone_number_owner,
-              phone_number_verification_request: verification_request,
-            )
-            redirect_to(after_authentication_url, status: :see_other)
+          if verification_request.verify(verification_code)
+            if (phone_number_owner = verification_request.phone_number_owner)
+              phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
+              phone_number_owner.update!(**phone_number_owner_params)
+              start_new_session_for(
+                phone_number_owner,
+                phone_number_verification_request: verification_request,
+              )
+              redirect_to(after_authentication_url, status: :see_other)
+            else
+              session[:phone_number_verification_token] =
+                verification_request.generate_registration_token
+              redirect_to(new_account_path, status: :see_other)
+            end
           else
-            session[:phone_number_verification_token] =
-              verification_request.generate_registration_token
-            redirect_to(new_account_path, status: :see_other)
+            render(
+              turbo_stream: [
+                replace_form(verification_request:),
+              ],
+            )
           end
         rescue ActiveRecord::RecordInvalid => error
           render(
@@ -131,9 +138,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   def replace_form(verification_request:)
     turbo_stream.replace(
       "phone_number_verification_form",
-      renderable: Components::PhoneNumberVerificationForm.new(
-        verification_request:,
-      ),
+      renderable: Components::PhoneNumberVerificationForm.new(verification_request:),
     )
   end
 
