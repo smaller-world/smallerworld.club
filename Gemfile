@@ -79,7 +79,7 @@ gem "rack-canonical-host", "~> 1.3"
 gem "mission_control-jobs"
 
 # Paginate with Pagy
-gem "pagy", "~> 43.5"
+gem "pagy", "~> 43.8"
 
 # Parse and format phone numbers with phonelib
 gem "phonelib", "~> 0.10.16"
