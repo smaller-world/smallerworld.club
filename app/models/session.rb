@@ -42,7 +42,11 @@ class Session < ApplicationRecord
 
   # == Validations ==
 
-  validate :validate_verified_phone_number_verification_request
+  validate :validate_verified_phone_number_verification_request, on: :create
+
+  # == Hooks ==
+
+  around_create :consume_verification_request
 
   private
 
@@ -51,8 +55,23 @@ class Session < ApplicationRecord
   sig { void }
   def validate_verified_phone_number_verification_request
     verification_request = phone_number_verification_request or return
-    unless verification_request.verified?
-      errors.add(:phone_number_verification_request, "must be verified")
+    unless verification_request.verified? && !verification_request.consumed_at? &&
+        User.exists?(id: user_id, phone_number: verification_request.phone_number)
+      errors.add(:phone_number_verification_request, "must be verified, unused, and match the phone number")
+    end
+  end
+
+  # Recheck after locking: validation alone races with another session creation.
+  # The insert and durable consumption share the save transaction, even for
+  # direct Session.create! callers. Existing session updates do not consume again.
+  sig { params(block: T.proc.void).void }
+  def consume_verification_request(&block)
+    phone_number_verification_request!.with_lock(requires_new: true) do
+      validate_verified_phone_number_verification_request
+      raise ActiveRecord::RecordInvalid, self if errors.any?
+
+      yield
+      phone_number_verification_request!.update!(consumed_at: Time.current)
     end
   end
 end

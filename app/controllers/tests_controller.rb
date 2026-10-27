@@ -17,7 +17,7 @@ class TestsController < ApplicationController
   def sign_in
     user = User.find(params.fetch(:user_id))
     verification_request = PhoneNumberVerificationRequest.create_test_mock_for!(user, verified: true)
-    start_new_session_for(user, phone_number_verification_request: verification_request)
+    install_session(user.sessions.create!(phone_number_verification_request: verification_request))
     redirect_to(home_path)
   end
 

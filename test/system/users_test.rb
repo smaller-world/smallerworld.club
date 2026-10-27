@@ -17,6 +17,12 @@ class UsersTest < ApplicationSystemTestCase
     assert_field "verification code", wait: 10
 
     verification_request = PhoneNumberVerificationRequest.chronological.last!
+    fill_in "verification code", with: (verification_request.verification_code == "000000" ? "111111" : "000000")
+    click_button "complete login"
+    assert_text "is invalid"
+    assert_field "verification code"
+    assert_equal 0, Session.where(phone_number_verification_request: verification_request).count
+
     fill_in "verification code", with: verification_request.verification_code
     click_button "complete login"
 
@@ -27,5 +33,7 @@ class UsersTest < ApplicationSystemTestCase
     click_button "create account"
 
     assert_current_path home_path, wait: 10
+    assert_equal 1, Session.where(phone_number_verification_request: verification_request).count
+    assert_predicate verification_request.reload, :consumed_at?
   end
 end

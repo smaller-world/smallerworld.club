@@ -28,7 +28,7 @@ class AccountsController < ApplicationController
 
         verification_request = PhoneNumberVerificationRequest
           .find_by_registration_token(phone_number_verification_token)
-        unless verification_request&.verified?
+        unless verification_request
           tag_logger do
             logger.warn("Invalid phone number verification token")
           end
@@ -63,7 +63,7 @@ class AccountsController < ApplicationController
           end
           redirect_to(
             new_session_path,
-            alert: "Missing phone number verification token",
+            alert: "missing phone number verification token",
             status: :see_other,
           )
           return
@@ -71,28 +71,40 @@ class AccountsController < ApplicationController
 
         phone_number_verification_request = PhoneNumberVerificationRequest
           .find_by_registration_token(phone_number_verification_token)
-        unless phone_number_verification_request&.verified?
+        unless phone_number_verification_request
           tag_logger do
             logger.warn("Invalid phone number verification token")
           end
           redirect_to(
             new_session_path,
-            alert: "Invalid phone number verification token",
+            alert: "invalid phone number verification token",
             status: :see_other,
           )
           return
         end
 
-        user = User.new(
-          **user_params,
-          phone_number: phone_number_verification_request.phone_number,
-        )
-        if user.save
+        begin
+          persisted_session = phone_number_verification_request
+            .complete_registration!(user_params.to_h.symbolize_keys)
+          install_session(persisted_session)
           session.delete(:phone_number_verification_token)
-          start_new_session_for(user, phone_number_verification_request:)
           redirect_to(after_authentication_url, status: :see_other)
-        else
-          render Views::Accounts::New.new(user:), status: :unprocessable_content
+        rescue ActiveRecord::RecordInvalid => error
+          record = error.record
+          case record
+          when User
+            render Views::Accounts::New.new(user: record), status: :unprocessable_content
+          when Session
+            user = record.user!
+            user.errors.add(:base, record.errors.full_messages.join(", ").downcase)
+            render Views::Accounts::New.new(user:), status: :unprocessable_content
+          else
+            redirect_to(
+              new_session_path,
+              alert: "invalid phone number verification token",
+              status: :see_other,
+            )
+          end
         end
       end
     end

@@ -82,18 +82,15 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           ])
         verification_code = verification_request_params.delete(:verification_code)
         begin
-          verification_request.verify!(verification_code)
-          if (phone_number_owner = verification_request.phone_number_owner)
-            phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
-            phone_number_owner.update!(**phone_number_owner_params)
-            start_new_session_for(
-              phone_number_owner,
-              phone_number_verification_request: verification_request,
-            )
+          result = verification_request.submit_code!(
+            verification_code,
+            time_zone_name: verification_request_params.dig(:phone_number_owner, :time_zone_name),
+          )
+          if result.is_a?(Session)
+            install_session(result)
             redirect_to(after_authentication_url, status: :see_other)
           else
-            session[:phone_number_verification_token] =
-              verification_request.generate_registration_token
+            session[:phone_number_verification_token] = result
             redirect_to(new_account_path, status: :see_other)
           end
         rescue ActiveRecord::RecordInvalid => error
@@ -104,7 +101,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
                 "flashes",
                 renderable: Components::AppFlashAlert.new(
                   type: :alert,
-                  message: error.message,
+                  message: error.record.errors.full_messages.join(", ").downcase,
                 ),
               ),
             ],

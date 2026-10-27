@@ -73,21 +73,17 @@ module Authentication
       Rails.application.routes.url_helpers.home_path
   end
 
-  sig do
-    params(
-      user: User,
-      phone_number_verification_request: PhoneNumberVerificationRequest,
-    ).returns(Session)
-  end
-  def start_new_session_for(user, phone_number_verification_request:)
-    user.sessions.create!(phone_number_verification_request:).tap do |session|
-      Current.session = session
-      cookies.signed.permanent[:session_id] = {
-        value: session.id,
-        httponly: true,
-        same_site: :lax,
-      }
-    end
+  sig { params(session: Session).returns(Session) }
+  def install_session(session)
+    raise "Session must be persisted" unless session.persisted?
+
+    Current.session = session
+    cookies.signed.permanent[:session_id] = {
+      value: session.id,
+      httponly: true,
+      same_site: :lax,
+    }
+    session
   end
 
   sig { void }

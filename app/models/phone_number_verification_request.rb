@@ -6,6 +6,7 @@
 #
 # Table name: phone_number_verification_requests
 #
+#  consumed_at       :timestamptz
 #  id                :uuid             not null, primary key
 #  ip_address        :inet             not null
 #  phone_number      :string           not null
@@ -83,17 +84,18 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   sig { params(token: String).returns(PhoneNumberVerificationRequest) }
   def self.find_by_registration_token!(token)
-    find_by_token_for!(:registration, token)
+    find_by_registration_token(token) or raise ActiveRecord::RecordNotFound
   end
 
   sig { params(token: String).returns(T.nilable(PhoneNumberVerificationRequest)) }
   def self.find_by_registration_token(token)
-    find_by_token_for(:registration, token)
+    request = find_by_token_for(:registration, token)
+    request if request&.registration_pending?
   end
 
   sig { returns(String) }
   def generate_registration_token
-    raise "Phone number not verified" unless verified?
+    require_registration_permission!
 
     generate_token_for(:registration)
   end
@@ -183,22 +185,68 @@ class PhoneNumberVerificationRequest < ApplicationRecord
       (Rails.configuration.x.phone_number_verification_requests.perform_deliveries || false)
   end
 
-  sig { params(code: String).returns(T::Boolean) }
-  def verify!(code)
-    if expired?
-      errors.add(:verification_code, :invalid, message: "has expired")
-      return false
-    end
+  sig { returns(T::Boolean) }
+  def registration_pending?
+    verified? && !consumed_at?
+  end
 
-    if verified? || code != verification_code
-      errors.add(:verification_code, :invalid)
-      return false
-    end
+  # A session or a signed registration permission is the only successful outcome.
+  sig { params(code: String, time_zone_name: T.nilable(String)).returns(T.any(Session, String)) }
+  def submit_code!(code, time_zone_name: nil)
+    with_lock(requires_new: true) do
+      errors.clear
+      if expired?
+        errors.add(:verification_code, :invalid, message: "has expired")
+      elsif verified? || consumed_at? || code != verification_code
+        errors.add(:verification_code, :invalid)
+      end
+      raise ActiveRecord::RecordInvalid, self if errors.any?
 
-    update!(verified_at: Time.current)
+      update!(verified_at: Time.current)
+      if (owner = phone_number_owner)
+        owner.update!(time_zone_name:)
+        owner.sessions.create!(phone_number_verification_request: self)
+      else
+        generate_registration_token
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => error
+    reload
+    raise ActiveRecord::RecordInvalid, error.record || self
+  end
+
+  sig { params(attributes: T::Hash[Symbol, T.untyped]).returns(Session) }
+  def complete_registration!(attributes)
+    user = User.new(attributes.slice(:name, :unconfirmed_email_address, :time_zone_name))
+    with_lock(requires_new: true) do
+      require_registration_permission!
+      user.phone_number = phone_number
+      user.save!
+      user.sessions.create!(phone_number_verification_request: self)
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => error
+    reload
+    raise ActiveRecord::RecordInvalid, error.record || user
+  rescue ActiveRecord::RecordNotUnique
+    # Another registration may have won a different request's lock. Never sign
+    # into the colliding account; keep this permission available for correction.
+    if user
+      user.valid?
+      user.errors.add(:base, "account could not be created; please try again") if user.errors.empty?
+      raise ActiveRecord::RecordInvalid, user
+    end
+    raise
   end
 
   private
+
+  sig { void }
+  def require_registration_permission!
+    return if registration_pending?
+
+    errors.add(:base, "invalid phone number verification token")
+    raise ActiveRecord::RecordInvalid, self
+  end
 
   # == Callbacks ==
 

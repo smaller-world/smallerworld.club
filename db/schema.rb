@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_160000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -163,6 +163,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
     t.string "user_agent", null: false
     t.string "verification_code", null: false
     t.timestamptz "verified_at"
+    t.timestamptz "consumed_at"
   end
 
   create_table "post_type_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
