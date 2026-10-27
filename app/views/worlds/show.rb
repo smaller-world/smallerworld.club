@@ -172,7 +172,7 @@ class Views::Worlds::Show < Views::Base
               @world,
               :posts,
               type_id: @only_post_type&.id,
-              only_ravorited: (true if @only_favorited),
+              only_favorited: (true if @only_favorited),
             ],
             target: "_top",
             class: "world-posts-frame",
