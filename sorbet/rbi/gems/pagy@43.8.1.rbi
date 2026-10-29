@@ -10,7 +10,7 @@
 # Pagy already implements the next code and this file works as a compatibility layer
 # to avoid breaking changes in the current version, respecting the Semantic Version contract.
 # avoid circular require (also from pagy itself)
-# :nocov:
+# simplecov:enable
 # Handle pagination response headers
 # Relegate internal functions. Make overriding navs easier.
 #
@@ -23,52 +23,52 @@ class Pagy
 
   # Merge all the DEFAULT constants of the class hierarchy with the options
   #
-  # pkg:gem/pagy#lib/pagy.rb:73
+  # pkg:gem/pagy#lib/pagy.rb:74
   def assign_options(**options); end
 
-  # pkg:gem/pagy#lib/pagy.rb:40
+  # pkg:gem/pagy#lib/pagy.rb:41
   def in; end
 
-  # pkg:gem/pagy#lib/pagy.rb:40
+  # pkg:gem/pagy#lib/pagy.rb:41
   def limit; end
 
-  # pkg:gem/pagy#lib/pagy.rb:40
+  # pkg:gem/pagy#lib/pagy.rb:41
   def next; end
 
-  # pkg:gem/pagy#lib/pagy.rb:40
+  # pkg:gem/pagy#lib/pagy.rb:41
   def options; end
 
-  # pkg:gem/pagy#lib/pagy.rb:40
+  # pkg:gem/pagy#lib/pagy.rb:41
   def page; end
 
   protected
 
   # Validate presence and min value of options
   #
-  # pkg:gem/pagy#lib/pagy.rb:53
+  # pkg:gem/pagy#lib/pagy.rb:54
   def assign_and_check(name_min); end
 
-  # pkg:gem/pagy#lib/pagy.rb:47
+  # pkg:gem/pagy#lib/pagy.rb:48
   def calendar?; end
 
-  # pkg:gem/pagy#lib/pagy.rb:46
+  # pkg:gem/pagy#lib/pagy.rb:47
   def countless?; end
 
-  # pkg:gem/pagy#lib/pagy.rb:50
+  # pkg:gem/pagy#lib/pagy.rb:51
   def keynav?; end
 
-  # pkg:gem/pagy#lib/pagy.rb:49
+  # pkg:gem/pagy#lib/pagy.rb:50
   def keyset?; end
 
   # Instance identity methods, overridden by the respective classes
   #
-  # pkg:gem/pagy#lib/pagy.rb:45
+  # pkg:gem/pagy#lib/pagy.rb:46
   def offset?; end
 
-  # pkg:gem/pagy#lib/pagy.rb:48
+  # pkg:gem/pagy#lib/pagy.rb:49
   def search?; end
 
-  # pkg:gem/pagy#lib/pagy.rb:65
+  # pkg:gem/pagy#lib/pagy.rb:66
   def validate_string_values(options); end
 end
 
@@ -523,8 +523,11 @@ module Pagy::Deprecated::Request
   def resolve_limit; end
 end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:25
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:43
 class Pagy::ElasticsearchRails < ::Pagy::SearchBase; end
+
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:44
+Pagy::ElasticsearchRails::DEFAULT = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:6
 module Pagy::ElasticsearchRailsPaginator
@@ -535,13 +538,13 @@ module Pagy::ElasticsearchRailsPaginator
 
   # Support different versions of ElasticsearchRails
   #
-  # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:36
+  # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:38
   def pagination_params_from(response_object); end
 
   # Support different versions of ElasticsearchRails
   #
-  # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:48
-  def total_count_from(response_object); end
+  # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:50
+  def total_count_from(response_object, options); end
 
   class << self
     # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:9
@@ -549,13 +552,13 @@ module Pagy::ElasticsearchRailsPaginator
 
     # Support different versions of ElasticsearchRails
     #
-    # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:36
+    # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:38
     def pagination_params_from(response_object); end
 
     # Support different versions of ElasticsearchRails
     #
-    # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:48
-    def total_count_from(response_object); end
+    # pkg:gem/pagy#lib/pagy/toolbox/paginators/elasticsearch_rails.rb:50
+    def total_count_from(response_object, options); end
   end
 end
 
@@ -743,6 +746,19 @@ module Pagy::I18n::P11n::Polish
   end
 end
 
+# pkg:gem/pagy#lib/pagy/modules/i18n/p11n/romanian.rb:6
+module Pagy::I18n::P11n::Romanian
+  private
+
+  # pkg:gem/pagy#lib/pagy/modules/i18n/p11n/romanian.rb:9
+  def plural_for(n = T.unsafe(nil)); end
+
+  class << self
+    # pkg:gem/pagy#lib/pagy/modules/i18n/p11n/romanian.rb:9
+    def plural_for(n = T.unsafe(nil)); end
+  end
+end
+
 # pkg:gem/pagy#lib/pagy/modules/i18n/p11n/west_slavic.rb:6
 module Pagy::I18n::P11n::WestSlavic
   private
@@ -859,10 +875,10 @@ module Pagy::Keyset::Adapters; end
 #
 # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:7
 module Pagy::Keyset::Adapters::ActiveRecord
-  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:38
+  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:39
   def apply_where(predicate, arguments); end
 
-  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:32
+  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:33
   def ensure_select; end
 
   # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:8
@@ -874,11 +890,11 @@ module Pagy::Keyset::Adapters::ActiveRecord
   # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:18
   def quoted_identifiers(table); end
 
-  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:23
+  # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:24
   def typecast(attributes); end
 
   class << self
-    # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:42
+    # pkg:gem/pagy#lib/pagy/classes/keyset/adapters/active_record.rb:43
     def included(including); end
   end
 end
@@ -1045,10 +1061,10 @@ module Pagy::Linkable::QueryUtils
   end
 end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:27
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:48
 class Pagy::Meilisearch < ::Pagy::SearchBase; end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:28
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:49
 Pagy::Meilisearch::DEFAULT = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/pagy#lib/pagy/toolbox/paginators/meilisearch.rb:6
@@ -1066,11 +1082,11 @@ end
 
 # Pagy::Method defines the #pagy method to be included in the app controller/view.
 #
-# pkg:gem/pagy#lib/pagy/toolbox/paginators/method.rb:21
+# pkg:gem/pagy#lib/pagy/toolbox/paginators/method.rb:22
 module Pagy::Method
   protected
 
-  # pkg:gem/pagy#lib/pagy/toolbox/paginators/method.rb:24
+  # pkg:gem/pagy#lib/pagy/toolbox/paginators/method.rb:25
   def pagy(paginator = T.unsafe(nil), collection, **options); end
 end
 
@@ -1153,12 +1169,12 @@ end
 
 # Hook module for numeric UI helpers
 #
-# pkg:gem/pagy#lib/pagy.rb:91
+# pkg:gem/pagy#lib/pagy.rb:92
 module Pagy::NumericHelpers
   include ::Pagy::NumericHelperLoader
 end
 
-# pkg:gem/pagy#lib/pagy.rb:34
+# pkg:gem/pagy#lib/pagy.rb:35
 Pagy::OPTIONS = T.let(T.unsafe(nil), Hash)
 
 # Implements Offset Pagination
@@ -1171,53 +1187,53 @@ class Pagy::Offset < ::Pagy
   include ::Pagy::NumericHelperLoader
   include ::Pagy::NumericHelpers
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:18
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:19
   def initialize(**_arg0); end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:47
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:48
   def assign_last; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def count; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def from; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def in; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def last; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def next; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def offset; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:38
   def pages; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def previous; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:39
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:40
   def records(collection); end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:36
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:37
   def to; end
 
   protected
 
   # Called by false in_range?
   #
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:56
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:57
   def assign_empty_page_variables; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:51
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:52
   def assign_offset; end
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:45
+  # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:46
   def offset?; end
 end
 
@@ -1269,6 +1285,9 @@ end
 # pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:9
 Pagy::Offset::DEFAULT = T.let(T.unsafe(nil), Hash)
 
+# pkg:gem/pagy#lib/pagy/classes/offset/offset.rb:10
+Pagy::Offset::MAX_OFFSET = T.let(T.unsafe(nil), Integer)
+
 # pkg:gem/pagy#lib/pagy/toolbox/paginators/offset.rb:6
 module Pagy::OffsetPaginator
   private
@@ -1306,6 +1325,25 @@ Pagy::PAGE_TOKEN = T.let(T.unsafe(nil), Pagy::EscapedValue)
 
 # pkg:gem/pagy#lib/pagy.rb:13
 Pagy::ROOT = T.let(T.unsafe(nil), Pathname)
+
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:39
+class Pagy::RailsActiveSearch < ::Pagy::SearchBase; end
+
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:40
+Pagy::RailsActiveSearch::DEFAULT = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/pagy#lib/pagy/toolbox/paginators/rails_active_search.rb:6
+module Pagy::RailsActiveSearchPaginator
+  private
+
+  # pkg:gem/pagy#lib/pagy/toolbox/paginators/rails_active_search.rb:9
+  def paginate(search, options); end
+
+  class << self
+    # pkg:gem/pagy#lib/pagy/toolbox/paginators/rails_active_search.rb:9
+    def paginate(search, options); end
+  end
+end
 
 # I18n localization error
 #
@@ -1365,36 +1403,56 @@ end
 module Pagy::Search
   # Collect the search arguments to pass to the actual search
   #
-  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:12
+  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:28
   def pagy_search(*arguments, **options, &block); end
 end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:5
-class Pagy::Search::Arguments < ::Array
+# Collect the search arguments and record the chained calls, applied later by the paginators.
+# It is not an Array, so methods like filter, reject, sort, etc. get recorded as well
+#
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:7
+class Pagy::Search::Arguments
   # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:8
-  def method_missing(*_arg0); end
+  def initialize(*arguments); end
+
+  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:19
+  def method_missing(name, *args, **kwargs, &block); end
+
+  # Destructure as [model, arguments, options, block, calls]
+  #
+  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:14
+  def to_ary; end
 
   private
 
-  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:6
-  def respond_to_missing?(*_arg0); end
+  # Conversion methods are not recorded
+  #
+  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:17
+  def respond_to_missing?(name, *_arg1); end
 end
 
 # Search classes do not use OFFSET for querying a DB;
 # however, they use the same positional technique used by Offset.
 #
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:19
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:35
 class Pagy::SearchBase < ::Pagy::Offset
-  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:22
+  # pkg:gem/pagy#lib/pagy/classes/offset/search.rb:36
   def search?; end
 end
-
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:20
-Pagy::SearchBase::DEFAULT = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/pagy#lib/pagy/modules/searcher.rb:4
 module Pagy::Searcher
   private
+
+  # Apply the calls recorded by Search::Arguments
+  #
+  # pkg:gem/pagy#lib/pagy/modules/searcher.rb:23
+  def chain(receiver, calls); end
+
+  # Resolve the page and limit from the request
+  #
+  # pkg:gem/pagy#lib/pagy/modules/searcher.rb:17
+  def resolve(options); end
 
   # Common search logic
   #
@@ -1402,6 +1460,16 @@ module Pagy::Searcher
   def wrap(search_arguments, options); end
 
   class << self
+    # Apply the calls recorded by Search::Arguments
+    #
+    # pkg:gem/pagy#lib/pagy/modules/searcher.rb:23
+    def chain(receiver, calls); end
+
+    # Resolve the page and limit from the request
+    #
+    # pkg:gem/pagy#lib/pagy/modules/searcher.rb:17
+    def resolve(options); end
+
     # Common search logic
     #
     # pkg:gem/pagy#lib/pagy/modules/searcher.rb:8
@@ -1409,8 +1477,11 @@ module Pagy::Searcher
   end
 end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:31
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:52
 class Pagy::Searchkick < ::Pagy::SearchBase; end
+
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:53
+Pagy::Searchkick::DEFAULT = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/pagy#lib/pagy/toolbox/paginators/searchkick.rb:6
 module Pagy::SearchkickPaginator
@@ -1419,9 +1490,15 @@ module Pagy::SearchkickPaginator
   # pkg:gem/pagy#lib/pagy/toolbox/paginators/searchkick.rb:9
   def paginate(search, options); end
 
+  # pkg:gem/pagy#lib/pagy/toolbox/paginators/searchkick.rb:36
+  def total_count_from(response_object, options); end
+
   class << self
     # pkg:gem/pagy#lib/pagy/toolbox/paginators/searchkick.rb:9
     def paginate(search, options); end
+
+    # pkg:gem/pagy#lib/pagy/toolbox/paginators/searchkick.rb:36
+    def total_count_from(response_object, options); end
   end
 end
 
@@ -1441,8 +1518,11 @@ class Pagy::SyncTask < ::Rake::TaskLib
   def initialize(resource, destination, *targets); end
 end
 
-# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:33
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:57
 class Pagy::TypesenseRails < ::Pagy::SearchBase; end
+
+# pkg:gem/pagy#lib/pagy/classes/offset/search.rb:58
+Pagy::TypesenseRails::DEFAULT = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/pagy#lib/pagy/toolbox/paginators/typesense_rails.rb:6
 module Pagy::TypesenseRailsPaginator
