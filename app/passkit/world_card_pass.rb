@@ -52,7 +52,7 @@ module Passkit
     def logo_text = @world.name
 
     sig { override.returns(T::Boolean) }
-    def suppress_strip_shine = false # rubocop:disable Naming/PredicateMethod
+    def suppress_strip_shine = false
 
     sig { override.returns(String) }
     def description
@@ -176,7 +176,7 @@ module Passkit
     end
 
     sig { override.returns(T::Boolean) }
-    def voided # rubocop:disable Naming/PredicateMethod
+    def voided
       @card.discarded?
     end
 

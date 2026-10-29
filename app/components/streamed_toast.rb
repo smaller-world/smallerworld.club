@@ -6,7 +6,7 @@
 class Components::StreamedToast < Components::Base
   # == Configuration ==
 
-  TYPES = [ :success, :error, :warning, :info ]
+  TYPES = [ :success, :error, :warning, :info ].freeze
 
   # == Initialization ==
 

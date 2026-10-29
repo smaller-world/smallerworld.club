@@ -61,6 +61,10 @@ arg "[files]..." var=#true help="Run on specific files"
 run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
 alias = "ch"
 
+[tasks."check:srb"]
+run = "bin/srb tc"
+alias = "srb"
+
 # == Security ==
 
 [tasks."audit:ruby"]

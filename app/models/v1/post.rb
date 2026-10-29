@@ -120,7 +120,7 @@ module V1
         begin
           download_futures = T.let([], T::Array[Concurrent::Promise])
           ordered_image_blobs.each do |blob|
-            file = File.open(File.join(tmpdir, blob.filename.to_s), "wb+") # rubocop:disable Style/FileOpen
+            file = File.open(File.join(tmpdir, blob.filename.to_s), "wb+")
             files << file
             download_futures << Concurrent::Promises.future do
               download_blob_to_file(blob, file)

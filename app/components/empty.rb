@@ -6,7 +6,7 @@ class Components::Empty < Components::Base
 
   # == Configuration ==
 
-  MEDIA_VARIANTS = [ :default, :icon ]
+  MEDIA_VARIANTS = [ :default, :icon ].freeze
 
   # == Component ==
 

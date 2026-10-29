@@ -4,7 +4,7 @@
 class Components::CheckboxGroup < Components::FieldGroup
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    Components::FieldGroup( # rubocop:disable Style/ExplicitBlockArgument
+    Components::FieldGroup(
       **mix(
         {
           data: {

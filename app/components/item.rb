@@ -6,9 +6,9 @@ class Components::Item < Components::Polymorphic
 
   # == Configuration ==
 
-  VARIANTS = [ :default, :outline, :muted ]
-  MEDIA_VARIANTS = [ :default, :icon, :image ]
-  SIZES = [ :default, :xs, :sm ]
+  VARIANTS = [ :default, :outline, :muted ].freeze
+  MEDIA_VARIANTS = [ :default, :icon, :image ].freeze
+  SIZES = [ :default, :xs, :sm ].freeze
 
   # == Initialization ==
 

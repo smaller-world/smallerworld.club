@@ -6,7 +6,7 @@ class Components::Alert < Components::Base
 
   # == Configuration ==
 
-  VARIANTS = [ :default, :destructive ]
+  VARIANTS = [ :default, :destructive ].freeze
 
   # == Initialization ==
 

@@ -4,7 +4,7 @@
 class Components::Field < Components::Base
   # == Configuration ==
 
-  ORIENTATIONS = [ :vertical, :horizontal, :responsive ]
+  ORIENTATIONS = [ :vertical, :horizontal, :responsive ].freeze
 
   # == Initialization ==
 

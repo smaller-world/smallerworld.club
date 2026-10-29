@@ -4,7 +4,7 @@
 class Components::Badge < Components::Polymorphic
   # == Configuration
 
-  VARIANTS = [ :default, :secondary, :destructive, :outline, :ghost, :link ]
+  VARIANTS = [ :default, :secondary, :destructive, :outline, :ghost, :link ].freeze
 
   # == Initialization ==
 

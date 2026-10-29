@@ -34,7 +34,7 @@ class World < ApplicationRecord
   # == Configuration ==
 
   NAME_MAX_LENGTH = 30
-  ICON_CONTENT_TYPES = [ "image/*", "video/*" ]
+  ICON_CONTENT_TYPES = [ "image/*", "video/*" ].freeze
 
   # Attributes that, when changed, invalidate the on-device pass for each card.
   # Icon changes are handled separately via `after_attached :icon`.

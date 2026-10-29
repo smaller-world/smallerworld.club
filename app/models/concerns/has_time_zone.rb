@@ -14,7 +14,7 @@ module HasTimeZone
   sig { abstract.returns(String) }
   def time_zone_name; end
 
-  sig { abstract.params(value: String).returns(String) }
+  sig { abstract.params(value: String).void }
   def time_zone_name=(value); end
 
   # == Methods ==
@@ -25,7 +25,7 @@ module HasTimeZone
   end
 
   sig do
-    params(value: T.any(String, ActiveSupport::TimeZone)).returns(T.untyped)
+    params(value: T.any(String, ActiveSupport::TimeZone)).void
   end
   def time_zone=(value)
     self.time_zone_name = case value

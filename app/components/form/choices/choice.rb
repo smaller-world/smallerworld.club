@@ -22,12 +22,12 @@ class Components::Form
         ).void
       end
       def initialize(component:, field:, value:, item:, index:, type:)
-        @component = T.let(component, Phlex::HTML)
-        @field = T.let(field, Field)
-        @value = T.let(value, T.any(String, T::Boolean))
-        @item = T.let(item, Elem)
-        @index = T.let(index, Integer)
-        @type = T.let(type, Symbol)
+        @component = component
+        @field = field
+        @value = value
+        @item = item
+        @index = index
+        @type = type
       end
 
       # == Methods ==

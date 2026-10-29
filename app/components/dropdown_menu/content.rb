@@ -6,7 +6,7 @@ class Components::DropdownMenu::Content < Components::Base
 
   # == Configuration ==
 
-  ITEM_VARIANTS = [ :default, :destructive ]
+  ITEM_VARIANTS = [ :default, :destructive ].freeze
   ANCHOR_VALUES = [ :top, :right, :bottom, :left, :start, :end ].freeze
 
   # == Initialization ==

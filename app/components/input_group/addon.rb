@@ -4,7 +4,7 @@
 class Components::InputGroup::Addon < Components::Base
   # == Configuration ==
 
-  ALIGNMENTS = [ :inline_start, :inline_end, :block_start, :block_end ]
+  ALIGNMENTS = [ :inline_start, :inline_end, :block_start, :block_end ].freeze
 
   # == Initialization ==
 
@@ -15,7 +15,7 @@ class Components::InputGroup::Addon < Components::Base
     end
 
     super(**attributes)
-    @align = T.let(align, Symbol)
+    @align = align
   end
 
   # == Component ==

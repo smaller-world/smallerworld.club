@@ -6,7 +6,7 @@ class Components::AppFlashes < Components::Base
 
   # == Configuration ==
 
-  FLASH_TYPES = [ :alert, :notice ]
+  FLASH_TYPES = [ :alert, :notice ].freeze
 
   # == Component ==
 

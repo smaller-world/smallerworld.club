@@ -18,12 +18,12 @@ module FlashActions
   end
 
   sig { params(message: String).returns(ActiveSupport::SafeBuffer) }
-  def set_notice(message) # rubocop:disable Naming/AccessorMethodName
+  def set_notice(message)
     set_flash(message, type: :notice)
   end
 
   sig { params(message: String).returns(ActiveSupport::SafeBuffer) }
-  def set_alert(message) # rubocop:disable Naming/AccessorMethodName
+  def set_alert(message)
     set_flash(message, type: :alert)
   end
 end

@@ -37,7 +37,7 @@ class Report < ApplicationRecord
 
   # == Configuration ==
 
-  REPORTABLE_TYPES = [ "Post", "User" ]
+  REPORTABLE_TYPES = [ "Post", "User" ].freeze
 
   # == Attributes ==
 

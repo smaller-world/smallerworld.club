@@ -6,7 +6,7 @@ class Components::Card < Components::Base
 
   # == Configuration ==
 
-  SIZES = [ :default, :sm ]
+  SIZES = [ :default, :sm ].freeze
 
   # == Initialization ==
 

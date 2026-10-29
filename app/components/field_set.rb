@@ -4,7 +4,7 @@
 class Components::FieldSet < Components::Base
   # == Configuration ==
 
-  LEGEND_VARIANTS = [ :legend, :label ]
+  LEGEND_VARIANTS = [ :legend, :label ].freeze
 
   # == Component ==
 
