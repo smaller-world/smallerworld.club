@@ -19,6 +19,12 @@ gem:
   # workers: 5
 
 dsl:
+  skip_constant:
+    - V1::User
+    - V1::Post
+    - V1::ActiveStorage::Attachment
+    - V1::ActiveStorage::Blob
+    - V1::ActionText::RichText
   # Add your `dsl` command parameters here:
   #
   # exclude:
