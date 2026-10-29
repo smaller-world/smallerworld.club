@@ -1,6 +1,7 @@
 [settings]
 experimental = true
 auto_install_disable_tools = ["overmind"]
+disable_tools = ["node"]
 
 [tools]
 ruby = { version = "4.0.1", postinstall = "bundle install" }
@@ -14,28 +15,28 @@ overmind = "latest"
 setup = { run = "bin/setup" }
 "setup:actual_db_schema" = { description = "Install Git hooks for actual_db_schema", run = "bin/rails actual_db_schema:install_git_hooks" }
 ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
-pg = { description = "Start a postgres container", run = "bin/postgres" }
+postgres = { description = "Start a postgres container", run = "bin/postgres", alias = "pg" }
 dev = { description = "Start dev proceses", run = "bin/dev" }
-restart = { description = "Restart all processes", run = "bin/overmind restart" }
+restart = { description = "Restart all processes", run = "bin/overmind restart", alias = "r" }
 
 # == Rails shortcuts
-rc = { run = "bin/rails console" }
-rr = { run = "bin/rails restart" }
-rk = { run = "bin/rails kill" }
-db = { run = "bin/rails db" }
+"rails:console" = { run = "bin/rails console", alias = "c" }
+"rails:restart" = { run = "bin/rails restart", alias = "rr" }
+"rails:kill" = { run = "bin/rails kill", alias = "k" }
+"rails:db" = { run = "bin/rails db", alias = "db" }
 
 # == Production access
-"fly:ssh" = { run = "fly ssh console" }
+"fly:ssh" = { run = "fly ssh console", alias = "ssh" }
 
 # NOTE: For agents, please note that this console is protected and audited by console1984.
 # If you are passing input to this command, the first line must be a response to the
 # prompt "What is your name?", and the second is the respond to the prompt "<Name>,
 # why are you using this console today?".
-"fly:console" = { run = "bin/fly-exec 'bin/rails console'" }
+"fly:console" = { run = "bin/fly-exec 'bin/rails console'", alias = "c" }
 
 # == Development tasks
 annotate = { run = "bin/annotaterb models" }
-"tapioca:dsl" = { run = "bin/tapioca dsl" }
+"tapioca:dsl" = { run = "bin/tapioca dsl", alias = "dsl" }
 "tapioca:gem" = { run = "bin/tapioca gem" }
 tapioca = { run = [{ tasks = ["tapioca:dsl", "tapioca:gem"] }] }
 
@@ -58,6 +59,7 @@ flag "-S --step <step>" help="Run only specific step(s)"
 arg "[files]..." var=#true help="Run on specific files"
 '''
 run = "hk check ${usage_all:+--all} ${usage_step:+--step=$usage_step} $usage_files"
+alias = "ch"
 
 # == Security ==
 
@@ -72,6 +74,9 @@ run = [
 description = "Scan JavaScript dependencies for security issues"
 run = "bun audit --audit-level high"
 
+[tasks.audit]
+run = [{ tasks = ["audit:ruby", "audit:js"] }]
+
 # == Testing ==
 
 [tasks.test]
@@ -82,6 +87,7 @@ flag "-i --include <pattern>" help="Include tests matching /regexp/ or string"
 flag "-v --verbose" help="Print each test name as it runs"
 '''
 run = 'bin/rails test $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
+alias = "t"
 
 [tasks."test:system"]
 description = "Run system tests"
@@ -91,6 +97,7 @@ flag "-i --include <pattern>" help="Include tests matching /regexp/ or string"
 flag "-v --verbose" help="Print each test name as it runs"
 '''
 run = 'bin/rails test:system $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
+alias = "ts"
 
 [tasks."test:all"]
 description = "Run all tests"
@@ -100,6 +107,7 @@ flag "-v --verbose" help="Print each test name as it runs"
 arg "[files]..." var=#true help="Test files, directories, or file:line patterns"
 '''
 run = 'bin/rails test:all $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
+alias = "ta"
 
 # == Misc ==
 
@@ -109,3 +117,4 @@ usage = '''
 arg "<target>" help="Process to attach to" default="web"
 '''
 run = "bin/overmind connect ${usage_target?}"
+alias = "a"
