@@ -77,6 +77,10 @@ class User < ApplicationRecord
 
   # == Associations ==
 
+  has_one :registration,
+    foreign_key: :created_user_id,
+    inverse_of: :created_user,
+    dependent: :nullify
   has_many :sessions, dependent: :destroy
   has_many :owned_worlds,
     class_name: "World",

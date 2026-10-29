@@ -28,6 +28,9 @@ module GeneratedUrlHelpersModule
   def account_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def actual_db_schema_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def admin_dashboard_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

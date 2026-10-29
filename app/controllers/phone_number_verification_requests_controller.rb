@@ -13,6 +13,7 @@ class PhoneNumberVerificationRequestsController < ApplicationController
 
   # == Filters ==
 
+  before_action :reject_authenticated_access, only: [ :create, :verify ]
   before_action :verify_turnstile_request, only: :create
 
   # == Actions ==
@@ -25,9 +26,9 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           phone_number_verification_request: [ :phone_number ],
         )
         verification_request = PhoneNumberVerificationRequest.new(
+          **verification_request_params,
           ip_address: request.remote_ip,
           user_agent: request.user_agent,
-          **verification_request_params,
         )
         begin
           if verification_request.save
@@ -49,9 +50,12 @@ class PhoneNumberVerificationRequestsController < ApplicationController
               )
             end
             render(turbo_stream: actions)
-          elsif (error = verification_request.errors.full_messages_for(:ip_address).first)
-            alert = "failed to send verification code: #{error}"
-            redirect_to(new_session_path, alert:, status: :see_other)
+          elsif (ip_address_error = verification_request.errors.full_messages_for(:ip_address).first)
+            redirect_to(
+              new_session_path,
+              status: :see_other,
+              alert: "failed to send verification code: #{ip_address_error}",
+            )
           else
             actions = [ replace_form(verification_request:) ]
             render(
@@ -63,8 +67,11 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           tag_logger do
             logger.error("Failed to send verification code: #{error}")
           end
-          alert = "failed to send verification code: #{error}"
-          redirect_to(new_session_path, alert:, status: :see_other)
+          redirect_to(
+            new_session_path,
+            status: :see_other,
+            alert: "failed to send verification code: #{error}",
+          )
         end
       end
     end
@@ -82,41 +89,39 @@ class PhoneNumberVerificationRequestsController < ApplicationController
           ])
         verification_code = verification_request_params.delete(:verification_code)
         begin
-          if verification_request.verify(verification_code)
-            if (phone_number_owner = verification_request.phone_number_owner)
-              phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
-              phone_number_owner.update!(**phone_number_owner_params)
-              start_new_session_for(
-                phone_number_owner,
-                phone_number_verification_request: verification_request,
-              )
-              redirect_to(after_authentication_url, status: :see_other)
+          verification_request.transaction do
+            if verification_request.verify(verification_code)
+              if (phone_number_owner = verification_request.phone_number_owner)
+                phone_number_owner_params = verification_request_params.fetch(:phone_number_owner)
+                phone_number_owner.update!(**phone_number_owner_params)
+                start_new_session_for(
+                  phone_number_owner,
+                  phone_number_verification_request: verification_request,
+                )
+                session.delete(:registration_token)
+                redirect_to(
+                  after_authentication_url,
+                  status: :see_other,
+                  notice: "welcome back to smaller world :)",
+                )
+              else
+                session[:registration_token] = verification_request.generate_registration_token
+                redirect_to(new_account_path, status: :see_other)
+              end
             else
-              session[:phone_number_verification_token] =
-                verification_request.generate_registration_token
-              redirect_to(new_account_path, status: :see_other)
+              render(
+                turbo_stream: [
+                  replace_form(verification_request:),
+                ],
+              )
             end
-          else
-            render(
-              turbo_stream: [
-                replace_form(verification_request:),
-              ],
-            )
           end
         rescue ActiveRecord::RecordInvalid => error
-          render(
-            turbo_stream: [
-              replace_form(verification_request:),
-              turbo_stream.update(
-                "flashes",
-                renderable: Components::AppFlashAlert.new(
-                  type: :alert,
-                  message: error.message,
-                ),
-              ),
-            ],
-            status: :unprocessable_content,
-          )
+          actions = [ replace_form(verification_request:) ]
+          if (message = error.record.errors.full_messages.first)
+            actions << set_alert(message)
+          end
+          render(turbo_stream: actions, status: :unprocessable_content)
         end
       end
     end
@@ -143,6 +148,11 @@ class PhoneNumberVerificationRequestsController < ApplicationController
   end
 
   # == Callbacks ==
+
+  sig { void }
+  def reject_authenticated_access
+    redirect_to(home_path, status: :see_other) if authenticated?
+  end
 
   sig { void }
   def verify_turnstile_request

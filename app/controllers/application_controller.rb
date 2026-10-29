@@ -12,9 +12,10 @@ class ApplicationController < ActionController::Base
   include ClientDetection
   include DeviceIdentification
   include SentryIdentification
-  include LogStreaming
   include TaggedLogging
   include ToastStreaming
+  include LogActions
+  include FlashActions
 
   # == Configuration ==
 

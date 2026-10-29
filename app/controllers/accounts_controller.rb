@@ -4,7 +4,7 @@
 class AccountsController < ApplicationController
   # == Configuration ==
 
-  allow_unauthenticated_access only: [ :new, :create ]
+  require_unauthenticated_access only: [ :new, :create ]
   skip_verify_authorized
 
   # == Actions ==
@@ -13,30 +13,11 @@ class AccountsController < ApplicationController
   def new
     respond_to do |format|
       format.html do
-        phone_number_verification_token = session[:phone_number_verification_token]
-        unless phone_number_verification_token
-          tag_logger do
-            logger.warn("Missing phone number verification token")
-          end
-          redirect_url = if authenticated?
-            home_path
-          else
-            new_session_path
-          end
-          redirect_to(redirect_url) and return
+        if (registration = find_registration)
+          render Views::Accounts::New.new(user: registration.user)
+        else
+          redirect_to(new_session_path, alert: "please verify your phone number to continue")
         end
-
-        verification_request = PhoneNumberVerificationRequest
-          .find_by_registration_token(phone_number_verification_token)
-        unless verification_request&.verified?
-          tag_logger do
-            logger.warn("Invalid phone number verification token")
-          end
-          redirect_to(new_session_path) and return
-        end
-
-        user = User.new
-        render Views::Accounts::New.new(user:)
       end
     end
   end
@@ -56,43 +37,36 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html do
         user_params = params.expect(user: [ :name, :unconfirmed_email_address, :time_zone_name ])
-        phone_number_verification_token = session[:phone_number_verification_token]
-        unless phone_number_verification_token
-          tag_logger do
-            logger.warn("Missing phone number verification token")
+        if (registration = find_registration)
+          phone_number_verification_request = registration.phone_number_verification_request!
+          registration.transaction do
+            user = registration.complete! do |user|
+              user.attributes = user_params
+            end
+            start_new_session_for(user, phone_number_verification_request:)
+            session.delete(:registration_token)
+            redirect_to(
+              after_authentication_url,
+              status: :see_other,
+              notice: "welcome to smaller world!!",
+            )
+          rescue Registration::AlreadyCompleted
+            session.delete(:registration_token)
+            redirect_to(new_session_path, status: :see_other)
+          rescue ActiveRecord::RecordInvalid => error
+            case (record = error.record)
+            when User
+              render Views::Accounts::New.new(user: record), status: :unprocessable_content
+            else
+              raise
+            end
           end
-          redirect_to(
-            new_session_path,
-            alert: "Missing phone number verification token",
-            status: :see_other,
-          )
-          return
-        end
-
-        phone_number_verification_request = PhoneNumberVerificationRequest
-          .find_by_registration_token(phone_number_verification_token)
-        unless phone_number_verification_request&.verified?
-          tag_logger do
-            logger.warn("Invalid phone number verification token")
-          end
-          redirect_to(
-            new_session_path,
-            alert: "Invalid phone number verification token",
-            status: :see_other,
-          )
-          return
-        end
-
-        user = User.new(
-          **user_params,
-          phone_number: phone_number_verification_request.phone_number,
-        )
-        if user.save
-          session.delete(:phone_number_verification_token)
-          start_new_session_for(user, phone_number_verification_request:)
-          redirect_to(after_authentication_url, status: :see_other)
         else
-          render Views::Accounts::New.new(user:), status: :unprocessable_content
+          redirect_to(
+            new_session_path,
+            status: :see_other,
+            alert: "something went wrong, please try again!",
+          )
         end
       end
     end
@@ -109,16 +83,20 @@ class AccountsController < ApplicationController
           :unconfirmed_email_address,
         ])
         if current_user.update(user_params)
-          alert = if current_user.unconfirmed_email_address? &&
+          if current_user.unconfirmed_email_address? &&
               current_user.saved_change_to_unconfirmed_email_address?
-            "please check your inbox for a confirmation email! ty <3"
+            refresh_or_redirect_to(
+              home_path,
+              status: :see_other,
+              alert: "please check your inbox for a confirmation email! ty <3",
+            )
+          else
+            refresh_or_redirect_to(
+              home_path,
+              status: :see_other,
+              notice: "your account settings were saved",
+            )
           end
-          refresh_or_redirect_to(
-            home_path,
-            status: :see_other,
-            notice: "your account settings were saved",
-            alert:,
-          )
         else
           render Views::Accounts::Edit.new(current_user:), status: :unprocessable_content
         end
@@ -137,6 +115,17 @@ class AccountsController < ApplicationController
           render Views::Accounts::Edit.new(current_user:), status: :unprocessable_content
         end
       end
+    end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(T.nilable(Registration)) }
+  def find_registration
+    if (token = session[:registration_token])
+      Registration.find_by_token(token)
     end
   end
 end

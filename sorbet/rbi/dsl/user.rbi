@@ -389,6 +389,15 @@ class User
     sig { params(value: T::Enumerable[::World]).void }
     def accessible_worlds=(value); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def build_registration(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def create_registration(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def create_registration!(*args, &blk); end
+
     sig { returns(T::Array[T.untyped]) }
     def device_ids; end
 
@@ -459,6 +468,15 @@ class User
     sig { params(value: T::Enumerable[::Notification]).void }
     def received_notifications=(value); end
 
+    sig { returns(T.nilable(::Registration)) }
+    def registration; end
+
+    sig { params(value: T.nilable(::Registration)).void }
+    def registration=(value); end
+
+    sig { returns(T.nilable(::Registration)) }
+    def reload_registration; end
+
     sig { returns(T::Array[T.untyped]) }
     def reply_initiation_ids; end
 
@@ -486,6 +504,9 @@ class User
 
     sig { params(value: T::Enumerable[::Report]).void }
     def reports=(value); end
+
+    sig { void }
+    def reset_registration; end
 
     sig { returns(T::Array[T.untyped]) }
     def session_ids; end

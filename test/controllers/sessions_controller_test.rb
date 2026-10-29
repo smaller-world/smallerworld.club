@@ -27,4 +27,16 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_empty cookies[:session_id]
   end
+
+  test "a signed out session cookie cannot authenticate again" do
+    sign_in_as(@user)
+    session_cookie = cookies[:session_id]
+
+    delete session_path
+    assert_redirected_to root_path
+
+    cookies[:session_id] = session_cookie
+    get home_path
+    assert_redirected_to new_session_path
+  end
 end

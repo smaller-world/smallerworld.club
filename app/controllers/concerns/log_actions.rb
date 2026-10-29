@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-module LogStreaming
+module LogActions
   extend T::Sig
   extend T::Helpers
   extend ActiveSupport::Concern

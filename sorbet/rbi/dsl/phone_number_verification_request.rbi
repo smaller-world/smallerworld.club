@@ -6,6 +6,7 @@
 
 
 class PhoneNumberVerificationRequest
+  include GeneratedAssociationMethods
   include GeneratedAttributeMethods
   extend CommonRelationMethods
   extend GeneratedRelationMethods
@@ -449,6 +450,29 @@ class PhoneNumberVerificationRequest
 
     sig { returns(::PhoneNumberVerificationRequest) }
     def third_to_last!; end
+  end
+
+  module GeneratedAssociationMethods
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def build_registration(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def create_registration(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::Registration) }
+    def create_registration!(*args, &blk); end
+
+    sig { returns(T.nilable(::Registration)) }
+    def registration; end
+
+    sig { params(value: T.nilable(::Registration)).void }
+    def registration=(value); end
+
+    sig { returns(T.nilable(::Registration)) }
+    def reload_registration; end
+
+    sig { void }
+    def reset_registration; end
   end
 
   module GeneratedAssociationRelationMethods

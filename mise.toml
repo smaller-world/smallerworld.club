@@ -12,10 +12,11 @@ overmind = "latest"
 [tasks]
 # == Development flow
 setup = { run = "bin/setup" }
-"setup:actual_db_schema" = { run = "bin/rails actual_db_schema:install_git_hooks" }
+"setup:actual_db_schema" = { description = "Install Git hooks for actual_db_schema", run = "bin/rails actual_db_schema:install_git_hooks" }
 ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
-dev = { run = "bin/dev" }
-restart = { run = "bin/overmind restart" }
+pg = { description = "Start a postgres container", run = "bin/postgres" }
+dev = { description = "Start dev proceses", run = "bin/dev" }
+restart = { description = "Restart all processes", run = "bin/overmind restart" }
 
 # == Rails shortcuts
 rc = { run = "bin/rails console" }

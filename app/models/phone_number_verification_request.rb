@@ -41,7 +41,14 @@ class PhoneNumberVerificationRequest < ApplicationRecord
     phone_number if verified?
   end
 
-  # == Asosciations ==
+  sig { returns(Phonelib::Phone) }
+  def parsed_phone_number
+    Phonelib.parse(phone_number)
+  end
+
+  # == Associations ==
+
+  has_one :registration, dependent: :destroy
 
   sig { returns(T.nilable(User)) }
   def phone_number_owner
@@ -77,89 +84,11 @@ class PhoneNumberVerificationRequest < ApplicationRecord
       .where("created_at > ", EXPIRATION_DURATION.ago)
   }
 
-  # == Tokens ==
-
-  generates_token_for :registration
-
-  sig { params(token: String).returns(PhoneNumberVerificationRequest) }
-  def self.find_by_registration_token!(token)
-    find_by_token_for!(:registration, token)
-  end
-
-  sig { params(token: String).returns(T.nilable(PhoneNumberVerificationRequest)) }
-  def self.find_by_registration_token(token)
-    find_by_token_for(:registration, token)
-  end
-
-  sig { returns(String) }
-  def generate_registration_token
-    raise "Phone number not verified" unless verified?
-
-    generate_token_for(:registration)
-  end
-
-  # == Override Codes ==
-
-  sig { returns(T::Hash[String, String]) }
-  private_class_method def self.override_codes_by_phone_number
-    @override_codes_by_phone_number ||= T.let(
-      if (overrides = Rails.application.credentials.phone_number_verification_code_overrides)
-        overrides
-          .index_by { |override| override.fetch(:phone_number) }
-          .transform_values { |override| override.fetch(:verification_code) }
-      else
-        {}
-      end,
-      T.nilable(T::Hash[String, String]),
-    )
-  end
-
-  sig { params(phone_number: String).returns(T.nilable(String)) }
-  def self.override_code_for(phone_number)
-    override_codes_by_phone_number[phone_number]
-  end
-
-  sig { returns(T::Boolean) }
-  def has_override_code?
-    self.class.override_code_for(phone_number).present?
-  end
-
-  # == Methods ==
-
-  # Creates a verified request for `user` with throwaway transport metadata.
-  # Test-only: used by PhoneNumberVerificationRequestTestHelper and the test sign-in
-  # backdoor to satisfy Session's `phone_number_verification_request` requirement without
-  # walking the OTP flow.
-  sig { params(user: User, verified: T::Boolean).returns(PhoneNumberVerificationRequest) }
-  def self.create_test_mock_for!(user, verified:)
-    raise "Only available in test environment" unless Rails.env.test?
-
-    create!(
-      phone_number: user.phone_number,
-      user_agent: "test",
-      ip_address: IPAddr.new("127.0.0.1"),
-    ) do |request|
-      request.verified_at = Time.current if verified
-    end
-  end
-
-  sig { returns(T::Enumerable[IPAddr]) }
-  def self.ip_addresses_exceeding_daily_rate_limit
-    where(created_at: (1.day.ago)..)
-      .where.not(ip_address: nil)
-      .group(:ip_address)
-      .having("COUNT(*) >= ?", DAILY_RATE_LIMIT)
-      .pluck(:ip_address)
-  end
+  # == Verification ==
 
   sig { returns(String) }
   def self.generate_verification_code
     format("%06d", rand(0..999_999))
-  end
-
-  sig { returns(Phonelib::Phone) }
-  def parsed_phone_number
-    Phonelib.parse(phone_number)
   end
 
   sig { returns(String) }
@@ -198,6 +127,69 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
       update(verified_at: Time.current)
     end
+  end
+
+  # == Override Codes ==
+
+  sig { returns(T::Hash[String, String]) }
+  private_class_method def self.override_codes_by_phone_number
+    @override_codes_by_phone_number ||= T.let(
+      if (overrides = Rails.application.credentials.phone_number_verification_code_overrides)
+        overrides
+          .index_by { |override| override.fetch(:phone_number) }
+          .transform_values { |override| override.fetch(:verification_code) }
+      else
+        {}
+      end,
+      T.nilable(T::Hash[String, String]),
+    )
+  end
+
+  sig { params(phone_number: String).returns(T.nilable(String)) }
+  def self.override_code_for(phone_number)
+    override_codes_by_phone_number[phone_number]
+  end
+
+  sig { returns(T::Boolean) }
+  def has_override_code?
+    self.class.override_code_for(phone_number).present?
+  end
+
+  # == Testing ==
+
+  # Creates a verified request for `user` with throwaway transport metadata.
+  #
+  # Test-only: used by PhoneNumberVerificationRequestTestHelper and the test sign-in
+  # backdoor to satisfy Session's `phone_number_verification_request` requirement without
+  # walking the OTP flow.
+  sig { params(user: User, verified: T::Boolean).returns(PhoneNumberVerificationRequest) }
+  def self.create_test_mock_for!(user, verified:)
+    raise ApplicationError, "Only available in test environment" unless Rails.env.test?
+
+    create!(
+      phone_number: user.phone_number,
+      user_agent: "test",
+      ip_address: IPAddr.new("127.0.0.1"),
+    ) do |request|
+      request.verified_at = Time.current if verified
+    end
+  end
+
+  # == Methods ==
+
+  sig { returns(String) }
+  def generate_registration_token
+    registration = self.registration || create_registration!
+    registration.generate_token
+  end
+
+  sig { returns(T::Enumerable[IPAddr]) }
+  def self.ip_addresses_exceeding_daily_rate_limit
+    where(created_at: (1.day.ago)..)
+      .where.not(ip_address: nil)
+      .group(:ip_address)
+      .having("COUNT(*) >= ?", DAILY_RATE_LIMIT)
+      .pluck(:ip_address)
   end
 
   private

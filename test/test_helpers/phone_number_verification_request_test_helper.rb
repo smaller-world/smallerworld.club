@@ -4,7 +4,7 @@
 # Drives the phone-number verification flow through the real controller stack —
 # both the create endpoint (with Turnstile swapped to the always-passes test
 # client) and the verify endpoint — so the session-level
-# `:phone_number_verification_token` marker is set the same way the production
+# `:registration_token` marker is set the same way the production
 # flow sets it. Returns the verified PhoneNumberVerificationRequest.
 #
 # For tests where the verification flow is the subject under test, drive the

@@ -36,6 +36,12 @@ module Authentication
     def allow_unauthenticated_access(**options)
       skip_before_action(:require_authentication, **options)
     end
+
+    sig { params(options: T.untyped).void }
+    def require_unauthenticated_access(**options)
+      allow_unauthenticated_access(**options)
+      before_action(:reject_authenticated_access, **options)
+    end
   end
 
   private
@@ -65,6 +71,17 @@ module Authentication
       Rails.application.routes.url_helpers.new_session_path,
       notice: "please sign in to continue",
     )
+  end
+
+  sig { void }
+  def reject_authenticated_access
+    if authenticated?
+      redirect_to(
+        after_authentication_url,
+        status: request.get? ? :found : :see_other,
+        notice: "you are already signed in!",
+      )
+    end
   end
 
   sig { returns(String) }

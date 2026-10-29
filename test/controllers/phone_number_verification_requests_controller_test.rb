@@ -5,6 +5,62 @@ require "test_helper"
 require "timeout"
 
 class PhoneNumberVerificationRequestsControllerTest < ActionDispatch::IntegrationTest
+  test "signed in users cannot request a verification code" do
+    sign_in_as(users(:bob))
+    session_cookie = cookies[:session_id]
+
+    assert_no_difference -> { PhoneNumberVerificationRequest.count } do
+      post phone_number_verification_requests_path,
+        params: { phone_number_verification_request: { phone_number: "+14165551234" } },
+        as: :turbo_stream
+    end
+
+    assert_redirected_to home_url
+    assert_response :see_other
+    assert_equal session_cookie, cookies[:session_id]
+  end
+
+  test "signed in users cannot verify an unregistered phone number" do
+    verification_request = PhoneNumberVerificationRequest.create!(
+      phone_number: "+14165551234", ip_address: "127.0.0.1", user_agent: "test",
+    )
+    sign_in_as(users(:bob))
+    session_cookie = cookies[:session_id]
+
+    assert_no_difference([ -> { Registration.count }, -> { Session.count } ]) do
+      verify_request(verification_request, code: verification_request.verification_code)
+    end
+
+    assert_redirected_to home_url
+    assert_response :see_other
+    assert_nil verification_request.reload.verified_at
+    assert_equal session_cookie, cookies[:session_id]
+
+    delete session_path
+    post account_path, params: {
+      user: { name: "bobby", unconfirmed_email_address: "bobby@example.com", time_zone_name: "America/Toronto" },
+    }
+    assert_redirected_to new_session_path
+  end
+
+  test "signed in users cannot switch accounts by verifying another user's phone number" do
+    user = users(:sue)
+    verification_request = PhoneNumberVerificationRequest.create_test_mock_for!(user, verified: false)
+    sign_in_as(users(:bob))
+    session_cookie = cookies[:session_id]
+
+    assert_no_changes -> { user.reload.attributes } do
+      assert_no_difference -> { Session.count } do
+        verify_request(verification_request, code: verification_request.verification_code)
+      end
+    end
+
+    assert_redirected_to home_url
+    assert_response :see_other
+    assert_nil verification_request.reload.verified_at
+    assert_equal session_cookie, cookies[:session_id]
+  end
+
   test "start new verification request" do
     assert_difference -> { PhoneNumberVerificationRequest.count }, 1 do
       post phone_number_verification_requests_path,

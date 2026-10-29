@@ -3,6 +3,11 @@
 The ubiquitous language of smaller world. This is a glossary, not a spec — it
 says what words mean, never how they're implemented.
 
+## Accounts
+
+**Registration** — an attempt to create a user account after verifying ownership
+of a phone number. Completing a registration creates exactly one **User**.
+
 ## Worlds and access
 
 **World** — a person's private space, owned by exactly one **User**. Everything

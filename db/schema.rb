@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_28_182508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -212,6 +212,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
     t.index ["post_id", "emoji", "reactor_id"], name: "index_reactions_uniqueness", unique: true
     t.index ["post_id"], name: "index_reactions_on_post_id"
     t.index ["reactor_id"], name: "index_reactions_on_reactor_id"
+  end
+
+  create_table "registrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "phone_number_verification_request_id", null: false
+    t.uuid "created_user_id"
+    t.timestamptz "completed_at"
+    t.timestamptz "created_at", null: false
+    t.index ["created_user_id"], name: "index_registrations_on_created_user_id", unique: true
+    t.index ["phone_number_verification_request_id"], name: "index_registrations_on_phone_number_verification_request_id", unique: true
   end
 
   create_table "reply_initiations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -481,6 +490,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_212935) do
   add_foreign_key "posts", "worlds"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
+  add_foreign_key "registrations", "phone_number_verification_requests"
+  add_foreign_key "registrations", "users", column: "created_user_id"
   add_foreign_key "reply_initiations", "posts"
   add_foreign_key "reply_initiations", "users", column: "replier_id"
   add_foreign_key "reports", "users", column: "moderator_id"

@@ -28,6 +28,9 @@ module GeneratedPathHelpersModule
   def account_time_zone_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def actual_db_schema_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def admin_dashboard_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
