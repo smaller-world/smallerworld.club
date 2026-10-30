@@ -22,7 +22,7 @@ jobs:
           key: gems-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
           restore-keys: gems-${{ runner.os }}-
       - name: Set up Ruby
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v5
         with:
           install_args: ruby
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
           key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-${{ runner.os }}-
       - name: Set up Bun
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v5
         with:
           install_args: bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
           key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-${{ runner.os }}-
       - name: Set up tools
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Ruby gems
@@ -149,7 +149,7 @@ jobs:
           key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-${{ runner.os }}-
       - name: Set up tools
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v5
         with:
           install_args: ruby bun
           github_token: ${{ secrets.GITHUB_TOKEN }}
