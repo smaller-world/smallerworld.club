@@ -15,7 +15,7 @@
     "build:css": "bunx --bun -p npm-run-all2 run-p --npm-path bun 'build:css:*'"
   },
   "dependencies": {
-    "@37signals/lexxy": "^0.9.25",
+    "@37signals/lexxy": "^1.0.3",
     "@glidejs/glide": "^3.7.1",
     "@gothassos/uppy-activestorage-upload": "^2.0.2",
     "@hotwired/hotwire-native-bridge": "^1.2.2",

@@ -63,6 +63,19 @@ module ActiveStorage; end
 module ActiveStorage::BlobWithPreviewUrl
   # pkg:gem/lexxy#lib/active_storage/blob_with_preview_url.rb:5
   def as_json(options = T.unsafe(nil)); end
+
+  private
+
+  # pkg:gem/lexxy#lib/active_storage/blob_with_preview_url.rb:19
+  def preview_json_root(options); end
+
+  # pkg:gem/lexxy#lib/active_storage/blob_with_preview_url.rb:33
+  def preview_url_path; end
+
+  # Mirrors Active Model: only takes precedence over except.
+  #
+  # pkg:gem/lexxy#lib/active_storage/blob_with_preview_url.rb:25
+  def serializes_preview_field?(field, options); end
 end
 
 # pkg:gem/lexxy#lib/active_storage/blob_with_preview_url.rb:3
@@ -71,7 +84,7 @@ ActiveStorage::BlobWithPreviewUrl::PREVIEW_SIZE = T.let(T.unsafe(nil), Array)
 # pkg:gem/lexxy#lib/lexxy/version.rb:1
 module Lexxy
   class << self
-    # pkg:gem/lexxy#lib/lexxy.rb:10
+    # pkg:gem/lexxy#lib/lexxy.rb:14
     def override_action_text_defaults; end
 
     # pkg:gem/lexxy#lib/lexxy/engine.rb:7
@@ -83,9 +96,12 @@ module Lexxy
     # pkg:gem/lexxy#lib/lexxy/engine.rb:7
     def railtie_routes_url_helpers(include_path_helpers = T.unsafe(nil)); end
 
+    # pkg:gem/lexxy#lib/lexxy.rb:5
+    def supports_alternative_text?; end
+
     # Check for ActionText::Editor with block-children support (rails/rails#56926)
     #
-    # pkg:gem/lexxy#lib/lexxy.rb:6
+    # pkg:gem/lexxy#lib/lexxy.rb:10
     def supports_editor_adapter?; end
 
     # pkg:gem/lexxy#lib/lexxy/engine.rb:7
@@ -134,7 +150,7 @@ end
 
 # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:2
 module Lexxy::TagHelper
-  # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:21
+  # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:22
   def lexxy_rich_text_area_tag(name, value = T.unsafe(nil), options = T.unsafe(nil), &block); end
 
   # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:3
@@ -144,7 +160,7 @@ module Lexxy::TagHelper
 
   # Temporary: we need to *adaptarize* action text
   #
-  # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:25
+  # pkg:gem/lexxy#lib/lexxy/rich_text_area_tag.rb:26
   def render_custom_attachments_in(value); end
 end
 

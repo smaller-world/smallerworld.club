@@ -18,6 +18,7 @@ ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
 postgres = { description = "Start a postgres container", run = "bin/postgres", alias = "pg" }
 dev = { description = "Start dev proceses", run = "bin/dev" }
 restart = { description = "Restart all processes", run = "bin/overmind restart", alias = "r" }
+tunnel = { description = "Start Cloudflare dev tunnel", run = "cloudflared tunnel run" }
 
 # == Rails shortcuts
 "rails:console" = { run = "bin/rails console", alias = "c" }

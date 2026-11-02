@@ -21,7 +21,6 @@ class ActualDbSchema::BrokenVersionsController
     include ::ActionText::ContentHelper
     include ::ActionText::TagHelper
     include ::Lexxy::TagHelper
-    include ::Lexxy::TagHelper::RenderEncryptedContent
     include ::Importmap::ImportmapTagsHelper
     include ::ActionController::Base::HelperMethods
 

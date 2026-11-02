@@ -48,6 +48,24 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Edited", post.reload.title
   end
 
+  test "encrypted rich text loads into the editor and preserves formatting in the feed" do
+    post = create_post(world: @world, body: "<p><s>crossed out</s> <u>underlined</u></p>")
+    sign_in_as(@owner)
+
+    get edit_post_path(post)
+    assert_response :success
+    assert_select "lexxy-editor[name='post[body]']" do |editors|
+      value = editors.first["value"].to_s
+      assert_includes value, "<s>crossed out</s>"
+      assert_includes value, "<u>underlined</u>"
+    end
+
+    get world_posts_path(@world), headers: { "Turbo-Frame" => "posts" }
+    assert_response :success
+    assert_select ".lexxy-content s", text: "crossed out"
+    assert_select ".lexxy-content u", text: "underlined"
+  end
+
   test "owner deletes a post" do
     post = create_post(world: @world)
 

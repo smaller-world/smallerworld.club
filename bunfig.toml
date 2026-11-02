@@ -1,5 +1,6 @@
 [install]
 # Only install package versions published at least 7 days ago
 minimumReleaseAge = 604800
-# 2.4.0 fixes GHSA-27r3-jxmh-p828; published files match upstream release commit.
-minimumReleaseAgeExcludes = ["body-parser"]
+
+# Lexxy 1.0.3 is an intentional upgrade reviewed against upstream release notes.
+minimumReleaseAgeExcludes = ["@37signals/lexxy"]
