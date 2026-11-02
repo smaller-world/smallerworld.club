@@ -31,6 +31,7 @@ module SmallerWorld
     config.x.turnstile_test_secret_keys.already_spent_key = "3x0000000000000000000000000000000AA"
     config.x.turnstile_test_site_keys.always_passes_key = "1x00000000000000000000AA"
 
+    config.github_url = "https://github.com/smaller-world/smallerworld.club"
     config.fly_url = "https://fly.io/apps/smallerworld"
     config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
     config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
