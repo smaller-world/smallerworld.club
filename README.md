@@ -62,8 +62,5 @@ mise run test:all -v
 
 ## feedback
 
-- what happens if i add this card to my wallet? will it drain my credit card?
 - the world icon on the key grants page looks too much like a button
-- firefox focus apple wallet card DOES NOT WORK
 - create your world icon looks fucking icon
-- accept world key from card does not redirect to world

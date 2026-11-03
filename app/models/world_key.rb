@@ -199,11 +199,4 @@ class WorldKey < ApplicationRecord
   def broadcast_world_keys_page_refresh
     broadcast_refresh_to(world!, :keys)
   end
-
-  # sig { void }
-  # def discard_recipient_world_cards!
-  #   world = world!
-  #   recipient = recipient!
-  #   world.cards.kept.where(cardholder: recipient).discard_all!
-  # end
 end

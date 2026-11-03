@@ -16,7 +16,7 @@ module DownloadsTestHelper
 
   # == Methods ==
 
-  # Asserts that a file matching `pattern` (a glob, e.g. "*.pkpass") was
+  # Asserts that a file matching `pattern` (a glob, e.g. "*.pdf") was
   # downloaded within `wait` seconds. Returns the Pathname of the file.
   sig { params(pattern: String, wait: T.any(Float, Integer)).returns(Pathname) }
   def assert_download(pattern, wait: 10)

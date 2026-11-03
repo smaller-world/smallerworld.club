@@ -265,6 +265,9 @@ module GeneratedUrlHelpersModule
   def session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def src_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def start_pwa_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

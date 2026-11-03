@@ -265,6 +265,9 @@ module GeneratedPathHelpersModule
   def session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def src_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def start_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

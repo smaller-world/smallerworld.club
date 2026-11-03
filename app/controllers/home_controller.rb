@@ -20,26 +20,4 @@ class HomeController < ApplicationController
       end
     end
   end
-
-  # private
-
-  # == Helpers ==
-
-  # sig { returns(T::Boolean) }
-  # def app_required?
-  #   cast_boolean(params[:require_app])
-  # end
-
-  # TODO: Auto-link cards with existing keys?
-  # sig do
-  #   params(
-  #     cards: WorldCard::PrivateRelation,
-  #     current_user: User,
-  #     current_device: Device,
-  #   ).void
-  # end
-  # def autolink_cards(cards, current_user:, current_device:)
-  #   cards.find_each do |card|
-  #   end
-  # end
 end

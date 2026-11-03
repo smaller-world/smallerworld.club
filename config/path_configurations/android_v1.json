@@ -12,7 +12,6 @@
         "\/new(\\?.*)?$",
         "\/edit(\\?.*)?$",
         "^\/world_key_grants\/.+$",
-        "^\/world_cards\/[\\w-]+\/key_grant(\\?.*)?$",
         "\/settings(\\?.*)?$",
         "\/policies(\\?.*)?$",
         "\/contact(\\?.*)?$"
@@ -59,13 +58,7 @@
       }
     },
     {
-      "patterns": [
-        "^\/worlds$",
-        "^\/world_key_grants$",
-        "^\/world_cards$",
-        "^\/world_cards\/[\\w-]+$",
-        "^\/posts$"
-      ],
+      "patterns": ["^\/worlds$", "^\/world_key_grants$", "^\/posts$"],
       "properties": {
         "unroutable": true
       }

@@ -362,11 +362,6 @@ class Post < ApplicationRecord
     update_column("ordered_images_attachment_ids", images_attachments.map(&:id)) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  # sig { void }
-  # def touch_world_cards
-  #   world_cards.active.find_each(&:touch)
-  # end
-
   sig { void }
   def create_notifications_for_subscribers!
     subscribers.find_each do |subscriber|

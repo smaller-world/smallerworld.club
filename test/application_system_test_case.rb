@@ -1,17 +1,10 @@
 # typed: strict
 # frozen_string_literal: true
 
-require "test_helper"
 require "capybara/playwright"
+require "test_helper"
 
-Capybara.register_driver(:playwright) do |app|
-  Capybara::Playwright::Driver.new(
-    app,
-    browser_type: :chromium,
-    headless: true,
-    playwright_cli_executable_path: "bunx --bun playwright",
-  )
-end
+Capybara.register_driver(:playwright)
 
 Capybara.configure do |config|
   config.test_id = "data-testid"
@@ -19,5 +12,9 @@ Capybara.configure do |config|
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :playwright
+  driven_by :playwright, options: {
+    browser_type: :chromium,
+    headless: true,
+    playwright_cli_executable_path: "bunx --bun playwright",
+  }
 end

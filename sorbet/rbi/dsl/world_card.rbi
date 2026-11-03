@@ -417,9 +417,6 @@ class WorldCard
     sig { params(args: T.untyped, blk: T.untyped).returns(::Device) }
     def build_device(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
-    def build_pass(*args, &blk); end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
@@ -447,12 +444,6 @@ class WorldCard
     sig { params(args: T.untyped, blk: T.untyped).returns(::Device) }
     def create_device!(*args, &blk); end
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
-    def create_pass(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(::Passkit::Pass) }
-    def create_pass!(*args, &blk); end
-
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world(*args, &blk); end
 
@@ -471,48 +462,11 @@ class WorldCard
     sig { returns(T::Boolean) }
     def device_previously_changed?; end
 
-    sig { returns(T.nilable(::Passkit::Pass)) }
-    def pass; end
-
-    sig { params(value: T.nilable(::Passkit::Pass)).void }
-    def pass=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def pass_device_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def pass_device_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :pass_devices, through: :pass_registrations`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::Passkit::Device::PrivateCollectionProxy) }
-    def pass_devices; end
-
-    sig { params(value: T::Enumerable[::Passkit::Device]).void }
-    def pass_devices=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def pass_registration_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def pass_registration_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `WorldCard` class because it declared `has_many :pass_registrations, through: :pass`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::Passkit::Registration::PrivateCollectionProxy) }
-    def pass_registrations; end
-
-    sig { params(value: T::Enumerable[::Passkit::Registration]).void }
-    def pass_registrations=(value); end
-
     sig { returns(T.nilable(::User)) }
     def reload_cardholder; end
 
     sig { returns(T.nilable(::Device)) }
     def reload_device; end
-
-    sig { returns(T.nilable(::Passkit::Pass)) }
-    def reload_pass; end
 
     sig { returns(T.nilable(::World)) }
     def reload_world; end
@@ -522,9 +476,6 @@ class WorldCard
 
     sig { void }
     def reset_device; end
-
-    sig { void }
-    def reset_pass; end
 
     sig { void }
     def reset_world; end
@@ -545,9 +496,6 @@ class WorldCard
   module GeneratedAssociationRelationMethods
     include Discard::Model::ClassMethods
 
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def active(*args, &blk); end
-
     sig { returns(PrivateAssociationRelation) }
     def all; end
 
@@ -562,9 +510,6 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def chronological(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def claimed(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def create_with(*args, &blk); end
@@ -688,9 +633,6 @@ class WorldCard
     def structurally_compatible?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def unclaimed(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def undiscarded(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -714,19 +656,10 @@ class WorldCard
     def with_discarded(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def with_expired_relevant_date(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def with_pass_serial_numbers(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def without(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def without_world_key(*args, &blk); end
   end
 
   module GeneratedAttributeMethods
@@ -1302,9 +1235,6 @@ class WorldCard
   end
 
   module GeneratedRelationMethods
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def active(*args, &blk); end
-
     sig { returns(PrivateRelation) }
     def all; end
 
@@ -1319,9 +1249,6 @@ class WorldCard
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def chronological(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def claimed(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def create_with(*args, &blk); end
@@ -1445,9 +1372,6 @@ class WorldCard
     def structurally_compatible?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def unclaimed(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def undiscarded(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1471,19 +1395,10 @@ class WorldCard
     def with_discarded(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def with_expired_relevant_date(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def with_pass_serial_numbers(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def without(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def without_world_key(*args, &blk); end
   end
 
   class PrivateAssociationRelation < ::ActiveRecord::AssociationRelation

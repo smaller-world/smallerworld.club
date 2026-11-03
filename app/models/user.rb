@@ -37,10 +37,6 @@ class User < ApplicationRecord
 
   NAME_MAX_LENGTH = 22
 
-  # Attributes that, when changed, invalidate the on-device pass for each world
-  # card.
-  WORLD_CARD_ATTRIBUTES = T.let([ "name" ].freeze, T::Array[String])
-
   # == FriendlyId ==
 
   friendly_id :phone_number, use: :slugged, slug_column: :phone_number
@@ -101,10 +97,10 @@ class User < ApplicationRecord
     foreign_key: :owner_id,
     dependent: :destroy
 
-  # has_many :world_cards,
-  #   inverse_of: :cardholder,
-  #   foreign_key: :cardholder_id,
-  #   dependent: :destroy
+  has_many :world_cards,
+    inverse_of: :cardholder,
+    foreign_key: :cardholder_id,
+    dependent: :destroy
 
   has_many :received_notifications,
     class_name: "Notification",

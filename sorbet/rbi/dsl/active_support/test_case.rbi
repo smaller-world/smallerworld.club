@@ -26,20 +26,20 @@ class ActiveSupport::TestCase
   end
   def active_storage_blobs(fixture_name = nil, *other_fixtures); end
 
-  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[Device]) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(Device) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[Device]) }
-  def devices(fixture_name = nil, *other_fixtures); end
-
-  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[Passkit::Device]) }
-  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(Passkit::Device) }
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[ActiveStorage::VariantRecord]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(ActiveStorage::VariantRecord) }
   sig do
     params(
       fixture_name: T.any(String, Symbol),
       other_fixtures: T.any(String, Symbol)
-    ).returns(T::Array[Passkit::Device])
+    ).returns(T::Array[ActiveStorage::VariantRecord])
   end
-  def passkit_devices(fixture_name = nil, *other_fixtures); end
+  def active_storage_variant_records(fixture_name = nil, *other_fixtures); end
+
+  sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[Device]) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(Device) }
+  sig { params(fixture_name: T.any(String, Symbol), other_fixtures: T.any(String, Symbol)).returns(T::Array[Device]) }
+  def devices(fixture_name = nil, *other_fixtures); end
 
   sig { params(fixture_name: NilClass, other_fixtures: NilClass).returns(T::Array[User]) }
   sig { params(fixture_name: T.any(String, Symbol), other_fixtures: NilClass).returns(User) }

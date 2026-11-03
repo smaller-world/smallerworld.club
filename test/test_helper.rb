@@ -33,21 +33,5 @@ module ActiveSupport
     # to open a connection to it during test setup, which would fail when
     # credentials are unavailable (e.g. on Dependabot CI runs).
     skip_transactional_tests_for_database :v1
-
-    # private
-
-    # # == Helpers ==
-
-    # sig do
-    #   type_parameters(:U).params(
-    #     errors: T.any(Module, String),
-    #     block: T.proc.returns(T.type_parameter(:U)),
-    #   ).returns(T.type_parameter(:U))
-    # end
-    # def retry_on(*errors, &block)
-    #   yield
-    # rescue *errors
-    #   retry
-    # end
   end
 end

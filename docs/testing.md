@@ -7,7 +7,7 @@ The suite uses Minitest with fixtures and builder helpers. Run it with
 
 - **Model tests** (`test/models/`, `ActiveSupport::TestCase`) — isolated model
   logic: validations, scopes, callbacks. Fast. Use for business rules
-  (key/card/visibility logic).
+  (key/post-type/visibility logic).
 - **Integration tests** (`test/controllers/`, `ActionDispatch::IntegrationTest`)
   — a real request through routing → controller → policy → rendered Phlex HTML.
   Because the app is server-rendered, these carry most flow coverage. Default
@@ -31,13 +31,11 @@ Defined in `test/test_helpers/world_test_helper.rb`. Dumb and composable —
 combine them to express a scenario; they contain no conditional logic.
 
 - `create_world(owner:, name: nil)` — world with the canonical icon attached.
-- `grant_key(world:, recipient:, color: :blue, accepted: true)` — the "join"
-  primitive. `accepted: false` models the future return-key (pending) invite.
-- `create_card(world:, granted_key_color: :blue, device: nil)` — a world card.
-  Pass `device:` to claim it for that device's owner (`cardholder_id` is derived
-  from `device.owner_id` via a model callback).
-- `create_post(world:, key_colors: ["blue"], body:, **attrs)` — key-scoped post;
-  `key_colors: nil` is visible to all keys.
+- `create_member_key(world:, recipient:)` — grants the recipient a key with
+  access to all of the world's current post types.
+- `create_post(world:, type_label: "journal entry", body: "hello world", **attributes)`
+  — creates a post using the world's post type with the given label, forwarding
+  additional attributes to `world.posts.create!`.
 
 ### Sign-in
 
@@ -118,6 +116,5 @@ breaks `cookies` resolution inside the helper.
 
 ## Next effort (not yet covered)
 
-Passkit / Apple Wallet pass generation and push notification delivery are
-intentionally untested for now — they need careful mocking of the Passkit and
-APNs layers. Pick this up as a dedicated follow-up.
+Native push notification delivery is intentionally untested for now — it needs
+careful mocking of the push services. Pick this up as a dedicated follow-up.

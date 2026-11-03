@@ -42,9 +42,6 @@ class Device < ApplicationRecord
 
   belongs_to :owner, class_name: "User", optional: true
   has_many :world_cards, dependent: :destroy
-  has_many :world_card_passes,
-    through: :world_cards,
-    source: :pass
 
   sig { returns(User) }
   def owner!

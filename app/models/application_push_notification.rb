@@ -3,6 +3,7 @@
 
 class ApplicationPushNotification < ActionPushNative::Notification
   extend T::Sig
+  extend T::Helpers
 
   # == Configuration ==
 

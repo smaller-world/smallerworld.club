@@ -56,14 +56,6 @@ Rails.application.routes.draw do
     post :test
   end
 
-  # resource :apple_oauth_session, path: "/session/apple_oauth", only: :create do
-  #   post :callback
-  # end
-  # resource :google_oauth_session, path: "/session/google_oauth", only: :create do
-  #   get :callback
-  # end
-  # resources :passwords, param: :token
-
   # == Home
   get :home, to: "home#show"
 
@@ -99,14 +91,6 @@ Rails.application.routes.draw do
   resources :world_key_world_visits,
     path: "/world_keys/:world_key_id/world_visits",
     only: :create
-
-  # == World Cards
-  # resources :world_cards, only: [ :show ] do
-  #   member do
-  #     get :download
-  #     post :claim
-  #   end
-  # end
 
   # == World Key Grants
   resources :world_key_grants, only: :show, param: :message do
@@ -145,9 +129,6 @@ Rails.application.routes.draw do
   get "/install",
     to: redirect(Rails.configuration.install_url, status: 302),
     as: :install
-
-  # == Passkit
-  # mount Passkit::Engine => "/passkit", as: "passkit"
 
   # == Contact Us
   resource :contact_request, path: "/contact", only: :create
