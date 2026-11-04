@@ -9,12 +9,13 @@ class SolidCable::TrimJob
   class << self
     sig do
       params(
+        trim_batch_size: T.untyped,
         block: T.nilable(T.proc.params(job: SolidCable::TrimJob).void)
       ).returns(T.any(SolidCable::TrimJob, FalseClass))
     end
-    def perform_later(&block); end
+    def perform_later(trim_batch_size: T.unsafe(nil), &block); end
 
-    sig { returns(T.untyped) }
-    def perform_now; end
+    sig { params(trim_batch_size: T.untyped).returns(T.untyped) }
+    def perform_now(trim_batch_size: T.unsafe(nil)); end
   end
 end

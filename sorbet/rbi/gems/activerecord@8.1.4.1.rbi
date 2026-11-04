@@ -25873,7 +25873,7 @@ class ActiveRecord::MigrationProxy < ::Struct
   def filename=(_); end
 
   # pkg:gem/activerecord#lib/active_record/migration.rb:1196
-  def migrate(*_arg0, **_arg1, &_arg2); end
+  def migrate(direction); end
 
   # pkg:gem/activerecord#lib/active_record/migration.rb:1186
   def name; end
@@ -36939,7 +36939,7 @@ ActiveRecord::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveRecord::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/activerecord#lib/active_record/gem_version.rb:13
-ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # pkg:gem/activerecord#lib/active_record/gem_version.rb:15
 ActiveRecord::VERSION::STRING = T.let(T.unsafe(nil), String)
