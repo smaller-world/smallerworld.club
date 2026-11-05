@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 import { Typed } from "stimulus-typescript";
 import invariant from "tiny-invariant";
 
-import CheckboxProxyController from "./checkbox_proxy_controller";
+import CheckableProxyController from "./checkable_proxy_controller";
 
 const values = {
   toggleable: Boolean,
@@ -31,16 +31,17 @@ export default class RadioGroupItemController extends Typed(
   // == Helpers ==
 
   #updateOtherRadio(radio: HTMLInputElement): void {
-    if (radio !== this.element) {
-      radio.checked = false;
-      const proxy = this.#locateRadioProxy(radio);
-      const controller = this.application.getControllerForElementAndIdentifier(
-        proxy,
-        "checkbox-proxy",
-      );
-      if (controller instanceof CheckboxProxyController) {
-        controller.update();
-      }
+    if (radio === this.element) {
+      return;
+    }
+    radio.checked = false;
+    const proxy = this.#locateRadioProxy(radio);
+    const controller = this.application.getControllerForElementAndIdentifier(
+      proxy,
+      "checkable-proxy",
+    );
+    if (controller instanceof CheckableProxyController) {
+      controller.update();
     }
   }
 

@@ -329,6 +329,16 @@ class User < ApplicationRecord
     V1::User.find_by(phone_number:)
   end
 
+  sig { returns(T::Boolean) }
+  def link_v1_account!
+    return true if has_v1_account?
+    if V1::User.exists?(phone_number:)
+      update!(has_v1_account: true)
+    else
+      false
+    end
+  end
+
   private
 
   # == Callbacks ==

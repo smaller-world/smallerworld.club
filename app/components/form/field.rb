@@ -108,6 +108,14 @@ class Components::Form
     end
 
     sig do
+      params(index: T.nilable(Integer), attributes: T.untyped)
+        .returns(Switch)
+    end
+    def switch(index: nil, **attributes)
+      Switch.new(self, index:, **attributes)
+    end
+
+    sig do
       override.type_parameters(:U)
         .params(
           options: T::Enumerable[T.type_parameter(:U)],

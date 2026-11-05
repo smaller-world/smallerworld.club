@@ -91,7 +91,7 @@ class Components::Base
   sig { returns(T.nilable(String)) }
   def native_client_version; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def native_client_identifier; end
 
   sig { returns(Symbol) }

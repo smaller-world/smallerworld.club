@@ -104,6 +104,10 @@ flag "-v --verbose" help="Print each test name as it runs"
 run = 'bin/rails test:system $usage_files ${usage_verbose:+--verbose} ${usage_include:+--include="$usage_include"}'
 alias = "ts"
 
+[tasks."test:ui"]
+description = "Run opt-in UI checks"
+run = "bin/rails test test/ui/*.rb"
+
 [tasks."test:all"]
 description = "Run all tests"
 usage = '''

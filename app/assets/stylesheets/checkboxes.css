@@ -5,6 +5,8 @@
 
     /* Customizations */
     @apply cursor-pointer;
+    /* The visible span cannot match :disabled; the proxy mirrors the input's state here. */
+    @apply data-disabled:cursor-not-allowed data-disabled:opacity-50;
   }
 
   .checkbox-indicator {

@@ -40,6 +40,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :native_client_name
   register_value_helper :native_client_version
   register_value_helper :native_client_identifier
+  register_value_helper :client_identifier
 
   # == Errors ==
 

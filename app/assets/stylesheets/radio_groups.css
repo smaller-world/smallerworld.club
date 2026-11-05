@@ -13,6 +13,8 @@
 
     /* Customizations */
     @apply cursor-pointer;
+    /* The proxy span mirrors disabled state from its native input. */
+    @apply data-disabled:cursor-not-allowed data-disabled:opacity-50;
   }
 
   .radio-group-indicator {

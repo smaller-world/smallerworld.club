@@ -104,6 +104,24 @@ class AccountsController < ApplicationController
     end
   end
 
+  # POST /account/link_v1
+  def link_v1
+    respond_to do |format|
+      format.turbo_stream do
+        current_user = Current.user!
+        if current_user.link_v1_account!
+          redirect_to(
+            edit_account_path,
+            notice: "your v1 account has been linked!",
+            status: :see_other
+          )
+        else
+          render turbo_stream: append_toast("no v1 account found :(")
+        end
+      end
+    end
+  end
+
   # DELETE /account
   def destroy
     respond_to do |format|

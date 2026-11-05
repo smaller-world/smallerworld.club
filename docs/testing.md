@@ -16,6 +16,13 @@ The suite uses Minitest with fixtures and builder helpers. Run it with
   browser via Capybara + Playwright. Reserve for behavior that JavaScript /
   Turbo Streams change (infinite scroll, live reactions).
 
+### UI checks
+
+Run `mise run test:ui` for the opt-in component compatibility checks in
+`test/ui/`. These inherit from `ApplicationSystemTestCase`, but intentionally
+omit the `_test.rb` suffix so Rails does not discover them during regular tests,
+system tests, or CI's `test:all` run.
+
 ## Fixtures
 
 `test/fixtures/users.yml` defines two users: `bob` (2 worlds, 1 device) and

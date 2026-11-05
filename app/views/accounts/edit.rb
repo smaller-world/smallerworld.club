@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Views::Accounts::Edit < Views::Base
+  include Phlex::Rails::Helpers::FormWith
+
   # == Initialization ==
 
   sig { params(current_user: User).void }
@@ -43,9 +45,11 @@ class Views::Accounts::Edit < Views::Base
         end
 
         Components::Card() do |card|
-          card.header do
-            card.title(class: "font-mono text-xs text-center") do
-              native_client_identifier
+          if (identifier = native_client_identifier)
+            card.header do
+              card.title(class: "font-mono text-xs text-center") do
+                identifier
+              end
             end
           end
           card.content(class: "space-y-4") do
@@ -56,6 +60,7 @@ class Views::Accounts::Edit < Views::Base
               Components::Input(
                 type: :text,
                 size: :xs,
+                id: "user_id",
                 value: @current_user.id,
                 readonly: true,
                 class: "text-xs font-mono",
@@ -65,6 +70,34 @@ class Views::Accounts::Edit < Views::Base
                 },
               )
             end
+
+            div(class: "flex flex-col gap-2") do
+              span(class: "text-xs font-mono text-muted-foreground") do
+                "has v1 account?"
+              end
+              div(class: "flex gap-2 justify-between items-start") do
+                div(class: "flex gap-2") do
+                  Components::Switch(
+                    id: "has_v1_account",
+                    checked: @current_user.has_v1_account?,
+                    readonly: true,
+                    class: "cursor-not-allowed"
+                  )
+                  Components::Label(for: "has_v1_account", class: "text-muted-foreground") {
+                    @current_user.has_v1_account? ? "yep" : "nope"
+                  }
+                end
+                if !@current_user.has_v1_account?
+                  form_with(url: link_v1_account_path) do
+                    Components::Button(type: :submit, size: :xs, variant: :ghost) do |button|
+                        button.inline_start_icon("huge/refresh")
+                        span { "re-check" }
+                      end
+                  end
+                end
+              end
+            end
+
             if (device = Current.device)
               div(class: "flex flex-col gap-2") do
                 span(class: "text-xs font-mono text-muted-foreground") do

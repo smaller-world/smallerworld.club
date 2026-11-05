@@ -26,24 +26,29 @@ class Components::RadioGroupItem < Components::Input
 
   sig { override.void }
   def view_template
-    attributes = @attributes
-    input_attributes = delete_from(attributes, :id, :name, :data)
+    attributes = @attributes.dup
+    input_attributes = delete_from(attributes, :id, :name, :data, :disabled, :readonly, :required, :form)
 
     span(
       role: "radio",
-      tabindex: 0,
+      tabindex: input_attributes[:disabled] ? -1 : 0,
       **mix(
         {
           class: "radio-group-item group/radio-group-item peer",
           data: {
-            controller: token_list("checkbox-proxy", "radio-toggle" => @toggleable),
+            controller: token_list("checkable-proxy", "radio-toggle" => @toggleable),
             slot: "radio-group-item",
             checked: ("" if @checked),
             unchecked: ("" unless @checked),
-            action: @toggleable ? "click->radio-toggle#toggle" : "click->checkbox-proxy#forwardClick",
+            disabled: ("" if input_attributes[:disabled]),
+            readonly: ("" if input_attributes[:readonly]),
+            action: @toggleable ? "click->radio-toggle#toggle" : "click->checkable-proxy#forwardClick",
           },
           aria: {
             checked: @checked.to_s,
+            disabled: ("true" if input_attributes[:disabled]),
+            readonly: ("true" if input_attributes[:readonly]),
+            required: ("true" if input_attributes[:required]),
             invalid: ("true" if @invalid),
           },
         },
@@ -66,7 +71,7 @@ class Components::RadioGroupItem < Components::Input
       tabindex: -1,
       class: "visually-hidden",
       aria: {
-        hidden: true,
+        hidden: "true",
       },
       **mix(
         {

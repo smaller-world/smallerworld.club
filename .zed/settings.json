@@ -11,6 +11,9 @@
     "Ruby": ["rbi"]
   },
   "languages": {
+    "CSS": {
+      "language_servers": ["tailwindcss-language-server"]
+    },
     "Ruby": {
       "language_servers": [
         "ruby-lsp",

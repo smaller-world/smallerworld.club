@@ -9,37 +9,47 @@ class Components::Checkbox < Components::Input
   sig do
     params(
       checked: T::Boolean,
+      readonly: T::Boolean,
       invalid: T::Boolean,
       attributes: T.untyped,
     ).void
   end
-  def initialize(checked: false, invalid: false, **attributes)
+  def initialize(checked: false, readonly: false, invalid: false, **attributes)
     super(invalid:, **attributes)
     @checked = checked
+    @readonly = readonly
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    attributes = @attributes
-    input_attributes = delete_from(attributes, :id, :name, :value, :data)
+    attributes = @attributes.dup
+    input_attributes = delete_from(
+      attributes,
+      :id, :name, :value, :data, :disabled, :required, :form
+    )
 
     span(
       role: "checkbox",
-      tabindex: 0,
+      tabindex: input_attributes[:disabled] ? -1 : 0,
       **mix(
         {
           class: "checkbox group/checkbox peer",
           data: {
-            controller: "checkbox-proxy",
+            controller: "checkable-proxy",
             slot: "checkbox",
             checked: ("" if @checked),
             unchecked: ("" unless @checked),
-            action: "click->checkbox-proxy#forwardClick:prevent",
+            disabled: ("" if input_attributes[:disabled]),
+            readonly: ("" if @readonly),
+            action: "click->checkable-proxy#forwardClick:prevent",
           },
           aria: {
             checked: @checked.to_s,
+            disabled: ("true" if input_attributes[:disabled]),
+            readonly: ("true" if @readonly),
+            required: ("true" if input_attributes[:required]),
             invalid: ("true" if @invalid),
           },
         },
@@ -59,9 +69,10 @@ class Components::Checkbox < Components::Input
       type: :checkbox,
       tabindex: -1,
       checked: @checked,
+      readonly: @readonly,
       class: "visually-hidden",
       aria: {
-        hidden: true,
+        hidden: "true",
       },
       **input_attributes,
     )

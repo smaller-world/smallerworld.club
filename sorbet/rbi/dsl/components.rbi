@@ -102,8 +102,8 @@ module Components
   def Card(size: T.unsafe(nil), **attributes, &content); end
 
   # source://app/components/checkbox.rb:4
-  sig { params(checked: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
-  def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
+  sig { params(checked: T::Boolean, readonly: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
+  def Checkbox(checked: T.unsafe(nil), readonly: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
   # source://app/components/checkbox_group.rb:4
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
@@ -429,6 +429,10 @@ module Components
   end
   def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
 
+  # source://app/components/switch.rb:4
+  sig { params(checked: T::Boolean, invalid: T::Boolean, size: ::Symbol, attributes: T.untyped).void }
+  def Switch(checked: T.unsafe(nil), invalid: T.unsafe(nil), size: T.unsafe(nil), **attributes); end
+
   # source://app/components/textarea.rb:4
   sig do
     params(
@@ -626,8 +630,8 @@ module Components
     def Card(size: T.unsafe(nil), **attributes, &content); end
 
     # source://app/components/checkbox.rb:4
-    sig { params(checked: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
-    def Checkbox(checked: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
+    sig { params(checked: T::Boolean, readonly: T::Boolean, invalid: T::Boolean, attributes: T.untyped).void }
+    def Checkbox(checked: T.unsafe(nil), readonly: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
     # source://app/components/checkbox_group.rb:4
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::CheckboxGroup).void).void }
@@ -952,6 +956,10 @@ module Components
       ).void
     end
     def StreamedToast(message:, type: T.unsafe(nil), description: T.unsafe(nil), **attributes); end
+
+    # source://app/components/switch.rb:4
+    sig { params(checked: T::Boolean, invalid: T::Boolean, size: ::Symbol, attributes: T.untyped).void }
+    def Switch(checked: T.unsafe(nil), invalid: T.unsafe(nil), size: T.unsafe(nil), **attributes); end
 
     # source://app/components/textarea.rb:4
     sig do

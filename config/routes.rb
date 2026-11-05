@@ -42,7 +42,9 @@ Rails.application.routes.draw do
   end
 
   # == Account
-  resource :account, only: [ :new, :edit, :create, :update, :destroy ]
+  resource :account, only: [ :new, :edit, :create, :update, :destroy ] do
+    post :link_v1
+  end
   resource :account_time_zone, path: "/account/time_zone", only: :update
   resource :account_app_visits, path: "/account/app_visits", only: :create
   resource :account_email_address_confirmation,

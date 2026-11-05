@@ -32,17 +32,17 @@ module ClientDetection
 
   sig { returns(T::Boolean) }
   def ios_browser?
-    client.os_family == "iOS" || emulate_ios_browser?
+    browser_client.os_family == "iOS" || emulate_ios_browser?
   end
 
   sig { returns(T::Boolean) }
   def android_browser?
-    client.os_family == "Android" || emulate_android_browser?
+    browser_client.os_family == "Android" || emulate_android_browser?
   end
 
   sig { returns(T.nilable(String)) }
   def device_name
-    client.device_name
+    browser_client.device_name
   end
 
   sig { returns(T.nilable(String)) }
@@ -59,6 +59,7 @@ module ClientDetection
   def native_client_identifier
     native_client_info&.join(" ")
   end
+
 
   sig { returns(T.nilable(Symbol)) }
   def hotwire_native_platform
@@ -89,7 +90,7 @@ module ClientDetection
   # == Helpers ==
 
   sig { returns(DeviceDetector) }
-  def client
+  def browser_client
     @client ||= T.let(
       DeviceDetector.new(request.user_agent, request.headers.to_h),
       T.nilable(DeviceDetector),

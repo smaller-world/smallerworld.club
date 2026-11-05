@@ -28,6 +28,8 @@ export default class RadioToggleController extends Controller<HTMLSpanElement> {
 
   toggle(): void {
     const input = this.#locateInput();
+    // Toggleable radios bypass the checkable proxy's click guard.
+    if (input.disabled || input.readOnly) return;
     input.checked = !input.checked;
     input.dispatchEvent(new Event("input"));
     input.dispatchEvent(new Event("change"));
