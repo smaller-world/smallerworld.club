@@ -106,7 +106,7 @@ GEM
       activestorage (>= 6.0)
       activesupport (>= 6.0)
     after_party (2.1.0)
-    annotaterb (4.23.0)
+    annotaterb (4.26.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
     ast (2.4.3)
@@ -772,7 +772,7 @@ CHECKSUMS
   addressable (2.9.2) sha256=9117c7e7d6ee07230e75ce41fb9401ae55354dc654fcd0e862ba41d539e9a610
   after_attached (0.1.1) sha256=5b3c5483dcaae7522c5431e80ac01b4062b0ab3bd2cc8145b974ba702769ee79
   after_party (2.1.0) sha256=d81ba71272f7204eec3e683958fad13c8539c79c2c6914ecec85bc08de5f5e1e
-  annotaterb (4.23.0) sha256=0fc59b1d40e07bec75d9d9b0cd479493631ce8901e4b59fefc561689f22b4600
+  annotaterb (4.26.0) sha256=f884a1cca92f7894b8b9efc1505cad597e6b666ed4295037ee7f5a34a33c9516
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   aws-eventstream (1.4.0) sha256=116bf85c436200d1060811e6f5d2d40c88f65448f2125bc77ffce5121e6e183b
   aws-partitions (1.1262.0) sha256=77e9b1dd3e8f616673f2959d2fc4e762065f83a43140e2cb82274525afbaccf7
