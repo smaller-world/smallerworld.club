@@ -8,7 +8,7 @@ class Views::Errors::Forbidden < Views::Base
   def view_template
     Components::AppLayout(page_title: "you can't go there", class: "bg-muted") do
       main(class: "flex-1 flex items-center justify-center") do
-        Components::Empty(class: "max-w-md bg-background") do |empty|
+        Components::Empty(class: "flex-0 max-w-md bg-background") do |empty|
           empty.header do
             empty.media(variant: :icon) do
               Icon("huge/door-lock")
@@ -18,8 +18,10 @@ class Views::Errors::Forbidden < Views::Base
               "sorry! you don't have access to this page :("
             end
           end
-          empty.content do
-            button_back_to("your worlds", home_path, variant: :secondary)
+          if authenticated?
+            empty.content do
+              button_back_to("your worlds", home_path, variant: :secondary)
+            end
           end
         end
       end

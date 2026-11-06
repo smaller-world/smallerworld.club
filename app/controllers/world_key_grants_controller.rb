@@ -7,6 +7,10 @@ class WorldKeyGrantsController < ApplicationController
   allow_unauthenticated_access only: [ :show, :accept ]
   skip_verify_authorized only: [ :show, :accept ]
 
+  # == Filters ==
+
+  rescue_from ActiveSupport::MessageVerifier::InvalidSignature, with: :render_invalid_grant
+
   # == Actions ==
 
   # GET /world_key_grants/:message
@@ -45,6 +49,11 @@ class WorldKeyGrantsController < ApplicationController
   private
 
   # == Helpers ==
+
+  sig { params(error: ActiveSupport::MessageVerifier::InvalidSignature).void }
+  def render_invalid_grant(error)
+    render Views::Errors::InvalidWorldKeyGrant.new, content_type: "text/html", status: :bad_request
+  end
 
   sig { params(scope: T.untyped).returns(World) }
   def find_world(scope: World.all)

@@ -19,6 +19,27 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
 
   # == Tests ==
 
+  test "viewing a key grant with an altered separator shows an invalid link page" do
+    get world_key_grant_path(@grant_message.sub("--", "–"))
+
+    assert_response :bad_request
+    assert_select "title", "invalid key link | smaller world"
+    assert_select "a[href=?]", home_path, count: 0
+  end
+
+  test "accepting an invalid key grant shows an invalid link page without granting access" do
+    sign_in_as(@recipient)
+
+    assert_no_difference [ -> { WorldKey.count }, -> { WorldInvitation.count } ] do
+      post accept_world_key_grant_path("invalid"), as: :turbo_stream
+    end
+
+    assert_response :bad_request
+    assert_equal "text/html", response.media_type
+    assert_select "title", "invalid key link | smaller world"
+    assert_select "a[href=?]", home_path, text: "back to your worlds"
+  end
+
   test "accepting a key grant adds the recipient to the world" do
     sign_in_as(@recipient)
 
