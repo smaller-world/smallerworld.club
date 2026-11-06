@@ -274,6 +274,15 @@ class User < ApplicationRecord
   end
 
   sig { void }
+  def unconfirm_email_address!
+    update!(
+      unconfirmed_email_address: email_address,
+      email_address: nil,
+      email_address_confirmed_at: nil,
+    )
+  end
+
+  sig { void }
   def deliver_email_address_confirmation!
     AccountMailer.email_address_confirmation(user: self).deliver_now
     update!(email_address_confirmation_sent_at: Time.current)

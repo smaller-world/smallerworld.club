@@ -25,9 +25,7 @@ class AccountEmailAddressConfirmationsController < ApplicationController
         if (current_user = Current.user) && current_user != user
           terminate_session
         end
-        render Views::AccountEmailAddressConfirmations::Show.new(
-          confirmation_token:,
-        )
+        render Views::AccountEmailAddressConfirmations::Show.new(confirmation_token:)
       rescue ActiveSupport::MessageVerifier::InvalidSignature
         redirect_to(
           authenticated? ? home_path : root_path,

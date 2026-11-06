@@ -1,4 +1,4 @@
-@utility spinner {
+@utility spinner-dots {
   --mask: no-repeat radial-gradient(#000 68%, #0000 71%);
   --size: 1.25em;
 
@@ -26,7 +26,7 @@
   }
 
   &::after {
-    @apply absolute spinner z-20;
+    @apply absolute spinner-dots z-20;
 
     content: "";
   }

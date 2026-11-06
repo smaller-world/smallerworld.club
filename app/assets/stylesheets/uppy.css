@@ -33,7 +33,7 @@
           }
 
           &::after {
-            @apply absolute spinner;
+            @apply absolute spinner-dots;
 
             content: "";
           }

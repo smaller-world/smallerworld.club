@@ -30,6 +30,7 @@
     "@uppy/drag-drop": "^5.1.0",
     "@uppy/image-editor": "^4.2.0",
     "browserlist": "^1.0.2",
+    "cn": "^0.5.1",
     "el-transition": "^0.0.7",
     "emoji-mart": "^5.6.0",
     "fast-uri": "^3.1.5",

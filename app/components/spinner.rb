@@ -12,7 +12,10 @@ class Components::Spinner < Components::Base
         {
           role: "status",
           aria: { label: "Loading" },
-          class: "animate-spin",
+          class: "spinner",
+          data: {
+            slot: "spinner"
+          }
         },
         @attributes,
       ),

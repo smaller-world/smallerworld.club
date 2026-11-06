@@ -1,0 +1,5 @@
+@layer base-components {
+  .spinner {
+    @apply size-4 animate-spin;
+  }
+}

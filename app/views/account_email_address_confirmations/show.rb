@@ -38,7 +38,8 @@ class Views::AccountEmailAddressConfirmations::Show < Views::Base
   def confirmation_card
     Components::Card(class: "w-full max-w-90 gap-2.5") do |card|
       card.header(class: "flex flex-col items-center gap-2") do
-        image_tag("logo.png", class: "size-10")
+        Icon("huge/mail-edit-01", class: "size-6")
+        Components::Spinner()
         card.title(class: "text-lg text-center") do
           "confirming your email address"
         end
@@ -62,7 +63,7 @@ class Views::AccountEmailAddressConfirmations::Show < Views::Base
         type: :submit,
         class: "loading *:invisible",
         data: {
-          controller: "autoclick",
+          # controller: "autoclick",
           autoclick_once_value: true,
         },
       ) do |button|
