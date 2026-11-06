@@ -53,7 +53,7 @@ gem "aws-sdk-s3", require: false
 gem "sorbet-runtime"
 
 # Perform full text search with Postgres
-gem "pg_search", "~> 2.3"
+gem "pg_search", "~> 2.4"
 
 # Inline CSS into email templates (& generate text versions of emails)
 gem "premailer-rails"
