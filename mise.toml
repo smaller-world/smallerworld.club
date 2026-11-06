@@ -1,7 +1,6 @@
 [settings]
 experimental = true
 auto_install_disable_tools = ["overmind"]
-disable_tools = ["node"]
 
 [tools]
 ruby = { version = "4.0.1", postinstall = "bundle install" }
