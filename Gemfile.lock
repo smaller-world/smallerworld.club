@@ -513,9 +513,9 @@ GEM
     rubocop-ast (1.50.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (3.0.0)
+    rubocop-capybara (3.1.0)
       lint_roller (~> 1.1)
-      rubocop (~> 1.81)
+      rubocop (~> 1.89)
     rubocop-minitest (0.39.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
@@ -938,7 +938,7 @@ CHECKSUMS
   rqrcode_core (2.1.0) sha256=f303b85df89c1b8fc5ee8dc19808c9dc4330e6329b660d99d4a8cbb36ca13051
   rubocop (1.92.2) sha256=14fb31eed143a0dc6f78186c550c1715e81cd38f59d05d1165050e445c1f5382
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
-  rubocop-capybara (3.0.0) sha256=7a64655238acda7f8f3c87e37ac825a64c615a79c17c253f1a28270dc3768c4b
+  rubocop-capybara (3.1.0) sha256=1712900b04178272b643f7bffa385f7b1d157c4f83a0ad502ae10690e18f5096
   rubocop-minitest (0.39.1) sha256=998398d6da4026d297f0f9bf709a1eac5f2b6947c24431f94af08138510cf7ed
   rubocop-performance (1.27.0) sha256=eeeb1374d062a368ee1c787b70eb0b0cc4b184cb1f8565f424760946146d61ce
   rubocop-rails (2.38.0) sha256=6e2b7c532efa95e3050371bec20b8f5b025662acead8bc70ee31f0e3e6fa2f06
