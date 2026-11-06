@@ -163,7 +163,7 @@ gem "console1984"
 gem "superform", "~> 0.7.0"
 
 # Send transactional emails with Resend
-gem "resend", "~> 1.6"
+gem "resend", "~> 1.18"
 
 group :development, :test do
   # Run tests with Minitest
