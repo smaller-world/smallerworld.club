@@ -165,6 +165,9 @@ gem "superform", "~> 0.7.0"
 # Send transactional emails with Resend
 gem "resend", "~> 1.6"
 
+# Send OTPs with Stytch
+gem "stytch", "~> 11.1"
+
 group :development, :test do
   # Run tests with Minitest
   gem "minitest", "~> 6.0.1"
