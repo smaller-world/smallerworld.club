@@ -27,7 +27,16 @@ class UserReportsController < ApplicationController
         authorize!(user, to: :report?)
         report_params = params.expect(report: [ :category, :note ])
         report = user.reports.build(reporter: current_user, **report_params)
-        if report.save
+        saved = report.transaction do
+          next false unless report.save
+
+          WorldKey
+            .where(world: user.owned_worlds, recipient: current_user)
+            .or(WorldKey.where(world: current_user.owned_worlds, recipient: user))
+            .find_each(&:destroy!)
+          true
+        end
+        if saved
           if hotwire_native_ios?
             redirect_to(
               home_path(report_notice: true),
@@ -41,8 +50,10 @@ class UserReportsController < ApplicationController
             )
           end
         else
+          world = user.owned_worlds
+            .where(id: current_user.world_keys.select(:world_id)).first!
           render(
-            Views::UserReports::New.new(user:, report:),
+            Views::UserReports::New.new(user:, world:, report:),
             status: :unprocessable_content,
           )
         end
