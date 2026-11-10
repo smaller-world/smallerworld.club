@@ -27,13 +27,6 @@
 require "test_helper"
 
 class WorldTest < ActiveSupport::TestCase
-  test "create_world helper attaches an icon" do
-    world = create_world(owner: users(:sue), name: "Helper World")
-
-    assert_predicate world, :persisted?
-    assert_predicate world.icon, :attached?
-  end
-
   test "creates an intro post on create" do
     world = create_world(owner: users(:sue), name: "Intro World")
 

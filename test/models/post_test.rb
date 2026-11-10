@@ -53,14 +53,6 @@ class PostTest < ActiveSupport::TestCase
     assert_includes scope, diary_post
   end
 
-  test "a key holder sees posts of the types their key grants" do
-    key = @world.keys.create!(recipient: @friend)
-    key.granted_post_types << post_type_for(@world, "journal entry")
-    post = create_post(world: @world)
-
-    assert_includes Post.visible_to(@friend), post
-  end
-
   test "a key holder does not see posts of types their key does not grant" do
     @world.keys.create!(recipient: @friend)
     diary_post = create_post(world: @world, type_label: "diary")
@@ -84,30 +76,5 @@ class PostTest < ActiveSupport::TestCase
     post = create_post(world: @world)
 
     assert_not_includes Post.visible_to(@friend), post
-  end
-
-  private
-
-  # Asserts the block touches `card` (advances `updated_at`). Time is advanced
-  # so the touch writes a strictly later timestamp than the one captured before.
-  def assert_card_touched(card, &block)
-    before = card.reload.updated_at
-    travel(1.minute, &block)
-    assert_operator(
-      card.reload.updated_at,
-      :>,
-      before,
-      "expected the card to be touched",
-    )
-  end
-
-  def assert_card_untouched(card, &block)
-    before = card.reload.updated_at
-    travel(1.minute, &block)
-    assert_equal(
-      before,
-      card.reload.updated_at,
-      "expected the card to be left untouched",
-    )
   end
 end

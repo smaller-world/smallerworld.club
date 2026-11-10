@@ -4,13 +4,6 @@
 require "test_helper"
 
 class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
-  # == Configuration ==
-
-  IOS_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) " \
-    "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 " \
-    "Safari/604.1"
-  HOTWIRE_NATIVE_IOS_USER_AGENT = "#{IOS_USER_AGENT} Hotwire Native iOS".freeze
-
   setup do
     @world = worlds(:bobs_world_one)
     @recipient = users(:sue)
