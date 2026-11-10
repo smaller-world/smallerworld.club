@@ -34,6 +34,36 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:bob) # phone_number +14165558323
   end
 
+  test "world invitations include account and phone matches without duplicates" do
+    world = create_world(owner: users(:sue))
+    direct = world.invitations.create!(recipient: @user, granted_post_type_ids: world.post_type_ids)
+    phone_world = create_world(owner: users(:sue), name: "another world")
+    phone_only = phone_world.invitations.create!(recipient_phone_number: @user.phone_number,
+      granted_post_type_ids: phone_world.post_type_ids)
+    unrelated = world.invitations.create!(recipient_phone_number: "+14165550101",
+      granted_post_type_ids: world.post_type_ids)
+
+    assert_equal [ direct.id ], @user.received_world_invitations.pluck(:id)
+    assert_equal [ direct.id, phone_only.id ].sort, @user.world_invitations.pluck(:id).sort
+    assert_not_includes @user.world_invitations, unrelated
+  end
+
+  test "deleting a recipient preserves invitations and clears their account reference" do
+    recipient = User.create!(name: "Alex", phone_number: "+14165550101",
+      email_address: "alex@example.com", time_zone_name: "America/Toronto")
+    world = create_world(owner: users(:sue))
+    invitation = world.invitations.create!(recipient:, granted_post_type_ids: world.post_type_ids)
+
+    assert_no_difference "WorldInvitation.count" do
+      recipient.destroy!
+    end
+
+    assert_nil invitation.reload.recipient_id
+    assert_equal recipient.phone_number, invitation.recipient_phone_number
+    assert_equal world.post_type_ids.sort, invitation.granted_post_type_ids.sort
+    assert_predicate invitation, :persisted?
+  end
+
   test "disabled v1 checks preserve user creation, validation, and other callbacks" do
     assert_predicate User, :v1_checks_disabled?
     V1::User.stub(:exists?, ->(**) { flunk "unexpected v1 lookup" }) do

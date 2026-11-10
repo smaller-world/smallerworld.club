@@ -107,6 +107,11 @@ class User < ApplicationRecord
     inverse_of: :recipient,
     foreign_key: :recipient_id,
     dependent: :destroy
+  has_many :received_world_invitations,
+    class_name: "WorldInvitation",
+    inverse_of: :recipient,
+    foreign_key: :recipient_id,
+    dependent: :nullify
 
   has_many :world_keys,
     dependent: :destroy,
@@ -121,9 +126,9 @@ class User < ApplicationRecord
     through: :world_keys,
     source: :world_owner
 
-  sig { returns(WorldInvitation::PrivateRelation) }
+  sig { returns(WorldInvitation::PrivateAssociationRelation) }
   def world_invitations
-    WorldInvitation.where(recipient_id: id)
+    received_world_invitations
       .or(WorldInvitation.where(recipient_phone_number: phone_number))
   end
 
