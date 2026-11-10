@@ -84,7 +84,7 @@ class Components::ReportForm < Components::Base
         },
       ) do |button|
         button.inline_start_icon("huge/flag-01")
-        span { "report #{reportable_label}" }
+        span { @reportable.is_a?(User) ? "report and remove account" : "report #{reportable_label}" }
       end
     end
   end

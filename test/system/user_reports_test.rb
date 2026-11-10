@@ -19,7 +19,7 @@ class UserReportsTest < ApplicationSystemTestCase
     click_button "please select one"
     find("[role='option']", text: "other", exact_text: true).click
     fill_in "note", with: "this account is harassing me"
-    click_button "report account"
+    click_button "report and remove account"
 
     assert_current_path home_path
     assert_text "your report has been submitted and will be reviewed by our team."
