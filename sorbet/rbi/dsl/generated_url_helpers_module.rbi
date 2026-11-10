@@ -142,6 +142,9 @@ module GeneratedUrlHelpersModule
   def phone_number_verification_requests_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def places_dock_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def policies_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

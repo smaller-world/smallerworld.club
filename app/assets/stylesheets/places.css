@@ -1,0 +1,5 @@
+@layer components {
+  .place-background {
+    @apply dark:invert;
+  }
+}

@@ -28,7 +28,7 @@ local linters = new Mapping<String, Step> {
   ["rubocop"] = (Builtins.rubocop) {
     exclude = List("bin/*")
     check = "bin/rubocop --force-exclusion {{ files }}"
-    check_list_files = "bin/rubocop --force-exclusion --list-target-files {{ files }}"
+    check_list_files = "bin/rubocop --force-exclusion --format files {{ files }}"
     fix = "bin/rubocop --force-exclusion --autocorrect {{ files }}"
   }
   ["sorbet"] = (Builtins.sorbet) {

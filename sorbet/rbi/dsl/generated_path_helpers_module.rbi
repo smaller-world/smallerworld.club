@@ -142,6 +142,9 @@ module GeneratedPathHelpersModule
   def phone_number_verification_requests_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def places_dock_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def policies_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

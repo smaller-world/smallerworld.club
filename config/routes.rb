@@ -61,6 +61,11 @@ Rails.application.routes.draw do
   # == Home
   get :home, to: "home#show"
 
+  # == Places
+  scope controller: :places, path: "/places", as: :places do
+    get :dock
+  end
+
   # == Users
   resources :user_reports, path: "/users/:user_id/reports", only: [ :new, :create ]
 

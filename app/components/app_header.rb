@@ -38,7 +38,18 @@ class Components::AppHeader < Components::Base
 
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
-    # Actions:
+    groups = [ :action_items ]
+    groups << :user_items if !hotwire_native_app? && Current.user
+    groups << :general_items
+
+    groups.each_with_index do |group, index|
+      content.separator unless index.zero?
+      send(group, content)
+    end
+  end
+
+  sig { params(content: Components::DropdownMenu::Content).void }
+  def action_items(content)
     if Current.user
       form_with(url: session_path, method: :delete, data: {
         controller: "haptic-bridge",
@@ -68,10 +79,11 @@ class Components::AppHeader < Components::Base
         end
       end
     end
-    content.separator
+  end
 
-    # User links:
-    if !hotwire_native_app? && (current_user = Current.user)
+  sig { params(content: Components::DropdownMenu::Content).void }
+  def user_items(content)
+    if (current_user = Current.user)
       content.link_item_to(home_path) do
         Icon("huge/home-01")
         span { "home" }
@@ -82,16 +94,21 @@ class Components::AppHeader < Components::Base
           span { world.name }
         end
       end
+      content.link_item_to(places_dock_path) do
+        Icon("huge/lake")
+        span { "the dock" }
+      end
       if current_user.admin?
         content.link_item_to(admin_dashboard_path) do
           Icon("huge/dashboard-square-02")
           span { "admin" }
         end
       end
-      content.separator
     end
+  end
 
-    # General pages:
+  sig { params(content: Components::DropdownMenu::Content).void }
+  def general_items(content)
     unless hotwire_native_app?
       content.link_item_to(root_path) do
         image_tag("logo.png", class: "size-4")

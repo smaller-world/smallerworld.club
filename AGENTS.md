@@ -10,6 +10,8 @@ iOS shell), Sorbet, Action Policy, Minitest.
   UI.
 - [docs/testing.md](docs/testing.md) — test types, fixtures, builder helpers.
 - [docs/adr/](docs/adr/) — decisions and why they were made.
+- **Transparent video** — for luma-keying or encoding web backgrounds, read
+  [docs/transparent-background-video.md](docs/transparent-background-video.md).
 
 ## Agent skills
 

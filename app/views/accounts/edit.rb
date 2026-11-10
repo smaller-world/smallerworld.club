@@ -83,9 +83,9 @@ class Views::Accounts::Edit < Views::Base
                     readonly: true,
                     class: "cursor-not-allowed"
                   )
-                  Components::Label(for: "has_v1_account", class: "text-muted-foreground") {
+                  Components::Label(for: "has_v1_account", class: "text-muted-foreground") do
                     @current_user.has_v1_account? ? "yep" : "nope"
-                  }
+                  end
                 end
                 if !@current_user.has_v1_account?
                   form_with(url: link_v1_account_path) do
