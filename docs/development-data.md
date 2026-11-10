@@ -5,8 +5,9 @@ The development baseline is implemented in `db/seeds/development.rb`.
 ## Switching accounts
 
 Visit `/admin/users` in development, including while signed out. The admin
-dashboard also links to it under quick links. It lists every local user by name
-and phone number, including accounts outside the seed baseline.
+dashboard also links to it under quick links. Signed-in users see the admin link
+in the app menu in development. It lists every other local user by name and
+phone number, including accounts outside the seed baseline.
 
 Switching uses `POST /admin/users/:id/switch`, replaces only the current browser
 session, and redirects to home. Other sessions remain signed in. Each switch

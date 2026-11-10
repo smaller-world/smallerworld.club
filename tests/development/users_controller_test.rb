@@ -63,6 +63,23 @@ module Admin
       end
     end
 
+    test "signed in users see other accounts and the development admin menu link" do
+      sign_in_as(users(:bob))
+      with_routes_for("development") do
+        get "/admin/users"
+
+        assert_response :success
+        assert_select "form[action=?]", "/admin/users/#{users(:bob).id}/switch", count: 0
+        assert_select "form[action=?]", "/admin/users/#{users(:sue).id}/switch", count: 1
+        get home_path
+
+        assert_select "a[href='/admin']", text: "admin"
+      end
+      get home_path
+
+      assert_select "a[href='/admin']", count: 0
+    end
+
     test "signed out switching creates a verified normal session and redirects home" do
       with_routes_for("development") do
         assert_difference -> { Session.count }, 1 do

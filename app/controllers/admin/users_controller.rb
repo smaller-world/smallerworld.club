@@ -13,7 +13,7 @@ module Admin
 
     # GET /admin/users
     def index
-      users = User.order(:name, :phone_number, :id)
+      users = User.where.not(id: Current.user&.id).order(:name, :phone_number, :id)
       render Views::Admin::Users::Index.new(users:)
     end
 
