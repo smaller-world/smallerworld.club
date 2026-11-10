@@ -105,7 +105,15 @@ alias = "ts"
 
 [tasks."test:ui"]
 description = "Run opt-in UI checks"
-run = "bin/rails test test/ui/*.rb"
+run = "bin/rails test checks/ui"
+
+[tasks."test:seeds"]
+description = "Run opt-in development seed checks"
+run = "bin/rails test checks/seeds"
+
+[tasks."test:optional"]
+description = "Run all opt-in checks"
+run = "bin/rails test checks"
 
 [tasks."test:all"]
 description = "Run all tests"

@@ -114,11 +114,11 @@ readable scenario descriptions alongside it.
 
 ## Implementation verification
 
-`bin/rails test test/seeds/development_data_test.rb` exercises real commits and
-checks the graph, post counts, visibility, repeat seeding, preserved local
-edits, missing-post restoration, notification examples, no delivery/broadcast
-jobs, allowed attachment analysis, and restoration after failures. The account
-page and its environment checks remain pending.
+`mise run test:seeds` exercises real commits and checks the graph, post counts,
+visibility, repeat seeding, preserved local edits, missing-post restoration,
+notification examples, no delivery/broadcast jobs, allowed attachment analysis,
+and restoration after failures. The account page and its environment checks
+remain pending.
 
 Verify repeat setup preserves edits, fresh setup creates the documented graph,
 and seeding performs no legacy lookup or outbound delivery. Verify switching

@@ -16,12 +16,23 @@ The suite uses Minitest with fixtures and builder helpers. Run it with
   browser via Capybara + Playwright. Reserve for behavior that JavaScript /
   Turbo Streams change (infinite scroll, live reactions).
 
-### UI checks
+### Opt-in checks
 
-Run `mise run test:ui` for the opt-in component compatibility checks in
-`test/ui/`. These inherit from `ApplicationSystemTestCase`, but intentionally
-omit the `_test.rb` suffix so Rails does not discover them during regular tests,
-system tests, or CI's `test:all` run.
+Keep the regular CI suite in `test/`. Put automated checks that are run manually
+in `checks/`, using the usual `_test.rb` suffix. Both use `RAILS_ENV=test` and
+the existing test helpers. Rails' normal discovery and `test:all` search under
+`test/`, so files in `checks/` are excluded without custom filtering.
+
+| Command                  | Directory       | Purpose                                    |
+| ------------------------ | --------------- | ------------------------------------------ |
+| `mise run test:ui`       | `checks/ui/`    | Browser checks for component compatibility |
+| `mise run test:seeds`    | `checks/seeds/` | Development baseline and seed isolation    |
+| `mise run test:optional` | `checks/`       | All opt-in checks                          |
+
+Run the relevant checks when changing components or development seeds.
+Individual files also work:
+`bin/rails test checks/seeds/development_data_test.rb`. Production behavior and
+environment guards belong in the regular CI suite.
 
 ## Fixtures
 
