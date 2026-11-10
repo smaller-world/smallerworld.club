@@ -49,7 +49,7 @@ class Components::ExistingPostReactionForm < Components::Base
               "turbo:submit-end->confetti#launch" => @reaction.new_record?,
             ),
             confetti_emoji_value: @emoji,
-            confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
+            confetti_canvas_id_value: Rails.configuration.x.confetti_canvas_id,
           },
         },
         @attributes,

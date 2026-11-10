@@ -32,7 +32,7 @@ class WorldV1PostsImportsController < ApplicationController
         world = find_world
         authorize!(world, to: :manage?)
         enqueued_job = world.import_v1_posts_later(
-          limit: Rails.configuration.v1_posts_import_limit,
+          limit: Rails.configuration.x.v1_posts_import_limit,
         )
         redirect_to(
           [ world, :v1_posts_import, import_job_id: enqueued_job.provider_job_id ],

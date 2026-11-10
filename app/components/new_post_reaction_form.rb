@@ -29,7 +29,7 @@ class Components::NewPostReactionForm < Components::Base
               "turbo:submit-end->confetti#launch",
               "turbo:submit-end->haptic-bridge#vibrate",
             ],
-            confetti_canvas_id_value: Rails.configuration.confetti_canvas_id,
+            confetti_canvas_id_value: Rails.configuration.x.confetti_canvas_id,
           },
         },
         @attributes,

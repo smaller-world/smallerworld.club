@@ -4,6 +4,6 @@
 class SmallerWorld::Application
   sig { returns(String) }
   def v1_url
-    config.v1_url
+    config.x.v1_url
   end
 end

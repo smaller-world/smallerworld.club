@@ -170,7 +170,7 @@ class User < ApplicationRecord
     if: :unconfirmed_email_address?
   before_save :clear_email_address_confirmation_timestamps,
     if: [ :unconfirmed_email_address?, :unconfirmed_email_address_changed? ]
-  before_create :set_has_v1_account unless Rails.env.test?
+  before_create :set_has_v1_account, unless: -> { User.v1_checks_disabled? }
   after_commit :deliver_email_address_confirmation_later,
     if: [
       :unconfirmed_email_address?,
@@ -283,6 +283,11 @@ class User < ApplicationRecord
   end
 
   # == Methods ==
+
+  sig { returns(T::Boolean) }
+  def self.v1_checks_disabled?
+    SmallerWorld.application.config.x.v1_checks_disabled == true
+  end
 
   sig { params(phone_number: String).returns(T.nilable(User)) }
   def self.find_by_phone_number(phone_number)
