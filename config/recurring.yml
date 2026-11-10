@@ -22,3 +22,6 @@ development:
 
 production:
   <<: *shared
+  worker_heartbeat:
+    class: WorkerHeartbeatJob
+    schedule: "*/5 * * * *"
