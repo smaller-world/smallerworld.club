@@ -34,6 +34,44 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:bob) # phone_number +14165558323
   end
 
+  test "disabled v1 checks preserve user creation, validation, and other callbacks" do
+    assert_predicate User, :v1_checks_disabled?
+    V1::User.stub(:exists?, ->(**) { flunk "unexpected v1 lookup" }) do
+      user = User.new(
+        name: " Alex ",
+        phone_number: "+14165550101",
+        email_address: "alex@example.com",
+        time_zone_name: "America/Toronto"
+      )
+      assert user.save!
+      assert_not user.reload.has_v1_account?
+      assert_equal "Alex", user.name
+
+      user.name = ""
+      assert_not user.valid?
+      assert user.errors.added?(:name, :blank)
+    end
+  end
+
+  test "enabled v1 checks look up the account during creation" do
+    config = SmallerWorld.application.config.x
+    previous = config.v1_checks_disabled
+    config.v1_checks_disabled = false
+    assert_not User.v1_checks_disabled?
+    lookups = []
+    V1::User.stub(:exists?, ->(**attributes) {
+      lookups << attributes
+      true
+    }) do
+      user = User.create!(name: "Alex", phone_number: "+14165550101",
+        email_address: "alex@example.com", time_zone_name: "America/Toronto")
+      assert_predicate user.reload, :has_v1_account?
+      assert_equal [ { phone_number: user.phone_number } ], lookups
+    end
+  ensure
+    config.v1_checks_disabled = previous
+  end
+
   test "record_app_visit! saves the visit and enqueues a badge update with pending notifications" do
     freeze_time do
       @user.update!(app_last_visited_at: 1.minute.ago)
