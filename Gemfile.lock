@@ -318,7 +318,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.1027)
+    mime-types-data (3.2026.1103)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -389,7 +389,7 @@ GEM
       railties (>= 7.1, < 9)
       zeitwerk (~> 2.7)
     phonelib (0.10.28)
-    playwright-ruby-client (1.61.0)
+    playwright-ruby-client (1.64.0)
       base64
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
@@ -510,9 +510,9 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.50.0)
+    rubocop-ast (1.51.0)
       parser (>= 3.3.7.2)
-      prism (~> 1.7)
+      prism (>= 1.7)
     rubocop-capybara (3.1.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.89)
@@ -709,7 +709,7 @@ DEPENDENCIES
   phlex-icons
   phlex-rails (~> 2.4)
   phonelib (~> 0.10.28)
-  playwright-ruby-client (= 1.61.0)
+  playwright-ruby-client (= 1.64.0)
   premailer (~> 1.29)
   premailer-rails
   propshaft
@@ -863,7 +863,7 @@ CHECKSUMS
   marcel (1.2.1) sha256=1678e9360e32f9eafa917c80029e2f6d10b2715c66a4b87b6d0da9b9cd1f859f
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
   mime-types (3.7.0) sha256=dcebf61c246f08e15a4de34e386ebe8233791e868564a470c3fe77c00eed5e56
-  mime-types-data (3.2026.1027) sha256=4568729e44974c1c8a8ceb76f7a5fc164e8c9553335455688bb3c00020f5d83f
+  mime-types-data (3.2026.1103) sha256=cda7af94d895f1fd33e000acea800e6ed31e4c861e3d6c1a27c8b74f9e44dc64
   mini_magick (5.3.1) sha256=29395dfd76badcabb6403ee5aff6f681e867074f8f28ce08d78661e9e4a351c4
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
@@ -896,7 +896,7 @@ CHECKSUMS
   phlex-icons (2.56.0) sha256=83aa4dc223ffd3838f033cda1f67fd5c41341116d2d449865bafa24dae74f822
   phlex-rails (2.4.0) sha256=2bcddbd488681acb25753bab1887d3ac150e644244ff8ba307f2171a4d0195f5
   phonelib (0.10.28) sha256=96dbb0ac9a76e3997825470b47ce7425f4ddf5e9ba52aad40fc465b839bc3dc6
-  playwright-ruby-client (1.61.0) sha256=1f5c5f0307a2f6bd70b4fa797020a30eef5680caf8d5bd9ccc8d3937f6666e08
+  playwright-ruby-client (1.64.0) sha256=a30df6435a26a09dccb664260e1aaed49de2c2d97a67c7ee7b03ab84755af755
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   premailer (1.29.0) sha256=015f30c520701f3d47fd898886a3eaf4e5171efcc5fd239b872efd1ba61d3da0
   premailer-rails (1.12.0) sha256=c13815d161b9bc7f7d3d81396b0bb0a61a90fa9bd89931548bf4e537c7710400
@@ -937,7 +937,7 @@ CHECKSUMS
   rqrcode (3.2.0) sha256=64c1494ca6bb67d731330f38b50e3fd09eeab4f5dcd04b608e21218d1d0b9542
   rqrcode_core (2.1.0) sha256=f303b85df89c1b8fc5ee8dc19808c9dc4330e6329b660d99d4a8cbb36ca13051
   rubocop (1.92.2) sha256=14fb31eed143a0dc6f78186c550c1715e81cd38f59d05d1165050e445c1f5382
-  rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
+  rubocop-ast (1.51.0) sha256=0ec311e36b191b3872d909078a35274e962ae97dbce64be6812d145ca59acfcb
   rubocop-capybara (3.1.0) sha256=1712900b04178272b643f7bffa385f7b1d157c4f83a0ad502ae10690e18f5096
   rubocop-minitest (0.39.1) sha256=998398d6da4026d297f0f9bf709a1eac5f2b6947c24431f94af08138510cf7ed
   rubocop-performance (1.27.0) sha256=eeeb1374d062a368ee1c787b70eb0b0cc4b184cb1f8565f424760946146d61ce

@@ -27,6 +27,12 @@
 require "test_helper"
 
 class WorldTest < ActiveSupport::TestCase
+  test "search supports websearch syntax and quoted values" do
+    assert_equal [ worlds(:bobs_world_one) ], World.search('"First World"').to_a
+    assert_equal [ worlds(:sues_world) ], World.search("Sue's").to_a
+    assert_empty World.search("").to_a
+  end
+
   test "creates an intro post on create" do
     world = create_world(owner: users(:sue), name: "Intro World")
 

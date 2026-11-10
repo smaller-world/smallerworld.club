@@ -12,15 +12,14 @@ module PgSearch::Features
 
       requires_ancestor { TSearch }
 
-      sig { returns(String) }
+      sig { returns(Arel::Nodes::Node) }
       def tsquery
         if options[:websearch]
-          return "''" if query.blank?
+          return Arel::Nodes.build_quoted("") if query.blank?
 
-          term_sql = Arel.sql(normalize(connection.quote(query)))
+          term_sql = normalize(Arel::Nodes.build_quoted(query))
           Arel::Nodes::NamedFunction
             .new("websearch_to_tsquery", [ dictionary, term_sql ])
-            .to_sql
         else
           super
         end

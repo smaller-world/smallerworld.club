@@ -32,13 +32,17 @@ Single-context: `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
 ```sh
 mise run test          # unit + integration
 mise run test:system   # browser (Capybara + Playwright)
-bin/tapioca dsl        # regenerate RBIs after schema/route changes
 bundle exec srb tc     # typecheck
 bundle exec rubocop -a # lint
 ```
 
-Run `bin/tapioca dsl` before `srb tc` when routes or columns changed, or Sorbet
-will report missing path helpers and attributes that do exist.
+Before typechecking and finishing a change, regenerate the affected RBIs:
+
+- `Gemfile` or `Gemfile.lock` changed: run `mise run tapioca:gem`.
+- Active Job, Active Record, Active Model, or Action Controller classes added,
+  changed, or removed, or schema/routes changed: run `mise run tapioca:dsl`.
+
+Review the generated diff and include the RBI changes with the source changes.
 
 When local PostgreSQL is needed and stopped, start it with `bin/postgres` in a
 background tool session, then retry the database operation. Kai authorizes

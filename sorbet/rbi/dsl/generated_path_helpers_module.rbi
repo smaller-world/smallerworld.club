@@ -235,6 +235,9 @@ module GeneratedPathHelpersModule
   def rails_representation_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def rails_resend_inbound_emails_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def rails_sendgrid_inbound_emails_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
