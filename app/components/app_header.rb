@@ -39,7 +39,7 @@ class Components::AppHeader < Components::Base
   sig { params(content: Components::DropdownMenu::Content).void }
   def menu_content(content)
     groups = [ :action_items ]
-    groups << :user_items if !hotwire_native_app? && Current.user
+    groups << :user_items if  Current.user
     groups << :general_items
 
     groups.each_with_index do |group, index|
@@ -87,13 +87,13 @@ class Components::AppHeader < Components::Base
       content.link_item_to(home_path) do
         Icon("huge/home-01")
         span { "home" }
-      end
+      end unless hotwire_native_app?
       if (world = current_user.owned_worlds.chronological.first)
         content.link_item_to(world_path(world)) do
           Icon("huge/earth")
           span { world.name }
         end
-      end
+      end unless hotwire_native_app?
       content.link_item_to(places_dock_path) do
         Icon("huge/lake")
         span { "the dock" }
