@@ -1,7 +1,7 @@
 # Development data
 
-Planning notes for the development dataset. Implementation is pending agreement
-on seed isolation and the final scenario matrix.
+The development baseline is implemented in `db/seeds/development.rb`. The
+account-switching page and static graph are the next milestone.
 
 ## Agreed behavior
 
@@ -30,10 +30,58 @@ on seed isolation and the final scenario matrix.
   diagram describes the seed baseline and may become stale after local edits.
 - Prefer precise additions over changes to normal application behavior.
 
-## Decisions still open
+## Seed baseline
 
-- The final identity/access matrix and post counts (the sparse world keeps its
-  intro; the other proposed primary-world totals are 3, 8, 15, and 60).
+Run `mise setup` to prepare the database and fill missing baseline records.
+`mise setup --reset` rebuilds the development database, deleting local data.
+`bin/rails db:seed` fills the baseline without running the other setup steps.
+The normal seeds entry point does nothing outside development.
+
+| Account | Phone        | World                | Posts including intro | Key recipients           |
+| ------- | ------------ | -------------------- | --------------------: | ------------------------ |
+| Alex    | +14165550101 | alex's world         |                     1 | nobody                   |
+| Blair   | +14165550102 | blair's world        |                    60 | Alex, Casey, Drew, Ellis |
+| Casey   | +14165550103 | casey's world        |                     8 | Alex, Blair              |
+| Casey   | same account | casey's quiet corner |                     1 | nobody                   |
+| Drew    | +14165550104 | drew's world         |                     3 | Casey                    |
+| Ellis   | +14165550105 | ellis's world        |                    15 | Blair, Drew              |
+
+Emails are the lowercase first name at `example.com`, already confirmed. The
+phone numbers use the fictional North American 555-0100–0199 range. Alex has
+nobody in their own world, but can enter Blair's and Casey's worlds. Blair/Casey
+and Blair/Ellis share reciprocally; the other keys are directed.
+
+- Alex's key to Blair's world grants journal entries only. Other baseline keys
+  grant all four default post types.
+- Casey's custom `field note` type is granted only to Blair.
+- Blair's first generated journal entry excludes Drew. Ellis mutes Blair's
+  poems.
+- Blair and Ellis each have a favorited post, with a reaction from Casey and
+  Drew respectively.
+- Casey invites Ellis; Drew invites Blair. These remain pending at baseline.
+- Keys held by Blair have a current visit timestamp; other keys were visited a
+  week ago. Posts span recent days to provide read and unread activity.
+- Four notification examples cover a post, reaction, accepted key, and pending
+  invitation. All are marked delivered; only the reaction is marked received.
+
+The images in `db/seeds/images` are bundled DiceBear Clay PNGs. Casey's two
+worlds share one image. Setup never downloads images.
+
+## Preserving local edits
+
+Seed users, worlds, custom/default post types, generated posts, invitations, and
+notification examples use deterministic UUIDs. Existing records are left alone;
+missing records are created. Keys, grants, and reactions use their natural
+association keys. Setup does not reset content, names, read state, or favorites.
+Accepting a pending invitation locally does not make setup offer it again. World
+creation uses the normal callback to create its intro post.
+
+Faker uses a fixed random source per generated post, restoring the previous
+source afterwards. Existing content is never regenerated on repeat setup.
+
+Account deletion nullifies invitations' `recipient_id`, preserving their phone
+number and granted types. A later account with that phone number can discover
+them through `User#world_invitations`.
 
 ## Seed isolation strategy
 
@@ -65,6 +113,12 @@ invitations, and a legend for edge cases. Label it as the seed baseline; provide
 readable scenario descriptions alongside it.
 
 ## Implementation verification
+
+`bin/rails test test/seeds/development_data_test.rb` exercises real commits and
+checks the graph, post counts, visibility, repeat seeding, preserved local
+edits, missing-post restoration, notification examples, no delivery/broadcast
+jobs, allowed attachment analysis, and restoration after failures. The account
+page and its environment checks remain pending.
 
 Verify repeat setup preserves edits, fresh setup creates the documented graph,
 and seeding performs no legacy lookup or outbound delivery. Verify switching

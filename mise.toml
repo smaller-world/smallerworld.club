@@ -11,7 +11,7 @@ overmind = "latest"
 
 [tasks]
 # == Development flow
-setup = { run = "bin/setup" }
+setup = { usage = 'flag "--reset" help="Rebuild the database and seed data"', run = "bin/setup ${usage_reset:+--reset}" }
 "setup:actual_db_schema" = { description = "Install Git hooks for actual_db_schema", run = "bin/rails actual_db_schema:install_git_hooks" }
 ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
 postgres = { description = "Start a postgres container", run = "bin/postgres", alias = "pg" }
