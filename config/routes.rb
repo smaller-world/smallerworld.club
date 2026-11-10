@@ -167,6 +167,13 @@ Rails.application.routes.draw do
   # else. Mission Control is gated by the same filter via its
   # `base_controller_class` (see `config/application.rb`).
   namespace :admin do
+    if Rails.env.development?
+      resources :users, only: :index do
+        member do
+          post :switch
+        end
+      end
+    end
     mount MissionControl::Jobs::Engine, at: "/jobs"
     get "/" => "dashboards#show", as: :dashboard
     resources :reports, only: [ :index, :show ] do

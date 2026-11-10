@@ -18,6 +18,11 @@ class Views::Admin::Dashboards::Show < Views::Base
         div(class: "flex flex-col gap-y-1") do
           h2(class: "text-xl font-semibold") { "quick links" }
           ul(class: "list-disc ml-6 space-y-0.5") do
+            if Rails.env.development?
+              li do
+                link_to("development users", admin_users_path, class: "link")
+              end
+            end
             li do
               link_to("reports", [ :admin, :reports ], class: "link")
             end

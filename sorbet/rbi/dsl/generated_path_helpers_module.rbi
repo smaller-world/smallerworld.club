@@ -43,6 +43,9 @@ module GeneratedPathHelpersModule
   def admin_reports_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def admin_users_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def apple_app_site_association_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -284,6 +287,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def support_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def switch_admin_user_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_path(*args); end

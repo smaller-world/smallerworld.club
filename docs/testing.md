@@ -23,16 +23,18 @@ in `checks/`, using the usual `_test.rb` suffix. Both use `RAILS_ENV=test` and
 the existing test helpers. Rails' normal discovery and `test:all` search under
 `test/`, so files in `checks/` are excluded without custom filtering.
 
-| Command                  | Directory       | Purpose                                    |
-| ------------------------ | --------------- | ------------------------------------------ |
-| `mise run test:ui`       | `checks/ui/`    | Browser checks for component compatibility |
-| `mise run test:seeds`    | `checks/seeds/` | Development baseline and seed isolation    |
-| `mise run test:optional` | `checks/`       | All opt-in checks                          |
+| Command                     | Directory                       | Purpose                                    |
+| --------------------------- | ------------------------------- | ------------------------------------------ |
+| `mise run test:ui`          | `checks/ui/`                    | Browser checks for component compatibility |
+| `mise run test:seeds`       | `checks/seeds/`                 | Development baseline and seed isolation    |
+| `mise run test:development` | `tests/development/`            | Development account switching and guards   |
+| `mise run test:optional`    | `checks/`, `tests/development/` | All opt-in checks                          |
 
 Run the relevant checks when changing components or development seeds.
 Individual files also work:
-`bin/rails test checks/seeds/development_data_test.rb`. Production behavior and
-environment guards belong in the regular CI suite.
+`bin/rails test checks/seeds/development_data_test.rb`. Development tooling
+checks live in `tests/development/`, outside Rails' normal `test/` discovery.
+These include the account-switching route and controller environment guards.
 
 ## Fixtures
 

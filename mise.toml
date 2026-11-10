@@ -114,7 +114,11 @@ run = "bin/rails test checks/seeds"
 
 [tasks."test:optional"]
 description = "Run all opt-in checks"
-run = "bin/rails test checks"
+run = "bin/rails test checks tests/development"
+
+[tasks."test:development"]
+description = "Run opt-in development tooling checks"
+run = "bin/rails test tests/development"
 
 [tasks."test:all"]
 description = "Run all tests"

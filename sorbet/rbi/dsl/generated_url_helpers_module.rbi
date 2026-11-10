@@ -43,6 +43,9 @@ module GeneratedUrlHelpersModule
   def admin_reports_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def admin_users_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def apple_app_site_association_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -284,6 +287,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def support_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def switch_admin_user_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def test_device_push_token_url(*args); end

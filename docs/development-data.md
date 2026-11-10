@@ -1,7 +1,30 @@
 # Development data
 
-The development baseline is implemented in `db/seeds/development.rb`. The
-account-switching page and static graph are the next milestone.
+The development baseline is implemented in `db/seeds/development.rb`.
+
+## Switching accounts
+
+Visit `/admin/users` in development, including while signed out. The admin
+dashboard also links to it under quick links. It lists every local user by name
+and phone number, including accounts outside the seed baseline.
+
+Switching uses `POST /admin/users/:id/switch`, replaces only the current browser
+session, and redirects to home. Other sessions remain signed in. Each switch
+creates a verified phone-number verification request using the selected user's
+phone number and the browser's request metadata, then creates a normal session.
+Development's existing delivery configuration disables SMS; no normal
+authentication validation is bypassed or changed. Seeding still creates no
+verification requests or devices.
+
+Routes are mounted only in development. The controller independently raises
+`Only available in development` outside development, before authentication. The
+page is deliberately accessible without admin privileges in development.
+
+Scenario descriptions and `app/assets/images/development-seed-graph.svg` appear
+on the users page. Both describe the seed baseline and may be stale after local
+edits; they are not generated from the current database. Arrows run from worlds
+to key recipients, with dashed arrows for pending invitations. Repeated names
+refer to the same account. There is no runtime diagram dependency.
 
 ## Agreed behavior
 
@@ -117,8 +140,10 @@ readable scenario descriptions alongside it.
 `mise run test:seeds` exercises real commits and checks the graph, post counts,
 visibility, repeat seeding, preserved local edits, missing-post restoration,
 notification examples, no delivery/broadcast jobs, allowed attachment analysis,
-and restoration after failures. The account page and its environment checks
-remain pending.
+and restoration after failures. `mise run test:development` covers account
+switching, signed-out access, session replacement, and independent
+route/controller environment guards. These development tooling checks live in
+`tests/development/` and are opt-in, also included in `mise run test:optional`.
 
 Verify repeat setup preserves edits, fresh setup creates the documented graph,
 and seeding performs no legacy lookup or outbound delivery. Verify switching
