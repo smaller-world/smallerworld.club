@@ -60,6 +60,14 @@ module DevelopmentData
       [ name, create_world(name, owner, "#{owner.name.downcase}'s world") ]
     end
     worlds[:casey_second] = create_world(:casey_second, users.fetch(:casey), "casey's quiet corner")
+    worlds.each do |label, world|
+      World.default_post_types.each do |type|
+        world.post_types.find_or_create_by!(id: id("type/#{label}/#{type.label}")) do |record|
+          record.label = type.label
+          record.icon = type.icon
+        end
+      end
+    end
     worlds
   end
 

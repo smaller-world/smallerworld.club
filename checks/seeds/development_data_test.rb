@@ -105,6 +105,28 @@ class DevelopmentDataTest < ActiveSupport::TestCase
     config.v1_checks_disabled = previous if config
   end
 
+  test "setup restores missing default types and preserves existing type edits" do
+    DevelopmentData.seed!
+    %w[alex blair casey_second].each do |label|
+      world = World.find(DevelopmentData.id("world/#{label}"))
+      world.post_types.find(DevelopmentData.id("type/#{label}/poem")).destroy!
+      world.post_types.find(DevelopmentData.id("type/#{label}/journal entry")).update!(label: "local label", icon: "huge/book-edit")
+    end
+
+    2.times { DevelopmentData.seed! }
+
+    %w[alex blair casey_second].each do |label|
+      world = World.find(DevelopmentData.id("world/#{label}"))
+      restored = world.post_types.find(DevelopmentData.id("type/#{label}/poem"))
+      assert_equal "poem", restored.label
+      assert_equal World.default_post_types.find { |type| type.label == "poem" }&.icon, restored.icon
+      edited = world.post_types.find(DevelopmentData.id("type/#{label}/journal entry"))
+      assert_equal "local label", edited.label
+      assert_equal "huge/book-edit", edited.icon
+      assert_equal World.default_post_types.size, world.post_types.count
+    end
+  end
+
   test "failed seed creation restores the v1 flag and suppression" do
     notification = T.let(nil, T.nilable(Notification))
     config = SmallerWorld.application.config.x
