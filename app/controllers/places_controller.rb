@@ -6,6 +6,10 @@ class PlacesController < ApplicationController
 
   skip_verify_authorized
 
+  # == Filters ==
+
+  before_action :show_development_alert
+
   # == Actions ==
 
   # GET /places/dock
@@ -15,5 +19,14 @@ class PlacesController < ApplicationController
         render Views::Places::Dock.new
       end
     end
+  end
+
+  private
+
+  # == Callbacks ==
+
+  sig { void }
+  def show_development_alert
+    flash.now[:alert] = "this feature is still in active development."
   end
 end

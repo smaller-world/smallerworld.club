@@ -19,9 +19,15 @@ class Views::Places::Dock < Views::Base
           muted: true,
           loop: true,
           playsinline: true,
-          data: { controller: "autoplay" },
+          class: "place-background hidden w-full max-w-sm h-auto",
+          data: {
+            hidden_inline: "",
+            controller: "autoplay transition",
+            action: "playing->transition#enter",
+            transition_enter: "transition-opacity duration-[1400ms] ease-in-ou",
+            transition_enter_start: "opacity-0",
+          },
           aria: { hidden: "true" },
-          class: "place-background w-full max-w-sm h-auto"
         ) do
           source(src: asset_path("places/dock-background.mov"), type: "video/quicktime")
           source(src: asset_path("places/dock-background.webm"), type: "video/webm")
