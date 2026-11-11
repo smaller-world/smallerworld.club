@@ -19,6 +19,7 @@ class Views::Places::Dock < Views::Base
           muted: true,
           loop: true,
           playsinline: true,
+          data: { controller: "autoplay" },
           aria: { hidden: "true" },
           class: "place-background w-full max-w-sm h-auto"
         ) do
