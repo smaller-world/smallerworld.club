@@ -134,7 +134,7 @@ Rails.application.routes.draw do
 
   # == Installation
   get "/install",
-    to: redirect(Rails.configuration.install_url, status: 302),
+    to: redirect(Rails.configuration.x.install_url, status: 302),
     as: :install
 
   # == Contact Us
@@ -143,12 +143,12 @@ Rails.application.routes.draw do
   get "/support" => redirect("/contact", status: 302)
 
   # == Tools
-  get "/src" => redirect(Rails.configuration.github_url, status: 302)
-  get "/fly" => redirect(Rails.configuration.fly_url, status: 302)
-  get "/logs" => redirect(Rails.configuration.logs_url, status: 302)
-  get "/metrics" => redirect(Rails.configuration.metrics_url, status: 302)
-  get "/sentry" => redirect(Rails.configuration.sentry_url, status: 302)
-  get "/ci" => redirect(Rails.configuration.ci_url, status: 302)
+  get "/src" => redirect(Rails.configuration.x.github_url, status: 302)
+  get "/fly" => redirect(Rails.configuration.x.fly_url, status: 302)
+  get "/logs" => redirect(Rails.configuration.x.logs_url, status: 302)
+  get "/metrics" => redirect(Rails.configuration.x.metrics_url, status: 302)
+  get "/sentry" => redirect(Rails.configuration.x.sentry_url, status: 302)
+  get "/ci" => redirect(Rails.configuration.x.ci_url, status: 302)
 
   # == V1 Redirects
   scope controller: "v1_redirects" do
@@ -167,6 +167,13 @@ Rails.application.routes.draw do
   # else. Mission Control is gated by the same filter via its
   # `base_controller_class` (see `config/application.rb`).
   namespace :admin do
+    if Rails.env.development?
+      resources :users, only: :index do
+        member do
+          post :switch
+        end
+      end
+    end
     mount MissionControl::Jobs::Engine, at: "/jobs"
     get "/" => "dashboards#show", as: :dashboard
     resources :reports, only: [ :index, :show ] do

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 900 710" role="img" aria-labelledby="title description">
+<title id="title">seed baseline social graph</title>
+<desc id="description">arrows run from a world to its key recipients. dashed arrows are pending invitations, which grant no access. blair and casey, and blair and ellis, share reciprocal keys. full scenario descriptions accompany this graph.</desc>
+<style>
+:root { color-scheme: light dark; --paper: Canvas; --ink: CanvasText; --muted: GrayText; --line: GrayText; }
+text { fill: var(--ink); font-family: sans-serif; font-size: 17px; }
+.small { fill: var(--muted); font-size: 13px; }
+.node { fill: var(--paper); stroke: var(--line); }
+.edge { fill: none; stroke: var(--line); stroke-width: 1.5; marker-end: url(#arrow); }
+.pending { stroke-dasharray: 6 4; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--line)"/></marker></defs>
+<rect y="90" width="900" height="710" rx="16" fill="var(--paper)"/>
+
+<rect class="node" x="24" y="115" width="215" height="64" rx="12"/><text x="36" y="141">alex&#x27;s world</text><text class="small" x="36" y="163">1 post · no friends</text>
+<text class="small" x="268" y="152">no outgoing keys or invitations</text>
+<rect class="node" x="24" y="227" width="215" height="64" rx="12"/><text x="36" y="253">blair&#x27;s world</text><text class="small" x="36" y="275">60 posts</text>
+<path class="edge" d="M 239 259 H 252 V 213 H 343 V 227"/>
+<rect class="node" x="274" y="227" width="139" height="64" rx="12"/><text x="284" y="253">alex</text><text class="small" x="284" y="275">journal entries only</text>
+<path class="edge" d="M 239 259 H 252 V 213 H 496 V 227"/>
+<rect class="node" x="427" y="227" width="139" height="64" rx="12"/><text x="437" y="253">casey</text><text class="small" x="437" y="275">default types</text>
+<path class="edge" d="M 239 259 H 252 V 213 H 649 V 227"/>
+<rect class="node" x="580" y="227" width="139" height="64" rx="12"/><text x="590" y="253">drew</text><text class="small" x="590" y="275">default types</text>
+<path class="edge" d="M 239 259 H 252 V 213 H 802 V 227"/>
+<rect class="node" x="733" y="227" width="139" height="64" rx="12"/><text x="743" y="253">ellis</text><text class="small" x="743" y="275">poems muted</text>
+<rect class="node" x="24" y="339" width="215" height="64" rx="12"/><text x="36" y="365">casey&#x27;s world</text><text class="small" x="36" y="387">8 posts · field note</text>
+<path class="edge" d="M 239 371 H 252 V 325 H 343 V 339"/>
+<rect class="node" x="274" y="339" width="139" height="64" rx="12"/><text x="284" y="365">alex</text><text class="small" x="284" y="387">default types</text>
+<path class="edge" d="M 239 371 H 252 V 325 H 496 V 339"/>
+<rect class="node" x="427" y="339" width="139" height="64" rx="12"/><text x="437" y="365">blair</text><text class="small" x="437" y="387">+ field note</text>
+<path class="edge pending" d="M 239 371 H 252 V 325 H 649 V 339"/>
+<rect class="node" x="580" y="339" width="139" height="64" rx="12"/><text x="590" y="365">ellis</text><text class="small" x="590" y="387">pending invitation</text>
+<rect class="node" x="24" y="451" width="215" height="64" rx="12"/><text x="36" y="477">casey&#x27;s quiet corner</text><text class="small" x="36" y="499">1 post · no friends</text>
+<text class="small" x="268" y="488">no outgoing keys or invitations</text>
+<rect class="node" x="24" y="563" width="215" height="64" rx="12"/><text x="36" y="589">drew&#x27;s world</text><text class="small" x="36" y="611">3 posts</text>
+<path class="edge" d="M 239 595 H 252 V 549 H 343 V 563"/>
+<rect class="node" x="274" y="563" width="139" height="64" rx="12"/><text x="284" y="589">casey</text><text class="small" x="284" y="611">default types</text>
+<path class="edge pending" d="M 239 595 H 252 V 549 H 496 V 563"/>
+<rect class="node" x="427" y="563" width="139" height="64" rx="12"/><text x="437" y="589">blair</text><text class="small" x="437" y="611">pending invitation</text>
+<rect class="node" x="24" y="675" width="215" height="64" rx="12"/><text x="36" y="701">ellis&#x27;s world</text><text class="small" x="36" y="723">15 posts</text>
+<path class="edge" d="M 239 707 H 252 V 661 H 343 V 675"/>
+<rect class="node" x="274" y="675" width="139" height="64" rx="12"/><text x="284" y="701">blair</text><text class="small" x="284" y="723">default types</text>
+<path class="edge" d="M 239 707 H 252 V 661 H 496 V 675"/>
+<rect class="node" x="427" y="675" width="139" height="64" rx="12"/><text x="437" y="701">drew</text><text class="small" x="437" y="723">default types</text>
+</svg>

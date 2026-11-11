@@ -24,6 +24,8 @@ module SmallerWorld
     config.x.site.name = "smaller world"
     config.x.site.tagline = "a place to share your feelings with friends."
 
+    config.x.v1_checks_disabled = false
+
     # Cloudflare Turnstile server-side test secret keys.
     # See: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
     config.x.turnstile_test_secret_keys.always_passes_key = "1x0000000000000000000000000000000AA"
@@ -31,21 +33,21 @@ module SmallerWorld
     config.x.turnstile_test_secret_keys.already_spent_key = "3x0000000000000000000000000000000AA"
     config.x.turnstile_test_site_keys.always_passes_key = "1x00000000000000000000AA"
 
-    config.github_url = "https://github.com/smaller-world/smallerworld.club"
-    config.fly_url = "https://fly.io/apps/smallerworld"
-    config.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
-    config.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
-    config.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
-    config.install_url = "https://smallerworld.instally.io/t8rnd9"
-    config.ci_url = "https://github.com/smaller-world/smallerworld.club/actions"
+    config.x.github_url = "https://github.com/smaller-world/smallerworld.club"
+    config.x.fly_url = "https://fly.io/apps/smallerworld"
+    config.x.logs_url = "https://fly-metrics.net/d/fly-logs/fly-logs?orgId=256205&var-app=smallerworld"
+    config.x.metrics_url = "https://fly-metrics.net/d/fly-app/fly-app?orgId=256205&var-app=smallerworld"
+    config.x.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
+    config.x.install_url = "https://smallerworld.instally.io/t8rnd9"
+    config.x.ci_url = "https://github.com/smaller-world/smallerworld.club/actions"
 
-    config.v1_url = "https://old.smallerworld.club"
-    config.v1_posts_import_limit = 20
+    config.x.v1_url = "https://old.smallerworld.club"
+    config.x.v1_posts_import_limit = 20
 
-    config.email_disclaimer =
+    config.x.email_disclaimer =
       "we will only email you about important announcements. we will not spam you or " \
         "send you marketing emails."
-    config.confetti_canvas_id = "confetti_canvas"
+    config.x.confetti_canvas_id = "confetti_canvas"
 
     # == Rails Configuration ==
 

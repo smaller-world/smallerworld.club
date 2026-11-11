@@ -221,6 +221,9 @@ group :development do
 
   # Keep database in sync with Git branches
   gem "actual_db_schema"
+
+  # Seed database with fake data for dev and testing
+  gem "faker"
 end
 
 group :test do

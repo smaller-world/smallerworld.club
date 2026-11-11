@@ -27,6 +27,6 @@ class TestsController < ApplicationController
 
   sig { void }
   def ensure_test_env
-    raise "Only available in test environment" unless Rails.env.test?
+    raise "Only available in test" unless Rails.env.test?
   end
 end

@@ -9,6 +9,6 @@ class SmallerWorld::Application
 
   sig { returns(String) }
   def email_disclaimer
-    Rails.configuration.email_disclaimer
+    Rails.configuration.x.email_disclaimer
   end
 end

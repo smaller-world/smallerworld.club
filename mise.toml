@@ -11,8 +11,9 @@ overmind = "latest"
 
 [tasks]
 # == Development flow
-setup = { run = "bin/setup" }
+setup = { usage = 'flag "--reset" help="Rebuild the database and seed data"', run = "bin/setup ${usage_reset:+--reset}" }
 "setup:actual_db_schema" = { description = "Install Git hooks for actual_db_schema", run = "bin/rails actual_db_schema:install_git_hooks" }
+"setup:playwright" = { description = "Install Playwright Chromium headless shell and system dependencies", run = "bunx --bun playwright install chromium --only-shell --with-deps" }
 ci = { description = "Run all CI checks", run = "bin/ci --fail-fast" }
 postgres = { description = "Start a postgres container", run = "bin/postgres", alias = "pg" }
 dev = { description = "Start dev proceses", run = "bin/dev" }
@@ -105,7 +106,19 @@ alias = "ts"
 
 [tasks."test:ui"]
 description = "Run opt-in UI checks"
-run = "bin/rails test test/ui/*.rb"
+run = "bin/rails test checks/ui"
+
+[tasks."test:seeds"]
+description = "Run opt-in development seed checks"
+run = "bin/rails test checks/seeds"
+
+[tasks."test:optional"]
+description = "Run all opt-in checks"
+run = "bin/rails test checks tests/development"
+
+[tasks."test:development"]
+description = "Run opt-in development tooling checks"
+run = "bin/rails test tests/development"
 
 [tasks."test:all"]
 description = "Run all tests"

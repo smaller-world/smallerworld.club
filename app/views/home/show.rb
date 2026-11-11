@@ -25,7 +25,7 @@ class Views::Home::Show < Views::Base
       @current_user.world_invitations
         .pending_acceptance
         .with_world_and_attached_icon,
-      WorldInvitation::PrivateRelation,
+      WorldInvitation::PrivateAssociationRelation,
     )
   end
 

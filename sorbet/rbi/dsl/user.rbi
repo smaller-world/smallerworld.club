@@ -468,6 +468,20 @@ class User
     sig { params(value: T::Enumerable[::Notification]).void }
     def received_notifications=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def received_world_invitation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def received_world_invitation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `User` class because it declared `has_many :received_world_invitations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldInvitation::PrivateCollectionProxy) }
+    def received_world_invitations; end
+
+    sig { params(value: T::Enumerable[::WorldInvitation]).void }
+    def received_world_invitations=(value); end
+
     sig { returns(T.nilable(::Registration)) }
     def registration; end
 

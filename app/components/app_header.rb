@@ -98,7 +98,7 @@ class Components::AppHeader < Components::Base
         Icon("huge/lake")
         span { "the dock" }
       end
-      if current_user.admin?
+      if Rails.env.development? || current_user.admin?
         content.link_item_to(admin_dashboard_path) do
           Icon("huge/dashboard-square-02")
           span { "admin" }

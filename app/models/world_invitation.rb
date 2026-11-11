@@ -37,7 +37,7 @@ class WorldInvitation < ApplicationRecord
   has_many :world_key_recipients, through: :world, source: :key_recipients
   has_many :world_post_types, through: :world, source: :post_types
 
-  belongs_to :recipient, class_name: "User", optional: true
+  belongs_to :recipient, class_name: "User", inverse_of: :received_world_invitations, optional: true
   has_one :world_key,
     inverse_of: :invitation,
     foreign_key: :invitation_id,
