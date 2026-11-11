@@ -14,8 +14,8 @@ class DevelopmentDataTest < ActiveSupport::TestCase
     Notification.suppress do
       Post.suppressing_turbo_broadcasts do
         WorldKey.suppressing_turbo_broadcasts do
-          World.where(owner_id: DevelopmentData::NAMES.map { |name| DevelopmentData.id("user/#{name}") }).destroy_all
-          User.where(id: DevelopmentData::NAMES.map { |name| DevelopmentData.id("user/#{name}") }).destroy_all
+          World.where(owner_id: DevelopmentData::USER_NAMES.map { |name| DevelopmentData.id("user/#{name}") }).destroy_all
+          User.where(id: DevelopmentData::USER_NAMES.map { |name| DevelopmentData.id("user/#{name}") }).destroy_all
         end
       end
     end
@@ -36,7 +36,7 @@ class DevelopmentDataTest < ActiveSupport::TestCase
     assert_not Post.suppressed_turbo_broadcasts?
     assert_not WorldKey.suppressed_turbo_broadcasts?
 
-    users = DevelopmentData::NAMES.to_h { |name| [ name.to_sym, User.find(DevelopmentData.id("user/#{name}")) ] }
+    users = DevelopmentData::USER_NAMES.to_h { |name| [ name.to_sym, User.find(DevelopmentData.id("user/#{name}")) ] }
     worlds = DevelopmentData::POST_COUNTS.keys.index_with { |name| World.find(DevelopmentData.id("world/#{name}")) }
     users.each_value do |user|
       assert_not user.has_v1_account?

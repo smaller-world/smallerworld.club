@@ -144,7 +144,7 @@ notification examples, no delivery/broadcast jobs, allowed attachment analysis,
 and restoration after failures. `mise run test:development` covers account
 switching, signed-out access, session replacement, and independent
 route/controller environment guards. These development tooling checks live in
-`tests/development/` and are opt-in, also included in `mise run test:optional`.
+`checks/development/` and are opt-in, also included in `mise run test:optional`.
 
 Verify repeat setup preserves edits, fresh setup creates the documented graph,
 and seeding performs no legacy lookup or outbound delivery. Verify switching

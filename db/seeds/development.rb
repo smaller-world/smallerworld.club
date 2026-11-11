@@ -5,7 +5,7 @@ require "faker"
 require "active_support/core_ext/digest/uuid"
 
 module DevelopmentData
-  NAMES = %w[alex blair casey drew ellis].freeze
+  USER_NAMES = %w[alex blair casey drew ellis].freeze
   POST_COUNTS = { alex: 1, blair: 60, casey: 8, drew: 3, ellis: 15 }.freeze
 
   # Stable identities survive edits to names, phone numbers, and post content.
@@ -40,7 +40,7 @@ module DevelopmentData
   end
 
   def self.create_users
-    NAMES.each_with_index.to_h do |name, index|
+    USER_NAMES.each_with_index.to_h do |name, index|
       user = User.find_or_create_by!(id: id("user/#{name}")) do |record|
         record.assign_attributes(
           name: name.capitalize,

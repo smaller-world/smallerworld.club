@@ -54,7 +54,3 @@ Sorbet/FalseSigil:
   Enabled: false
 Sorbet/TrueSigil:
   Enabled: true
-
-Minitest/MultipleAssertions:
-  Exclude:
-    - tests/development/**/*
