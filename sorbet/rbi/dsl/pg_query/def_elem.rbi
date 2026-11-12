@@ -9,13 +9,14 @@ class PgQuery::DefElem < Google::Protobuf::AbstractMessage
   sig do
     params(
       arg: T.nilable(PgQuery::Node),
+      arg_location: T.nilable(Integer),
       defaction: T.nilable(T.any(Symbol, Integer)),
       defname: T.nilable(String),
       defnamespace: T.nilable(String),
       location: T.nilable(Integer)
     ).void
   end
-  def initialize(arg: nil, defaction: nil, defname: nil, defnamespace: nil, location: nil); end
+  def initialize(arg: nil, arg_location: nil, defaction: nil, defname: nil, defnamespace: nil, location: nil); end
 
   sig { returns(T.nilable(PgQuery::Node)) }
   def arg; end
@@ -23,8 +24,17 @@ class PgQuery::DefElem < Google::Protobuf::AbstractMessage
   sig { params(value: T.nilable(PgQuery::Node)).void }
   def arg=(value); end
 
+  sig { returns(Integer) }
+  def arg_location; end
+
+  sig { params(value: Integer).void }
+  def arg_location=(value); end
+
   sig { void }
   def clear_arg; end
+
+  sig { void }
+  def clear_arg_location; end
 
   sig { void }
   def clear_defaction; end

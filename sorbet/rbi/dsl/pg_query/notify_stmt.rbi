@@ -6,14 +6,23 @@
 
 
 class PgQuery::NotifyStmt < Google::Protobuf::AbstractMessage
-  sig { params(conditionname: T.nilable(String), payload: T.nilable(String)).void }
-  def initialize(conditionname: nil, payload: nil); end
+  sig do
+    params(
+      conditionname: T.nilable(String),
+      payload: T.nilable(String),
+      payload_location: T.nilable(Integer)
+    ).void
+  end
+  def initialize(conditionname: nil, payload: nil, payload_location: nil); end
 
   sig { void }
   def clear_conditionname; end
 
   sig { void }
   def clear_payload; end
+
+  sig { void }
+  def clear_payload_location; end
 
   sig { returns(String) }
   def conditionname; end
@@ -26,4 +35,10 @@ class PgQuery::NotifyStmt < Google::Protobuf::AbstractMessage
 
   sig { params(value: String).void }
   def payload=(value); end
+
+  sig { returns(Integer) }
+  def payload_location; end
+
+  sig { params(value: Integer).void }
+  def payload_location=(value); end
 end

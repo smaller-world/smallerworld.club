@@ -9,15 +9,19 @@ class PgQuery::CreateSubscriptionStmt < Google::Protobuf::AbstractMessage
   sig do
     params(
       conninfo: T.nilable(String),
+      conninfo_location: T.nilable(Integer),
       options: T.nilable(T::Array[PgQuery::Node]),
       publication: T.nilable(T::Array[PgQuery::Node]),
       subname: T.nilable(String)
     ).void
   end
-  def initialize(conninfo: nil, options: T.unsafe(nil), publication: T.unsafe(nil), subname: nil); end
+  def initialize(conninfo: nil, conninfo_location: nil, options: T.unsafe(nil), publication: T.unsafe(nil), subname: nil); end
 
   sig { void }
   def clear_conninfo; end
+
+  sig { void }
+  def clear_conninfo_location; end
 
   sig { void }
   def clear_options; end
@@ -33,6 +37,12 @@ class PgQuery::CreateSubscriptionStmt < Google::Protobuf::AbstractMessage
 
   sig { params(value: String).void }
   def conninfo=(value); end
+
+  sig { returns(Integer) }
+  def conninfo_location; end
+
+  sig { params(value: Integer).void }
+  def conninfo_location=(value); end
 
   sig { returns(Google::Protobuf::RepeatedField[PgQuery::Node]) }
   def options; end
