@@ -4,7 +4,7 @@
   "workspaces": {
     "": {
       "dependencies": {
-        "@37signals/lexxy": "^1.0.3",
+        "@37signals/lexxy": "^1.0.4",
         "@glidejs/glide": "^3.7.1",
         "@gothassos/uppy-activestorage-upload": "^2.0.2",
         "@hotwired/hotwire-native-bridge": "^1.2.2",
@@ -96,7 +96,7 @@
     "zod": "4.6.6",
   },
   "packages": {
-    "@37signals/lexxy": ["@37signals/lexxy@1.0.3", "", { "dependencies": { "@lexical/clipboard": "^0.52.0", "@lexical/code": "^0.52.0", "@lexical/code-prism": "^0.52.0", "@lexical/extension": "^0.52.0", "@lexical/history": "^0.52.0", "@lexical/html": "^0.52.0", "@lexical/link": "^0.52.0", "@lexical/list": "^0.52.0", "@lexical/markdown": "^0.52.0", "@lexical/plain-text": "^0.52.0", "@lexical/rich-text": "^0.52.0", "@lexical/selection": "^0.52.0", "@lexical/table": "^0.52.0", "@lexical/utils": "^0.52.0", "dompurify": "^3.4.17", "lexical": "^0.52.0", "marked": "^16.4.2", "prismjs": "^1.30.0" }, "peerDependencies": { "@rails/activestorage": ">= 7.0.0" }, "optionalPeers": ["@rails/activestorage"] }, "sha512-h7XXTt9XQbg1l7c2nz2iSAHXepeTx/35MJo5Cmdv3VdZitM5chdkzzKr9Rc41uySkcKqhzpHy7QOmHudQST0JA=="],
+    "@37signals/lexxy": ["@37signals/lexxy@1.0.4", "", { "dependencies": { "@lexical/clipboard": "^0.52.0", "@lexical/code": "^0.52.0", "@lexical/code-prism": "^0.52.0", "@lexical/extension": "^0.52.0", "@lexical/history": "^0.52.0", "@lexical/html": "^0.52.0", "@lexical/link": "^0.52.0", "@lexical/list": "^0.52.0", "@lexical/markdown": "^0.52.0", "@lexical/plain-text": "^0.52.0", "@lexical/rich-text": "^0.52.0", "@lexical/selection": "^0.52.0", "@lexical/table": "^0.52.0", "@lexical/utils": "^0.52.0", "dompurify": "^3.4.17", "lexical": "^0.52.0", "marked": "^16.4.2", "prismjs": "^1.30.0" }, "peerDependencies": { "@rails/activestorage": ">= 7.0.0" }, "optionalPeers": ["@rails/activestorage"] }, "sha512-g0TZffZN+g/p7GAUKewDL78OYmJ6suV4qyA1zj1uMoRRrzG1YWacMLJt35BTDK2r3lRtgNykZsws0lzp2FLHFQ=="],
 
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
