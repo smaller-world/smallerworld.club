@@ -114,7 +114,7 @@ gem "inline_svg", "~> 1.10"
 gem "active_storage_validations", "~> 3.0"
 
 # Rich text editing with Lexxy
-gem "lexxy", "~> 1.0.3"
+gem "lexxy", "~> 1.0.4"
 
 # ISO 3166 country data
 gem "countries", "~> 8.1"
