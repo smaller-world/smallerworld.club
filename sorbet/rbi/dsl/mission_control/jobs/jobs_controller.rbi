@@ -25,7 +25,7 @@ class MissionControl::Jobs::JobsController
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
     include ::LocalTimeHelper
-    include ::Admin::EngineController::HelperMethods
+    include ::ApplicationController::HelperMethods
     include ::MissionControl::Jobs::InterfaceHelper
     include ::MissionControl::Jobs::NavigationHelper
     include ::MissionControl::Jobs::JobsHelper

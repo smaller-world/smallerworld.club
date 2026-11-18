@@ -65,10 +65,10 @@ module SmallerWorld
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Disable HTTP basic auth for the jobs dashboard; access is instead gated
-    # by `Admin::AdminController#verify_admin!`, inherited via the base
+    # by `AdminController#verify_admin!`, inherited via the base
     # controller below.
     config.mission_control.jobs.http_basic_auth_enabled = false
-    config.mission_control.jobs.base_controller_class = "Admin::EngineController"
+    config.mission_control.jobs.base_controller_class = "::AdminController"
 
     # Set a PID file
     config.solid_queue.supervisor_pidfile = Rails.root.join("tmp/pids/jobs.pid")

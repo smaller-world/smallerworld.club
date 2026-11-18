@@ -60,7 +60,7 @@ class Views::Places::Dock < Views::Base
             source(src: asset_path("places/dock_bg.webm"), type: "video/webm")
           end
           div(class: "text-center font-heading text-xs text-muted-foreground/80 italic") do
-            plain("this is a private place to reflect on your day.")
+            plain("this is a private place to reflect on your day. it's a work in progress...")
             whitespace
             form_with(url: contact_request_path(purpose: "feedback"), class: "inline") do |form|
               form.button(class: "link underline") do

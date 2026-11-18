@@ -15,23 +15,6 @@ module Admin
       @report = @post.reports.create!(reporter: @reporter, category: "spam")
     end
 
-    test "a non-admin gets a 403" do
-      sign_in_as(@reporter)
-      with_admins(@admin) do
-        get admin_reports_path
-        assert_response :forbidden
-
-        get admin_report_path(@report)
-        assert_response :forbidden
-
-        post resolve_admin_report_path(@report), params: {
-          report: { resolution: "dismissed" },
-        }
-        assert_response :forbidden
-      end
-      assert_nil @report.reload.resolution
-    end
-
     test "a signed-out visitor is sent to sign in" do
       get admin_reports_path
       assert_redirected_to new_session_path

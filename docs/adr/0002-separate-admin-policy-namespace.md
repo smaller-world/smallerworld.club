@@ -1,4 +1,4 @@
-# 2. A separate `Admin::` policy namespace
+# 2. A separate policy for admin access
 
 Date: 2026-08-06
 
@@ -26,35 +26,19 @@ zero callers.
 
 ## Decision
 
-Admin authorization lives in its own namespace: `Admin::AdminPolicy` as the base
-(`index?`, `show?` = `user.admin?`), with `Admin::ReportPolicy` adding
-`resolve?`. Admin controllers pass the policy explicitly:
-
-```ruby
-authorize!(report, with: Admin::ReportPolicy)
-```
-
-Access to the admin area as a whole is additionally gated by
-`Admin::AdminController#verify_admin!`, which raises `RecordNotFound` rather
-than denying — `/admin/*` is indistinguishable from a mistyped URL, and nothing
-in the app links to it.
+The dashboard, reports, and Mission Control inherit the top-level
+`AdminController`. Its `verify_admin!` before-action authorizes
+`AdminPolicy#manage?` explicitly. Denied requests from signed-in non-admins
+render the Forbidden page with status 403.
 
 Admin-ness itself is derived from `credentials.admin_phone_numbers` via
 `User#admin?`, so it is a property of a person and cannot be granted in-app.
 
 ## Consequences
 
-- Every admin authorization call must pass `with:`. Forgetting it silently
-  resolves to the reporter-facing `ReportPolicy` — which is why the
-  `verify_admin!` filter exists as a second, independent gate rather than
-  relying on policies alone.
-- The two policies can evolve without regression risk to each other. The
-  reporter-facing `ReportPolicy` was left completely untouched by this work.
-- Engines mounted in the admin area can't call `authorize!`, so they inherit
-  `Admin::EngineController`, which is gated by the same filter but opts out of
-  Action Policy verification. Mission Control is wired to it via
-  `config.mission_control.jobs.base_controller_class`. This is what actually
-  authenticates `/admin/jobs` — `http_basic_auth_enabled` is `false`, so
-  mounting the engine without this would have exposed it publicly.
-- Adding a second admin resource means one more policy class, not a branch in an
-  existing one.
+- Admin access is decided once per request. The reporter-facing `ReportPolicy`
+  continues to check report ownership.
+- Mission Control uses `::AdminController` via
+  `config.mission_control.jobs.base_controller_class`. The inherited callback
+  satisfies Action Policy's authorization verification. The engine uses the
+  app's session authentication with HTTP Basic authentication disabled.

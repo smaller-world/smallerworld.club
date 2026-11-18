@@ -19,20 +19,34 @@ module Admin
       assert_select "a[href=?]", admin_reports_path
     end
 
-    test "a non-admin gets a 401" do
+    test "admin routes return 403 to signed-in non-admins" do
+      world = create_world(owner: users(:sue))
+      create_member_key(world:, recipient: @user)
+      reported_post = create_post(world:)
+      report = reported_post.reports.create!(reporter: @user, category: "spam")
       sign_in_as(@user)
-      with_admins(@admin) do
-        get admin_dashboard_path
-      end
-      assert_response :forbidden
-    end
 
-    test "mission control is gated by the admin filter" do
-      sign_in_as(@user)
       with_admins(@admin) do
+        [
+          admin_dashboard_path,
+          admin_reports_path,
+          admin_report_path(report),
+        ].each do |path|
+          get(path)
+          assert_response(:forbidden, "GET #{path}")
+          assert_select "main", text: /this door is locked\./
+        end
+
+        path = resolve_admin_report_path(report)
+        post(path, params: { report: { resolution: "dismissed" } })
+        assert_response(:forbidden, "POST #{path}")
+        assert_select "main", text: /this door is locked\./
+        assert_nil report.reload.resolution
+
         get admin_mission_control_jobs_path
+        assert_response :forbidden
+        assert_select "main", text: /this door is locked\./
       end
-      assert_redirected_to root_path
     end
 
     test "an admin can load mission control" do

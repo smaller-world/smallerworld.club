@@ -9,9 +9,7 @@ module Admin
     def index
       respond_to do |format|
         format.html do
-          authorize!
-          scope = authorized_scope(Report.all)
-          reports = scope.includes(:reporter, :reportable).pending_first
+          reports = Report.includes(:reporter, :reportable).pending_first
           pagy, reports = pagy(:countish, reports)
           render Views::Admin::Reports::Index.new(reports:, pagy:)
         end
@@ -24,7 +22,6 @@ module Admin
         format.html do
           current_user = Current.user!
           report = find_report
-          authorize!(report)
           render Views::Admin::Reports::Show.new(current_user:, report:)
         end
       end
@@ -36,7 +33,6 @@ module Admin
         format.html do
           current_user = Current.user!
           report = find_report
-          authorize!(report)
           resolution = params.require(:report).fetch(:resolution)
           report.resolve!(resolution:, moderator: current_user)
           resolution = report.resolution!

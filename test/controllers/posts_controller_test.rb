@@ -15,6 +15,48 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   # == Tests ==
 
+  test "a signed-out visitor sees a reporting alert in place of a reported post" do
+    reporter = users(:sue)
+    create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "reported post body")
+    post.reports.create!(reporter:, category: "spam")
+
+    get post_path(post)
+
+    assert_response :success
+    assert_not_includes response.body, "reported post body"
+    assert_select '[role="alert"]', text: "this post has been reported."
+  end
+
+  test "the author can open a reported post's secret link after the report is upheld" do
+    reporter = users(:sue)
+    create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "the author's reported post body")
+    report = post.reports.create!(reporter:, category: "spam")
+    report.resolve!(resolution: "upheld", moderator: users(:jane))
+    sign_in_as(@owner)
+
+    get post_path(post)
+
+    assert_response :success
+    assert_includes response.body, "the author's reported post body"
+  end
+
+  test "a friend sees a reporting alert on the secret link after the report is upheld" do
+    friend = users(:sue)
+    create_member_key(world: @world, recipient: friend)
+    post = create_post(world: @world, body: "post shared with a friend")
+    report = post.reports.create!(reporter: friend, category: "spam")
+    report.resolve!(resolution: "upheld", moderator: users(:jane))
+    sign_in_as(friend)
+
+    get post_path(post)
+
+    assert_response :success
+    assert_not_includes response.body, "post shared with a friend"
+    assert_select '[role="alert"]', text: "this post has been reported."
+  end
+
   test "owner creates a post of a given type" do
     sign_in_as(@owner)
     post_type = @world.post_types.find_by!(label: "journal entry")

@@ -166,9 +166,8 @@ Rails.application.routes.draw do
 
   # == Admin
   #
-  # Gated by `Admin::AdminController#verify_admin!`, which 404s for everyone
-  # else. Mission Control is gated by the same filter via its
-  # `base_controller_class` (see `config/application.rb`).
+  # AdminController applies the admin policy to these routes, including
+  # Mission Control via its configured base controller.
   namespace :admin do
     if Rails.env.development?
       resources :users, only: :index do

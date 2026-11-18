@@ -85,6 +85,9 @@ class WorldKey < ApplicationRecord
   # == Scopes ==
 
   scope :order_by_latest_visible_post, -> {
+    reported = Report.not_dismissed
+      .where(reportable_type: "Post")
+      .where("reports.reportable_id = posts.id")
     latest_post_at = Arel::Nodes::Grouping.new(
       Post
         .joins(:type)
@@ -96,6 +99,7 @@ class WorldKey < ApplicationRecord
             .arel
             .exists,
         )
+        .where.not(reported.arel.exists)
         .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
         .select("MAX(posts.created_at)")
         .arel,

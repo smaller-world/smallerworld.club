@@ -20,15 +20,23 @@ class WorldKeyGrantsTest < ApplicationSystemTestCase
     assert_no_button "enter #{@world.name}"
   end
 
-  test "opening the invite link while signed in shows the enter world button" do
+  test "accepting the invite while signed in opens the world and shows a granted post" do
     recipient = users(:sue)
+    world = create_world(owner: users(:bob))
+    body = "a journal entry for invited friends"
+    post = create_post(world:, body:)
+    grant_message = world.key_grant_message(post_type_ids: [ post.type_id ])
     sign_in_as(recipient)
 
-    visit world_key_grant_path(@grant_message)
+    visit world_key_grant_path(grant_message)
 
     assert_text "you've been invited to:"
-    assert_text @world.name
-    assert_button "enter #{@world.name}"
+    assert_text world.name
     assert_no_selector "input[placeholder='your phone #']"
+
+    click_button "enter #{world.name}"
+
+    assert_current_path world_path(world)
+    assert_text body
   end
 end

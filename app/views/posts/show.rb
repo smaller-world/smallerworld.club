@@ -50,11 +50,18 @@ class Views::Posts::Show < Views::Base
           end
         end
 
-        Components::PostCard(
-          post: @post,
-          active_report: @active_report,
-          auto_collapse: false,
-        )
+        if @active_report && !allowed_to?(:manage?, @post)
+          Components::Alert(variant: :destructive) do |alert|
+            Icon("huge/alert-01")
+            alert.title { "this post has been reported." }
+          end
+        else
+          Components::PostCard(
+            post: @post,
+            active_report: @active_report,
+            auto_collapse: false,
+          )
+        end
       end
     end
   end

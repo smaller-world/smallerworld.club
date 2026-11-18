@@ -8,7 +8,9 @@ iOS shell), Sorbet, Action Policy, Minitest.
 - [CONTEXT.md](CONTEXT.md) — domain glossary. Read before naming anything.
 - [docs/design.md](docs/design.md) — the visual language. Read before writing
   UI.
-- [docs/testing.md](docs/testing.md) — test types, fixtures, builder helpers.
+- **Testing** — read [docs/testing.md](docs/testing.md) before proposing,
+  writing, or reviewing tests. Get Kai's approval for each proposed test before
+  writing it.
 - [docs/adr/](docs/adr/) — decisions and why they were made.
 - **Transparent video** — for luma-keying or encoding web backgrounds, read
   [docs/transparent-background-video.md](docs/transparent-background-video.md).
@@ -80,8 +82,7 @@ controllers and components. Keep to the order already in the file.
 
 ## Admin
 
-`/admin/*` is gated by `Admin::AdminController#verify_admin!`, which 404s rather
-than 403s. Admins come from `credentials.admin_phone_numbers` via `User#admin?`.
-Admin authorization lives in `Admin::`-namespaced policies and must be passed
-explicitly: `authorize!(record, with: Admin::SomePolicy)`. Nothing in the app
-links to the admin area.
+`AdminController#verify_admin!` applies `AdminPolicy#manage?` to the dashboard,
+reports, and Mission Control. Denials render the Forbidden page with 403. Admins
+come from `credentials.admin_phone_numbers` via `User#admin?`. Nothing in the
+app links to the admin area.
