@@ -132,6 +132,9 @@ Rails.application.routes.draw do
   # NOTE: `/reports` is reserved for the reporter-facing view of one's own
   # submitted reports. Admin moderation lives under `/admin/reports`.
 
+  # == Reflections
+  resources :reflections, param: :date, only: [ :index, :edit, :update ]
+
   # == Installation
   get "/install",
     to: redirect(Rails.configuration.x.install_url, status: 302),

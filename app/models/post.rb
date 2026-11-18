@@ -34,6 +34,7 @@
 #  fk_rails_...  (world_id => worlds.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
+# TODO: Remove plain_body???
 class Post < ApplicationRecord
   include NormalizesText
   include NormalizesArrays

@@ -100,14 +100,6 @@
         @apply hover:bg-muted hover:text-foreground dark:hover:bg-input/30;
       }
     }
-
-    [name="post[body]"] + [data-slot="field-description"] {
-      @apply mt-px text-center text-xs transition-opacity;
-
-      &[data-fade] {
-        @apply opacity-50 duration-400;
-      }
-    }
   }
 
   .post-form-checkbox-label {

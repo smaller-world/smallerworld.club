@@ -52,7 +52,7 @@ class DevelopmentDataTest < ActiveSupport::TestCase
       worlds.fetch(:blair).keys.pluck(:recipient_id).sort
     {
       alex: [], blair: %i[alex casey drew ellis], casey: %i[alex blair],
-      drew: %i[casey], ellis: %i[blair drew],
+      drew: %i[casey], ellis: %i[blair drew]
     }.each do |owner, recipients|
       assert_equal recipients.map { |name| users.fetch(name).id }.sort,
         worlds.fetch(owner).keys.pluck(:recipient_id).sort

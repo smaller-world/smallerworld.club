@@ -18,7 +18,8 @@ module ClientDetection
 
     # == Configuration ==
 
-    helper_method :ios_browser?,
+    helper_method :ios_app_on_mac?,
+      :ios_browser?,
       :android_browser?,
       :hotwire_native_platform,
       :hotwire_native_ios?,
@@ -63,9 +64,8 @@ module ClientDetection
 
   sig { returns(T.nilable(Symbol)) }
   def hotwire_native_platform
-    user_agent = request.user_agent
     @hotwire_native_platform ||= T.let(
-      case user_agent
+      case request.user_agent
       when /Hotwire Native Android/
         :android
       when /Hotwire Native iOS/
@@ -83,6 +83,14 @@ module ClientDetection
   sig { returns(T::Boolean) }
   def hotwire_native_android?
     hotwire_native_platform == :android
+  end
+
+  sig { returns(T::Boolean) }
+  def ios_app_on_mac?
+    @ios_app_on_mac ||= T.let(
+      request.user_agent.include?("(iOSAppOnMac)"),
+      T.nilable(T::Boolean),
+    )
   end
 
   private

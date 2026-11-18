@@ -111,7 +111,6 @@ class Components::PostCard < Components::Base
                   end
                 end
               end
-
             end
           end
           if (title = @post.title)
@@ -168,7 +167,6 @@ class Components::PostCard < Components::Base
             else
               Components::PostReactions(post: @post)
             end
-
             if allowed_to?(:reply?, @post)
               Components::ReplyInitiationForm(
                 reply_initiation: @post.reply_initiations.build,

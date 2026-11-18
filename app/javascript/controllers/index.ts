@@ -62,7 +62,7 @@ import PostTimestampController from "./post_timestamp_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
 import RedirectBackToSelfController from "./redirect_back_to_self_controller";
-import ReportFormController from "./report-form-controller";
+import ReportFormController from "./report_form_controller";
 import SelectAllController from "./select_all_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";

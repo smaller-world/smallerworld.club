@@ -173,7 +173,7 @@ class Components::DropdownMenu::Content < Components::Base
           disabled: (true if disabled && element == :button),
           data: {
             slot: "dropdown-menu-item",
-            variant: variant,
+            variant:,
             inset: (true if inset),
             disabled: (true if disabled),
           },

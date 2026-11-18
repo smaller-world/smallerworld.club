@@ -33,8 +33,6 @@ class Views::ContactRequests::New < Views::Base
           end
         end
       end
-
-      div(id: "contact_links")
     end
   end
 

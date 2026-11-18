@@ -9,13 +9,13 @@ AllCops:
     - dsl/**/*
     - gems/**/*
 
+Metrics/ParameterLists:
+  Enabled: false
+
 Naming/FileName:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/OneClassPerFile:
-  Enabled: false
-
-Metrics/ParameterLists:
   Enabled: false

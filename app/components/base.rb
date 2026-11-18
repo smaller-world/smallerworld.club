@@ -26,11 +26,13 @@ class Components::Base < Phlex::HTML
   include TokenList
 
   register_output_helper :local_time
+  register_output_helper :local_date
   register_output_helper :inline_svg_tag
   register_value_helper :auto_link
   register_value_helper :authenticated?
   register_value_helper :allowed_to?
   register_value_helper :authorized_scope
+  register_value_helper :ios_app_on_mac?
   register_value_helper :ios_browser?
   register_value_helper :android_browser?
   register_value_helper :hotwire_native_platform

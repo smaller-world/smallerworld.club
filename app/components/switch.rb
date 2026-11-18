@@ -35,7 +35,14 @@ class Components::Switch < Components::Input
     attributes = @attributes.dup
     input_attributes = delete_from(
       attributes,
-      :id, :name, :value, :data, :readonly, :disabled, :required, :form
+      :id,
+      :name,
+      :value,
+      :data,
+      :readonly,
+      :disabled,
+      :required,
+      :form,
     )
 
     span(

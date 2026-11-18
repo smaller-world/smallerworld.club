@@ -60,7 +60,7 @@ class Views::Admin::Users::Index < Views::Base
             image_tag(
               "development-seed-graph.svg",
               alt: "seed baseline: directed keys and pending invitations; full scenarios follow below",
-              class: "min-w-xl"
+              class: "min-w-xl",
             )
           end
           p(class: "text-sm text-muted-foreground") do
@@ -72,35 +72,35 @@ class Views::Admin::Users::Index < Views::Base
             scenario(
               "alex",
               "owns a world with only its intro and no friends. holds keys to blair's journal " \
-                "entries and casey's default post types."
+                "entries and casey's default post types.",
             )
             scenario(
               "blair",
               "owns a world with 60 posts and all four other accounts as friends. shares " \
                 "reciprocal keys with casey and ellis. the first generated journal entry is " \
-                "hidden from drew and favorited, with a reaction from casey."
+                "hidden from drew and favorited, with a reaction from casey.",
             )
             scenario(
               "casey",
               "owns a world with 8 posts, shared with alex and blair, and a quiet corner with " \
                 "only its intro and no friends. the custom field note type is shared " \
-                "only with blair. has a pending invitation to ellis."
+                "only with blair. has a pending invitation to ellis.",
             )
             scenario(
               "drew",
               "owns a world with 3 posts, shared with casey. has a pending invitation to blair. " \
-                "reacts to ellis's favorited post."
+                "reacts to ellis's favorited post.",
             )
             scenario(
               "ellis",
               "owns a world with 15 posts, shared with blair and drew. mutes blair's poems and " \
-                "has a favorited post with drew's reaction."
+                "has a favorited post with drew's reaction.",
             )
             scenario(
               "read state and notifications",
               "keys held by blair were visited now; other keys were visited a week ago. posts " \
                 "span recent days. four delivered notification examples cover a post, reaction, " \
-                "accepted key, and pending invitation; only the reaction is marked received."
+                "accepted key, and pending invitation; only the reaction is marked received.",
             )
           end
         end

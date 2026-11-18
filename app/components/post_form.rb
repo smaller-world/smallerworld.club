@@ -108,13 +108,11 @@ class Components::PostForm < Components::Base
               },
             ) do
               form.wrapped(
-                form.field(:recipient_ids).post_recipients_select(**T.unsafe({
-                  post: @post,
-                  **form.error_tooltip_attributes_for(:recipient_ids),
-                })),
+                form.field(:recipient_ids).post_recipients_select(post: @post),
                 orientation: :horizontal,
                 label: false,
                 error: false,
+                **form.error_tooltip_attributes_for(:recipient_ids),
               )
             end
           end
@@ -122,18 +120,20 @@ class Components::PostForm < Components::Base
 
         Components::FieldGroup(class: "flex-row gap-3") do
           form.wrapped(
-            form.field(:emoji).emoji(**mix(
-              form.error_tooltip_attributes_for(:emoji),
-              ({ data: { action: "change->post-draft#save" } } if can_save_draft?),
-            )),
+            form.field(:emoji).emoji(data: {
+              action: token_list("change->post-draft#save" => can_save_draft?),
+            }),
             label: false,
             error: false,
-            class: "flex-0",
+            **mix({ class: "flex-0" }, form.error_tooltip_attributes_for(:emoji)),
           )
           form.wrapped(
-            form.field(:title).text(placeholder: "a title!", data: {
-              action: ("change->post-draft#save" if can_save_draft?),
-            }),
+            form.field(:title).text(
+              placeholder: "a title!",
+              data: {
+                action: ("change->post-draft#save" if can_save_draft?),
+              },
+            ),
             label: false,
             class: "flex-1",
           )
@@ -151,14 +151,18 @@ class Components::PostForm < Components::Base
               ),
             },
           )
+          form.error_for(:body, class: "text-center")
           field.description(
+            class: [
+              "text-center text-xs transition-opacity",
+              "data-fade:opacity-50 data-fade:duration-400",
+            ],
             data: {
               post_draft_target: "savedTimestampLabel",
             },
           ) do
             "write freely! your posts are encrypted."
           end
-          form.error_for(:body, class: "text-center")
         end
       end
 
@@ -255,9 +259,12 @@ class Components::PostForm < Components::Base
                     end
                   end
                 end
-                choice.input(class: "visually-hidden", data: {
-                  action: ("post-draft#save" if can_save_draft?),
-                })
+                choice.input(
+                  class: "visually-hidden",
+                  data: {
+                    action: ("post-draft#save" if can_save_draft?),
+                  },
+                )
               end
             end
           end

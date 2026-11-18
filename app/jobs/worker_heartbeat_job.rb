@@ -6,7 +6,7 @@ class WorkerHeartbeatJob < ApplicationJob
 
   sig { void }
   def perform
-    Sentry.capture_check_in("worker-heartbeat", :ok, monitor_config:,)
+    Sentry.capture_check_in("worker-heartbeat", :ok, monitor_config:)
   end
 
   private

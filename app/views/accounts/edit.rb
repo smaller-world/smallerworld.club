@@ -60,8 +60,24 @@ class Views::Accounts::Edit < Views::Base
               Components::Input(
                 type: :text,
                 size: :xs,
-                id: "user_id",
                 value: @current_user.id,
+                readonly: true,
+                class: "text-xs font-mono",
+                data: {
+                  controller: "select-all",
+                  action: "focus->select-all#select",
+                },
+              )
+            end
+
+            div(class: "flex flex-col gap-2") do
+              span(class: "text-xs font-mono text-muted-foreground") do
+                "timezone"
+              end
+              Components::Input(
+                type: :text,
+                size: :xs,
+                value: @current_user.time_zone_name,
                 readonly: true,
                 class: "text-xs font-mono",
                 data: {
@@ -78,21 +94,21 @@ class Views::Accounts::Edit < Views::Base
               div(class: "flex gap-2 justify-between items-start") do
                 div(class: "flex gap-2") do
                   Components::Switch(
-                    id: "has_v1_account",
+                    id: "user_has_v1_account",
                     checked: @current_user.has_v1_account?,
                     readonly: true,
-                    class: "cursor-not-allowed"
+                    class: "cursor-not-allowed",
                   )
-                  Components::Label(for: "has_v1_account", class: "text-muted-foreground") do
+                  Components::Label(for: "user_has_v1_account", class: "text-muted-foreground") do
                     @current_user.has_v1_account? ? "yep" : "nope"
                   end
                 end
                 if !@current_user.has_v1_account?
                   form_with(url: link_v1_account_path) do
                     Components::Button(type: :submit, size: :xs, variant: :ghost) do |button|
-                        button.inline_start_icon("huge/refresh")
-                        span { "re-check" }
-                      end
+                      button.inline_start_icon("huge/refresh")
+                      span { "re-check" }
+                    end
                   end
                 end
               end

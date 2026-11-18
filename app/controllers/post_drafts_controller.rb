@@ -9,9 +9,7 @@ class PostDraftsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         world = find_world
-        post_params = params.expect(post: [
-          :type_id, :emoji, :title, :body, :quiet, images: [],
-        ])
+        post_params = params.expect(post: [ :type_id, :emoji, :title, :body, :quiet, images: [] ])
         authorize!(world, to: :manage?)
         post = world.posts.build(**post_params)
         render turbo_stream: replace_post_form(post:)

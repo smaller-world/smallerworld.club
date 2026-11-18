@@ -142,7 +142,7 @@ class Views::Home::Show < Views::Base
   def owned_worlds
     ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
       @owned_worlds.each do |world|
-        li(class: "relative starting:opacity-0 starting:scale-95") do
+        li(class: "relative") do
           link_to(world, class: "world-icon-container hover:underline") do
             image_tag(world.page_icon_variant, class: "world-icon")
             span(class: "world-icon-label") do
@@ -151,6 +151,23 @@ class Views::Home::Show < Views::Base
           end
           Components::WorldKeyGrantIconButton(world:)
         end
+      end
+
+      li(class: "self-center world-icon-container") do
+        button_link_to(
+          places_dock_path,
+          variant: :outline,
+          class: class_names(
+            "world-icon border-dashed border-muted-foreground/40 shadow-none p-1.5",
+            "flex flex-col items-center justify-center",
+          ),
+          data: {
+            world_icon_size: "xs",
+          },
+        ) do
+          image_tag("places/dock_icon.webp", class: "dark:invert")
+        end
+        span(class: "world-icon-label") { "\u00A0" }
       end
     end
 
@@ -180,16 +197,19 @@ class Views::Home::Show < Views::Base
       @world_keys.each do |world_key|
         world = world_key.world!
         badge_count = badge_count_for(world_key)
-        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
-          hidden_inline: "",
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
-          action: [
-            "transition-group:start->transition#enter",
-            "transition-group:start->transition-group#startNext",
-          ],
-        }) do
+        li(
+          class: "hidden starting:opacity-0 starting:scale-95",
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
+            action: [
+              "transition-group:start->transition#enter",
+              "transition-group:start->transition-group#startNext",
+            ],
+          },
+        ) do
           link_to(world, class: "world-icon-container hover:underline") do
             div(class: "relative") do
               image_tag(
@@ -212,16 +232,19 @@ class Views::Home::Show < Views::Base
 
       @pending_world_invitations.find_each do |invitation|
         world = invitation.world!
-        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
-          hidden_inline: "",
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
-          action: [
-            "transition-group:start->transition#enter",
-            "transition-group:start->transition-group#startNext",
-          ],
-        }) do
+        li(
+          class: "hidden starting:opacity-0 starting:scale-95",
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
+            action: [
+              "transition-group:start->transition#enter",
+              "transition-group:start->transition-group#startNext",
+            ],
+          },
+        ) do
           link_to(invitation, class: "world-icon-container hover:underline") do
             div(class: "relative") do
               image_tag(
@@ -240,19 +263,22 @@ class Views::Home::Show < Views::Base
         end
       end
 
-      if hotwire_native_app?
-        li(class: "hidden starting:opacity-0 starting:scale-95", data: {
-          hidden_inline: "",
-          transition_group_target: "item",
-          controller: "transition",
-          transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
-          action: "transition-group:start->transition#enter",
-        }) do
+      if hotwire_native_app? && !ios_app_on_mac?
+        li(
+          class: "hidden starting:opacity-0 starting:scale-95",
+          data: {
+            hidden_inline: true,
+            transition_group_target: "item",
+            controller: "transition",
+            transition_enter: "transition-[scale,opacity] duration-300 ease-in-quart",
+            action: "transition-group:start->transition#enter",
+          },
+        ) do
           link_to("/native/scan_qr_code", class: "world-icon-container hover:underline") do
             Components::Button(
               element: :div,
               variant: :outline,
-              class: "world-icon shadow-none border-dashed",
+              class: "world-icon border-dashed border-muted-foreground/40 shadow-none",
               data: {
                 world_icon_size: "sm",
               },

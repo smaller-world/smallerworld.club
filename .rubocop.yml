@@ -17,36 +17,53 @@ AllCops:
     - storage/**/*
     - node_modules/**/*
 
-Lint/CopDirectiveSyntax:
-  Enabled: false
-
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-Layout/SpaceInsideArrayLiteralBrackets:
-  EnforcedStyle: space
+Layout/ArrayAlignment:
+  Enabled: true
+Layout/BlockAlignment:
+  Enabled: true
+Layout/BlockEndNewline:
+  Enabled: true
+Layout/EndAlignment:
+  Enabled: true
+Layout/ExtraSpacing:
+  Enabled: true
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+Layout/FirstArgumentIndentation:
+  Enabled: true
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedLastArgumentHashStyle: always_inspect
 
 Rails/I18nLocaleTexts:
   Enabled: false
-Rails/DynamicFindBy:
-  Enabled: false
-Rails/Delegate:
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: space
+
+Lint/CopDirectiveSyntax:
   Enabled: false
 
-Style/ClassAndModuleChildren:
+Rails/Delegate:
   Enabled: false
-Style/ClassMethodsDefinitions:
+Rails/DynamicFindBy:
   Enabled: false
-Style/BlockDelimiters:
-  Enabled: true
-  EnforcedStyle: line_count_based
-Style/MethodCallWithArgsParentheses:
-  AllowedMethods:
-    - render
-    - raise
-    - yield
-    - require
-    - puts
 
 Sorbet/AllowIncompatibleOverride:
   Enabled: false
@@ -54,3 +71,36 @@ Sorbet/FalseSigil:
   Enabled: false
 Sorbet/TrueSigil:
   Enabled: true
+
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: line_count_based
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/ClassMethodsDefinitions:
+  Enabled: false
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowedMethods:
+    - render
+    - raise
+    - yield
+    - require
+    - puts
+    - throw
+Style/MethodCallWithoutArgsParentheses:
+  Enabled: true
+Style/RedundantParentheses:
+  Enabled: true
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma

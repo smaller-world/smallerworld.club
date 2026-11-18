@@ -45,6 +45,9 @@ class ApplicationController
     def hotwire_native_platform; end
 
     sig { returns(T::Boolean) }
+    def ios_app_on_mac?; end
+
+    sig { returns(T::Boolean) }
     def ios_browser?; end
 
     sig { returns(T.nilable(::String)) }

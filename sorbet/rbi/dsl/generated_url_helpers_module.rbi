@@ -67,6 +67,9 @@ module GeneratedUrlHelpersModule
   def edit_post_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_reflection_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_invitation_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -257,6 +260,12 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def reaction_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def reflection_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def reflections_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def resend_account_email_address_confirmation_url(*args); end

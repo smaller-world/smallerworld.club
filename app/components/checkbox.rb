@@ -27,7 +27,13 @@ class Components::Checkbox < Components::Input
     attributes = @attributes.dup
     input_attributes = delete_from(
       attributes,
-      :id, :name, :value, :data, :disabled, :required, :form
+      :id,
+      :name,
+      :value,
+      :data,
+      :disabled,
+      :required,
+      :form,
     )
 
     span(

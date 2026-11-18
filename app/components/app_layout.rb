@@ -147,6 +147,7 @@ class Components::AppLayout < Components::Base
         confetti_canvas
         logs_container
         toasts_container
+        contact_links_container
 
         if (current_user = Current.user)
           # Auto-update user time zone
@@ -277,5 +278,10 @@ class Components::AppLayout < Components::Base
       #   Components::StreamedToast(message:, type: :warning)
       # end
     end
+  end
+
+  sig { void }
+  def contact_links_container
+    div(id: "contact_links", hidden: true)
   end
 end

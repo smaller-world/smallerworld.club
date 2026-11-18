@@ -109,11 +109,14 @@ class Views::Worlds::Show < Views::Base
             end
             if (blurb = @world.blurb)
               p(class: "whitespace-pre-wrap text-center text-muted-foreground text-sm") do
-                auto_link(blurb, html: {
-                  class: "underline underline-offset-4",
-                  target: "_blank",
-                  rel: "noopener noreferrer nofollow",
-                }) do |text|
+                auto_link(
+                  blurb,
+                  html: {
+                    class: "underline underline-offset-4",
+                    target: "_blank",
+                    rel: "noopener noreferrer nofollow",
+                  },
+                ) do |text|
                   # Normalize URL (strip protocol)
                   Addressable::URI.parse(text).omit(:scheme).to_s.delete_prefix("//")
                 end

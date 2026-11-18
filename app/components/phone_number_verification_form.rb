@@ -104,12 +104,12 @@ class Components::PhoneNumberVerificationForm < Components::Base
           div(class: "text-xs text-muted-foreground *:mt-2") do
             p(class: "text-center text-balance") do
               plain("by continuing, you agree to receive one sms verification code from ")
-              span(class: "text-foreground/75 text-nowrap") { "smaller world" }
+              span(class: "text-foreground/80 text-nowrap") { "smaller world" }
               plain(" for each login attempt. message and data rates may apply.")
             end
             p(class: "text-center text-balance") do
               plain("reply STOP to opt out, START to opt back in, or HELP for help. see our ")
-              link_to("terms and policies", policies_path, class: "text-foreground/75 underline")
+              link_to("terms and policies", policies_path, class: "text-foreground/80 underline")
               plain(".")
             end
           end

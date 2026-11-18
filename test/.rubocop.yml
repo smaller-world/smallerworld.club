@@ -8,5 +8,16 @@ Minitest/MultipleAssertions:
 Style/MethodCallWithArgsParentheses:
   AllowedMethods:
     - post
+    - get
     - visit
     - raise
+    - throw
+    - assert
+    - assert_nil
+    - assert_not
+    - assert_empty
+    - assert_equal
+    - assert_predicate
+    - assert_raises
+    - assert_no_difference
+    - flunk

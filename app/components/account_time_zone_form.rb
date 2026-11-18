@@ -25,7 +25,7 @@ class Components::AccountTimeZoneForm < Components::Base
     ) do |form|
       form.Field(:time_zone_name).hidden(data: {
         controller: "current-time-zone-input",
-        action: "current-time-zone-input:changed->submit#request",
+        action: "current-time-zone-input:new->submit#request",
       })
     end
   end

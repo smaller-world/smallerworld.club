@@ -38,6 +38,7 @@ class Components::Form
             controller: "tooltip connection",
             tooltip_content_value: message,
             tooltip_placement_value: "bottom",
+            tooltip_trigger_value: "manual",
             action: "connection:connect->tooltip#show",
           },
         }

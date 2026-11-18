@@ -113,7 +113,7 @@ class AccountsController < ApplicationController
           redirect_to(
             edit_account_path,
             notice: "your v1 account has been linked!",
-            status: :see_other
+            status: :see_other,
           )
         else
           render turbo_stream: append_toast("no v1 account found :(")

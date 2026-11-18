@@ -8,6 +8,7 @@
   }
 
   .item {
+    /* Base styles */
     @apply flex w-full flex-wrap items-center rounded-2xl border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted;
 
     &[data-variant="default"] {
@@ -33,6 +34,9 @@
     &[data-size="xs"] {
       @apply gap-2.5 px-3 py-2.5 in-data-[slot=dropdown-menu-content]:p-0;
     }
+
+    /* Customizations */
+    @apply [a]:cursor-pointer;
   }
 
   .item-media {

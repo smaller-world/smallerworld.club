@@ -47,7 +47,7 @@ module Post::WorldItemBroadcasts
     broadcast_prepend_to(
       world,
       :posts,
-      target: :post_items,
+      target: "post_items",
       renderable: Components::AsyncWorldPostItem.new(post: self, newly_created: true),
     )
   end

@@ -5,7 +5,7 @@ class SmallerWorld::Application
   sig { returns(String) }
   def contact_email_address
     with_fallback_email_for_ci do
-      credentials.contact!.email!
+      credentials.contact!.email_address!
     end
   end
 
@@ -18,9 +18,14 @@ class SmallerWorld::Application
   end
 
   sig { returns(String) }
+  def contact_phone_number
+    credentials.contact!.phone_number!
+  end
+
+  sig { returns(String) }
   def support_email_address
     with_fallback_email_for_ci do
-      credentials.contact!.support_email!
+      credentials.contact!.support_email_address!
     end
   end
 

@@ -36,7 +36,9 @@ class UserReportsControllerTest < ActionDispatch::IntegrationTest
 
   test "a failed key removal rolls back the report and all key removals" do
     blocked_key_id = @keys.last.id
-    prevent_destroy = ->(key) { throw :abort if key.id == blocked_key_id }
+    prevent_destroy = ->(key) do
+      throw :abort if key.id == blocked_key_id
+    end
     WorldKey.set_callback(:destroy, :before, prevent_destroy)
 
     assert_no_difference [ "Report.count", "WorldKey.count" ] do

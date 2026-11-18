@@ -71,8 +71,13 @@ class CheckableComponentsTest < ApplicationSystemTestCase
       assert_equal "-1", input["tabindex"]
 
       document = Nokogiri::HTML.fragment(component.new(
-        checked: true, disabled: true, readonly: true, required: true, invalid: true,
-        form: "external-form", aria: { label: "control", describedby: "description" },
+        checked: true,
+        disabled: true,
+        readonly: true,
+        required: true,
+        invalid: true,
+        form: "external-form",
+        aria: { label: "control", describedby: "description" },
       ).call)
       proxy = document.at_css("[role]")
       input = document.at_css("input")
@@ -136,8 +141,8 @@ class CheckableComponentsTest < ApplicationSystemTestCase
       all('input[type="checkbox"]', visible: :all).each do |input|
         input.execute_script("this.click()")
       end
-      assert_selector '#readonly-checked:checked', visible: :all
-      assert_no_selector '#readonly-unchecked:checked', visible: :all
+      assert_selector "#readonly-checked:checked", visible: :all
+      assert_no_selector "#readonly-unchecked:checked", visible: :all
       assert_selector '[role="checkbox"][aria-checked="true"]', count: 1
       assert_selector '[role="checkbox"][aria-checked="false"]', count: 1
     end
@@ -157,7 +162,7 @@ class CheckableComponentsTest < ApplicationSystemTestCase
     within("#builder-switch") do
       assert_selector '[role="switch"][aria-labelledby="post_quiet_label"][aria-invalid="true"][data-size="sm"]'
       assert_selector 'label#post_quiet_label[for="post_quiet"]'
-      assert_selector '#post_quiet:checked', visible: :all
+      assert_selector "#post_quiet:checked", visible: :all
       assert_selector 'input[type="hidden"][name="post[quiet]"][value="0"]', visible: :all
       assert_selector '#post_quiet[name="post[quiet]"][value="1"]', visible: :all
     end
@@ -166,7 +171,7 @@ class CheckableComponentsTest < ApplicationSystemTestCase
     assert_equal "1", Rack::Utils.parse_nested_query(query).dig("post", "quiet")
 
     find('#builder-switch [role="switch"]').click
-    assert_no_selector '#post_quiet:checked', visible: :all
+    assert_no_selector "#post_quiet:checked", visible: :all
     query = page.evaluate_script('new URLSearchParams(new FormData(document.getElementById("builder-switch"))).toString()')
     assert_equal "0", Rack::Utils.parse_nested_query(query).dig("post", "quiet")
   end
@@ -174,26 +179,26 @@ class CheckableComponentsTest < ApplicationSystemTestCase
   test "switch toggles with pointer, label, space and enter and resets with its form" do
     switch = find('#checkables [role="switch"][data-size="default"]', match: :first)
     switch.click
-    assert_selector '#switch-input:checked', visible: :all
+    assert_selector "#switch-input:checked", visible: :all
     assert_selector '[role="switch"][data-checked][aria-checked="true"]'
     assert_equal "1", page.evaluate_script('new FormData(document.getElementById("checkables")).get("notifications")')
 
     find('label[for="switch-input"]').click
-    assert_no_selector '#switch-input:checked', visible: :all
+    assert_no_selector "#switch-input:checked", visible: :all
     assert_equal switch, page.active_element
 
     switch.send_keys(:space)
-    assert_selector '#switch-input:checked', visible: :all
+    assert_selector "#switch-input:checked", visible: :all
     switch.send_keys(:enter)
-    assert_no_selector '#switch-input:checked', visible: :all
+    assert_no_selector "#switch-input:checked", visible: :all
     assert_selector '[role="switch"][data-unchecked][aria-checked="false"]'
-    assert_no_selector '#checkables[data-submitted]'
+    assert_no_selector "#checkables[data-submitted]"
 
     switch.click
     click_button "reset controls"
-    assert_no_selector '#switch-input:checked', visible: :all
+    assert_no_selector "#switch-input:checked", visible: :all
     assert_selector '[role="switch"][data-unchecked][aria-checked="false"]'
-    assert_selector '#small-switch-input:checked', visible: :all
+    assert_selector "#small-switch-input:checked", visible: :all
   end
 
   test "switch sizes, invalid state and disabled controls" do
@@ -208,7 +213,7 @@ class CheckableComponentsTest < ApplicationSystemTestCase
       assert document.at_css("input[disabled]")
     end
 
-    all('#checkables [data-disabled]').each do |control|
+    all("#checkables [data-disabled]").each do |control|
       assert_equal "-1", control[:tabindex]
       assert_equal "true", control["aria-disabled"]
       control.execute_script("this.click()")
@@ -216,19 +221,19 @@ class CheckableComponentsTest < ApplicationSystemTestCase
     find('label[for="disabled-switch-input"]').execute_script("this.click()")
     find('label[for="disabled-radio-input"]').execute_script("this.click()")
     find('label[for="disabled-toggleable-radio-input"]').execute_script("this.click()")
-    assert_no_selector '#disabled-switch-input:checked', visible: :all
-    assert_no_selector '#disabled-checkbox-input:checked', visible: :all
-    assert_no_selector '#disabled-radio-input:checked, #disabled-toggleable-radio-input:checked', visible: :all
+    assert_no_selector "#disabled-switch-input:checked", visible: :all
+    assert_no_selector "#disabled-checkbox-input:checked", visible: :all
+    assert_no_selector "#disabled-radio-input:checked, #disabled-toggleable-radio-input:checked", visible: :all
     assert_nil page.evaluate_script('new FormData(document.getElementById("checkables")).get("disabled")')
   end
 
   test "checkbox enter submits without toggling and radio changes stay synchronized" do
     checkbox = find('#checkables [role="checkbox"]', match: :first)
     checkbox.send_keys(:space)
-    assert_selector '#checkbox-input:checked', visible: :all
+    assert_selector "#checkbox-input:checked", visible: :all
     checkbox.send_keys(:enter)
     assert_selector '#checkables[data-submitted="save"]'
-    assert_selector '#checkbox-input:checked', visible: :all
+    assert_selector "#checkbox-input:checked", visible: :all
     assert_selector '[role="checkbox"][aria-checked="true"]'
 
     all('#checkables [role="radio"]').last.click

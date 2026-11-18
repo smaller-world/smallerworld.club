@@ -378,6 +378,18 @@ module Components
   end
   def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes); end
 
+  # source://app/components/reflection_form.rb:4
+  sig { params(reflection: ::Reflection, attributes: T.untyped).void }
+  def ReflectionForm(reflection:, **attributes); end
+
+  # source://app/components/reflection_item.rb:4
+  sig { params(reflection: ::Reflection, time_zone: ::ActiveSupport::TimeZone, attributes: T.untyped).void }
+  def ReflectionItem(reflection:, time_zone:, **attributes); end
+
+  # source://app/components/reflection_item_skeleton.rb:4
+  sig { params(attributes: T.untyped).void }
+  def ReflectionItemSkeleton(**attributes); end
+
   # source://app/components/reply_initiation_form.rb:4
   sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }
   def ReplyInitiationForm(reply_initiation:, replied:, **attributes); end
@@ -905,6 +917,18 @@ module Components
       ).void
     end
     def RadioGroupItem(value: T.unsafe(nil), checked: T.unsafe(nil), invalid: T.unsafe(nil), toggleable: T.unsafe(nil), **attributes); end
+
+    # source://app/components/reflection_form.rb:4
+    sig { params(reflection: ::Reflection, attributes: T.untyped).void }
+    def ReflectionForm(reflection:, **attributes); end
+
+    # source://app/components/reflection_item.rb:4
+    sig { params(reflection: ::Reflection, time_zone: ::ActiveSupport::TimeZone, attributes: T.untyped).void }
+    def ReflectionItem(reflection:, time_zone:, **attributes); end
+
+    # source://app/components/reflection_item_skeleton.rb:4
+    sig { params(attributes: T.untyped).void }
+    def ReflectionItemSkeleton(**attributes); end
 
     # source://app/components/reply_initiation_form.rb:4
     sig { params(reply_initiation: ::ReplyInitiation, replied: T::Boolean, attributes: T.untyped).void }

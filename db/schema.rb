@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_28_182508) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,8 +25,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_182508) do
   end
 
   create_table "active_record_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
-    t.timestamptz "created_at", precision: 6, null: false
-    t.timestamptz "updated_at", precision: 6, null: false
+    t.timestamptz "created_at", null: false
+    t.timestamptz "updated_at", null: false
     t.string "value"
   end
 
@@ -212,6 +212,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_182508) do
     t.index ["post_id", "emoji", "reactor_id"], name: "index_reactions_uniqueness", unique: true
     t.index ["post_id"], name: "index_reactions_on_post_id"
     t.index ["reactor_id"], name: "index_reactions_on_reactor_id"
+  end
+
+  create_table "reflections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.date "date", null: false
+    t.uuid "author_id", null: false
+    t.string "emoji"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_reflections_on_author_id"
+    t.index ["date", "author_id"], name: "index_reflections_uniqueness", unique: true
   end
 
   create_table "registrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -490,6 +500,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_182508) do
   add_foreign_key "posts", "worlds"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
+  add_foreign_key "reflections", "users", column: "author_id"
   add_foreign_key "registrations", "phone_number_verification_requests"
   add_foreign_key "registrations", "users", column: "created_user_id"
   add_foreign_key "reply_initiations", "posts"

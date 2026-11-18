@@ -1,0 +1,24 @@
+@layer components {
+  .reflection-item {
+    @apply rounded-none;
+
+    &[data-new] {
+      @apply border-dashed;
+
+      [data-slot="item-title"] {
+        @apply text-muted-foreground;
+      }
+
+      &:not([data-today]) {
+        [data-slot="item-description"] {
+          @apply text-muted-foreground/80;
+        }
+      }
+    }
+
+    &:not([data-new]) {
+      @apply bg-accent/40 hover:bg-accent;
+      @apply shadow-xs;
+    }
+  }
+}

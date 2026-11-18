@@ -126,6 +126,8 @@ class User < ApplicationRecord
     through: :world_keys,
     source: :world_owner
 
+  has_many :reflections, inverse_of: :author, dependent: :destroy
+
   sig { returns(WorldInvitation::PrivateAssociationRelation) }
   def world_invitations
     received_world_invitations

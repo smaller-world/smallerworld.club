@@ -14,8 +14,8 @@ class Components::Spinner < Components::Base
           aria: { label: "Loading" },
           class: "spinner",
           data: {
-            slot: "spinner"
-          }
+            slot: "spinner",
+          },
         },
         @attributes,
       ),

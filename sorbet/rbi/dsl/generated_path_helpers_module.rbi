@@ -67,6 +67,9 @@ module GeneratedPathHelpersModule
   def edit_post_type_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_reflection_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_invitation_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -257,6 +260,12 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def reaction_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def reflection_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def reflections_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def resend_account_email_address_confirmation_path(*args); end
