@@ -34,23 +34,22 @@ class Views::Places::Dock < Views::Base
       app_layout.page_container(class: "max-w-lg flex flex-col gap-6") do
         div(class: "flex flex-col gap-3") do
           video(
+            id: "dock_bg",
             muted: true,
             loop: true,
             playsinline: true,
             poster: asset_path("places/dock_bg_poster.webp"),
-            class: "place-background w-full max-w-sm h-auto hidden",
+            class: "place-background w-full max-w-sm h-auto",
             data: {
               hidden_inline: true,
-              controller: "autoplay transition",
-              action: [
-                "playing->transition#enter",
-                "autoplay:denied->transition#enter",
-                "pageshow@window->autoplay#resume",
-                "page-visibility:invisible@document->autoplay#pause",
-                "page-visibility:visible@document->autoplay#resume",
-              ],
-              transition_enter: "transition-opacity duration-[1400ms] ease-in-out",
+              turbo_permanent: true,
+              controller: "media-status autoplay transition",
               transition_enter_start: "opacity-0",
+              transition_enter: "transition-opacity duration-[1400ms] ease-in-out",
+              action: [
+                "media-status:loading-required->transition#leave",
+                "playing->transition#enter",
+              ],
             },
             aria: {
               hidden: "true",
@@ -59,6 +58,13 @@ class Views::Places::Dock < Views::Base
             source(src: asset_path("places/dock_bg.mov"), type: "video/quicktime")
             source(src: asset_path("places/dock_bg.webm"), type: "video/webm")
           end
+          # image_tag(
+          #   "places/dock_bg.webp",
+          #   id: "dock_bg",
+          #   class: "place-background w-full max-w-sm h-auto",
+          #   data: { turbo_permanent: true },
+          # )
+
           div(class: "text-center font-heading text-xs text-muted-foreground/80 italic") do
             plain("this is a private place to reflect on your day. it's a work in progress...")
             whitespace

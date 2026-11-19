@@ -12,7 +12,6 @@ export default class TransitionController extends Typed(Controller, {
   // == Actions ==
 
   enter() {
-    // console.debug("transition entering", this.element);
     this.#withDelay(() => {
       enter(this.element).then(() => {
         this.dispatch("entered", { bubbles: false });
@@ -22,7 +21,6 @@ export default class TransitionController extends Typed(Controller, {
   }
 
   leave() {
-    // console.debug("transition leaving", this.element);
     this.#withDelay(() => {
       leave(this.element).then(() => {
         this.dispatch("exited", { bubbles: false });

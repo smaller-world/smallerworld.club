@@ -1,5 +1,4 @@
 import type { Meta, MinimalRequiredUppyFile } from "@uppy/core";
-import { isEmpty } from "lodash-es";
 import { Typed } from "stimulus-typescript";
 
 import ApplicationController from "./application_controller";
