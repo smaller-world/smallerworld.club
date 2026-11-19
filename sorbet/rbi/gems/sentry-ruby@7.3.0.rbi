@@ -29,15 +29,24 @@ module Sentry
     # @!method add_attachment
     #   @!macro add_attachment
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:225
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:269
     def add_attachment(**opts); end
 
     # Takes an instance of Sentry::Breadcrumb and stores it to the current active scope.
     #
     # @return [Breadcrumb, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:320
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:367
     def add_breadcrumb(breadcrumb, **options); end
+
+    # Records a feature flag evaluation on the current scope and active span.
+    # Only boolean results are recorded.
+    # @param name [String, Symbol] the flag name
+    # @param result [Boolean] the evaluation result
+    # @return [void]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:233
+    def add_feature_flag(name, result); end
 
     # Add a global event processor [Proc].
     # These run before scope event processors.
@@ -52,30 +61,30 @@ module Sentry
     #     event
     #   end
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:559
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:608
     def add_global_event_processor(&block); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:113
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:118
     def apply_patches(config); end
 
     # @!attribute [rw] background_worker
     #   @return [BackgroundWorker]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:85
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:90
     def background_worker; end
 
     # @!attribute [rw] background_worker
     #   @return [BackgroundWorker]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:85
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:90
     def background_worker=(_arg0); end
 
     # @!attribute [r] backpressure_monitor
     #   @return [BackpressureMonitor, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:93
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:98
     def backpressure_monitor; end
 
     # Captures a check-in and sends it to Sentry via the currently active hub.
@@ -90,14 +99,14 @@ module Sentry
     #
     # @return [String, nil] The {CheckInEvent#check_in_id} to use for later updates on the same slug
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:479
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:528
     def capture_check_in(slug, status, **options); end
 
     # Takes an instance of Sentry::Event and dispatches it to the currently active hub.
     #
     # @return [Event, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:463
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:512
     def capture_event(event); end
 
     # Takes an exception and reports it to Sentry via the currently active hub.
@@ -105,7 +114,7 @@ module Sentry
     # @yieldparam scope [Scope]
     # @return [Event, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:427
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:476
     def capture_exception(exception, **options, &block); end
 
     # Captures a log event and sends it to Sentry via the currently active hub.
@@ -122,9 +131,9 @@ module Sentry
     #   Sentry.capture_log("User logged in", level: :info, user_id: 123)
     #
     # @see https://develop.sentry.dev/sdk/telemetry/logs/ Sentry SDK Telemetry Logs Protocol
-    # @return [LogEvent, nil] The created log event or nil if logging is disabled
+    # @return [LogEvent, nil] The created log event or nil if Sentry is not initialized
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:499
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:548
     def capture_log(message, **options); end
 
     # Takes a message string and reports it to Sentry via the currently active hub.
@@ -132,17 +141,19 @@ module Sentry
     # @yieldparam scope [Scope]
     # @return [Event, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:455
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:504
     def capture_message(message, **options, &block); end
 
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:698
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:733
     def clear_external_propagation_context; end
 
-    # Clones the main thread's active hub and stores it to the current thread.
+    # Clones the main hub and stores it for the current execution context
+    # (the current thread, or the current fiber when +config.hub_isolation_level+
+    # is +:fiber+).
     #
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:357
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:406
     def clone_hub_to_current_thread; end
 
     # Flushes pending events and cleans up SDK state.
@@ -150,13 +161,13 @@ module Sentry
     #
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:258
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:303
     def close; end
 
     # @!method configuration
     #   @!macro configuration
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:165
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:170
     def configuration; end
 
     # Takes a block and yields the current active scope.
@@ -171,7 +182,7 @@ module Sentry
     # @yieldparam scope [Scope]
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:373
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:422
     def configure_scope(&block); end
 
     # Continue an incoming trace from a rack env like hash.
@@ -179,7 +190,7 @@ module Sentry
     # @param env [Hash]
     # @return [Transaction, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:603
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:652
     def continue_trace(env, **options); end
 
     # Returns an uri for security policy reporting that's generated from the given DSN
@@ -191,38 +202,49 @@ module Sentry
     #
     # @return [String, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:302
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:349
     def csp_report_uri; end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:708
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:743
     def dependency_installed?(name); end
 
     # Checks if the exception object has been captured by the SDK.
     #
     # @return [Boolean]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:541
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:590
     def exception_captured?(exc); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:67
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:72
     def exception_locals_tp; end
+
+    # Copies +hub+ for a context that inherited it. The span is re-attached
+    # because Scope#dup deep-copies it, and spans recorded on a detached
+    # transaction copy are never sent.
+    #
+    # @!visibility private
+    # @param hub [Hub]
+    # @return [Hub]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:778
+    def fork_hub(hub); end
 
     # Returns the baggage header for distributed tracing.
     # Can be either from the currently active span or the propagation context.
     #
     # @return [String, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:576
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:625
     def get_baggage; end
 
     # Returns the current active client.
     # @return [Client, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:341
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:388
     def get_current_client; end
 
     # Returns the current active hub.
@@ -231,28 +253,40 @@ module Sentry
     #
     # @return [Hub]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:330
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:377
     def get_current_hub; end
+
+    # Reads the hub stored for the current execution context. The active
+    # isolation level (cached from +config.hub_isolation_level+ at init) decides
+    # whether that context is the current thread or the current fiber. Reads the
+    # cached level rather than the configuration to avoid recursing back through
+    # hub resolution.
+    #
+    # @!visibility private
+    # @return [Hub, nil]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:755
+    def get_current_hub_internal; end
 
     # Returns the current active scope.
     #
     # @return [Scope, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:349
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:396
     def get_current_scope; end
 
     # Returns the external propagation context (trace_id, span_id) if a callback is registered.
     #
     # @return [Array<String>, nil] A tuple of [trace_id, span_id] or nil if no context is available
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:689
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:724
     def get_external_propagation_context; end
 
     # Returns the main thread's active hub.
     #
     # @return [Hub]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:310
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:357
     def get_main_hub; end
 
     # Returns the a Hash containing sentry-trace and baggage.
@@ -260,7 +294,7 @@ module Sentry
     #
     # @return [Hash, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:585
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:634
     def get_trace_propagation_headers; end
 
     # Returns the a Hash containing sentry-trace and baggage.
@@ -268,7 +302,7 @@ module Sentry
     #
     # @return [String]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:594
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:643
     def get_trace_propagation_meta; end
 
     # Returns the traceparent (sentry-trace) header for distributed tracing.
@@ -276,7 +310,7 @@ module Sentry
     #
     # @return [String, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:567
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:616
     def get_traceparent; end
 
     # Initializes the SDK with given configuration.
@@ -284,39 +318,31 @@ module Sentry
     # @yieldparam config [Configuration]
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:236
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:280
     def init(&block); end
 
     # Returns true if the SDK is initialized.
     #
     # @return [Boolean]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:290
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:337
     def initialized?; end
 
     # Returns a hash that contains all the integrations that have been registered to the main SDK.
     #
     # @return [Hash{String=>Hash}]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:129
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:134
     def integrations; end
 
     # Returns the id of the lastly reported Sentry::Event.
     #
     # @return [String, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:533
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:582
     def last_event_id; end
 
     # Returns the structured logger instance that implements Sentry's SDK telemetry logs protocol.
-    #
-    # This logger is only available when logs are enabled in the configuration.
-    #
-    # @example Enable logs in configuration
-    #   Sentry.init do |config|
-    #     config.dsn = "YOUR_DSN"
-    #     config.enable_logs = true
-    #   end
     #
     # @example Basic usage
     #   Sentry.logger.info("User logged in successfully", user_id: 123)
@@ -327,18 +353,12 @@ module Sentry
     #
     # @see https://develop.sentry.dev/sdk/telemetry/logs/ Sentry SDK Telemetry Logs Protocol
     #
-    # @return [StructuredLogger] The structured logger instance or nil if logs are disabled
+    # @return [StructuredLogger] The structured logger instance
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:628
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:669
     def logger; end
 
     # Returns the metrics API for capturing custom metrics.
-    #
-    # @example Enable metrics
-    #   Sentry.init do |config|
-    #     config.dsn = "YOUR_DSN"
-    #     config.enable_metrics = true
-    #   end
     #
     # @example Usage
     #   Sentry.metrics.count("button.click", 1, attributes: { button_id: "submit" })
@@ -347,7 +367,7 @@ module Sentry
     #
     # @return [Metrics] The metrics API
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:646
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:681
     def metrics; end
 
     # Registers a callback function that retrieves the current external propagation context.
@@ -363,7 +383,7 @@ module Sentry
     #     [span_context.hex_trace_id, span_context.hex_span_id]
     #   end
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:682
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:717
     def register_external_propagation_context(&callback); end
 
     # Registers the SDK integration with its name and version.
@@ -371,80 +391,115 @@ module Sentry
     # @param name [String] name of the integration
     # @param version [String] version of the integration
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:137
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:142
     def register_integration(name, version); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:98
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:103
     def register_patch(key, patch = T.unsafe(nil), target = T.unsafe(nil), &block); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:120
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:125
     def registered_patches; end
+
+    # @!method remove_attribute
+    #   Removes a single attribute from the current scope.
+    #   @param key [String, Symbol]
+    #   @return [void]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:262
+    def remove_attribute(key); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:661
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:696
     def sdk_logger; end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:666
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:701
     def sdk_meta; end
 
     # @!method send_event
     #   @!macro send_event
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:172
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:177
     def send_event(*args); end
 
     # @!attribute [r] session_flusher
     #   @return [SessionFlusher, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:89
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:94
     def session_flusher; end
+
+    # @!method set_attribute
+    #   Sets a single attribute on the current scope.
+    #   @param key [String, Symbol]
+    #   @param value [Object]
+    #   @param unit [String, Symbol, nil] an optional measurement unit for the value
+    #   @return [Hash]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:253
+    def set_attribute(key, value, unit: T.unsafe(nil)); end
+
+    # @!method set_attributes
+    #   Updates the current scope's attributes by merging with the old value.
+    #   @param attributes_hash [Hash]
+    #   @return [Hash]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:242
+    def set_attributes(attributes_hash); end
 
     # @!method set_context
     #   @!macro set_context
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:218
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:223
     def set_context(*args); end
+
+    # Stores +hub+ for the current execution context (thread or fiber).
+    #
+    # @!visibility private
+    # @param hub [Hub, nil]
+    # @return [Hub, nil]
+    #
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:791
+    def set_current_hub_internal(hub); end
 
     # @!method set_extras
     #   @!macro set_extras
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:204
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:209
     def set_extras(*args); end
 
     # @!method set_tags
     #   @!macro set_tags
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:197
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:202
     def set_tags(*args); end
 
     # @!method set_user
     #   @!macro set_user
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:211
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:216
     def set_user(*args); end
 
     # Takes or initializes a new Sentry::Transaction and makes a sampling decision for it.
     #
     # @return [Transaction, nil]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:507
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:556
     def start_transaction(**options); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:653
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:688
     def sys_command(command); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:703
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:738
     def utc_now; end
 
     # Records the block's execution as a child of the current span.
@@ -460,7 +515,7 @@ module Sentry
     #     # result will be returned
     #   end
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:525
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:574
     def with_child_span(**attributes, &block); end
 
     # Takes a block and evaluates it. If the block raised an exception, it reports the exception to Sentry and re-raises it.
@@ -475,7 +530,7 @@ module Sentry
     #     1/0 #=> ZeroDivisionError will be reported and re-raised
     #   end
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:444
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:493
     def with_exception_captured(**options, &block); end
 
     # Takes a block and yields a temporary scope.
@@ -499,7 +554,7 @@ module Sentry
     # @yieldparam scope [Scope]
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:398
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:447
     def with_scope(&block); end
 
     # Wrap a given block with session tracking.
@@ -518,7 +573,7 @@ module Sentry
     #   end
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:418
+    # pkg:gem/sentry-ruby#lib/sentry-ruby.rb:467
     def with_session_tracking(&block); end
   end
 end
@@ -569,7 +624,7 @@ end
 # pkg:gem/sentry-ruby#lib/sentry/attachment.rb:5
 class Sentry::Attachment::PathNotFoundError < ::StandardError; end
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:51
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:56
 Sentry::BAGGAGE_HEADER_NAME = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/background_worker.rb:8
@@ -643,38 +698,40 @@ Sentry::BackpressureMonitor::MAX_DOWNSAMPLE_FACTOR = T.let(T.unsafe(nil), Intege
 #
 # pkg:gem/sentry-ruby#lib/sentry/backtrace/line.rb:5
 class Sentry::Backtrace
-  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:73
+  extend ::Sentry::CallbackHelper
+
+  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:82
   def initialize(lines); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:89
+  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:98
   def ==(other); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:77
+  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:86
   def inspect; end
 
   # holder for an Array of Backtrace::Line instances
   #
-  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:11
+  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:13
   def lines; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:81
+  # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:90
   def to_s; end
 
   class << self
-    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:60
+    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:69
     def line_cache; end
 
     # @deprecated project_root, in_app_pattern passed from outside
     # @deprecated app_dirs_pattern, in_app_pattern passed from outside
     #
-    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:15
+    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:17
     def parse(backtrace, project_root, app_dirs_pattern, in_app_pattern: T.unsafe(nil), &backtrace_cleanup_callback); end
 
     # Since Sentry is mostly used in production, we don't want to fallback
     # to the slower implementation and adds potentially big overhead to the
     # application.
     #
-    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:36
+    # pkg:gem/sentry-ruby#lib/sentry/backtrace.rb:45
     def source_location(&backtrace_cleaner); end
   end
 end
@@ -968,8 +1025,23 @@ end
 # pkg:gem/sentry-ruby#lib/sentry/breadcrumb_buffer.rb:7
 Sentry::BreadcrumbBuffer::DEFAULT_SIZE = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:45
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:50
 Sentry::CAPTURED_SIGNATURE = T.let(T.unsafe(nil), Symbol)
+
+# @private
+#
+# pkg:gem/sentry-ruby#lib/sentry/utils/callback_helper.rb:5
+module Sentry::CallbackHelper
+  # @!visibility private
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/utils/callback_helper.rb:7
+  def safe_dispatch_callback(callback_name, callback, args, fallback: T.unsafe(nil)); end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/callback_helper.rb:16
+  def log_callback_error(callback_name, exception); end
+end
 
 # pkg:gem/sentry-ruby#lib/sentry/check_in_event.rb:8
 class Sentry::CheckInEvent < ::Sentry::Event
@@ -1051,31 +1123,32 @@ Sentry::CheckInEvent::VALID_STATUSES = T.let(T.unsafe(nil), Array)
 # pkg:gem/sentry-ruby#lib/sentry/client.rb:12
 class Sentry::Client
   include ::Sentry::LoggingHelper
+  include ::Sentry::CallbackHelper
 
   # @param configuration [Configuration]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:33
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:34
   def initialize(configuration); end
 
   # Buffer a log event to be sent later with other logs in a single envelope
   # @param event [LogEvent] the log event to be buffered
   # @return [LogEvent]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:108
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:105
   def buffer_log_event(event, scope); end
 
   # Buffer a metric event to be sent later with other metrics in a single envelope
   # @param event [MetricEvent] the metric event to be buffered
   # @return [MetricEvent]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:117
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:114
   def buffer_metric_event(event, scope); end
 
   # Capture an envelope directly.
   # @param envelope [Envelope] the envelope to be captured.
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:127
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:124
   def capture_envelope(envelope); end
 
   # Applies the given scope's data to the event and sends it to Sentry.
@@ -1084,12 +1157,12 @@ class Sentry::Client
   # @param hint [Hash] the hint data that'll be passed to `before_send` callback and the scope's event processors.
   # @return [Event, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:65
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:62
   def capture_event(event, scope, hint = T.unsafe(nil)); end
 
   # @!macro configuration
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:31
   def configuration; end
 
   # Initializes a CheckInEvent object with the given options.
@@ -1103,7 +1176,7 @@ class Sentry::Client
   #
   # @return [Event]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:184
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:181
   def event_from_check_in(slug, status, hint = T.unsafe(nil), duration: T.unsafe(nil), monitor_config: T.unsafe(nil), check_in_id: T.unsafe(nil)); end
 
   # Initializes an Event object with the given exception. Returns `nil` if the exception's class is excluded from reporting.
@@ -1111,7 +1184,7 @@ class Sentry::Client
   # @param hint [Hash] the hint data that'll be passed to `before_send` callback and the scope's event processors.
   # @return [Event, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:144
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:141
   def event_from_exception(exception, hint = T.unsafe(nil)); end
 
   # Initializes a LogEvent object with the given message and options
@@ -1123,7 +1196,7 @@ class Sentry::Client
   #
   # @return [LogEvent] the created log event
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:213
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:210
   def event_from_log(message, level:, **options); end
 
   # Initializes an Event object with the given message.
@@ -1131,69 +1204,69 @@ class Sentry::Client
   # @param hint [Hash] the hint data that'll be passed to `before_send` callback and the scope's event processors.
   # @return [Event]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:164
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:161
   def event_from_message(message, hint = T.unsafe(nil), backtrace: T.unsafe(nil)); end
 
   # Initializes an Event object with the given Transaction object.
   # @param transaction [Transaction] the transaction to be recorded.
   # @return [TransactionEvent]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:234
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:231
   def event_from_transaction(transaction); end
 
   # Flush pending events to Sentry.
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:133
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:130
   def flush; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:24
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:25
   def log_event_buffer; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:27
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:28
   def metric_event_buffer; end
 
   # Send an envelope directly to Sentry.
   # @param envelope [Envelope] the envelope to be sent.
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:301
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:310
   def send_envelope(envelope); end
 
   # @!macro send_event
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:239
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:236
   def send_event(event, hint = T.unsafe(nil)); end
 
   # The Transport object that'll send events for the client.
   # @return [SpotlightTransport, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:21
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:22
   def spotlight_transport; end
 
   # The Transport object that'll send events for the client.
   # @return [Transport]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:18
   def transport; end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/client.rb:316
+  # pkg:gem/sentry-ruby#lib/sentry/client.rb:330
   def dispatch_background_event(event, hint); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:21
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:22
 class Sentry::Configuration
   include ::Sentry::CustomInspection
   include ::Sentry::LoggingHelper
   include ::Sentry::ArgumentCheckingHelper
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:509
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:539
   def initialize; end
 
   # Directories to be recognized as part of your app. e.g. if you
@@ -1204,7 +1277,7 @@ class Sentry::Configuration
   #
   # @return [Regexp, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:33
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:34
   def app_dirs_pattern; end
 
   # Directories to be recognized as part of your app. e.g. if you
@@ -1215,19 +1288,19 @@ class Sentry::Configuration
   #
   # @return [Regexp, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:33
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:34
   def app_dirs_pattern=(_arg0); end
 
   # Track sessions in request/response cycles automatically
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:291
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:307
   def auto_session_tracking; end
 
   # Track sessions in request/response cycles automatically
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:291
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:307
   def auto_session_tracking=(_arg0); end
 
   # The maximum queue size for the background worker.
@@ -1236,7 +1309,7 @@ class Sentry::Configuration
   # Default is {BackgroundWorker::DEFAULT_MAX_QUEUE}.
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:50
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:51
   def background_worker_max_queue; end
 
   # The maximum queue size for the background worker.
@@ -1245,7 +1318,7 @@ class Sentry::Configuration
   # Default is {BackgroundWorker::DEFAULT_MAX_QUEUE}.
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:50
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:51
   def background_worker_max_queue=(_arg0); end
 
   # to send events in a non-blocking way, sentry-ruby has its own background worker
@@ -1257,7 +1330,7 @@ class Sentry::Configuration
   # E.g.: config.background_worker_threads = 0
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:43
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:44
   def background_worker_threads; end
 
   # to send events in a non-blocking way, sentry-ruby has its own background worker
@@ -1269,7 +1342,7 @@ class Sentry::Configuration
   # E.g.: config.background_worker_threads = 0
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:43
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:44
   def background_worker_threads=(_arg0); end
 
   # a proc/lambda that takes an array of stack traces
@@ -1282,7 +1355,7 @@ class Sentry::Configuration
   #
   # @return [Proc, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:61
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:62
   def backtrace_cleanup_callback; end
 
   # a proc/lambda that takes an array of stack traces
@@ -1295,7 +1368,7 @@ class Sentry::Configuration
   #
   # @return [Proc, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:61
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:62
   def backtrace_cleanup_callback=(_arg0); end
 
   # Optional Proc, called before adding the breadcrumb to the current scope
@@ -1306,10 +1379,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:70
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:71
   def before_breadcrumb; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:650
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:705
   def before_breadcrumb=(value); end
 
   # Optional Proc, called before sending an error event to the server
@@ -1324,10 +1397,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:83
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:84
   def before_send; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:626
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:681
   def before_send=(value); end
 
   # Optional Proc, called before sending a check-in event to the server
@@ -1341,10 +1414,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:108
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:109
   def before_send_check_in; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:638
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:693
   def before_send_check_in=(value); end
 
   # Optional Proc, called before sending an event to the server
@@ -1355,7 +1428,7 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:117
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:118
   def before_send_log; end
 
   # Optional Proc, called before sending an event to the server
@@ -1366,7 +1439,7 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:117
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:118
   def before_send_log=(_arg0); end
 
   # Optional Proc, called before sending a metric
@@ -1377,10 +1450,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:363
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:375
   def before_send_metric; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:644
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:699
   def before_send_metric=(value); end
 
   # Optional Proc, called before sending a transaction event to the server
@@ -1395,10 +1468,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:96
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:97
   def before_send_transaction; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:632
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:687
   def before_send_transaction=(value); end
 
   # An array of breadcrumbs loggers to be used. Available options are:
@@ -1411,10 +1484,10 @@ class Sentry::Configuration
   #
   # @return [Array<Symbol>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:128
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:129
   def breadcrumbs_logger; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:613
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:668
   def breadcrumbs_logger=(logger); end
 
   # Capture queue time from X-Request-Start header set by reverse proxies.
@@ -1422,7 +1495,7 @@ class Sentry::Configuration
   # Defaults to true.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:242
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:262
   def capture_queue_time; end
 
   # Capture queue time from X-Request-Start header set by reverse proxies.
@@ -1430,64 +1503,76 @@ class Sentry::Configuration
   # Defaults to true.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:242
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:262
   def capture_queue_time=(_arg0); end
 
   # Number of lines of code context to capture, or nil for none
+  # @deprecated Use {#data_collection} and `frame_context_lines` instead.
   # @return [Integer, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:136
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:138
   def context_lines; end
 
-  # Number of lines of code context to capture, or nil for none
-  # @return [Integer, nil]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:136
-  def context_lines=(_arg0); end
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:140
+  def context_lines=(value); end
 
   # Cron related configuration.
   # @return [Cron::Configuration]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:260
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:280
   def cron; end
 
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:762
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:815
   def csp_report_uri; end
+
+  # Controls which categories of data may be collected.
+  # Replacement for send_default_pii.
+  # @return [DataCollection]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:256
+  def data_collection; end
+
+  # Controls which categories of data may be collected.
+  # Replacement for send_default_pii.
+  # @return [DataCollection]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:256
+  def data_collection=(_arg0); end
 
   # Whether the SDK should run in the debugging mode. Default is false.
   # If set to true, SDK errors will be logged with backtrace
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:145
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:152
   def debug; end
 
   # Whether the SDK should run in the debugging mode. Default is false.
   # If set to true, SDK errors will be logged with backtrace
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:145
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:152
   def debug=(_arg0); end
 
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:784
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:845
   def detect_release; end
 
   # the dsn value, whether it's set via `config.dsn=` or `ENV["SENTRY_DSN"]`
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:149
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:156
   def dsn; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:601
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:634
   def dsn=(value); end
 
   # Returns the effective org ID, preferring the explicit config option over the DSN-parsed value.
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:703
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:758
   def effective_org_id; end
 
   # Whether to downsample transactions automatically because of backpressure.
@@ -1495,7 +1580,7 @@ class Sentry::Configuration
   # Default is false
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:297
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:313
   def enable_backpressure_handling; end
 
   # Whether to downsample transactions automatically because of backpressure.
@@ -1503,151 +1588,134 @@ class Sentry::Configuration
   # Default is false
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:297
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:313
   def enable_backpressure_handling=(_arg0); end
-
-  # Enable Structured Logging
-  # @return [Boolean]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:278
-  def enable_logs; end
-
-  # Enable Structured Logging
-  # @return [Boolean]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:278
-  def enable_logs=(_arg0); end
-
-  # Enable metrics collection, defaults to true
-  # @return [Boolean]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:350
-  def enable_metrics; end
-
-  # Enable metrics collection, defaults to true
-  # @return [Boolean]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:350
-  def enable_metrics=(_arg0); end
 
   # Whitelist of enabled_environments that will send notifications to Sentry. Array of Strings.
   # @return [Array<String>, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:153
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:160
   def enabled_environments; end
 
   # Whitelist of enabled_environments that will send notifications to Sentry. Array of Strings.
   # @return [Array<String>, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:153
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:160
   def enabled_environments=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:740
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:793
   def enabled_in_current_env?; end
 
   # Array of patches to apply.
   # Default is {DEFAULT_PATCHES}
   # @return [Array<Symbol>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:342
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:358
   def enabled_patches; end
 
   # Array of patches to apply.
   # Default is {DEFAULT_PATCHES}
   # @return [Array<Symbol>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:342
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:358
   def enabled_patches=(_arg0); end
 
   # RACK_ENV by default.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:140
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:147
   def environment; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:662
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:717
   def environment=(environment); end
 
-  # @api private
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:797
-  def error_messages; end
-
-  # these are not config options
-  # @!visibility private
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:394
-  def errors; end
-
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:727
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:780
   def exception_class_allowed?(exc); end
 
   # Logger 'progname's to exclude from breadcrumbs
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:157
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:164
   def exclude_loggers; end
 
   # Logger 'progname's to exclude from breadcrumbs
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:157
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:164
   def exclude_loggers=(_arg0); end
 
   # Array of exception classes that should never be sent. See IGNORE_DEFAULT.
   # You should probably append to this rather than overwrite it.
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:162
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:169
   def excluded_exceptions; end
 
   # Array of exception classes that should never be sent. See IGNORE_DEFAULT.
   # You should probably append to this rather than overwrite it.
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:162
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:169
   def excluded_exceptions=(_arg0); end
 
   # these are not config options
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:394
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:424
   def gem_specs; end
 
-  # Whether to capture local variables from the raised exception's frame. Default is false.
-  # @return [Boolean]
+  # Which execution primitive owns the SDK's current hub.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:171
-  def include_local_variables; end
+  # [+:thread+ (default)] Store the hub in thread-local storage. Correct for
+  #   thread-based servers (Puma, Unicorn) and background processors (Sidekiq,
+  #   Resque). Every fiber on a thread shares one hub.
+  # [+:fiber+] Store the hub in Fiber Storage (Ruby 3.2+). Each fiber gets its
+  #   own hub, so concurrent requests on a fiber-based server (Falcon/async)
+  #   are isolated instead of sharing and corrupting one another's scope. A
+  #   fiber or thread started from another inherits its context and trace, but
+  #   its own scope changes stay local. Requested on a Ruby without Fiber
+  #   Storage (< 3.2), the SDK logs a warning and falls back to +:thread+.
+  #
+  # @return [Symbol]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:417
+  def hub_isolation_level; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:651
+  def hub_isolation_level=(level); end
 
   # Whether to capture local variables from the raised exception's frame. Default is false.
+  # @deprecated Use {#data_collection} and `stack_frame_variables` instead.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:171
-  def include_local_variables=(_arg0); end
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:179
+  def include_local_variables; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:181
+  def include_local_variables=(value); end
 
   # Boolean to check nested exceptions when deciding if to exclude. Defaults to true
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:166
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:173
   def inspect_exception_causes_for_exclusion; end
 
   # Boolean to check nested exceptions when deciding if to exclude. Defaults to true
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:166
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:173
   def inspect_exception_causes_for_exclusion=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:167
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:174
   def inspect_exception_causes_for_exclusion?; end
 
   # The instrumenter to use, :sentry or :otel
   # @return [Symbol]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:318
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:334
   def instrumenter; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:666
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:721
   def instrumenter=(instrumenter); end
 
   # You may provide your own LineCache for matching paths with source files.
@@ -1655,7 +1723,7 @@ class Sentry::Configuration
   # @see LineCache
   # @return [LineCache]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:185
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:198
   def linecache; end
 
   # You may provide your own LineCache for matching paths with source files.
@@ -1663,43 +1731,48 @@ class Sentry::Configuration
   # @see LineCache
   # @return [LineCache]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:185
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:198
   def linecache=(_arg0); end
+
+  # @api private
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:825
+  def log_deprecations; end
 
   # Max number of breadcrumbs a breadcrumb buffer can hold
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:132
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:133
   def max_breadcrumbs; end
 
   # Max number of breadcrumbs a breadcrumb buffer can hold
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:132
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:133
   def max_breadcrumbs=(_arg0); end
 
   # Maximum number of log events to buffer before sending
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:362
   def max_log_events; end
 
   # Maximum number of log events to buffer before sending
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:362
   def max_log_events=(_arg0); end
 
   # Maximum number of metric events to buffer before sending
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:354
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:366
   def max_metric_events; end
 
   # Maximum number of metric events to buffer before sending
   # @return [Integer]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:354
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:366
   def max_metric_events=(_arg0); end
 
   # An optional organization ID. The SDK will try to extract it from the DSN in most cases
@@ -1707,19 +1780,19 @@ class Sentry::Configuration
   # This value is used for trace propagation and for features like strict_trace_continuation.
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:378
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:390
   def org_id; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:697
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:752
   def org_id=(value); end
 
   # The profiler class
   # @return [Class]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:322
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:338
   def profiler_class; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:686
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:741
   def profiler_class=(profiler_class); end
 
   # Interval in microseconds at which to take samples.
@@ -1730,7 +1803,7 @@ class Sentry::Configuration
   #   config.profiles_sample_interval = 1e5 / 101
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:337
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:353
   def profiles_sample_interval; end
 
   # Interval in microseconds at which to take samples.
@@ -1741,7 +1814,7 @@ class Sentry::Configuration
   #   config.profiles_sample_interval = 1e5 / 101
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:337
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:353
   def profiles_sample_interval=(_arg0); end
 
   # Take a float between 0.0 and 1.0 as the sample rate for capturing profiles.
@@ -1749,125 +1822,127 @@ class Sentry::Configuration
   # i.e. the profile is sampled by this rate after the transaction is sampled.
   # @return [Float, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:328
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:344
   def profiles_sample_rate; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:682
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:737
   def profiles_sample_rate=(profiles_sample_rate); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:755
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:808
   def profiling_enabled?; end
 
   # Project directory root for in_app detection. Could be Rails root, etc.
   # Set automatically for Rails.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:200
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:213
   def project_root; end
 
   # Project directory root for in_app detection. Could be Rails root, etc.
   # Set automatically for Rails.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:200
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:213
   def project_root=(_arg0); end
 
   # Insert sentry-trace to outgoing requests' headers
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:209
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:222
   def propagate_traces; end
 
   # Insert sentry-trace to outgoing requests' headers
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:209
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:222
   def propagate_traces=(_arg0); end
 
   # Array of rack env parameters to be included in the event sent to sentry.
+  # @deprecated Use `data_collection.http_headers.request` to control request data collection instead.
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:213
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:227
   def rack_env_whitelist; end
 
   # Array of rack env parameters to be included in the event sent to sentry.
+  # @deprecated Use `data_collection.http_headers.request` to control request data collection instead.
   # @return [Array<String>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:213
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:227
   def rack_env_whitelist=(_arg0); end
 
   # Release tag to be passed with every event sent to Sentry.
   # We automatically try to set this to a git SHA or Capistrano release.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:218
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:232
   def release; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:607
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:645
   def release=(value); end
 
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:803
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:858
   def run_after_close_callbacks; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:717
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:770
   def sample_allowed?; end
 
   # The sampling factor to apply to events. A value of 0.0 will not send
   # any events, and a value of 1.0 will send 100% of events.
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:223
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:237
   def sample_rate; end
 
   # The sampling factor to apply to events. A value of 0.0 will not send
   # any events, and a value of 1.0 will send 100% of events.
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:223
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:237
   def sample_rate=(_arg0); end
 
   # File path for DebugTransport to log events to. If not set, defaults to a temporary file.
   # This is useful for debugging and testing purposes.
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:195
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:208
   def sdk_debug_transport_log_file; end
 
   # File path for DebugTransport to log events to. If not set, defaults to a temporary file.
   # This is useful for debugging and testing purposes.
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:195
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:208
   def sdk_debug_transport_log_file=(_arg0); end
 
   # Logger used by Sentry. In Rails, this is the Rails logger, otherwise
   # Sentry provides its own Sentry::Logger.
   # @return [Logger]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:190
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:203
   def sdk_logger; end
 
   # Logger used by Sentry. In Rails, this is the Rails logger, otherwise
   # Sentry provides its own Sentry::Logger.
   # @return [Logger]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:190
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:203
   def sdk_logger=(_arg0); end
 
   # Send diagnostic client reports about dropped events, true by default
   # tries to attach to an existing envelope max once every 30s
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:287
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:303
   def send_client_reports; end
 
   # Send diagnostic client reports about dropped events, true by default
   # tries to attach to an existing envelope max once every 30s
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:287
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:303
   def send_client_reports=(_arg0); end
 
   # When send_default_pii's value is false (default), sensitive information like
@@ -1876,66 +1951,59 @@ class Sentry::Configuration
   # - request body
   # - query string
   # will not be sent to Sentry.
+  # @deprecated Use {#data_collection} instead.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:236
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:251
   def send_default_pii; end
 
-  # When send_default_pii's value is false (default), sensitive information like
-  # - user ip
-  # - user cookie
-  # - request body
-  # - query string
-  # will not be sent to Sentry.
-  # @return [Boolean]
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:236
-  def send_default_pii=(_arg0); end
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:638
+  def send_default_pii=(value); end
 
   # Include module versions in reports - boolean.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:227
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:241
   def send_modules; end
 
   # Include module versions in reports - boolean.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:227
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:241
   def send_modules=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:707
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:762
   def sending_allowed?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:711
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:766
   def sending_to_dsn_allowed?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:605
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:643
   def server=(value); end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:252
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:272
   def server_name; end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:252
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:272
   def server_name=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:723
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:776
   def session_tracking?; end
 
   # Allow to skip Sentry emails within rake tasks
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:246
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:266
   def skip_rake_integration; end
 
   # Allow to skip Sentry emails within rake tasks
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:246
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:266
   def skip_rake_integration=(_arg0); end
 
   # Whether to capture events and traces into Spotlight. Default is false.
@@ -1945,7 +2013,7 @@ class Sentry::Configuration
   # with the proxy URL.
   # @return [Boolean, String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:179
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:192
   def spotlight; end
 
   # Whether to capture events and traces into Spotlight. Default is false.
@@ -1955,12 +2023,12 @@ class Sentry::Configuration
   # with the proxy URL.
   # @return [Boolean, String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:179
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:192
   def spotlight=(_arg0); end
 
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:772
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:833
   def stacktrace_builder; end
 
   # Optional Proc, called to filter log messages before sending to Sentry
@@ -1971,10 +2039,10 @@ class Sentry::Configuration
   #   end
   # @return [Proc, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:372
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:384
   def std_lib_logger_filter; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:656
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:711
   def std_lib_logger_filter=(value); end
 
   # If set to true, the SDK will only continue a trace if the org_id of the incoming trace found in the
@@ -1988,7 +2056,7 @@ class Sentry::Configuration
   # This is useful to prevent traces of unknown third-party services from being continued in your application.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:390
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:402
   def strict_trace_continuation; end
 
   # If set to true, the SDK will only continue a trace if the org_id of the incoming trace found in the
@@ -2002,27 +2070,27 @@ class Sentry::Configuration
   # This is useful to prevent traces of unknown third-party services from being continued in your application.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:390
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:402
   def strict_trace_continuation=(_arg0); end
 
   # Whether to strip the load path while constructing the backtrace frame filename.
   # Defaults to true.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:205
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:218
   def strip_backtrace_load_path; end
 
   # Whether to strip the load path while constructing the backtrace frame filename.
   # Defaults to true.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:205
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:218
   def strip_backtrace_load_path=(_arg0); end
 
   # Structured logging configuration.
   # @return [StructuredLoggingConfiguration]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:282
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:298
   def structured_logging; end
 
   # Collection of HTTP status codes or ranges of codes to ignore when tracing incoming requests.
@@ -2036,33 +2104,33 @@ class Sentry::Configuration
   #
   # @return [Array<Integer>, Array<Range>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:314
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:330
   def trace_ignore_status_codes; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:670
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:725
   def trace_ignore_status_codes=(codes); end
 
   # Allowlist of outgoing request targets to which sentry-trace and baggage headers are attached.
   # Default is all (/.*/)
   # @return [Array<String, Regexp>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:302
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:318
   def trace_propagation_targets; end
 
   # Allowlist of outgoing request targets to which sentry-trace and baggage headers are attached.
   # Default is all (/.*/)
   # @return [Array<String, Regexp>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:302
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:318
   def trace_propagation_targets=(_arg0); end
 
   # Take a float between 0.0 and 1.0 as the sample rate for tracing events (transactions).
   # @return [Float, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:264
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:284
   def traces_sample_rate; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:678
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:733
   def traces_sample_rate=(traces_sample_rate); end
 
   # Take a Proc that controls the sample rate for every tracing event, e.g.
@@ -2074,7 +2142,7 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:274
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:294
   def traces_sampler; end
 
   # Take a Proc that controls the sample rate for every tracing event, e.g.
@@ -2086,163 +2154,165 @@ class Sentry::Configuration
   #   end
   # @return [Proc]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:274
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:294
   def traces_sampler=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:749
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:802
   def tracing_enabled?; end
 
   # Transport related configuration.
   # @return [Transport::Configuration]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:256
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:276
   def transport; end
 
   # IP ranges for trusted proxies that will be skipped when calculating IP address.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:249
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:269
   def trusted_proxies; end
 
   # IP ranges for trusted proxies that will be skipped when calculating IP address.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:249
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:269
   def trusted_proxies=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:744
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:797
   def valid_sample_rate?(sample_rate); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:583
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:616
   def validate; end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:844
-  def capture_in_environment?; end
-
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:860
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:903
   def environment_from_env; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:815
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:874
   def excluded_exception?(incoming_exception); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:821
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:880
   def excluded_exception_classes; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:825
-  def get_exception_class(x); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:809
-  def init_dsn(dsn_string); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:829
-  def matches_exception?(excluded_exception_class, incoming_exception); end
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:864
+  def fiber_storage_available?; end
 
   # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:884
+  def get_exception_class(x); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:868
+  def init_dsn(dsn_string); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:888
+  def matches_exception?(excluded_exception_class, incoming_exception); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:927
   def processor_count; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:878
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:921
   def run_callbacks(hook, event); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:874
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:917
   def running_on_heroku?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:837
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:896
   def safe_const_get(x); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:864
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:907
   def server_name_from_env; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:851
-  def valid?; end
-
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:889
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:932
   def valid_http_status_code?(code); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:893
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:936
   def valid_status_code_entry?(entry); end
 
   class << self
     # allow extensions to add their hooks to the Configuration class
     #
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:448
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:478
     def add_post_initialization_callback(&block); end
 
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:456
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:486
     def after(event, &block); end
 
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:452
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:482
     def before(event, &block); end
 
     # @!visibility private
     #
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:461
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:491
     def callbacks; end
 
     # Post initialization callbacks are called at the end of initialization process
     # allowing extending the configuration of sentry-ruby by multiple extensions
     #
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:443
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:473
     def post_initialization_callbacks; end
 
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:473
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:503
     def validate(attribute, optional: T.unsafe(nil), type: T.unsafe(nil)); end
 
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:469
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:499
     def validations; end
 
     private
 
-    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:483
+    # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:513
     def build_validation_proc(optional, type); end
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:435
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:465
 Sentry::Configuration::APP_DIRS_PATTERN = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:433
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:463
 Sentry::Configuration::DEFAULT_PATCHES = T.let(T.unsafe(nil), Array)
 
 # 101 Hz in microseconds
 #
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:438
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:468
 Sentry::Configuration::DEFAULT_PROFILES_SAMPLE_INTERVAL = T.let(T.unsafe(nil), Float)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:422
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:452
 Sentry::Configuration::HEROKU_DYNO_METADATA_MESSAGE = T.let(T.unsafe(nil), String)
 
 # Most of these errors generate 4XX responses. In general, Sentry clients
 # only automatically report 5xx responses.
 #
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:407
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:437
 Sentry::Configuration::IGNORE_DEFAULT = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:429
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:459
 Sentry::Configuration::INSTRUMENTERS = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:425
+# Isolation levels the SDK understands for hub storage.
+#
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:420
+Sentry::Configuration::ISOLATION_LEVELS = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:455
 Sentry::Configuration::LOG_PREFIX = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:426
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:456
 Sentry::Configuration::MODULE_SEPARATOR = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:431
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:461
 Sentry::Configuration::PROPAGATION_TARGETS_MATCH_ALL = T.let(T.unsafe(nil), Regexp)
 
 # These exceptions could enter Puma's `lowlevel_error_handler` callback and the SDK's Puma integration
 # But they are mostly considered as noise and should be ignored by default
 # Please see https://github.com/getsentry/sentry-ruby/pull/2026 for more information
 #
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:399
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:429
 Sentry::Configuration::PUMA_IGNORE_DEFAULT = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:414
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:444
 Sentry::Configuration::RACK_ENV_WHITELIST_DEFAULT = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:427
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:457
 Sentry::Configuration::SKIP_INSPECTION_ATTRIBUTES = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:420
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:450
 Sentry::Configuration::TRACE_IGNORE_STATUS_CODES_DEFAULT = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/sentry-ruby#lib/sentry/cron/configuration.rb:4
@@ -2291,34 +2361,92 @@ class Sentry::Cron::Configuration
   def default_timezone=(_arg0); end
 end
 
+# Converts fugit schedules into monitor configs. Returns nil when the
+# schedule can't be expressed in the Crons schedule format.
+#
+# pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:7
+module Sentry::Cron::FugitSchedule
+  class << self
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:14
+    def from_cron(cron); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:20
+    def from_seconds(seconds); end
+
+    private
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:85
+    def crontab_field(values, min, max, step: T.unsafe(nil)); end
+
+    # Rebuilds a 5-field crontab from fugit's expanded fields. Returns nil for
+    # sub-minute seconds, `%`, `&`, and negative days other than `L` and `#-1`.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:43
+    def crontab_for(cron); end
+
+    # Day fields never use `*/n`: Debian cron treats a field starting with
+    # `*` as unrestricted when combining day-of-month and weekday.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:63
+    def monthday_field(monthdays); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:107
+    def offset_timezone(hours, minutes); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:36
+    def options; end
+
+    # Sentry only accepts IANA names, so only whole-hour offsets get a zone.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:97
+    def timezone_for(cron); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:74
+    def weekday_field(weekdays); end
+  end
+end
+
+# et-orbi names offset zones like "+05:00".
+#
+# pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:11
+Sentry::Cron::FugitSchedule::OFFSET = T.let(T.unsafe(nil), Regexp)
+
+# `#n` and `#-1` (last) have Crons equivalents; other `#-n` don't.
+#
+# pkg:gem/sentry-ruby#lib/sentry/cron/fugit_schedule.rb:9
+Sentry::Cron::FugitSchedule::WEEKDAY_HASHES = T.let(T.unsafe(nil), Array)
+
 # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:5
 module Sentry::Cron::MonitorCheckIns
   mixes_in_class_methods ::Sentry::Cron::MonitorCheckIns::ClassMethods
 
   class << self
-    # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:72
+    # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:78
     def included(base); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:8
+    def with_check_in(slug, monitor_config: T.unsafe(nil)); end
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:45
+# pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:51
 module Sentry::Cron::MonitorCheckIns::ClassMethods
-  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:46
+  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:52
   def sentry_monitor_check_ins(slug: T.unsafe(nil), monitor_config: T.unsafe(nil)); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:67
+  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:73
   def sentry_monitor_config; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:60
+  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:66
   def sentry_monitor_slug(name: T.unsafe(nil)); end
 end
 
 # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:6
 Sentry::Cron::MonitorCheckIns::MAX_SLUG_LENGTH = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:8
+# pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:39
 module Sentry::Cron::MonitorCheckIns::Patch
-  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:9
+  # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_check_ins.rb:40
   def perform(*args, **opts); end
 end
 
@@ -2451,6 +2579,23 @@ end
 # pkg:gem/sentry-ruby#lib/sentry/cron/monitor_schedule.rb:29
 Sentry::Cron::MonitorSchedule::Interval::VALID_UNITS = T.let(T.unsafe(nil), Array)
 
+# pkg:gem/sentry-ruby#lib/sentry/cron/slug.rb:5
+module Sentry::Cron::Slug
+  private
+
+  # Returns nil when nothing usable is left.
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/cron/slug.rb:9
+  def from(name); end
+
+  class << self
+    # Returns nil when nothing usable is left.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/cron/slug.rb:9
+    def from(name); end
+  end
+end
+
 # pkg:gem/sentry-ruby#lib/sentry/utils/custom_inspection.rb:4
 module Sentry::CustomInspection
   # pkg:gem/sentry-ruby#lib/sentry/utils/custom_inspection.rb:5
@@ -2543,128 +2688,443 @@ Sentry::DSN::PROTOCOL_VERSION = T.let(T.unsafe(nil), String)
 # pkg:gem/sentry-ruby#lib/sentry/dsn.rb:11
 Sentry::DSN::REQUIRED_ATTRIBUTES = T.let(T.unsafe(nil), Array)
 
-# DebugStructuredLogger is a logger that captures structured log events to a file for debugging purposes.
+# pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:4
+class Sentry::DataCollection
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:153
+  def initialize; end
+
+  # Copies the legacy context_lines configuration.
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:175
+  def backfill_frame_context_lines(configuration); end
+
+  # Copies the legacy stack frame variable configuration.
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:170
+  def backfill_stack_frame_variables(configuration); end
+
+  # Returns whether incoming HTTP request bodies should be collected.
+  # nil implies all BODY_TYPES according to spec
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:198
+  def collect_incoming_http_body?; end
+
+  # Returns whether outgoing HTTP request bodies should be collected.
+  # nil implies all BODY_TYPES according to spec
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:204
+  def collect_outgoing_http_body?; end
+
+  # Returns whether stack frame local variables should be captured.
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:180
+  def collect_stack_frame_variables?; end
+
+  # @return [Boolean, KeyValueCollection]
+  # A boolean is shorthand for `mode: :deny_list` (`true`) or `mode: :off` (`false`).
+  # @default `mode: :deny_list, terms: nil`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:84
+  def cookies; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:188
+  def cookies=(value); end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:101
+  def database_query_data; end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:101
+  def database_query_data=(_arg0); end
+
+  # @return [Integer]
+  # @default `3`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:118
+  def frame_context_lines; end
+
+  # @return [Integer]
+  # @default `3`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:118
+  def frame_context_lines=(_arg0); end
+
+  # @return [GraphQL]
+  # @default `document: true, variables: true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:105
+  def graphql; end
+
+  # @return [GraphQL]
+  # @default `document: true, variables: true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:105
+  def graphql=(_arg0); end
+
+  # @return [Array<Symbol>] containing values from BODY_TYPES
+  # @default `nil` (all valid body types)
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:92
+  def http_bodies; end
+
+  # @return [Array<Symbol>] containing values from BODY_TYPES
+  # @default `nil` (all valid body types)
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:92
+  def http_bodies=(_arg0); end
+
+  # @return [HttpHeaders]
+  # @default request and response use `mode: :deny_list, terms: nil`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:88
+  def http_headers; end
+
+  # @return [HttpHeaders]
+  # @default request and response use `mode: :deny_list, terms: nil`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:88
+  def http_headers=(_arg0); end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:109
+  def queues; end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:109
+  def queues=(_arg0); end
+
+  # @return [Boolean, KeyValueCollection]
+  # A boolean is shorthand for `mode: :deny_list` (`true`) or `mode: :off` (`false`).
+  # @default `false` (Ruby-specific to avoid TracePoint overhead)
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:114
+  def stack_frame_variables; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:184
+  def stack_frame_variables=(value); end
+
+  # @return [Boolean, KeyValueCollection]
+  # A boolean is shorthand for `mode: :deny_list` (`true`) or `mode: :off` (`false`).
+  # @default `mode: :deny_list, terms: nil`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:97
+  def url_query_params; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:192
+  def url_query_params=(value); end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:79
+  def user_info; end
+
+  # @return [Boolean]
+  # @default `true`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:79
+  def user_info=(_arg0); end
+
+  class << self
+    # Builds data collection settings compatible with the legacy send_default_pii
+    # configuration.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:131
+    def backfill(configuration); end
+
+    # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:125
+    def default_filter; end
+
+    # Filters key-value data using the default sensitive denylist.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:121
+    def filter(values); end
+  end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:36
+Sentry::DataCollection::BODY_TYPES = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:64
+class Sentry::DataCollection::GraphQL
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:71
+  def initialize(document:, variables:); end
+
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:66
+  def document; end
+
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:66
+  def document=(_arg0); end
+
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:69
+  def variables; end
+
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:69
+  def variables=(_arg0); end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:43
+class Sentry::DataCollection::HttpHeaders
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:50
+  def initialize(request:, response:); end
+
+  # @return [KeyValueCollection]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:45
+  def request; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:55
+  def request=(value); end
+
+  # @return [KeyValueCollection]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:48
+  def response; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:59
+  def response=(value); end
+end
+
+# Configuration for key-value data collection.
 #
-# It can optionally also send log events to Sentry via the normal structured logger if logging
-# is enabled.
-#
-# pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:13
-class Sentry::DebugStructuredLogger < ::SimpleDelegator
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:18
-  def initialize(configuration); end
+# pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:6
+class Sentry::DataCollection::KeyValueCollection
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:68
+  def initialize(mode:, terms:); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:16
-  def backend; end
+  # Applies this collection configuration without changing the input hash.
+  # Keys are retained whenever the category is collected; values that are not
+  # safe to send are replaced with FILTERED_VALUE.
+  #
+  # @param values [Hash] key-value data to filter
+  # @return [Hash] a new filtered hash, or an empty hash when collection is off
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:99
+  def filter(values, cookie: T.unsafe(nil)); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:42
-  def capture_log_event(level, message, parameters, **attributes); end
+  # `mode` controls whether values are collected:
+  # - `:off` disables collection.
+  # - `:deny_list` collects values except those matching `terms`.
+  # - `:allow_list` collects only values matching `terms`.
+  # Boolean values are accepted as shorthand for `:deny_list` and `:off`.
+  # @return [:off, :deny_list, :allow_list]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:62
+  def mode; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:61
-  def clear; end
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:73
+  def mode=(mode); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def debug(message, parameters = T.unsafe(nil), **attributes); end
+  # `terms` contains the keys or patterns used by the selected mode.
+  # @return [Array<String, Regexp>, nil]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:66
+  def terms; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def error(message, parameters = T.unsafe(nil), **attributes); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def fatal(message, parameters = T.unsafe(nil), **attributes); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def info(message, parameters = T.unsafe(nil), **attributes); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:36
-  def log(level, message, parameters:, **attributes); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:16
-  def log_file; end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:55
-  def logged_events; end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def trace(message, parameters = T.unsafe(nil), **attributes); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:29
-  def warn(message, parameters = T.unsafe(nil), **attributes); end
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:88
+  def terms=(terms); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:70
-  def initialize_backend(configuration); end
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:129
+  def matches_any_term?(key, key_downcase); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:79
-  def initialize_log_file(log_file_path); end
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:109
+  def safe_value?(key, cookie: T.unsafe(nil)); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:124
+  def sensitive?(key, cookie: T.unsafe(nil)); end
+
+  class << self
+    # Converts the boolean shorthand into a collection configuration.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:82
+    def from(value); end
+  end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:14
-Sentry::DebugStructuredLogger::DEFAULT_LOG_FILE_PATH = T.let(T.unsafe(nil), String)
+# pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:7
+Sentry::DataCollection::KeyValueCollection::FILTERED_VALUE = T.let(T.unsafe(nil), String)
 
-# No-op logger for when structured logging is disabled
+# Additional terms applied to cookie names only. These cover common
+# opaque session, identity-provider, and load-balancer cookies without
+# making the general header denylist overly broad.
 #
-# pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:88
-class Sentry::DebugStructuredLogger::NoOpLogger
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def debug(*args, **kwargs); end
+# pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:35
+Sentry::DataCollection::KeyValueCollection::SENSITIVE_COOKIE_NAME_DENY_LIST = T.let(T.unsafe(nil), Array)
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def error(*args, **kwargs); end
+# Keys from this list are ALWAYS filtered, regardless of :mode
+#
+# pkg:gem/sentry-ruby#lib/sentry/data_collection/key_value_collection.rb:10
+Sentry::DataCollection::KeyValueCollection::SENSITIVE_DENY_LIST = T.let(T.unsafe(nil), Array)
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def fatal(*args, **kwargs); end
+# Configuration for the categories of data collected by the SDK.
+# Replacement for send_default_pii.
+# Spec: https://develop.sentry.dev/sdk/foundations/client/data-collection/
+#
+# @example Configure data collection
+#   Sentry.init do |config|
+#     data_collection = config.data_collection
+#     data_collection.user_info = true
+#     data_collection.cookies.mode = :deny_list
+#     data_collection.cookies.terms = ["session", "token"]
+#     data_collection.http_headers.request.mode = :deny_list
+#     data_collection.http_headers.request.terms = nil
+#     data_collection.http_headers.response.mode = :allow_list
+#     data_collection.http_headers.response.terms = ["my_special_header"]
+#     data_collection.http_bodies = [:incoming_request]
+#     data_collection.url_query_params.mode = :allow_list
+#     data_collection.url_query_params.terms = ["page", "limit"]
+#     data_collection.graphql.document = true
+#     data_collection.graphql.variables = true
+#     data_collection.database_query_data = true
+#     data_collection.queues = true
+#     data_collection.stack_frame_variables = true
+#     data_collection.frame_context_lines = 5
+#   end
+#
+# pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:32
+Sentry::DataCollection::MODES = T.let(T.unsafe(nil), Array)
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def info(*args, **kwargs); end
+# pkg:gem/sentry-ruby#lib/sentry/data_collection.rb:34
+Sentry::DataCollection::PII_HEADER_SNIPPETS = T.let(T.unsafe(nil), Array)
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def log(*args, **kwargs); end
+# pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:10
+class Sentry::DebugLogFile
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:13
+  def initialize(path, prefix); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def trace(*args, **kwargs); end
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:25
+  def append(entry); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:90
-  def warn(*args, **kwargs); end
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:48
+  def clear; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:33
+  def entries; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:11
+  def path; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:56
+  def start_run; end
 end
+
+# DebugStructuredLogger is a logger that captures structured log events to a file for debugging purposes.
+#
+# It also sends log events to Sentry via the normal structured logger.
+#
+# pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:10
+class Sentry::DebugStructuredLogger < ::SimpleDelegator
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:15
+  def initialize(configuration); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:13
+  def backend; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:44
+  def capture_log_event(level, message, parameters, **attributes); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:65
+  def clear; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def debug(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def error(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def fatal(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def info(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:35
+  def log(level, message = T.unsafe(nil), parameters:, **attributes); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:13
+  def log_file; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:57
+  def logged_events; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:61
+  def start_run; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def trace(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:25
+  def warn(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:74
+  def initialize_backend(configuration); end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/debug_structured_logger.rb:11
+Sentry::DebugStructuredLogger::DEFAULT_LOG_FILE_PATH = T.let(T.unsafe(nil), String)
 
 # DebugTransport is a transport that logs events to a file for debugging purposes.
 #
 # It can optionally also send events to Sentry via HTTP transport if a real DSN
 # is provided.
 #
-# pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:13
+# pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:75
 class Sentry::DebugTransport < ::SimpleDelegator
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:18
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:80
   def initialize(configuration); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:16
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:78
   def backend; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:50
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:118
   def clear; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:98
   def log_envelope(envelope); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:16
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:78
   def log_file; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:42
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:110
   def logged_envelopes; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:25
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:93
+  def send_envelope(envelope); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:88
   def send_event(event); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:114
+  def start_run; end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:57
+  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:125
   def initialize_backend(configuration); end
-
-  # pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:62
-  def initialize_log_file(configuration); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:14
+# pkg:gem/sentry-ruby#lib/sentry/transport/debug_transport.rb:76
 Sentry::DebugTransport::DEFAULT_LOG_FILE_PATH = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:4
@@ -2675,7 +3135,7 @@ class Sentry::DummyTransport < ::Sentry::Transport
   # Empties the captured events and envelopes so `TestHelper.clear_sentry_events`
   # also clears the dummy transport instance
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:24
+  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:25
   def clear; end
 
   # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:5
@@ -2690,10 +3150,10 @@ class Sentry::DummyTransport < ::Sentry::Transport
   # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:5
   def events=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:18
+  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:19
   def send_envelope(envelope); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:13
+  # pkg:gem/sentry-ruby#lib/sentry/transport/dummy_transport.rb:14
   def send_event(event); end
 end
 
@@ -2730,8 +3190,11 @@ end
 #
 # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:5
 class Sentry::Envelope::Item
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:28
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:35
   def initialize(headers, payload); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:43
+  def byte_data_category; end
 
   # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:13
   def data_category; end
@@ -2739,19 +3202,25 @@ class Sentry::Envelope::Item
   # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:13
   def headers; end
 
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:47
+  def item_count; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:51
+  def lost_event_byte_size; end
+
   # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:13
   def payload; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:40
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:61
   def serialize; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:56
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:77
   def size_breakdown; end
 
   # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:13
   def size_limit; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:36
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:57
   def to_s; end
 
   # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:13
@@ -2759,13 +3228,16 @@ class Sentry::Envelope::Item
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:72
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:93
   def reduce_stacktrace!; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:64
+  # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:85
   def remove_breadcrumbs!; end
 
   class << self
+    # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:28
+    def byte_data_category(data_category); end
+
     # rate limits and client reports use the data_category rather than envelope item type
     #
     # pkg:gem/sentry-ruby#lib/sentry/envelope/item.rb:16
@@ -3003,10 +3475,10 @@ class Sentry::Event
   # When behind a proxy (or if the user is using a proxy), we can't use
   # REMOTE_ADDR to determine the Event IP, and must use other headers instead.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/event.rb:143
+  # pkg:gem/sentry-ruby#lib/sentry/event.rb:147
   def calculate_real_ip_from_rack(env); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/event.rb:133
+  # pkg:gem/sentry-ruby#lib/sentry/event.rb:137
   def serialize_attributes; end
 end
 
@@ -3053,10 +3525,11 @@ class Sentry::ExceptionInterface < ::Sentry::Interface
     # @see SingleExceptionInterface#build_with_stacktrace
     # @see SingleExceptionInterface#initialize
     # @param mechanism [Mechanism]
+    # @param data_collection [DataCollection]
     # @return [ExceptionInterface]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/interfaces/exception.rb:29
-    def build(exception:, stacktrace_builder:, mechanism:); end
+    # pkg:gem/sentry-ruby#lib/sentry/interfaces/exception.rb:30
+    def build(exception:, stacktrace_builder:, mechanism:, data_collection:); end
   end
 end
 
@@ -3077,23 +3550,23 @@ module Sentry::Faraday::Connection
   def initialize(url = T.unsafe(nil), options = T.unsafe(nil)); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:25
+# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:28
 class Sentry::Faraday::Instrumenter
   include ::Sentry::Utils::HttpTracing
 
-  # pkg:gem/sentry-ruby#lib/sentry/faraday.rb:31
+  # pkg:gem/sentry-ruby#lib/sentry/faraday.rb:34
   def instrument(op_name, env, &block); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/faraday.rb:58
+  # pkg:gem/sentry-ruby#lib/sentry/faraday.rb:61
   def extract_request_info(env); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:27
+# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:30
 Sentry::Faraday::Instrumenter::BREADCRUMB_CATEGORY = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:26
+# pkg:gem/sentry-ruby#lib/sentry/faraday.rb:29
 Sentry::Faraday::Instrumenter::SPAN_ORIGIN = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/faraday.rb:5
@@ -3116,7 +3589,7 @@ class Sentry::FilenameCache
   def longest_load_path(abs_path); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:57
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:62
 Sentry::GLOBALS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/sentry-ruby#lib/sentry/transport/http_transport.rb:7
@@ -3194,29 +3667,30 @@ Sentry::HTTPTransport::USER_AGENT = T.let(T.unsafe(nil), String)
 # pkg:gem/sentry-ruby#lib/sentry/hub.rb:8
 class Sentry::Hub
   include ::Sentry::ArgumentCheckingHelper
+  include ::Sentry::CallbackHelper
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:18
   def initialize(client, scope); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:292
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:295
   def add_breadcrumb(breadcrumb, hint: T.unsafe(nil)); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:81
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:82
   def bind_client(client); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:202
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:203
   def capture_check_in(slug, status, **options); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:259
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:262
   def capture_event(event, **options, &block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:161
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:162
   def capture_exception(exception, **options, &block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:226
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:227
   def capture_log_event(message, **options); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:187
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:188
   def capture_message(message, **options, &block); end
 
   # Captures a metric and sends it to Sentry
@@ -3226,126 +3700,127 @@ class Sentry::Hub
   # @param value [Numeric] the metric value
   # @param unit [String, nil] (optional) the metric unit
   # @param attributes [Hash, nil] (optional) additional attributes for the metric
+  # @param integration [String, Symbol, nil] (optional) registered integration emitting the metric
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:244
-  def capture_metric(name:, type:, value:, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:246
+  def capture_metric(name:, type:, value:, unit: T.unsafe(nil), attributes: T.unsafe(nil), integration: T.unsafe(nil)); end
 
   # All clients bound across the hub's scope stack, base layer first.
   # @return [Array<Client>]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:59
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:60
   def clients; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:71
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:72
   def clone; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:63
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:64
   def configuration; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:89
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:90
   def configure_scope(&block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:376
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:383
   def continue_trace(env, **options); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:53
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:54
   def current_client; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:15
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:16
   def current_profiler; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:67
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:68
   def current_scope; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:321
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:328
   def end_session; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:351
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:358
   def get_baggage; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:358
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:365
   def get_trace_propagation_headers; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:370
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:377
   def get_trace_propagation_meta; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:344
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:351
   def get_traceparent; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:13
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:14
   def last_event_id; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:49
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:50
   def new_from_top; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:111
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:112
   def pop_scope; end
 
   # This is an internal private method
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:43
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:44
   def profiler_running?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:100
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:101
   def push_scope; end
 
   # This is an internal private method
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:26
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:27
   def start_profiler!(transaction); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:316
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:323
   def start_session; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:121
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:122
   def start_transaction(transaction: T.unsafe(nil), custom_sampling_context: T.unsafe(nil), instrumenter: T.unsafe(nil), **options); end
 
   # This is an internal private method
   # @api private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:35
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:36
   def stop_profiler!(transaction); end
 
   # this doesn't do anything to the already initialized background worker
   # but it temporarily disables dispatching events to it
   #
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:307
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:314
   def with_background_worker_disabled(&block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:141
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:142
   def with_child_span(instrumenter: T.unsafe(nil), **attributes, &block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:93
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:94
   def with_scope(&block); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:335
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:342
   def with_session_tracking(&block); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:396
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:403
   def current_layer; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/hub.rb:400
+# pkg:gem/sentry-ruby#lib/sentry/hub.rb:407
 class Sentry::Hub::Layer
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:404
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:411
   def initialize(client, scope); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:401
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:408
   def client; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:401
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:408
   def client=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:402
+  # pkg:gem/sentry-ruby#lib/sentry/hub.rb:409
   def scope; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/hub.rb:11
+# pkg:gem/sentry-ruby#lib/sentry/hub.rb:12
 Sentry::Hub::MUTEX = T.let(T.unsafe(nil), Thread::Mutex)
 
 # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:4
@@ -3358,6 +3833,15 @@ module Sentry::Integrable
 
   # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:24
   def capture_message(message, **options, &block); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:36
+  def count(name, value: T.unsafe(nil), attributes: T.unsafe(nil)); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:44
+  def distribution(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:40
+  def gauge(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
 
   # pkg:gem/sentry-ruby#lib/sentry/integrable.rb:10
   def integration_name; end
@@ -3374,7 +3858,268 @@ class Sentry::Interface
   def to_h; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:47
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:4
+module Sentry::JobExtensions; end
+
+# Base class for extensions that let a background-job backend enrich Sentry's
+# job integrations. A backend gem subclasses it and overrides the hooks it can
+# supply; jobs are opaque to Sentry and only interpreted by the extension.
+#
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:8
+class Sentry::JobExtensions::Extension
+  include ::Sentry::LoggingHelper
+
+  # Creates an extension. Raises ArgumentError if the name is not a Symbol.
+  #
+  # @param name [Symbol]
+  # @param integration [Module] the integration that captures the job's exceptions
+  # @param origin [String] the origin of the job's spans
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:38
+  def initialize(name:, integration:, origin:); end
+
+  # Captures an exception raised by the job, enriched with the extension's error data.
+  #
+  # @param job [Object]
+  # @param exception [Exception]
+  # @return [Event, nil]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:105
+  def capture_exception(job:, exception:, contexts: T.unsafe(nil), tags: T.unsafe(nil), extra: T.unsafe(nil), **context); end
+
+  # Returns data to add to the event captured for a failed job. Data already on
+  # the scope or passed explicitly by the job integration takes precedence.
+  #
+  # @param job [Object]
+  # @param exception [Exception]
+  # @return [Hash] with optional `:contexts`, `:tags` and `:extra`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:152
+  def error_data(job:, exception:, **_arg2); end
+
+  # Returns the trace propagation headers the job carries, so that performing
+  # it continues the trace it was enqueued in.
+  #
+  # @param job [Object]
+  # @return [Hash{String => String}]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:199
+  def extract_trace_headers(job:, **_arg1); end
+
+  # Finishes the job's transaction with the given status.
+  #
+  # @param transaction [Transaction, nil]
+  # @param status [Integer]
+  # @return [void]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:93
+  def finish_job(transaction:, status:); end
+
+  # Returns the backend's job payload carrying the trace propagation headers.
+  #
+  # @param job [Object]
+  # @param payload [Object]
+  # @param headers [Hash{String => String}]
+  # @return [Object] a payload of the same class as the one given
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:190
+  def inject_trace_headers(job:, payload:, headers:, **_arg3); end
+
+  # Wraps enqueueing a job in a `queue.publish` span.
+  #
+  # @param job [Object]
+  # @yieldreturn [Object] the result of enqueueing the job
+  # @return [Object] the block's result
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:51
+  def instrument_enqueue(job:, **context, &enqueue); end
+
+  # Returns the integration that captures the job's exceptions. Defaults to
+  # the extension's integration.
+  #
+  # @param job [Object]
+  # @return [Module]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:258
+  def integration(job:, **_arg1); end
+
+  # Returns messaging attributes for the job's spans.
+  #
+  # @param job [Object]
+  # @return [Hash] with optional `:system`, `:message_id`, `:destination`,
+  #   `:receive_latency`, `:retry_count` and `:body_size`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:208
+  def messaging_data(job:, **_arg1); end
+
+  # The extension's name, used in SDK log messages.
+  # @return [Symbol]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:31
+  def name; end
+
+  # Returns the description of the `queue.publish` span. Defaults to the job's class name.
+  #
+  # @param job [Object]
+  # @return [String, nil]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:233
+  def publish_description(job:, **_arg1); end
+
+  # Returns messaging attributes for the `queue.publish` span. Defaults to
+  # {#messaging_data}.
+  #
+  # @param job [Object]
+  # @return [Hash]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:217
+  def publish_messaging_data(job:, **context); end
+
+  # Returns the origin of the `queue.publish` span. Defaults to {#span_origin}.
+  #
+  # @param job [Object]
+  # @return [String]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:249
+  def publish_span_origin(job:, **context); end
+
+  # Returns whether to record a `queue.publish` span when the job is enqueued.
+  #
+  # @param job [Object]
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:134
+  def record_publish_span?(job:, **_arg1); end
+
+  # Returns whether to capture the job's exception. By default only when the
+  # backend won't retry the job.
+  #
+  # @param job [Object]
+  # @param exception [Exception]
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:170
+  def report_exception?(job:, exception:, **context); end
+
+  # Returns whether to capture an exception that the job integration's own
+  # retry mechanism retries, so the backend never sees it.
+  #
+  # @param job [Object]
+  # @param exception [Exception]
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:180
+  def report_retried_exception?(job:, exception:, **_arg2); end
+
+  # Runs a hook, logging its failure and returning `fallback` instead of raising.
+  #
+  # @param context [String] what the hook does, used in the log message
+  # @return [Object]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:118
+  def safely(context, fallback: T.unsafe(nil)); end
+
+  # Returns data to apply to the scope the job is performed in.
+  #
+  # @param job [Object]
+  # @return [Hash] with optional `:contexts`, `:tags`, `:extra` and `:user`
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:142
+  def scope_data(job:, **_arg1); end
+
+  # Returns the origin of the job's transaction. Defaults to the extension's origin.
+  #
+  # @param job [Object]
+  # @return [String]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:241
+  def span_origin(job:, **_arg1); end
+
+  # Prepares the scope for performing the job and starts its `queue.process`
+  # transaction, continuing the trace the job was enqueued in.
+  #
+  # @param scope [Scope]
+  # @param job [Object]
+  # @return [Transaction, nil]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:71
+  def start_job(scope:, job:, **context); end
+
+  # Returns the name of the job's transaction. Defaults to the job's class name.
+  #
+  # @param job [Object]
+  # @return [String, nil]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:225
+  def transaction_name(job:, **_arg1); end
+
+  # Returns whether the backend will retry the failed job.
+  #
+  # @param job [Object]
+  # @return [Boolean]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:160
+  def will_retry?(job:, **_arg1); end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:286
+  def apply_scope_data(scope, data); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:335
+  def contexts_with_scope_values(contexts, scope_contexts); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:264
+  def hook_hash(description); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:339
+  def log_failure(context, error); end
+
+  # Builds the capture options so that the caller's contexts, tags and extra
+  # take precedence over the scope's, and the scope's over the extension's.
+  #
+  # Every value passed to capture_exception becomes event data, and
+  # Scope#apply_to_event lets event data beat scope data. It also merges
+  # contexts by name, so an event context replaces the scope context of the
+  # same name entirely. The extension's tags and extra therefore leave out
+  # keys the scope already has, and each extension context absorbs the scope
+  # context of the same name before the caller's values are merged on top.
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:318
+  def merged_error_data(data, contexts:, tags:, extra:); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:299
+  def normalized_error_data(data); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:343
+  def sdk_logger; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:293
+  def set_messaging_data(span, data); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:271
+  def start_transaction(scope, trace_headers, origin); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:331
+  def without_scope_keys(values, scope_values); end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:26
+Sentry::JobExtensions::Extension::EMPTY_ERROR_DATA = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:23
+Sentry::JobExtensions::Extension::EMPTY_HASH = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:14
+Sentry::JobExtensions::Extension::MESSAGING_DATA_ATTRIBUTES = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:12
+Sentry::JobExtensions::Extension::PROCESS_OP = T.let(T.unsafe(nil), String)
+
+# pkg:gem/sentry-ruby#lib/sentry/job_extensions/extension.rb:11
+Sentry::JobExtensions::Extension::PUBLISH_OP = T.let(T.unsafe(nil), String)
+
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:52
 Sentry::LOGGER_PROGNAME = T.let(T.unsafe(nil), String)
 
 # @api private
@@ -3559,10 +4304,10 @@ module Sentry::LoggingHelper
   def sdk_logger; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:43
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:48
 Sentry::META = T.let(T.unsafe(nil), Hash)
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:55
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:60
 Sentry::MUTEX = T.let(T.unsafe(nil), Thread::Mutex)
 
 # pkg:gem/sentry-ruby#lib/sentry/interfaces/mechanism.rb:4
@@ -3604,13 +4349,16 @@ class Sentry::MetricEvent
   include ::Sentry::Utils::TelemetryAttributes
 
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:12
-  def initialize(name:, type:, value:, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
+  def initialize(name:, type:, value:, unit: T.unsafe(nil), attributes: T.unsafe(nil), integration_meta: T.unsafe(nil)); end
 
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:9
   def attributes; end
 
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:10
   def attributes=(_arg0); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:9
+  def integration_meta; end
 
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:9
   def name; end
@@ -3624,7 +4372,7 @@ class Sentry::MetricEvent
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:9
   def timestamp; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:32
   def to_h; end
 
   # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:9
@@ -3644,7 +4392,7 @@ class Sentry::MetricEvent
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:45
+  # pkg:gem/sentry-ruby#lib/sentry/metric_event.rb:47
   def serialize_attributes; end
 end
 
@@ -3673,30 +4421,33 @@ module Sentry::Metrics
     # @param name [String] the metric name
     # @param value [Numeric] the value to increment by (default: 1)
     # @param attributes [Hash, nil] additional attributes for the metric (optional)
+    # @param integration [String, Symbol, nil] registered integration emitting the metric (optional)
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:13
-    def count(name, value: T.unsafe(nil), attributes: T.unsafe(nil)); end
+    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:14
+    def count(name, value: T.unsafe(nil), attributes: T.unsafe(nil), integration: T.unsafe(nil)); end
 
     # Records a distribution metric
     # @param name [String] the metric name
     # @param value [Numeric] the distribution value
     # @param unit [String, nil] the metric unit (optional)
     # @param attributes [Hash, nil] additional attributes for the metric (optional)
+    # @param integration [String, Symbol, nil] registered integration emitting the metric (optional)
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:48
-    def distribution(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
+    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:53
+    def distribution(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil), integration: T.unsafe(nil)); end
 
     # Records a gauge metric
     # @param name [String] the metric name
     # @param value [Numeric] the gauge value
     # @param unit [String, nil] the metric unit (optional)
     # @param attributes [Hash, nil] additional attributes for the metric (optional)
+    # @param integration [String, Symbol, nil] registered integration emitting the metric (optional)
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:30
-    def gauge(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil)); end
+    # pkg:gem/sentry-ruby#lib/sentry/metrics.rb:33
+    def gauge(name, value, unit: T.unsafe(nil), attributes: T.unsafe(nil), integration: T.unsafe(nil)); end
   end
 end
 
@@ -3818,7 +4569,7 @@ Sentry::Profiler::VERSION = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:9
 class Sentry::PropagationContext
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:121
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:123
   def initialize(scope, env = T.unsafe(nil)); end
 
   # This is only for accessing the current baggage variable.
@@ -3831,25 +4582,25 @@ class Sentry::PropagationContext
   # Returns the Baggage from the propagation context or populates as head SDK if empty.
   # @return [Baggage, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:181
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:183
   def get_baggage; end
 
   # Returns the Dynamic Sampling Context from the baggage.
   # @return [Hash, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:188
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:190
   def get_dynamic_sampling_context; end
 
   # Returns the trace context that can be used to embed in an Event.
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:165
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:167
   def get_trace_context; end
 
   # Returns the sentry-trace header from the propagation context.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:175
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:177
   def get_traceparent; end
 
   # Is there an incoming trace or not?
@@ -3890,11 +4641,11 @@ class Sentry::PropagationContext
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:194
+  # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:196
   def populate_head_baggage; end
 
   class << self
-    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:94
+    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:96
     def extract_sample_rand_from_baggage(baggage, trace_id = T.unsafe(nil)); end
 
     # Extract the trace_id, parent_span_id and parent_sampled values from a sentry-trace header.
@@ -3905,7 +4656,7 @@ class Sentry::PropagationContext
     # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:43
     def extract_sentry_trace(sentry_trace); end
 
-    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:104
+    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:106
     def generate_sample_rand(baggage, trace_id, parent_sampled); end
 
     # Determines whether we should continue an incoming trace based on org_id matching
@@ -3914,7 +4665,7 @@ class Sentry::PropagationContext
     # @param incoming_baggage [Baggage] the baggage from the incoming request
     # @return [Boolean]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:61
+    # pkg:gem/sentry-ruby#lib/sentry/propagation_context.rb:63
     def should_continue_trace?(incoming_baggage); end
   end
 end
@@ -4023,45 +4774,50 @@ end
 #
 # pkg:gem/sentry-ruby#lib/sentry/redis.rb:5
 class Sentry::Redis
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:10
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:14
   def initialize(commands, host, port, db); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:14
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:18
   def instrument; end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:38
   def commands; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:53
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:57
   def commands_description; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:38
   def db; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:38
   def host; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:59
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:63
   def parsed_commands; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:38
   def port; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:36
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:40
   def record_breadcrumb; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:75
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:81
   def server_description; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/redis.rb:85
+# Commands whose later arguments can carry credentials. Arguments are never recorded.
+#
+# pkg:gem/sentry-ruby#lib/sentry/redis.rb:12
+Sentry::Redis::ARGUMENTLESS_COMMANDS = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/sentry-ruby#lib/sentry/redis.rb:91
 module Sentry::Redis::GlobalRedisInstrumentation
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:86
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:92
   def call(command, redis_config); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:92
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:98
   def call_pipelined(commands, redis_config); end
 end
 
@@ -4071,11 +4827,16 @@ Sentry::Redis::LOGGER_NAME = T.let(T.unsafe(nil), Symbol)
 # pkg:gem/sentry-ruby#lib/sentry/redis.rb:6
 Sentry::Redis::OP_NAME = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/redis.rb:79
+# pkg:gem/sentry-ruby#lib/sentry/redis.rb:85
 module Sentry::Redis::OldClientPatch
-  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:80
+  # pkg:gem/sentry-ruby#lib/sentry/redis.rb:86
   def logging(commands, &block); end
 end
+
+# Commands that carry credentials from their first argument on.
+#
+# pkg:gem/sentry-ruby#lib/sentry/redis.rb:10
+Sentry::Redis::SENSITIVE_COMMANDS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/sentry-ruby#lib/sentry/redis.rb:7
 Sentry::Redis::SPAN_ORIGIN = T.let(T.unsafe(nil), String)
@@ -4105,94 +4866,94 @@ class Sentry::ReleaseDetector
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:4
+# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:6
 class Sentry::RequestInterface < ::Sentry::Interface
   # @param env [Hash]
-  # @param send_default_pii [Boolean]
+  # @param data_collection [DataCollection]
   # @param rack_env_whitelist [Array]
-  # @see Configuration#send_default_pii
+  # @see Configuration#data_collection
   # @see Configuration#rack_env_whitelist
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:47
-  def initialize(env:, send_default_pii:, rack_env_whitelist:); end
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:43
+  def initialize(env:, data_collection:, rack_env_whitelist:); end
 
-  # @return [String]
+  # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:30
   def cookies; end
 
-  # @return [String]
+  # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:30
   def cookies=(_arg0); end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:28
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:24
   def data; end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:28
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:24
   def data=(_arg0); end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:40
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:36
   def env; end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:40
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:36
   def env=(_arg0); end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:37
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:33
   def headers; end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:37
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:33
   def headers=(_arg0); end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:25
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:21
   def method; end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:25
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:21
   def method=(_arg0); end
 
-  # @return [String]
+  # @return [String, Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:31
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:27
   def query_string; end
 
-  # @return [String]
+  # @return [String, Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:31
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:27
   def query_string=(_arg0); end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:22
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:18
   def url; end
 
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:22
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:18
   def url=(_arg0); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:137
-  def filter_and_format_env(env, rack_env_whitelist); end
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:129
+  def filter_and_format_env(env, collection, rack_env_whitelist); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:89
-  def filter_and_format_headers(env, send_default_pii); end
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:81
+  def filter_and_format_headers(env, collection); end
 
   # In versions < 3, Rack adds in an incorrect HTTP_VERSION key, which causes downstream
   # to think this is a Version header. Instead, this is mapped to
@@ -4200,78 +4961,128 @@ class Sentry::RequestInterface < ::Sentry::Interface
   # if the request has legitimately sent a Version header themselves.
   # See: https://github.com/rack/rack/blob/028438f/lib/rack/handler/cgi.rb#L29
   #
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:124
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:116
   def is_server_protocol?(key, value, protocol_version); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:113
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:106
   def is_skippable_header?(key); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:74
+  # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:59
   def read_data_from(request); end
 
   class << self
-    # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:130
+    # pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:122
     def rack_3_or_above?; end
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:6
+# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:8
 Sentry::RequestInterface::CONTENT_HEADERS = T.let(T.unsafe(nil), Array)
-
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:7
-Sentry::RequestInterface::IP_HEADERS = T.let(T.unsafe(nil), Array)
 
 # Regex to detect lowercase chars — match? is allocation-free (no MatchData/String)
 #
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:15
+# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:11
 Sentry::RequestInterface::LOWERCASE_PATTERN = T.let(T.unsafe(nil), Regexp)
 
 # See Sentry server default limits at
 # https://github.com/getsentry/sentry/blob/master/src/sentry/conf/server.py
 #
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:19
+# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:15
 Sentry::RequestInterface::MAX_BODY_LIMIT = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:5
+# pkg:gem/sentry-ruby#lib/sentry/interfaces/request.rb:7
 Sentry::RequestInterface::REQUEST_ID_HEADERS = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:49
+# Sends Crons check-ins for rufus-scheduler `cron` and `every` jobs.
+# Enable with `config.enabled_patches << :rufus_scheduler`.
+#
+# pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:6
+module Sentry::RufusScheduler
+  class << self
+    # Returns [slug, monitor_config], or nil for jobs that aren't monitored (like `at`/`in`, or unsupported schedules).
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:50
+    def monitor_for(job); end
+
+    private
+
+    # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:100
+    def monitor_config_for(job); end
+
+    # sidekiq-scheduler jobs are monitored by the :sidekiq_scheduler patch.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:76
+    def sidekiq_scheduler_job?(job); end
+
+    # Job ids are random per process and block paths change between deploys,
+    # so the slug comes from `name:`, then the handler method or class.
+    #
+    # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:83
+    def slug_for(job); end
+  end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:7
+module Sentry::RufusScheduler::Job
+  protected
+
+  # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:10
+  def do_call(time, do_rescue); end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/rufus_scheduler.rb:38
+  def sentry_monitor; end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:54
 Sentry::SENTRY_TRACE_HEADER_NAME = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/scope.rb:9
+# pkg:gem/sentry-ruby#lib/sentry/scope.rb:11
 class Sentry::Scope
   include ::Sentry::ArgumentCheckingHelper
+  include ::Sentry::CallbackHelper
 
   # @param max_breadcrumbs [Integer] the maximum number of breadcrumbs to be stored in the scope.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:33
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:41
   def initialize(max_breadcrumbs: T.unsafe(nil)); end
 
   # Add a new attachment to the scope.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:338
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:404
   def add_attachment(**opts); end
 
   # Adds the breadcrumb to the scope's breadcrumbs buffer.
   # @param breadcrumb [Breadcrumb]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:113
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:133
   def add_breadcrumb(breadcrumb); end
 
   # Adds a new event processor [Proc] to the scope.
   # @param block [Proc]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:326
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:392
   def add_event_processor(&block); end
+
+  # Records a feature flag evaluation on the scope (and the active span, if any).
+  # Only boolean results are supported; other values are ignored.
+  # The scope keeps the most recent {MAX_FLAGS} distinct flags (oldest evicted first).
+  # @param name [String, Symbol] the flag name
+  # @param result [Boolean] the evaluation result
+  # @return [void]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:315
+  def add_feature_flag(name, result); end
 
   # Applies stored attributes and event processors to the given event.
   # @param event [Event]
   # @param hint [Hash] the hint data that'll be passed to event processors.
   # @return [Event]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:48
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:56
   def apply_to_event(event, hint = T.unsafe(nil)); end
 
   # A leaner version of apply_to_event that applies to
@@ -4282,92 +5093,121 @@ class Sentry::Scope
   # @param telemetry [MetricEvent, LogEvent] the telemetry event to apply scope context to
   # @return [MetricEvent, LogEvent] the telemetry event with scope context applied
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:86
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:96
   def apply_to_telemetry(telemetry); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def attachments; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
+  def attributes; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def breadcrumbs; end
 
   # Resets the scope's attributes to defaults.
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:40
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:48
   def clear; end
 
   # Clears the scope's breadcrumbs buffer
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:119
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:139
   def clear_breadcrumbs; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def contexts; end
 
   # @return [Scope]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:124
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:144
   def dup; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def event_processors; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def extra; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def fingerprint; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
+  def flags; end
 
   # Generate a new propagation context either from the incoming env headers or from scratch.
   # @param env [Hash, nil]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:333
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:399
   def generate_propagation_context(env = T.unsafe(nil)); end
 
   # Returns the associated Span object.
   # @return [Span, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:296
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:362
   def get_span; end
 
   # Returns the trace context for this scope.
   # Prioritizes external propagation context (from OTel) over local propagation context.
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:303
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:369
   def get_trace_context; end
 
   # Returns the associated Transaction object.
   # @return [Transaction, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:290
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:356
   def get_transaction; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def level; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def propagation_context; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def rack_env; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # Removes a single attribute from the scope. No-op if the attribute is not set.
+  # @param key [String, Symbol]
+  # @return [void]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:305
+  def remove_attribute(key); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def session; end
+
+  # Sets a single attribute on the scope.
+  # @param key [String, Symbol]
+  # @param value [Object]
+  # @param unit [String, Symbol, nil] an optional measurement unit for the value
+  # @return [Hash]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:297
+  def set_attribute(key, value, unit: T.unsafe(nil)); end
+
+  # Updates the scope's attributes by merging with the old value.
+  # @param attributes_hash [Hash]
+  # @return [Hash]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:286
+  def set_attributes(attributes_hash); end
 
   # @!macro set_context
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:254
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:278
   def set_context(key, value); end
 
   # Updates the scope's contexts attribute by merging with the old value.
   # @param contexts [Hash]
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:242
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:266
   def set_contexts(contexts_hash); end
 
   # Adds a new key-value pair to current extras.
@@ -4375,47 +5215,47 @@ class Sentry::Scope
   # @param value [Object]
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:221
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:245
   def set_extra(key, value); end
 
   # @!macro set_extras
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:212
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:236
   def set_extras(extras_hash); end
 
   # Sets the scope's fingerprint attribute.
   # @param fingerprint [Array]
   # @return [Array]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:317
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:383
   def set_fingerprint(fingerprint); end
 
   # Sets the scope's level attribute.
   # @param level [String, Symbol]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:262
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:328
   def set_level(level); end
 
   # Sets the scope's rack_env attribute.
   # @param env [Hash]
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:192
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:216
   def set_rack_env(env); end
 
   # Sets the currently active session on the scope.
   # @param session [Session, nil]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:278
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:344
   def set_session(session); end
 
   # Sets the scope's span attribute.
   # @param span [Span]
   # @return [Span]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:200
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:224
   def set_span(span); end
 
   # Adds a new key-value pair to current tags.
@@ -4423,12 +5263,12 @@ class Sentry::Scope
   # @param value [Object]
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:235
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:259
   def set_tag(key, value); end
 
   # @!macro set_tags
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:226
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:250
   def set_tags(tags_hash); end
 
   # Appends a new transaction name to the scope.
@@ -4436,35 +5276,35 @@ class Sentry::Scope
   # @param transaction_name [String]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:270
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:336
   def set_transaction_name(transaction_name, source: T.unsafe(nil)); end
 
   # @!macro set_user
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:206
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:230
   def set_user(user_hash); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def span; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def tags; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def transaction_name; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def transaction_source; end
 
   # These are high cardinality and thus bad.
   # @return [Boolean]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:284
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:350
   def transaction_source_low_quality?; end
 
   # Updates the scope's data from the given options.
   # @param contexts [Hash]
-  # @param extras [Hash]
+  # @param extra [Hash]
   # @param tags [Hash]
   # @param user [Hash]
   # @param level [String, Symbol]
@@ -4472,72 +5312,84 @@ class Sentry::Scope
   # @param attachments [Array<Attachment>]
   # @return [Array]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:168
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:192
   def update_from_options(contexts: T.unsafe(nil), extra: T.unsafe(nil), tags: T.unsafe(nil), user: T.unsafe(nil), level: T.unsafe(nil), fingerprint: T.unsafe(nil), attachments: T.unsafe(nil), **options); end
 
   # Updates the scope's data from a given scope.
   # @param scope [Scope]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:145
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:167
   def update_from_scope(scope); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:30
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:38
   def user; end
 
   protected
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def attachments=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
+  def attributes=(_arg0); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def breadcrumbs=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def contexts=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def event_processors=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def extra=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def fingerprint=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
+  def flags=(_arg0); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def level=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def propagation_context=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def rack_env=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def session=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def span=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def tags=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def transaction_name=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def transaction_source=(_arg0); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:346
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:412
   def user=(_arg0); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:350
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:416
+  def add_feature_flag_to_span(name, result); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:422
+  def apply_flags_to_event(event); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:429
   def set_default_value; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:368
+  # pkg:gem/sentry-ruby#lib/sentry/scope.rb:449
   def set_new_breadcrumb_buffer; end
 
   class << self
@@ -4548,29 +5400,34 @@ class Sentry::Scope
     # @param block [Proc]
     # @return [void]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:408
+    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:489
     def add_global_event_processor(&block); end
 
     # Returns the global event processors array.
     # @return [Array<Proc>]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:398
+    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:479
     def global_event_processors; end
 
     # @return [Hash]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:374
+    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:455
     def os_context; end
 
     # @return [Hash]
     #
-    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:389
+    # pkg:gem/sentry-ruby#lib/sentry/scope.rb:470
     def runtime_context; end
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/scope.rb:12
+# pkg:gem/sentry-ruby#lib/sentry/scope.rb:15
 Sentry::Scope::ATTRIBUTES = T.let(T.unsafe(nil), Array)
+
+# Maximum number of feature flag evaluations kept on a scope.
+#
+# pkg:gem/sentry-ruby#lib/sentry/scope.rb:36
+Sentry::Scope::MAX_FLAGS = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/sentry-ruby#lib/sentry/session.rb:4
 class Sentry::Session
@@ -4622,14 +5479,17 @@ class Sentry::SessionFlusher < ::Sentry::ThreadedPeriodicWorker
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:58
+  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:68
   def attrs; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:38
+  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:48
   def init_aggregates(aggregation_key); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:44
+  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:54
   def pending_envelope; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:41
+  def reset_if_forked; end
 end
 
 # pkg:gem/sentry-ruby#lib/sentry/session_flusher.rb:5
@@ -4671,7 +5531,7 @@ class Sentry::SingleExceptionInterface < ::Sentry::Interface
     # also see `StacktraceBuilder.build`.
     #
     # pkg:gem/sentry-ruby#lib/sentry/interfaces/single_exception.rb:44
-    def build_with_stacktrace(exception:, stacktrace_builder:, mechanism:); end
+    def build_with_stacktrace(exception:, stacktrace_builder:, mechanism:, data_collection:); end
   end
 end
 
@@ -4692,195 +5552,208 @@ class Sentry::SizeExceededError < ::Sentry::ExternalError; end
 
 # pkg:gem/sentry-ruby#lib/sentry/span.rb:7
 class Sentry::Span
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:120
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:127
   def initialize(transaction:, description: T.unsafe(nil), op: T.unsafe(nil), status: T.unsafe(nil), trace_id: T.unsafe(nil), span_id: T.unsafe(nil), parent_span_id: T.unsafe(nil), sampled: T.unsafe(nil), start_timestamp: T.unsafe(nil), timestamp: T.unsafe(nil), origin: T.unsafe(nil)); end
 
   # Span data
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:105
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:109
   def data; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:244
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:252
   def deep_dup; end
 
   # Span description
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:93
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:97
   def description; end
 
   # Finishes the span by adding a timestamp.
   # @return [self]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:150
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:158
   def finish(end_timestamp: T.unsafe(nil)); end
+
+  # Feature flag data
+  # @return [Hash]
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:112
+  def flags; end
 
   # Returns the Dynamic Sampling Context from the transaction baggage.
   # @return [Hash, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:173
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:181
   def get_dynamic_sampling_context; end
 
   # Returns the span's context that can be used to embed in an Event.
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:196
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:204
   def get_trace_context; end
 
   # Span operation
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:96
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:100
   def op; end
 
   # Span origin that tracks what kind of instrumentation created a span
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:108
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:115
   def origin; end
 
   # Span parent's span_id.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:81
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:85
   def parent_span_id; end
 
   # Sampling result of the span.
   # @return [Boolean, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:84
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:88
   def sampled; end
 
   # Inserts a key-value pair to the span's data payload.
   # @param key [String, Symbol]
   # @param value [Object]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:291
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:299
   def set_data(key, value); end
 
   # Sets the span's description.
   # @param description [String] description of the span.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:256
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:264
   def set_description(description); end
+
+  # Sets a feature flag on the span.
+  # @param name [String] the flag name
+  # @param result [Boolean] the evaluation result
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:306
+  def set_flag(name, result); end
 
   # Sets the span's status with given http status code.
   # @param status_code [String] example: "500".
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:275
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:283
   def set_http_status(status_code); end
 
   # Sets the span's operation.
   # @param op [String] operation of the span.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:250
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:258
   def set_op(op); end
 
   # Sets the origin of the span.
   # @param origin [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:304
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:320
   def set_origin(origin); end
 
   # Sets the span's status.
   # @param status [String] status of the span.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:263
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:271
   def set_status(status); end
 
   # Sets a tag to the span.
   # @param key [String, Symbol]
   # @param value [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:298
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:314
   def set_tag(key, value); end
 
   # Sets the span's finish timestamp.
   # @param timestamp [Float] finished time in float format (most precise).
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:269
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:277
   def set_timestamp(timestamp); end
 
   # An uuid that can be used to identify the span.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:78
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:82
   def span_id; end
 
   # The SpanRecorder the current span belongs to.
   # SpanRecorder holds all spans under the same Transaction object (including the Transaction itself).
   # @return [SpanRecorder]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:113
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:120
   def span_recorder; end
 
   # The SpanRecorder the current span belongs to.
   # SpanRecorder holds all spans under the same Transaction object (including the Transaction itself).
   # @return [SpanRecorder]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:113
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:120
   def span_recorder=(_arg0); end
 
   # Starts a child span with given attributes.
   # @param attributes [Hash] the attributes for the child span.
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:211
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:219
   def start_child(**attributes); end
 
   # Starting timestamp of the span.
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:87
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:91
   def start_timestamp; end
 
   # Span status
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:99
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:103
   def status; end
 
   # Span tags
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:102
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:106
   def tags; end
 
   # Finishing timestamp of the span.
   # @return [Float]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:90
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:94
   def timestamp; end
 
   # Generates a W3C Baggage header string for distributed tracing
   # from the incoming baggage stored on the transaction.
   # @return [String, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:167
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:175
   def to_baggage; end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:178
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:186
   def to_h; end
 
   # Generates a trace string that can be used to connect other transactions.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:157
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:165
   def to_sentry_trace; end
 
   # An uuid that can be used to identify a trace.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:75
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:79
   def trace_id; end
 
   # The Transaction object the Span belongs to.
   # Every span needs to be attached to a Transaction and their child spans will also inherit the same transaction.
   # @return [Transaction]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:118
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:125
   def transaction; end
 
   # Starts a child span, yield it to the given block, and then finish the span after the block is executed.
@@ -4893,11 +5766,16 @@ class Sentry::Span
   # @param block [Proc] the action to be recorded in the child span.
   # @yieldparam child_span [Span]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/span.rb:232
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:240
   def with_child_span(**attributes, &block); end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/span.rb:326
+  def serialized_data; end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:71
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:73
 Sentry::Span::DEFAULT_SPAN_ORIGIN = T.let(T.unsafe(nil), String)
 
 # We will try to be consistent with OpenTelemetry on this front going forward.
@@ -4934,7 +5812,7 @@ Sentry::Span::DataConventions::HTTP_QUERY = T.let(T.unsafe(nil), String)
 
 # Time in ms the request spent in the server queue before processing began.
 #
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:54
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:56
 Sentry::Span::DataConventions::HTTP_QUEUE_TIME_MS = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/span.rb:12
@@ -4943,17 +5821,23 @@ Sentry::Span::DataConventions::HTTP_STATUS_CODE = T.let(T.unsafe(nil), String)
 # pkg:gem/sentry-ruby#lib/sentry/span.rb:44
 Sentry::Span::DataConventions::LINENO = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:49
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:50
 Sentry::Span::DataConventions::MESSAGING_DESTINATION_NAME = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:48
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:53
+Sentry::Span::DataConventions::MESSAGING_MESSAGE_BODY_SIZE = T.let(T.unsafe(nil), String)
+
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:49
 Sentry::Span::DataConventions::MESSAGING_MESSAGE_ID = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:50
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:51
 Sentry::Span::DataConventions::MESSAGING_MESSAGE_RECEIVE_LATENCY = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:51
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:52
 Sentry::Span::DataConventions::MESSAGING_MESSAGE_RETRY_COUNT = T.let(T.unsafe(nil), String)
+
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:48
+Sentry::Span::DataConventions::MESSAGING_SYSTEM = T.let(T.unsafe(nil), String)
 
 # pkg:gem/sentry-ruby#lib/sentry/span.rb:46
 Sentry::Span::DataConventions::NAMESPACE = T.let(T.unsafe(nil), String)
@@ -4986,7 +5870,13 @@ Sentry::Span::DataConventions::SERVER_SOCKET_PORT = T.let(T.unsafe(nil), String)
 # pkg:gem/sentry-ruby#lib/sentry/span.rb:11
 Sentry::Span::DataConventions::URL = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/span.rb:57
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:74
+Sentry::Span::MAX_FLAGS = T.let(T.unsafe(nil), Integer)
+
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:75
+Sentry::Span::SPAN_FLAG_ATTRIBUTE_PREFIX = T.let(T.unsafe(nil), String)
+
+# pkg:gem/sentry-ruby#lib/sentry/span.rb:59
 Sentry::Span::STATUS_MAP = T.let(T.unsafe(nil), Hash)
 
 # Designed to just report events to Spotlight in development.
@@ -4996,7 +5886,7 @@ class Sentry::SpotlightTransport < ::Sentry::HTTPTransport
   # pkg:gem/sentry-ruby#lib/sentry/transport/spotlight_transport.rb:12
   def initialize(configuration); end
 
-  # Similar to HTTPTransport connection, but does not support Proxy and SSL
+  # Similar to HTTPTransport connection, but does not support Proxy
   #
   # pkg:gem/sentry-ruby#lib/sentry/transport/spotlight_transport.rb:43
   def conn; end
@@ -5203,14 +6093,16 @@ end
 #
 # pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:6
 module Sentry::StdLibLogger
-  # pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:17
+  include ::Sentry::CallbackHelper
+
+  # pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:19
   def add(severity, message = T.unsafe(nil), progname = T.unsafe(nil), &block); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:15
+# pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:17
 Sentry::StdLibLogger::ORIGIN = T.let(T.unsafe(nil), String)
 
-# pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:7
+# pkg:gem/sentry-ruby#lib/sentry/std_lib_logger.rb:9
 Sentry::StdLibLogger::SEVERITY_MAP = T.let(T.unsafe(nil), Hash)
 
 # The StructuredLogger class implements Sentry's SDK telemetry logs protocol.
@@ -5266,7 +6158,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:73
-  def debug(message, parameters = T.unsafe(nil), **attributes); end
+  def debug(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 
   # Logs a message at ERROR level
   #
@@ -5277,7 +6169,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:106
-  def error(message, parameters = T.unsafe(nil), **attributes); end
+  def error(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 
   # Logs a message at FATAL level
   #
@@ -5288,7 +6180,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:117
-  def fatal(message, parameters = T.unsafe(nil), **attributes); end
+  def fatal(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 
   # Logs a message at INFO level
   #
@@ -5299,7 +6191,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:84
-  def info(message, parameters = T.unsafe(nil), **attributes); end
+  def info(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 
   # Logs a message at the specified level
   #
@@ -5311,7 +6203,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:129
-  def log(level, message, parameters:, **attributes); end
+  def log(level, message = T.unsafe(nil), parameters:, **attributes); end
 
   # Logs a message at TRACE level
   #
@@ -5322,7 +6214,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:62
-  def trace(message, parameters = T.unsafe(nil), **attributes); end
+  def trace(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 
   # Logs a message at WARN level
   #
@@ -5333,7 +6225,7 @@ class Sentry::StructuredLogger
   # @return [LogEvent, nil] The created log event or nil if logging is disabled
   #
   # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:95
-  def warn(message, parameters = T.unsafe(nil), **attributes); end
+  def warn(message = T.unsafe(nil), parameters = T.unsafe(nil), **attributes, &block); end
 end
 
 # Severity number mapping for log levels according to the Sentry Logs Protocol
@@ -5342,37 +6234,37 @@ end
 # pkg:gem/sentry-ruby#lib/sentry/structured_logger.rb:35
 Sentry::StructuredLogger::LEVELS = T.let(T.unsafe(nil), Hash)
 
-# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:907
+# pkg:gem/sentry-ruby#lib/sentry/configuration.rb:950
 class Sentry::StructuredLoggingConfiguration
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:916
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:959
   def initialize; end
 
   # File path for DebugStructuredLogger to log events to
   # @return [String, Pathname, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:910
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:953
   def file_path; end
 
   # File path for DebugStructuredLogger to log events to
   # @return [String, Pathname, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:910
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:953
   def file_path=(_arg0); end
 
   # The class to use as a structured logger.
   # @return [Class]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:914
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:957
   def logger_class; end
 
   # The class to use as a structured logger.
   # @return [Class]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:914
+  # pkg:gem/sentry-ruby#lib/sentry/configuration.rb:957
   def logger_class=(_arg0); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:53
+# pkg:gem/sentry-ruby#lib/sentry-ruby.rb:58
 Sentry::THREAD_LOCAL = T.let(T.unsafe(nil), Symbol)
 
 # TelemetryEventBuffer is a base class for buffering telemetry events (logs, metrics, etc.)
@@ -5382,70 +6274,112 @@ Sentry::THREAD_LOCAL = T.let(T.unsafe(nil), Symbol)
 #
 # @!visibility private
 #
-# pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:13
+# pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:14
 class Sentry::TelemetryEventBuffer < ::Sentry::ThreadedPeriodicWorker
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:19
+  include ::Sentry::CallbackHelper
+
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:23
   def initialize(configuration, client, event_class:, max_items:, max_items_before_drop:, envelope_type:, envelope_content_type:, before_send:); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:52
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:54
   def add_item(item); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:80
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:94
   def clear!; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:21
   def data_category; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:72
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:86
   def empty?; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:21
   def envelope_type; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:39
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:44
   def flush; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:21
   def pending_items; end
 
   # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:50
   def run; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:76
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:90
   def size; end
 
   # @!visibility private
   #
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:17
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:21
   def thread; end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:86
-  def send_items; end
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:108
+  def flush_pending_items; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:100
+  def reset_if_forked; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:124
+  def send_items(pending_items); end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:14
+# pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:17
 Sentry::TelemetryEventBuffer::FLUSH_INTERVAL = T.let(T.unsafe(nil), Integer)
+
+# seconds
+#
+# pkg:gem/sentry-ruby#lib/sentry/telemetry_event_buffer.rb:18
+Sentry::TelemetryEventBuffer::FLUSH_TIMEOUT = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:4
 class Sentry::ThreadedPeriodicWorker
   include ::Sentry::LoggingHelper
 
-  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:7
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:10
   def initialize(sdk_logger, interval); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:14
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:25
   def ensure_thread; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:32
+  # @!visibility private
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:8
+  def idle_condition; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:67
   def kill; end
+
+  # @!visibility private
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:8
+  def thread; end
+
+  # @!visibility private
+  #
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:8
+  def thread_mutex; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:52
+  def wait_until_idle(timeout = T.unsafe(nil)); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:42
+  def wake; end
+
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:86
+  def reset_if_forked; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/threaded_periodic_worker.rb:100
+  def worker_loop; end
 end
 
 # pkg:gem/sentry-ruby#lib/sentry/interfaces/threads.rb:4
@@ -5478,8 +6412,9 @@ end
 # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:9
 class Sentry::Transaction < ::Sentry::Span
   include ::Sentry::LoggingHelper
+  include ::Sentry::CallbackHelper
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:56
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:57
   def initialize(name: T.unsafe(nil), source: T.unsafe(nil), parent_sampled: T.unsafe(nil), baggage: T.unsafe(nil), sample_rand: T.unsafe(nil), **options); end
 
   # The parsed incoming W3C baggage header.
@@ -5487,70 +6422,70 @@ class Sentry::Transaction < ::Sentry::Span
   # Please use the #get_baggage method for interfacing outside this class.
   # @return [Baggage, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:34
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:35
   def baggage; end
 
   # Additional contexts stored directly on the transaction object.
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:46
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:47
   def contexts; end
 
   # @return [Transaction]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:105
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:106
   def deep_dup; end
 
   # The effective sample rate at which this transaction was sampled.
   # @return [Float, nil]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:42
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:43
   def effective_sample_rate; end
 
   # Finishes the transaction's recording and send it to Sentry.
   # @return [TransactionEvent]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:192
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:198
   def finish(end_timestamp: T.unsafe(nil)); end
 
   # Get the existing frozen incoming baggage
   # or populate one with sentry- items as the head SDK.
   # @return [Baggage]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:226
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:232
   def get_baggage; end
 
   # The measurements added to the transaction.
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:38
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:39
   def measurements; end
 
   # The name of the transaction.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:20
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:21
   def name; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:97
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:98
   def parent_sample_rate; end
 
   # The sampling decision of the parent transaction, which will be considered when making the current transaction's sampling decision.
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:28
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:29
   def parent_sampled; end
 
   # The Profiler instance for this transaction.
   # @return [Profiler]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:50
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:51
   def profiler; end
 
   # Sample rand value generated from trace_id
   # @return [String]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:54
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:55
   def sample_rand; end
 
   # Set contexts directly on the transaction.
@@ -5558,14 +6493,14 @@ class Sentry::Transaction < ::Sentry::Span
   # @param value [Object]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:245
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:251
   def set_context(key, value); end
 
   # Sets initial sampling decision of the transaction.
   # @param sampling_context [Hash] a context Hash that'll be passed to `traces_sampler` (if provided).
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:130
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:131
   def set_initial_sample_decision(sampling_context:); end
 
   # Sets a custom measurement on the transaction.
@@ -5574,7 +6509,7 @@ class Sentry::Transaction < ::Sentry::Span
   # @param unit [String] unit of the measurement
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:123
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:124
   def set_measurement(name, value, unit = T.unsafe(nil)); end
 
   # Set the transaction name directly.
@@ -5583,51 +6518,51 @@ class Sentry::Transaction < ::Sentry::Span
   # @param source [Symbol]
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:236
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:242
   def set_name(name, source: T.unsafe(nil)); end
 
   # The source of the transaction name.
   # @return [Symbol]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:24
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:25
   def source; end
 
   # These are high cardinality and thus bad
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:259
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:265
   def source_low_quality?; end
 
   # Start the profiler.
   # @return [void]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:251
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:257
   def start_profiler!; end
 
   # @return [Hash]
   #
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:84
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:85
   def to_h; end
 
   protected
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:270
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:276
   def init_profiler; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:265
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:271
   def init_span_recorder(limit = T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:281
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:287
   def generate_transaction_description; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:320
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:326
   def get_http_status_code; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:308
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:314
   def ignore_status_code?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:288
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:294
   def populate_head_baggage; end
 end
 
@@ -5639,18 +6574,18 @@ Sentry::Transaction::MESSAGE_PREFIX = T.let(T.unsafe(nil), String)
 # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:14
 Sentry::Transaction::SOURCES = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/sentry-ruby#lib/sentry/transaction.rb:324
+# pkg:gem/sentry-ruby#lib/sentry/transaction.rb:330
 class Sentry::Transaction::SpanRecorder
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:327
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:333
   def initialize(max_length); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:332
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:338
   def add(span); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:325
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:331
   def max_length; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:325
+  # pkg:gem/sentry-ruby#lib/sentry/transaction.rb:331
   def spans; end
 end
 
@@ -5739,7 +6674,7 @@ class Sentry::Transport
   # pkg:gem/sentry-ruby#lib/sentry/transport.rb:119
   def envelope_from_event(event); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:177
+  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:182
   def flush; end
 
   # pkg:gem/sentry-ruby#lib/sentry/transport.rb:93
@@ -5752,7 +6687,7 @@ class Sentry::Transport
   def rate_limits; end
 
   # pkg:gem/sentry-ruby#lib/sentry/transport.rb:170
-  def record_lost_event(reason, data_category, num: T.unsafe(nil)); end
+  def record_lost_event(reason, data_category, num: T.unsafe(nil), num_bytes: T.unsafe(nil)); end
 
   # pkg:gem/sentry-ruby#lib/sentry/transport.rb:43
   def send_data(data, options = T.unsafe(nil)); end
@@ -5768,10 +6703,10 @@ class Sentry::Transport
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:188
+  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:193
   def fetch_pending_client_report(force: T.unsafe(nil)); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:210
+  # pkg:gem/sentry-ruby#lib/sentry/transport.rb:215
   def reject_rate_limited_items(envelope); end
 end
 
@@ -6021,32 +6956,51 @@ module Sentry::Utils::ExceptionCauseChain
   end
 end
 
-# pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:5
+# pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:7
 module Sentry::Utils::HttpTracing
-  # Kindly borrowed from Rack::Utils
-  #
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:47
-  def build_nested_query(value, prefix = T.unsafe(nil)); end
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:8
+  def filter_query_params(query); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:39
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:67
   def propagate_trace?(url); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:24
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:52
   def record_sentry_breadcrumb(request_info, response_status); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:35
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:63
   def record_sentry_breadcrumb?; end
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:14
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:42
   def set_propagation_headers(req); end
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:6
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:34
   def set_span_info(sentry_span, request_info, response_status); end
 
   private
 
-  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:67
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:83
   def get_level(status); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:77
+  def url_with_query(request_info); end
+
+  class << self
+    # pkg:gem/sentry-ruby#lib/sentry/utils/http_tracing.rb:28
+    def format_query(query); end
+  end
+end
+
+# pkg:gem/sentry-ruby#lib/sentry/utils/latency.rb:7
+module Sentry::Utils::Latency
+  private
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/latency.rb:10
+  def milliseconds_since(time); end
+
+  class << self
+    # pkg:gem/sentry-ruby#lib/sentry/utils/latency.rb:10
+    def milliseconds_since(time); end
+  end
 end
 
 # pkg:gem/sentry-ruby#lib/sentry/utils/real_ip.rb:11
@@ -6084,6 +7038,27 @@ end
 
 # pkg:gem/sentry-ruby#lib/sentry/utils/request_id.rb:6
 Sentry::Utils::RequestId::REQUEST_ID_HEADERS = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:7
+class Sentry::Utils::RingBuffer
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:10
+  def initialize(capacity); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:23
+  def clear; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:31
+  def dup; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:27
+  def empty?; end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:17
+  def set(key, value); end
+
+  # pkg:gem/sentry-ruby#lib/sentry/utils/ring_buffer.rb:8
+  def values; end
+end
 
 # pkg:gem/sentry-ruby#lib/sentry/utils/sample_rand.rb:5
 class Sentry::Utils::SampleRand
@@ -6142,7 +7117,7 @@ module Sentry::Utils::TelemetryAttributes
   private
 
   # pkg:gem/sentry-ruby#lib/sentry/utils/telemetry_attributes.rb:10
-  def attribute_hash(value); end
+  def attribute_hash(raw_value); end
 end
 
 # pkg:gem/sentry-ruby#lib/sentry/version.rb:4
