@@ -33,12 +33,22 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", home_path, text: "back to your worlds"
   end
 
-  test "accepting a key grant adds the recipient to the world" do
+  test "accepting a key grant gives the recipient access to only the selected post types" do
+    journal_type = @world.post_types.create!(label: "journal entry")
+    @world.post_types.create!(label: "diary")
+    create_post(world: @world, body: "journal entry shared by invitation")
+    create_post(world: @world, type_label: "diary", body: "diary post outside the invitation")
+    grant_message = @world.key_grant_message(post_type_ids: [ journal_type.id ])
     sign_in_as(@recipient)
 
     assert_difference -> { @recipient.world_keys.count }, 1 do
-      post accept_world_key_grant_path(@grant_message), as: :turbo_stream
+      post accept_world_key_grant_path(grant_message), as: :turbo_stream
     end
     assert_redirected_to world_path(@world)
+
+    get world_posts_path(@world), headers: { "Turbo-Frame" => "posts" }
+    assert_response :success
+    assert_includes response.body, "journal entry shared by invitation"
+    assert_not_includes response.body, "diary post outside the invitation"
   end
 end

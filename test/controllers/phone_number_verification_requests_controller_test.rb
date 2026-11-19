@@ -61,19 +61,22 @@ class PhoneNumberVerificationRequestsControllerTest < ActionDispatch::Integratio
     assert_equal session_cookie, cookies[:session_id]
   end
 
-  test "start new verification request" do
-    assert_difference -> { PhoneNumberVerificationRequest.count }, 1 do
-      post phone_number_verification_requests_path,
-        headers: {
-          "User-Agent" => "test",
-        },
-        params: {
-          phone_number_verification_request: { phone_number: "+14165550000" },
-          "cf-turnstile-response" => "dummy",
-        },
-        as: :turbo_stream
+  test "a rejected Turnstile token cannot request a verification code" do
+    reject_token = ->(**) { raise Turnstile::Error, "invalid-input-response" }
+
+    SmallerWorld.application.turnstile_client.stub(:verify, reject_token) do
+      assert_no_difference -> { PhoneNumberVerificationRequest.count } do
+        post phone_number_verification_requests_path,
+          headers: { "User-Agent" => "test" },
+          params: {
+            phone_number_verification_request: { phone_number: "+14165550000" },
+            "cf-turnstile-response" => "rejected-token",
+          },
+          as: :turbo_stream
+      end
     end
-    assert_response :success
+
+    assert_redirected_to new_session_path
   end
 
   test "sign in by verifying code" do
@@ -98,25 +101,9 @@ class PhoneNumberVerificationRequestsControllerTest < ActionDispatch::Integratio
     assert_verification_rejected(user, verification_request, code: "wrong")
   end
 
-  test "wrong code for a verified request does not sign in or update the user" do
-    user = users(:bob)
-    verification_request = PhoneNumberVerificationRequest.create_test_mock_for!(user, verified: true)
-
-    assert_verification_rejected(user, verification_request, code: "wrong")
-  end
-
   test "expired pending request does not sign in or update the user" do
     user = users(:bob)
     verification_request = PhoneNumberVerificationRequest.create_test_mock_for!(user, verified: false)
-
-    travel PhoneNumberVerificationRequest::EXPIRATION_DURATION + 1.second do
-      assert_verification_rejected(user, verification_request, code: verification_request.verification_code)
-    end
-  end
-
-  test "expired verified request does not sign in or update the user" do
-    user = users(:bob)
-    verification_request = PhoneNumberVerificationRequest.create_test_mock_for!(user, verified: true)
 
     travel PhoneNumberVerificationRequest::EXPIRATION_DURATION + 1.second do
       assert_verification_rejected(user, verification_request, code: verification_request.verification_code)

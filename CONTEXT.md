@@ -47,14 +47,15 @@ absence of a resolution, not a resolution of its own.
 - **Upheld** — the report was right. The reportable stays suppressed
   indefinitely. Nothing is deleted; the report and the content both survive as a
   record of what happened.
-- **Dismissed** — the report was not right. The reportable is restored and
-  becomes visible to its recipients again.
+- **Dismissed** — the report was not right. This report no longer suppresses its
+  reportable.
 
 **Resolved** — a report that has a resolution, whether upheld or dismissed.
 
 **Suppressed** — hidden from recipients but not from its author, and not
-deleted. Pending and upheld reports suppress; dismissed reports do not. See
-[[resolving-a-report]] for why the pending state suppresses.
+deleted. See the
+[moderation decision](docs/adr/0001-pending-reports-suppress-their-reportable.md)
+for the suppression rule.
 
 **Moderator** — the admin who resolved a report. A resolution can be revisited,
 in which case the moderator is whoever most recently judged it.

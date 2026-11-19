@@ -28,7 +28,6 @@ class ActionDispatch::SystemTestCase
 end
 
 class ActionDispatch::IntegrationTest
-  include PhoneNumberVerificationRequestTestHelper
   include SessionTestHelper
   include WorldTestHelper
 end

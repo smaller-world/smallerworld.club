@@ -60,6 +60,7 @@ class RegistrationSecurityTest < ActionDispatch::IntegrationTest
     register_account
     assert_redirected_to home_url
     assert_predicate registration.reload, :completed_at?
+    assert_equal "bobby", User.find_by!(phone_number: verification_request.phone_number).name
   end
 
   test "concurrent registration submissions create only one account and session" do

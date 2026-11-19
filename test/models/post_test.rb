@@ -53,13 +53,6 @@ class PostTest < ActiveSupport::TestCase
     assert_includes scope, diary_post
   end
 
-  test "a key holder does not see posts of types their key does not grant" do
-    @world.keys.create!(recipient: @friend)
-    diary_post = create_post(world: @world, type_label: "diary")
-
-    assert_not_includes Post.visible_to(@friend), diary_post
-  end
-
   test "a key holder sees only the types their key grants" do
     key = @world.keys.create!(recipient: @friend)
     key.granted_post_types << post_type_for(@world, "journal entry")

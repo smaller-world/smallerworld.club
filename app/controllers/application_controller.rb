@@ -53,6 +53,10 @@ class ApplicationController < ActionController::Base
 
   sig { params(error: ActionPolicy::Unauthorized).void }
   def render_forbidden(error)
-    render Views::Errors::Forbidden.new, layout: false, status: :forbidden
+    respond_to do |format|
+      format.html do
+        render Views::Errors::Forbidden.new, layout: false, status: :forbidden
+      end
+    end
   end
 end

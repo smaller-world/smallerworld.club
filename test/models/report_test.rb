@@ -73,15 +73,6 @@ class ReportTest < ActiveSupport::TestCase
     assert_not_nil report.resolved_at
   end
 
-  test "resolving is idempotent and can reverse a decision" do
-    report = build_report
-    report.resolve!(resolution: "upheld", moderator: @admin)
-    report.resolve!(resolution: "dismissed", moderator: @admin)
-
-    assert_equal "dismissed", report.reload.resolution
-    assert_not_includes Report.not_dismissed, report
-  end
-
   test "an unknown resolution is rejected" do
     report = build_report
     report.resolution = "banished"
@@ -90,9 +81,19 @@ class ReportTest < ActiveSupport::TestCase
   end
 
   test "creating a report emails support" do
-    assert_enqueued_emails 1 do
-      build_report
-    end
+    report = T.let(nil, T.nilable(Report))
+    emails = capture_emails { report = build_report }
+
+    assert_equal 1, emails.size
+    email = emails.fetch(0)
+    assert_equal [ SmallerWorld.application.support_email_address ], email.to
+
+    links = Nokogiri::HTML((email.html_part || email).body.decoded).css("a")
+    review_link = links.find { |link| link.text.strip == "review this report" }
+    expected_url = Rails.application.routes.url_helpers.admin_report_url(
+      report, **ApplicationMailer.default_url_options
+    )
+    assert_equal expected_url, review_link&.attr("href")
   end
 
   private

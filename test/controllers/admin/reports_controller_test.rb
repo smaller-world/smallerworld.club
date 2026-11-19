@@ -68,18 +68,29 @@ module Admin
       assert @post.reload.visible_to?(@reporter)
     end
 
-    test "an admin can reverse a resolution" do
+    test "reversing an upheld report restores the post to the recipient's feed" do
       sign_in_as(@admin)
+      recipient = open_session { |client| client.sign_in_as(@reporter) }
+      feed_path = world_posts_path(@world)
+      headers = { "Turbo-Frame" => "posts" }
+
       with_admins(@admin) do
         post resolve_admin_report_path(@report), params: {
           report: { resolution: "upheld" },
         }
+        assert_equal "upheld", @report.reload.resolution
+        recipient.get(feed_path, headers:)
+        recipient.assert_response(:success)
+        assert_not_includes recipient.response.body, "hello world"
+
         post resolve_admin_report_path(@report), params: {
           report: { resolution: "dismissed" },
         }
       end
       assert_equal "dismissed", @report.reload.resolution
-      assert @post.reload.visible_to?(@reporter)
+      recipient.get(feed_path, headers:)
+      recipient.assert_response(:success)
+      assert_includes recipient.response.body, "hello world"
     end
   end
 end

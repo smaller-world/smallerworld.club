@@ -26,13 +26,12 @@ class WorldsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to world_path(world)
   end
 
-  test "owner views their world feed" do
-    create_post(world: @world, body: "first post")
-
+  test "the owner's world page points to its feed" do
     sign_in_as(@owner)
 
     get world_path(@world)
     assert_response :success
+    assert_select "turbo-frame[src=?]", world_posts_path(@world), count: 1
   end
 
   test "owner updates a world" do

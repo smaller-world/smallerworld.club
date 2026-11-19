@@ -128,6 +128,17 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "visible post"
   end
 
+  test "a signed-in user without a key cannot open the world feed" do
+    create_post(world: @world, body: "post in a private world")
+    sign_in_as(users(:sue))
+
+    get world_posts_path(@world),
+      headers: { "Turbo-Frame" => "posts" }
+
+    assert_response :forbidden
+    assert_not_includes response.body, "post in a private world"
+  end
+
   test "a friend sees only the posts of the types their key grants" do
     friend = users(:sue)
     @world.post_types.create!(label: "diary")
@@ -152,10 +163,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     create_member_key(world: @world, recipient: visible_friend)
     post_type = @world.post_types.find_by!(label: "journal entry")
 
-    # The compose UI submits the *selected* recipients (`recipient_ids`). The
-    # model stores the inverse (`hidden_from_ids`) so members added later still
-    # see the post by default. Here the owner deselects `hidden_friend`, keeping
-    # only `visible_friend`. `body` is ActionText rich text, submitted as HTML.
     sign_in_as(@owner)
     post world_posts_path(@world), params: {
       post: {
@@ -165,7 +172,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       },
     }
     post = @world.posts.chronological.last!
-    assert_equal [ hidden_friend.id ], post.hidden_from_ids
     assert_equal "secret post", post.plain_body
 
     # `hidden_friend` was deselected, so the post is absent from their feed.

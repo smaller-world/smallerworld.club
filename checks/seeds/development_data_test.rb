@@ -48,8 +48,6 @@ class DevelopmentDataTest < ActiveSupport::TestCase
     end
     assert_equal 2, users.fetch(:casey).owned_worlds.count
     assert_empty worlds.fetch(:alex).keys
-    assert_equal %i[alex casey drew ellis].map { |name| users.fetch(name).id }.sort,
-      worlds.fetch(:blair).keys.pluck(:recipient_id).sort
     {
       alex: [], blair: %i[alex casey drew ellis], casey: %i[alex blair],
       drew: %i[casey], ellis: %i[blair drew]

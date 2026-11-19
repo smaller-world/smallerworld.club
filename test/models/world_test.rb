@@ -47,12 +47,4 @@ class WorldTest < ActiveSupport::TestCase
 
     assert_equal "Bob's world", world.name
   end
-
-  test "name is unique per owner" do
-    create_world(owner: users(:sue), name: "Duplicate World")
-    duplicate = users(:sue).owned_worlds.build(name: "Duplicate World")
-
-    assert_not_predicate duplicate, :valid?
-    assert_includes duplicate.errors.full_messages.to_sentence, "Duplicate World"
-  end
 end

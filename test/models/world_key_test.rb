@@ -61,6 +61,9 @@ class WorldKeyTest < ActiveSupport::TestCase
     newer_key = create_member_key(world: newer_world, recipient: @recipient)
     travel_to 1.minute.from_now do
       create_post(world: newer_world)
+      @world.post_types.create!(label: "diary")
+      create_post(world: @world, type_label: "diary", created_at: 1.minute.from_now)
+      create_post(world: @world, recipient_ids: [], created_at: 2.minutes.from_now)
 
       assert_equal [ newer_key.id, older_key.id ],
         @recipient.world_keys.order_by_latest_visible_post.to_a.map(&:id)

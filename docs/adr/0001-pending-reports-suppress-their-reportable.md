@@ -35,9 +35,8 @@ The two options are genuinely in tension:
 
 ## Decision
 
-Pending reports suppress their reportable. Suppression is the complement of
-dismissal: content is hidden unless a report against it has been explicitly
-dismissed.
+Any pending or upheld report suppresses its reportable. Suppression ends once
+every report against that content has been dismissed.
 
 The same suppression rule applies when opening a post's copied secret link.
 While a report is pending or upheld, the linked page shows a reporting alert in
@@ -45,16 +44,14 @@ place of the post content for everyone except the author. The author can still
 view the post.
 
 On a friend's home screen, a world's position follows its latest post that the
-friend can see. A pending or upheld report excludes the post from that ordering.
-A dismissed report allows the post to count again if the friend has access to
-it.
+friend can see. A suppressed post is excluded from that ordering. Once
+suppression ends, the post counts again for friends who have access to it.
 
 Concretely, visibility is expressed as `Report.not_dismissed`, matching both
 `NULL` and `upheld` resolutions, rather than as `unresolved` or `upheld`.
 
-This preserves the behaviour that shipped, and the resolution column changes
-only what happens _after_ an admin looks: dismissing restores, upholding makes
-the suppression permanent without deleting anything.
+This preserves the behaviour that shipped. Upholding keeps content suppressed
+without deleting it, and dismissal removes that report's suppression.
 
 ## Consequences
 

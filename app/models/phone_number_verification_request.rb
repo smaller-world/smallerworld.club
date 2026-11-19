@@ -159,9 +159,7 @@ class PhoneNumberVerificationRequest < ApplicationRecord
 
   # Creates a verified request for `user` with throwaway transport metadata.
   #
-  # Test-only: used by PhoneNumberVerificationRequestTestHelper and the test sign-in
-  # backdoor to satisfy Session's `phone_number_verification_request` requirement without
-  # walking the OTP flow.
+  # Test-only: used by the sign-in backdoor and tests that start after a code is issued.
   sig { params(user: User, verified: T::Boolean).returns(PhoneNumberVerificationRequest) }
   def self.create_test_mock_for!(user, verified:)
     raise ApplicationError, "Only available in test environment" unless Rails.env.test?

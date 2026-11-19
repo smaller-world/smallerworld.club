@@ -16,6 +16,30 @@ class ReflectionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "authors can reopen their own saved reflections for the same date" do
+    date = "2026-11-15"
+    bob = users(:bob)
+    sue = users(:sue)
+    sue.reflections.create!(date:, body: "Sue's private reflection")
+
+    sign_in_as(bob)
+    put reflection_path(date), params: { reflection: { body: "Bob's private reflection" } }
+    assert_redirected_to places_dock_path
+
+    get edit_reflection_path(date)
+    assert_response :success
+    assert_select "lexxy-editor[name='reflection[body]']", count: 1 do |editors|
+      assert_equal "Bob's private reflection", Nokogiri::HTML.fragment(editors.first["value"].to_s).text.strip
+    end
+
+    sign_in_as(sue)
+    get edit_reflection_path(date)
+    assert_response :success
+    assert_select "lexxy-editor[name='reflection[body]']", count: 1 do |editors|
+      assert_equal "Sue's private reflection", Nokogiri::HTML.fragment(editors.first["value"].to_s).text.strip
+    end
+  end
+
   test "the reflections frame requires a valid time zone" do
     sign_in_as(users(:bob))
     headers = { "Turbo-Frame" => "reflections" }
@@ -26,10 +50,10 @@ class ReflectionsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "the dock shows the author's last seven days newest first" do
-    travel_to Time.utc(2026, 11, 16, 12) do
+  test "the dock shows the author's last seven days in the requested time zone, newest first" do
+    travel_to Time.utc(2026, 11, 16, 6) do
       author = users(:bob)
-      today = Date.new(2026, 11, 16)
+      today = Date.new(2026, 11, 15)
       saved_date = today - 2
       author.reflections.create!(date: saved_date, body: "My reflection")
       author.reflections.create!(date: today - 7, body: "Older reflection")
@@ -37,7 +61,7 @@ class ReflectionsControllerTest < ActionDispatch::IntegrationTest
       users(:sue).reflections.create!(date: today, body: "Another author's reflection")
       sign_in_as(author)
 
-      get reflections_path(time_zone_name: "UTC"), headers: { "Turbo-Frame" => "reflections" }
+      get reflections_path(time_zone_name: "America/Los_Angeles"), headers: { "Turbo-Frame" => "reflections" }
 
       assert_response :success
       assert_select "turbo-frame#reflections a.reflection-item", count: 7 do |items|

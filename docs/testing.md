@@ -31,6 +31,16 @@ failure at the same boundary. Separate cases earn their place through a
 different actor, state, outcome, entry point, or plausible failure. Browser
 coverage of a critical user flow may intentionally repeat a lower-level case.
 
+When several rules can reject the same request, keep a case where each rule is
+the sole reason for rejection. Keep a combined case if it protects a distinct
+outcome or a known regression. Keep verification replay through an actual
+successful sign-in so it also checks that the sign-in consumes the code.
+
+When a rejected submission can be retried, check what the corrected request
+actually saves. The registration retry reads the saved name by verified phone
+number, and the browser case covers the full journey from requesting a code
+through reaching home.
+
 Assert outcomes through the selected interface. In a request test, this can be
 rendered content, a subsequent request, or a durable state change the action
 promises. In a model test, it can be the result of a public domain operation.
@@ -38,7 +48,53 @@ Use independently specified expectations. Use stable browser controls and
 observable state, and keep CSS classes, callback registration, storage layout,
 and intermediate JavaScript state out of assertions unless they are part of the
 contract under test. Simulate external services and otherwise unreachable
-failures at the narrowest practical boundary.
+failures at the narrowest practical boundary. The verification request simulates
+Turnstile rejecting a token and checks the redirect and absence of a new
+request. The onboarding browser test exercises successful issuance and use of
+the code. The recipient-selection test checks both friends' feeds after
+submission, so it can detect an incorrect audience without depending on the
+stored form of the selection. When the same content has separately authorized
+endpoints, test the boundary that can fail on its own. The post-card case makes
+a direct frame request and checks that denial also omits the post body. The feed
+case additionally checks that a signed-in user without a key receives a denial
+response. When an invitation promises limited access, accept it through the
+public endpoint and check both granted and excluded content in the recipient's
+feed. For a rejected access change, check the response and the saved grants. For
+a page that loads content through a Turbo Frame, assert the frame's source on
+the page and the rendered content at the feed endpoint. The world-page test
+checks the connection between the two requests. For a machine-consumed response,
+parse the response and check the fields the client relies on. The Apple
+association test checks the app identifier and which rules take precedence.
+
+For ordering with exclusions, include an excluded record that would change the
+result if it were counted. When multiple exclusions have separate rules, make
+each excluded record capable of changing the order on its own.
+
+Skip standalone checks that exercise Rails' built-in validators on their own.
+For custom validation logic, cover the general rule once. Exercise validation
+through a public flow when it protects a distinct user outcome.
+
+For a transition that changes what another actor can see, verify that the first
+state took effect and observe the result through that actor's public interface
+on both sides of the transition. The admin reversal test checks the recipient's
+feed before and after dismissal. The key update test checks the member's feed
+before and after the owner clears the last grant. Keep a separate model case
+when it protects a distinct contract, such as recording the moderator and
+resolution time. To cover report submission, create the report through the
+request under test so the feed assertions also detect a submission that never
+saves a report.
+
+For local-date behavior, freeze time where the requested time zone and the
+likely fallback are on different dates. Assert the expected dates in the public
+response. The reflections dock request uses this setup to catch a UTC fallback.
+
+For a private save, reopen the resource in a separate request and check what the
+editor displays. Give another author an entry for the same date when that date
+is part of the lookup, so the test exercises both persistence and ownership.
+
+When an email's recipient or link is part of the behavior, run the queued mail
+through the test adapter and inspect the delivered message. Use the configured
+destination and the target resource's public URL as expectations.
 
 ## Test types and when to use each
 
@@ -54,6 +110,13 @@ failures at the narrowest practical boundary.
   for browser behavior a request test cannot observe, such as resuming a draft
   or reacting without a reload. Drive the flow to its user-visible outcome, even
   when a faster test covers some of the same steps.
+
+For asynchronous browser steps, wait for an observable change tied to the
+action. The draft test gives successive saves different clock times so each wait
+can distinguish a fresh confirmation from the previous one. For infinite scroll,
+wait for the first page to load before checking that a later item is absent.
+After scrolling, check that the later item appears and an item from the first
+page is still present.
 
 ### Opt-in checks
 
@@ -117,11 +180,10 @@ combine them to express a scenario; they contain no conditional logic.
   — a low-level model factory for setting up a pending (or verified) request
   without touching the controller. Use when the verify endpoint is the subject
   under test and you want to skip past create.
-- `complete_phone_verification_for(phone_number:)` from
-  `PhoneNumberVerificationRequestTestHelper` — drives the full create + verify
-  HTTP flow and returns the verified request. This exercises Turnstile over the
-  network. When verification is incidental to the case, start with the closest
-  prerequisite the test needs.
+- When verification is incidental to the case, start with the closest
+  prerequisite the test needs. The registration requests begin with an issued
+  code and submit it through the verify endpoint to obtain real registration
+  proof without a Turnstile call.
 
 ## External dependencies
 
@@ -164,13 +226,6 @@ URL helpers (`*_path`/`*_url`) inside `ActionDispatch::IntegrationTest` are
 provided by Tapioca's DSL RBI generation (`bin/tapioca dsl`) — don't shim them
 manually. System tests are a different case; see the shim file for the specific
 include needed.
-
-`SessionTestHelper` uses `requires_ancestor { ActionDispatch::IntegrationTest }`
-so `cookies` and other integration-test methods resolve inside the helper body.
-Sorbet's view of `ActionDispatch::SystemTestCase` doesn't inherit from
-`IntegrationTest`, so this constraint produces a small known set of `5064`
-errors in system tests — accepted trade-off, since relaxing the constraint
-breaks `cookies` resolution inside the helper.
 
 ## Next effort (not yet covered)
 

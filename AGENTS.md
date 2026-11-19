@@ -11,6 +11,8 @@ iOS shell), Sorbet, Action Policy, Minitest.
 - **Testing** — read [docs/testing.md](docs/testing.md) before proposing,
   writing, or reviewing tests. Get Kai's approval for each proposed test before
   writing it.
+- **Post access** — read [docs/post-access.md](docs/post-access.md) when
+  changing post visibility, copied links, or key revocation.
 - [docs/adr/](docs/adr/) — decisions and why they were made.
 - **Transparent video** — for luma-keying or encoding web backgrounds, read
   [docs/transparent-background-video.md](docs/transparent-background-video.md).

@@ -10,7 +10,6 @@ require "rails/test_help"
 
 require_relative "test_helpers/admin_test_helper"
 require_relative "test_helpers/downloads_test_helper"
-require_relative "test_helpers/phone_number_verification_request_test_helper"
 require_relative "test_helpers/session_test_helper"
 require_relative "test_helpers/system_session_test_helper"
 require_relative "test_helpers/world_test_helper"
