@@ -17,7 +17,11 @@ class Views::Reflections::Edit < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(
-      page_title: (localized_date unless hotwire_native_app?),
+      page_title: if hotwire_native_app?
+                    "reflecting at the dock..."
+                  else
+                    localized_date
+                  end,
     ) do |app_layout|
       app_layout.with_navigation do
         button_back_to("the dock", places_dock_path, variant: :secondary)
