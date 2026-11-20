@@ -176,7 +176,7 @@ GEM
     countries (8.1.0)
       unaccent (~> 0.3)
     crass (1.0.8)
-    css_parser (3.3.0)
+    css_parser (3.4.0)
       addressable
       base64
       ssrf_filter (~> 1.5)
@@ -248,7 +248,6 @@ GEM
       listen
       rails (>= 7.0.0)
       zeitwerk
-    htmlentities (4.4.2)
     http-2 (1.2.0)
     http (6.0.3)
       http-cookie (~> 1.0)
@@ -407,10 +406,9 @@ GEM
       mime-types (>= 3.0)
     pp (0.6.4)
       prettyprint
-    premailer (1.29.0)
+    premailer (1.33.0)
       addressable
-      css_parser (>= 1.19.0)
-      htmlentities (>= 4.0.0)
+      css_parser (>= 3.1.0)
     premailer-rails (1.12.0)
       actionmailer (>= 3)
       net-smtp
@@ -725,7 +723,7 @@ DEPENDENCIES
   phlex-rails (~> 2.4)
   phonelib (~> 0.10.28)
   playwright-ruby-client (= 1.64.0)
-  premailer (~> 1.29)
+  premailer (~> 1.33)
   premailer-rails
   propshaft
   prosopite
@@ -816,7 +814,7 @@ CHECKSUMS
   console1984 (0.2.4) sha256=634e71a51cdc1b8ca3c9550b27f0ef01d386655830f3805b4e2e4e1e2f3b244e
   countries (8.1.0) sha256=4d6b318b8e906f1f769d5c021c13a418d33e917dc96ceb625a91d8e7ab2d192e
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
-  css_parser (3.3.0) sha256=79ba7fc428b18d2a085bcb6f310193f957afc30a7df9be2701419abc1a83d7ca
+  css_parser (3.4.0) sha256=0df3355c4e53fb872dd4cb46b10969c8722a010bc0fa38deb6589cd7e0387d15
   cssbundling-rails (1.4.3) sha256=53aecd5a7d24ac9c8fcd92975acd0e830fead4ee4583d3d3d49bb64651946e41
   csv (3.3.7) sha256=15a3f16f6628da8664d455eb634e7f22031bcf53044923caf56975109e71b9f8
   date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
@@ -850,7 +848,6 @@ CHECKSUMS
   google-protobuf (4.36.2-x86_64-linux-gnu) sha256=d25a820873e423f1d209ae8c672a4a28b019e2429debd0901d26670a0b4e14db
   googleauth (1.17.1) sha256=0f7e6fc70e204cee1b2d71f1e1de2d3b349d432404197fe68ebf7fa23d0821b9
   hotwire-spark (0.1.13) sha256=0a24799b0942fc9b7ea3e560a5aba3f4dd9a6086958a25929894340f920fb499
-  htmlentities (4.4.2) sha256=bbafbdf69f2eca9262be4efef7e43e6a1de54c95eb600f26984f71d2fe96c5c3
   http (6.0.3) sha256=0206e79131089ca9aae557c6791afd6bf9339af319d78a616af1477ae79614fa
   http-2 (1.2.0) sha256=5bed923379ae67895d3bde440502219543da2885104b46ed7d604f5990efad1c
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
@@ -919,7 +916,7 @@ CHECKSUMS
   phonelib (0.10.28) sha256=96dbb0ac9a76e3997825470b47ce7425f4ddf5e9ba52aad40fc465b839bc3dc6
   playwright-ruby-client (1.64.0) sha256=a30df6435a26a09dccb664260e1aaed49de2c2d97a67c7ee7b03ab84755af755
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
-  premailer (1.29.0) sha256=015f30c520701f3d47fd898886a3eaf4e5171efcc5fd239b872efd1ba61d3da0
+  premailer (1.33.0) sha256=1a0c6320fc482e97fd1ce05f0f25d96e1dc766520ea64db9e7637efd0c510daa
   premailer-rails (1.12.0) sha256=c13815d161b9bc7f7d3d81396b0bb0a61a90fa9bd89931548bf4e537c7710400
   prettyprint (0.2.1) sha256=d555d57ea6d7cf001d4774b693546a6bd88bec1e778ddffb5c60b68ceec4b7d4
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
