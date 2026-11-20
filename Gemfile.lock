@@ -56,11 +56,11 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6, >= 1.7.2)
-    active_storage_validations (3.0.5)
-      activejob (>= 6.1.4)
-      activemodel (>= 6.1.4)
-      activestorage (>= 6.1.4)
-      activesupport (>= 6.1.4)
+    active_storage_validations (4.1.1)
+      activejob (>= 7.0.1)
+      activemodel (>= 7.0.1)
+      activestorage (>= 7.0.1)
+      activesupport (>= 7.0.1)
       marcel (>= 1.0.3)
     activejob (8.1.4.1)
       activesupport (= 8.1.4.1)
@@ -675,7 +675,7 @@ PLATFORMS
 DEPENDENCIES
   action_policy (~> 0.7.6)
   action_push_native (~> 0.3.1)
-  active_storage_validations (~> 3.0)
+  active_storage_validations (~> 4.1)
   activerecord-postgis-adapter
   activerecord-typedstore (~> 1.6)
   actual_db_schema
@@ -775,7 +775,7 @@ CHECKSUMS
   actionpack (8.1.4.1) sha256=8c6f2e7cbd2653ef0539bde1ff20eb3e2e264e366affe56f0ba7f06d3670cb4b
   actiontext (8.1.4.1) sha256=fb59611dc16e2b6bbfcec66793acfae6cdd64b1e35ef3f9175424f31e62c38da
   actionview (8.1.4.1) sha256=d25b4d9cf8d0c0195ffcfe8b2cf3fcbe6fea54fd7c17f1a9cb8182881463f12b
-  active_storage_validations (3.0.5) sha256=4ae7338769ea28d67f1eb20a5693de4cf356c0a68ade914be4b5ae9691628425
+  active_storage_validations (4.1.1) sha256=0975eb88921bf6095b4b9ea9f9cd1187e873f8952c2b77132bb362bd0f3d6a0f
   activejob (8.1.4.1) sha256=82c4c9311ea1016d5f7f134a0c5f9b6527cad5a6237f5f3f60aa17984ef36229
   activemodel (8.1.4.1) sha256=063caf105372fbc98b2d789e4be23de63ac5c043f7d9330f04e2caddb7012805
   activerecord (8.1.4.1) sha256=bd65599ca0b5d210937f835d42c7aff69d271741c75aab022730be6cbce67e87
