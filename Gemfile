@@ -64,7 +64,7 @@ gem "phlex-rails", "~> 2.4"
 gem "phlex-icons"
 
 # Declare enum attributes with Enumerize
-gem "enumerize", "~> 2.8"
+gem "enumerize", "~> 3.0"
 
 # Create human-friendly identifiers for models
 gem "friendly_id", "~> 5.7"
