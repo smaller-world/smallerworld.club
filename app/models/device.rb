@@ -41,7 +41,6 @@ class Device < ApplicationRecord
   # == Associations ==
 
   belongs_to :owner, class_name: "User", optional: true
-  has_many :world_cards, dependent: :destroy
 
   sig { returns(User) }
   def owner!

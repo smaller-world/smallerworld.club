@@ -38,6 +38,9 @@ class MissionControl::Jobs::ApplicationController
     def active_filters?; end
 
     sig { returns(T.untyped) }
+    def batches_supported?; end
+
+    sig { returns(T.untyped) }
     def jobs_filter_param; end
 
     sig { returns(T.untyped) }
