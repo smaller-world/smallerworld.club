@@ -111,7 +111,7 @@ gem "email_validator", "~> 2.2"
 gem "inline_svg", "~> 1.10"
 
 # Validate Active Storage attachments
-gem "active_storage_validations", "~> 3.0"
+gem "active_storage_validations", "~> 4.1"
 
 # Rich text editing with Lexxy
 gem "lexxy", "~> 1.0.4"
