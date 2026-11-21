@@ -3451,6 +3451,20 @@ class Net::SSH::HostKeyEntries::PubKey
   def to_blob; end
 end
 
+# @revoked entry
+#
+# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:98
+class Net::SSH::HostKeyEntries::Revoked
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:99
+  def initialize(key, comment: T.unsafe(nil)); end
+
+  # Returns true for the revoked key itself and for any certificate that
+  # wraps it or is signed by it, matching OpenSSH's check_key_not_revoked.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:106
+  def matches_key?(server_key); end
+end
+
 # Base class for host key exceptions. When rescuing this exception, you can
 # inspect the key fingerprint and, if you want to proceed anyway, simply call
 # the remember_host! method on the exception, and then retry.
@@ -3515,6 +3529,17 @@ end
 # pkg:gem/net-ssh#lib/net/ssh/errors.rb:97
 class Net::SSH::HostKeyMismatch < ::Net::SSH::HostKeyError; end
 
+# Raised when the key given by the host, or the CA that signed its
+# certificate, is marked @revoked in a known hosts file. A revoked key must
+# never be accepted, so unlike the other host key errors this one can't be
+# overridden: #remember_host! just raises it again.
+#
+# pkg:gem/net-ssh#lib/net/ssh/errors.rb:110
+class Net::SSH::HostKeyRevoked < ::Net::SSH::HostKeyError
+  # pkg:gem/net-ssh#lib/net/ssh/errors.rb:111
+  def remember_host!; end
+end
+
 # Raised when there is no cached key for a particular host, which probably
 # means that the host has simply not been seen before.
 # When rescuing this exception, you can inspect the key fingerprint and, if
@@ -3527,23 +3552,23 @@ class Net::SSH::HostKeyUnknown < ::Net::SSH::HostKeyError; end
 # Represents the result of a search in known hosts
 # see search_for
 #
-# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:100
+# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:116
 class Net::SSH::HostKeys
   include ::Enumerable
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:104
-  def initialize(host_keys, host, known_hosts, options = T.unsafe(nil)); end
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:120
+  def initialize(host_keys, host, known_hosts, options = T.unsafe(nil), revoked_keys = T.unsafe(nil)); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:111
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:133
   def add_host_key(key); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:116
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:138
   def each(&block); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:120
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:142
   def empty?; end
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:102
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:118
   def host; end
 
   # Returns the bare hostname, stripping port and IP portions from the
@@ -3554,8 +3579,13 @@ class Net::SSH::HostKeys
   #   "server.example.com,1.2.3.4"    => "server.example.com"
   #   "[server.example.com]:2222"      => "server.example.com"
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:131
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:153
   def hostname; end
+
+  # Returns true if a @revoked known-hosts entry for this host matches +key+.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:129
+  def revoked?(key); end
 end
 
 # A factory class for returning new Key classes. It is used for obtaining
@@ -3631,19 +3661,19 @@ Net::SSH::KeyFactory::MAP = T.let(T.unsafe(nil), Hash)
 # This is used internally by Net::SSH, and will never need to be used directly
 # by consumers of the library.
 #
-# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:142
+# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:164
 class Net::SSH::KnownHosts
   # Instantiate a new KnownHosts instance that will search the given known-hosts
   # file. The path is expanded file File.expand_path.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:203
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:228
   def initialize(source); end
 
   # Tries to append an entry to the current source file for the given host
   # and key. If it is unable to (because the file is not writable, for
   # instance), an exception will be raised.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:300
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:329
   def add(host, key); end
 
   # Returns an array of all keys that are known to be associatd with the
@@ -3660,30 +3690,49 @@ class Net::SSH::KnownHosts
   #   "[1,2,3,4]:5555"
   #   "[net.ssh.test]:5555,[1.2.3.4]:5555
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:222
+  # @revoked entries are not included, see revoked_keys_for.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:249
   def keys_for(host, options = T.unsafe(nil)); end
 
   # Indicates whether one of the entries matches an hostname that has been
   # stored as a HMAC-SHA1 hash in the known hosts.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:284
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:313
   def known_host_hash?(hostlist, entries); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:267
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:296
   def match(host, pattern); end
+
+  # Returns the @revoked entries for the given host, which takes the same
+  # formats as keys_for. An entry matching any of the comma-separated names
+  # counts, so :check_host_ip can't narrow a revocation.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:280
+  def revoked_keys_for(host); end
 
   # The host-key file name that this KnownHosts instance will use to search
   # for keys.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:199
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:224
   def source; end
+
+  private
+
+  # Yields the marker, host patterns, key and comment of each usable line.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:339
+  def each_entry; end
+
+  # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:358
+  def read_key(key_content); end
 
   class << self
     # Looks in all user known host files (see KnownHosts.hostfiles) and tries to
     # add an entry for the given host and key to the first file it is able
     # to.
     #
-    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:187
+    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:212
     def add(host, key, options = T.unsafe(nil)); end
 
     # Looks in the given +options+ hash for the :user_known_hosts_file and
@@ -3696,24 +3745,25 @@ class Net::SSH::KnownHosts
     # If you only want the user known host files, you can pass :user as
     # the second option.
     #
-    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:172
+    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:197
     def hostfiles(options, which = T.unsafe(nil)); end
 
     # Searches all known host files (see KnownHosts.hostfiles) for all keys
     # of the given host. Returns an enumerable of keys found.
     #
-    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:153
+    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:175
     def search_for(host, options = T.unsafe(nil)); end
 
     # Search for all known keys for the given host, in every file given in
-    # the +files+ array. Returns the list of keys.
+    # the +files+ array. Returns the list of keys. @revoked entries are not
+    # included.
     #
-    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:159
+    # pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:184
     def search_in(files, host, options = T.unsafe(nil)); end
   end
 end
 
-# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:143
+# pkg:gem/net-ssh#lib/net/ssh/known_hosts.rb:165
 Net::SSH::KnownHosts::SUPPORTED_TYPE = T.let(T.unsafe(nil), Array)
 
 # A simple module to make logging easier to deal with. It assumes that the
@@ -6015,14 +6065,15 @@ end
 # verify a connection if the server is the localhost and the port is a
 # nonstandard port number. Those two conditions will typically mean the
 # connection is being tunnelled through a forwarded port, so the known-hosts
-# file will not be helpful (in general).
+# file will not be helpful (in general). A key marked @revoked is refused
+# either way.
 #
-# pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:11
+# pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:12
 class Net::SSH::Verifiers::AcceptNewOrLocalTunnel < ::Net::SSH::Verifiers::AcceptNew
   # Tries to determine if the connection is being tunnelled, and if so,
   # returns true. Otherwise, performs the standard strict verification.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:14
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:15
   def verify(arguments); end
 
   private
@@ -6030,7 +6081,7 @@ class Net::SSH::Verifiers::AcceptNewOrLocalTunnel < ::Net::SSH::Verifiers::Accep
   # A connection is potentially being tunnelled if the port is not 22,
   # and the ip refers to the localhost.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:24
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/accept_new_or_local_tunnel.rb:26
   def tunnelled?(args); end
 end
 
@@ -6040,42 +6091,50 @@ end
 # (HostKeyUnknown). This is in contrast to the "Strict" class, which will
 # silently add the key to your known_hosts file. If the server does appear at
 # least once, but the key given does not match any known for the server, an
-# exception will be raised (HostKeyMismatch).
+# exception will be raised (HostKeyMismatch). A key marked @revoked in a
+# host file is always refused (HostKeyRevoked).
 # Otherwise, this returns true.
 #
-# pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:15
+# pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:16
 class Net::SSH::Verifiers::Always
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:16
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:17
   def verify(arguments); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:44
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:47
   def verify_signature(&block); end
 
   private
 
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:84
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:99
   def process_cache_miss(host_keys, args, exc_class, message); end
+
+  # Custom :known_hosts objects may return a host_keys collection with no
+  # revocation support.
+  #
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:55
+  def refuse_revoked!(arguments); end
 
   # Enforces the @cert-authority certificate constraints for entries that
   # implement them (Net::SSH::HostKeyEntries::CertAuthority). Non-certificate
   # entries do not respond to these predicates and are left untouched.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:53
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/always.rb:68
   def verify_certificate!(entry, host_keys, arguments); end
 end
 
 # This host key verifier simply allows every key it sees, without
 # any verification. This is simple, but very insecure because it
-# exposes you to MiTM attacks.
+# exposes you to MiTM attacks. It does not read the known hosts files,
+# so it accepts keys marked @revoked as well.
 #
-# pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:7
+# pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:8
 class Net::SSH::Verifiers::Never
   # Returns true.
   #
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:9
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:10
   def verify(arguments); end
 
-  # pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:13
+  # pkg:gem/net-ssh#lib/net/ssh/verifiers/never.rb:14
   def verify_signature(&block); end
 end
 

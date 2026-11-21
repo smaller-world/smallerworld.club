@@ -22,16 +22,16 @@ module HTTP2::BufferUtils
   # pkg:gem/http-2#lib/http/2/extensions.rb:26
   def read_str(str, n); end
 
-  # pkg:gem/http-2#lib/http/2/extensions.rb:44
+  # pkg:gem/http-2#lib/http/2/extensions.rb:51
   def read_uint32(str); end
 end
 
-# pkg:gem/http-2#lib/http/2/connection.rb:42
+# pkg:gem/http-2#lib/http/2/connection.rb:20
 HTTP2::CONNECTION_FRAME_TYPES = T.let(T.unsafe(nil), Array)
 
 # Default connection "fast-fail" preamble string as defined by the spec.
 #
-# pkg:gem/http-2#lib/http/2/connection.rb:36
+# pkg:gem/http-2#lib/http/2/connection.rb:14
 HTTP2::CONNECTION_PREFACE_MAGIC = T.let(T.unsafe(nil), String)
 
 # HTTP 2.0 client connection class that implements appropriate header
@@ -98,7 +98,7 @@ end
 # Note that this class should not be used directly. Instead, you want to
 # use either Client or Server class to drive the HTTP 2.0 exchange.
 #
-# pkg:gem/http-2#lib/http/2/connection.rb:53
+# pkg:gem/http-2#lib/http/2/connection.rb:31
 class HTTP2::Connection
   include ::HTTP2::Error
   include ::HTTP2::FlowBuffer
@@ -107,26 +107,34 @@ class HTTP2::Connection
 
   # Initializes new connection object.
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:81
+  # pkg:gem/http-2#lib/http/2/connection.rb:59
   def initialize(settings = T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:427
+  # pkg:gem/http-2#lib/http/2/connection.rb:431
   def <<(data); end
 
   # Number of active streams between client and server (reserved streams
   # are not counted towards the stream limit).
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:77
+  # pkg:gem/http-2#lib/http/2/connection.rb:56
   def active_stream_count; end
 
   # Number of active streams between client and server (reserved streams
   # are not counted towards the stream limit).
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:77
+  # pkg:gem/http-2#lib/http/2/connection.rb:56
   def active_stream_count=(_arg0); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:116
+  # No new streams may be opened (a GOAWAY was sent or received).
+  #
+  # pkg:gem/http-2#lib/http/2/connection.rb:95
   def closed?; end
+
+  # Graceful GOAWAY received: tracked streams may still complete,
+  # but no new ones can be opened.
+  #
+  # pkg:gem/http-2#lib/http/2/connection.rb:101
+  def closing?; end
 
   # Sends a GOAWAY frame indicating that the peer should stop creating
   # new streams for current connection.
@@ -139,18 +147,18 @@ class HTTP2::Connection
   # @param error [Symbol]
   # @param payload [String]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:158
+  # pkg:gem/http-2#lib/http/2/connection.rb:146
   def goaway(error = T.unsafe(nil), payload = T.unsafe(nil)); end
 
   # Current settings value for local and peer
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:69
+  # pkg:gem/http-2#lib/http/2/connection.rb:48
   def local_settings; end
 
   # Size of current connection flow control window (by default, set to
   # infinity, but is automatically updated on receipt of peer settings).
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:64
+  # pkg:gem/http-2#lib/http/2/connection.rb:43
   def local_window; end
 
   # Allocates new stream for current connection.
@@ -159,13 +167,13 @@ class HTTP2::Connection
   # @param window [Integer]
   # @param parent [Stream]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:125
+  # pkg:gem/http-2#lib/http/2/connection.rb:110
   def new_stream(**args); end
 
   # Pending settings value
   #  Sent but not ack'ed settings
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:73
+  # pkg:gem/http-2#lib/http/2/connection.rb:52
   def pending_settings; end
 
   # Sends PING frame to the peer.
@@ -173,7 +181,7 @@ class HTTP2::Connection
   # @param payload [String] optional payload must be 8 bytes long
   # @param blk [Proc] callback to execute when PONG is received
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:143
+  # pkg:gem/http-2#lib/http/2/connection.rb:131
   def ping(payload, &blk); end
 
   # Decodes incoming bytes into HTTP 2.0 frames and routes them to
@@ -182,13 +190,13 @@ class HTTP2::Connection
   #
   # @param data [String] Binary encoded string
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:188
+  # pkg:gem/http-2#lib/http/2/connection.rb:175
   def receive(data); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:65
+  # pkg:gem/http-2#lib/http/2/connection.rb:44
   def remote_settings; end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:65
+  # pkg:gem/http-2#lib/http/2/connection.rb:44
   def remote_window; end
 
   # Sends a connection SETTINGS frame to the peer.
@@ -196,39 +204,44 @@ class HTTP2::Connection
   #
   # @param settings [Array or Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:177
+  # pkg:gem/http-2#lib/http/2/connection.rb:164
   def settings(payload); end
 
-  # Connection state (:new, :closed).
+  # Connection state (:waiting_magic, :waiting_connection_preface,
+  # :connected, :closing, :closed).
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:60
+  # pkg:gem/http-2#lib/http/2/connection.rb:39
   def state; end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:66
+  # pkg:gem/http-2#lib/http/2/connection.rb:45
   def window; end
 
   # Sends a WINDOW_UPDATE frame to the peer.
   #
   # @param increment [Integer]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:168
+  # pkg:gem/http-2#lib/http/2/connection.rb:155
   def window_update(increment); end
 
   private
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:822
+  # pkg:gem/http-2#lib/http/2/connection.rb:869
   def _verify_pseudo_headers(frame, mandatory_headers); end
 
   # Activates new incoming or outgoing stream and registers appropriate
   # connection managemet callbacks.
   #
   # @param id [Integer]
+  # @param max_concurrent_streams [Symbol] threshold to cap the number of active streams with.
   # @param priority [Integer]
   # @param window [Integer]
   # @param parent [Stream]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:775
-  def activate_stream(id:, **args); end
+  # pkg:gem/http-2#lib/http/2/connection.rb:805
+  def activate_stream(id:, max_concurrent_streams: T.unsafe(nil), **args); end
+
+  # pkg:gem/http-2#lib/http/2/connection.rb:857
+  def close!; end
 
   # Emit GOAWAY error indicating to peer that the connection is being
   # aborted, and once sent, raise a local exception.
@@ -242,7 +255,7 @@ class HTTP2::Connection
   # @option error [Symbol] :compression_error
   # @param msg [String]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:848
+  # pkg:gem/http-2#lib/http/2/connection.rb:895
   def connection_error(error = T.unsafe(nil), msg: T.unsafe(nil), e: T.unsafe(nil)); end
 
   # Check if frame is a connection frame: SETTINGS, PING, GOAWAY, and any
@@ -251,7 +264,7 @@ class HTTP2::Connection
   # @param frame [Hash]
   # @return [Boolean]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:477
+  # pkg:gem/http-2#lib/http/2/connection.rb:481
   def connection_frame?(frame); end
 
   # Process received connection frame (stream ID = 0).
@@ -262,14 +275,14 @@ class HTTP2::Connection
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:488
+  # pkg:gem/http-2#lib/http/2/connection.rb:492
   def connection_management(frame); end
 
   # Update connection settings based on parameters set by the peer.
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:611
+  # pkg:gem/http-2#lib/http/2/connection.rb:630
   def connection_settings(frame); end
 
   # Decode headers payload and update connection decompressor state.
@@ -281,30 +294,30 @@ class HTTP2::Connection
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:708
+  # pkg:gem/http-2#lib/http/2/connection.rb:737
   def decode_headers(frame); end
 
   # Applies HTTP 2.0 binary encoding to the frame.
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:468
+  # pkg:gem/http-2#lib/http/2/connection.rb:472
   def encode(frame); end
 
   # Encode headers payload and update connection compressor state.
   #
   # @param headers_frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:721
+  # pkg:gem/http-2#lib/http/2/connection.rb:750
   def encode_headers(headers_frame); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:857
+  # pkg:gem/http-2#lib/http/2/connection.rb:904
   def error(error = T.unsafe(nil), msg: T.unsafe(nil), e: T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:859
+  # pkg:gem/http-2#lib/http/2/connection.rb:906
   def manage_state(_); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:549
+  # pkg:gem/http-2#lib/http/2/connection.rb:558
   def ping_management(frame); end
 
   # Send an outgoing frame. DATA frames are subject to connection flow
@@ -314,23 +327,23 @@ class HTTP2::Connection
   # @note all frames are currently delivered in FIFO order.
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:439
+  # pkg:gem/http-2#lib/http/2/connection.rb:443
   def send(frame); end
+
+  # pkg:gem/http-2#lib/http/2/connection.rb:566
+  def validate_push_promise(stream_id); end
 
   # Validate settings parameters.  See sepc Section 6.5.2.
   #
   # @param role [Symbol] The sender's role: :client or :server
   # @return nil if no error.  Exception object in case of any error.
   #
-  # pkg:gem/http-2#lib/http/2/connection.rb:561
+  # pkg:gem/http-2#lib/http/2/connection.rb:580
   def validate_settings(role, settings); end
 
-  # pkg:gem/http-2#lib/http/2/connection.rb:815
+  # pkg:gem/http-2#lib/http/2/connection.rb:862
   def verify_stream_order(id); end
 end
-
-# pkg:gem/http-2#lib/http/2/connection.rb:23
-HTTP2::DEFAULT_CONNECTION_SETTINGS = T.let(T.unsafe(nil), Hash)
 
 # Default connection and stream flow control window (64KB).
 #
@@ -347,13 +360,14 @@ HTTP2::DEFAULT_HEADER_SIZE = T.let(T.unsafe(nil), Integer)
 # pkg:gem/http-2#lib/http/2/connection.rb:11
 HTTP2::DEFAULT_MAX_CONCURRENT_STREAMS = T.let(T.unsafe(nil), Integer)
 
-# Default stream priority (lower values are higher priority).
-#
-# pkg:gem/http-2#lib/http/2/connection.rb:33
-HTTP2::DEFAULT_WEIGHT = T.let(T.unsafe(nil), Integer)
-
 # pkg:gem/http-2#lib/http/2.rb:6
 HTTP2::EMPTY = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/http-2#lib/http/2.rb:7
+HTTP2::EMPTY_HASH = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/http-2#lib/http/2/settings.rb:17
+HTTP2::ENCODING_CONTEXT_SETTINGS = T.let(T.unsafe(nil), Array)
 
 # 2
 #
@@ -425,7 +439,7 @@ end
 # pkg:gem/http-2#lib/http/2/error.rb:38
 class HTTP2::Error::CompressionError < ::HTTP2::Error::ProtocolError; end
 
-# Raised if connection has been closed (or draining) and new stream
+# Raised if connection has been closed (or closing) and new stream
 # cannot be opened.
 #
 # pkg:gem/http-2#lib/http/2/error.rb:58
@@ -723,29 +737,20 @@ class HTTP2::Header::Compressor
   include ::HTTP2::PackingExtensions
   include ::HTTP2::BufferUtils
 
-  # @param options [Hash] encoding options
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:11
-  def initialize(options = T.unsafe(nil)); end
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:10
+  def initialize(settings = T.unsafe(nil)); end
 
   # Encodes provided list of HTTP headers.
   #
-  # @param headers [Array] +[[name, value], ...]+
-  # @return [Buffer]
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:134
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:114
   def encode(headers); end
 
-  # Encodes header command with appropriate header representation.
+  # Encodes +h+ header command with appropriate header representation into +buffer+.
   #
-  # @param h [Hash] header command
-  # @param buffer [String]
-  # @return [Buffer]
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:101
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:84
   def header(h, buffer = T.unsafe(nil)); end
 
-  # Encodes provided value via integer representation.
+  # Encodes +i+ via integer representation into +buffer+ at the offset set by +offset+.
   # - http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-10#section-5.1
   #
   #  If I < 2^N - 1, encode I on N bits
@@ -757,14 +762,15 @@ class HTTP2::Header::Compressor
   #           I = I / 128
   #      encode (I) on 8 bits
   #
-  # @param i [Integer] value to encode
-  # @param n [Integer] number of available bits
-  # @param buffer [String] buffer to pack bytes into
-  # @param offset [Integer] offset to insert packed bytes in buffer
-  # @return [String] binary string
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:38
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:33
   def integer(i, n, buffer:, offset: T.unsafe(nil)); end
+
+  # Set the maximum dynamic table +size+ allowed by the peer's
+  # SETTINGS_HEADER_TABLE_SIZE. The next header block starts with a
+  # dynamic table size update when the table size has to change.
+  #
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:17
+  def max_table_size=(size); end
 
   # Encodes provided value via string literal representation.
   # - http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-10#section-5.2
@@ -779,44 +785,24 @@ class HTTP2::Header::Compressor
   # * If the bit 7 of the first byte is 0, the string value is
   #   represented as a list of UTF-8 encoded octets.
   #
-  #  :never   Do not use Huffman encoding
-  #  :always  Always use Huffman encoding
-  #  :shorter Use Huffman when the result is strictly shorter
-  #
-  # @param str [String]
-  # @param buffer [String]
-  # @return [String] binary string
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:76
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:63
   def string(str, buffer = T.unsafe(nil)); end
-
-  # Set dynamic table size in EncodingContext
-  # @param size [Integer] new dynamic table size
-  #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:17
-  def table_size=(size); end
 
   private
 
-  # @param str [String]
-  # @param buffer [String]
-  # @return [String] binary string
+  # encodes +str+ into +buffer+ using Huffman encoding.
   #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:150
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:128
   def huffman_string(str, buffer = T.unsafe(nil)); end
 
-  # @param str [String]
-  # @param buffer [String]
-  # @return [String] binary string
+  # encodes +str+ into +buffer+.
   #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:168
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:144
   def plain_string(str, plain = T.unsafe(nil)); end
 
-  # @param buffer [String]
-  # @param huffman_offset [Integer] buffer offset where huffman string was introduced
-  # @return [String] binary string
+  # encodes the huffman string size from +buffer+ into the string at the offset indicated by +huffman_offset+
   #
-  # pkg:gem/http-2#lib/http/2/header/compressor.rb:177
+  # pkg:gem/http-2#lib/http/2/header/compressor.rb:151
   def set_huffman_size(buffer, huffman_offset); end
 end
 
@@ -824,63 +810,51 @@ end
 # context of the opposing peer. Decompressor must be initialized with
 # appropriate starting context based on local role: client or server.
 #
-# @example
-#   server_role = Decompressor.new(:request)
-#   client_role = Decompressor.new(:response)
-#
-# pkg:gem/http-2#lib/http/2/header/decompressor.rb:12
+# pkg:gem/http-2#lib/http/2/header/decompressor.rb:8
 class HTTP2::Header::Decompressor
   include ::HTTP2::Error
   include ::HTTP2::BufferUtils
 
-  # @param options [Hash] decoding options.  Only :table_size is effective.
-  #
-  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:19
-  def initialize(options = T.unsafe(nil)); end
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:16
+  def initialize(settings = T.unsafe(nil)); end
 
-  # Decodes and processes header commands within provided buffer.
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:22
+  def accept_invalid_headers!; end
+
+  # Decodes and processes header commands within provided +buf+.
   #
-  # @param buf [Buffer]
-  # @param frame [HTTP2::Frame, nil]
-  # @return [Array] +[[name, value], ...]
-  #
-  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:117
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:108
   def decode(buf, frame = T.unsafe(nil)); end
 
-  # Decodes header command from provided buffer.
+  # Decodes header command from provided +buf+.
   #
-  # @param buf [Buffer]
-  # @return [Hash] command
-  #
-  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:79
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:74
   def header(buf); end
 
-  # Decodes integer value from provided buffer.
-  #
-  # @param buf [String]
-  # @param n [Integer] number of available bits
-  # @return [Integer]
+  # Decodes integer value from provided +buffer+.
   #
   # pkg:gem/http-2#lib/http/2/header/decompressor.rb:34
   def integer(buf, n); end
 
-  # Decodes string value from provided buffer.
-  #
-  # @param buf [String]
-  # @return [String] UTF-8 encoded string
-  # @raise [CompressionError] when input is malformed
-  #
-  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:63
-  def string(buf); end
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:14
+  def max_header_list_size=(_arg0); end
 
-  # Set dynamic table size in EncodingContext
-  # @param size [Integer] new dynamic table size
+  # Set the maximum dynamic table +size+ allowed by our acknowledged
+  # SETTINGS_HEADER_TABLE_SIZE. When the current table is larger, the
+  # next header block has to start with a dynamic table size update.
   #
-  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:25
-  def table_size=(size); end
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:29
+  def max_table_size=(size); end
+
+  # Decodes string value from provided +buf+.
+  #
+  # raises CompressionError when input is malformed
+  #
+  # pkg:gem/http-2#lib/http/2/header/decompressor.rb:61
+  def string(buf); end
 end
 
-# pkg:gem/http-2#lib/http/2/header/decompressor.rb:16
+# pkg:gem/http-2#lib/http/2/header/decompressor.rb:12
 HTTP2::Header::Decompressor::FORBIDDEN_HEADERS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:8
@@ -888,124 +862,113 @@ class HTTP2::Header::EncodingContext
   include ::HTTP2::Error
 
   # Initializes compression context with appropriate client/server
-  # defaults and maximum size of the dynamic table.
+  # +settings+ and maximum size of the dynamic table.
   #
-  # @param options [Hash] encoding options
-  #   :table_size  Integer  maximum dynamic table size in bytes
-  #   :huffman     Symbol   :always, :never, :shorter
-  #   :index       Symbol   :all, :static, :never
+  # The dynamic table starts at +settings.table_size+ octets. The same
+  # value is the initial maximum size allowed for the table.
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:119
-  def initialize(options = T.unsafe(nil)); end
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:107
+  def initialize(settings = T.unsafe(nil)); end
 
-  # Emits command for a header.
+  # Emits command for a +field+/+value+ header.
   # Prefer static table over dynamic table.
   # Prefer exact match over name-only match.
   #
-  # +@options [:index]+ controls whether to use the dynamic table,
-  # static table, or both.
-  #  :never   Do not use dynamic table or static table reference at all.
-  #  :static  Use static table only.
-  #  :all     Use all of them.
-  #
-  # @param field [String] the header field
-  # @param value [String] the header value
-  # @return [Hash] command
-  #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:270
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:262
   def addcmd(field, value); end
 
   # Current table size in octets
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:110
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:100
   def current_table_size; end
 
-  # Finds an entry in current dynamic table by index.
-  # Note that index is zero-based in this module.
+  # Finds an entry in current dynamic table by +index+.
+  # Note that +index+ is zero-based in this module.
   #
-  # If the index is greater than the last index in the static table,
+  # If the +index+ is greater than the last index in the static table,
   # an entry in the dynamic table is dereferenced.
   #
-  # If the index is greater than the last header index, an error is raised.
+  # If the +index+ is greater than the last header index, an error is raised.
   #
-  # @param index [Integer] zero-based index in the dynamic table.
-  # @return [Array] +[key, value]+
-  #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:156
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:149
   def dereference(index); end
 
   # Duplicates current compression context
-  # @return [EncodingContext]
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:131
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:123
   def dup; end
 
-  # Plan header compression according to +@options [:index]+
-  #  :never   Do not use dynamic table or static table reference at all.
-  #  :static  Use static table only.
-  #  :all     Use all of them.
+  # Plan +headers+ compression.
   #
-  # @param headers [Array] +[[name, value], ...]+
-  # @return [Array] array of commands
+  # Emits dynamic table size updates first when the table size has to
+  # change. See #max_table_size=.
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:241
-  def encode(headers); end
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:237
+  def encode(headers, &block); end
 
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:316
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:328
   def listen_on_table; end
 
-  # Current encoding options
+  # Set the maximum dynamic table +size+ allowed by
+  # SETTINGS_HEADER_TABLE_SIZE.
   #
-  #   :table_size  Integer  maximum dynamic table size in bytes
-  #   :huffman     Symbol   :always, :never, :shorter
-  #   :index       Symbol   :all, :static, :never
+  # The current table size does not change here. It changes only with a
+  # dynamic table size update at the beginning of a header block:
+  # - an encoder emits the update in the next #encode call. It uses
+  #   +settings.table_size+, capped by this maximum.
+  # - a decoder requires the update in the next header block when the
+  #   current table size exceeds this maximum.
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:107
-  def options; end
+  # When the maximum is reduced and then increased again before the next
+  # header block, the smallest maximum has to be signalled first.
+  # - https://www.rfc-editor.org/rfc/rfc7541#section-4.2
+  #
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:321
+  def max_table_size=(size); end
 
   # Header Block Processing
   # - http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-10#section-4.1
   #
-  # @param cmd [Hash] { type:, name:, value:, index: }
-  # @return [Array, nil] +[name, value]+ header field that is added to the decoded header list,
-  #                                      or nil if +cmd[:type]+ is +:changetablesize+
-  #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:173
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:162
   def process(cmd); end
+
+  # Current encoding settings
+  #
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:97
+  def settings; end
 
   # Current table of header key-value pairs.
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:100
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:94
   def table; end
 
   # Alter dynamic table size.
   #  When the size is reduced, some headers might be evicted.
   #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:311
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:303
   def table_size=(size); end
 
   private
 
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:324
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:336
+  def encode_change_table_size; end
+
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:352
   def resize_table(cmdsize); end
 
+  # whether +cmd+ fits in the dynamic table.
+  #
   # To keep the dynamic table size lower than or equal to @limit,
   # remove one or more entries at the end of the dynamic table.
   #
-  # @param cmdsize [Integer]
-  # @return [Boolean] whether +cmd+ fits in the dynamic table.
-  #
-  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:345
+  # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:372
   def size_check?(cmdsize); end
 end
 
 # pkg:gem/http-2#lib/http/2/header/encoding_context.rb:89
-HTTP2::Header::EncodingContext::DEFAULT_OPTIONS = T.let(T.unsafe(nil), Hash)
-
-# pkg:gem/http-2#lib/http/2/header/encoding_context.rb:95
 HTTP2::Header::EncodingContext::STATIC_ALL = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/http-2#lib/http/2/header/encoding_context.rb:97
+# pkg:gem/http-2#lib/http/2/header/encoding_context.rb:91
 HTTP2::Header::EncodingContext::STATIC_NEVER = T.let(T.unsafe(nil), Array)
 
 # @private
@@ -1039,43 +1002,29 @@ module HTTP2::Header::Huffman
 
   private
 
-  # Decodes provided Huffman coded string.
+  # Decodes provided Huffman coded string in +buf+.
   #
-  # @param buf [Buffer]
-  # @return [String] binary string
-  # @raise [CompressionError] when Huffman coded string is malformed
+  # raises CompressionError when Huffman coded string is malformed
   #
-  # pkg:gem/http-2#lib/http/2/header/huffman.rb:43
+  # pkg:gem/http-2#lib/http/2/header/huffman.rb:36
   def decode(buf); end
 
-  # Encodes provided value via huffman encoding.
-  # Length is not encoded in this method.
+  # Encodes provided +str+ via huffman encoding into +buffer+ .
   #
-  # @param str [String]
-  # @param buffer [String]
-  # @return [String] binary string
-  #
-  # pkg:gem/http-2#lib/http/2/header/huffman.rb:31
+  # pkg:gem/http-2#lib/http/2/header/huffman.rb:26
   def encode(str, buffer = T.unsafe(nil)); end
 
   class << self
-    # Decodes provided Huffman coded string.
+    # Decodes provided Huffman coded string in +buf+.
     #
-    # @param buf [Buffer]
-    # @return [String] binary string
-    # @raise [CompressionError] when Huffman coded string is malformed
+    # raises CompressionError when Huffman coded string is malformed
     #
-    # pkg:gem/http-2#lib/http/2/header/huffman.rb:43
+    # pkg:gem/http-2#lib/http/2/header/huffman.rb:36
     def decode(buf); end
 
-    # Encodes provided value via huffman encoding.
-    # Length is not encoded in this method.
+    # Encodes provided +str+ via huffman encoding into +buffer+ .
     #
-    # @param str [String]
-    # @param buffer [String]
-    # @return [String] binary string
-    #
-    # pkg:gem/http-2#lib/http/2/header/huffman.rb:31
+    # pkg:gem/http-2#lib/http/2/header/huffman.rb:26
     def encode(str, buffer = T.unsafe(nil)); end
   end
 end
@@ -1086,10 +1035,10 @@ HTTP2::Header::Huffman::BITS_AT_ONCE = T.let(T.unsafe(nil), Integer)
 # Huffman table as specified in
 # - http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-10#appendix-B
 #
-# pkg:gem/http-2#lib/http/2/header/huffman.rb:70
+# pkg:gem/http-2#lib/http/2/header/huffman.rb:63
 HTTP2::Header::Huffman::CODES = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/http-2#lib/http/2/header/huffman.rb:330
+# pkg:gem/http-2#lib/http/2/header/huffman.rb:323
 HTTP2::Header::Huffman::ENCODE_TABLE = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/http-2#lib/http/2/header/huffman.rb:20
@@ -1131,6 +1080,12 @@ HTTP2::Header::STATIC = T.let(T.unsafe(nil), Hash)
 # pkg:gem/http-2#lib/http/2/header.rb:26
 HTTP2::Header::STATICH = T.let(T.unsafe(nil), Hash)
 
+# pkg:gem/http-2#lib/http/2/settings.rb:4
+HTTP2::MAX_HEADER_LIST_SIZE = T.let(T.unsafe(nil), Integer)
+
+# pkg:gem/http-2#lib/http/2/settings.rb:5
+HTTP2::MAX_HEADER_TABLE_SIZE = T.let(T.unsafe(nil), Integer)
+
 # 4
 #
 # pkg:gem/http-2#lib/http/2/framer.rb:20
@@ -1144,13 +1099,13 @@ HTTP2::PRIORITY = T.let(T.unsafe(nil), Integer)
 # this mixin handles backwards-compatibility for the new packing options
 # shipping with ruby 3.3 (see https://docs.ruby-lang.org/en/3.3/packed_data_rdoc.html)
 #
-# pkg:gem/http-2#lib/http/2/extensions.rb:51
+# pkg:gem/http-2#lib/http/2/extensions.rb:58
 module HTTP2::PackingExtensions
-  # pkg:gem/http-2#lib/http/2/extensions.rb:65
+  # pkg:gem/http-2#lib/http/2/extensions.rb:72
   def pack(array_to_pack, template, buffer:, offset: T.unsafe(nil)); end
 end
 
-# pkg:gem/http-2#lib/http/2/connection.rb:38
+# pkg:gem/http-2#lib/http/2/connection.rb:16
 HTTP2::REQUEST_MANDATORY_HEADERS = T.let(T.unsafe(nil), Array)
 
 # 1
@@ -1158,16 +1113,15 @@ HTTP2::REQUEST_MANDATORY_HEADERS = T.let(T.unsafe(nil), Array)
 # pkg:gem/http-2#lib/http/2/framer.rb:18
 HTTP2::RESERVED = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/http-2#lib/http/2/connection.rb:40
+# pkg:gem/http-2#lib/http/2/connection.rb:18
 HTTP2::RESPONSE_MANDATORY_HEADERS = T.let(T.unsafe(nil), Array)
 
 # Default values for SETTINGS frame, as defined by the spec.
-# Default values for SETTINGS frame, as defined by the spec.
 #
-# pkg:gem/http-2#lib/http/2/connection.rb:14
+# pkg:gem/http-2#lib/http/2/settings.rb:8
 HTTP2::SPEC_DEFAULT_CONNECTION_SETTINGS = T.let(T.unsafe(nil), Hash)
 
-# pkg:gem/http-2#lib/http/2/connection.rb:44
+# pkg:gem/http-2#lib/http/2/connection.rb:22
 HTTP2::STREAM_OPEN_STATES = T.let(T.unsafe(nil), Array)
 
 # HTTP 2.0 server connection class that implements appropriate header
@@ -1196,13 +1150,13 @@ class HTTP2::Server < ::HTTP2::Connection
   # pkg:gem/http-2#lib/http/2/server.rb:27
   def initialize(settings = T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/server.rb:117
+  # pkg:gem/http-2#lib/http/2/server.rb:114
   def activate_stream(**_arg0); end
 
   # pkg:gem/http-2#lib/http/2/server.rb:24
   def origin_set; end
 
-  # pkg:gem/http-2#lib/http/2/server.rb:123
+  # pkg:gem/http-2#lib/http/2/server.rb:120
   def origin_set=(origins); end
 
   #   GET / HTTP/1.1
@@ -1242,7 +1196,7 @@ class HTTP2::Server < ::HTTP2::Connection
 
   private
 
-  # pkg:gem/http-2#lib/http/2/server.rb:130
+  # pkg:gem/http-2#lib/http/2/server.rb:127
   def connection_settings(frame); end
 
   # Handle locally initiated server-push event emitted by the stream.
@@ -1252,11 +1206,91 @@ class HTTP2::Server < ::HTTP2::Connection
   # @param flags Integer
   # @param callback [Proc]
   #
-  # pkg:gem/http-2#lib/http/2/server.rb:147
+  # pkg:gem/http-2#lib/http/2/server.rb:144
   def promise(parent, headers, flags); end
 
-  # pkg:gem/http-2#lib/http/2/server.rb:137
+  # pkg:gem/http-2#lib/http/2/server.rb:134
   def verify_pseudo_headers(frame); end
+end
+
+# pkg:gem/http-2#lib/http/2/settings.rb:19
+class HTTP2::Settings < ::Struct
+  # pkg:gem/http-2#lib/http/2/settings.rb:33
+  def initialize(settings_header_table_size: T.unsafe(nil), settings_enable_push: T.unsafe(nil), settings_max_concurrent_streams: T.unsafe(nil), settings_initial_window_size: T.unsafe(nil), settings_max_frame_size: T.unsafe(nil), settings_max_header_list_size: T.unsafe(nil), huffman: T.unsafe(nil), index: T.unsafe(nil), table_size: T.unsafe(nil)); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:49
+  def connection_settings; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def huffman; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def huffman=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def index; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def index=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_enable_push; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_enable_push=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_header_table_size; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_header_table_size=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_initial_window_size; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_initial_window_size=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_concurrent_streams; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_concurrent_streams=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_frame_size; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_frame_size=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_header_list_size; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def settings_max_header_list_size=(_); end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def table_size; end
+
+  # pkg:gem/http-2#lib/http/2/settings.rb:19
+  def table_size=(_); end
+
+  class << self
+    # pkg:gem/http-2#lib/http/2/settings.rb:19
+    def [](*_arg0); end
+
+    # pkg:gem/http-2#lib/http/2/settings.rb:19
+    def inspect; end
+
+    # pkg:gem/http-2#lib/http/2/settings.rb:19
+    def keyword_init?; end
+
+    # pkg:gem/http-2#lib/http/2/settings.rb:19
+    def members; end
+
+    # pkg:gem/http-2#lib/http/2/settings.rb:19
+    def new(*_arg0); end
+  end
 end
 
 # A single HTTP 2.0 connection can multiplex multiple streams in parallel:
@@ -1314,23 +1348,23 @@ class HTTP2::Stream
   # @param parent [Stream]
   # @param state [Symbol]
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:78
+  # pkg:gem/http-2#lib/http/2/stream.rb:81
   def initialize(connection:, id:, weight: T.unsafe(nil), dependency: T.unsafe(nil), exclusive: T.unsafe(nil), parent: T.unsafe(nil), state: T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:173
+  # pkg:gem/http-2#lib/http/2/stream.rb:174
   def <<(frame); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:189
+  # pkg:gem/http-2#lib/http/2/stream.rb:190
   def calculate_content_length(data_length); end
 
   # Sends a RST_STREAM indicating that the stream is no longer needed.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:293
+  # pkg:gem/http-2#lib/http/2/stream.rb:294
   def cancel; end
 
   # Chunk data into max_size, yield each chunk, then return final chunk
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:274
+  # pkg:gem/http-2#lib/http/2/stream.rb:275
   def chunk_data(payload, max_size); end
 
   # Sends a RST_STREAM frame which closes current stream - this does not
@@ -1338,15 +1372,15 @@ class HTTP2::Stream
   #
   # @param error [:Symbol] optional reason why stream was closed
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:288
+  # pkg:gem/http-2#lib/http/2/stream.rb:289
   def close(error = T.unsafe(nil)); end
 
   # Reason why connection was closed.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:63
+  # pkg:gem/http-2#lib/http/2/stream.rb:66
   def closed; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:107
+  # pkg:gem/http-2#lib/http/2/stream.rb:108
   def closed?; end
 
   # Sends DATA frame containing response payload.
@@ -1354,10 +1388,10 @@ class HTTP2::Stream
   # @param payload [String]
   # @param end_stream [Boolean] indicates last response DATA frame
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:256
+  # pkg:gem/http-2#lib/http/2/stream.rb:257
   def data(payload, end_stream: T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:56
+  # pkg:gem/http-2#lib/http/2/stream.rb:59
   def dependency; end
 
   # Sends a HEADERS frame containing HTTP response headers.
@@ -1367,41 +1401,41 @@ class HTTP2::Stream
   # @param end_headers [Boolean] indicates that no more headers will be sent
   # @param end_stream [Boolean] indicates that no payload will be sent
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:228
+  # pkg:gem/http-2#lib/http/2/stream.rb:229
   def headers(headers, end_headers: T.unsafe(nil), end_stream: T.unsafe(nil)); end
 
   # Stream ID (odd for client initiated streams, even otherwise).
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:46
+  # pkg:gem/http-2#lib/http/2/stream.rb:49
   def id; end
 
   # Size of current stream flow control window.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:59
+  # pkg:gem/http-2#lib/http/2/stream.rb:62
   def local_window; end
 
   # Request parent stream of push stream.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:52
+  # pkg:gem/http-2#lib/http/2/stream.rb:55
   def parent; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:235
+  # pkg:gem/http-2#lib/http/2/stream.rb:236
   def promise(headers, end_headers: T.unsafe(nil), &block); end
 
   # Processes incoming HTTP 2.0 frames. The frames must be decoded upstream.
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:114
+  # pkg:gem/http-2#lib/http/2/stream.rb:115
   def receive(frame); end
 
   # Sends a RST_STREAM indicating that the stream has been refused prior
   # to performing any application processing.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:299
+  # pkg:gem/http-2#lib/http/2/stream.rb:300
   def refuse; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:56
+  # pkg:gem/http-2#lib/http/2/stream.rb:59
   def remote_window; end
 
   # Sends a PRIORITY frame with new stream priority value (can only be
@@ -1410,7 +1444,7 @@ class HTTP2::Stream
   # @param weight [Integer] new stream weight value
   # @param dependency [Integer] new stream dependency stream
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:247
+  # pkg:gem/http-2#lib/http/2/stream.rb:248
   def reprioritize(weight: T.unsafe(nil), dependency: T.unsafe(nil), exclusive: T.unsafe(nil)); end
 
   # Processes outgoing HTTP 2.0 frames. Data frames may be automatically
@@ -1419,30 +1453,30 @@ class HTTP2::Stream
   #
   # @param frame [Hash]
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:203
+  # pkg:gem/http-2#lib/http/2/stream.rb:204
   def send(frame); end
 
   # Stream state as defined by HTTP 2.0.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:49
+  # pkg:gem/http-2#lib/http/2/stream.rb:52
   def state; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:175
+  # pkg:gem/http-2#lib/http/2/stream.rb:176
   def verify_trailers(frame); end
 
   # Stream priority as set by initiator.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:55
+  # pkg:gem/http-2#lib/http/2/stream.rb:58
   def weight; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:60
+  # pkg:gem/http-2#lib/http/2/stream.rb:63
   def window; end
 
   # Sends a WINDOW_UPDATE frame to the peer.
   #
   # @param increment [Integer]
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:306
+  # pkg:gem/http-2#lib/http/2/stream.rb:307
   def window_update(increment); end
 
   private
@@ -1451,31 +1485,31 @@ class HTTP2::Stream
   # states count toward the maximum number of streams that an endpoint is
   # permitted to open.
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:631
+  # pkg:gem/http-2#lib/http/2/stream.rb:632
   def activate_stream_in_conn; end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:637
+  # pkg:gem/http-2#lib/http/2/stream.rb:638
   def close_stream_in_conn(*args); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:642
+  # pkg:gem/http-2#lib/http/2/stream.rb:643
   def complete_transition(frame); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:669
+  # pkg:gem/http-2#lib/http/2/stream.rb:670
   def end_stream?(frame); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:686
+  # pkg:gem/http-2#lib/http/2/stream.rb:687
   def error(error = T.unsafe(nil), msg: T.unsafe(nil)); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:605
+  # pkg:gem/http-2#lib/http/2/stream.rb:606
   def event(newstate); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:688
+  # pkg:gem/http-2#lib/http/2/stream.rb:689
   def manage_state(frame); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:653
+  # pkg:gem/http-2#lib/http/2/stream.rb:654
   def process_priority(frame); end
 
-  # pkg:gem/http-2#lib/http/2/stream.rb:678
+  # pkg:gem/http-2#lib/http/2/stream.rb:679
   def stream_error(error = T.unsafe(nil), msg: T.unsafe(nil)); end
 
   # HTTP 2.0 Stream States
@@ -1492,11 +1526,16 @@ class HTTP2::Stream
   # `---------------------->|        |<----------------------'
   #                         +--------+
   #
-  # pkg:gem/http-2#lib/http/2/stream.rb:347
+  # pkg:gem/http-2#lib/http/2/stream.rb:348
   def transition(frame, sending); end
 end
 
-# pkg:gem/http-2#lib/http/2/stream.rb:43
+# Default stream priority (lower values are higher priority).
+#
+# pkg:gem/http-2#lib/http/2/stream.rb:44
+HTTP2::Stream::DEFAULT_WEIGHT = T.let(T.unsafe(nil), Integer)
+
+# pkg:gem/http-2#lib/http/2/stream.rb:46
 HTTP2::Stream::STREAM_OPEN_STATES = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/http-2#lib/http/2/version.rb:4
