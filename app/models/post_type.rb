@@ -15,8 +15,9 @@
 #
 # Indexes
 #
-#  index_post_types_on_world_id  (world_id)
-#  index_post_types_uniqueness   (world_id,label) UNIQUE
+#  index_post_types_on_id_and_world_id  (id,world_id) UNIQUE
+#  index_post_types_on_world_id         (world_id)
+#  index_post_types_uniqueness          (world_id,label) UNIQUE
 #
 # Foreign Keys
 #

@@ -17,6 +17,7 @@
 #
 # Indexes
 #
+#  index_world_keys_on_id_and_world_id      (id,world_id) UNIQUE
 #  index_world_keys_on_invitation_id        (invitation_id)
 #  index_world_keys_on_muted_post_type_ids  (muted_post_type_ids) USING gin
 #  index_world_keys_on_recipient_id         (recipient_id)
@@ -25,7 +26,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (invitation_id => world_invitations.id)
+#  fk_rails_...  ([invitation_id, world_id] => world_invitations[id, world_id])
 #  fk_rails_...  (recipient_id => users.id)
 #  fk_rails_...  (world_id => worlds.id)
 #
