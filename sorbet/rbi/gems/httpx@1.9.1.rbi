@@ -29,12 +29,12 @@ module HTTPX::AltSvc
   def lookup(origin, ttl); end
 
   # pkg:gem/httpx#lib/httpx/altsvc.rb:124
-  def parse(altsvc); end
+  def parse(altsvc, host: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/altsvc.rb:157
-  def parse_altsvc_origin(alt_proto, alt_origin); end
+  # pkg:gem/httpx#lib/httpx/altsvc.rb:169
+  def parse_altsvc_origin(alt_proto, alt_origin, host: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/altsvc.rb:148
+  # pkg:gem/httpx#lib/httpx/altsvc.rb:160
   def parse_altsvc_scheme(alt_proto); end
 
   class << self
@@ -51,12 +51,12 @@ module HTTPX::AltSvc
     def lookup(origin, ttl); end
 
     # pkg:gem/httpx#lib/httpx/altsvc.rb:124
-    def parse(altsvc); end
+    def parse(altsvc, host: T.unsafe(nil)); end
 
-    # pkg:gem/httpx#lib/httpx/altsvc.rb:157
-    def parse_altsvc_origin(alt_proto, alt_origin); end
+    # pkg:gem/httpx#lib/httpx/altsvc.rb:169
+    def parse_altsvc_origin(alt_proto, alt_origin, host: T.unsafe(nil)); end
 
-    # pkg:gem/httpx#lib/httpx/altsvc.rb:148
+    # pkg:gem/httpx#lib/httpx/altsvc.rb:160
     def parse_altsvc_scheme(alt_proto); end
   end
 end
@@ -119,7 +119,7 @@ class HTTPX::Buffer
   # pkg:gem/httpx#lib/httpx/buffer.rb:23
   def bytesize(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/buffer.rb:53
+  # pkg:gem/httpx#lib/httpx/buffer.rb:58
   def capacity; end
 
   # pkg:gem/httpx#lib/httpx/buffer.rb:25
@@ -128,7 +128,7 @@ class HTTPX::Buffer
   # pkg:gem/httpx#lib/httpx/buffer.rb:21
   def empty?(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/buffer.rb:49
+  # pkg:gem/httpx#lib/httpx/buffer.rb:54
   def full?; end
 
   # pkg:gem/httpx#lib/httpx/buffer.rb:29
@@ -137,7 +137,7 @@ class HTTPX::Buffer
   # pkg:gem/httpx#lib/httpx/buffer.rb:27
   def replace(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/buffer.rb:57
+  # pkg:gem/httpx#lib/httpx/buffer.rb:62
   def shift!(fin); end
 
   # pkg:gem/httpx#lib/httpx/buffer.rb:17
@@ -145,6 +145,11 @@ class HTTPX::Buffer
 
   # pkg:gem/httpx#lib/httpx/buffer.rb:19
   def to_str(*_arg0, **_arg1, &_arg2); end
+
+  private
+
+  # pkg:gem/httpx#lib/httpx/buffer.rb:49
+  def initialize_dup(other); end
 end
 
 # pkg:gem/httpx#lib/httpx/callbacks.rb:4
@@ -153,7 +158,7 @@ module HTTPX::Callbacks
   def callbacks_for?(type); end
 
   # pkg:gem/httpx#lib/httpx/callbacks.rb:17
-  def emit(type, *args); end
+  def emit(type, *_arg1, **_arg2, &_arg3); end
 
   # pkg:gem/httpx#lib/httpx/callbacks.rb:5
   def on(type, &action); end
@@ -172,72 +177,74 @@ end
 #
 # pkg:gem/httpx#lib/httpx/chainable.rb:6
 module HTTPX::Chainable
-  # pkg:gem/httpx#lib/httpx/chainable.rb:20
+  # returns a new session with the "Accept" header set to +type+.
+  #
+  # pkg:gem/httpx#lib/httpx/chainable.rb:23
   def accept(type); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def connect(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def delete(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def get(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def head(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def options(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def patch(*uri, **options); end
 
   # returns a new instance loaded with the +pl+ plugin and +options+.
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:30
+  # pkg:gem/httpx#lib/httpx/chainable.rb:33
   def plugin(pl, options = T.unsafe(nil), &blk); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def post(*uri, **options); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def put(*uri, **options); end
 
   # delegates to the default session (see HTTPX::Session#request).
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:16
-  def request(*args, **options); end
+  # pkg:gem/httpx#lib/httpx/chainable.rb:18
+  def request(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:8
+  # pkg:gem/httpx#lib/httpx/chainable.rb:9
   def trace(*uri, **options); end
 
   # returns a new instance loaded with +options+.
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:38
+  # pkg:gem/httpx#lib/httpx/chainable.rb:41
   def with(options, &blk); end
 
   # delegates to the default session (see HTTPX::Session#wrap).
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:25
+  # pkg:gem/httpx#lib/httpx/chainable.rb:28
   def wrap(&blk); end
 
   private
 
   # returns a default instance of HTTPX::Session.
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:50
+  # pkg:gem/httpx#lib/httpx/chainable.rb:53
   def branch(options, &blk); end
 
   # returns default instance of HTTPX::Options.
   #
-  # pkg:gem/httpx#lib/httpx/chainable.rb:45
+  # pkg:gem/httpx#lib/httpx/chainable.rb:48
   def default_options; end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:56
+  # pkg:gem/httpx#lib/httpx/chainable.rb:59
   def method_missing(meth, *args, **options, &blk); end
 
-  # pkg:gem/httpx#lib/httpx/chainable.rb:84
+  # pkg:gem/httpx#lib/httpx/chainable.rb:87
   def respond_to_missing?(meth, *_arg1); end
 end
 
@@ -275,127 +282,138 @@ class HTTPX::Connection
   include ::HTTPX::Callbacks
   extend ::Forwardable
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:47
+  # pkg:gem/httpx#lib/httpx/connection.rb:46
   def initialize(uri, options); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:93
+  # pkg:gem/httpx#lib/httpx/connection.rb:124
   def addresses; end
 
   # this is a semi-private method, to be used by the resolver
   # to initiate the io object.
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:85
+  # pkg:gem/httpx#lib/httpx/connection.rb:116
   def addresses=(addrs); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:97
+  # pkg:gem/httpx#lib/httpx/connection.rb:128
   def addresses?; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:215
+  # pkg:gem/httpx#lib/httpx/connection.rb:251
   def call; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:261
+  # pkg:gem/httpx#lib/httpx/connection.rb:322
   def close; end
+
+  # whether the connection can be removed from the selector.
+  #
+  # pkg:gem/httpx#lib/httpx/connection.rb:220
+  def closed_for_select?; end
 
   # coalescable connections need to be mergeable!
   # but internally, #mergeable? is called before #coalescable?
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:138
+  # pkg:gem/httpx#lib/httpx/connection.rb:172
   def coalescable?(connection); end
 
   # coalesces +self+ into +connection+.
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:125
+  # pkg:gem/httpx#lib/httpx/connection.rb:159
   def coalesce!(connection); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:132
+  # pkg:gem/httpx#lib/httpx/connection.rb:166
   def coalesced?; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:182
+  # pkg:gem/httpx#lib/httpx/connection.rb:215
   def connecting?; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:41
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
+  def current_selector; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
   def current_selector=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:43
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
   def current_session; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:43
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
   def current_session=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:381
+  # pkg:gem/httpx#lib/httpx/connection.rb:452
   def deactivate; end
 
   # disconnects from the current session it's attached to
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:416
+  # pkg:gem/httpx#lib/httpx/connection.rb:490
   def disconnect; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:37
   def empty?(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:43
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
   def family; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:43
+  # pkg:gem/httpx#lib/httpx/connection.rb:42
   def family=(_arg0); end
 
   # bypasses state machine rules while setting the connection in the
   # :closed state.
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:286
+  # pkg:gem/httpx#lib/httpx/connection.rb:348
   def force_close(delete_pending = T.unsafe(nil)); end
 
   # bypasses the state machine to force closing of connections still connecting.
   # **only** used for Happy Eyeballs v2.
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:304
+  # pkg:gem/httpx#lib/httpx/connection.rb:365
   def force_reset(cloned = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:407
+  # pkg:gem/httpx#lib/httpx/connection.rb:481
   def handle_connect_error(error); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:389
+  # pkg:gem/httpx#lib/httpx/connection.rb:463
   def handle_socket_timeout(interval); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:364
+  # pkg:gem/httpx#lib/httpx/connection.rb:435
   def idling; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:186
+  # pkg:gem/httpx#lib/httpx/connection.rb:224
   def inflight?; end
 
-  # :nocov:
+  # pkg:gem/httpx#lib/httpx/connection.rb:318
+  def initial_call; end
+
+  # simplecov:disable
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:460
+  # pkg:gem/httpx#lib/httpx/connection.rb:563
   def inspect; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:195
+  # pkg:gem/httpx#lib/httpx/connection.rb:233
   def interests; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def io; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:176
+  # pkg:gem/httpx#lib/httpx/connection.rb:209
   def io_connected?; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:101
+  # pkg:gem/httpx#lib/httpx/connection.rb:132
   def match?(uri, options); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:149
+  # pkg:gem/httpx#lib/httpx/connection.rb:183
   def merge(connection); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:113
+  # pkg:gem/httpx#lib/httpx/connection.rb:144
   def mergeable?(connection); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:426
+  # pkg:gem/httpx#lib/httpx/connection.rb:503
   def on_connect_error(e); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:439
+  # pkg:gem/httpx#lib/httpx/connection.rb:521
   def on_error(error, request = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:434
+  # pkg:gem/httpx#lib/httpx/connection.rb:511
   def on_io_error(e); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:385
+  # pkg:gem/httpx#lib/httpx/connection.rb:459
   def open?; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
@@ -407,43 +425,52 @@ class HTTPX::Connection
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def origins; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:79
+  # pkg:gem/httpx#lib/httpx/connection.rb:110
   def peer; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def pending; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:163
+  # returns the number of pending requests both in the connection as well as parser
+  # pending queues
+  #
+  # pkg:gem/httpx#lib/httpx/connection.rb:199
+  def pending_count; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:203
   def purge_pending(&block); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:310
+  # pkg:gem/httpx#lib/httpx/connection.rb:371
   def reset; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:331
+  # pkg:gem/httpx#lib/httpx/connection.rb:395
   def send(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:395
+  # pkg:gem/httpx#lib/httpx/connection.rb:469
   def sibling=(connection); end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def state; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:267
+  # pkg:gem/httpx#lib/httpx/connection.rb:328
   def terminate; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:354
+  # pkg:gem/httpx#lib/httpx/connection.rb:422
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:211
+  # pkg:gem/httpx#lib/httpx/connection.rb:247
   def to_io; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def type; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:377
+  # pkg:gem/httpx#lib/httpx/connection.rb:448
   def used?; end
 
   protected
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:39
+  def read_buffer; end
 
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def sibling; end
@@ -451,99 +478,144 @@ class HTTPX::Connection
   # pkg:gem/httpx#lib/httpx/connection.rb:39
   def ssl_session; end
 
+  # pkg:gem/httpx#lib/httpx/connection.rb:39
+  def write_buffer; end
+
   private
 
   # returns an HTTPX::Connection for the negotiated Alternative Service (or none).
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:901
+  # pkg:gem/httpx#lib/httpx/connection.rb:1038
   def build_altsvc_connection(alt_origin, origin, alt_params); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:657
+  # pkg:gem/httpx#lib/httpx/connection.rb:763
   def build_parser(protocol = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:931
+  # pkg:gem/httpx#lib/httpx/connection.rb:1068
   def build_socket(addrs = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:855
+  # pkg:gem/httpx#lib/httpx/connection.rb:1130
+  def clear_pending_requests; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:992
   def close_sibling; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:471
+  # pkg:gem/httpx#lib/httpx/connection.rb:594
   def connect; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:475
+  # the time left until the attempt to connect to the current address should be abandoned.
+  #
+  # pkg:gem/httpx#lib/httpx/connection.rb:575
+  def connect_attempt_time_left; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:583
+  def connect_next(error); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:598
   def consume; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:643
-  def enqueue_pending_requests_from_parser(parser); end
-
-  # pkg:gem/httpx#lib/httpx/connection.rb:841
+  # pkg:gem/httpx#lib/httpx/connection.rb:971
   def force_purge; end
 
   # recover internal state and emit all relevant error responses when +error+ was raised.
   # this takes an optiona +request+ which may have already been handled and can be opted out
   # in the state recovery process.
   #
-  # pkg:gem/httpx#lib/httpx/connection.rb:992
+  # pkg:gem/httpx#lib/httpx/connection.rb:1148
   def handle_error(error, request = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:770
+  # pkg:gem/httpx#lib/httpx/connection.rb:907
   def handle_transition(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:887
+  # dupped initialization
+  #
+  # pkg:gem/httpx#lib/httpx/connection.rb:89
+  def initialize_dup(orig); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1024
   def initialize_type(uri, options); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:978
-  def no_more_requests_loop_check; end
+  # true when there are no more pending nor inflight (in parser) requests
+  #
+  # pkg:gem/httpx#lib/httpx/connection.rb:1135
+  def no_more_requests?; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:623
+  # pkg:gem/httpx#lib/httpx/connection.rb:1117
+  def no_more_selector_check; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1144
+  def no_requests_to_handle?; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:858
+  def on_parser_error(request, error); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:745
   def parser; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1114
+  # pkg:gem/httpx#lib/httpx/connection.rb:1307
   def parser_type(protocol); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:955
+  # pkg:gem/httpx#lib/httpx/connection.rb:1092
   def ping(_request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:970
+  # pkg:gem/httpx#lib/httpx/connection.rb:1110
   def pong; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:873
+  # pkg:gem/httpx#lib/httpx/connection.rb:1010
   def purge_after_closed; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1065
+  # pkg:gem/httpx#lib/httpx/connection.rb:1220
   def read_timeout_callback(request, timeout, error_type = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:617
+  # pkg:gem/httpx#lib/httpx/connection.rb:985
+  def reset_ping_timer; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:738
   def send_pending; end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:627
-  def send_request_to_parser(request); end
+  # pkg:gem/httpx#lib/httpx/connection.rb:749
+  def send_request_to_parser(request, head = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:664
+  # pkg:gem/httpx#lib/httpx/connection.rb:1263
+  def set_connecting_request_timeout(request); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1273
+  def set_connecting_total_request_timeout(request); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1285
+  def set_connection_timeout(label, request, timeout, start_event, finish_events, &callback); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1176
+  def set_connection_timeouts(request); end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:770
   def set_parser_callbacks(parser); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1026
+  # pkg:gem/httpx#lib/httpx/connection.rb:1181
   def set_request_read_timeout(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1046
+  # pkg:gem/httpx#lib/httpx/connection.rb:1201
   def set_request_request_timeout(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1088
+  # pkg:gem/httpx#lib/httpx/connection.rb:1243
   def set_request_timeout(label, request, timeout, start_event, finish_events, &callback); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1018
+  # pkg:gem/httpx#lib/httpx/connection.rb:1169
   def set_request_timeouts(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1076
+  # pkg:gem/httpx#lib/httpx/connection.rb:1231
   def set_request_total_request_timeout(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1036
+  # pkg:gem/httpx#lib/httpx/connection.rb:1191
   def set_request_write_timeout(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:749
+  # pkg:gem/httpx#lib/httpx/connection.rb:881
   def transition(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/connection.rb:1056
+  # pkg:gem/httpx#lib/httpx/connection.rb:589
+  def try_connect; end
+
+  # pkg:gem/httpx#lib/httpx/connection.rb:1211
   def write_timeout_callback(request, timeout); end
 end
 
@@ -553,27 +625,27 @@ class HTTPX::Connection::HTTP1
   include ::HTTPX::Loggable
 
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:23
-  def initialize(buffer, options); end
+  def initialize(buffer, pending, options); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:91
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:94
   def <<(data); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:71
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:73
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:107
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:110
   def consume; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:188
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:185
   def dispatch(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:80
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:83
   def empty?; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:76
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:79
   def exhausted?; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:223
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:217
   def handle_error(ex, request = T.unsafe(nil)); end
 
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:40
@@ -585,29 +657,32 @@ class HTTPX::Connection::HTTP1
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:21
   def max_concurrent_requests=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:179
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:254
+  def no_more_requests?; end
+
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:176
   def on_complete; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:160
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:163
   def on_data(chunk); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:126
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:129
   def on_headers(h); end
 
   # HTTP Parser callbacks
   #
   # must be public methods, or else they won't be reachable
   #
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:122
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:125
   def on_start; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:148
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:151
   def on_trailers(h); end
 
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:19
   def pending; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:251
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:245
   def ping; end
 
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:19
@@ -616,51 +691,53 @@ class HTTPX::Connection::HTTP1
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:50
   def reset; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:61
+  # move incompleted requests back to pending queue.
+  #
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:57
   def reset_requests; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:95
-  def send(request); end
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:98
+  def send(request, head = T.unsafe(nil)); end
 
   # pkg:gem/httpx#lib/httpx/connection/http1.rb:36
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:257
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:250
   def waiting_for_ping?; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:418
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:411
   def capitalized(field); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:299
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:292
   def disable; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:306
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:299
   def disable_pipelining; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:360
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:353
   def handle(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:387
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:380
   def join_body(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:377
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:370
   def join_headers(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:410
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:403
   def join_headers2(request, headers); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:373
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:366
   def join_headline(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:402
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:395
   def join_trailers(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:263
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:260
   def manage_connection(request, response); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http1.rb:325
+  # pkg:gem/httpx#lib/httpx/connection/http1.rb:318
   def set_protocol_headers(request); end
 end
 
@@ -678,141 +755,153 @@ class HTTPX::Connection::HTTP2
   include ::HTTPX::Callbacks
   include ::HTTPX::Loggable
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:33
-  def initialize(buffer, options); end
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:53
+  def initialize(buffer, pending, options); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:111
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:181
   def <<(data); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:95
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:135
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:135
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:219
   def consume; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:103
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:173
   def empty?; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:107
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:177
   def exhausted?; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:143
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:229
   def handle_error(ex, request = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:54
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:76
   def interests; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:31
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:310
+  def no_more_requests?; end
+
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:51
   def pending; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:163
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:299
   def ping; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:222
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:369
   def reset; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:174
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:314
   def reset_requests; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:115
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:197
   def send(request, head = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:31
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:51
   def streams; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:48
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:70
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:170
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:306
   def waiting_for_ping?; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:178
-  def can_buffer_more_requests?; end
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:324
+  def can_buffer_pending_requests?; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:296
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:697
+  def emit_stream_error(stream, request, error); end
+
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:453
   def end_stream?(request, next_chunk); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:446
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:631
   def frame_with_extra_info(frame); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:190
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:337
   def handle(request, stream); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:225
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:372
   def handle_stream(stream, request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:202
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:349
   def init_connection; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:269
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:416
   def join_body(stream, request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:243
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:390
   def join_headers(stream, request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:257
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:404
   def join_trailers(stream, request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:490
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:675
   def on_altsvc(origin, frame); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:413
-  def on_close(_last_frame, error, _payload); end
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:594
+  def on_close(last_stream_id, error, _payload); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:402
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:583
   def on_frame(bytes); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:441
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:626
   def on_frame_received(frame); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:436
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:621
   def on_frame_sent(frame); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:502
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:687
   def on_origin(origin); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:506
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:691
   def on_pong(ping); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:498
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:683
   def on_promise(stream); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:406
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:587
   def on_settings(*_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:366
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:536
   def on_stream_close(stream, request, error); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:345
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:504
   def on_stream_data(stream, request, data); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:356
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:526
   def on_stream_half_close(stream, request); end
 
   # HTTP/2 Callbacks
   #
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:304
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:461
   def on_stream_headers(stream, request, h); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:351
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:521
   def on_stream_refuse(stream, request, error); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:338
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:497
   def on_stream_trailers(stream, request, response, h); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:290
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:447
   def send_chunk(request, stream, chunk, next_chunk); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:184
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:331
   def send_pending; end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:234
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:381
   def set_protocol_headers(request); end
 
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:512
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:703
   def teardown(request = T.unsafe(nil)); end
+
+  # whether there are PING acks, or streams waiting for more data
+  # (that can be a response or WINDOW_UPDATE frames).
+  #
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:320
+  def waiting_for_peer?; end
 end
 
 # pkg:gem/httpx#lib/httpx/connection/http2.rb:13
@@ -823,9 +912,18 @@ end
 
 # pkg:gem/httpx#lib/httpx/connection/http2.rb:25
 class HTTPX::Connection::HTTP2::GoawayError < ::HTTPX::Connection::HTTP2::Error
-  # pkg:gem/httpx#lib/httpx/connection/http2.rb:26
-  def initialize(code = T.unsafe(nil)); end
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:28
+  def initialize(code, last_stream_id); end
+
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:34
+  def last_stream_id; end
+
+  # pkg:gem/httpx#lib/httpx/connection/http2.rb:40
+  def unrecoverable?; end
 end
+
+# pkg:gem/httpx#lib/httpx/connection/http2.rb:26
+HTTPX::Connection::HTTP2::GoawayError::UNRECOVERABLE_ERRORS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/httpx#lib/httpx/connection/http2.rb:11
 HTTPX::Connection::HTTP2::MAX_CONCURRENT_REQUESTS = T.let(T.unsafe(nil), Integer)
@@ -836,14 +934,20 @@ class HTTPX::Connection::HTTP2::PingError < ::HTTPX::Connection::HTTP2::Error
   def initialize; end
 end
 
+# pkg:gem/httpx#lib/httpx/connection/http2.rb:48
+class HTTPX::Connection::HTTP2::RefusedStreamError < ::HTTPX::Connection::HTTP2::RstStreamError; end
+
+# pkg:gem/httpx#lib/httpx/connection/http2.rb:45
+class HTTPX::Connection::HTTP2::RstStreamError < ::HTTPX::Connection::HTTP2::Error; end
+
 # pkg:gem/httpx#lib/httpx/errors.rb:9
 class HTTPX::ConnectionError < ::HTTPX::Error; end
 
 # Helper class which decodes the HTTP "content-type" header.
 #
-# pkg:gem/httpx#lib/httpx/response.rb:217
+# pkg:gem/httpx#lib/httpx/response.rb:216
 class HTTPX::ContentType
-  # pkg:gem/httpx#lib/httpx/response.rb:221
+  # pkg:gem/httpx#lib/httpx/response.rb:219
   def initialize(header_value); end
 
   # returns the charset declared in the header.
@@ -851,27 +955,24 @@ class HTTPX::ContentType
   #   ContentType.new("application/json; charset=utf-8").charset #=> "utf-8"
   #   ContentType.new("text/plain").charset #=> nil
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:242
+  # pkg:gem/httpx#lib/httpx/response.rb:240
   def charset; end
 
   # returns the mime type declared in the header.
   #
   #   ContentType.new("application/json; charset=utf-8").mime_type #=> "application/json"
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:230
+  # pkg:gem/httpx#lib/httpx/response.rb:228
   def mime_type; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/response.rb:252
+  # pkg:gem/httpx#lib/httpx/response.rb:250
   def load; end
 end
 
-# pkg:gem/httpx#lib/httpx/response.rb:219
-HTTPX::ContentType::CHARSET_RE = T.let(T.unsafe(nil), Regexp)
-
-# pkg:gem/httpx#lib/httpx/response.rb:218
-HTTPX::ContentType::MIME_TYPE_RE = T.let(T.unsafe(nil), Regexp)
+# pkg:gem/httpx#lib/httpx/response.rb:217
+HTTPX::ContentType::SPLIT_PATTERN = T.let(T.unsafe(nil), Regexp)
 
 # Represents a domain name ready for extracting its registered domain
 # and TLD.
@@ -927,10 +1028,10 @@ class HTTPX::DomainName
   end
 end
 
-# pkg:gem/httpx#lib/httpx.rb:8
+# pkg:gem/httpx#lib/httpx.rb:9
 HTTPX::EMPTY = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/httpx#lib/httpx.rb:9
+# pkg:gem/httpx#lib/httpx.rb:10
 HTTPX::EMPTY_HASH = T.let(T.unsafe(nil), Hash)
 
 # the default exception class for exceptions raised by HTTPX.
@@ -945,62 +1046,61 @@ class HTTPX::Error < ::StandardError; end
 #   response = HTTPX.get("https://some-domain/path") #=> response is HTTPX::Response or HTTPX::ErrorResponse
 #   response.raise_for_status #=> raises if it wraps an error
 #
-# pkg:gem/httpx#lib/httpx/response.rb:269
+# pkg:gem/httpx#lib/httpx/response.rb:281
 class HTTPX::ErrorResponse
-  include ::HTTPX::Loggable
   include ::HTTPX::ErrorResponsePatternMatchExtensions
   extend ::Forwardable
 
-  # pkg:gem/httpx#lib/httpx/response.rb:288
+  # pkg:gem/httpx#lib/httpx/response.rb:299
   def initialize(request, error); end
 
   # buffers lost chunks to error response
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:322
+  # pkg:gem/httpx#lib/httpx/response.rb:333
   def <<(data); end
 
   # closes the error resources.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:303
+  # pkg:gem/httpx#lib/httpx/response.rb:314
   def close; end
 
   # the wrapped exception.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:280
+  # pkg:gem/httpx#lib/httpx/response.rb:291
   def error; end
 
-  # pkg:gem/httpx#lib/httpx/response.rb:312
+  # pkg:gem/httpx#lib/httpx/response.rb:323
   def finish!; end
 
   # always true for error responses.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:308
+  # pkg:gem/httpx#lib/httpx/response.rb:319
   def finished?; end
 
-  # pkg:gem/httpx#lib/httpx/response.rb:286
+  # pkg:gem/httpx#lib/httpx/response.rb:297
   def peer_address(*_arg0, **_arg1, &_arg2); end
 
   # raises the wrapped exception.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:317
+  # pkg:gem/httpx#lib/httpx/response.rb:328
   def raise_for_status; end
 
   # the corresponding HTTPX::Request instance.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:274
+  # pkg:gem/httpx#lib/httpx/response.rb:285
   def request; end
 
   # the HTTPX::Response instance, when there is one (i.e. error happens fetching the response).
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:277
+  # pkg:gem/httpx#lib/httpx/response.rb:288
   def response; end
 
   # returns the exception full message.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:298
+  # pkg:gem/httpx#lib/httpx/response.rb:309
   def to_s; end
 
-  # pkg:gem/httpx#lib/httpx/response.rb:283
+  # pkg:gem/httpx#lib/httpx/response.rb:294
   def uri(*_arg0, **_arg1, &_arg2); end
 end
 
@@ -1015,23 +1115,23 @@ end
 
 # The exception class for HTTP responses with 4xx or 5xx status.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:101
+# pkg:gem/httpx#lib/httpx/errors.rb:104
 class HTTPX::HTTPError < ::HTTPX::Error
   # Creates the instance and assigns the HTTPX::Response +response+.
   #
-  # pkg:gem/httpx#lib/httpx/errors.rb:106
+  # pkg:gem/httpx#lib/httpx/errors.rb:109
   def initialize(response); end
 
   # The HTTPX::Response response object this exception refers to.
   #
-  # pkg:gem/httpx#lib/httpx/errors.rb:103
+  # pkg:gem/httpx#lib/httpx/errors.rb:106
   def response; end
 
   # The HTTP response status.
   #
   #   error.status #=> 404
   #
-  # pkg:gem/httpx#lib/httpx/errors.rb:114
+  # pkg:gem/httpx#lib/httpx/errors.rb:117
   def status; end
 end
 
@@ -1095,9 +1195,9 @@ class HTTPX::Headers
   # to "correct" the user input, i.e. it doesn't downcase the key.
   #
   # pkg:gem/httpx#lib/httpx/headers.rb:162
-  def get(field); end
+  def get(downcased_key); end
 
-  # :nocov:
+  # simplecov:disable
   #
   # pkg:gem/httpx#lib/httpx/headers.rb:144
   def inspect; end
@@ -1166,20 +1266,27 @@ end
 
 # pkg:gem/httpx#lib/httpx/loggable.rb:6
 module HTTPX::Loggable
-  # pkg:gem/httpx#lib/httpx/loggable.rb:20
+  # pkg:gem/httpx#lib/httpx/loggable.rb:26
   def log(level: T.unsafe(nil), color: T.unsafe(nil), debug_level: T.unsafe(nil), debug: T.unsafe(nil), &msg); end
 
-  # pkg:gem/httpx#lib/httpx/loggable.rb:48
+  # pkg:gem/httpx#lib/httpx/loggable.rb:53
   def log_exception(ex, level: T.unsafe(nil), color: T.unsafe(nil), debug_level: T.unsafe(nil), debug: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/loggable.rb:60
+  private
+
+  # pkg:gem/httpx#lib/httpx/loggable.rb:67
   def log_redact(text, should_redact = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/loggable.rb:56
+  # pkg:gem/httpx#lib/httpx/loggable.rb:63
   def log_redact_body(text); end
 
-  # pkg:gem/httpx#lib/httpx/loggable.rb:52
+  # pkg:gem/httpx#lib/httpx/loggable.rb:59
   def log_redact_headers(text); end
+
+  class << self
+    # pkg:gem/httpx#lib/httpx/loggable.rb:20
+    def log_identifiers; end
+  end
 end
 
 # pkg:gem/httpx#lib/httpx/loggable.rb:7
@@ -1191,27 +1298,27 @@ HTTPX::Loggable::USE_DEBUG_LOG = T.let(T.unsafe(nil), FalseClass)
 # Error raised when there was an error while resolving a domain to an IP
 # using a HTTPX::Resolver::Native resolver.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:86
+# pkg:gem/httpx#lib/httpx/errors.rb:89
 class HTTPX::NativeResolveError < ::HTTPX::ResolveError
   # initializes the exception with the +connection+ it refers to, the +host+ domain
   # which failed to resolve, and the error +message+.
   #
-  # pkg:gem/httpx#lib/httpx/errors.rb:93
+  # pkg:gem/httpx#lib/httpx/errors.rb:96
   def initialize(connection, host, message = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/errors.rb:89
+  # pkg:gem/httpx#lib/httpx/errors.rb:92
   def connection; end
 
-  # pkg:gem/httpx#lib/httpx/errors.rb:89
+  # pkg:gem/httpx#lib/httpx/errors.rb:92
   def connection=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/errors.rb:87
+  # pkg:gem/httpx#lib/httpx/errors.rb:90
   def host; end
 end
 
 # Error raised when there was a timeout waiting for readiness of the socket the request is related to.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:76
+# pkg:gem/httpx#lib/httpx/errors.rb:79
 class HTTPX::OperationTimeoutError < ::HTTPX::TimeoutError; end
 
 # Contains a set of options which are passed and shared across from session to its requests or
@@ -1279,324 +1386,321 @@ class HTTPX::Options
   #
   # This list of options are enhanced with each loaded plugin, see the plugin docs for details.
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def initialize(options = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def addresses; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def base_path; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def body_threshold_size; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def buffer_size; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def close_on_fork; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def compress_request_body; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def connection_class; end
 
   # checks whether +other+ matches the same connection-level options
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def connection_options_match?(other, ignore_ivars = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def debug; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def debug_level; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def debug_redact; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def decompress_response_body; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def extend_with_plugin_classes(pl); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def fallback_protocol; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def freeze; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def headers; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def headers_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def http1_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def http2_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def http2_settings; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def io; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def ip_families; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def max_concurrent_requests; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def max_requests; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def max_response_body_size; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def max_response_header_value_size; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def max_response_headers; end
 
   # returns a HTTPX::Options instance resulting of the merging of +other+ with self.
   # it may return self if +other+ is self or equal to self.
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def merge(other); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def options_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def origin; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def persistent; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def pool_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def pool_options; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def request_body_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def request_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_cache; end
 
   # returns the class with which to instantiate the DNS resolver.
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_https_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_native_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_options; end
 
   # checks whether +other+ matches the same resolver-level options
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_options_match?(other); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def resolver_system_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def response_body_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def response_class; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def ssl; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def supported_compression_formats; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def to_hash; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def transport; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def window_size; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
-  def access_option(obj, k, ivar_map); end
-
   # called after all options are initialized
   #
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def do_initialize; end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_addresses(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_base_path(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_body_threshold_size(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_buffer_size(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_close_on_fork(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_compress_request_body(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_connection_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_debug(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_debug_level(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_debug_redact(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_decompress_response_body(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_fallback_protocol(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_headers(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_headers_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_http1_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_http2_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_http2_settings(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_io(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_ip_families(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_max_concurrent_requests(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_max_requests(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_max_response_body_size(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_max_response_header_value_size(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_max_response_headers(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_options_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_origin(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_persistent(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_pool_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_pool_options(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_request_body_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_request_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_cache(cache_type); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_class(resolver_type); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_https_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_native_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_options(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_resolver_system_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_response_body_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_response_class(v); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_ssl(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_supported_compression_formats(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_timeout(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_transport(value); end
 
-  # pkg:gem/httpx#lib/httpx/options.rb:44
+  # pkg:gem/httpx#lib/httpx/options.rb:43
   def option_window_size(value); end
 
   class << self
-    # pkg:gem/httpx#lib/httpx/options.rb:38
+    # pkg:gem/httpx#lib/httpx/options.rb:37
     def freeze; end
 
-    # pkg:gem/httpx#lib/httpx/options.rb:25
+    # pkg:gem/httpx#lib/httpx/options.rb:24
     def inherited(klass); end
 
-    # pkg:gem/httpx#lib/httpx/options.rb:43
+    # pkg:gem/httpx#lib/httpx/options.rb:42
     def method_added(meth); end
 
-    # pkg:gem/httpx#lib/httpx/options.rb:30
+    # pkg:gem/httpx#lib/httpx/options.rb:29
     def new(options = T.unsafe(nil)); end
 
-    # pkg:gem/httpx#lib/httpx/options.rb:23
+    # pkg:gem/httpx#lib/httpx/options.rb:22
     def options_names; end
   end
 end
@@ -1610,7 +1714,7 @@ HTTPX::Options::CLOSE_HANDSHAKE_TIMEOUT = T.let(T.unsafe(nil), Integer)
 # pkg:gem/httpx#lib/httpx/options.rb:14
 HTTPX::Options::CONNECT_TIMEOUT = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/httpx#lib/httpx/options.rb:552
+# pkg:gem/httpx#lib/httpx/options.rb:623
 HTTPX::Options::DEFAULT_OPTIONS = T.let(T.unsafe(nil), Hash)
 
 # 112K
@@ -1623,25 +1727,19 @@ HTTPX::Options::KEEP_ALIVE_TIMEOUT = T.let(T.unsafe(nil), Integer)
 # pkg:gem/httpx#lib/httpx/options.rb:9
 HTTPX::Options::MAX_BODY_THRESHOLD_SIZE = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/httpx#lib/httpx/options.rb:15
-HTTPX::Options::OPERATION_TIMEOUT = T.let(T.unsafe(nil), T.untyped)
-
 # pkg:gem/httpx#lib/httpx/options.rb:11
 HTTPX::Options::PING_TIMEOUT = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/httpx#lib/httpx/options.rb:14
 HTTPX::Options::READ_TIMEOUT = T.let(T.unsafe(nil), Integer)
 
-# pkg:gem/httpx#lib/httpx/options.rb:209
+# pkg:gem/httpx#lib/httpx/options.rb:208
 HTTPX::Options::REQUEST_BODY_IVARS = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/httpx#lib/httpx/options.rb:15
-HTTPX::Options::REQUEST_TIMEOUT = T.let(T.unsafe(nil), T.untyped)
-
-# pkg:gem/httpx#lib/httpx/options.rb:234
+# pkg:gem/httpx#lib/httpx/options.rb:231
 HTTPX::Options::RESOLVER_IVARS = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/httpx#lib/httpx/options.rb:16
+# pkg:gem/httpx#lib/httpx/options.rb:15
 HTTPX::Options::RESOLVER_TYPES = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/httpx#lib/httpx/options.rb:12
@@ -1649,15 +1747,47 @@ HTTPX::Options::SETTINGS_TIMEOUT = T.let(T.unsafe(nil), Integer)
 
 # these really need to be defined at the end of the class
 #
-# pkg:gem/httpx#lib/httpx/options.rb:544
+# pkg:gem/httpx#lib/httpx/options.rb:615
 HTTPX::Options::SET_TEMPORARY_NAME = T.let(T.unsafe(nil), Proc)
 
-# pkg:gem/httpx#lib/httpx/options.rb:15
-HTTPX::Options::TOTAL_REQUEST_TIMEOUT = T.let(T.unsafe(nil), T.untyped)
+# pkg:gem/httpx#lib/httpx/options.rb:549
+class HTTPX::Options::Timeouts < ::Struct
+  # pkg:gem/httpx#lib/httpx/options.rb:556
+  def initialize(connect_timeout: T.unsafe(nil), settings_timeout: T.unsafe(nil), read_timeout: T.unsafe(nil), write_timeout: T.unsafe(nil), request_timeout: T.unsafe(nil), total_request_timeout: T.unsafe(nil), operation_timeout: T.unsafe(nil), close_handshake_timeout: T.unsafe(nil), keep_alive_timeout: T.unsafe(nil), ping_timeout: T.unsafe(nil)); end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:588
+  def close_handshake_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:572
+  def connect_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:592
+  def keep_alive_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:600
+  def merge(other); end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:596
+  def ping_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:580
+  def read_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:576
+  def settings_timeout; end
+
+  # pkg:gem/httpx#lib/httpx/options.rb:584
+  def write_timeout; end
+
+  private
+
+  # pkg:gem/httpx#lib/httpx/options.rb:608
+  def deadline_timeouts?; end
+end
 
 # default value used for "user-agent" header, when not overridden.
 #
-# pkg:gem/httpx#lib/httpx/options.rb:18
+# pkg:gem/httpx#lib/httpx/options.rb:17
 HTTPX::Options::USER_AGENT = T.let(T.unsafe(nil), String)
 
 # pkg:gem/httpx#lib/httpx/options.rb:8
@@ -1700,16 +1830,16 @@ class HTTPX::Parser::HTTP1
 
   private
 
-  # pkg:gem/httpx#lib/httpx/parser/http1.rb:189
+  # pkg:gem/httpx#lib/httpx/parser/http1.rb:186
   def nextstate(state); end
 
-  # pkg:gem/httpx#lib/httpx/parser/http1.rb:178
+  # pkg:gem/httpx#lib/httpx/parser/http1.rb:175
   def no_more_data?; end
 
   # pkg:gem/httpx#lib/httpx/parser/http1.rb:46
   def parse; end
 
-  # pkg:gem/httpx#lib/httpx/parser/http1.rb:130
+  # pkg:gem/httpx#lib/httpx/parser/http1.rb:127
   def parse_data; end
 
   # pkg:gem/httpx#lib/httpx/parser/http1.rb:79
@@ -1718,7 +1848,7 @@ class HTTPX::Parser::HTTP1
   # pkg:gem/httpx#lib/httpx/parser/http1.rb:61
   def parse_headline; end
 
-  # pkg:gem/httpx#lib/httpx/parser/http1.rb:159
+  # pkg:gem/httpx#lib/httpx/parser/http1.rb:156
   def prepare_data(headers); end
 end
 
@@ -1727,24 +1857,24 @@ HTTPX::Parser::HTTP1::VERSIONS = T.let(T.unsafe(nil), Array)
 
 # Error raised when a connection liveness probe (aka ping) times out.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:79
+# pkg:gem/httpx#lib/httpx/errors.rb:82
 class HTTPX::PingTimeoutError < ::HTTPX::TimeoutError; end
 
 # All plugins should be stored under this module/namespace. Can register and load
 # plugins.
 #
-# pkg:gem/httpx#lib/httpx.rb:14
+# pkg:gem/httpx#lib/httpx.rb:15
 module HTTPX::Plugins
   class << self
     # Loads a plugin based on a name. If the plugin hasn't been loaded, tries to load
     # it from the load path under "httpx/plugins/" directory.
     #
-    # pkg:gem/httpx#lib/httpx.rb:21
+    # pkg:gem/httpx#lib/httpx.rb:22
     def load_plugin(name); end
 
     # Registers a plugin (+mod+) in the central store indexed by +name+.
     #
-    # pkg:gem/httpx#lib/httpx.rb:33
+    # pkg:gem/httpx#lib/httpx.rb:34
     def register_plugin(name, mod); end
   end
 end
@@ -1843,7 +1973,7 @@ class HTTPX::Pool
   # pkg:gem/httpx#lib/httpx/pool.rb:143
   def checkout_resolver(options); end
 
-  # :nocov:
+  # simplecov:disable
   #
   # pkg:gem/httpx#lib/httpx/pool.rb:177
   def inspect; end
@@ -1897,7 +2027,7 @@ end
 
 # Error raised when there was a timeout while receiving a response from the server.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:60
+# pkg:gem/httpx#lib/httpx/errors.rb:63
 class HTTPX::ReadTimeoutError < ::HTTPX::RequestTimeoutError; end
 
 # Defines how an HTTP request is handled internally, both in terms of making attributes accessible,
@@ -1936,7 +2066,7 @@ class HTTPX::Request
   #   session.build_request("GET", "https://google.com/query").authority #=> "google.com"
   #   session.build_request("GET", "http://internal:3182/a").authority #=> "internal:3182"
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:240
+  # pkg:gem/httpx#lib/httpx/request.rb:244
   def authority; end
 
   # an HTTPX::Request::Body object containing the request body payload (or +nil+, whenn there is none).
@@ -1944,7 +2074,7 @@ class HTTPX::Request
   # pkg:gem/httpx#lib/httpx/request.rb:28
   def body; end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:178
+  # pkg:gem/httpx#lib/httpx/request.rb:182
   def can_buffer?; end
 
   # pkg:gem/httpx#lib/httpx/request.rb:63
@@ -1960,7 +2090,7 @@ class HTTPX::Request
 
   # consumes and returns the next available chunk of request body that can be sent
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:270
+  # pkg:gem/httpx#lib/httpx/request.rb:274
   def drain_body; end
 
   # Exception raised during enumerable body writes.
@@ -1968,7 +2098,7 @@ class HTTPX::Request
   # pkg:gem/httpx#lib/httpx/request.rb:40
   def drain_error; end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:359
+  # pkg:gem/httpx#lib/httpx/request.rb:364
   def emit_response(response); end
 
   # pkg:gem/httpx#lib/httpx/request.rb:60
@@ -1976,10 +2106,10 @@ class HTTPX::Request
 
   # whether the request supports the 100-continue handshake and already processed the 100 response.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:336
+  # pkg:gem/httpx#lib/httpx/request.rb:341
   def expects?; end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:349
+  # pkg:gem/httpx#lib/httpx/request.rb:354
   def handle_error(error); end
 
   # an HTTPX::Headers object containing the request HTTP headers.
@@ -1993,19 +2123,19 @@ class HTTPX::Request
   # pkg:gem/httpx#lib/httpx/request.rb:44
   def http2_stream_options; end
 
-  # :nocov:
+  # simplecov:disable
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:286
+  # pkg:gem/httpx#lib/httpx/request.rb:288
   def inspect; end
 
   # returns +:r+ or +:w+, depending on whether the request is waiting for a response or flushing.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:172
+  # pkg:gem/httpx#lib/httpx/request.rb:176
   def interests; end
 
   # merges +h+ into the instance of HTTPX::Headers of the request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:187
+  # pkg:gem/httpx#lib/httpx/request.rb:191
   def merge_headers(h); end
 
   # callback triggered when a response (which may not be the final response) was assigned to the request.
@@ -2023,12 +2153,12 @@ class HTTPX::Request
   #   session.build_request("GET", "https://google.com/query").authority #=> "https://google.com"
   #   session.build_request("GET", "http://internal:3182/a").authority #=> "http://internal:3182"
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:248
+  # pkg:gem/httpx#lib/httpx/request.rb:252
   def origin; end
 
   # returnns the URI path of the request +uri+.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:228
+  # pkg:gem/httpx#lib/httpx/request.rb:232
   def path; end
 
   # The IP address from the peer server.
@@ -2044,17 +2174,17 @@ class HTTPX::Request
   # pkg:gem/httpx#lib/httpx/request.rb:55
   def persistent=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:157
+  # pkg:gem/httpx#lib/httpx/request.rb:161
   def persistent?; end
 
   # marks the request as having been buffered with a ping
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:133
+  # pkg:gem/httpx#lib/httpx/request.rb:137
   def ping!; end
 
   # whether request has been buffered with a ping
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:128
+  # pkg:gem/httpx#lib/httpx/request.rb:132
   def ping?; end
 
   # returs the URI query string of the request (when available).
@@ -2064,17 +2194,17 @@ class HTTPX::Request
   #   session.build_request("GET", "https://search.com", params: { q: "a"}).query #=> "q=a"
   #   session.build_request("GET", "https://search.com?q=a", params: { foo: "bar"}).query #=> "q=a&foo&bar"
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:258
+  # pkg:gem/httpx#lib/httpx/request.rb:262
   def query; end
 
   # the read timeout defined for this request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:138
+  # pkg:gem/httpx#lib/httpx/request.rb:142
   def read_timeout; end
 
   # the request timeout defined for this request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:148
+  # pkg:gem/httpx#lib/httpx/request.rb:152
   def request_timeout; end
 
   # the corresponding HTTPX::Response object, when there is one.
@@ -2084,18 +2214,18 @@ class HTTPX::Request
 
   # sets the +response+ on this request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:200
+  # pkg:gem/httpx#lib/httpx/request.rb:204
   def response=(response); end
 
   # the URI scheme of the request +uri+.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:195
+  # pkg:gem/httpx#lib/httpx/request.rb:199
   def scheme; end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:340
+  # pkg:gem/httpx#lib/httpx/request.rb:345
   def set_timeout_callback(event, &callback); end
 
-  # pkg:gem/httpx#lib/httpx/request.rb:182
+  # pkg:gem/httpx#lib/httpx/request.rb:186
   def started?; end
 
   # a symbol describing which frame is currently being flushed.
@@ -2105,22 +2235,22 @@ class HTTPX::Request
 
   # the total request timeout defined for this request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:153
+  # pkg:gem/httpx#lib/httpx/request.rb:157
   def total_request_timeout; end
 
   # returns an instance of HTTPX::Headers containing the trailer headers
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:167
+  # pkg:gem/httpx#lib/httpx/request.rb:171
   def trailers; end
 
   # if the request contains trailer headers
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:162
+  # pkg:gem/httpx#lib/httpx/request.rb:166
   def trailers?; end
 
   # moves on to the +nextstate+ of the request state machine (when all preconditions are met)
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:296
+  # pkg:gem/httpx#lib/httpx/request.rb:298
   def transition(nextstate); end
 
   # the absolute URI object for this request.
@@ -2135,7 +2265,7 @@ class HTTPX::Request
 
   # the write timeout defined for this request.
   #
-  # pkg:gem/httpx#lib/httpx/request.rb:143
+  # pkg:gem/httpx#lib/httpx/request.rb:147
   def write_timeout; end
 
   private
@@ -2144,6 +2274,9 @@ class HTTPX::Request
   #
   # pkg:gem/httpx#lib/httpx/request.rb:116
   def initialize_dup(orig); end
+
+  # pkg:gem/httpx#lib/httpx/request.rb:374
+  def reset_timers(reset_total_request_timers); end
 end
 
 # pkg:gem/httpx#lib/httpx/request.rb:16
@@ -2162,74 +2295,74 @@ class HTTPX::Request::Body < ::SimpleDelegator
   #   ..., form: { foo: File.open("path/to/file") }) #=> multipart urlencoded encoder
   #   ..., form: { body: "bla") }) #=> raw data encoder
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:28
+  # pkg:gem/httpx#lib/httpx/request/body.rb:31
   def initialize(h, options, **params); end
 
   # returns the +@body+ payload size in bytes.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:87
+  # pkg:gem/httpx#lib/httpx/request/body.rb:91
   def bytesize; end
 
   # sets the chunked transfer encoding header.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:113
+  # pkg:gem/httpx#lib/httpx/request/body.rb:117
   def chunk!; end
 
   # returns whether the chunked transfer encoding header is set.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:108
+  # pkg:gem/httpx#lib/httpx/request/body.rb:112
   def chunked?; end
 
-  # pkg:gem/httpx#lib/httpx/request/body.rb:67
+  # pkg:gem/httpx#lib/httpx/request/body.rb:71
   def close; end
 
   # consumes and yields the request payload in chunks.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:49
+  # pkg:gem/httpx#lib/httpx/request/body.rb:53
   def each(&block); end
 
   # return +true+ if the +body+ has been fully drained (or does nnot exist).
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:79
+  # pkg:gem/httpx#lib/httpx/request/body.rb:83
   def empty?; end
 
-  # :nocov:
+  # simplecov:disable
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:118
+  # pkg:gem/httpx#lib/httpx/request/body.rb:122
   def inspect; end
 
-  # pkg:gem/httpx#lib/httpx/request/body.rb:18
+  # pkg:gem/httpx#lib/httpx/request/body.rb:21
   def options; end
 
-  # pkg:gem/httpx#lib/httpx/request/body.rb:18
+  # pkg:gem/httpx#lib/httpx/request/body.rb:21
   def options=(_arg0); end
 
   # if the +@body+ is rewindable, it rewinnds it.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:72
+  # pkg:gem/httpx#lib/httpx/request/body.rb:76
   def rewind; end
 
   # sets the body to yield using chunked trannsfer encoding format.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:94
+  # pkg:gem/httpx#lib/httpx/request/body.rb:98
   def stream(body); end
 
   # returns whether the body yields infinitely.
   #
-  # pkg:gem/httpx#lib/httpx/request/body.rb:101
+  # pkg:gem/httpx#lib/httpx/request/body.rb:105
   def unbounded_body?; end
 
   class << self
-    # pkg:gem/httpx#lib/httpx/request/body.rb:125
+    # pkg:gem/httpx#lib/httpx/request/body.rb:129
     def initialize_body(params); end
 
     # returns the +body+ wrapped with the correct deflater accordinng to the given +encodisng+.
     #
-    # pkg:gem/httpx#lib/httpx/request/body.rb:144
+    # pkg:gem/httpx#lib/httpx/request/body.rb:148
     def initialize_deflater_body(body, encoding); end
 
     # pkg:gem/httpx#lib/httpx/request/body.rb:7
-    def new(_, options, body: T.unsafe(nil), **params); end
+    def new(h, options, body: T.unsafe(nil), **params); end
   end
 end
 
@@ -2241,26 +2374,31 @@ class HTTPX::RequestTimeoutError < ::HTTPX::TimeoutError
   # initializes the exception with the +request+ and +response+ it refers to, and the
   # +timeout+ causing the error, and the
   #
-  # pkg:gem/httpx#lib/httpx/errors.rb:48
+  # pkg:gem/httpx#lib/httpx/errors.rb:51
   def initialize(request, response, timeout); end
 
-  # pkg:gem/httpx#lib/httpx/errors.rb:54
+  # pkg:gem/httpx#lib/httpx/errors.rb:57
   def marshal_dump; end
 
   # The HTTPX::Request request object this exception refers to.
   #
   # pkg:gem/httpx#lib/httpx/errors.rb:44
   def request; end
+
+  # The response object this exception refers to.
+  #
+  # pkg:gem/httpx#lib/httpx/errors.rb:47
+  def response; end
 end
 
 # Error raised when there was an error while resolving a domain to an IP.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:82
+# pkg:gem/httpx#lib/httpx/errors.rb:85
 class HTTPX::ResolveError < ::HTTPX::Error; end
 
 # Error raised when there was a timeout while resolving a domain to an IP.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:73
+# pkg:gem/httpx#lib/httpx/errors.rb:76
 class HTTPX::ResolveTimeoutError < ::HTTPX::TimeoutError; end
 
 # pkg:gem/httpx#lib/httpx/resolver.rb:7
@@ -2281,10 +2419,10 @@ module HTTPX::Resolver
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver.rb:97
+  # pkg:gem/httpx#lib/httpx/resolver.rb:101
   def find_supported_ip_families; end
 
-  # pkg:gem/httpx#lib/httpx/resolver.rb:93
+  # pkg:gem/httpx#lib/httpx/resolver.rb:97
   def id_synchronize(&block); end
 end
 
@@ -2317,7 +2455,7 @@ class HTTPX::Resolver::Cache::Base
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver/cache/base.rb:120
+  # pkg:gem/httpx#lib/httpx/resolver/cache/base.rb:113
   def _evict(hostname, ip, lookups, hostnames); end
 
   # not to be used directly!
@@ -2406,10 +2544,10 @@ end
 class HTTPX::Resolver::HTTPS < ::HTTPX::Resolver::Resolver
   extend ::Forwardable
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:37
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:38
   def initialize(_, options); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:55
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:56
   def <<(connection); end
 
   # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
@@ -2420,6 +2558,9 @@ class HTTPX::Resolver::HTTPS < ::HTTPX::Resolver::Resolver
 
   # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
   def closed?(*_arg0, **_arg1, &_arg2); end
+
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
+  def closed_for_select?(*_arg0, **_arg1, &_arg2); end
 
   # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
   def connecting?(*_arg0, **_arg1, &_arg2); end
@@ -2433,10 +2574,10 @@ class HTTPX::Resolver::HTTPS < ::HTTPX::Resolver::Resolver
   # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
   def inflight?(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:70
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:71
   def resolver_connection; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:51
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:52
   def state; end
 
   # pkg:gem/httpx#lib/httpx/resolver/https.rb:34
@@ -2447,34 +2588,34 @@ class HTTPX::Resolver::HTTPS < ::HTTPX::Resolver::Resolver
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:261
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:262
   def build_request(hostname); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:308
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:309
   def close_or_resolve(should_deactivate = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:283
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:284
   def decode_response_body(response); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:154
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:155
   def on_promise(_, stream); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:128
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:129
   def on_response(request, response); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:159
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:160
   def parse(request, response); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:213
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:214
   def parse_addresses(answers, request); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:293
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:294
   def reset_hostname(hostname, reset_candidates: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:85
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:86
   def resolve(connection = T.unsafe(nil), hostname = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/https.rb:114
+  # pkg:gem/httpx#lib/httpx/resolver/https.rb:115
   def send_request(hostname, connection); end
 end
 
@@ -2508,7 +2649,7 @@ class HTTPX::Resolver::Multi
   def lazy_resolve(connection); end
 
   # pkg:gem/httpx#lib/httpx/resolver/multi.rb:38
-  def log(*args, **kwargs, &blk); end
+  def log(*_arg0, **_arg1, &_arg2); end
 
   # pkg:gem/httpx#lib/httpx/resolver/multi.rb:8
   def options; end
@@ -2535,98 +2676,101 @@ class HTTPX::Resolver::Native < ::HTTPX::Resolver::Resolver
   # pkg:gem/httpx#lib/httpx/resolver/native.rb:28
   def initialize(family, options); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:95
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:105
   def <<(connection); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:76
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:75
   def call; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:49
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:48
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:68
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:67
   def closed?; end
+
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:89
+  def closed_for_select?; end
 
   # pkg:gem/httpx#lib/httpx/resolver/native.rb:24
   def empty?(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:53
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:52
   def force_close(*_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:123
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:133
   def handle_error(error); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:121
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:131
   def handle_socket_timeout(interval); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:83
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:93
   def interests; end
 
   # pkg:gem/httpx#lib/httpx/resolver/native.rb:26
   def state; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:64
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:63
   def terminate; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:107
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:117
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:72
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:71
   def to_io; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:492
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:509
   def build_socket; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:138
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:148
   def calculate_interests; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:581
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:602
   def close_or_resolve; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:150
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:160
   def consume; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:197
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:208
   def do_retry(h, connection, interval); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:507
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:524
   def downgrade_socket; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:236
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:247
   def dread(wsize = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:285
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:296
   def dwrite; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:471
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:487
   def encode_dns_query(hostname); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:478
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:495
   def generate_candidates(name); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:305
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:316
   def parse(buffer); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:371
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:388
   def parse_addresses(addresses); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:569
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:590
   def reset_hostname(hostname, connection: T.unsafe(nil), reset_candidates: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:563
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:584
   def reset_query; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:433
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:450
   def resolve(connection = T.unsafe(nil), hostname = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:178
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:189
   def schedule_retry; end
 
   # moves the resolver state machine to the +nextstate+ state (if all conditions are met)-
   #
-  # pkg:gem/httpx#lib/httpx/resolver/native.rb:516
+  # pkg:gem/httpx#lib/httpx/resolver/native.rb:533
   def transition(nextstate); end
 end
 
@@ -2652,10 +2796,13 @@ class HTTPX::Resolver::Resolver
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:51
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:61
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:65
   def closed?; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:32
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:34
+  def current_selector; end
+
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:34
   def current_selector=(_arg0); end
 
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:32
@@ -2664,28 +2811,31 @@ class HTTPX::Resolver::Resolver
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:43
   def each_connection(&block); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:132
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:136
   def early_resolve(connection, hostname: T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:73
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:77
   def emit_addresses(connection, family, addresses, early_resolve = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:65
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:69
   def empty?; end
 
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:30
   def family; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:55
-  def force_close(*args); end
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:59
+  def force_close(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:110
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:114
   def handle_error(error); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:69
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:73
   def inflight?; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:146
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:55
+  def initial_call; end
+
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:150
   def lazy_resolve(connection); end
 
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:34
@@ -2694,10 +2844,10 @@ class HTTPX::Resolver::Resolver
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:34
   def multi=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:127
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:131
   def on_error(error); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:122
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:126
   def on_io_error(e); end
 
   # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:30
@@ -2708,22 +2858,22 @@ class HTTPX::Resolver::Resolver
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:201
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:205
   def disconnect; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:195
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:199
   def emit_connection_error(connection, error); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:178
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:182
   def emit_resolve_error(connection, hostname = T.unsafe(nil), ex = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:161
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:165
   def emit_resolved_connection(connection, addresses, early_resolve); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:191
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:195
   def resolve_connection(connection); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:182
+  # pkg:gem/httpx#lib/httpx/resolver/resolver.rb:186
   def resolve_error(hostname, ex = T.unsafe(nil)); end
 
   class << self
@@ -2749,76 +2899,82 @@ HTTPX::Resolver::Resolver::RECORD_TYPES = T.let(T.unsafe(nil), Hash)
 #
 # pkg:gem/httpx#lib/httpx/resolver/system.rb:15
 class HTTPX::Resolver::System < ::HTTPX::Resolver::Resolver
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:34
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:37
   def initialize(options); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:82
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:85
   def call; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:62
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:65
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:74
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:77
   def closed?; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:119
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:93
+  def closed_for_select?; end
+
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:126
   def early_resolve(_, **_arg1); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:58
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:61
   def empty?; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:66
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:69
   def force_close(*_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:123
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:130
   def handle_socket_timeout(interval); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:90
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:97
   def interests; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:110
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:117
   def lazy_resolve(connection); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:54
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:57
   def multi; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:48
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:51
   def resolvers; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:32
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:35
   def state; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:96
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:103
   def timeout; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:78
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:81
   def to_io; end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:277
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:284
   def __addrinfo_resolve(host, scheme); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:219
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:226
   def async_resolve(connection, hostname, scheme); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:266
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:273
   def close_or_resolve; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:156
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:163
   def consume; end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:193
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:200
   def resolve(connection = T.unsafe(nil), hostname = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/resolver/system.rb:139
+  # pkg:gem/httpx#lib/httpx/resolver/system.rb:146
   def transition(nextstate); end
 
   class << self
-    # pkg:gem/httpx#lib/httpx/resolver/system.rb:27
+    # pkg:gem/httpx#lib/httpx/resolver/system.rb:30
     def multi?; end
   end
 end
+
+# pkg:gem/httpx#lib/httpx/resolver/system.rb:26
+class HTTPX::Resolver::System::AddrinfoTimeoutError < ::StandardError; end
 
 # pkg:gem/httpx#lib/httpx/resolver/system.rb:23
 HTTPX::Resolver::System::DONE = T.let(T.unsafe(nil), Integer)
@@ -2871,7 +3027,7 @@ class HTTPX::Response
 
   # returns whether the response contains body payload.
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:127
+  # pkg:gem/httpx#lib/httpx/response.rb:126
   def bodyless?; end
 
   # closes the respective +@request+ and +@body+.
@@ -2879,7 +3035,7 @@ class HTTPX::Response
   # pkg:gem/httpx#lib/httpx/response.rb:83
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/response.rb:140
+  # pkg:gem/httpx#lib/httpx/response.rb:139
   def complete?; end
 
   # returns the response content length as advertised in the HTTP Content-Length header value.
@@ -2904,7 +3060,7 @@ class HTTPX::Response
   #   ok_response.error #=> nil
   #   not_found_response.error #=> HTTPX::HTTPError instance, status 404
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:159
+  # pkg:gem/httpx#lib/httpx/response.rb:158
   def error; end
 
   # marks the response as finished, freezes the headers.
@@ -2920,7 +3076,7 @@ class HTTPX::Response
   # decodes the response payload into a ruby object **if** the payload is valid
   # "application/x-www-urlencoded" or "multipart/form-data".
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:185
+  # pkg:gem/httpx#lib/httpx/response.rb:184
   def form; end
 
   # an HTTPX::Headers object containing the response HTTP headers.
@@ -2928,9 +3084,9 @@ class HTTPX::Response
   # pkg:gem/httpx#lib/httpx/response.rb:30
   def headers; end
 
-  # :nocov:
+  # simplecov:disable
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:145
+  # pkg:gem/httpx#lib/httpx/response.rb:144
   def inspect; end
 
   # decodes the response payload into a ruby object **if** the payload is valid json.
@@ -2938,8 +3094,8 @@ class HTTPX::Response
   #   response.json #≈> { "foo" => "bar" } for "{\"foo\":\"bar\"}" payload
   #   response.json(symbolize_names: true) #≈> { foo: "bar" } for "{\"foo\":\"bar\"}" payload
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:179
-  def json(*args); end
+  # pkg:gem/httpx#lib/httpx/response.rb:178
+  def json(*_arg0, **_arg1, &_arg2); end
 
   # merges headers defined in +h+ into the response headers.
   #
@@ -2954,7 +3110,7 @@ class HTTPX::Response
   #   ok_response.raise_for_status #=> ok_response
   #   not_found_response.raise_for_status #=> raises HTTPX::HTTPError exception
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:169
+  # pkg:gem/httpx#lib/httpx/response.rb:168
   def raise_for_status; end
 
   # pkg:gem/httpx#lib/httpx/response.rb:50
@@ -2979,7 +3135,7 @@ class HTTPX::Response
   # pkg:gem/httpx#lib/httpx/response.rb:42
   def version; end
 
-  # pkg:gem/httpx#lib/httpx/response.rb:189
+  # pkg:gem/httpx#lib/httpx/response.rb:188
   def xml; end
 
   private
@@ -2989,8 +3145,8 @@ class HTTPX::Response
   # +transcoder+ must implement the internal transcoder API, i.e. respond to <tt>decode(HTTPX::Response response)</tt>,
   # which returns a decoder which responds to <tt>call(HTTPX::Response response, **kwargs)</tt>
   #
-  # pkg:gem/httpx#lib/httpx/response.rb:203
-  def decode(transcoder, *args); end
+  # pkg:gem/httpx#lib/httpx/response.rb:202
+  def decode(transcoder, *_arg1, **_arg2, &_arg3); end
 
   # dupped initialization
   #
@@ -3060,7 +3216,7 @@ class HTTPX::Response::Body
   # pkg:gem/httpx#lib/httpx/response/body.rb:106
   def filename; end
 
-  # :nocov:
+  # simplecov:disable
   #
   # pkg:gem/httpx#lib/httpx/response/body.rb:165
   def inspect; end
@@ -3068,7 +3224,7 @@ class HTTPX::Response::Body
   # reads a chunk from the payload (implementation of the IO reader protocol).
   #
   # pkg:gem/httpx#lib/httpx/response/body.rb:72
-  def read(*args); end
+  def read(*_arg0, **_arg1, &_arg2); end
 
   # rewinds the response payload buffer.
   #
@@ -3181,56 +3337,62 @@ end
 
 # session may be overridden by certain adapters.
 #
-# pkg:gem/httpx#lib/httpx/session.rb:595
+# pkg:gem/httpx#lib/httpx/session.rb:630
 HTTPX::S = HTTPX::Session
 
 # pkg:gem/httpx#lib/httpx/io/ssl.rb:8
 class HTTPX::SSL < ::HTTPX::TCP
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:19
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:17
   def initialize(_, _, options); end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:75
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:84
   def can_verify_peer?; end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:97
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:106
   def connect; end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:87
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:96
   def connected?; end
 
   # in jruby, alpn_protocol may return ""
   # https://github.com/jruby/jruby-openssl/issues/287
   #
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:53
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:64
   def protocol; end
 
+  # sets the ssl session callback to be picked up by the ssl context.
   # session_new_cb not implemented under JRuby
   #
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:45
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:47
   def session_new_cb(&pr); end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:17
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:15
   def ssl_session=(_arg0); end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:91
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:100
   def ssl_session_expired?; end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:126
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:135
   def try_ssl_connect; end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:79
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:88
   def verify_hostname(host); end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:157
+  # sets the ssl context's new session callback, which points at @session_new_cb when available.
+  #
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:52
+  def init_session_new_cb; end
+
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:166
   def log_transition_state(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/io/ssl.rb:145
+  # pkg:gem/httpx#lib/httpx/io/ssl.rb:154
   def transition(nextstate); end
 end
 
-# pkg:gem/httpx#lib/httpx/io/ssl.rb:10
+# pkg:gem/httpx#lib/httpx/io/ssl.rb:13
 HTTPX::SSL::TLS_OPTIONS = T.let(T.unsafe(nil), Hash)
 
 # Implements the selector loop, where it registers and monitors "Selectable" objects.
@@ -3251,68 +3413,92 @@ HTTPX::SSL::TLS_OPTIONS = T.let(T.unsafe(nil), Hash)
 class HTTPX::Selector
   extend ::Forwardable
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:34
+  # pkg:gem/httpx#lib/httpx/selector.rb:40
   def initialize; end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:30
+  # pkg:gem/httpx#lib/httpx/selector.rb:36
   def after(*_arg0, **_arg1, &_arg2); end
 
   # deregisters +io+ from selectables.
   #
-  # pkg:gem/httpx#lib/httpx/selector.rb:117
+  # pkg:gem/httpx#lib/httpx/selector.rb:150
   def deregister(io); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:32
+  # pkg:gem/httpx#lib/httpx/selector.rb:38
   def each(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:91
+  # pkg:gem/httpx#lib/httpx/selector.rb:124
   def each_connection(&block); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:40
+  # pkg:gem/httpx#lib/httpx/selector.rb:48
   def empty?; end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:104
+  # pkg:gem/httpx#lib/httpx/selector.rb:137
   def find_connection(request_uri, options); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:110
+  # pkg:gem/httpx#lib/httpx/selector.rb:143
   def find_mergeable_connection(connection); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:82
+  # pkg:gem/httpx#lib/httpx/selector.rb:115
   def find_resolver(options); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:44
+  # first time the registered selectables are added, there's probably work to do.
+  #
+  # pkg:gem/httpx#lib/httpx/selector.rb:53
+  def initial_call; end
+
+  # pkg:gem/httpx#lib/httpx/selector.rb:57
   def next_tick; end
 
   # register +io+.
   #
-  # pkg:gem/httpx#lib/httpx/selector.rb:122
+  # pkg:gem/httpx#lib/httpx/selector.rb:155
   def register(io); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:66
-  def terminate; end
+  # pkg:gem/httpx#lib/httpx/selector.rb:97
+  def terminate(selectables = T.unsafe(nil)); end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:286
+  # pkg:gem/httpx#lib/httpx/selector.rb:363
+  def busy_loop_check(timeout); end
+
+  # pkg:gem/httpx#lib/httpx/selector.rb:374
+  def busy_loop_error_message(timeout); end
+
+  # pkg:gem/httpx#lib/httpx/selector.rb:345
   def next_timeout; end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:309
+  # pkg:gem/httpx#lib/httpx/selector.rb:415
   def rw_wait(io, interval); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:130
+  # pkg:gem/httpx#lib/httpx/selector.rb:163
   def select(interval, &block); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:215
+  # pkg:gem/httpx#lib/httpx/selector.rb:263
   def select_many(r, w, interval, &block); end
 
-  # pkg:gem/httpx#lib/httpx/selector.rb:256
+  # pkg:gem/httpx#lib/httpx/selector.rb:315
   def select_one(io, interests, interval); end
+
+  # returns the selectables whose IOs were closed.
+  #
+  # pkg:gem/httpx#lib/httpx/selector.rb:306
+  def selectables_with_closed_ios(r, w); end
 end
 
 # pkg:gem/httpx#lib/httpx/selector.rb:24
+HTTPX::Selector::HAS_FIBER_SCHEDULER = T.let(T.unsafe(nil), TrueClass)
+
+# max number of consecutive ticks allowed to neither wait on IO nor call a ready selectable.
+#
+# pkg:gem/httpx#lib/httpx/selector.rb:30
+HTTPX::Selector::MAX_BUSY_ITERATIONS = T.let(T.unsafe(nil), Integer)
+
+# pkg:gem/httpx#lib/httpx/selector.rb:26
 HTTPX::Selector::READABLE = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/httpx#lib/httpx/selector.rb:25
+# pkg:gem/httpx#lib/httpx/selector.rb:27
 HTTPX::Selector::WRITABLE = T.let(T.unsafe(nil), Array)
 
 # Class implementing the APIs being used publicly.
@@ -3411,86 +3597,92 @@ class HTTPX::Session
 
   # returns a set of HTTPX::Request objects built from the given +args+ and +options+.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:266
+  # pkg:gem/httpx#lib/httpx/session.rb:290
   def build_requests(*args, params); end
+
+  # pkg:gem/httpx#lib/httpx/session.rb:214
+  def can_checkin?(connection); end
 
   # coalesces +conn2+ into +conn1+. if +conn1+ was loaded from the connection pool
   # (it is known via +from_pool+), then it adds its to the +selector+.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:426
+  # pkg:gem/httpx#lib/httpx/session.rb:461
   def coalesce_connections(conn1, conn2, selector, from_pool); end
 
   # tries deactivating connections in the +selector+, deregistering the ones that have been deactivated.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:224
-  def deactivate(selector); end
+  # pkg:gem/httpx#lib/httpx/session.rb:228
+  def deactivate(selector, error = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:295
+  # pkg:gem/httpx#lib/httpx/session.rb:321
   def do_init_connection(connection, selector); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:387
+  # pkg:gem/httpx#lib/httpx/session.rb:285
+  def do_request(request, connection, _); end
+
+  # pkg:gem/httpx#lib/httpx/session.rb:422
   def early_resolve(resolver, connection); end
 
   # returns the corresponding HTTP::Response to the given +request+ if it has been received.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:235
+  # pkg:gem/httpx#lib/httpx/session.rb:250
   def fetch_response(request, _selector, _options); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:411
+  # pkg:gem/httpx#lib/httpx/session.rb:446
   def find_resolver_for(connection, selector); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:443
+  # pkg:gem/httpx#lib/httpx/session.rb:478
   def get_current_selector; end
 
   # callback executed when an HTTP/2 promise frame has been received.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:229
+  # pkg:gem/httpx#lib/httpx/session.rb:244
   def on_promise(_, stream); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:391
+  # pkg:gem/httpx#lib/httpx/session.rb:426
   def on_resolver_connection(connection, selector); end
 
   # returns the array of HTTPX::Response objects corresponding to the array of HTTPX::Request +requests+.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:316
+  # pkg:gem/httpx#lib/httpx/session.rb:342
   def receive_requests(requests, selector); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:363
+  # pkg:gem/httpx#lib/httpx/session.rb:398
   def resolve_connection(connection, selector); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:214
-  def selector_close(selector); end
+  # pkg:gem/httpx#lib/httpx/session.rb:218
+  def selector_close(selector, *_arg1, **_arg2, &_arg3); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:455
+  # pkg:gem/httpx#lib/httpx/session.rb:490
   def selector_store; end
 
-  # sends the +request+ to the corresponding HTTPX::Connection
+  # sends the +request+ to a suitable HTTPX::Connection, which gets yielded if a block is passed.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:246
-  def send_request(request, selector, options = T.unsafe(nil)); end
+  # pkg:gem/httpx#lib/httpx/session.rb:261
+  def send_request(request, selector, options = T.unsafe(nil), &blk); end
 
   # sends an array of HTTPX::Request +requests+, returns the respective array of HTTPX::Response objects.
   #
-  # pkg:gem/httpx#lib/httpx/session.rb:300
+  # pkg:gem/httpx#lib/httpx/session.rb:326
   def send_requests(*requests); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:447
+  # pkg:gem/httpx#lib/httpx/session.rb:482
   def set_current_selector(selector); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:291
+  # pkg:gem/httpx#lib/httpx/session.rb:317
   def set_request_callbacks(request); end
 
-  # pkg:gem/httpx#lib/httpx/session.rb:465
+  # pkg:gem/httpx#lib/httpx/session.rb:500
   def thread_selector_store(th); end
 
   class << self
-    # pkg:gem/httpx#lib/httpx/session.rb:569
+    # pkg:gem/httpx#lib/httpx/session.rb:604
     def after_fork; end
 
-    # pkg:gem/httpx#lib/httpx/session.rb:475
+    # pkg:gem/httpx#lib/httpx/session.rb:510
     def default_options; end
 
-    # pkg:gem/httpx#lib/httpx/session.rb:477
+    # pkg:gem/httpx#lib/httpx/session.rb:512
     def inherited(klass); end
 
     # returns a new HTTPX::Session instance, with the plugin pointed by +pl+ loaded.
@@ -3498,23 +3690,23 @@ class HTTPX::Session
     #   session_with_retries = session.plugin(:retries)
     #   session_with_custom = session.plugin(CustomPlugin)
     #
-    # pkg:gem/httpx#lib/httpx/session.rb:489
+    # pkg:gem/httpx#lib/httpx/session.rb:524
     def plugin(pl, options = T.unsafe(nil), &block); end
   end
 end
 
-# pkg:gem/httpx#lib/httpx/session.rb:575
+# pkg:gem/httpx#lib/httpx/session.rb:610
 module HTTPX::Session::ForkTracker
-  # pkg:gem/httpx#lib/httpx/session.rb:576
+  # pkg:gem/httpx#lib/httpx/session.rb:611
   def _fork; end
 end
 
-# pkg:gem/httpx#lib/httpx/session.rb:566
+# pkg:gem/httpx#lib/httpx/session.rb:601
 HTTPX::Session::INSTANCES = T.let(T.unsafe(nil), ObjectSpace::WeakMap)
 
 # Error raised when there was a timeout while waiting for the HTTP/2 settings frame from the server.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:70
+# pkg:gem/httpx#lib/httpx/errors.rb:73
 class HTTPX::SettingsTimeoutError < ::HTTPX::TimeoutError; end
 
 # pkg:gem/httpx#lib/httpx/io/tcp.rb:6
@@ -3538,27 +3730,32 @@ class HTTPX::TCP
   # signals that the connection that contains this IO can be checked back into the pool.
   # that includes sockets opened outside of the scope of the session, or closed IOs.
   #
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:203
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:229
   def can_disconnect?; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:184
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:203
   def close; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:211
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:237
   def closed?; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:91
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:112
   def connect; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:207
+  # time left until the attempt to connect to the current address should be abandoned.
+  #
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:84
+  def connect_attempt_time_left; end
+
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:233
   def connected?; end
 
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:13
   def host; end
 
-  # :nocov:
+  # simplecov:disable
   #
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:216
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:242
   def inspect; end
 
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:11
@@ -3567,13 +3764,18 @@ class HTTPX::TCP
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:11
   def ip; end
 
+  # abandons the connection attempt to the current address.
+  #
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:96
+  def next_address!(e); end
+
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:11
   def port; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:87
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:108
   def protocol; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:161
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:177
   def read(size, buffer); end
 
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:49
@@ -3582,27 +3784,27 @@ class HTTPX::TCP
   # pkg:gem/httpx#lib/httpx/io/tcp.rb:11
   def state; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:83
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:104
   def to_io; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:173
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:190
   def write(buffer); end
 
   private
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:228
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:254
   def build_socket; end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:244
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:271
   def do_transition(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:249
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:276
   def log_transition_state(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:233
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:260
   def transition(nextstate); end
 
-  # pkg:gem/httpx#lib/httpx/io/tcp.rb:143
+  # pkg:gem/httpx#lib/httpx/io/tcp.rb:159
   def try_connect; end
 end
 
@@ -3654,54 +3856,64 @@ class HTTPX::Timers
   def drop_elapsed!(elapsed_time); end
 end
 
-# pkg:gem/httpx#lib/httpx/timers.rb:75
+# pkg:gem/httpx#lib/httpx/timers.rb:78
 class HTTPX::Timers::Interval
   include ::Comparable
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:80
+  # pkg:gem/httpx#lib/httpx/timers.rb:83
   def initialize(interval); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:99
+  # pkg:gem/httpx#lib/httpx/timers.rb:102
   def <<(callback); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:85
+  # pkg:gem/httpx#lib/httpx/timers.rb:88
   def <=>(other); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:89
+  # pkg:gem/httpx#lib/httpx/timers.rb:92
   def ==(other); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:103
+  # pkg:gem/httpx#lib/httpx/timers.rb:106
   def delete(callback); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:115
+  # pkg:gem/httpx#lib/httpx/timers.rb:118
   def elapse(elapsed); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:111
+  # pkg:gem/httpx#lib/httpx/timers.rb:114
   def elapsed?(elapsed = T.unsafe(nil)); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:78
+  # pkg:gem/httpx#lib/httpx/timers.rb:81
   def interval; end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:107
+  # pkg:gem/httpx#lib/httpx/timers.rb:110
   def no_callbacks?; end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:95
+  # pkg:gem/httpx#lib/httpx/timers.rb:98
   def to_f; end
 end
 
 # pkg:gem/httpx#lib/httpx/timers.rb:64
 class HTTPX::Timers::Timer
-  # pkg:gem/httpx#lib/httpx/timers.rb:65
+  # pkg:gem/httpx#lib/httpx/timers.rb:68
   def initialize(interval, callback); end
 
-  # pkg:gem/httpx#lib/httpx/timers.rb:70
+  # pkg:gem/httpx#lib/httpx/timers.rb:73
   def cancel; end
+
+  # simpler helper which allows classification
+  #
+  # pkg:gem/httpx#lib/httpx/timers.rb:66
+  def label; end
+
+  # simpler helper which allows classification
+  #
+  # pkg:gem/httpx#lib/httpx/timers.rb:66
+  def label=(_arg0); end
 end
 
 # Error raised when a response couldn't be received for a request after multiple interactions.
 # This error should not be retriable.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:67
+# pkg:gem/httpx#lib/httpx/errors.rb:70
 class HTTPX::TotalRequestTimeoutError < ::HTTPX::RequestTimeoutError; end
 
 # pkg:gem/httpx#lib/httpx/transcoder.rb:4
@@ -3836,7 +4048,7 @@ class HTTPX::Transcoder::Chunker::Encoder
   private
 
   # pkg:gem/httpx#lib/httpx/transcoder/chunker.rb:27
-  def respond_to_missing?(meth, *args); end
+  def respond_to_missing?(*_arg0, **_arg1, &_arg2); end
 end
 
 # pkg:gem/httpx#lib/httpx/transcoder/chunker.rb:7
@@ -4007,10 +4219,10 @@ module HTTPX::Transcoder::JSON
   def encode(json); end
 
   # pkg:gem/httpx#lib/httpx/transcoder/json.rb:67
-  def json_dump(*args); end
+  def json_dump(*_arg0, **_arg1, &_arg2); end
 
   # pkg:gem/httpx#lib/httpx/transcoder/json.rb:66
-  def json_load(*args); end
+  def json_load(*_arg0, **_arg1, &_arg2); end
 
   class << self
     # pkg:gem/httpx#lib/httpx/transcoder/json.rb:46
@@ -4020,10 +4232,10 @@ module HTTPX::Transcoder::JSON
     def encode(json); end
 
     # pkg:gem/httpx#lib/httpx/transcoder/json.rb:67
-    def json_dump(*args); end
+    def json_dump(*_arg0, **_arg1, &_arg2); end
 
     # pkg:gem/httpx#lib/httpx/transcoder/json.rb:66
-    def json_load(*args); end
+    def json_load(*_arg0, **_arg1, &_arg2); end
   end
 end
 
@@ -4237,7 +4449,7 @@ class HTTPX::UNIX < ::HTTPX::TCP
   # pkg:gem/httpx#lib/httpx/io/unix.rb:9
   def host; end
 
-  # :nocov:
+  # simplecov:disable
   #
   # pkg:gem/httpx#lib/httpx/io/unix.rb:64
   def inspect; end
@@ -4326,7 +4538,7 @@ HTTPX::VERSION = T.let(T.unsafe(nil), String)
 
 # Error raised when there was a timeout while sending a request from the server.
 #
-# pkg:gem/httpx#lib/httpx/errors.rb:63
+# pkg:gem/httpx#lib/httpx/errors.rb:66
 class HTTPX::WriteTimeoutError < ::HTTPX::RequestTimeoutError; end
 
 module Process
