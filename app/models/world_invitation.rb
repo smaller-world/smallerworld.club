@@ -16,9 +16,10 @@
 #
 # Indexes
 #
-#  index_world_invitations_on_recipient_id  (recipient_id)
-#  index_world_invitations_on_world_id      (world_id)
-#  index_world_invitations_uniqueness       (world_id,recipient_phone_number) UNIQUE
+#  index_world_invitations_on_id_and_world_id  (id,world_id) UNIQUE
+#  index_world_invitations_on_recipient_id     (recipient_id)
+#  index_world_invitations_on_world_id         (world_id)
+#  index_world_invitations_uniqueness          (world_id,recipient_phone_number) UNIQUE
 #
 # Foreign Keys
 #

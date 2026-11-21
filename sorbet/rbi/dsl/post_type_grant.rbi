@@ -876,6 +876,9 @@ class PostTypeGrant
     def restore_post_type_id!; end
 
     sig { void }
+    def restore_world_id!; end
+
+    sig { void }
     def restore_world_key_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
@@ -903,6 +906,12 @@ class PostTypeGrant
     def saved_change_to_post_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_world_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_world_key_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -921,7 +930,55 @@ class PostTypeGrant
     def will_save_change_to_post_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_world_key_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(::String) }
+    def world_id; end
+
+    sig { params(value: ::String).returns(::String) }
+    def world_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def world_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def world_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def world_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def world_id_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def world_id_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def world_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def world_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def world_id_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def world_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def world_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def world_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def world_id_was; end
+
+    sig { void }
+    def world_id_will_change!; end
 
     sig { returns(::String) }
     def world_key_id; end

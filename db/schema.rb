@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -169,6 +169,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
     t.timestamptz "created_at", null: false
     t.uuid "post_type_id", null: false
     t.uuid "world_key_id", null: false
+    t.uuid "world_id", null: false
     t.index ["post_type_id"], name: "index_post_type_grants_on_post_type_id"
     t.index ["world_key_id", "post_type_id"], name: "index_post_type_grants_uniqueness", unique: true
     t.index ["world_key_id"], name: "index_post_type_grants_on_world_key_id"
@@ -180,6 +181,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
     t.string "label", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.index ["id", "world_id"], name: "index_post_types_on_id_and_world_id", unique: true
     t.index ["world_id", "label"], name: "index_post_types_uniqueness", unique: true
     t.index ["world_id"], name: "index_post_types_on_world_id"
   end
@@ -456,6 +458,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
     t.string "recipient_phone_number", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.index ["id", "world_id"], name: "index_world_invitations_on_id_and_world_id", unique: true
     t.index ["recipient_id"], name: "index_world_invitations_on_recipient_id"
     t.index ["world_id", "recipient_phone_number"], name: "index_world_invitations_uniqueness", unique: true
     t.index ["world_id"], name: "index_world_invitations_on_world_id"
@@ -469,6 +472,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.timestamptz "world_last_visited_at"
+    t.index ["id", "world_id"], name: "index_world_keys_on_id_and_world_id", unique: true
     t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
     t.index ["muted_post_type_ids"], name: "index_world_keys_on_muted_post_type_ids", using: :gin
     t.index ["recipient_id"], name: "index_world_keys_on_recipient_id"
@@ -493,10 +497,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "passkit_registrations", "passkit_devices"
   add_foreign_key "passkit_registrations", "passkit_passes"
-  add_foreign_key "post_type_grants", "post_types"
-  add_foreign_key "post_type_grants", "world_keys"
+  add_foreign_key "post_type_grants", "post_types", column: ["post_type_id", "world_id"], primary_key: ["id", "world_id"]
+  add_foreign_key "post_type_grants", "world_keys", column: ["world_key_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "post_types", "worlds"
-  add_foreign_key "posts", "post_types", column: "type_id"
+  add_foreign_key "posts", "post_types", column: ["type_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "posts", "worlds"
   add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users", column: "reactor_id"
@@ -522,7 +526,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_184923) do
   add_foreign_key "world_invitations", "users", column: "recipient_id"
   add_foreign_key "world_invitations", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"
-  add_foreign_key "world_keys", "world_invitations", column: "invitation_id"
+  add_foreign_key "world_keys", "world_invitations", column: ["invitation_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "world_keys", "worlds"
   add_foreign_key "worlds", "users", column: "owner_id"
 end

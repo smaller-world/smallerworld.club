@@ -30,7 +30,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (type_id => post_types.id)
+#  fk_rails_...  ([type_id, world_id] => post_types[id, world_id])
 #  fk_rails_...  (world_id => worlds.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
