@@ -167,7 +167,7 @@ gem "resend", "~> 1.18"
 
 group :development, :test do
   # Run tests with Minitest
-  gem "minitest", "~> 6.0.1"
+  gem "minitest", "~> 6.1.0"
   gem "minitest-mock", "~> 5.27"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
