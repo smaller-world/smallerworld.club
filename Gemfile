@@ -57,7 +57,7 @@ gem "pg_search", "~> 2.4"
 
 # Inline CSS into email templates (& generate text versions of emails)
 gem "premailer-rails"
-gem "premailer", "~> 1.29"
+gem "premailer", "~> 1.33"
 
 # Build views with Ruby
 gem "phlex-rails", "~> 2.4"
