@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::WorldV1PostsImportAlert < Components::Base
+class Components::Deprecated::WorldV1PostsImportAlert < Components::Base
   include Phlex::Rails::Helpers::Pluralize
   include Phlex::Rails::Helpers::FormWith
 

@@ -82,9 +82,10 @@ Rails.application.routes.draw do
   resources :world_invitations,
     path: "/worlds/:world_id/invitations",
     only: [ :new, :create ]
-  resource :world_v1_posts_import,
-    path: "/worlds/:world_id/v1_posts_import",
-    only: [ :show, :create ]
+  # resource :world_v1_posts_import,
+  #   controller: "deprecated/world_v1_posts_imports",
+  #   path: "/worlds/:world_id/v1_posts_import",
+  #   only: [ :show, :create ]
 
   # == World Invitations
   resources :world_invitations, only: [ :show, :edit, :update, :destroy ]

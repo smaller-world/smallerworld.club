@@ -38,7 +38,7 @@ module World::V1Importing
   def current_v1_posts_import_job
     arguments_json = { "_aj_globalid" => to_gid }.to_json
     scope = SolidQueue::Job
-      .where(class_name: "ImportV1PostsJob")
+      .where(class_name: "Deprecated::ImportV1PostsJob")
       .where("arguments LIKE ?", "%#{arguments_json}%")
     scope
       .where(id: SolidQueue::ReadyExecution.select(:job_id))
@@ -63,9 +63,9 @@ module World::V1Importing
     broadcast_v1_posts_import_progress
   end
 
-  sig { params(limit: T.nilable(Integer), options: T.untyped).returns(ImportV1PostsJob) }
+  sig { params(limit: T.nilable(Integer), options: T.untyped).returns(Deprecated::ImportV1PostsJob) }
   def import_v1_posts_later(limit: nil, **options)
-    ImportV1PostsJob
+    Deprecated::ImportV1PostsJob
       .set(**options)
       .perform_later(
         self,

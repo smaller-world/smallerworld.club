@@ -55,9 +55,9 @@ class Views::Worlds::Show < Views::Base
             )
           end
         end
-        app_layout.with_alert do
-          v1_post_import_frame
-        end
+        # app_layout.with_alert do
+        #   v1_post_import_frame
+        # end
       else
         if (current_device = Current.device)
           app_layout.with_alert do

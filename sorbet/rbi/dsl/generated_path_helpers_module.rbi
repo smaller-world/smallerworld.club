@@ -361,8 +361,5 @@ module GeneratedPathHelpersModule
   def world_posts_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_v1_posts_import_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def worlds_path(*args); end
 end
