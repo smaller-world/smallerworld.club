@@ -328,6 +328,7 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.1.0)
       drb (~> 2.0)
       prism (>= 1.5, < 3)
@@ -364,6 +365,9 @@ GEM
       logger
     netrc (0.11.0)
     nio4r (2.7.5)
+    nokogiri (1.19.7)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.19.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-linux-gnu)
@@ -585,14 +589,14 @@ GEM
       fugit (~> 1.11)
       railties (>= 7.1)
       thor (>= 1.3.1)
-    sorbet (0.6.13690)
-      sorbet-static (= 0.6.13690)
-    sorbet-runtime (0.6.13690)
-    sorbet-static (0.6.13690-universal-darwin)
-    sorbet-static (0.6.13690-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13690)
-      sorbet (= 0.6.13690)
-      sorbet-runtime (= 0.6.13690)
+    sorbet (0.6.13704)
+      sorbet-static (= 0.6.13704)
+    sorbet-runtime (0.6.13704)
+    sorbet-static (0.6.13704-universal-darwin)
+    sorbet-static (0.6.13704-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13704)
+      sorbet (= 0.6.13704)
+      sorbet-runtime (= 0.6.13704)
     spoom (1.8.2)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
@@ -746,7 +750,7 @@ DEPENDENCIES
   solid_cable
   solid_cache
   solid_queue
-  sorbet (= 0.6.13690)
+  sorbet (= 0.6.13704)
   sorbet-runtime
   standardwebhooks (~> 1.1)
   stimulus-rails
@@ -877,6 +881,7 @@ CHECKSUMS
   mime-types-data (3.2026.1103) sha256=cda7af94d895f1fd33e000acea800e6ed31e4c861e3d6c1a27c8b74f9e44dc64
   mini_magick (5.3.1) sha256=29395dfd76badcabb6403ee5aff6f681e867074f8f28ce08d78661e9e4a351c4
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
+  mini_portile2 (2.8.9) sha256=0cd7c7f824e010c072e33f68bc02d85a00aeb6fce05bb4819c03dfd3c140c289
   minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
   minitest-mock (5.27.0) sha256=7040ed7185417a966920987eaa6eaf1be4ea1fc5b25bb03ff4703f98564a55b0
   mission_control-jobs (1.3.1) sha256=3230be224069b39fee2893eecd27c1c334fb5467290bf575e88b5c9121287b26
@@ -892,6 +897,7 @@ CHECKSUMS
   net-ssh (7.3.10) sha256=8b54591acc8f9dbb63cd906add66a816c302f950cf92137b14155e809abea472
   netrc (0.11.0) sha256=de1ce33da8c99ab1d97871726cba75151113f117146becbe45aa85cb3dabee3f
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
+  nokogiri (1.19.7) sha256=abe94507c54cb18f872777b16bdca4aad32b1abdc4c52fe843f1c80fbdf992b8
   nokogiri (1.19.7-arm64-darwin) sha256=f27d7f25f4873fbc3aa35a2cc2fb680c98555fec1925348da439d0869d541142
   nokogiri (1.19.7-x86_64-linux-gnu) sha256=25865ccb462f714e712fdf8906fde07849cb6704a808e3d629d75baa5af5dd3b
   os (1.1.4) sha256=57816d6a334e7bd6aed048f4b0308226c5fb027433b67d90a9ab435f35108d3f
@@ -972,11 +978,11 @@ CHECKSUMS
   solid_cable (4.1.0) sha256=828e3d509207b82b4f05f4e9c85f696994710679b52d511aa7f97ebd212d3226
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
   solid_queue (1.7.2) sha256=a22685e1d2ee14ce7b4e5d4592c9d8e837951884c51555609dee58679ed03325
-  sorbet (0.6.13690) sha256=378d1558b0237df76002078b54abb2ea4cb8eadb1d7d5a0b4a328f544b833ca8
-  sorbet-runtime (0.6.13690) sha256=2e9699d96841513bb49b95fb1bf6b7228521886aa8faef7600dee506ccf86f47
-  sorbet-static (0.6.13690-universal-darwin) sha256=55bc9dee0c1f85b0ee35a504f84aea87d7e3f5d44eed65405f5fb50d59d90e9b
-  sorbet-static (0.6.13690-x86_64-linux) sha256=4832e2e62146a18cc51434cfcbfe8254f572f780d95c15ff537677a8113afe1c
-  sorbet-static-and-runtime (0.6.13690) sha256=8c32d8ba3faa1a6c6b1ba6446a64296e9e092120ebb09c2634372f3fbe461cc7
+  sorbet (0.6.13704) sha256=7f6ad978bf193b495896a84efb2a98c8d84518f53223da34d18189d69abfc942
+  sorbet-runtime (0.6.13704) sha256=110d042714fc15f4ffd651d53890215178b42285f3182a844d637465b96b005e
+  sorbet-static (0.6.13704-universal-darwin) sha256=4f5b53f2b2ec01c8546e25f6fe4515146d78d7a5f73cb9bf7eb641b09e8cb4af
+  sorbet-static (0.6.13704-x86_64-linux) sha256=bf544dc2b24eeb59b15c44e90fbfd18f5f65730aa22844fc4205be90a04c9f4d
+  sorbet-static-and-runtime (0.6.13704) sha256=7e8e96005d943e0c8385f543eb5d943eb9c5680ee8152229d7e3f01be9f545cf
   spoom (1.8.2) sha256=1253232b9d85ed140c9d5337ad2c74f03af89a70e3c602f2b2438eba34d0bd2f
   sshkit (1.25.0) sha256=c8c6543cdb60f91f1d277306d585dd11b6a064cb44eab0972827e4311ff96744
   ssrf_filter (1.6.0) sha256=78d15bc26d0385c931f46f12a9c1cbb90e6556bd96b95f25e5a5f786c8dcf999
