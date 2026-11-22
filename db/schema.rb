@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,6 +93,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.index ["username"], name: "index_console1984_users_on_username"
+  end
+
+  create_table "deprecated_world_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cardholder_id"
+    t.datetime "created_at", null: false
+    t.uuid "device_id"
+    t.timestamptz "discarded_at"
+    t.timestamptz "relevant_date", default: -> { "now()" }
+    t.datetime "updated_at", null: false
+    t.uuid "world_id", null: false
+    t.uuid "world_key_id"
+    t.index ["cardholder_id"], name: "index_deprecated_world_cards_on_cardholder_id"
+    t.index ["device_id"], name: "index_deprecated_world_cards_on_device_id"
+    t.index ["discarded_at"], name: "index_deprecated_world_cards_on_discarded_at"
+    t.index ["relevant_date"], name: "index_deprecated_world_cards_on_relevant_date"
+    t.index ["world_id"], name: "index_deprecated_world_cards_on_world_id"
+    t.index ["world_key_id"], name: "index_deprecated_world_cards_on_world_key_id"
   end
 
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -434,23 +451,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
-  create_table "world_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "cardholder_id"
-    t.datetime "created_at", null: false
-    t.uuid "device_id"
-    t.timestamptz "discarded_at"
-    t.timestamptz "relevant_date", default: -> { "now()" }
-    t.datetime "updated_at", null: false
-    t.uuid "world_id", null: false
-    t.uuid "world_key_id"
-    t.index ["cardholder_id"], name: "index_world_cards_on_cardholder_id"
-    t.index ["device_id"], name: "index_world_cards_on_device_id"
-    t.index ["discarded_at"], name: "index_world_cards_on_discarded_at"
-    t.index ["relevant_date"], name: "index_world_cards_on_relevant_date"
-    t.index ["world_id"], name: "index_world_cards_on_world_id"
-    t.index ["world_key_id"], name: "index_world_cards_on_world_key_id"
-  end
-
   create_table "world_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.uuid "granted_post_type_ids", default: [], null: false, array: true
@@ -493,6 +493,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "deprecated_world_cards", "devices"
+  add_foreign_key "deprecated_world_cards", "users", column: "cardholder_id"
+  add_foreign_key "deprecated_world_cards", "world_keys"
+  add_foreign_key "deprecated_world_cards", "worlds"
   add_foreign_key "devices", "users", column: "owner_id"
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "passkit_registrations", "passkit_devices"
@@ -519,10 +523,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_215704) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "world_cards", "devices"
-  add_foreign_key "world_cards", "users", column: "cardholder_id"
-  add_foreign_key "world_cards", "world_keys"
-  add_foreign_key "world_cards", "worlds"
   add_foreign_key "world_invitations", "users", column: "recipient_id"
   add_foreign_key "world_invitations", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"

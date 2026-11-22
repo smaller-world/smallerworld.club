@@ -98,6 +98,7 @@ class User < ApplicationRecord
     dependent: :destroy
 
   has_many :world_cards,
+    class_name: "Deprecated::WorldCard",
     inverse_of: :cardholder,
     foreign_key: :cardholder_id,
     dependent: :destroy
