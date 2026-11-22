@@ -82,7 +82,7 @@ gem "mission_control-jobs"
 gem "pagy", "~> 43.8"
 
 # Parse and format phone numbers with phonelib
-gem "phonelib", "~> 0.10.28"
+gem "phonelib", "~> 0.11.0"
 
 # Cache-friendly, client-side local time
 gem "local_time"
