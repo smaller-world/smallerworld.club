@@ -541,10 +541,6 @@ module Components
   end
   def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
 
-  # source://app/components/world_v1_posts_import_alert.rb:4
-  sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
-  def WorldV1PostsImportAlert(world:, import_job:, **attributes); end
-
   class << self
     # source://app/components/accept_world_key_grant_form.rb:4
     sig { params(verified_grant: ::VerifiedWorldKeyGrant, invitation: ::WorldInvitation, attributes: T.untyped).void }
@@ -1087,9 +1083,5 @@ module Components
       ).void
     end
     def WorldPostItems(current_user:, posts:, replied_post_ids:, active_reports_by_post_id:); end
-
-    # source://app/components/world_v1_posts_import_alert.rb:4
-    sig { params(world: ::World, import_job: T.nilable(::SolidQueue::Job), attributes: T.untyped).void }
-    def WorldV1PostsImportAlert(world:, import_job:, **attributes); end
   end
 end

@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class ImportV1PostsJob < ApplicationJob
+class Deprecated::ImportV1PostsJob < ApplicationJob
   # == Configuration ==
 
   # Only one import job may run per world at a time.

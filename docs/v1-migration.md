@@ -1,5 +1,18 @@
 # V1 Migration
 
+## Retiring post imports
+
+Before deploying the importer retirement, stop old app processes and any
+external enqueuers, then stop the job workers. Let claimed imports finish or
+verify that they have stopped and their claims have been released. The Fly
+release command runs After Party before replacing the running app and workers,
+so quiesce them before starting the deploy.
+
+The release task discards unfinished jobs under both importer class names.
+Already imported posts remain in place, including their V1 metadata, which still
+controls validation and publishing. Resume traffic and workers on the new
+release after the task succeeds.
+
 ## Moving from Mantine's TipTap editor to Lexxy
 
 Mantine TipTap editor format:

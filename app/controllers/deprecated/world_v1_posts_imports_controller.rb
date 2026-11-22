@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class WorldV1PostsImportsController < ApplicationController
+class Deprecated::WorldV1PostsImportsController < ApplicationController
   # == Actions ==
 
   # GET /world/:world_id/v1_posts_import?import_job_id=...
@@ -19,7 +19,7 @@ class WorldV1PostsImportsController < ApplicationController
               status: :found,
             ) and return
           end
-          render Views::WorldV1PostsImport::Show.new(world:, import_job:)
+          render Views::Deprecated::WorldV1PostsImport::Show.new(world:, import_job:)
         end
       end
     end

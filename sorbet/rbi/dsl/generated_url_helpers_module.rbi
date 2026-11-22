@@ -361,8 +361,5 @@ module GeneratedUrlHelpersModule
   def world_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def world_v1_posts_import_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
   def worlds_url(*args); end
 end
