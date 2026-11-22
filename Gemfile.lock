@@ -400,7 +400,7 @@ GEM
       phlex (~> 2.4.0)
       railties (>= 7.1, < 9)
       zeitwerk (~> 2.7)
-    phonelib (0.10.28)
+    phonelib (0.11.0)
     playwright-ruby-client (1.65.0)
       base64
       concurrent-ruby (>= 1.1.6)
@@ -723,7 +723,7 @@ DEPENDENCIES
   pg_search (~> 2.4)
   phlex-icons
   phlex-rails (~> 2.4)
-  phonelib (~> 0.10.28)
+  phonelib (~> 0.11.0)
   playwright-ruby-client (= 1.65.0)
   premailer (~> 1.29)
   premailer-rails
@@ -916,7 +916,7 @@ CHECKSUMS
   phlex (2.4.1) sha256=e596717fbfe38b5271840266758779ebe75092e02629f0c170287e6290a70b12
   phlex-icons (2.56.0) sha256=83aa4dc223ffd3838f033cda1f67fd5c41341116d2d449865bafa24dae74f822
   phlex-rails (2.4.0) sha256=2bcddbd488681acb25753bab1887d3ac150e644244ff8ba307f2171a4d0195f5
-  phonelib (0.10.28) sha256=96dbb0ac9a76e3997825470b47ce7425f4ddf5e9ba52aad40fc465b839bc3dc6
+  phonelib (0.11.0) sha256=b4c33f6bbc3375ef33de84c7e3e4d86429b1ed2eaee1e2fcaa851ab8a0e04e67
   playwright-ruby-client (1.65.0) sha256=895bdd6805ce4ead4a6b777bc6b37e59cb6e8dfd5fc0e7db7b80830fe874d8c7
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   premailer (1.29.0) sha256=015f30c520701f3d47fd898886a3eaf4e5171efcc5fd239b872efd1ba61d3da0
