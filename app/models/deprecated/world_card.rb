@@ -4,7 +4,7 @@
 # rubocop:disable Layout/LineLength, Lint/RedundantCopDisableDirective
 # == Schema Information
 #
-# Table name: world_cards
+# Table name: deprecated_world_cards
 #
 #  id            :uuid             not null, primary key
 #  discarded_at  :timestamptz
@@ -18,12 +18,12 @@
 #
 # Indexes
 #
-#  index_world_cards_on_cardholder_id  (cardholder_id)
-#  index_world_cards_on_device_id      (device_id)
-#  index_world_cards_on_discarded_at   (discarded_at)
-#  index_world_cards_on_relevant_date  (relevant_date)
-#  index_world_cards_on_world_id       (world_id)
-#  index_world_cards_on_world_key_id   (world_key_id)
+#  index_deprecated_world_cards_on_cardholder_id  (cardholder_id)
+#  index_deprecated_world_cards_on_device_id      (device_id)
+#  index_deprecated_world_cards_on_discarded_at   (discarded_at)
+#  index_deprecated_world_cards_on_relevant_date  (relevant_date)
+#  index_deprecated_world_cards_on_world_id       (world_id)
+#  index_deprecated_world_cards_on_world_key_id   (world_key_id)
 #
 # Foreign Keys
 #
@@ -33,7 +33,7 @@
 #  fk_rails_...  (world_key_id => world_keys.id)
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
-class WorldCard < ApplicationRecord
+class Deprecated::WorldCard < ApplicationRecord
   include Discard::Model
 
   # == Configuration ==
@@ -49,9 +49,9 @@ class WorldCard < ApplicationRecord
     ShortUUID.shorten(id)
   end
 
-  sig { params(short_id: String).returns(WorldCard) }
+  sig { params(short_id: String).returns(Deprecated::WorldCard) }
   def self.find_by_short_id!(short_id)
-    WorldCard.find(ShortUUID.expand(short_id))
+    find(ShortUUID.expand(short_id))
   end
 
   # == Associations ==

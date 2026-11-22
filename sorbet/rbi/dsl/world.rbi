@@ -384,10 +384,10 @@ class World
 
     # This method is created by ActiveRecord on the `World` class because it declared `has_many :cards`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::WorldCard::PrivateCollectionProxy) }
+    sig { returns(::Deprecated::WorldCard::PrivateCollectionProxy) }
     def cards; end
 
-    sig { params(value: T::Enumerable[::WorldCard]).void }
+    sig { params(value: T::Enumerable[::Deprecated::WorldCard]).void }
     def cards=(value); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Attachment) }

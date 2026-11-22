@@ -558,10 +558,10 @@ class User
 
     # This method is created by ActiveRecord on the `User` class because it declared `has_many :world_cards`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::WorldCard::PrivateCollectionProxy) }
+    sig { returns(::Deprecated::WorldCard::PrivateCollectionProxy) }
     def world_cards; end
 
-    sig { params(value: T::Enumerable[::WorldCard]).void }
+    sig { params(value: T::Enumerable[::Deprecated::WorldCard]).void }
     def world_cards=(value); end
 
     sig { returns(T::Array[T.untyped]) }
