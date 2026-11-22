@@ -5,90 +5,90 @@
 # Please instead update this file by running `bin/tapioca gem phonelib`.
 
 
-# pkg:gem/phonelib#lib/validators/phone_validator.rb:75
+# pkg:gem/phonelib#lib/validators/phone_validator.rb:72
 class PhoneValidator < ::ActiveModel::EachValidator
   include ::Phonelib::Core
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:82
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:79
   def check_validity!; end
 
   # Validation method
   #
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:90
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:87
   def validate_each(record, attribute, value); end
 
   private
 
   # @private
   #
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:225
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:224
   def countries; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:149
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:148
   def detailed_countries; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:136
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:135
   def detailed_error_options(error); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:110
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:107
   def detailed_errors?; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:145
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:144
   def detailed_types; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:174
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:173
   def extensions_allowed?; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:114
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:111
   def legacy_error_options; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:106
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:103
   def message; end
 
   # @private
   #
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:211
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:210
   def phone_countries(phone); end
 
   # @private
   #
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:201
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:200
   def phone_types(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:155
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:154
   def phone_valid?(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:190
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:189
   def specified_country(record); end
 
   # @private
   #
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:217
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:216
   def types; end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:164
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:163
   def valid_country?(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:169
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:168
   def valid_extensions?(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:184
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:183
   def valid_input_format?(value); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:178
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:177
   def valid_international_prefix?(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:159
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:158
   def valid_types?(phone); end
 
-  # pkg:gem/phonelib#lib/validators/phone_validator.rb:118
-  def validate_with_details(record, attribute, phone); end
+  # pkg:gem/phonelib#lib/validators/phone_validator.rb:115
+  def validate_with_details(record, attribute, phone, value); end
 end
 
-# pkg:gem/phonelib#lib/validators/phone_validator.rb:76
+# pkg:gem/phonelib#lib/validators/phone_validator.rb:73
 PhoneValidator::E164_PATTERN = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/phonelib#lib/validators/phone_validator.rb:77
+# pkg:gem/phonelib#lib/validators/phone_validator.rb:74
 PhoneValidator::SUPPORTED_FORMATS = T.let(T.unsafe(nil), Array)
 
 # main Phonelib module definition
@@ -102,15 +102,15 @@ end
 #
 # pkg:gem/phonelib#lib/phonelib/core.rb:5
 module Phonelib::Core
-  # pkg:gem/phonelib#lib/phonelib/core.rb:210
+  # pkg:gem/phonelib#lib/phonelib/core.rb:219
   def add_additional_regex(country, type, national_regex); end
 
-  # pkg:gem/phonelib#lib/phonelib/core.rb:231
+  # pkg:gem/phonelib#lib/phonelib/core.rb:240
   def additional_regexes; end
 
   # setter for data file to use
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:197
+  # pkg:gem/phonelib#lib/phonelib/core.rb:206
   def additional_regexes=(data); end
 
   # @private getter for phone data indexed by country code (internal use only)
@@ -121,17 +121,17 @@ module Phonelib::Core
   # getter method for default_country variable
   # @return [String,Symbol,Array<String,Symbol>,nil] Default country ISO2 code or codes used for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:59
+  # pkg:gem/phonelib#lib/phonelib/core.rb:67
   def default_country; end
 
   # setter method for default_country variable
   # @param country [String,Symbol,Array<String,Symbol>] Default country ISO2 code or codes used for parsing
   # @return [String,Symbol,Array<String,Symbol>] Default country ISO2 code or codes used for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:66
+  # pkg:gem/phonelib#lib/phonelib/core.rb:74
   def default_country=(country); end
 
-  # pkg:gem/phonelib#lib/phonelib/core.rb:219
+  # pkg:gem/phonelib#lib/phonelib/core.rb:228
   def dump_additional_regexes; end
 
   # eagerly initialize the gem, loads data into memory. not required, initialization is done lazily otherwise, but
@@ -143,54 +143,54 @@ module Phonelib::Core
   # getter method for extension_separate_symbols variable
   # @return [String] Default extension separator symbols used for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:91
+  # pkg:gem/phonelib#lib/phonelib/core.rb:99
   def extension_separate_symbols; end
 
   # setter method for extension_separate_symbols variable
   # @param separator [String] extension separator symbols used for parsing
   # @return [String] Default extension separator symbols used for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:98
+  # pkg:gem/phonelib#lib/phonelib/core.rb:106
   def extension_separate_symbols=(separator); end
 
   # getter method for extension_separator variable
   # @return [String] Default extension separator used for formatting
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:75
+  # pkg:gem/phonelib#lib/phonelib/core.rb:83
   def extension_separator; end
 
   # setter method for extension_separator variable
   # @param separator [String] extension separator used for formatting
   # @return [String] Default extension separator used for formatting
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:82
+  # pkg:gem/phonelib#lib/phonelib/core.rb:90
   def extension_separator=(separator); end
 
   # getter for ignore plus flag
   # @return [Boolean] Flag defines whether to reset country in case number has + and country prefix doesn't match
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:140
+  # pkg:gem/phonelib#lib/phonelib/core.rb:148
   def ignore_plus; end
 
   # setter for ignore plus flag
   # @param ignore_plus [Boolean] ignore plus sign or not
   # @return [Boolean] Flag defines whether to ignore plus for country reset during validations in case country prefix doesn't match
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:147
+  # pkg:gem/phonelib#lib/phonelib/core.rb:155
   def ignore_plus=(ignore_plus); end
 
   # method checks if passed phone number is impossible
   # @param phone_number [String] the phone number to be parsed
   # @return [Boolean] phone impossible or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:461
+  # pkg:gem/phonelib#lib/phonelib/core.rb:470
   def impossible?(phone_number); end
 
   # method checks if passed phone number is invalid
   # @param phone_number [String] the phone number to be parsed
   # @return [Boolean] phone invalid or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:447
+  # pkg:gem/phonelib#lib/phonelib/core.rb:456
   def invalid?(phone_number); end
 
   # method checks if passed phone number is invalid for provided country
@@ -198,15 +198,15 @@ module Phonelib::Core
   # @param country [String] ISO2 country code for phone parsing
   # @return [Boolean] phone invalid for specified country or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:477
+  # pkg:gem/phonelib#lib/phonelib/core.rb:486
   def invalid_for_country?(phone_number, country); end
 
-  # pkg:gem/phonelib#lib/phonelib/core.rb:191
+  # pkg:gem/phonelib#lib/phonelib/core.rb:200
   def override_phone_data; end
 
   # setter for data file to use
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:185
+  # pkg:gem/phonelib#lib/phonelib/core.rb:193
   def override_phone_data=(file_path); end
 
   # method for parsing phone number.
@@ -215,21 +215,26 @@ module Phonelib::Core
   # @param passed_country [nil|String|Symbol] country for phone parsing
   # @return [Phonelib::Phone] parsed phone entity
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:433
+  # pkg:gem/phonelib#lib/phonelib/core.rb:442
   def parse(phone, passed_country = T.unsafe(nil)); end
 
   # getter for flag for special phone types parsing
   # @return [Boolean] Flag defines whether to parse special phone types
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:108
+  # pkg:gem/phonelib#lib/phonelib/core.rb:116
   def parse_special; end
 
   # setter for flag for special phone types parsing
   # @param special [Boolean] parse special phone types value
   # @return [Boolean] Flag defines whether to parse special phone types
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:115
+  # pkg:gem/phonelib#lib/phonelib/core.rb:123
   def parse_special=(special); end
+
+  # @private getter for anchored phone regexp cache (internal use only)
+  #
+  # pkg:gem/phonelib#lib/phonelib/core.rb:50
+  def phone_anchored_regexp_cache; end
 
   # getter for phone data for other modules of gem, can be used outside
   # @return [Hash] all data for phone parsing
@@ -244,7 +249,7 @@ module Phonelib::Core
 
   # @private getter for extended phone data
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:50
+  # pkg:gem/phonelib#lib/phonelib/core.rb:58
   def phone_ext_data; end
 
   # @private getter for phone regexp cache (internal use only)
@@ -256,20 +261,20 @@ module Phonelib::Core
   # @param phone_number [String] the phone number to be parsed
   # @return [Boolean] phone possible or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:454
+  # pkg:gem/phonelib#lib/phonelib/core.rb:463
   def possible?(phone_number); end
 
   # getter for sanitize regex
   # @return [String] regex of symbols to wipe from parsed number
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:156
+  # pkg:gem/phonelib#lib/phonelib/core.rb:164
   def sanitize_regex; end
 
   # setter for sanitize regex
   # @param regex [String] symbols to wipe from parsed number
   # @return [String] regex of symbols to wipe from parsed number
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:163
+  # pkg:gem/phonelib#lib/phonelib/core.rb:171
   def sanitize_regex=(regex); end
 
   # pkg:gem/phonelib#lib/phonelib/core.rb:18
@@ -278,34 +283,34 @@ module Phonelib::Core
   # getter for strict check flag
   # @return [Boolean] Flag defines whether to do strict parsing check
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:124
+  # pkg:gem/phonelib#lib/phonelib/core.rb:132
   def strict_check; end
 
   # setter for strict check flag
   # @param strict [Boolean] make a strict parsing or not
   # @return [Boolean] Flag defines whether to do strict parsing check
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:131
+  # pkg:gem/phonelib#lib/phonelib/core.rb:139
   def strict_check=(strict); end
 
   # getter for strict double prefix check flag
   # @return [Boolean] Flag defines whether to do strict double prefix parsing check
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:172
+  # pkg:gem/phonelib#lib/phonelib/core.rb:180
   def strict_double_prefix_check; end
 
   # setter for strict double prefix check flag
   # @param strict [Boolean] make a strict double prefix parsing or not
   # @return [Boolean] Flag defines whether to do strict double prefix parsing check
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:179
+  # pkg:gem/phonelib#lib/phonelib/core.rb:187
   def strict_double_prefix_check=(strict); end
 
   # method checks if passed phone number is valid
   # @param phone_number [String] the phone number to be parsed
   # @return [Boolean] phone valid or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:440
+  # pkg:gem/phonelib#lib/phonelib/core.rb:449
   def valid?(phone_number); end
 
   # method checks if passed phone number is valid for provided country
@@ -313,346 +318,346 @@ module Phonelib::Core
   # @param country [String] ISO2 country code for phone parsing
   # @return [Boolean] phone valid for specified country or not
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:469
+  # pkg:gem/phonelib#lib/phonelib/core.rb:478
   def valid_for_country?(phone_number, country); end
 
-  # pkg:gem/phonelib#lib/phonelib/core.rb:241
+  # pkg:gem/phonelib#lib/phonelib/core.rb:250
   def vanity_conversion; end
 
   # setter for vanity phone numbers chars replacement
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:237
+  # pkg:gem/phonelib#lib/phonelib/core.rb:246
   def vanity_conversion=(value); end
 
   private
 
   # @private Load data file into memory
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:484
+  # pkg:gem/phonelib#lib/phonelib/core.rb:493
   def load_data; end
 
   # @private Load extended data file into memory
   #
-  # pkg:gem/phonelib#lib/phonelib/core.rb:510
+  # pkg:gem/phonelib#lib/phonelib/core.rb:519
   def load_ext_data; end
 end
 
 # @private Area code countries for mobile type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:354
+# pkg:gem/phonelib#lib/phonelib/core.rb:363
 Phonelib::Core::AREA_CODE_MOBILE_COUNTRIES = T.let(T.unsafe(nil), Array)
 
 # @private Area code mobile phone token
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:357
+# pkg:gem/phonelib#lib/phonelib/core.rb:366
 Phonelib::Core::AREA_CODE_MOBILE_TOKENS = T.let(T.unsafe(nil), Hash)
 
 # @private area code optional type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:306
+# pkg:gem/phonelib#lib/phonelib/core.rb:315
 Phonelib::Core::AREA_CODE_OPTIONAL = T.let(T.unsafe(nil), Symbol)
 
 # @private Area code possible types
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:351
+# pkg:gem/phonelib#lib/phonelib/core.rb:360
 Phonelib::Core::AREA_CODE_TYPES = T.let(T.unsafe(nil), Array)
 
 # @private carrier selection codes
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:304
+# pkg:gem/phonelib#lib/phonelib/core.rb:313
 Phonelib::Core::CARRIER_SELECTION_CODES = T.let(T.unsafe(nil), Symbol)
 
 # @private carrier services type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:298
+# pkg:gem/phonelib#lib/phonelib/core.rb:307
 Phonelib::Core::CARRIER_SERVICES = T.let(T.unsafe(nil), Symbol)
 
 # @private carrier specific type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:290
+# pkg:gem/phonelib#lib/phonelib/core.rb:299
 Phonelib::Core::CARRIER_SPECIFIC = T.let(T.unsafe(nil), Symbol)
 
 # @private Country code key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:326
+# pkg:gem/phonelib#lib/phonelib/core.rb:335
 Phonelib::Core::COUNTRY_CODE = T.let(T.unsafe(nil), Symbol)
 
 # @private Default number formatting data hash
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:363
+# pkg:gem/phonelib#lib/phonelib/core.rb:372
 Phonelib::Core::DEFAULT_NUMBER_FORMAT = T.let(T.unsafe(nil), Hash)
 
 # @private directory services
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:300
+# pkg:gem/phonelib#lib/phonelib/core.rb:309
 Phonelib::Core::DIRECTORY_SERVICES = T.let(T.unsafe(nil), Symbol)
 
 # @private Double country prefix flag key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:334
+# pkg:gem/phonelib#lib/phonelib/core.rb:343
 Phonelib::Core::DOUBLE_COUNTRY_PREFIX_FLAG = T.let(T.unsafe(nil), Symbol)
 
 # @private emergency numbers
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:288
+# pkg:gem/phonelib#lib/phonelib/core.rb:297
 Phonelib::Core::EMERGENCY = T.let(T.unsafe(nil), Symbol)
 
 # @private expanded emergency type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:294
+# pkg:gem/phonelib#lib/phonelib/core.rb:303
 Phonelib::Core::EXPANDED_EMERGENCY = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data carriers array key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:413
+# pkg:gem/phonelib#lib/phonelib/core.rb:422
 Phonelib::Core::EXT_CARRIERS = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data key for carrier in prefixes hash
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:419
+# pkg:gem/phonelib#lib/phonelib/core.rb:428
 Phonelib::Core::EXT_CARRIER_KEY = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data country names array key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:409
+# pkg:gem/phonelib#lib/phonelib/core.rb:418
 Phonelib::Core::EXT_COUNTRY_NAMES = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data geo names array key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:407
+# pkg:gem/phonelib#lib/phonelib/core.rb:416
 Phonelib::Core::EXT_GEO_NAMES = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data key for geoname in prefixes hash
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:415
+# pkg:gem/phonelib#lib/phonelib/core.rb:424
 Phonelib::Core::EXT_GEO_NAME_KEY = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data prefixes hash key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:405
+# pkg:gem/phonelib#lib/phonelib/core.rb:414
 Phonelib::Core::EXT_PREFIXES = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data timezones array key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:411
+# pkg:gem/phonelib#lib/phonelib/core.rb:420
 Phonelib::Core::EXT_TIMEZONES = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data key for timezone in prefixes hash
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:417
+# pkg:gem/phonelib#lib/phonelib/core.rb:426
 Phonelib::Core::EXT_TIMEZONE_KEY = T.let(T.unsafe(nil), Symbol)
 
 # @private Extended data file
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:250
+# pkg:gem/phonelib#lib/phonelib/core.rb:259
 Phonelib::Core::FILE_EXT_DATA = T.let(T.unsafe(nil), String)
 
 # @private Main data file
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:248
+# pkg:gem/phonelib#lib/phonelib/core.rb:257
 Phonelib::Core::FILE_MAIN_DATA = T.let(T.unsafe(nil), String)
 
 # @private Fixed line pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:279
+# pkg:gem/phonelib#lib/phonelib/core.rb:288
 Phonelib::Core::FIXED_LINE = T.let(T.unsafe(nil), Symbol)
 
-# pkg:gem/phonelib#lib/phonelib/core.rb:423
+# pkg:gem/phonelib#lib/phonelib/core.rb:432
 Phonelib::Core::FIXED_LINE_OR_MOBILE_ARRAY = T.let(T.unsafe(nil), Array)
 
 # @private In case MOBILE and FIXED patterns are the same,
 #   this type is returned
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:284
+# pkg:gem/phonelib#lib/phonelib/core.rb:293
 Phonelib::Core::FIXED_OR_MOBILE = T.let(T.unsafe(nil), Symbol)
 
 # @private Static arrays used to avoid allocations
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:422
+# pkg:gem/phonelib#lib/phonelib/core.rb:431
 Phonelib::Core::FIXED_OR_MOBILE_ARRAY = T.let(T.unsafe(nil), Array)
 
 # @private Formats key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:338
+# pkg:gem/phonelib#lib/phonelib/core.rb:347
 Phonelib::Core::FORMATS = T.let(T.unsafe(nil), Symbol)
 
 # Validation patterns keys constants
 # @private General pattern for country key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:256
+# pkg:gem/phonelib#lib/phonelib/core.rb:265
 Phonelib::Core::GENERAL = T.let(T.unsafe(nil), Symbol)
 
 # @private International prefix key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:330
+# pkg:gem/phonelib#lib/phonelib/core.rb:339
 Phonelib::Core::INTERNATIONAL_PREFIX = T.let(T.unsafe(nil), Symbol)
 
 # @private Leading digits key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:328
+# pkg:gem/phonelib#lib/phonelib/core.rb:337
 Phonelib::Core::LEADING_DIGITS = T.let(T.unsafe(nil), Symbol)
 
 # @private Main country for code key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:332
+# pkg:gem/phonelib#lib/phonelib/core.rb:341
 Phonelib::Core::MAIN_COUNTRY_FOR_CODE = T.let(T.unsafe(nil), Symbol)
 
 # @private Mobile phone number pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:281
+# pkg:gem/phonelib#lib/phonelib/core.rb:290
 Phonelib::Core::MOBILE = T.let(T.unsafe(nil), Symbol)
 
 # @private National prefix key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:318
+# pkg:gem/phonelib#lib/phonelib/core.rb:327
 Phonelib::Core::NATIONAL_PREFIX = T.let(T.unsafe(nil), Symbol)
 
 # @private National prefix for parsing key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:320
+# pkg:gem/phonelib#lib/phonelib/core.rb:329
 Phonelib::Core::NATIONAL_PREFIX_FOR_PARSING = T.let(T.unsafe(nil), Symbol)
 
 # @private National prefix rule key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:324
+# pkg:gem/phonelib#lib/phonelib/core.rb:333
 Phonelib::Core::NATIONAL_PREFIX_RULE = T.let(T.unsafe(nil), Symbol)
 
 # @private National prefix transform rule key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:322
+# pkg:gem/phonelib#lib/phonelib/core.rb:331
 Phonelib::Core::NATIONAL_PREFIX_TRANSFORM_RULE = T.let(T.unsafe(nil), Symbol)
 
-# pkg:gem/phonelib#lib/phonelib/core.rb:426
+# pkg:gem/phonelib#lib/phonelib/core.rb:435
 Phonelib::Core::NIL_RESULT_ARRAY = T.let(T.unsafe(nil), Array)
 
 # @private no international dialling type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:296
+# pkg:gem/phonelib#lib/phonelib/core.rb:305
 Phonelib::Core::NO_INTERNATIONAL_DIALING = T.let(T.unsafe(nil), Symbol)
 
 # @private Pager phone number pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:271
+# pkg:gem/phonelib#lib/phonelib/core.rb:280
 Phonelib::Core::PAGER = T.let(T.unsafe(nil), Symbol)
 
 # @private Pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:340
+# pkg:gem/phonelib#lib/phonelib/core.rb:349
 Phonelib::Core::PATTERN = T.let(T.unsafe(nil), Symbol)
 
 # @private A personal number is associated with a particular person,
 # and may be routed to either a MOBILE or FIXED_LINE number.
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:269
+# pkg:gem/phonelib#lib/phonelib/core.rb:278
 Phonelib::Core::PERSONAL_NUMBER = T.let(T.unsafe(nil), Symbol)
 
 # @private Plus sign
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:345
+# pkg:gem/phonelib#lib/phonelib/core.rb:354
 Phonelib::Core::PLUS_SIGN = T.let(T.unsafe(nil), String)
 
 # @private Possible national number lengths imported from libphonenumber
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:314
+# pkg:gem/phonelib#lib/phonelib/core.rb:323
 Phonelib::Core::POSSIBLE_LENGTHS = T.let(T.unsafe(nil), Symbol)
 
 # @private Possible local-only number lengths imported from libphonenumber
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:316
+# pkg:gem/phonelib#lib/phonelib/core.rb:325
 Phonelib::Core::POSSIBLE_LOCAL_ONLY_LENGTHS = T.let(T.unsafe(nil), Symbol)
 
 # @private Possible regex pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:312
+# pkg:gem/phonelib#lib/phonelib/core.rb:321
 Phonelib::Core::POSSIBLE_PATTERN = T.let(T.unsafe(nil), Symbol)
 
-# pkg:gem/phonelib#lib/phonelib/core.rb:424
+# pkg:gem/phonelib#lib/phonelib/core.rb:433
 Phonelib::Core::POSSIBLE_VALID_ARRAY = T.let(T.unsafe(nil), Array)
 
 # @private Freephone line pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:258
+# pkg:gem/phonelib#lib/phonelib/core.rb:267
 Phonelib::Core::PREMIUM_RATE = T.let(T.unsafe(nil), Symbol)
 
 # @private Shared cost pattern key. The cost of this call is shared
 # between caller and recipient, and is hence typically less than
 # PREMIUM_RATE calls
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:264
+# pkg:gem/phonelib#lib/phonelib/core.rb:273
 Phonelib::Core::SHARED_COST = T.let(T.unsafe(nil), Symbol)
 
 # @private Short key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:342
+# pkg:gem/phonelib#lib/phonelib/core.rb:351
 Phonelib::Core::SHORT = T.let(T.unsafe(nil), Symbol)
 
 # @private Short code
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:286
+# pkg:gem/phonelib#lib/phonelib/core.rb:295
 Phonelib::Core::SHORT_CODE = T.let(T.unsafe(nil), Symbol)
 
 # @private short codes types keys
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:397
+# pkg:gem/phonelib#lib/phonelib/core.rb:406
 Phonelib::Core::SHORT_CODES = T.let(T.unsafe(nil), Array)
 
 # @private SMS Services only type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:292
+# pkg:gem/phonelib#lib/phonelib/core.rb:301
 Phonelib::Core::SMS_SERVICES = T.let(T.unsafe(nil), Symbol)
 
 # @private standard rate type
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:302
+# pkg:gem/phonelib#lib/phonelib/core.rb:311
 Phonelib::Core::STANDARD_RATE = T.let(T.unsafe(nil), Symbol)
 
 # @private Freephone line pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:260
+# pkg:gem/phonelib#lib/phonelib/core.rb:269
 Phonelib::Core::TOLL_FREE = T.let(T.unsafe(nil), Symbol)
 
 # @private Types key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:336
+# pkg:gem/phonelib#lib/phonelib/core.rb:345
 Phonelib::Core::TYPES = T.let(T.unsafe(nil), Symbol)
 
 # @private hash of all phone types with human representation
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:369
+# pkg:gem/phonelib#lib/phonelib/core.rb:378
 Phonelib::Core::TYPES_DESC = T.let(T.unsafe(nil), Hash)
 
-# pkg:gem/phonelib#lib/phonelib/core.rb:394
+# pkg:gem/phonelib#lib/phonelib/core.rb:403
 Phonelib::Core::TYPES_DESC_KEYS = T.let(T.unsafe(nil), Array)
 
 # @private Used for 'Universal Access Numbers' or 'Company Numbers'.
 #   They may be further routed to specific offices, but allow one number
 #   to be used for a company.
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:275
+# pkg:gem/phonelib#lib/phonelib/core.rb:284
 Phonelib::Core::UAN = T.let(T.unsafe(nil), Symbol)
 
 # Internal use keys for validations
 # @private Valid regex pattern key
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:310
+# pkg:gem/phonelib#lib/phonelib/core.rb:319
 Phonelib::Core::VALID_PATTERN = T.let(T.unsafe(nil), Symbol)
 
-# pkg:gem/phonelib#lib/phonelib/core.rb:425
+# pkg:gem/phonelib#lib/phonelib/core.rb:434
 Phonelib::Core::VALID_POSSIBLE_ARRAY = T.let(T.unsafe(nil), Array)
 
 # @private vanity numbers 4 keys letters
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:348
+# pkg:gem/phonelib#lib/phonelib/core.rb:357
 Phonelib::Core::VANITY_4_LETTERS_KEYS_REGEX = T.let(T.unsafe(nil), Regexp)
 
 # @private Used for 'Voice Mail Access Numbers'.
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:277
+# pkg:gem/phonelib#lib/phonelib/core.rb:286
 Phonelib::Core::VOICEMAIL = T.let(T.unsafe(nil), Symbol)
 
 # @private VoIP pattern key. This includes TSoIP (Telephony Service over IP)
 #
-# pkg:gem/phonelib#lib/phonelib/core.rb:266
+# pkg:gem/phonelib#lib/phonelib/core.rb:275
 Phonelib::Core::VOIP = T.let(T.unsafe(nil), Symbol)
 
 # Read-only collection of phone validation errors.
@@ -686,6 +691,17 @@ class Phonelib::Errors
   def size; end
 end
 
+# pkg:gem/phonelib#lib/phonelib/locale.rb:4
+module Phonelib::Locale
+  class << self
+    # pkg:gem/phonelib#lib/phonelib/locale.rb:7
+    def register; end
+  end
+end
+
+# pkg:gem/phonelib#lib/phonelib/locale.rb:5
+Phonelib::Locale::FILES = T.let(T.unsafe(nil), Array)
+
 # class for parsed phone number, includes validation and formatting methods
 #
 # pkg:gem/phonelib#lib/phonelib/phone.rb:5
@@ -710,26 +726,26 @@ class Phonelib::Phone
   # @param other [String|Phonelib::Phone] Phone number to compare against
   # @return [Boolean] result of equality comparison
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:54
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:56
   def ==(other); end
 
   # Returns all countries that matched valid patterns
   # @return [Array] Possible ISO2 country codes array
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:108
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:110
   def countries; end
 
   # Returns first country that matched valid patterns
   # @return [String] valid country ISO2 code or first matched country code
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:130
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:132
   def country; end
 
   # Returns whether the original input begins with an explicit + or 00
   # international prefix after parser-recognized leading formatting.
   # @return [Boolean] original input has an explicit international prefix
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:72
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:74
   def explicit_international_prefix?; end
 
   # @!attribute [r] extension
@@ -741,25 +757,25 @@ class Phonelib::Phone
   # Return human representation of phone type
   # @return [String] Human readable valid phone type
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:102
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:104
   def human_type; end
 
   # Returns human representation of all matched phone types
   # @return [Array] Array of human readable valid phone types
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:96
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:98
   def human_types; end
 
   # Returns whether a current parsed phone number is impossible
   # @return [Boolean] parsed phone is impossible
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:160
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:162
   def impossible?; end
 
   # Returns whether a current parsed phone number is invalid
   # @return [Boolean] parsed phone is invalid
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:146
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:148
   def invalid?; end
 
   # Returns whether a current parsed phone number is invalid for specified
@@ -768,13 +784,13 @@ class Phonelib::Phone
   #   'us' or :us for United States
   # @return [Boolean] parsed phone number is invalid
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:196
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:198
   def invalid_for_country?(country); end
 
   # returns local number
   # @return [String] local number
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:166
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:168
   def local_number; end
 
   # @!attribute [r] national_number
@@ -792,54 +808,54 @@ class Phonelib::Phone
   # Returns whether a current parsed phone number is possible
   # @return [Boolean] parsed phone is possible
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:152
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:154
   def possible?; end
 
   # Returns all possible types that matched possible patterns
   # @return [Array] all possible phone types
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:84
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:86
   def possible_types; end
 
   # method to get sanitized phone number (only numbers)
   # @return [String] Sanitized phone number
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:62
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:64
   def sanitized; end
 
   # method returns string representation of parsed phone
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:47
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:49
   def to_s; end
 
   # Returns first phone type that matched
   # @return [Symbol] valid phone type
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:90
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:92
   def type; end
 
   # Returns all phone types that matched valid patterns
   # @return [Array] all valid phone types
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:78
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:80
   def types; end
 
   # Returns whether a current parsed phone number is valid
   # @return [Boolean] parsed phone is valid
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:138
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:140
   def valid?; end
 
   # Return countries with valid patterns
   # @return [Array] Valid ISO2 country codes array
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:114
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:116
   def valid_countries; end
 
   # Return valid country
   # @return [String] valid ISO2 country code
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:122
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:124
   def valid_country; end
 
   # Returns whether a current parsed phone number is valid for specified
@@ -848,26 +864,38 @@ class Phonelib::Phone
   #   'us' or :us for United States
   # @return [Boolean] parsed phone number is valid
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:183
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:185
   def valid_for_country?(country); end
 
   private
+
+  # @private checks whether analyze result has any valid country entry
+  #
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:212
+  def any_valid?(data); end
 
   # @private analyzing results of the country that #country resolved to.
   # Every value derived from a single country (national number, format,
   # national prefix) must be read through here so they cannot disagree.
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:205
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:207
   def country_data; end
 
   # @private get main country for code among provided countries
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:223
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:249
   def main_country(countries_array); end
+
+  # @private a leading 00 is read as an international prefix first; when
+  # that reading is not valid, retry it as national digits of the passed or
+  # default country
+  #
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:219
+  def national_double_zero_fallback(country); end
 
   # @private extracts extension from passed phone number if provided
   #
-  # pkg:gem/phonelib#lib/phonelib/phone.rb:210
+  # pkg:gem/phonelib#lib/phonelib/phone.rb:236
   def separate_extension(original); end
 end
 
@@ -886,7 +914,7 @@ module Phonelib::PhoneAnalyzer
   # * +passed_country+ - Country provided for parsing. Must be ISO code of
   #   country (2 letters) like 'US', 'us' or :us for United States
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:20
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:28
   def analyze(phone, passed_country); end
 
   private
@@ -900,15 +928,15 @@ module Phonelib::PhoneAnalyzer
   # * +data+  - country data
   # * +not_valid+ - specifies that number is not valid by general desc pattern
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:213
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:237
   def all_number_types(phone, data, not_valid = T.unsafe(nil)); end
 
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:44
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:52
   def analyze_single_country(phone, country, passed_country); end
 
   # method checks which result is better to return
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:60
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:68
   def better_result(base_result, result = T.unsafe(nil)); end
 
   # Create phone representation in e164 format
@@ -918,10 +946,10 @@ module Phonelib::PhoneAnalyzer
   # * +phone+ - phone number for parsing
   # * +data+  - country data to be based on for creating e164 representation
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:169
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:193
   def convert_to_e164(phone, data); end
 
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:155
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:179
   def country_code_candidates_for(phone); end
 
   # method tries to detect what is the country for provided phone
@@ -930,8 +958,14 @@ module Phonelib::PhoneAnalyzer
   #
   # * +phone+ - phone number for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:134
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:142
   def detect_and_parse(phone, country); end
+
+  # parses phone for single detected country, including national prefix
+  # replacement and double country prefix handling
+  #
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:163
+  def detect_and_parse_country(phone, country, data); end
 
   # Returns possible and valid patterns for validation for provided type
   #
@@ -940,7 +974,7 @@ module Phonelib::PhoneAnalyzer
   # * +all_patterns+ - hash of all patterns for validation
   # * +type+ - type of phone to get patterns for
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:248
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:272
   def get_patterns(all_patterns, type); end
 
   # returns national number and analyzing results for provided phone number
@@ -951,7 +985,7 @@ module Phonelib::PhoneAnalyzer
   # * +country_match+ - result of match of phone within full regex
   # * +not_valid+ - specifies that number is not valid by general desc pattern
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:190
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:214
   def national_and_data(data, country_match, not_valid = T.unsafe(nil)); end
 
   # Gets matched number formatting rule or default one
@@ -961,7 +995,7 @@ module Phonelib::PhoneAnalyzer
   # * +national+ - national phone number
   # * +format_data+  - formatting data from country data
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:234
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:258
   def number_format(national, format_data); end
 
   # trying to parse phone for single country including international prefix
@@ -972,7 +1006,7 @@ module Phonelib::PhoneAnalyzer
   # * +phone+ - phone for parsing
   # * +country+ - country to parse phone with
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:97
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:105
   def parse_country(phone, country); end
 
   # method checks if phone is valid against single provided country data
@@ -982,17 +1016,17 @@ module Phonelib::PhoneAnalyzer
   # * +e164+ - e164 representation of phone for parsing
   # * +data+ - country data for single country for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:119
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:127
   def parse_single_country(e164, data); end
 
   # pick best result when several countries specified
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:35
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:43
   def pick_results(results); end
 
   # replacing national prefix to simplified format
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:72
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:80
   def with_replaced_national_prefix(passed_phone, data); end
 end
 
@@ -1000,6 +1034,15 @@ end
 #
 # pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:10
 Phonelib::PhoneAnalyzer::NOT_FOR_CHECK = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:18
+Phonelib::PhoneAnalyzer::TYPES_FOR_CHECK = T.let(T.unsafe(nil), Hash)
+
+# @private types checked for each number, keyed by whether the fixed line
+# and mobile patterns are the same, precomputed to avoid allocations
+#
+# pkg:gem/phonelib#lib/phonelib/phone_analyzer.rb:14
+Phonelib::PhoneAnalyzer::TYPES_FOR_CHECK_WITH_SPECIAL = T.let(T.unsafe(nil), Hash)
 
 # @private helper methods for analyser
 #
@@ -1009,13 +1052,19 @@ module Phonelib::PhoneAnalyzerHelper
 
   # changes phone to with/without double country prefix
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:70
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:77
   def changed_dp_phone(country, phone); end
 
   # defines whether country can have double country prefix in number
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:62
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:69
   def country_can_dp?(country); end
+
+  # Keep the origin country long enough to strip its own IDD prefix.
+  # A leading plus is already international, not an origin-country IDD.
+  #
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:137
+  def country_international_prefix?(country); end
 
   # Get country that was provided or default country in needable format
   #
@@ -1023,18 +1072,23 @@ module Phonelib::PhoneAnalyzerHelper
   #
   # * +country+ - country passed for parsing
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:116
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:123
   def country_or_default_country(country); end
 
   # returns country prefix for provided country or nil
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:50
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:52
   def country_prefix(country); end
 
   # caches regular expression, reusing it for later lookups
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:57
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:59
   def cr(regexp); end
+
+  # caches regular expression matching the whole string against the pattern
+  #
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:64
+  def cr_anchored(regexp); end
 
   # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:8
   def decorate_analyze_result(result); end
@@ -1047,18 +1101,8 @@ module Phonelib::PhoneAnalyzerHelper
   # * +phone+ - phone number being parsed
   # * +parsed+ - parsed regex match for phone
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:90
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:97
   def double_prefix_allowed?(data, phone, parsed = T.unsafe(nil)); end
-
-  # Checks if fixed line pattern and mobile pattern are the same and returns
-  # appropriate keys
-  #
-  # ==== Attributes
-  #
-  # * +data+  - country data
-  #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:200
-  def fixed_and_mobile_keys(data); end
 
   # constructs full regex for phone validation for provided phone data
   # (international prefix, country code, national prefix, valid number)
@@ -1068,12 +1112,12 @@ module Phonelib::PhoneAnalyzerHelper
   # * +data+ - country data hash
   # * +country_optional+ - whether to put country code as optional group
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:133
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:154
   def full_regex_for_data(data, type, country_optional = T.unsafe(nil)); end
 
   # normalization for passed country unless we are not talking about International XXX
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:237
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:243
   def normalize_passed_country(country); end
 
   # Checks number against regex and compares match length
@@ -1083,7 +1127,7 @@ module Phonelib::PhoneAnalyzerHelper
   # * +number+ - phone number for validation
   # * +regex+ - regex for perfoming a validation
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:231
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:238
   def number_match?(number, regex); end
 
   # Checks if passed number matches valid and possible patterns
@@ -1095,12 +1139,12 @@ module Phonelib::PhoneAnalyzerHelper
   # * +v_regex+ - valid regex pattern for validation
   # * +not_valid+ - specifies that number is not valid by general desc pattern
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:216
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:223
   def number_valid_and_possible?(number, p_regex, v_regex, not_valid = T.unsafe(nil)); end
 
   # Returns original number passed if it's a string or empty string otherwise
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:98
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:105
   def original_s; end
 
   # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:19
@@ -1108,7 +1152,7 @@ module Phonelib::PhoneAnalyzerHelper
 
   # defines if to validate against single country or not
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:38
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:40
   def passed_country(country); end
 
   # Check if phone match country data
@@ -1118,13 +1162,13 @@ module Phonelib::PhoneAnalyzerHelper
   # * +phone+ - phone number for parsing
   # * +data+  - country data
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:165
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:186
   def phone_match_data?(phone, data, possible = T.unsafe(nil)); end
 
   # checks if types has both :mobile and :fixed_line and replaces it with
   # :fixed_or_mobile in case both present
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:174
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:195
   def sanitize_fixed_mobile(types); end
 
   # Returns original number without the leading characters that libphonenumber
@@ -1133,7 +1177,7 @@ module Phonelib::PhoneAnalyzerHelper
   # runs first, the same way +sanitized+ applies it, so leading letters that
   # convert to significant digits are not stripped as junk.
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:107
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:114
   def significant_original_s; end
 
   # Returns regex for type with special types if needed
@@ -1143,7 +1187,7 @@ module Phonelib::PhoneAnalyzerHelper
   # * +data+ - country types data for single type
   # * +type+ - possible or valid regex type needed
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:151
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:172
   def type_regex(data, type); end
 
   # returns array of phone types for check for current country data
@@ -1152,12 +1196,12 @@ module Phonelib::PhoneAnalyzerHelper
   #
   # * +data+  - country data hash
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:188
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:209
   def types_for_check(data); end
 
   # converts symbols in phone to numbers
   #
-  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:24
+  # pkg:gem/phonelib#lib/phonelib/phone_analyzer_helper.rb:26
   def vanity_converted(phone); end
 end
 

@@ -20,7 +20,7 @@ module CssParser
     # Thanks to Rafael Salazar and Nick Fitzsimons on the css-discuss list for their help.
     # ++
     #
-    # pkg:gem/css_parser#lib/css_parser.rb:108
+    # pkg:gem/css_parser#lib/css_parser.rb:109
     def calculate_specificity(selector); end
 
     # Make <tt>url()</tt> links absolute.
@@ -37,7 +37,7 @@ module CssParser
     #               "http://example.org/style/basic.css").inspect
     #  => "body { background: url('http://example.org/style/yellow.png?abc=123') };"
     #
-    # pkg:gem/css_parser#lib/css_parser.rb:132
+    # pkg:gem/css_parser#lib/css_parser.rb:133
     def convert_uris(css, base_uri); end
 
     # Merge multiple CSS RuleSets by cascading according to the CSS 2.1 cascading rules
@@ -85,14 +85,14 @@ module CssParser
     # pkg:gem/css_parser#lib/css_parser/regexps.rb:4
     def regex_possible_values(*values); end
 
-    # pkg:gem/css_parser#lib/css_parser.rb:149
+    # pkg:gem/css_parser#lib/css_parser.rb:150
     def sanitize_media_query(raw); end
   end
 end
 
 # Special units
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:53
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:56
 CssParser::BOX_MODEL_UNITS_RX = T.let(T.unsafe(nil), Regexp)
 
 # Exception class used if a request is made to load a CSS file more than once.
@@ -100,10 +100,10 @@ CssParser::BOX_MODEL_UNITS_RX = T.let(T.unsafe(nil), Regexp)
 # pkg:gem/css_parser#lib/css_parser/parser.rb:15
 class CssParser::CircularReferenceError < ::StandardError; end
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:105
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:108
 CssParser::ELEMENTS_AND_PSEUDO_ELEMENTS_RX_NC = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:59
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:62
 CssParser::FONT_UNITS_RX = T.let(T.unsafe(nil), Regexp)
 
 # RE_AT_IMPORT_RULE = Regexp.new('@import[\s]*(' + RE_STRING.to_s + ')([\w\s\,]*)[;]?', Regexp::IGNORECASE) -- should handle url() even though it is not allowed
@@ -119,12 +119,12 @@ class CssParser::IntegrityError < ::CssParser::RemoteFileError; end
 
 # Colours
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:116
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:119
 CssParser::NAMED_COLOURS = T.let(T.unsafe(nil), Array)
 
 # Patterns for specificity calculations
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:87
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:90
 CssParser::NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX_NC = T.let(T.unsafe(nil), Regexp)
 
 # == Parser class
@@ -445,34 +445,34 @@ CssParser::Parser::USER_AGENT = T.let(T.unsafe(nil), String)
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:29
 CssParser::RE_AT_IMPORT_RULE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:57
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:60
 CssParser::RE_BACKGROUND_POSITION = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:58
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:61
 CssParser::RE_BACKGROUND_SIZE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:60
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:63
 CssParser::RE_BORDER_STYLE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:61
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:64
 CssParser::RE_BORDER_UNITS = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:275
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:278
 CssParser::RE_COLOUR = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:273
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:276
 CssParser::RE_COLOUR_HEX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:274
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:277
 CssParser::RE_COLOUR_NAMED = T.let(T.unsafe(nil), Regexp)
 
 # CSS <number> allows the integer part to be omitted (e.g. `.1`), per CSS Values & Units.
 # `(?:\d*\.)?\d+` accepts `1`, `1.5`, and `.5` while still rejecting bare `1.`.
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:271
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:274
 CssParser::RE_COLOUR_NUMERIC = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:272
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:275
 CssParser::RE_COLOUR_NUMERIC_ALPHA = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:13
@@ -482,7 +482,7 @@ CssParser::RE_ESCAPE = T.let(T.unsafe(nil), Regexp)
 # Possessive quantifiers + recursion-first alternation avoid exponential
 # backtracking on unclosed functions, the timeout is a backstop.
 #
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:66
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:69
 CssParser::RE_FUNCTIONS = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:26
@@ -491,19 +491,19 @@ CssParser::RE_GRADIENT = T.let(T.unsafe(nil), Regexp)
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:14
 CssParser::RE_IDENT = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:47
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:50
 CssParser::RE_IMAGE = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:21
 CssParser::RE_INHERIT = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:38
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:41
 CssParser::RE_INSIDE_OUTSIDE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:54
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:57
 CssParser::RE_LENGTH_OR_PERCENTAGE = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:41
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:44
 CssParser::RE_LIST_STYLE_TYPE = T.let(T.unsafe(nil), Regexp)
 
 # :stopdoc:
@@ -515,16 +515,16 @@ CssParser::RE_NL = T.let(T.unsafe(nil), Regexp)
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:11
 CssParser::RE_NON_ASCII = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:40
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:43
 CssParser::RE_REPEAT = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:39
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:42
 CssParser::RE_SCROLL_FIXED = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:55
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:58
 CssParser::RE_SINGLE_BACKGROUND_POSITION = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:56
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:59
 CssParser::RE_SINGLE_BACKGROUND_SIZE = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:19
@@ -555,16 +555,16 @@ class CssParser::RemoteFileError < ::IOError; end
 class CssParser::RuleSet
   extend ::Forwardable
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:257
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:274
   def initialize(*args, selectors: T.unsafe(nil), block: T.unsafe(nil), offset: T.unsafe(nil), filename: T.unsafe(nil), specificity: T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:299
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:316
   def [](property); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:254
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:271
   def []=(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:253
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:270
   def add_declaration!(*_arg0, **_arg1, &_arg2); end
 
   # Looks for long format CSS background properties (e.g. <tt>background-color</tt>) and
@@ -572,7 +572,7 @@ class CssParser::RuleSet
   #
   # Leaves properties declared !important alone.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:544
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:557
   def create_background_shorthand!; end
 
   # Combine border-color, border-style and border-width into border
@@ -580,20 +580,20 @@ class CssParser::RuleSet
   #
   # TODO: this is extremely similar to create_background_shorthand! and should be combined
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:561
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:574
   def create_border_shorthand!; end
 
   # Looks for long format CSS dimensional properties (margin, padding, border-color, border-style and border-width)
   # and converts them into shorthand CSS properties.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:583
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:596
   def create_dimensions_shorthand!; end
 
   # Looks for long format CSS font properties (e.g. <tt>font-weight</tt>) and
   # tries to convert them into a shorthand CSS <tt>font</tt> property.  All
   # font properties must be present in order to create a shorthand declaration.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:607
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:617
   def create_font_shorthand!; end
 
   # Looks for long format CSS list-style properties (e.g. <tt>list-style-type</tt>) and
@@ -601,30 +601,30 @@ class CssParser::RuleSet
   #
   # Leaves properties declared !important alone.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:634
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:644
   def create_list_style_shorthand!; end
 
   # Create shorthand declarations (e.g. +margin+ or +font+) whenever possible.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:510
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:527
   def create_shorthand!; end
 
   # Combine several properties into a shorthand one
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:520
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:537
   def create_shorthand_properties!(properties, shorthand_property); end
 
   # Return all declarations as a string.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:327
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:344
   def declarations_to_s(options = T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:253
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:270
   def delete(*_arg0, **_arg1, &_arg2); end
 
   # Iterate through declarations.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:320
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:337
   def each_declaration; end
 
   # Iterate through selectors.
@@ -637,7 +637,7 @@ class CssParser::RuleSet
   #     ...
   #   end
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:310
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:327
   def each_selector(options = T.unsafe(nil)); end
 
   # Convert shorthand background declarations (e.g. <tt>background: url("chess.png") gray 50% repeat fixed;</tt>)
@@ -645,25 +645,25 @@ class CssParser::RuleSet
   #
   # See http://www.w3.org/TR/CSS21/colors.html#propdef-background
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:350
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:367
   def expand_background_shorthand!; end
 
   # Split shorthand border declarations (e.g. <tt>border: 1px red;</tt>)
   # Additional splitting happens in expand_dimensions_shorthand!
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:380
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:397
   def expand_border_shorthand!; end
 
   # Split shorthand dimensional declarations (e.g. <tt>margin: 0px auto;</tt>)
   # into their constituent parts.  Handles margin, padding, border-color, border-style and border-width.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:398
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:415
   def expand_dimensions_shorthand!; end
 
   # Convert shorthand font declarations (e.g. <tt>font: 300 italic 11px/14px verdana, helvetica, sans-serif;</tt>)
   # into their constituent parts.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:435
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:452
   def expand_font_shorthand!; end
 
   # Convert shorthand list-style declarations (e.g. <tt>list-style: lower-alpha outside;</tt>)
@@ -671,91 +671,94 @@ class CssParser::RuleSet
   #
   # See http://www.w3.org/TR/CSS21/generate.html#lists
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:490
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:507
   def expand_list_style_shorthand!; end
 
   # Split shorthand declarations (e.g. +margin+ or +font+) into their constituent parts.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:337
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:354
   def expand_shorthand!; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:372
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:389
   def extract_background_size_from(value); end
 
   # the local or remote location
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:241
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:258
   def filename; end
 
   # the local or remote location
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:241
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:258
   def filename=(_arg0); end
 
   # Get the value of a property
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:294
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:311
   def get_value(property); end
 
   # optional field for storing source reference
   # File offset range
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:239
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:256
   def offset; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:255
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:272
   def remove_declaration!(*_arg0, **_arg1, &_arg2); end
 
   # Array of selector strings.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:244
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:261
   def selectors; end
 
   # Integer with the specificity to use for this RuleSet.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:247
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:264
   def specificity; end
 
   # Integer with the specificity to use for this RuleSet.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:247
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:264
   def specificity=(_arg0); end
 
   # Return the CSS rule set as a string.
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:332
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:349
   def to_s; end
 
   private
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:642
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:652
   def compute_dimensions_shorthand(values); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:640
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:650
   def declarations; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:640
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:650
   def declarations=(_arg0); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:655
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:665
   def parse_declarations!(block); end
 
   # --
   # TODO: way too simplistic
   # ++
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:690
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:701
   def parse_selectors!(selectors); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:698
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:709
   def split_value_preserving_function_whitespace(value); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:683
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:694
   def unmatched_open_parenthesis?(declarations); end
 end
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:11
 CssParser::RuleSet::BACKGROUND_PROPERTIES = T.let(T.unsafe(nil), Array)
+
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:22
+CssParser::RuleSet::BLANK_VALUE_RX = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:16
 CssParser::RuleSet::BORDER_PROPERTIES = T.let(T.unsafe(nil), Array)
@@ -765,26 +768,26 @@ CssParser::RuleSet::BORDER_STYLE_PROPERTIES = T.let(T.unsafe(nil), Array)
 
 # Tokens for parse_declarations!
 #
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:32
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:37
 CssParser::RuleSet::COLON = T.let(T.unsafe(nil), String)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:21
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:26
 CssParser::RuleSet::DIMENSIONS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:17
 CssParser::RuleSet::DIMENSION_DIRECTIONS = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:37
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:42
 class CssParser::RuleSet::Declarations
   extend ::Forwardable
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:71
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:83
   def initialize(declarations = T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:214
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:228
   def ==(other); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:112
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:124
   def [](property); end
 
   # Add a CSS declaration
@@ -807,10 +810,10 @@ class CssParser::RuleSet::Declarations
   # is not !important.
   # If the value is empty - property will be deleted
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:95
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:107
   def []=(property, value); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:110
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:122
   def add_declaration!(property, value); end
 
   # Remove CSS declaration
@@ -819,22 +822,22 @@ class CssParser::RuleSet::Declarations
   # @example
   #   declarations.delete('color')
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:130
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:142
   def delete(property); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:69
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:81
   def each(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:69
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:81
   def each_value(*_arg0, **_arg1, &_arg2); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:115
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:127
   def get_value(property); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:117
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:129
   def key?(property); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:133
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:145
   def remove_declaration!(property); end
 
   # Replace CSS property with multiple declarations
@@ -851,50 +854,53 @@ class CssParser::RuleSet::Declarations
   #   "font-variant"=>#<CssParser::RuleSet::Declarations::Value:0x00000000039b3ec8 @important=false, @value="small-caps">,
   #   "font-size"=>#<CssParser::RuleSet::Declarations::Value:0x00000000029c2c80 @important=false, @value="12em">}>
   #
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:148
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:160
   def replace_declaration!(property, replacements, preserve_importance: T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:121
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:133
   def size; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:203
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:217
   def to_s(options = T.unsafe(nil)); end
 
   protected
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:222
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:236
   def declarations; end
 
   private
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:226
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:240
   def declarations=(_arg0); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:228
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:242
   def normalize_property(property); end
 end
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:38
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:43
+CssParser::RuleSet::Declarations::EMPTY_DECLARATIONS = T.let(T.unsafe(nil), Hash)
+
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:45
 class CssParser::RuleSet::Declarations::Value
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:42
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:49
   def initialize(value, important: T.unsafe(nil)); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:60
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:72
   def ==(other); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:40
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:47
   def important; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:40
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:47
   def important=(_arg0); end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:56
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:68
   def to_s; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:39
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:46
   def value; end
 
-  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:47
+  # pkg:gem/css_parser#lib/css_parser/rule_set.rb:54
   def value=(value); end
 end
 
@@ -904,14 +910,17 @@ CssParser::RuleSet::FONT_STYLE_PROPERTIES = T.let(T.unsafe(nil), Array)
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:14
 CssParser::RuleSet::FONT_WEIGHT_PROPERTIES = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:36
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:41
 CssParser::RuleSet::IMPORTANT = T.let(T.unsafe(nil), String)
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:12
 CssParser::RuleSet::LIST_STYLE_PROPERTIES = T.let(T.unsafe(nil), Array)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:34
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:39
 CssParser::RuleSet::LPAREN = T.let(T.unsafe(nil), String)
+
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:21
+CssParser::RuleSet::NORMALIZED_PROPERTY_RX = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:19
 CssParser::RuleSet::NUMBER_OF_DIMENSIONS = T.let(T.unsafe(nil), Integer)
@@ -924,20 +933,31 @@ CssParser::RuleSet::RE_ELEMENTS_AND_PSEUDO_ELEMENTS = T.let(T.unsafe(nil), Regex
 # pkg:gem/css_parser#lib/css_parser/rule_set.rb:9
 CssParser::RuleSet::RE_NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:35
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:40
 CssParser::RuleSet::RPAREN = T.let(T.unsafe(nil), String)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:33
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:38
 CssParser::RuleSet::SEMICOLON = T.let(T.unsafe(nil), String)
 
-# pkg:gem/css_parser#lib/css_parser/rule_set.rb:29
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:23
+CssParser::RuleSet::SURROUNDING_WHITESPACE_RX = T.let(T.unsafe(nil), Regexp)
+
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:24
+CssParser::RuleSet::TRAILING_SEMICOLON_RX = T.let(T.unsafe(nil), Regexp)
+
+# pkg:gem/css_parser#lib/css_parser/rule_set.rb:34
 CssParser::RuleSet::WHITESPACE_REPLACEMENT = T.let(T.unsafe(nil), String)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:49
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:52
 CssParser::STRIP_CSS_COMMENTS_RX = T.let(T.unsafe(nil), Regexp)
 
-# pkg:gem/css_parser#lib/css_parser/regexps.rb:50
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:53
 CssParser::STRIP_HTML_COMMENTS_RX = T.let(T.unsafe(nil), Regexp)
+
+# What sanitize_media_query would change: blank, padded, or not single-space separated
+#
+# pkg:gem/css_parser#lib/css_parser/regexps.rb:39
+CssParser::UNSANITIZED_MEDIA_QUERY_RX = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/css_parser#lib/css_parser/regexps.rb:24
 CssParser::URI_RX = T.let(T.unsafe(nil), Regexp)

@@ -6,7 +6,16 @@
 
 
 # pkg:gem/image_processing#lib/image_processing/chainable.rb:1
-module ImageProcessing; end
+module ImageProcessing
+  class << self
+    # Whether calling +name+ on +receiver+ would dispatch to an unsafe Ruby core
+    # method rather than a genuine operation. Used as a single, shared guard at
+    # every place where a user-provided name is dispatched via +public_send+.
+    #
+    # pkg:gem/image_processing#lib/image_processing.rb:21
+    def unsafe_method?(receiver, name); end
+  end
+end
 
 # pkg:gem/image_processing#lib/image_processing/builder.rb:2
 class ImageProcessing::Builder
@@ -89,21 +98,26 @@ module ImageProcessing::Chainable
   private
 
   # This prevents calling unsafe Ruby core methods such as `Kernel#system`,
-  # which would allow for remote shell execution.
+  # which would allow for remote shell execution. The processor enforces the
+  # same guard when operations are dispatched, which also covers paths that
+  # bypass this early check (e.g. the #operation meta-builder).
   #
-  # pkg:gem/image_processing#lib/image_processing/chainable.rb:90
+  # Bang names are rejected here because they are Chainable's execution
+  # shortcut (see #method_missing), not operations to chain.
+  #
+  # pkg:gem/image_processing#lib/image_processing/chainable.rb:95
   def invalid_operation?(name); end
 
   # Assume that any unknown method names an operation supported by the
   # processor. Add a bang ("!") if you want processing to be performed.
   #
   # pkg:gem/image_processing#lib/image_processing/chainable.rb:101
-  def method_missing(name, *args, **_arg2, &block); end
+  def method_missing(name, *_arg1, **_arg2, &_arg3); end
 end
 
 # Empty options which the builder starts with.
 #
-# pkg:gem/image_processing#lib/image_processing/chainable.rb:110
+# pkg:gem/image_processing#lib/image_processing/chainable.rb:109
 ImageProcessing::Chainable::DEFAULT_OPTIONS = T.let(T.unsafe(nil), Hash)
 
 # pkg:gem/image_processing#lib/image_processing.rb:8
@@ -114,83 +128,88 @@ module ImageProcessing::MiniMagick
   extend ::ImageProcessing::Chainable
 
   class << self
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:12
-    def convert_shim(&block); end
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:15
+    def convert_shim(inherit_fds: T.unsafe(nil), &block); end
 
     # Returns whether the given image file is processable.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:21
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:30
     def valid_image?(file); end
   end
 end
 
-# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:31
+# mini_magick gained `inherit_fds:` on MiniMagick::Shell#execute in 5.4.0.
+#
+# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:13
+ImageProcessing::MiniMagick::INHERIT_FDS_MINIMUM_VERSION = T.let(T.unsafe(nil), Gem::Version)
+
+# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:40
 class ImageProcessing::MiniMagick::Processor < ::ImageProcessing::Processor
   # Appends a raw ImageMagick command-line argument to the command.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:162
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:185
   def append(*args); end
 
   # Overlays the specified image over the current one. Supports specifying
   # an additional mask, composite mode, direction or offset of the overlay
   # image.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:127
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:150
   def composite(overlay = T.unsafe(nil), mask: T.unsafe(nil), mode: T.unsafe(nil), gravity: T.unsafe(nil), offset: T.unsafe(nil), args: T.unsafe(nil), &block); end
 
   # Crops the image with the specified crop points.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:108
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:131
   def crop(*args); end
 
   # Defines settings from the provided hash.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:150
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:173
   def define(options); end
 
   # Specifies resource limits from the provided hash.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:156
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:179
   def limits(options); end
 
   # Resizes the image to fit within the specified dimensions and fills
   # the remaining area with the specified background color.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:94
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:117
   def resize_and_pad(width, height, background: T.unsafe(nil), gravity: T.unsafe(nil), **options); end
 
   # Resizes the image to cover the specified dimensions, without
   # cropping the excess.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:103
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:126
   def resize_to_cover(width, height, **options); end
 
   # Resizes the image to fill the specified dimensions, applying any
   # necessary cropping.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:85
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:108
   def resize_to_fill(width, height, gravity: T.unsafe(nil), **options); end
 
   # Resizes the image to fit within the specified dimensions.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:79
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:102
   def resize_to_fit(width, height, **options); end
 
   # Resizes the image to not be larger than the specified dimensions.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:74
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:97
   def resize_to_limit(width, height, **options); end
 
   # Rotates the image by an arbitrary angle. For angles that are not
   # multiple of 90 degrees an optional background color can be specified to
   # fill in the gaps.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:119
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:142
   def rotate(degrees, background: T.unsafe(nil)); end
 
   protected
 
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:32
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:41
   def magick; end
 
   private
@@ -199,82 +218,87 @@ class ImageProcessing::MiniMagick::Processor < ::ImageProcessing::Processor
   # This supports specifying RGB(A) values with arrays, which mainly exists
   # for compatibility with the libvips implementation.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:175
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:198
   def color(value); end
 
   # Converts the image on disk in various forms into a path.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:198
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:221
   def convert_to_path(file, name); end
 
   # Resizes the image using the specified geometry, and sharpens the
   # resulting thumbnail.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:186
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:209
   def thumbnail(geometry, sharpen: T.unsafe(nil)); end
 
   class << self
     # Initializes the image on disk into a MiniMagick::Tool object. Accepts
     # additional options related to loading the image (e.g. geometry).
     # Additionally auto-orients the image to be upright.
+    # `inherit_fds` names IO objects the tool inherits, so the source may be a
+    # `/dev/fd/N` path. The source stays a path, so `loader`, `page` and
+    # `geometry` still apply to it, which they would not if the caller passed
+    # a pre-built MiniMagick::Tool carrying the descriptor.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:40
-    def load_image(path_or_magick, loader: T.unsafe(nil), page: T.unsafe(nil), geometry: T.unsafe(nil), auto_orient: T.unsafe(nil), **options); end
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:53
+    def load_image(path_or_magick, loader: T.unsafe(nil), page: T.unsafe(nil), geometry: T.unsafe(nil), auto_orient: T.unsafe(nil), inherit_fds: T.unsafe(nil), **options); end
 
     # Calls the built ImageMagick command to perform processing and save
     # the result to disk. Accepts additional options related to saving the
-    # image (e.g. quality).
+    # image (e.g. quality). `format` names the output format when given,
+    # otherwise ImageMagick infers it from the path's extension.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:64
-    def save_image(magick, destination_path, allow_splitting: T.unsafe(nil), **options); end
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:78
+    def save_image(magick, destination_path, format = T.unsafe(nil), allow_splitting: T.unsafe(nil), **options); end
   end
 end
 
-# pkg:gem/image_processing#lib/image_processing/processor.rb:34
+# pkg:gem/image_processing#lib/image_processing/processor.rb:36
 ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS = MiniMagick::Tool
 
 # Default sharpening parameters used on generated thumbnails.
 #
-# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:35
+# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:44
 ImageProcessing::MiniMagick::Processor::SHARPEN_PARAMETERS = T.let(T.unsafe(nil), Hash)
 
-# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:210
+# pkg:gem/image_processing#lib/image_processing/mini_magick.rb:233
 module ImageProcessing::MiniMagick::Processor::Utils
   private
 
   # Applies settings from the provided (nested) hash.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:239
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:269
   def apply_define(magick, options); end
 
   # Applies options from the provided hash.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:226
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:249
   def apply_options(magick, define: T.unsafe(nil), **options); end
 
   # When a multi-layer format is being converted into a single-layer
   # format, ImageMagick will create multiple images, one for each layer.
   # We want to warn the user that this is probably not what they wanted.
   #
-  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:216
+  # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:239
   def disallow_split_layers!(destination_path); end
 
   class << self
     # Applies settings from the provided (nested) hash.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:239
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:269
     def apply_define(magick, options); end
 
     # Applies options from the provided hash.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:226
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:249
     def apply_options(magick, define: T.unsafe(nil), **options); end
 
     # When a multi-layer format is being converted into a single-layer
     # format, ImageMagick will create multiple images, one for each layer.
     # We want to warn the user that this is probably not what they wanted.
     #
-    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:216
+    # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:239
     def disallow_split_layers!(destination_path); end
   end
 end
@@ -296,7 +320,7 @@ class ImageProcessing::Pipeline
 
   # Determines the appropriate destination image format.
   #
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:39
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:43
   def destination_format; end
 
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
@@ -316,33 +340,33 @@ class ImageProcessing::Pipeline
 
   # Retrieves the source path on disk.
   #
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:34
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:38
   def source_path; end
 
   private
 
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:49
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:53
   def call_processor(**options); end
 
   # Creates a new tempfile for the destination file, yields it, and refreshes
   # the file descriptor to get the updated file.
   #
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:61
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:65
   def create_tempfile; end
 
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:97
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:101
   def determine_format(file_path); end
 
   # In case of processing errors, both libvips and imagemagick will leave the
   # empty destination file they created, so this method makes sure it is
   # deleted in case an exception is raised on saving the image.
   #
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:76
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:80
   def handle_destination; end
 
   # Converts the source image object into a path or the accumulator object.
   #
-  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:85
+  # pkg:gem/image_processing#lib/image_processing/pipeline.rb:89
   def source; end
 end
 
@@ -353,7 +377,7 @@ ImageProcessing::Pipeline::DEFAULT_FORMAT = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/image_processing#lib/image_processing/processor.rb:3
 class ImageProcessing::Processor
-  # pkg:gem/image_processing#lib/image_processing/processor.rb:47
+  # pkg:gem/image_processing#lib/image_processing/processor.rb:49
   def initialize(accumulator = T.unsafe(nil)); end
 
   # Calls the operation to perform the processing. If the operation is
@@ -361,36 +385,46 @@ class ImageProcessing::Processor
   # operation directly on the accumulator object. This provides a common
   # umbrella above defined macros and direct operations.
   #
-  # pkg:gem/image_processing#lib/image_processing/processor.rb:55
+  # pkg:gem/image_processing#lib/image_processing/processor.rb:57
   def apply_operation(name, *args, &block); end
 
   # Calls the given block with the accumulator object. Useful for when you
   # want to access the accumulator object directly.
   #
-  # pkg:gem/image_processing#lib/image_processing/processor.rb:68
+  # pkg:gem/image_processing#lib/image_processing/processor.rb:79
   def custom(&block); end
 
   class << self
     # Use for processor subclasses to specify the name and the class of their
     # accumulator object (e.g. MiniMagick::Tool or Vips::Image).
     #
-    # pkg:gem/image_processing#lib/image_processing/processor.rb:31
+    # pkg:gem/image_processing#lib/image_processing/processor.rb:33
     def accumulator(name, klass); end
 
     # Delegates to #apply_operation.
     #
-    # pkg:gem/image_processing#lib/image_processing/processor.rb:38
+    # pkg:gem/image_processing#lib/image_processing/processor.rb:40
     def apply_operation(accumulator, _arg1); end
 
     # pkg:gem/image_processing#lib/image_processing/processor.rb:4
-    def call(source:, loader:, operations:, saver:, destination: T.unsafe(nil)); end
+    def call(source:, loader:, operations:, saver:, destination: T.unsafe(nil), format: T.unsafe(nil)); end
 
     # Whether the processor supports resizing the image upon loading.
     #
-    # pkg:gem/image_processing#lib/image_processing/processor.rb:43
+    # pkg:gem/image_processing#lib/image_processing/processor.rb:45
     def supports_resize_on_load?; end
   end
 end
+
+# Method owners considered unsafe to dispatch to when a method name comes
+# from user input, because they expose Ruby's metaprogramming and shell
+# primitives (e.g. Kernel#send, Kernel#eval, BasicObject#instance_eval,
+# Kernel#system). Any name whose implementation is inherited from one of
+# these should never be treated as an image operation or a loader/saver
+# option.
+#
+# pkg:gem/image_processing#lib/image_processing.rb:16
+ImageProcessing::UNSAFE_METHOD_OWNERS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/image_processing#lib/image_processing/version.rb:2
 ImageProcessing::VERSION = T.let(T.unsafe(nil), String)
@@ -412,54 +446,54 @@ class ImageProcessing::Vips::Processor < ::ImageProcessing::Processor
   # Overlays the specified image over the current one. Supports specifying
   # composite mode, direction or offset of the overlay image.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:126
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:138
   def composite(overlay, _mode = T.unsafe(nil), mode: T.unsafe(nil), gravity: T.unsafe(nil), offset: T.unsafe(nil), **options); end
 
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:156
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:168
   def remove(*args); end
 
   # Resizes the image to fit within the specified dimensions and fills
   # the remaining area with the specified background color.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:91
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:103
   def resize_and_pad(width, height, gravity: T.unsafe(nil), extend: T.unsafe(nil), background: T.unsafe(nil), alpha: T.unsafe(nil), **options); end
 
   # Resizes the image to cover the specified dimensions, without
   # cropping the excess.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:99
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:111
   def resize_to_cover(width, height, **options); end
 
   # Resizes the image to fill the specified dimensions, applying any
   # necessary cropping.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:85
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:97
   def resize_to_fill(width, height, **options); end
 
   # Resizes the image to fit within the specified dimensions.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:78
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:90
   def resize_to_fit(width, height, **options); end
 
   # Resizes the image to not be larger than the specified dimensions.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:72
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:84
   def resize_to_limit(width, height, **options); end
 
   # Rotates the image by an arbitrary angle.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:115
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:127
   def rotate(degrees, **options); end
 
   # make metadata setter methods chainable
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:153
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:165
   def set(*args); end
 
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:154
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:166
   def set_type(*args); end
 
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:155
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:167
   def set_value(*args); end
 
   protected
@@ -471,18 +505,18 @@ class ImageProcessing::Vips::Processor < ::ImageProcessing::Processor
 
   # Converts the image on disk in various forms into a Vips::Image object.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:190
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:202
   def convert_to_image(object, name); end
 
   # Hack to allow omitting one dimension.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:183
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:195
   def default_dimensions(width, height); end
 
   # Resizes the image according to the specified parameters, and sharpens
   # the resulting thumbnail.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:162
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:174
   def thumbnail(width, height, sharpen: T.unsafe(nil), **options); end
 
   class << self
@@ -495,10 +529,11 @@ class ImageProcessing::Vips::Processor < ::ImageProcessing::Processor
 
     # Writes the Vips::Image object to disk. This starts the processing
     # pipeline defined in the Vips::Image object. Accepts additional
-    # saver-specific options (e.g. quality).
+    # saver-specific options (e.g. quality). The saver is chosen by `format`
+    # when given, otherwise by the path's extension.
     #
-    # pkg:gem/image_processing#lib/image_processing/vips.rb:60
-    def save_image(image, path, saver: T.unsafe(nil), quality: T.unsafe(nil), **options); end
+    # pkg:gem/image_processing#lib/image_processing/vips.rb:61
+    def save_image(image, path, format = T.unsafe(nil), saver: T.unsafe(nil), quality: T.unsafe(nil), **options); end
 
     # See #thumbnail.
     #
@@ -507,7 +542,7 @@ class ImageProcessing::Vips::Processor < ::ImageProcessing::Processor
   end
 end
 
-# pkg:gem/image_processing#lib/image_processing/processor.rb:34
+# pkg:gem/image_processing#lib/image_processing/processor.rb:36
 ImageProcessing::Vips::Processor::ACCUMULATOR_CLASS = Vips::Image
 
 # Default sharpening mask that provides a fast and mild sharpen.
@@ -515,13 +550,13 @@ ImageProcessing::Vips::Processor::ACCUMULATOR_CLASS = Vips::Image
 # pkg:gem/image_processing#lib/image_processing/vips.rb:26
 ImageProcessing::Vips::Processor::SHARPEN_MASK = T.let(T.unsafe(nil), Vips::Image)
 
-# pkg:gem/image_processing#lib/image_processing/vips.rb:206
+# pkg:gem/image_processing#lib/image_processing/vips.rb:218
 module ImageProcessing::Vips::Processor::Utils
   private
 
   # libvips uses various loaders depending on the input format.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:210
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:222
   def select_valid_loader_options(source_path, options); end
 
   # libvips uses various loaders and savers depending on the input and
@@ -531,18 +566,18 @@ module ImageProcessing::Vips::Processor::Utils
   # loaders/savers, we do some introspection and filter out options that
   # don't exist for a particular loader or saver.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:227
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:239
   def select_valid_options(operation_name, options); end
 
   # Filters out unknown options for saving images.
   #
-  # pkg:gem/image_processing#lib/image_processing/vips.rb:216
+  # pkg:gem/image_processing#lib/image_processing/vips.rb:228
   def select_valid_saver_options(destination_path, options); end
 
   class << self
     # libvips uses various loaders depending on the input format.
     #
-    # pkg:gem/image_processing#lib/image_processing/vips.rb:210
+    # pkg:gem/image_processing#lib/image_processing/vips.rb:222
     def select_valid_loader_options(source_path, options); end
 
     # libvips uses various loaders and savers depending on the input and
@@ -552,12 +587,12 @@ module ImageProcessing::Vips::Processor::Utils
     # loaders/savers, we do some introspection and filter out options that
     # don't exist for a particular loader or saver.
     #
-    # pkg:gem/image_processing#lib/image_processing/vips.rb:227
+    # pkg:gem/image_processing#lib/image_processing/vips.rb:239
     def select_valid_options(operation_name, options); end
 
     # Filters out unknown options for saving images.
     #
-    # pkg:gem/image_processing#lib/image_processing/vips.rb:216
+    # pkg:gem/image_processing#lib/image_processing/vips.rb:228
     def select_valid_saver_options(destination_path, options); end
   end
 end

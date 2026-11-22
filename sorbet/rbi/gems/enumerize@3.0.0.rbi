@@ -35,6 +35,9 @@ class Enumerize::ActiveModelAttributesSupport::Type < ::ActiveModel::Type::Value
   # pkg:gem/enumerize#lib/enumerize/activemodel.rb:33
   def initialize(attr); end
 
+  # pkg:gem/enumerize#lib/enumerize/activemodel.rb:54
+  def cast(value); end
+
   # pkg:gem/enumerize#lib/enumerize/activemodel.rb:42
   def deserialize(value); end
 
@@ -51,49 +54,49 @@ module Enumerize::ActiveRecordSupport
   def enumerize(name, options = T.unsafe(nil)); end
 end
 
-# pkg:gem/enumerize#lib/enumerize/activerecord.rb:48
+# pkg:gem/enumerize#lib/enumerize/activerecord.rb:34
 module Enumerize::ActiveRecordSupport::InstanceMethods
   # Support multiple enumerized attributes
   #
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:59
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:45
   def becomes(klass); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:72
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:60
   def reload(options = T.unsafe(nil)); end
 
   # https://github.com/brainspec/enumerize/issues/74
   #
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:50
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:36
   def write_attribute(attr_name, value, *options); end
 end
 
-# pkg:gem/enumerize#lib/enumerize/activerecord.rb:97
+# pkg:gem/enumerize#lib/enumerize/activerecord.rb:85
 module Enumerize::ActiveRecordSupport::RelationMethods
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:98
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:86
   def update_all(updates); end
 end
 
-# pkg:gem/enumerize#lib/enumerize/activerecord.rb:111
+# pkg:gem/enumerize#lib/enumerize/activerecord.rb:99
 class Enumerize::ActiveRecordSupport::Type < ::ActiveModel::Type::Value
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:114
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:102
   def initialize(attr, subtype); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:136
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:126
   def as_json(options = T.unsafe(nil)); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:126
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:114
   def cast(value); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:140
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:130
   def encode_with(coder); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:146
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:136
   def init_with(coder); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:119
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:107
   def serialize(value); end
 
-  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:112
+  # pkg:gem/enumerize#lib/enumerize/activerecord.rb:100
   def type(*_arg0, **_arg1, &_arg2); end
 end
 

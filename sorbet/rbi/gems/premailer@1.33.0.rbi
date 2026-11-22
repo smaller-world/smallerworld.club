@@ -41,7 +41,7 @@ module HtmlToPlainText
 
   # Taken from Rails' word_wrap helper (http://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-word_wrap)
   #
-  # pkg:gem/premailer#lib/premailer/html_to_plain_text.rb:131
+  # pkg:gem/premailer#lib/premailer/html_to_plain_text.rb:130
   def word_wrap(txt, line_length); end
 end
 
@@ -78,6 +78,7 @@ class Premailer
   # @option options [Boolean] :verbose Whether to print errors and warnings to <tt>$stderr</tt>.  Default is false.
   # @option options [Boolean] :io_exceptions Throws exceptions on I/O errors. Default is false.
   # @option options [Boolean] :rule_set_exceptions Throws exceptions on invalid values in CSS Parser rule sets. Default is true.
+  # @option options [Boolean] :allow_local_network Allow css_parser to fetch remote CSS from local/private network hosts (disables its SSRF protection). Default is false.
   # @option options [Boolean] :include_link_tags Whether to include css from <tt>link rel=stylesheet</tt> tags.  Default is true.
   # @option options [Boolean] :include_style_tags Whether to include css from <tt>style</tt> tags.  Default is true.
   # @option options [String] :input_encoding Manually specify the source documents encoding. This is a good idea. Default is ASCII-8BIT.
@@ -89,10 +90,10 @@ class Premailer
   # @option options [Boolean] :html_fragment Handle HTML fragment without any HTML content wrappers. Default is false.
   # @option options [Boolean] :drop_unmergeable_css_rules Do not include unmergeable css rules in a <tt><style><tt> tag. Default is false.
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:184
+  # pkg:gem/premailer#lib/premailer/premailer.rb:185
   def initialize(html, options = T.unsafe(nil)); end
 
-  # pkg:gem/premailer#lib/premailer/premailer.rb:384
+  # pkg:gem/premailer#lib/premailer/premailer.rb:410
   def append_query_string(doc, queries); end
 
   # base directory used to resolve links for local files
@@ -108,7 +109,7 @@ class Premailer
 
   # Check <tt>CLIENT_SUPPORT_FILE</tt> for any CSS warnings
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:534
+  # pkg:gem/premailer#lib/premailer/premailer.rb:560
   def check_client_support; end
 
   # Free native Nokogiri/libxml2 memory held by this instance.
@@ -122,7 +123,7 @@ class Premailer
   #
   # After calling this method the instance is no longer usable.
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:356
+  # pkg:gem/premailer#lib/premailer/premailer.rb:382
   def cleanup!; end
 
   # Convert relative links to absolute links.
@@ -134,7 +135,7 @@ class Premailer
   #
   # Returns a document.
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:450
+  # pkg:gem/premailer#lib/premailer/premailer.rb:476
   def convert_inline_links(doc, base_uri); end
 
   # source HTML document (Nokogiri/Nokogumbo)
@@ -150,12 +151,12 @@ class Premailer
   # @private
   # @deprecated
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:370
+  # pkg:gem/premailer#lib/premailer/premailer.rb:396
   def local_uri?(uri); end
 
   # @private
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:378
+  # pkg:gem/premailer#lib/premailer/premailer.rb:404
   def media_type_ok?(media_types); end
 
   # processed HTML document (Nokogiri/Nokogumbo)
@@ -171,53 +172,64 @@ class Premailer
   # CSS warnings.
   # @return [Array(Hash)] Array of warnings.
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:263
+  # pkg:gem/premailer#lib/premailer/premailer.rb:266
   def warnings; end
 
   # Check for an XHTML doctype
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:435
+  # pkg:gem/premailer#lib/premailer/premailer.rb:461
   def xhtml?; end
 
   protected
 
+  # Only left/right floats have an equivalent legacy image alignment.
+  #
+  # pkg:gem/premailer#lib/premailer/premailer.rb:291
+  def css_float_without_alignment?(css_attr, merged); end
+
+  # Keep e.g. background-image: image-set(linear-gradient(red, blue), url(a.png))
+  # in CSS: a URL-only HTML background attribute cannot represent its gradient.
+  #
+  # pkg:gem/premailer#lib/premailer/premailer.rb:276
+  def css_gradient?(css_attr, merged); end
+
   # Load CSS included in <tt>style</tt> and <tt>link</tt> tags from an HTML document.
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:305
+  # pkg:gem/premailer#lib/premailer/premailer.rb:331
   def load_css_from_html!; end
 
-  # pkg:gem/premailer#lib/premailer/premailer.rb:271
+  # pkg:gem/premailer#lib/premailer/premailer.rb:297
   def load_css_from_local_file!(path); end
 
   # @private
   #
-  # pkg:gem/premailer#lib/premailer/premailer.rb:292
+  # pkg:gem/premailer#lib/premailer/premailer.rb:318
   def load_css_from_options!; end
 
-  # pkg:gem/premailer#lib/premailer/premailer.rb:287
+  # pkg:gem/premailer#lib/premailer/premailer.rb:313
   def load_css_from_string(css_string); end
 
   class << self
     # from http://www.ruby-forum.com/topic/140101
     #
-    # pkg:gem/premailer#lib/premailer/premailer.rb:527
+    # pkg:gem/premailer#lib/premailer/premailer.rb:553
     def canonicalize(uri); end
 
     # Test the passed variable to see if we are in local or remote mode.
     #
     # IO objects return true, as do strings that look like URLs.
     #
-    # pkg:gem/premailer#lib/premailer/premailer.rb:521
+    # pkg:gem/premailer#lib/premailer/premailer.rb:547
     def local_data?(data); end
 
     # @private
     #
-    # pkg:gem/premailer#lib/premailer/premailer.rb:495
+    # pkg:gem/premailer#lib/premailer/premailer.rb:521
     def media_query?(media_types); end
 
     # @private
     #
-    # pkg:gem/premailer#lib/premailer/premailer.rb:500
+    # pkg:gem/premailer#lib/premailer/premailer.rb:526
     def resolve_link(path, base_path); end
   end
 end
@@ -264,18 +276,35 @@ end
 module Premailer::Adapter::Nokogiri
   include ::AdapterHelper::RgbToHex
 
+  # Build an expanded rule set for folding. Returns nil (and optionally
+  # swallows the error, mirroring the old fold-time rescue) on bad CSS.
+  #
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:233
+  def build_rule_set(block, specificity); end
+
+  # Merge a list of rule sets into a final style string plus the HTML
+  # attribute duplications (bgcolor/align/...) for RELATED_ATTRIBUTES
+  # elements. Element-independent: the per-element "attribute already
+  # set" guard stays with the caller.
+  #
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:172
+  def fold_declarations(declarations, related_el_name); end
+
   # Load the HTML file and convert it into an Nokogiri document.
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:217
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:295
   def load_html(input); end
+
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:226
+  def selector_requires_absent_class?(selector, classes_in_doc); end
 
   # Merge CSS into the HTML document.
   #
   # @return [String] an HTML.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:14
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:19
   def to_inline_css; end
 
   # Converts the HTML document to a format suitable for plain-text e-mail.
@@ -284,13 +313,13 @@ module Premailer::Adapter::Nokogiri
   #
   # @return [String] a plain text.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:193
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:271
   def to_plain_text; end
 
   # Gets the original HTML as a string.
   # @return [String] HTML.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:206
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:284
   def to_s; end
 
   # Create a <tt>style</tt> element with un-mergable rules (e.g. <tt>:hover</tt>)
@@ -300,9 +329,19 @@ module Premailer::Adapter::Nokogiri
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:170
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:248
   def write_unmergable_css_rules(doc, unmergable_rules); end
 end
+
+# pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:13
+Premailer::Adapter::Nokogiri::CLASS_IN_SELECTOR = T.let(T.unsafe(nil), Regexp)
+
+# Selectors made only of element names, classes, ids, combinators and
+# pseudo-classes without arguments: no attribute, string, function or escape
+# can hide a "." that is not a class.
+#
+# pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:12
+Premailer::Adapter::Nokogiri::PLAIN_SELECTOR = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/premailer#lib/premailer/adapter/nokogiri.rb:8
 Premailer::Adapter::Nokogiri::WIDTH_AND_HIGHT = T.let(T.unsafe(nil), Array)
@@ -317,7 +356,7 @@ module Premailer::Adapter::NokogiriFast
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:220
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:223
   def load_html(input); end
 
   # Merge CSS into the HTML document.
@@ -333,13 +372,13 @@ module Premailer::Adapter::NokogiriFast
   #
   # @return [String] a plain text.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:196
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:199
   def to_plain_text; end
 
   # Gets the original HTML as a string.
   # @return [String] HTML.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:209
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:212
   def to_s; end
 
   # Create a <tt>style</tt> element with un-mergable rules (e.g. <tt>:hover</tt>)
@@ -349,7 +388,7 @@ module Premailer::Adapter::NokogiriFast
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:173
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:176
   def write_unmergable_css_rules(doc, unmergable_rules); end
 
   private
@@ -360,7 +399,7 @@ module Premailer::Adapter::NokogiriFast
   # @param descendants The running hash map of node -> set of nodes that maps descendants of a node.
   # @return The descendants argument after updating it.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:323
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:328
   def index_ancestry(doc, elem, parent, descendants); end
 
   # For very large documents, it is useful to trade off some memory for performance.
@@ -371,7 +410,7 @@ module Premailer::Adapter::NokogiriFast
   # @return [index, set_of_all_nodes, descendants] The index is a hash from key to set of nodes.
   #         The "descendants" is a hash mapping a node to the set of its descendant nodes.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:274
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:279
   def make_index(page); end
 
   # @param index An index returned by make_index
@@ -384,7 +423,7 @@ module Premailer::Adapter::NokogiriFast
   # It will return nil when such a selector is passed, so you can take
   # action on the falsity of the return value.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:354
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:359
   def match_selector(index, all_nodes, descendants, selector); end
 
   # @param index An index hash returned by make_index
@@ -393,7 +432,7 @@ module Premailer::Adapter::NokogiriFast
   #             "hello.world" or "#blue.diamond". This should not contain spaces.
   # @return Set of nodes matching the given spec that are present in the base set.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:338
+  # pkg:gem/premailer#lib/premailer/adapter/nokogiri_fast.rb:343
   def narrow_down_nodes(index, base, intersection_selector); end
 end
 
@@ -410,7 +449,7 @@ module Premailer::Adapter::Nokogumbo
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:215
+  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:218
   def load_html(input); end
 
   # Merge CSS into the HTML document.
@@ -426,13 +465,13 @@ module Premailer::Adapter::Nokogumbo
   #
   # @return [String] a plain text.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:191
+  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:194
   def to_plain_text; end
 
   # Gets the original HTML as a string.
   # @return [String] HTML.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:204
+  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:207
   def to_s; end
 
   # Create a <tt>style</tt> element with un-mergable rules (e.g. <tt>:hover</tt>)
@@ -442,7 +481,7 @@ module Premailer::Adapter::Nokogumbo
   #
   # @return [::Nokogiri::XML] a document.
   #
-  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:168
+  # pkg:gem/premailer#lib/premailer/adapter/nokogumbo.rb:171
   def write_unmergable_css_rules(doc, unmergable_rules); end
 end
 
