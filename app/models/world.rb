@@ -38,7 +38,7 @@ class World < ApplicationRecord
 
   # Attributes that, when changed, invalidate the on-device pass for each card.
   # Icon changes are handled separately via `after_attached :icon`.
-  CARD_ATTRIBUTES = T.let([ "name" ].freeze, T::Array[String])
+  CARD_ATTRIBUTES = [ "name" ].freeze
 
   # == FriendlyId ==
 
