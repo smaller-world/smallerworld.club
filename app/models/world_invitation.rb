@@ -11,6 +11,7 @@
 #  recipient_phone_number :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  key_type_id            :uuid
 #  recipient_id           :uuid
 #  world_id               :uuid             not null
 #
@@ -23,6 +24,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  ([world_id, key_type_id] => world_key_types[world_id, id])
 #  fk_rails_...  (recipient_id => users.id)
 #  fk_rails_...  (world_id => worlds.id)
 #

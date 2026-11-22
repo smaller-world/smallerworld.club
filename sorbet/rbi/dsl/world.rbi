@@ -866,6 +866,51 @@ class World
     sig { void }
     def id_will_change!; end
 
+    sig { returns(T::Boolean) }
+    def key_types_review_pending; end
+
+    sig { params(value: T::Boolean).returns(T::Boolean) }
+    def key_types_review_pending=(value); end
+
+    sig { returns(T::Boolean) }
+    def key_types_review_pending?; end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def key_types_review_pending_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def key_types_review_pending_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def key_types_review_pending_came_from_user?; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def key_types_review_pending_change; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def key_types_review_pending_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_types_review_pending_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def key_types_review_pending_in_database; end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def key_types_review_pending_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_types_review_pending_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def key_types_review_pending_previously_was; end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def key_types_review_pending_was; end
+
+    sig { void }
+    def key_types_review_pending_will_change!; end
+
     sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
     def last_imported_v1_post_created_at; end
 
@@ -1014,6 +1059,9 @@ class World
     def restore_id_value!; end
 
     sig { void }
+    def restore_key_types_review_pending!; end
+
+    sig { void }
     def restore_last_imported_v1_post_created_at!; end
 
     sig { void }
@@ -1048,6 +1096,12 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Boolean, T::Boolean])) }
+    def saved_change_to_key_types_review_pending; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_key_types_review_pending?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
     def saved_change_to_last_imported_v1_post_created_at; end
@@ -1129,6 +1183,9 @@ class World
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_key_types_review_pending?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_last_imported_v1_post_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end

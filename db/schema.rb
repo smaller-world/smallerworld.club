@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_22_200134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -216,6 +216,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
     t.datetime "updated_at", null: false
     t.jsonb "v1_attributes"
     t.uuid "world_id", null: false
+    t.uuid "visible_to_key_type_ids", default: [], null: false, array: true
+    t.uuid "visible_to_user_ids", default: [], null: false, array: true
     t.index ["favorited_at"], name: "index_posts_on_favorited_at"
     t.index ["hidden_from_ids"], name: "index_posts_on_hidden_from_ids", using: :gin
     t.index ["quiet"], name: "index_posts_on_quiet"
@@ -458,10 +460,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
     t.string "recipient_phone_number", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
+    t.uuid "key_type_id"
     t.index ["id", "world_id"], name: "index_world_invitations_on_id_and_world_id", unique: true
     t.index ["recipient_id"], name: "index_world_invitations_on_recipient_id"
     t.index ["world_id", "recipient_phone_number"], name: "index_world_invitations_uniqueness", unique: true
     t.index ["world_id"], name: "index_world_invitations_on_world_id"
+  end
+
+  create_table "world_key_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "world_id", null: false
+    t.string "name", null: false
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["world_id", "id"], name: "index_world_key_types_on_world_id_and_id", unique: true
+    t.index ["world_id", "name"], name: "index_world_key_types_on_world_id_and_name", unique: true
   end
 
   create_table "world_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -472,6 +485,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.timestamptz "world_last_visited_at"
+    t.uuid "type_id"
     t.index ["id", "world_id"], name: "index_world_keys_on_id_and_world_id", unique: true
     t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
     t.index ["muted_post_type_ids"], name: "index_world_keys_on_muted_post_type_ids", using: :gin
@@ -487,6 +501,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
     t.string "name", null: false
     t.uuid "owner_id", null: false
     t.datetime "updated_at", null: false
+    t.boolean "key_types_review_pending", default: false, null: false
     t.index ["name", "owner_id"], name: "index_worlds_on_name_and_owner_id", unique: true
     t.index ["owner_id"], name: "index_worlds_on_owner_id"
   end
@@ -524,9 +539,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_000000) do
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "world_invitations", "users", column: "recipient_id"
+  add_foreign_key "world_invitations", "world_key_types", column: ["world_id", "key_type_id"], primary_key: ["world_id", "id"]
   add_foreign_key "world_invitations", "worlds"
+  add_foreign_key "world_key_types", "worlds"
   add_foreign_key "world_keys", "users", column: "recipient_id"
   add_foreign_key "world_keys", "world_invitations", column: ["invitation_id", "world_id"], primary_key: ["id", "world_id"]
+  add_foreign_key "world_keys", "world_key_types", column: ["world_id", "type_id"], primary_key: ["world_id", "id"]
   add_foreign_key "world_keys", "worlds"
   add_foreign_key "worlds", "users", column: "owner_id"
 end

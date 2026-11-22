@@ -1237,6 +1237,12 @@ class Post
     def restore_v1_attributes!; end
 
     sig { void }
+    def restore_visible_to_key_type_ids!; end
+
+    sig { void }
+    def restore_visible_to_user_ids!; end
+
+    sig { void }
     def restore_world_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
@@ -1316,6 +1322,18 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def saved_change_to_visible_to_key_type_ids; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_visible_to_key_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def saved_change_to_visible_to_user_ids; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_visible_to_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_world_id; end
@@ -1503,6 +1521,96 @@ class Post
     sig { void }
     def v1_attributes_will_change!; end
 
+    sig { returns(T::Array[::String]) }
+    def visible_to_key_type_ids; end
+
+    sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
+    def visible_to_key_type_ids=(value); end
+
+    sig { returns(T::Boolean) }
+    def visible_to_key_type_ids?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def visible_to_key_type_ids_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def visible_to_key_type_ids_came_from_user?; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_change; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_key_type_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_in_database; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_key_type_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_was; end
+
+    sig { void }
+    def visible_to_key_type_ids_will_change!; end
+
+    sig { returns(T::Array[::String]) }
+    def visible_to_user_ids; end
+
+    sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
+    def visible_to_user_ids=(value); end
+
+    sig { returns(T::Boolean) }
+    def visible_to_user_ids?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def visible_to_user_ids_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def visible_to_user_ids_came_from_user?; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_change; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_user_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_in_database; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_user_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_was; end
+
+    sig { void }
+    def visible_to_user_ids_will_change!; end
+
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
@@ -1541,6 +1649,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_visible_to_key_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_visible_to_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

@@ -13,6 +13,7 @@
 #  updated_at            :datetime         not null
 #  invitation_id         :uuid
 #  recipient_id          :uuid             not null
+#  type_id               :uuid
 #  world_id              :uuid             not null
 #
 # Indexes
@@ -27,6 +28,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  ([invitation_id, world_id] => world_invitations[id, world_id])
+#  fk_rails_...  ([world_id, type_id] => world_key_types[world_id, id])
 #  fk_rails_...  (recipient_id => users.id)
 #  fk_rails_...  (world_id => worlds.id)
 #

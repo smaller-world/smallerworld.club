@@ -15,6 +15,8 @@
 #  quiet                         :boolean          default(FALSE), not null
 #  title                         :string
 #  v1_attributes                 :jsonb
+#  visible_to_key_type_ids       :uuid             default([]), not null, is an Array
+#  visible_to_user_ids           :uuid             default([]), not null, is an Array
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  type_id                       :uuid             not null
