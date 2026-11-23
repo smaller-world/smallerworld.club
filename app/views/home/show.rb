@@ -140,53 +140,49 @@ class Views::Home::Show < Views::Base
 
   sig { void }
   def owned_worlds
-    ul(class: "flex gap-6 flex-wrap justify-center empty:hidden") do
-      @owned_worlds.each do |world|
-        li(class: "relative") do
-          link_to(world, class: "world-icon-container hover:underline") do
-            image_tag(world.page_icon_variant, class: "world-icon")
-            span(class: "world-icon-label") do
-              world.name
+    if @owned_worlds.any?
+      ul(class: "flex gap-6 flex-wrap justify-center") do
+        @owned_worlds.each do |world|
+          li(class: "relative") do
+            link_to(world, class: "world-icon-container hover:underline") do
+              image_tag(world.page_icon_variant, class: "world-icon")
+              span(class: "world-icon-label") do
+                world.name
+              end
             end
+            Components::WorldKeyGrantIconButton(world:)
           end
-          Components::WorldKeyGrantIconButton(world:)
+        end
+
+        li(class: "self-center world-icon-container") do
+          button_link_to(
+            places_dock_path,
+            variant: :outline,
+            class: class_names(
+              "world-icon border-dashed border-muted-foreground/40 shadow-none p-1.5",
+              "flex flex-col items-center justify-center",
+            ),
+            data: {
+              world_icon_size: "xs",
+            },
+          ) do
+            image_tag("places/dock_icon.webp", class: "dark:invert")
+          end
+          span(class: "world-icon-label") { "\u00A0" }
         end
       end
-
-      li(class: "self-center world-icon-container") do
-        button_link_to(
-          places_dock_path,
+    else
+      link_to(new_world_path, class: "mx-auto world-icon-container hover:underline") do
+        Components::Button(
+          element: :div,
           variant: :outline,
-          class: class_names(
-            "world-icon border-dashed border-muted-foreground/40 shadow-none p-1.5",
-            "flex flex-col items-center justify-center",
-          ),
-          data: {
-            world_icon_size: "xs",
-          },
+          class: "world-icon border-dashed",
         ) do
-          image_tag("places/dock_icon.webp", class: "dark:invert")
+          image_tag("logo.png", class: "size-12")
         end
-        span(class: "world-icon-label") { "\u00A0" }
-      end
-    end
-
-    link_to(
-      new_world_path,
-      class: [
-        "mx-auto world-icon-container hover:underline",
-        "hidden [ul:empty+&]:revert-display-layer",
-      ],
-    ) do
-      Components::Button(
-        element: :div,
-        variant: :outline,
-        class: "world-icon border-dashed",
-      ) do
-        image_tag("logo.png", class: "size-12")
-      end
-      span(class: "world-icon-label shimmer shimmer-repeat-delay-2000") do
-        "create your world"
+        span(class: "world-icon-label shimmer shimmer-repeat-delay-2000") do
+          "create your world"
+        end
       end
     end
   end

@@ -4,6 +4,28 @@
 require "application_system_test_case"
 
 class WorldsTest < ApplicationSystemTestCase
+  test "a user creates their first world from home" do
+    user = users(:jane)
+    user.update!(email_address: "jane@example.com")
+    world_name = "Jane's World"
+
+    sign_in_as(user)
+    assert_current_path home_path
+    assert_selector "a[href='#{places_dock_path}']"
+    click_link "create your world"
+
+    fill_in "world[name]", with: world_name
+    attach_file "world_icon", file_fixture("world_icon.png"), make_visible: true
+    click_button "crop and continue"
+    find("input[name='world[icon]']", visible: false, wait: 10) { |input| input.value.present? }
+    find(:button, text: /\Acreate /).click
+
+    assert_selector "h1", text: world_name
+    visit home_path
+    assert_link world_name
+    assert_no_link "create your world"
+  end
+
   test "owner resumes a draft and creates the post" do
     owner = users(:bob)
     world = create_world(owner:, name: "Draft World")
