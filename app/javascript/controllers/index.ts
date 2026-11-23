@@ -58,7 +58,6 @@ import PhoneNumberVerificationFormController from "./phone_number_verification_f
 import PostDraftController from "./post_draft_controller";
 import PostDraftInfoController from "./post_draft_info_controller";
 import PostFormTypeController from "./post_form_type_controller";
-import PostRecipientsSelectcontroller from "./post_recipients_select_controller";
 import PostTimestampController from "./post_timestamp_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
@@ -173,7 +172,6 @@ application.register("post-timestamp", PostTimestampController);
 application.register("post-draft", PostDraftController);
 application.register("post-draft-info", PostDraftInfoController);
 application.register("post-form-type", PostFormTypeController);
-application.register("post-recipients-select", PostRecipientsSelectcontroller);
 application.register("report-form", ReportFormController);
 application.register(
   "messaging-platform-dropdown",

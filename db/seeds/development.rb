@@ -144,7 +144,7 @@ module DevelopmentData
           post.body = Faker::Lorem.paragraphs(number: 2).map { |text| "<p>#{text}</p>" }.join
           post.created_at = (count - number).days.ago
           post.favorited_at = Time.current if %i[blair ellis].include?(owner) && number == 1
-          post.hidden_from_ids = [ users.fetch(:drew).id ] if owner == :blair && number == 1
+          post.hidden_from_user_ids = [ users.fetch(:drew).id ] if owner == :blair && number == 1
         end
       end
     end

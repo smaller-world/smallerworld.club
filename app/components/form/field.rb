@@ -232,11 +232,6 @@ class Components::Form
       )
     end
 
-    sig { params(post: Post, attributes: T.untyped).returns(PostRecipientsSelect) }
-    def post_recipients_select(post:, **attributes)
-      PostRecipientsSelect.new(self, post:, **attributes)
-    end
-
     # # Overide base form helpers for small modifications, like injecting
     # # default classes or styles.
     # def input(class: nil, **)

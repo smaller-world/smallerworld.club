@@ -454,6 +454,20 @@ class World
     sig { params(value: T::Enumerable[::User]).void }
     def key_recipients=(value); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def key_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def key_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `World` class because it declared `has_many :key_types`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldKeyType::PrivateCollectionProxy) }
+    def key_types; end
+
+    sig { params(value: T::Enumerable[::WorldKeyType]).void }
+    def key_types=(value); end
+
     # This method is created by ActiveRecord on the `World` class because it declared `has_many :keys`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
     sig { returns(::WorldKey::PrivateCollectionProxy) }

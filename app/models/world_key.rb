@@ -103,7 +103,7 @@ class WorldKey < ApplicationRecord
             .exists,
         )
         .where.not(reported.arel.exists)
-        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
+        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_user_ids)")
         .select("MAX(posts.created_at)")
         .arel,
     )

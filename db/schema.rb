@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_22_200134) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -207,7 +207,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200134) do
     t.datetime "created_at", null: false
     t.string "emoji"
     t.timestamptz "favorited_at"
-    t.uuid "hidden_from_ids", default: [], null: false, array: true
+    t.uuid "hidden_from_user_ids", default: [], null: false, array: true
     t.uuid "ordered_images_attachment_ids", default: [], null: false, array: true
     t.text "plain_body", null: false
     t.boolean "quiet", default: false, null: false
@@ -219,7 +219,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200134) do
     t.uuid "visible_to_key_type_ids", default: [], null: false, array: true
     t.uuid "visible_to_user_ids", default: [], null: false, array: true
     t.index ["favorited_at"], name: "index_posts_on_favorited_at"
-    t.index ["hidden_from_ids"], name: "index_posts_on_hidden_from_ids", using: :gin
+    t.index ["hidden_from_user_ids"], name: "index_posts_on_hidden_from_user_ids", using: :gin
     t.index ["quiet"], name: "index_posts_on_quiet"
     t.index ["type_id", "created_at"], name: "index_posts_on_type_id_and_created_at"
     t.index ["world_id"], name: "index_posts_on_world_id"

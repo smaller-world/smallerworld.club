@@ -109,9 +109,6 @@ Rails.application.routes.draw do
 
   # == Post Types
   resources :post_types, only: [ :edit, :update, :destroy ]
-  resource :post_recipients_select,
-    path: "/post_types/:post_type_id/post_recipients_select",
-    only: :show
 
   # == Posts
   resources :posts, only: [ :show, :edit, :update, :destroy ] do

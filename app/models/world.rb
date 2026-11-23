@@ -56,6 +56,7 @@ class World < ApplicationRecord
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
 
   has_many :invitations, class_name: "WorldInvitation", dependent: :destroy
+  has_many :key_types, class_name: "WorldKeyType", dependent: :destroy
 
   sig { returns(User) }
   def owner!

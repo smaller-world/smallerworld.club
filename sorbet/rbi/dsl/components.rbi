@@ -339,18 +339,6 @@ module Components
   end
   def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
 
-  # source://app/components/post_recipients_select.rb:4
-  sig do
-    params(
-      post: ::Post,
-      value: T::Array[::String],
-      input_id_prefix: T.nilable(::String),
-      invalid: T::Boolean,
-      attributes: T.untyped
-    ).void
-  end
-  def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
-
   # source://app/components/post_type_form.rb:4
   sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }
   def PostTypeForm(post_type:, previous_url:, **attributes); end
@@ -874,18 +862,6 @@ module Components
       ).void
     end
     def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
-
-    # source://app/components/post_recipients_select.rb:4
-    sig do
-      params(
-        post: ::Post,
-        value: T::Array[::String],
-        input_id_prefix: T.nilable(::String),
-        invalid: T::Boolean,
-        attributes: T.untyped
-      ).void
-    end
-    def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
 
     # source://app/components/post_type_form.rb:4
     sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }

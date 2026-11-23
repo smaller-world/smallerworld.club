@@ -127,7 +127,7 @@ class Views::Home::Show < Views::Base
       PostTypeGrant
         .joins(:world_key, post_type: :posts)
         .where(world_keys: { recipient: @current_user })
-        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
+        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_user_ids)")
         .where(
           "world_keys.world_last_visited_at IS NULL OR " \
             "posts.created_at > world_keys.world_last_visited_at",

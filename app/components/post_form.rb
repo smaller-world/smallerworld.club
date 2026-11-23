@@ -41,8 +41,6 @@ class Components::PostForm < Components::Base
               "post-draft" => @post.new_record?,
             ),
             post_form_type_edit_url_template_value: edit_post_type_path(":post_type_id"),
-            post_form_type_recipients_select_frame_url_template_value:
-              post_recipients_select_path(":post_type_id"),
             post_draft_world_id_value: (@world.id if @post.new_record?),
             post_draft_restoring_value: @restore_draft,
             action: token_list(
@@ -98,23 +96,6 @@ class Components::PostForm < Components::Base
                 action: "redirect-back-to-self#visit",
               },
             )
-          end
-
-          unless @restore_draft
-            turbo_frame_tag(
-              "recipients_select",
-              data: {
-                post_form_type_target: "recipientsSelectFrame",
-              },
-            ) do
-              form.wrapped(
-                form.field(:recipient_ids).post_recipients_select(post: @post),
-                orientation: :horizontal,
-                label: false,
-                error: false,
-                **form.error_tooltip_attributes_for(:recipient_ids),
-              )
-            end
           end
         end
 

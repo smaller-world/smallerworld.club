@@ -23,9 +23,11 @@ key type. Already-accepted invitations keep their existing keys.
 
 When reclassifying a friend's key, the owner can retain access to already
 published posts via person-specific inclusions. A friend must hold a current key
-for individual access to apply. Both inclusions and exclusions survive
-revocation so they still apply if the friend rejoins. Account deletion clears
-both. Exclusions take precedence over inclusions.
+for individual access to apply. Revoking a key leaves both lists intact. A later
+edit that saves the post removes individual exceptions for anyone without a
+current key, even if the edit only changes the post body. If a friend rejoins
+before the edit, their saved exceptions apply again. Account deletion clears
+both lists. Exclusions take precedence over inclusions.
 
 Selecting all starter types during backfill would open old posts to later
 holders of any starter key. Selecting `existing friends` preserves the current
