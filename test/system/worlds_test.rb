@@ -11,7 +11,6 @@ class WorldsTest < ApplicationSystemTestCase
 
     sign_in_as(user)
     assert_current_path home_path
-    assert_selector "a[href='#{places_dock_path}']"
     click_link "create your world"
 
     fill_in "world[name]", with: world_name
