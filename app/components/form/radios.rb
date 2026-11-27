@@ -28,9 +28,7 @@ class Components::Form
 
     sig do
       params(
-        content: T.nilable(
-          T.proc.params(choice: Choices::Choice[Elem]).returns(T.untyped),
-        ),
+        content: T.nilable(T.proc.params(choice: Choices::Choice[Elem]).returns(T.untyped)),
       ).returns(T.untyped)
     end
     def view_template(&content)
@@ -44,7 +42,7 @@ class Components::Form
               invalid: field.invalid?,
             ) do |field|
               choice.input(toggleable: @toggleable)
-              field.label(for: Superform::DOM.join(dom.id, choice.index))
+              choice.label(for: Superform::DOM.join(dom.id, choice.index))
             end
           end
         end

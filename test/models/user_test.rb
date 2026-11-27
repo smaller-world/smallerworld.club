@@ -36,15 +36,17 @@ class UserTest < ActiveSupport::TestCase
 
   test "world invitations include account and phone matches without duplicates" do
     world = create_world(owner: users(:sue))
-    direct = world.invitations.create!(recipient: @user, granted_post_type_ids: world.post_type_ids)
+    key_type = world.key_types.create!(name: "close friends", color: "pink")
+    direct = world.invitations.create!(recipient: @user, key_type:)
     phone_world = create_world(owner: users(:sue), name: "another world")
+    phone_key_type = phone_world.key_types.create!(name: "close friends", color: "pink")
     phone_only = phone_world.invitations.create!(
       recipient_phone_number: @user.phone_number,
-      granted_post_type_ids: phone_world.post_type_ids,
+      key_type: phone_key_type,
     )
     unrelated = world.invitations.create!(
       recipient_phone_number: "+14165550101",
-      granted_post_type_ids: world.post_type_ids,
+      key_type:,
     )
 
     assert_equal [ direct.id ], @user.received_world_invitations.pluck(:id)
@@ -60,7 +62,8 @@ class UserTest < ActiveSupport::TestCase
       time_zone_name: "America/Toronto",
     )
     world = create_world(owner: users(:sue))
-    invitation = world.invitations.create!(recipient:, granted_post_type_ids: world.post_type_ids)
+    key_type = world.key_types.create!(name: "close friends", color: "pink")
+    invitation = world.invitations.create!(recipient:, key_type:)
 
     assert_no_difference "WorldInvitation.count" do
       recipient.destroy!
@@ -68,7 +71,7 @@ class UserTest < ActiveSupport::TestCase
 
     assert_nil invitation.reload.recipient_id
     assert_equal recipient.phone_number, invitation.recipient_phone_number
-    assert_equal world.post_type_ids.sort, invitation.granted_post_type_ids.sort
+    assert_equal key_type.id, invitation.key_type_id
     assert_predicate invitation, :persisted?
   end
 

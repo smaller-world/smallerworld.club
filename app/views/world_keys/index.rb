@@ -12,7 +12,7 @@ class Views::WorldKeys::Index < Views::Base
     @current_user = current_user
     @world = world
     @world_keys = T.let(
-      @world.keys.includes(:recipient, :granted_post_types),
+      @world.keys.includes(:recipient, :type),
       WorldKey::PrivateAssociationRelation,
     )
     @invitable_users = T.let(
@@ -49,33 +49,33 @@ class Views::WorldKeys::Index < Views::Base
           invitations_item
         end
 
-        Components::ItemGroup(class: "empty:hidden") do
-          @world_keys.each do |world_key|
-            world_key_item(world_key)
-          end
-        end
-
-        Components::Empty(
-          class: "hidden [[role=list]:empty+&]:revert-display-layer",
-        ) do |empty|
-          empty.header(class: "gap-0") do
-            empty.media do
-              span(class: "font-emoji text-xl leading-none") { "😪" }
-            end
-            empty.title(class: "flex flex-col gap-2") do
-              span { "nobody has access to your world!" }
-            end
-            empty.description do
-              "you haven't shared any world keys with anyone yet"
+        if @world_keys.any?
+          Components::ItemGroup() do
+            @world_keys.each do |world_key|
+              world_key_item(world_key)
             end
           end
-          empty.content do
-            button_link_to(
-              "give a friend a key to your world",
-              [ :new, @world, :key_grant ],
-              variant: :default,
-              icon: "huge/user-add-01",
-            )
+        else
+          Components::Empty() do |empty|
+            empty.header(class: "gap-0") do
+              empty.media do
+                span(class: "font-emoji text-xl leading-none") { "😪" }
+              end
+              empty.title(class: "flex flex-col gap-2") do
+                span { "nobody has access to your world!" }
+              end
+              empty.description do
+                "you haven't shared any world keys with anyone yet"
+              end
+            end
+            empty.content do
+              button_link_to(
+                "give a friend a key to your world",
+                [ :new, @world, :key_grant ],
+                variant: :default,
+                icon: "huge/user-add-01",
+              )
+            end
           end
         end
       end
@@ -105,27 +105,25 @@ class Views::WorldKeys::Index < Views::Base
   sig { params(world_key: WorldKey).void }
   def world_key_item(world_key)
     recipient = world_key.recipient!
+    type = world_key.type!
     Components::Item(
       variant: :muted,
       class: "flex-nowrap items-start gap-2",
     ) do |item|
-      item.content(class: "flex-row items-start") do |item_content|
+      item.content(class: "flex-row items-center gap-2") do |item_content|
         item_content.title do
           recipient.name
         end
-        item_content.description(
-          class: "flex-1 flex items-center justify-end gap-0.5 flex-wrap",
-        ) do
-          world_key.granted_post_types.each do |post_type|
-            Components::Badge(
-              variant: :ghost,
-              class: "text-muted-foreground",
-            ) do |badge|
-              if (icon = post_type.icon)
-                badge.inline_start_icon(icon)
-              end
-              span { post_type.label }
-            end
+        item_content.description do
+          Components::Badge(
+            variant: :ghost,
+            class: "text-key-foreground",
+            data: {
+              key_color: type.color,
+            },
+          ) do |badge|
+            badge.inline_start_icon("huge/key-02")
+            span { type.name }
           end
         end
       end
@@ -136,7 +134,7 @@ class Views::WorldKeys::Index < Views::Base
           [ :edit, world_key ],
           variant: :secondary,
           size: :xs,
-          icon: "huge/key-02",
+          icon: "huge/edit-02",
         )
       end
     end

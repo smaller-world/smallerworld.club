@@ -10,8 +10,8 @@ module Admin
       @owner = users(:bob)
       @reporter = users(:sue)
       @world = create_world(owner: @owner)
-      @post = create_post(world: @world)
-      create_member_key(world: @world, recipient: @reporter)
+      key = create_member_key(world: @world, recipient: @reporter)
+      @post = create_post(world: @world, visible_to_key_type_ids: [ key.type_id ])
       @report = @post.reports.create!(reporter: @reporter, category: "spam")
     end
 

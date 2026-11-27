@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 desc "Kill server process by sending SIGTERM"

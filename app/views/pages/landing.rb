@@ -55,8 +55,8 @@ class Views::Pages::Landing < Views::Base
 
   sig { returns(T.nilable(String)) }
   def title
-    site = Rails.configuration.x.site
-    [ site.tagline, site.name ].compact.join(" – ").presence
+    application = SmallerWorld.application
+    "#{application.site_name}: #{application.site_tagline}"
   end
 
   sig { void }
@@ -82,32 +82,6 @@ class Views::Pages::Landing < Views::Base
           end
         end
       end
-      # div(
-      #   class: "glide__arrows",
-      #   data: {
-      #     glide_el: "controls",
-      #   },
-      # ) do
-      #   button(
-      #     class: "glide__arrow glide__arrow--left -left-2",
-      #     data: { glide_dir: "<" },
-      #   ) do
-      #     Icon("huge/arrow-left-01")
-      #   end
-      #   button(class: "glide__arrow glide__arrow--right", data: { glide_dir: ">" }) do
-      #     Icon("huge/arrow-right-01")
-      #   end
-      # end
-      # div(class: "glide__bullets", data: { glide_el: "controls[nav]" }) do
-      #   images.count.times.each do |i|
-      #     button(class: "glide__bullet", data: { glide_dir: i })
-      #     #   <button class="glide__bullet" data-glide-dir="=0"></button>
-      #     #   <button class="glide__bullet" data-glide-dir="=1"></button>
-      #     #   <button class="glide__bullet" data-glide-dir="=2"></button>
-      #   end
-      # end
-      #    <div class="glide__bullets" data-glide-el="controls[nav]">
-      # </div>
     end
   end
 end

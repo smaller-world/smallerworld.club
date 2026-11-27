@@ -8,6 +8,11 @@ class SmallerWorld::Application
   end
 
   sig { returns(String) }
+  def site_tagline
+    Rails.configuration.x.site.tagline
+  end
+
+  sig { returns(String) }
   def email_disclaimer
     Rails.configuration.x.email_disclaimer
   end

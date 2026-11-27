@@ -22,9 +22,17 @@ module SmallerWorld
 
     # Site title and tagline
     config.x.site.name = "smaller world"
-    config.x.site.tagline = "a place to share your feelings with friends."
+    config.x.site.tagline = "a place to share your feelings with friends"
+    config.x.email_disclaimer =
+      "we will only email you about important announcements. we will not spam you or " \
+        "send you marketing emails."
 
+    config.x.confetti_canvas_id = "confetti_canvas"
+
+    # V1
     config.x.v1_checks_disabled = false
+    config.x.v1_url = "https://old.smallerworld.club"
+    config.x.v1_posts_import_limit = 20
 
     # Cloudflare Turnstile server-side test secret keys.
     # See: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
@@ -40,14 +48,6 @@ module SmallerWorld
     config.x.sentry_url = "https://smallerworld.sentry.io/issues/?limit=5&project=4511453980327936&query=error.unhandled%3Atrue%20is%3Aunresolved&sort=freq&statsPeriod=14d"
     config.x.install_url = "https://smallerworld.instally.io/t8rnd9"
     config.x.ci_url = "https://github.com/smaller-world/smallerworld.club/actions"
-
-    config.x.v1_url = "https://old.smallerworld.club"
-    config.x.v1_posts_import_limit = 20
-
-    config.x.email_disclaimer =
-      "we will only email you about important announcements. we will not spam you or " \
-        "send you marketing emails."
-    config.x.confetti_canvas_id = "confetti_canvas"
 
     # == Rails Configuration ==
 

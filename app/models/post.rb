@@ -9,12 +9,14 @@
 #  id                            :uuid             not null, primary key
 #  emoji                         :string
 #  favorited_at                  :timestamptz
-#  hidden_from_ids               :uuid             default([]), not null, is an Array
+#  hidden_from_user_ids          :uuid             default([]), not null, is an Array
 #  ordered_images_attachment_ids :uuid             default([]), not null, is an Array
 #  plain_body                    :text             not null
 #  quiet                         :boolean          default(FALSE), not null
 #  title                         :string
 #  v1_attributes                 :jsonb
+#  visible_to_key_type_ids       :uuid             default([]), not null, is an Array
+#  visible_to_user_ids           :uuid             default([]), not null, is an Array
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  type_id                       :uuid             not null
@@ -23,7 +25,7 @@
 # Indexes
 #
 #  index_posts_on_favorited_at            (favorited_at)
-#  index_posts_on_hidden_from_ids         (hidden_from_ids) USING gin
+#  index_posts_on_hidden_from_user_ids    (hidden_from_user_ids) USING gin
 #  index_posts_on_quiet                   (quiet)
 #  index_posts_on_type_id_and_created_at  (type_id,created_at)
 #  index_posts_on_world_id                (world_id)
@@ -80,20 +82,10 @@ class Post < ApplicationRecord
   # == Associations ==
 
   belongs_to :type, class_name: "PostType"
-  has_many :type_recipients, through: :type, source: :recipients
-  has_many :type_subscribers,
-    ->(post) {
-      post = T.let(post, Post)
-      where.not(
-        id: WorldKey.where("? = ANY(muted_post_type_ids)", post.type_id)
-          .select(:recipient_id),
-      )
-    },
-    through: :type,
-    source: :recipients
-
   belongs_to :world
   has_many :world_keys, through: :world, source: :keys
+  has_many :world_key_recipients, through: :world, source: :key_recipients
+  has_many :world_key_types, through: :world, source: :key_types
   has_many :world_post_types, through: :world, source: :post_types
   has_one :world_owner, through: :world, source: :owner
 
@@ -131,6 +123,15 @@ class Post < ApplicationRecord
   # == Validations ==
 
   validates :type, inclusion: { in: :world_post_types }
+  validates :visible_to_key_type_ids,
+    inclusion: { in: :world_key_type_ids, message: "must belong to this world" },
+    allow_blank: true
+  validates :visible_to_user_ids,
+    inclusion: { in: :world_key_recipient_ids, message: "must hold a key to this world" },
+    allow_blank: true
+  validates :hidden_from_user_ids,
+    inclusion: { in: :world_key_recipient_ids, message: "must hold a key to this world" },
+    allow_blank: true
   validates :emoji, emoji: true, allow_nil: true
   validates :body, presence: true
   validates :images,
@@ -146,8 +147,10 @@ class Post < ApplicationRecord
   # == Hooks ==
 
   before_validation :chomp_rich_text_body!, if: :body?
+  before_validation :filter_visible_to_key_type_ids!, if: :visible_to_key_type_ids?
+  before_validation :filter_visible_to_user_ids!, if: :visible_to_user_ids?
+  before_validation :filter_hidden_from_user_ids!, if: :hidden_from_user_ids?
   before_save :set_plain_body
-  before_create :set_hidden_from_ids_from_recipient_ids
   after_save :preserve_images_attachments_ordering, if: :images_attachments_changed?
   after_create_commit :create_notifications_for_subscribers!,
     if: :should_create_notifications?
@@ -160,26 +163,32 @@ class Post < ApplicationRecord
 
   # == Scopes ==
 
-  scope :visible_to, ->(user) {
-    authored = PostType.where(world: World.where(owner: user))
-    granted = PostTypeGrant
-      .where("post_type_grants.world_key_id = world_keys.id")
-      .where("post_type_grants.post_type_id = post_types.id")
-    received = PostType.joins(:world_keys)
-      .where(world_keys: { recipient: user })
-      .where(granted.arel.exists)
+  scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
+  scope :with_recipient_keys, -> {
+    joins(:world_keys).where(<<~SQL.squish)
+      (
+        world_keys.type_id = ANY(posts.visible_to_key_type_ids)
+        OR world_keys.recipient_id = ANY(posts.visible_to_user_ids)
+      )
+      AND NOT (world_keys.recipient_id = ANY(posts.hidden_from_user_ids))
+    SQL
+  }
+
+  scope :unreported, -> {
     reported = Report.not_dismissed
       .where(reportable_type: "Post")
-      .where("reports.reportable_id = posts.id")
-    where(type: authored)
-      .or(where(type: received).where.not(reported.arel.exists))
-      .where.not(":user_id = ANY(posts.hidden_from_ids)", user_id: user.id)
+      .where(Report.arel_table[:reportable_id].eq(Post.arel_table[:id]))
+    where.not(reported.arel.exists)
+  }
+  scope :visible_to, ->(user) {
+    recipient_posts = Post.with_recipient_keys
+      .where(world_keys: { recipient_id: user.id })
+      .select(:id)
+
+    where(world_id: user.owned_worlds.select(:id))
+      .or(where(id: recipient_posts).unreported)
   }
   scope :favorited, -> { where.not(favorited_at: nil) }
-
-  # scope :with_type, -> { includes(:type) }
-  # scope :with_world_owner, -> { includes(:world_owner) }
-  scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
 
   # == Notifications ==
 
@@ -194,25 +203,23 @@ class Post < ApplicationRecord
     )
   end
 
-  sig { returns(User::PrivateAssociationRelation) }
+  sig { returns(User::PrivateRelation) }
   def subscribers
-    type_subscribers.where.not(id: hidden_from_ids)
+    subscribed_posts = Post.with_recipient_keys.unreported.where(id:)
+      .where.not("? = ANY(world_keys.muted_post_type_ids)", type_id)
+    User.where(id: subscribed_posts.select("world_keys.recipient_id"))
   end
 
   # == Recipients ==
 
-  sig { returns(T::Array[String]) }
+  sig { returns(ActiveRecord::Relation) }
   def recipient_ids
-    @recipient_ids || type_recipient_ids - hidden_from_ids
+    Post.with_recipient_keys.where(id:).select("world_keys.recipient_id")
   end
 
-  sig { params(value: T::Array[String]).void }
-  def recipient_ids=(value)
-    if new_record?
-      @recipient_ids = T.let(value.compact_blank, T.nilable(T::Array[String]))
-    else
-      self.hidden_from_ids = type_recipient_ids - value
-    end
+  sig { returns(User::PrivateRelation) }
+  def recipients
+    User.where(id: recipient_ids)
   end
 
   # == Snippets ==
@@ -273,22 +280,23 @@ class Post < ApplicationRecord
 
   # == Favoriting ==
 
+  # Toggling a favorite keeps the saved recipient exceptions intact.
   sig { returns(T::Boolean) }
   def favorite
-    update(favorited_at: Time.current)
+    now = Time.current
+    update_columns(favorited_at: now, updated_at: now) # rubocop:disable Rails/SkipsModelValidations
   end
 
   sig { returns(T::Boolean) }
   def unfavorite
-    update(favorited_at: nil)
+    update_columns(favorited_at: nil, updated_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 
   # == Visibility ==
 
   sig { params(user: User).returns(T::Boolean) }
   def visible_to?(user)
-    user == world_owner! ||
-      (recipient_ids.include?(user.id) && reports.not_dismissed.none?)
+    Post.visible_to(user).exists?(id)
   end
 
   # == Methods ==
@@ -334,6 +342,24 @@ class Post < ApplicationRecord
   # == Callbacks ==
 
   sig { void }
+  def filter_visible_to_key_type_ids!
+    world_key_types.reset
+    self.visible_to_key_type_ids &= world_key_type_ids
+  end
+
+  sig { void }
+  def filter_visible_to_user_ids!
+    world_key_recipients.reset
+    self.visible_to_user_ids &= world_key_recipient_ids
+  end
+
+  sig { void }
+  def filter_hidden_from_user_ids!
+    world_key_recipients.reset
+    self.hidden_from_user_ids &= world_key_recipient_ids
+  end
+
+  sig { void }
   def chomp_rich_text_body!
     document = body.body.fragment.source
     document.children.reverse_each do |node|
@@ -349,13 +375,6 @@ class Post < ApplicationRecord
   sig { void }
   def set_plain_body
     self.plain_body = rich_text_body.to_plain_text.gsub("\n\n", "\n")
-  end
-
-  sig { void }
-  def set_hidden_from_ids_from_recipient_ids
-    if @recipient_ids
-      self.hidden_from_ids = type_recipient_ids - @recipient_ids
-    end
   end
 
   sig { void }

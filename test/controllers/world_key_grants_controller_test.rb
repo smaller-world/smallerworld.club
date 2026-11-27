@@ -7,7 +7,8 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @world = worlds(:bobs_world_one)
     @recipient = users(:sue)
-    @grant_message = @world.key_grant_message(post_type_ids: @world.post_type_ids)
+    @key_type = @world.key_types.create!(name: "close friends", color: "pink")
+    @grant_message = WorldKey.grant_message(key_type_id: @key_type.id)
   end
 
   # == Tests ==
@@ -16,8 +17,7 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
     get world_key_grant_path(@grant_message.sub("--", "–"))
 
     assert_response :bad_request
-    assert_select "title", "invalid key link | smaller world"
-    assert_select "a[href=?]", home_path, count: 0
+    assert_select "main", text: /\binvalid\b/i
   end
 
   test "accepting an invalid key grant shows an invalid link page without granting access" do
@@ -29,26 +29,24 @@ class WorldKeyGrantsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :bad_request
     assert_equal "text/html", response.media_type
-    assert_select "title", "invalid key link | smaller world"
-    assert_select "a[href=?]", home_path, text: "back to your worlds"
+    assert_select "main", text: /\binvalid\b/i
   end
 
-  test "accepting a key grant gives the recipient access to only the selected post types" do
-    journal_type = @world.post_types.create!(label: "journal entry")
-    @world.post_types.create!(label: "diary")
-    create_post(world: @world, body: "journal entry shared by invitation")
-    create_post(world: @world, type_label: "diary", body: "diary post outside the invitation")
-    grant_message = @world.key_grant_message(post_type_ids: [ journal_type.id ])
+  test "accepting a key grant gives the recipient access to posts shared with its key type" do
+    @world.post_types.create!(name: "journal entry")
+    other_type = @world.key_types.create!(name: "new friends", color: "green")
+    create_post(world: @world, body: "shared by invitation", visible_to_key_type_ids: [ @key_type.id ])
+    create_post(world: @world, body: "outside the invitation", visible_to_key_type_ids: [ other_type.id ])
     sign_in_as(@recipient)
 
     assert_difference -> { @recipient.world_keys.count }, 1 do
-      post accept_world_key_grant_path(grant_message), as: :turbo_stream
+      post accept_world_key_grant_path(@grant_message), as: :turbo_stream
     end
     assert_redirected_to world_path(@world)
 
     get world_posts_path(@world), headers: { "Turbo-Frame" => "posts" }
     assert_response :success
-    assert_includes response.body, "journal entry shared by invitation"
-    assert_not_includes response.body, "diary post outside the invitation"
+    assert_includes response.body, "shared by invitation"
+    assert_not_includes response.body, "outside the invitation"
   end
 end

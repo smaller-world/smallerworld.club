@@ -53,6 +53,7 @@ export default class PostDraftController extends Typed(
     requestIdleCallback(() => {
       const value = this.#serializeFormData();
       localStorage.setItem(this.#localStorageKey, value);
+      this.#updateSearchParams();
       this.#flashSavedTimestamp();
     });
   }
@@ -149,5 +150,11 @@ export default class PostDraftController extends Typed(
       minute: "2-digit",
     });
     return `draft saved at ${time}`;
+  }
+
+  #updateSearchParams() {
+    const url = new URL(location.href);
+    url.searchParams.set("restore_draft", "1");
+    history.replaceState(history.state, "", url.toString());
   }
 }

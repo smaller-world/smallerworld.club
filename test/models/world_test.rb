@@ -8,6 +8,7 @@
 #
 #  id                               :uuid             not null, primary key
 #  blurb                            :text
+#  key_types_review_pending         :boolean          default(FALSE), not null
 #  last_imported_v1_post_created_at :timestamptz
 #  name                             :string           not null
 #  created_at                       :datetime         not null
@@ -39,7 +40,18 @@ class WorldTest < ActiveSupport::TestCase
     post = world.posts.sole
     assert_equal "welcome to my smaller world!", post.title
     assert_equal "🌎", post.emoji
-    assert_equal "journal entry", post.type!.label
+    assert_equal "journal entry", post.type!.name
+  end
+
+  test "persists the three starter key types for a new world" do
+    world = create_world(owner: users(:sue), name: "Starter Key Types World")
+
+    expected = {
+      "chosen family" => "pink",
+      "new friends" => "green",
+      "acquaintances" => "blue",
+    }
+    assert_equal expected, world.reload.key_types.pluck(:name, :color).to_h
   end
 
   test "defaults its name from the owner's first name" do

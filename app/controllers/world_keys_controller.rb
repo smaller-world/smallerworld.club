@@ -44,10 +44,12 @@ class WorldKeysController < ApplicationController
       format.html do
         world_key = find_world_key
         authorize!(world_key)
-        world_key_params = params.expect(world_key: [ granted_post_type_ids: [] ])
-          .reverse_merge(granted_post_type_ids: [])
-        world_key.update!(world_key_params)
-        refresh_or_redirect_to([ world_key.world, :keys ], status: :see_other)
+        world_key_params = params.expect(world_key: :type_id)
+        if world_key.update(world_key_params)
+          refresh_or_redirect_to([ world_key.world, :keys ], status: :see_other)
+        else
+          render Views::WorldKeys::Edit.new(world_key:), status: :unprocessable_content
+        end
       end
     end
   end

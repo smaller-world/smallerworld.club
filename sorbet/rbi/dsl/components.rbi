@@ -147,6 +147,10 @@ module Components
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
   def DropdownMenu(**attributes, &content); end
 
+  # source://app/components/edit_world_key_types_button.rb:4
+  sig { params(world: ::World, attributes: T.untyped).void }
+  def EditWorldKeyTypesButton(world:, **attributes); end
+
   # source://app/components/emoji_select.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
@@ -203,12 +207,13 @@ module Components
         model: T.all(::Object, T.type_parameter(:U)),
         action: ::Object,
         method: T.nilable(::Symbol),
+        key: T.nilable(::String),
         vibrate_on_submit: T::Boolean,
         attributes: T.untyped,
         content: T.proc.params(instance: Components::Form[T.type_parameter(:U)]).void
       ).void
   end
-  def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
+  def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), key: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
   # source://app/components/hint_alert.rb:4
   sig { params(message: ::String, attributes: T.untyped).void }
@@ -339,21 +344,9 @@ module Components
   end
   def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
 
-  # source://app/components/post_recipients_select.rb:4
-  sig do
-    params(
-      post: ::Post,
-      value: T::Array[::String],
-      input_id_prefix: T.nilable(::String),
-      invalid: T::Boolean,
-      attributes: T.untyped
-    ).void
-  end
-  def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
-
   # source://app/components/post_type_form.rb:4
-  sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }
-  def PostTypeForm(post_type:, previous_url:, **attributes); end
+  sig { params(post_type: ::PostType, return_url: T.nilable(::String), attributes: T.untyped).void }
+  def PostTypeForm(post_type:, return_url: T.unsafe(nil), **attributes); end
 
   # source://app/components/radio_group.rb:4
   sig do
@@ -454,6 +447,10 @@ module Components
     ).void
   end
   def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
+
+  # source://app/components/todo.rb:4
+  sig { params(message: ::String).void }
+  def Todo(message:); end
 
   # source://app/components/uppy.rb:4
   sig do
@@ -683,6 +680,10 @@ module Components
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
     def DropdownMenu(**attributes, &content); end
 
+    # source://app/components/edit_world_key_types_button.rb:4
+    sig { params(world: ::World, attributes: T.untyped).void }
+    def EditWorldKeyTypesButton(world:, **attributes); end
+
     # source://app/components/emoji_select.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
@@ -739,12 +740,13 @@ module Components
           model: T.all(::Object, T.type_parameter(:U)),
           action: ::Object,
           method: T.nilable(::Symbol),
+          key: T.nilable(::String),
           vibrate_on_submit: T::Boolean,
           attributes: T.untyped,
           content: T.proc.params(instance: Components::Form[T.type_parameter(:U)]).void
         ).void
     end
-    def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
+    def Form(model, action: T.unsafe(nil), method: T.unsafe(nil), key: T.unsafe(nil), vibrate_on_submit: T.unsafe(nil), **attributes, &content); end
 
     # source://app/components/hint_alert.rb:4
     sig { params(message: ::String, attributes: T.untyped).void }
@@ -875,21 +877,9 @@ module Components
     end
     def PostReactions(post:, new_reaction: T.unsafe(nil), existing_reactions_form: T.unsafe(nil), new_reaction_form: T.unsafe(nil), **attributes); end
 
-    # source://app/components/post_recipients_select.rb:4
-    sig do
-      params(
-        post: ::Post,
-        value: T::Array[::String],
-        input_id_prefix: T.nilable(::String),
-        invalid: T::Boolean,
-        attributes: T.untyped
-      ).void
-    end
-    def PostRecipientsSelect(post:, value: T.unsafe(nil), input_id_prefix: T.unsafe(nil), invalid: T.unsafe(nil), **attributes); end
-
     # source://app/components/post_type_form.rb:4
-    sig { params(post_type: ::PostType, previous_url: T.nilable(::String), attributes: T.untyped).void }
-    def PostTypeForm(post_type:, previous_url:, **attributes); end
+    sig { params(post_type: ::PostType, return_url: T.nilable(::String), attributes: T.untyped).void }
+    def PostTypeForm(post_type:, return_url: T.unsafe(nil), **attributes); end
 
     # source://app/components/radio_group.rb:4
     sig do
@@ -990,6 +980,10 @@ module Components
       ).void
     end
     def Textarea(invalid: T.unsafe(nil), **attributes, &content); end
+
+    # source://app/components/todo.rb:4
+    sig { params(message: ::String).void }
+    def Todo(message:); end
 
     # source://app/components/uppy.rb:4
     sig do

@@ -7,14 +7,15 @@ class Components::PostTypeForm < Components::Base
   sig do
     params(
       post_type: PostType,
-      previous_url: T.nilable(String),
+      return_url: T.nilable(String),
       attributes: T.untyped,
     ).void
   end
-  def initialize(post_type:, previous_url:, **attributes)
+  def initialize(post_type:, return_url: nil, **attributes)
     super(**attributes)
     @post_type = post_type
-    @previous_url = previous_url
+    @return_url = return_url
+
     @world = T.let(@post_type.world!, World)
   end
 
@@ -27,13 +28,13 @@ class Components::PostTypeForm < Components::Base
       action: @post_type.new_record? ? [ @world, @post_type ] : @post_type,
       vibrate_on_submit: true,
     ) do |form|
-      if (previous_url = @previous_url)
-        input(type: "hidden", name: "previous_url", value: previous_url)
+      if (return_url = @return_url)
+        input(type: "hidden", name: "return_url", value: return_url)
       end
 
       form.wrapped(
-        form.field(:label).text(
-          placeholder: @post_type.label.presence || "journal entry",
+        form.field(:name).text(
+          placeholder: @post_type.name.presence || "journal entry",
           required: true,
           data: {
             controller: "prevent-enter-submit",
@@ -41,36 +42,6 @@ class Components::PostTypeForm < Components::Base
         ),
         label: "what's this post type called?",
       )
-
-      world_keys = @post_type.world_keys.includes(:recipient)
-      Components::FieldSet(
-        class: class_names("gap-2", "hidden" => world_keys.none?),
-      ) do |field_set|
-        field_set.legend(class: "mb-0") do
-          "who can see this post type?"
-        end
-        form.Field(:granted_world_key_ids).checkboxes(
-          world_keys,
-          class: "flex-row gap-1.5 flex-wrap",
-        ) do |choice|
-          recipient = choice.item.recipient!
-          choice.label(class: "cursor-pointer w-fit") do
-            Components::Field(
-              orientation: :horizontal,
-              invalid: form.invalid?(:granted_world_key_ids),
-              class: "w-auto py-1 pl-2 pr-2 items-center",
-            ) do |field|
-              field.content do
-                field.title(class: "flex items-center gap-1.5") do
-                  recipient.name
-                end
-              end
-              choice.input(class: "rounded-full")
-            end
-          end
-        end
-        form.error_for(:granted_world_key_ids)
-      end
 
       # Components::FieldSet(class: "gap-1") do |field_set|
       #   field_set.legend(class: "mb-0") do

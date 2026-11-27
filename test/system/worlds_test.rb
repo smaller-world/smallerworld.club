@@ -25,9 +25,11 @@ class WorldsTest < ApplicationSystemTestCase
     assert_no_link "create your world"
   end
 
-  test "owner resumes a draft and creates the post" do
+  test "owner resumes a draft and publishes it to the selected key type" do
     owner = users(:bob)
     world = create_world(owner:, name: "Draft World")
+    friend = users(:sue)
+    create_member_key(world:, recipient: friend)
 
     sign_in_as(owner)
 
@@ -56,7 +58,11 @@ class WorldsTest < ApplicationSystemTestCase
     editor.click
     clock.set_fixed_time((time + 2.minutes).iso8601)
     editor.set(body)
-    assert_selector("p", text: saved_text, wait: 10) { |label| label.text != emoji_save }
+    body_save = find("p", text: saved_text, wait: 10) { |label| label.text != emoji_save }.text
+
+    clock.set_fixed_time((time + 3.minutes).iso8601)
+    find("label", text: "new friends").click
+    assert_selector("p", text: saved_text, wait: 10) { |label| label.text != body_save }
 
     visit world_path(world)
     click_button "new post"
@@ -67,6 +73,7 @@ class WorldsTest < ApplicationSystemTestCase
       assert_field "post[emoji]", with: "😀"
       assert_selector "lexxy-editor[name='post[body]'] [contenteditable='true']",
         text: body
+      find("label", text: "new friends").assert_selector('[role="checkbox"][aria-checked="true"]')
       click_button "submit post"
     end
 
@@ -74,6 +81,10 @@ class WorldsTest < ApplicationSystemTestCase
     assert_text "a draft title"
     assert_text body
     assert_text "😀"
+
+    sign_in_as(friend)
+    visit world_path(world)
+    assert_text body
   end
 
   test "scrolling the feed loads more posts via turbo stream" do

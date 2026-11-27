@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 class Components::WorldKeyGrantForm < Components::Base
-  include Phlex::Rails::Helpers::FormWith
-  include NormalizeAttributes
-
   # == Initialization ==
 
   sig do
@@ -38,32 +35,39 @@ class Components::WorldKeyGrantForm < Components::Base
         @attributes,
       ),
     ) do |form|
-      Components::FieldSet() do |field_set|
-        field_set.legend(class: "text-center mb-0") do
-          "this key shares access to:"
+      Components::FieldSet(class: "gap-6") do |field_set|
+        div(class: "text-balance") do
+          field_set.legend(class: "text-center mb-0.5") do
+            "pick a key to give to your friend"
+          end
+          field_set.description(class: "text-center") do
+            "keys control what a friend can see on your world"
+          end
         end
-        form.Field(:granted_post_type_ids).checkboxes(
-          @world.post_types,
-          include_hidden: false,
-          class: "flex-row justify-center gap-2 flex-wrap",
+        form.Field(:key_type_id).radios(
+          @world.key_types,
+          class: if @world.key_types.size.even?
+                   "grid-cols-[min-content_min-content] place-content-center"
+                 else
+                   "flex flex-wrap justify-center"
+                 end,
         ) do |choice|
-          choice.label(class: "cursor-pointer w-fit") do
-            Components::Field(
-              orientation: :horizontal,
-              invalid: form.invalid?(:granted_post_type_ids),
-              class: "w-auto py-1 pl-2 pr-2 items-center",
-            ) do |field|
-              field.content do
-                field.title(class: "flex items-center gap-1.5") do
-                  Icon(choice.item.icon, class: "size-4")
-                  span do
-                    choice.item.label
-                  end
+          choice.label(
+            class: "size-28 cursor-pointer has-data-checked:border-key-foreground",
+            data: {
+              key_color: choice.item.color,
+            },
+          ) do
+            Components::Field(class: "w-auto my-auto items-center") do |field|
+              Icon("huge/key-02", class: "size-6 text-key-foreground")
+              field.content(class: "items-center") do
+                field.title(class: "text-xs text-key-foreground text-center") do
+                  choice.item.name
                 end
               end
               choice.input(
-                name: "granted_post_type_ids[]",
-                class: "rounded-full",
+                name: "key_type_id",
+                class: "visually-hidden",
                 data: {
                   action: "submit#request",
                 },
@@ -73,14 +77,13 @@ class Components::WorldKeyGrantForm < Components::Base
         end
       end
 
-      turbo_frame_tag("world_key_grant_form_qr_code", data: {
-        slot: "qr-code-frame",
-      }) do
-        if @grant.valid?
+      turbo_frame_tag("world_key_grant_form_qr_code", data: { slot: "qr-code-frame" }) do
+        if @grant.valid? && (key_type_id = @grant.key_type_id)
+          url = grant_url(key_type_id:)
           Components::Badge(class: "self-center") do
             "now, get your friend to scan this qr code:"
           end
-          grant_qr_code
+          grant_qr_code(url)
           div(class: "flex flex-col items-center gap-2") do
             Components::Button(
               type: :button,
@@ -89,7 +92,7 @@ class Components::WorldKeyGrantForm < Components::Base
               data: {
                 slot: "copy-invite-link-button",
                 controller: "clipboard flash-text",
-                clipboard_copy_value: grant_url,
+                clipboard_copy_value: url,
                 flash_text_content_value: "invite link copied!",
                 action: "clipboard#copy clipboard:copied->flash-text#flash",
               },
@@ -99,11 +102,9 @@ class Components::WorldKeyGrantForm < Components::Base
                 "copy invite link"
               end
             end
-            p(data: { slot: "copy-invite-link-description" }) do
-              "anyone with the link will be able to see your " \
-                "#{granted_post_types_descriptor} posts"
-            end
           end
+        else
+          form.error_for(:key_type_id, class: "text-center")
         end
       end
     end
@@ -113,9 +114,9 @@ class Components::WorldKeyGrantForm < Components::Base
 
   # == Helpers ==
 
-  sig { void }
-  def grant_qr_code
-    qr_code = RQRCode::QRCode.new(grant_url)
+  sig { params(url: String).void }
+  def grant_qr_code(url)
+    qr_code = RQRCode::QRCode.new(url)
     svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
     div(class: "relative", data: { slot: "grant-qr-code" }) do
       raw(safe(svg)) # rubocop:disable Rails/OutputSafety
@@ -131,14 +132,9 @@ class Components::WorldKeyGrantForm < Components::Base
     end
   end
 
-  sig { returns(String) }
-  def grant_url
-    message = @world.key_grant_message(post_type_ids: @grant.granted_post_type_ids)
+  sig { params(key_type_id: String).returns(String) }
+  def grant_url(key_type_id:)
+    message = WorldKey.grant_message(key_type_id:)
     shortlinked_url_helpers.world_key_grant_url(message:)
-  end
-
-  sig { returns(String) }
-  def granted_post_types_descriptor
-    @grant.granted_post_types.map(&:label).to_sentence
   end
 end

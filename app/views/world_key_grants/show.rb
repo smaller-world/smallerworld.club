@@ -5,11 +5,11 @@ class Views::WorldKeyGrants::Show < Views::Base
   # == Initialization ==
 
   sig { params(verified_grant: VerifiedWorldKeyGrant, invitation: WorldInvitation).void }
-  def initialize(verified_grant:, invitation: verified_grant.world.invitations.build)
+  def initialize(verified_grant:, invitation: verified_grant.build_invitation)
     super()
     @verfied_grant = verified_grant
     @invitation = invitation
-    @world = T.let(verified_grant.world, World)
+    @world = T.let(verified_grant.world!, World)
   end
 
   # == View ==

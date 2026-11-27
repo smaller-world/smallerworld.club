@@ -48,7 +48,7 @@ class Components::Form
               invalid: field.invalid?,
             ) do |field|
               choice.input
-              field.label(for: Superform::DOM.join(dom.id, choice.index))
+              choice.label(for: Superform::DOM.join(dom.id, choice.index))
             end
           end
         end

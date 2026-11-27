@@ -209,8 +209,8 @@ module V1
 
     sig { params(world: World).returns(PostType) }
     def post_type_on!(world)
-      label = V1_POST_TYPE_TO_TYPE_LABEL.fetch(type)
-      world.post_types.find_by!(label:)
+      name = V1_POST_TYPE_TO_TYPE_LABEL.fetch(type)
+      world.post_types.find_by!(name:)
     end
   end
 end

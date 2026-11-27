@@ -45,3 +45,9 @@ en:
       resolution:
         upheld: upheld
         dismissed: dismissed
+    world_key_type:
+      color:
+        green: green
+        orange: orange
+        pink: pink
+        blue: blue

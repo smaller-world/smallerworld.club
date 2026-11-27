@@ -3,13 +3,14 @@ import { visit } from "@hotwired/turbo";
 
 import { urlPathWithQuery } from "#helpers/url_helpers";
 
-export default class RedirectBackToSelfController extends Controller<HTMLAnchorElement> {
+export default class ReturnToSelfController extends Controller<HTMLAnchorElement> {
   // == Actions ==
 
   visit(event: Event): void {
     event.preventDefault();
     const url = new URL(this.element.href, location.href);
-    url.searchParams.set("redirect_back_to", urlPathWithQuery(location.href));
+    url.searchParams.set("return_to", urlPathWithQuery(location.href));
+    console.log(url.toString());
     visit(url.toString());
   }
 }

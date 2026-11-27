@@ -17,6 +17,7 @@ class Components::PostForm < Components::Base
     @restore_draft = restore_draft
     @post_type = T.let(@post.type!, PostType)
     @world = T.let(@post.world!, World)
+    @key_types = T.let(@world.key_types, WorldKeyType::PrivateCollectionProxy)
   end
 
   # == Component ==
@@ -41,8 +42,6 @@ class Components::PostForm < Components::Base
               "post-draft" => @post.new_record?,
             ),
             post_form_type_edit_url_template_value: edit_post_type_path(":post_type_id"),
-            post_form_type_recipients_select_frame_url_template_value:
-              post_recipients_select_path(":post_type_id"),
             post_draft_world_id_value: (@world.id if @post.new_record?),
             post_draft_restoring_value: @restore_draft,
             action: token_list(
@@ -60,7 +59,7 @@ class Components::PostForm < Components::Base
           div(class: "flex gap-0.5") do
             form.wrapped(
               form.field(:type_id).select(
-                @post.world_post_types.select(:id, :icon, :label),
+                @post.world_post_types.select(:id, :icon, :name),
                 data: {
                   post_form_type_target: "select",
                   action: "change->post-form-type#update",
@@ -77,7 +76,7 @@ class Components::PostForm < Components::Base
                       ) do
                         div(class: "flex items-center gap-2") do
                           Icon(post_type.icon)
-                          span { post_type.label }
+                          span { post_type.name }
                         end
                       end
                     end
@@ -94,27 +93,10 @@ class Components::PostForm < Components::Base
               class: "text-muted-foreground font-normal px-2 mt-0.5",
               data: {
                 post_form_type_target: "editAnchor",
-                controller: "redirect-back-to-self",
-                action: "redirect-back-to-self#visit",
+                controller: "return-to-self",
+                action: "return-to-self#visit",
               },
             )
-          end
-
-          unless @restore_draft
-            turbo_frame_tag(
-              "recipients_select",
-              data: {
-                post_form_type_target: "recipientsSelectFrame",
-              },
-            ) do
-              form.wrapped(
-                form.field(:recipient_ids).post_recipients_select(post: @post),
-                orientation: :horizontal,
-                label: false,
-                error: false,
-                **form.error_tooltip_attributes_for(:recipient_ids),
-              )
-            end
           end
         end
 
@@ -227,6 +209,46 @@ class Components::PostForm < Components::Base
       end
 
       div(class: "flex flex-col items-stretch gap-3") do
+        Components::Card(size: :sm) do |card|
+          card.content do
+            Components::FieldSet(class: "flex-row") do |field_set|
+              field_set.legend(variant: :label) do
+                "visible to:"
+              end
+              form.Field(:visible_to_key_type_ids).checkboxes(
+                @key_types,
+                class: "flex-1 flex-row flex-wrap justify-end gap-2",
+              ) do |choice|
+                choice.label(
+                  class: "w-auto cursor-pointer has-data-checked:border-key-foreground",
+                  data: {
+                    key_color: choice.item.color,
+                  },
+                ) do
+                  Components::Field(
+                    orientation: :horizontal,
+                    class: "w-auto px-2 py-1 gap-1.5",
+                  ) do |field|
+                    Icon(
+                      "huge/key-02",
+                      class: "size-3.5 text-key-foreground",
+                    )
+                    field.title(class: "text-xs text-key-foreground") do
+                      choice.item.name
+                    end
+                    choice.input(
+                      class: "visually-hidden",
+                      data: {
+                        action: ("post-draft#save" if can_save_draft?),
+                      },
+                    )
+                  end
+                end
+              end
+            end
+          end
+        end
+
         if @post.new_record?
           form.Field(:quiet).radios(
             [ [ false, :loud ], [ true, :quiet ] ],
@@ -291,48 +313,4 @@ class Components::PostForm < Components::Base
   def can_save_draft?
     @post.new_record? && !@restore_draft
   end
-
-  # sig { params(form: PhlexRailsFormBuilder).void }
-  # def key_colors_field_for(form)
-  #   field_for(form, :key_colors, class: "items-center") do |field|
-  #     form.hidden_field(:key_colors, multiple: true, value: nil)
-
-  #     field.checkbox_group(class: "flex-row justify-center") do |group|
-  #       WorldKey.color.values.each do |color|
-  #         group.field_label_for(
-  #           color,
-  #           class: "cursor-pointer w-auto not-has-data-checked:border-dashed",
-  #         ) do |label|
-  #           label.field(class: "p-2") do |field|
-  #             field.content(class: "items-center") do
-  #               Icon(
-  #                 "huge/key-02",
-  #                 class: "size-4.5",
-  #                 style: "color: var(--world-key-color-#{color})",
-  #               )
-  #             end
-  #             field.checkbox_group_item_for(
-  #               color,
-  #               hidden: true,
-  #               checked: checkbox_group_item_checked?(world_key_color: color),
-  #               input: {
-  #                 data: {
-  #                   post_form_target: "worldKeyColorsInput",
-  #                   action: "change->post-form#updateWorldKeyColorsDescription",
-  #                 },
-  #               },
-  #             )
-  #           end
-  #         end
-  #       end
-  #     end
-  #     field.description(
-  #       class: "text-center text-xs empty:opacity-0 max-w-60 text-balance",
-  #       data: {
-  #         post_form_target: "worldKeyColorsDescription",
-  #       },
-  #     )
-  #     field.error(class: "text-center text-xs")
-  #   end
-  # end
 end

@@ -12,9 +12,10 @@ module World::V1Importing
 
   sig { returns(V1::Post::PrivateRelation) }
   def v1_posts
+    owner = owner!
     V1::Post.joins(:author)
       .where(type: V1::Post::V1_POST_TYPE_TO_TYPE_LABEL.keys)
-      .where(prompt_id: nil, author: { phone_number: owner_phone_number })
+      .where(prompt_id: nil, author: { phone_number: owner.phone_number })
       .where.not(world_id: nil)
       .distinct
       .chronological

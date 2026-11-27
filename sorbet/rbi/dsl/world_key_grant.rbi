@@ -10,9 +10,9 @@ class WorldKeyGrant
 
   module GeneratedAttributeMethods
     sig { returns(T.untyped) }
-    def granted_post_type_ids; end
+    def key_type_id; end
 
     sig { params(value: T.untyped).returns(T.untyped) }
-    def granted_post_type_ids=(value); end
+    def key_type_id=(value); end
   end
 end

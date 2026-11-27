@@ -13,14 +13,14 @@ class Views::Errors::InvalidWorldKeyGrant < Views::Base
             empty.media(variant: :icon) do
               Icon("huge/door-lock")
             end
-            empty.title { "this key link is invalid" }
+            empty.title { "sorry, this key link is invalid :(" }
             empty.description do
               "please ask your friend for a new link!"
             end
           end
           if authenticated?
             empty.content do
-              button_back_to("your worlds", home_path, variant: :secondary)
+              button_back_to(:home, variant: :secondary)
             end
           end
         end

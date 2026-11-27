@@ -367,6 +367,9 @@ class WorldKey
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_recipient(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def build_type(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def build_world(*args, &blk); end
 
@@ -385,6 +388,12 @@ class WorldKey
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_recipient!(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def create_type(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def create_type!(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world(*args, &blk); end
 
@@ -398,18 +407,18 @@ class WorldKey
     def create_world_owner!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
-    def granted_post_type_ids; end
+    def deprecated_post_type_grant_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def granted_post_type_ids=(ids); end
+    def deprecated_post_type_grant_ids=(ids); end
 
-    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :granted_post_types, through: :post_type_grants`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::PostType::PrivateCollectionProxy) }
-    def granted_post_types; end
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :deprecated_post_type_grants`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Deprecated::PostTypeGrant::PrivateCollectionProxy) }
+    def deprecated_post_type_grants; end
 
-    sig { params(value: T::Enumerable[::PostType]).void }
-    def granted_post_types=(value); end
+    sig { params(value: T::Enumerable[::Deprecated::PostTypeGrant]).void }
+    def deprecated_post_type_grants=(value); end
 
     sig { returns(T.nilable(::WorldInvitation)) }
     def invitation; end
@@ -437,20 +446,6 @@ class WorldKey
     sig { params(value: T::Enumerable[::Notification]).void }
     def notifications=(value); end
 
-    sig { returns(T::Array[T.untyped]) }
-    def post_type_grant_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def post_type_grant_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :post_type_grants`.
-    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::PostTypeGrant::PrivateCollectionProxy) }
-    def post_type_grants; end
-
-    sig { params(value: T::Enumerable[::PostTypeGrant]).void }
-    def post_type_grants=(value); end
-
     sig { returns(T.nilable(::User)) }
     def recipient; end
 
@@ -469,6 +464,9 @@ class WorldKey
     sig { returns(T.nilable(::User)) }
     def reload_recipient; end
 
+    sig { returns(T.nilable(::WorldKeyType)) }
+    def reload_type; end
+
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
@@ -482,10 +480,25 @@ class WorldKey
     def reset_recipient; end
 
     sig { void }
+    def reset_type; end
+
+    sig { void }
     def reset_world; end
 
     sig { void }
     def reset_world_owner; end
+
+    sig { returns(T.nilable(::WorldKeyType)) }
+    def type; end
+
+    sig { params(value: T.nilable(::WorldKeyType)).void }
+    def type=(value); end
+
+    sig { returns(T::Boolean) }
+    def type_changed?; end
+
+    sig { returns(T::Boolean) }
+    def type_previously_changed?; end
 
     sig { returns(T.nilable(::World)) }
     def world; end
@@ -509,6 +522,20 @@ class WorldKey
 
     sig { params(value: T::Enumerable[::WorldInvitation]).void }
     def world_invitations=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKey` class because it declared `has_many :world_key_types, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldKeyType::PrivateCollectionProxy) }
+    def world_key_types; end
+
+    sig { params(value: T::Enumerable[::WorldKeyType]).void }
+    def world_key_types=(value); end
 
     sig { returns(T.nilable(::User)) }
     def world_owner; end
@@ -643,9 +670,6 @@ class WorldKey
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
-    def order_by_latest_visible_post(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
@@ -701,6 +725,9 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_visible_post_activity(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_world_and_attached_icon(*args, &blk); end
@@ -999,6 +1026,9 @@ class WorldKey
     def restore_recipient_id!; end
 
     sig { void }
+    def restore_type_id!; end
+
+    sig { void }
     def restore_updated_at!; end
 
     sig { void }
@@ -1043,6 +1073,12 @@ class WorldKey
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_recipient_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_type_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
 
@@ -1060,6 +1096,51 @@ class WorldKey
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_world_last_visited_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(::String) }
+    def type_id; end
+
+    sig { params(value: ::String).returns(::String) }
+    def type_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def type_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def type_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def type_id_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def type_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def type_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def type_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def type_id_was; end
+
+    sig { void }
+    def type_id_will_change!; end
 
     sig { returns(::ActiveSupport::TimeWithZone) }
     def updated_at; end
@@ -1123,6 +1204,9 @@ class WorldKey
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_recipient_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1319,9 +1403,6 @@ class WorldKey
     def order(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
-    def order_by_latest_visible_post(*args, &blk); end
-
-    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def preload(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
@@ -1377,6 +1458,9 @@ class WorldKey
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_visible_post_activity(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_world_and_attached_icon(*args, &blk); end

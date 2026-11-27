@@ -8,7 +8,7 @@
 #
 #  id         :uuid             not null, primary key
 #  icon       :string
-#  label      :string           not null
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  world_id   :uuid             not null
@@ -17,7 +17,7 @@
 #
 #  index_post_types_on_id_and_world_id  (id,world_id) UNIQUE
 #  index_post_types_on_world_id         (world_id)
-#  index_post_types_uniqueness          (world_id,label) UNIQUE
+#  index_post_types_uniqueness          (world_id,name) UNIQUE
 #
 # Foreign Keys
 #
@@ -25,18 +25,11 @@
 #
 # rubocop:enable Layout/LineLength, Lint/RedundantCopDisableDirective
 class PostType < ApplicationRecord
-  # == Configuration ==
-
-  DEFAULT_POST_TYPE_LABELS = T.let(
-    World.default_post_types.map(&:label).freeze,
-    T::Array[String],
-  )
-
   # == Attributes ==
 
   sig { returns(T::Boolean) }
   def default?
-    DEFAULT_POST_TYPE_LABELS.include?(label)
+    PostType.default_type_names.include?(name)
   end
 
   sig { returns(T::Boolean) }
@@ -55,26 +48,7 @@ class PostType < ApplicationRecord
   # == Associations ==
 
   belongs_to :world
-  has_many :grants, class_name: "PostTypeGrant", dependent: :destroy
-  has_many :granted_world_keys, through: :grants, source: :world_key
-  has_many :recipients, through: :granted_world_keys
-  has_many :subscribed_world_keys,
-    ->(post_type) {
-      post_type = T.let(post_type, PostType)
-      where.not("? = ANY(muted_post_type_ids)", post_type.id)
-    },
-    through: :grants,
-    source: :world_key
-  has_many :subscribers, through: :subscribed_world_keys, source: :recipient
-
-  has_many :world_keys, through: :world, source: :keys
-  has_many :world_key_recipients, through: :world_keys, source: :recipient
-  # has_many :subscribers,
-  #   ->(post_type) {
-  #     merge(post_type.recipients)
-  #   },
-  #   through: :world_keys,
-  #   source: :recipient
+  has_many :deprecated_post_type_grants, class_name: "Deprecated::PostTypeGrant", dependent: :destroy
 
   has_many :posts, inverse_of: :type, foreign_key: :type_id, dependent: :destroy
 
@@ -85,5 +59,34 @@ class PostType < ApplicationRecord
 
   # == Validations ==
 
-  validates :label, presence: true, uniqueness: { scope: :world }
+  validates :name,
+    presence: true,
+    uniqueness: { scope: :world, message: "already exists" }
+
+  # == Default Types ==
+
+  sig { returns(PostType) }
+  def self.journal_entry_type = new(name: "journal entry", icon: "huge/book-edit")
+
+  sig { returns(PostType) }
+  def self.poem_type = new(name: "poem", icon: "huge/quill-write-01")
+
+  sig { returns(PostType) }
+  def self.invitation_type = new(name: "invitation", icon: "huge/mail-open-love")
+
+  sig { returns(PostType) }
+  def self.ask_type = new(name: "ask", icon: "huge/waving-hand-02")
+
+  sig { returns(T::Array[PostType]) }
+  def self.default_types
+    [ journal_entry_type, poem_type, invitation_type, ask_type ]
+  end
+
+  sig { returns(T::Array[String]) }
+  def self.default_type_names
+    @default_type_names ||= T.let(
+      default_types.map(&:name).freeze,
+      T.nilable(T::Array[String]),
+    )
+  end
 end

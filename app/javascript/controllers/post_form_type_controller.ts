@@ -1,16 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
-import { FrameElement } from "@hotwired/turbo";
 import { Typed } from "stimulus-typescript";
 
 const values = {
-  recipientsSelectFrameUrlTemplate: String,
   editUrlTemplate: String,
 };
 
 const targets = {
   select: HTMLSelectElement,
   editAnchor: HTMLAnchorElement,
-  recipientsSelectFrame: FrameElement,
 };
 
 export default class PostTypeSelectController extends Typed(
@@ -30,9 +27,6 @@ export default class PostTypeSelectController extends Typed(
     if (!this.editUrlTemplateValue) {
       throw new Error("Missing editUrlTemplate value");
     }
-    if (!this.recipientsSelectFrameUrlTemplateValue) {
-      throw new Error("Missing recipientsSelectFrameUrlTemplate value");
-    }
   }
 
   // == Actions ==
@@ -41,7 +35,6 @@ export default class PostTypeSelectController extends Typed(
     const postTypeId = this.#selectedPostTypeId();
     if (postTypeId) {
       this.#updateEditAnchor(postTypeId);
-      this.#updateRecipientsSelectFrame(postTypeId);
       this.#updateSearchParams(postTypeId);
     }
   }
@@ -57,16 +50,6 @@ export default class PostTypeSelectController extends Typed(
     const url = new URL(location.href);
     url.searchParams.set("type_id", postTypeId);
     history.replaceState(null, "", url.toString());
-  }
-
-  #updateRecipientsSelectFrame(postTypeId: string): void {
-    if (this.hasRecipientsSelectFrameTarget) {
-      const frameUrl = this.recipientsSelectFrameUrlTemplateValue.replaceAll(
-        ":post_type_id",
-        postTypeId,
-      );
-      this.recipientsSelectFrameTarget.src = frameUrl;
-    }
   }
 
   #updateEditAnchor(postTypeId: string): void {

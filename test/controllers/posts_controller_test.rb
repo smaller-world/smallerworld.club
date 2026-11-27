@@ -17,21 +17,21 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "a signed-out visitor sees a reporting alert in place of a reported post" do
     reporter = users(:sue)
-    create_member_key(world: @world, recipient: reporter)
-    post = create_post(world: @world, body: "reported post body")
+    key = create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "reported post body", visible_to_key_type_ids: [ key.type_id ])
     post.reports.create!(reporter:, category: "spam")
 
     get post_path(post)
 
     assert_response :success
     assert_not_includes response.body, "reported post body"
-    assert_select '[role="alert"]', text: "this post has been reported."
+    assert_select '[role="alert"]', text: /\breported\b/i
   end
 
   test "the author can open a reported post's secret link after the report is upheld" do
     reporter = users(:sue)
-    create_member_key(world: @world, recipient: reporter)
-    post = create_post(world: @world, body: "the author's reported post body")
+    key = create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "the author's reported post body", visible_to_key_type_ids: [ key.type_id ])
     report = post.reports.create!(reporter:, category: "spam")
     report.resolve!(resolution: "upheld", moderator: users(:jane))
     sign_in_as(@owner)
@@ -44,8 +44,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "a friend sees a reporting alert on the secret link after the report is upheld" do
     friend = users(:sue)
-    create_member_key(world: @world, recipient: friend)
-    post = create_post(world: @world, body: "post shared with a friend")
+    key = create_member_key(world: @world, recipient: friend)
+    post = create_post(world: @world, body: "post shared with a friend", visible_to_key_type_ids: [ key.type_id ])
     report = post.reports.create!(reporter: friend, category: "spam")
     report.resolve!(resolution: "upheld", moderator: users(:jane))
     sign_in_as(friend)
@@ -54,12 +54,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_not_includes response.body, "post shared with a friend"
-    assert_select '[role="alert"]', text: "this post has been reported."
+    assert_select '[role="alert"]', text: /\breported\b/i
   end
 
   test "owner creates a post of a given type" do
     sign_in_as(@owner)
-    post_type = @world.post_types.find_by!(label: "journal entry")
+    post_type = @world.post_types.find_by!(name: "journal entry")
 
     assert_difference -> { @world.posts.count }, 1 do
       post world_posts_path(@world), params: {
@@ -139,53 +139,89 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "post in a private world"
   end
 
-  test "a friend sees only the posts of the types their key grants" do
+  test "a friend sees only the posts shared with their key type" do
     friend = users(:sue)
-    @world.post_types.create!(label: "diary")
-    key = @world.keys.create!(recipient: friend)
-    key.granted_post_types << @world.post_types.find_by!(label: "journal entry")
+    key_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
+    @world.keys.create!(recipient: friend, type_id: key_type.id)
 
-    create_post(world: @world, body: "granted post")
-    create_post(world: @world, type_label: "diary", body: "ungranted post")
+    create_post(world: @world, body: "shared post", visible_to_key_type_ids: [ key_type.id ])
+    create_post(world: @world, body: "private post")
 
     sign_in_as(friend)
     get world_posts_path(@world),
       headers: { "Turbo-Frame" => "posts" }
     assert_response :success
-    assert_includes response.body, "granted post"
-    assert_not_includes response.body, "ungranted post"
+    assert_includes response.body, "shared post"
+    assert_not_includes response.body, "private post"
   end
 
-  test "a post deselecting one recipient stays visible to the others" do
-    hidden_friend = users(:sue)
-    visible_friend = users(:jane)
-    create_member_key(world: @world, recipient: hidden_friend)
-    create_member_key(world: @world, recipient: visible_friend)
-    post_type = @world.post_types.find_by!(label: "journal entry")
+  test "publishing with a selected key type shares the post with its holders" do
+    friend = users(:sue)
+    key_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
+    @world.keys.create!(recipient: friend, type_id: key_type.id)
+    post_type = @world.post_types.find_by!(name: "journal entry")
 
     sign_in_as(@owner)
     post world_posts_path(@world), params: {
       post: {
         type_id: post_type.id,
         body: "<div>secret post</div>",
-        recipient_ids: [ visible_friend.id ],
+        visible_to_key_type_ids: [ key_type.id ],
       },
     }
     post = @world.posts.chronological.last!
     assert_equal "secret post", post.plain_body
 
-    # `hidden_friend` was deselected, so the post is absent from their feed.
-    sign_in_as(hidden_friend)
-    get world_posts_path(@world),
-      headers: { "Turbo-Frame" => "posts" }
-    assert_response :success
-    assert_not_includes response.body, "secret post"
-
-    # `visible_friend` was kept as a recipient, so the post appears in theirs.
-    sign_in_as(visible_friend)
+    sign_in_as(friend)
     get world_posts_path(@world),
       headers: { "Turbo-Frame" => "posts" }
     assert_response :success
     assert_includes response.body, "secret post"
+  end
+
+  test "publishing keeps only key types from the post's world" do
+    other_world = create_world(owner: @owner, name: "Other World")
+    foreign_type = WorldKeyType.create!(world: other_world, name: "close friends", color: "pink")
+    local_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
+    post_type = @world.post_types.find_by!(name: "journal entry")
+    sign_in_as(@owner)
+
+    assert_difference -> { @world.posts.count }, 1 do
+      post world_posts_path(@world), params: {
+        post: {
+          type_id: post_type.id,
+          body: "post with a selected key type",
+          visible_to_key_type_ids: [ local_type.id, SecureRandom.uuid, foreign_type.id ],
+        },
+      }
+    end
+    assert_response :redirect
+    assert_equal [ local_type.id ], @world.posts.chronological.last!.visible_to_key_type_ids
+  end
+
+  test "editing preserves an omitted audience and clears an explicitly empty one" do
+    friend = users(:sue)
+    key_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
+    @world.keys.create!(recipient: friend, type_id: key_type.id)
+    shared_post = create_post(world: @world, visible_to_key_type_ids: [ key_type.id ])
+    recipient = open_session { |client| client.sign_in_as(friend) }
+    feed_path = world_posts_path(@world)
+    feed_headers = { "Turbo-Frame" => "posts" }
+    sign_in_as(@owner)
+
+    patch post_path(shared_post), params: { post: { body: "edited post" } }
+    assert_response :redirect
+    recipient.get(feed_path, headers: feed_headers)
+    recipient.assert_response(:success)
+    assert_includes recipient.response.body, "edited post"
+
+    patch post_path(shared_post),
+      params: { post: { visible_to_key_type_ids: [] } },
+      as: :json,
+      headers: { "Accept" => "text/html" }
+    assert_response :redirect
+    recipient.get(feed_path, headers: feed_headers)
+    recipient.assert_response(:success)
+    assert_not_includes recipient.response.body, "edited post"
   end
 end

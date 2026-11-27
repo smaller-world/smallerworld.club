@@ -4,46 +4,47 @@
 class Components::WorldKeyForm < Components::Base
   # == Initialization ==
 
-  sig { params(world_key: WorldKey, attributes: T.untyped).void }
+  sig do
+    params(
+      world_key: WorldKey,
+      attributes: T.untyped,
+    ).void
+  end
   def initialize(world_key:, **attributes)
     super(**attributes)
     @world_key = world_key
-    @world = T.let(@world_key.world!, World)
-    @recipient = T.let(@world_key.recipient!, User)
   end
 
   # == Component ==
 
   sig { override.void }
   def view_template
-    Components::Form(@world_key, vibrate_on_submit: true) do |form|
+    Components::Form(@world_key, **mix({ class: "world-key-form" }, @attributes)) do |form|
       Components::FieldSet() do |field_set|
-        field_set.legend(class: "text-center mb-0") do
-          "which post types can #{@recipient.name} see?"
+        field_set.legend(variant: :label, class: "mb-0") do
+          "key type"
         end
-        form.Field(:granted_post_type_ids).checkboxes(
-          @world_key.world_post_types,
-          class: "flex-row justify-center gap-2 flex-wrap",
-        ) do |choice|
-          choice.label(class: "cursor-pointer w-fit") do
-            Components::Field(
-              orientation: :horizontal,
-              invalid: form.invalid?(:granted_post_type_ids),
-              class: "w-auto py-1 pl-2 pr-2 items-center",
-            ) do |field|
+        form.Field(:type_id).radios(@world_key.world_key_types) do |choice|
+          choice.label(
+            class: "cursor-pointer has-data-checked:border-key-foreground",
+            data: {
+              key_color: choice.item.color,
+            },
+          ) do
+            Components::Field(orientation: :horizontal, invalid: form.invalid?(:type)) do |field|
+              Icon("huge/key-02", class: "size-4 text-key-foreground")
               field.content do
-                field.title(class: "flex items-center gap-1.5") do
-                  Icon(choice.item.icon, class: "size-4")
-                  span do
-                    choice.item.label
-                  end
+                field.title(class: "text-xs text-key-foreground text-center text-balance") do
+                  plain(choice.item.name)
+                  whitespace
+                  plain("key")
                 end
               end
-              choice.input(class: "rounded-full")
+              choice.input(invalid: form.invalid?(:type), data: { action: "submit#request" })
             end
           end
         end
-        form.error_for(:granted_post_type_ids)
+        form.error_for(:type)
       end
 
       form.submit do |button|

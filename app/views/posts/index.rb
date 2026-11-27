@@ -96,7 +96,7 @@ class Views::Posts::Index < Views::Base
   sig { returns(String) }
   def post_type_plural
     if @post_type
-      @post_type.label.pluralize
+      @post_type.name.pluralize
     else
       "posts"
     end

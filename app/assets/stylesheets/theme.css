@@ -1,4 +1,4 @@
-/*  == Base styles == */
+/*  == Theme Defaults == */
 
 @layer theme {
   :root {
@@ -114,7 +114,69 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* == Theme Customizations == */
+
+@layer theme {
+  :root {
+    /* Key types */
+    --key-green: var(--color-lime-100);
+    --key-green-foreground: var(--color-lime-700);
+    --key-orange: var(--color-orange-100);
+    --key-orange-foreground: var(--color-orange-600);
+    --key-pink: var(--color-pink-100);
+    --key-pink-foreground: var(--color-pink-700);
+    --key-blue: var(--color-indigo-100);
+    --key-blue-foreground: var(--color-indigo-700);
+
+    @media (prefers-color-scheme: dark) {
+      --key-green: var(--color-lime-900);
+      --key-green-foreground: var(--color-lime-300);
+      --key-orange: var(--color-orange-900);
+      --key-orange-foreground: var(--color-orange-300);
+      --key-pink: var(--color-pink-900);
+      --key-pink-foreground: var(--color-pink-300);
+      --key-blue: var(--color-indigo-900);
+      --key-blue-foreground: var(--color-indigo-300);
+    }
+  }
+
+  [data-key-color="green"] {
+    --key: var(--key-green);
+    --key-foreground: var(--key-green-foreground);
+  }
+
+  [data-key-color="orange"] {
+    --key: var(--key-orange);
+    --key-foreground: var(--key-orange-foreground);
+  }
+
+  [data-key-color="pink"] {
+    --key: var(--key-pink);
+    --key-foreground: var(--key-pink-foreground);
+  }
+
+  [data-key-color="blue"] {
+    --key: var(--key-blue);
+    --key-foreground: var(--key-blue-foreground);
+  }
+}
+
 @theme inline {
+  --font-cursive: "Single Day", "Comic Sans MS", Manrope, cursive;
+  --radius-world-icon: calc(1 / 4.5 * 100%);
+
+  /* Key types */
+  --color-key-green: var(--key-green);
+  --color-key-green-foreground: var(--key-green-foreground);
+  --color-key-orange: var(--key-orange);
+  --color-key-orange-foreground: var(--key-orange-foreground);
+  --color-key-blue: var(--key-blue);
+  --color-key-blue-foreground: var(--key-blue-foreground);
+  --color-key-pink: var(--key-pink);
+  --color-key-pink-foreground: var(--key-pink-foreground);
+  --color-key: var(--key);
+  --color-key-foreground: var(--key-foreground);
+
   /* Easings */
   --ease-linear: cubic-bezier(0.25, 0.25, 0.75, 0.75);
   --ease-in-quad: cubic-bezier(0.26, 0, 0.6, 0.2);
@@ -132,23 +194,9 @@
   --ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045);
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --ease-in-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  --font-cursive: "Single Day", "Comic Sans MS", Manrope, cursive;
-  --radius-world-icon: calc(1 / 4.5 * 100%);
-  --animate-caret-blink: caret-blink 1s ease-out infinite;
-
-  @keyframes caret-blink {
-    0%,
-    70%,
-    100% {
-      opacity: 1;
-    }
-    20%,
-    50% {
-      opacity: 0;
-    }
-  }
 }
+
+/* == Base styles == */
 
 @layer base {
   html {

@@ -64,7 +64,7 @@ class Components::Field < Components::Base
     )
   end
 
-  sig { params(attributes: T.untyped, content: T.nilable(T.proc.void)).void }
+  sig { params(attributes: T.untyped, content: T.proc.void).void }
   def label(**attributes, &content)
     render Components::FieldLabel.new(**attributes, &content)
   end

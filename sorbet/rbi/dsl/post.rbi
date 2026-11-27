@@ -543,34 +543,6 @@ class Post
     sig { returns(T::Boolean) }
     def type_previously_changed?; end
 
-    sig { returns(T::Array[T.untyped]) }
-    def type_recipient_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def type_recipient_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :type_recipients, through: :type`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def type_recipients; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def type_recipients=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def type_subscriber_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def type_subscriber_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :type_subscribers, through: :type`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def type_subscribers; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def type_subscribers=(value); end
-
     sig { returns(T.nilable(::World)) }
     def world; end
 
@@ -585,6 +557,34 @@ class Post
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
     def world_key_ids=(ids); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_recipient_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_recipient_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_key_recipients, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::User::PrivateCollectionProxy) }
+    def world_key_recipients; end
+
+    sig { params(value: T::Enumerable[::User]).void }
+    def world_key_recipients=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def world_key_type_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def world_key_type_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_key_types, through: :world`.
+    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+    sig { returns(::WorldKeyType::PrivateCollectionProxy) }
+    def world_key_types; end
+
+    sig { params(value: T::Enumerable[::WorldKeyType]).void }
+    def world_key_types=(value); end
 
     # This method is created by ActiveRecord on the `Post` class because it declared `has_many :world_keys, through: :world`.
     # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
@@ -756,6 +756,9 @@ class Post
     def uniq!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def unreported(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
 
     sig { returns(PrivateAssociationRelation) }
@@ -774,6 +777,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_attached_images(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def with_recipient_keys(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def with_recursive(*args, &blk); end
@@ -928,49 +934,49 @@ class Post
     def favorited_at_will_change!; end
 
     sig { returns(T::Array[::String]) }
-    def hidden_from_ids; end
+    def hidden_from_user_ids; end
 
     sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
-    def hidden_from_ids=(value); end
+    def hidden_from_user_ids=(value); end
 
     sig { returns(T::Boolean) }
-    def hidden_from_ids?; end
+    def hidden_from_user_ids?; end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def hidden_from_ids_before_last_save; end
+    def hidden_from_user_ids_before_last_save; end
 
     sig { returns(T.untyped) }
-    def hidden_from_ids_before_type_cast; end
+    def hidden_from_user_ids_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def hidden_from_ids_came_from_user?; end
+    def hidden_from_user_ids_came_from_user?; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def hidden_from_ids_change; end
+    def hidden_from_user_ids_change; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def hidden_from_ids_change_to_be_saved; end
+    def hidden_from_user_ids_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def hidden_from_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def hidden_from_user_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def hidden_from_ids_in_database; end
+    def hidden_from_user_ids_in_database; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def hidden_from_ids_previous_change; end
+    def hidden_from_user_ids_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def hidden_from_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def hidden_from_user_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def hidden_from_ids_previously_was; end
+    def hidden_from_user_ids_previously_was; end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def hidden_from_ids_was; end
+    def hidden_from_user_ids_was; end
 
     sig { void }
-    def hidden_from_ids_will_change!; end
+    def hidden_from_user_ids_will_change!; end
 
     sig { returns(::String) }
     def id; end
@@ -1207,7 +1213,7 @@ class Post
     def restore_favorited_at!; end
 
     sig { void }
-    def restore_hidden_from_ids!; end
+    def restore_hidden_from_user_ids!; end
 
     sig { void }
     def restore_id!; end
@@ -1237,6 +1243,12 @@ class Post
     def restore_v1_attributes!; end
 
     sig { void }
+    def restore_visible_to_key_type_ids!; end
+
+    sig { void }
+    def restore_visible_to_user_ids!; end
+
+    sig { void }
     def restore_world_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
@@ -1258,10 +1270,10 @@ class Post
     def saved_change_to_favorited_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def saved_change_to_hidden_from_ids; end
+    def saved_change_to_hidden_from_user_ids; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_hidden_from_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_hidden_from_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -1316,6 +1328,18 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def saved_change_to_visible_to_key_type_ids; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_visible_to_key_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def saved_change_to_visible_to_user_ids; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_visible_to_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_world_id; end
@@ -1503,6 +1527,96 @@ class Post
     sig { void }
     def v1_attributes_will_change!; end
 
+    sig { returns(T::Array[::String]) }
+    def visible_to_key_type_ids; end
+
+    sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
+    def visible_to_key_type_ids=(value); end
+
+    sig { returns(T::Boolean) }
+    def visible_to_key_type_ids?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def visible_to_key_type_ids_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def visible_to_key_type_ids_came_from_user?; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_change; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_key_type_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_in_database; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_key_type_ids_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_key_type_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_key_type_ids_was; end
+
+    sig { void }
+    def visible_to_key_type_ids_will_change!; end
+
+    sig { returns(T::Array[::String]) }
+    def visible_to_user_ids; end
+
+    sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
+    def visible_to_user_ids=(value); end
+
+    sig { returns(T::Boolean) }
+    def visible_to_user_ids?; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def visible_to_user_ids_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def visible_to_user_ids_came_from_user?; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_change; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_user_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_in_database; end
+
+    sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
+    def visible_to_user_ids_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def visible_to_user_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_previously_was; end
+
+    sig { returns(T.nilable(T::Array[::String])) }
+    def visible_to_user_ids_was; end
+
+    sig { void }
+    def visible_to_user_ids_will_change!; end
+
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
@@ -1513,7 +1627,7 @@ class Post
     def will_save_change_to_favorited_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_hidden_from_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_hidden_from_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1541,6 +1655,12 @@ class Post
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_v1_attributes?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_visible_to_key_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_visible_to_user_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_world_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
@@ -1729,6 +1849,9 @@ class Post
     def uniq!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def unreported(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end
 
     sig { returns(PrivateRelation) }
@@ -1747,6 +1870,9 @@ class Post
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_attached_images(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def with_recipient_keys(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def with_recursive(*args, &blk); end

@@ -8,6 +8,7 @@
 #
 #  id                               :uuid             not null, primary key
 #  blurb                            :text
+#  key_types_review_pending         :boolean          default(FALSE), not null
 #  last_imported_v1_post_created_at :timestamptz
 #  name                             :string           not null
 #  created_at                       :datetime         not null
@@ -55,6 +56,7 @@ class World < ApplicationRecord
   has_many :key_recipients, -> { distinct }, through: :keys, source: :recipient
 
   has_many :invitations, class_name: "WorldInvitation", dependent: :destroy
+  has_many :key_types, class_name: "WorldKeyType", dependent: :destroy
 
   sig { returns(User) }
   def owner!
@@ -120,6 +122,7 @@ class World < ApplicationRecord
 
   after_initialize :set_default_name, if: :new_record?
   after_initialize :set_default_post_types, if: :new_record?
+  after_initialize :set_default_key_types, if: :new_record?
   after_create :create_intro_post!
 
   # == Search ==
@@ -148,42 +151,14 @@ class World < ApplicationRecord
 
   # == Post Types ==
 
-  sig { returns(T::Array[PostType]) }
-  def self.default_post_types
-    [
-      PostType.new(label: "journal entry", icon: "huge/book-edit"),
-      PostType.new(label: "poem", icon: "huge/quill-write-01"),
-      PostType.new(label: "invitation", icon: "huge/mail-open-love"),
-      PostType.new(label: "ask", icon: "huge/waving-hand-02"),
-    ]
-  end
-
   sig { returns(PostType) }
   def journal_entry_post_type!
-    post_types.find_or_create_by!(label: "journal entry") do |post_type|
+    post_types.find_or_create_by!(name: "journal entry") do |post_type|
       post_type.icon = "huge/book-edit"
     end
   end
 
-  # == Keys ==
-
-  sig { params(post_type_ids: T::Array[String]).returns(String) }
-  def key_grant_message(post_type_ids: [])
-    WorldKey.grant_verifier.generate({ world_id: id, post_type_ids: })
-  end
-
   private
-
-  # == Helpers ==
-
-  sig { returns(String) }
-  def owner_phone_number
-    if association_cached?(:owner)
-      owner!.phone_number
-    else
-      User.where(id: owner_id).pick(:phone_number)
-    end
-  end
 
   # == Callbacks ==
 
@@ -196,7 +171,12 @@ class World < ApplicationRecord
 
   sig { void }
   def set_default_post_types
-    self.post_types = self.class.default_post_types
+    self.post_types = PostType.default_types
+  end
+
+  sig { void }
+  def set_default_key_types
+    self.key_types = WorldKeyType.default_types
   end
 
   sig { void }

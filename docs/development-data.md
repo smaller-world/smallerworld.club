@@ -39,11 +39,11 @@ refer to the same account. There is no runtime diagram dependency.
 - Keep every world's automatically created intro post. The sparsest world has
   only its intro, rather than being truly empty.
 - Cover no friends, all four other users as friends, one-way and reciprocal
-  keys, selective post-type grants, pending invitations, reactions, and
-  read/unread activity.
+  keys, key-type audiences, individual exceptions, pending invitations,
+  reactions, and read/unread activity.
 - Include a second world owned by one user, a custom post type, a post hidden
-  from an otherwise eligible friend, muted post types, and favorited posts.
-  Worlds cannot be favorited.
+  from an otherwise eligible friend, and favorited posts. Worlds cannot be
+  favorited.
 - Exclude moderation scenarios from this first dataset.
 - Development-only account switching supports any local user, including from a
   signed-out entry point. Switching uses POST and creates a normal session. Both
@@ -61,28 +61,33 @@ Run `mise setup` to prepare the database and fill missing baseline records.
 `bin/rails db:seed` fills the baseline without running the other setup steps.
 The normal seeds entry point does nothing outside development.
 
-| Account | Phone        | World                | Posts including intro | Key recipients           |
-| ------- | ------------ | -------------------- | --------------------: | ------------------------ |
-| Alex    | +14165550101 | alex's world         |                     1 | nobody                   |
-| Blair   | +14165550102 | blair's world        |                    60 | Alex, Casey, Drew, Ellis |
-| Casey   | +14165550103 | casey's world        |                     8 | Alex, Blair              |
-| Casey   | same account | casey's quiet corner |                     1 | nobody                   |
-| Drew    | +14165550104 | drew's world         |                     3 | Casey                    |
-| Ellis   | +14165550105 | ellis's world        |                    15 | Blair, Drew              |
+| Account | Phone        | World                    | Posts including intro | Key recipients           |
+| ------- | ------------ | ------------------------ | --------------------: | ------------------------ |
+| Alex    | +14165550101 | alex's world             |                     1 | nobody                   |
+| Blair   | +14165550102 | blair's world (migrated) |                    60 | Alex, Casey, Drew, Ellis |
+| Casey   | +14165550103 | casey's world            |                     8 | Alex, Blair              |
+| Casey   | same account | casey's quiet corner     |                     1 | nobody                   |
+| Drew    | +14165550104 | drew's world             |                     3 | Casey                    |
+| Ellis   | +14165550105 | ellis's world            |                    15 | Blair, Drew              |
 
 Emails are the lowercase first name at `example.com`, already confirmed. The
 phone numbers use the fictional North American 555-0100–0199 range. Alex has
 nobody in their own world, but can enter Blair's and Casey's worlds. Blair/Casey
 and Blair/Ellis share reciprocally; the other keys are directed.
 
-- Alex's key to Blair's world grants journal entries only. Other baseline keys
-  grant all four default post types.
-- Casey's custom `field note` type is granted only to Blair.
-- Blair's first generated journal entry excludes Drew. Ellis mutes Blair's
-  poems.
+- Blair's world represents the state right after cutover. Its four keys are
+  `existing friends`, the key types review is pending, and the historical
+  audience is saved per person. Alex sees historical journal entries. The first
+  generated journal entry excludes Drew.
+- The other worlds use the three starter key types with no pending review. In
+  Casey's world, Alex holds `new friends` and Blair holds `chosen family`. The
+  custom `field note` post is shared with `chosen family`.
+- Ellis's favorited post is shared with `chosen family` (Blair) and Drew by
+  name. Ellis's newest post has an empty audience.
 - Blair and Ellis each have a favorited post, with a reaction from Casey and
   Drew respectively.
-- Casey invites Ellis; Drew invites Blair. These remain pending at baseline.
+- Casey invites Ellis and Drew invites Blair, both as `new friends`. These
+  remain pending at baseline.
 - Keys held by Blair have a current visit timestamp; other keys were visited a
   week ago. Posts span recent days to provide read and unread activity.
 - Four notification examples cover a post, reaction, accepted key, and pending
@@ -95,17 +100,17 @@ worlds share one image. Setup never downloads images.
 
 Seed users, worlds, custom/default post types, generated posts, invitations, and
 notification examples use deterministic UUIDs. Existing records are left alone;
-missing records are created. Keys, grants, and reactions use their natural
-association keys. Setup does not reset content, names, read state, or favorites.
-Accepting a pending invitation locally does not make setup offer it again. World
-creation uses the normal callback to create its intro post.
+missing records are created. Keys and reactions use their natural association
+keys. Setup does not reset content, names, read state, favorites, or review
+choices. Accepting a pending invitation locally does not make setup offer it
+again. World creation uses the normal callback to create its intro post.
 
 Faker uses a fixed random source per generated post, restoring the previous
 source afterwards. Existing content is never regenerated on repeat setup.
 
 Account deletion nullifies invitations' `recipient_id`, preserving their phone
-number and granted types. A later account with that phone number can discover
-them through `User#world_invitations`.
+number and selected key type. A later account with that phone number can
+discover them through `User#world_invitations`.
 
 ## Seed isolation strategy
 

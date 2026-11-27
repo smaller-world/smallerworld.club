@@ -24,19 +24,6 @@ class Views::WorldKeyGrants::New < Views::Base
       end
 
       app_layout.page_container(class: "max-w-md") do
-        div(class: "relative self-center") do
-          image_tag(
-            @world.page_icon_variant,
-            class: "world-icon",
-            data: {
-              world_icon_size: "sm",
-            },
-          )
-          div(class: "absolute inset-0 flex items-center justify-center") do
-            Icon("huge/key-01", class: "size-10 text-white")
-          end
-        end
-
         Components::WorldKeyGrantForm(grant: @grant)
       end
     end

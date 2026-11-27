@@ -25,6 +25,7 @@ class Components::Form < Superform::Rails::Form
       model: T.all(Elem, Object),
       action: Object,
       method: T.nilable(Symbol),
+      key: T.nilable(String),
       vibrate_on_submit: T::Boolean,
       attributes: T.untyped,
     ).void
@@ -33,10 +34,13 @@ class Components::Form < Superform::Rails::Form
     model,
     action: model,
     method: nil,
+    key: nil,
     vibrate_on_submit: false,
     **attributes
   )
+    @key = key
     super(model, action:, method:, **attributes)
+
     @model = T.let(@model, T.all(Elem, Object))
     @action = T.let(@action, Object)
     @method = T.let(@method, T.nilable(Symbol))
@@ -55,6 +59,21 @@ class Components::Form < Superform::Rails::Form
       end
       yield
     end
+  end
+
+  sig { override.params(content: T.proc.void).void }
+  def form_tag(&content)
+    form(
+      action: form_action,
+      method: form_method,
+      **form_attributes,
+      &content
+    )
+  end
+
+  sig { override.returns(T.nilable(String)) }
+  def key
+    @key || super
   end
 
   sig { params(content: T.proc.void).void }
@@ -161,16 +180,6 @@ class Components::Form < Superform::Rails::Form
 
   # == Helpers ==
 
-  sig { override.params(content: T.proc.void).void }
-  def form_tag(&content)
-    form(
-      action: form_action,
-      method: form_method,
-      **form_attributes,
-      &content
-    )
-  end
-
   sig { returns(String) }
   def form_action
     if @action.is_a?(String)
@@ -194,9 +203,14 @@ class Components::Form < Superform::Rails::Form
     )
   end
 
+  sig { overridable.returns(T::Boolean) }
+  def vibrate_on_submit?
+    @vibrate_on_submit
+  end
+
   sig { returns(T.nilable(T::Hash[Symbol, T.untyped])) }
   def haptic_form_attributes
-    if @vibrate_on_submit
+    if vibrate_on_submit?
       {
         data: {
           controller: "haptic-bridge",

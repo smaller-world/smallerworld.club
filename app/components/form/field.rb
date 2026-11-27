@@ -128,7 +128,14 @@ class Components::Form
         ).returns(Checkboxes[T.type_parameter(:U)])
     end
     def checkboxes(options, include_hidden: true, **attributes, &content)
-      # options = enum_options if options.empty?
+      selected_values = value
+      unless selected_values.is_a?(Array)
+        actual_type = selected_values.nil? ? "nil" : selected_values.class.name
+        raise ArgumentError,
+          "checkboxes for #{object.class}##{key} expected an Array of selected values, got " \
+            "#{actual_type}. Check the field name or initialize it to []."
+      end
+
       Checkboxes.new(field, options:, include_hidden:, **attributes, &content)
     end
 
@@ -230,11 +237,6 @@ class Components::Form
         dropzone_class:,
         **attributes,
       )
-    end
-
-    sig { params(post: Post, attributes: T.untyped).returns(PostRecipientsSelect) }
-    def post_recipients_select(post:, **attributes)
-      PostRecipientsSelect.new(self, post:, **attributes)
     end
 
     # # Overide base form helpers for small modifications, like injecting

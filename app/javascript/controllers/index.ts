@@ -58,12 +58,11 @@ import PhoneNumberVerificationFormController from "./phone_number_verification_f
 import PostDraftController from "./post_draft_controller";
 import PostDraftInfoController from "./post_draft_info_controller";
 import PostFormTypeController from "./post_form_type_controller";
-import PostRecipientsSelectcontroller from "./post_recipients_select_controller";
 import PostTimestampController from "./post_timestamp_controller";
 import RadioGroupItemController from "./radio_group_item_controller";
 import RadioToggleController from "./radio_toggle_controller";
-import RedirectBackToSelfController from "./redirect_back_to_self_controller";
 import ReportFormController from "./report_form_controller";
+import ReturnToSelfController from "./return_to_self_controller";
 import SelectAllController from "./select_all_controller";
 import SelectController from "./select_controller";
 import StreamedLogMessageController from "./streamed_log_message_controller";
@@ -117,7 +116,7 @@ application.register("forward-click", ForwardClickController);
 application.register("checkable-proxy", CheckableProxyController);
 application.register("radio-group-item", RadioGroupItemController);
 application.register("radio-toggle", RadioToggleController);
-application.register("redirect-back-to-self", RedirectBackToSelfController);
+application.register("return-to-self", ReturnToSelfController);
 application.register("async-submission", AsyncSubmissionController);
 application.register("dismissable", DismissableController);
 application.register("notifications-status", NotificationsStatusController);
@@ -173,7 +172,6 @@ application.register("post-timestamp", PostTimestampController);
 application.register("post-draft", PostDraftController);
 application.register("post-draft-info", PostDraftInfoController);
 application.register("post-form-type", PostFormTypeController);
-application.register("post-recipients-select", PostRecipientsSelectcontroller);
 application.register("report-form", ReportFormController);
 application.register(
   "messaging-platform-dropdown",

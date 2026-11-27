@@ -71,6 +71,23 @@ class User < ApplicationRecord
     SmallerWorld.application.admin_phone_numbers.include?(phone_number)
   end
 
+  # == Test User ==
+
+  sig { returns(User) }
+  def self.test_user
+    phone_number = Rails.application.credentials.test_user!.phone_number!
+
+    find_or_create_by!(phone_number:) do |user|
+      user.name = "test user"
+      user.email_address = "testuser@smallerworld.club"
+      user.time_zone_name = "America/Toronto"
+      user.owned_worlds.build(
+        name: "tester's world",
+        icon: Rails.root.join("app/assets/images/yumcat.png"),
+      )
+    end
+  end
+
   # == Associations ==
 
   has_one :registration,

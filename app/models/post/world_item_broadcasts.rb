@@ -33,7 +33,9 @@ module Post::WorldItemBroadcasts
   def world_item_previously_changed?
     emoji_previously_changed? ||
       title_previously_changed? ||
-      hidden_from_ids_previously_changed? ||
+      hidden_from_user_ids_previously_changed? ||
+      visible_to_user_ids_previously_changed? ||
+      visible_to_key_type_ids_previously_changed? ||
       ordered_images_attachment_ids_previously_changed? ||
       plain_body_previously_changed? ||
       type_id_previously_changed?

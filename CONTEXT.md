@@ -17,6 +17,9 @@ someone shares lives in one of their worlds.
 someone a key is how a world owner lets a friend in. A key grants access to
 specific **post types**, not to the world wholesale.
 
+**Key type** (planned) — a named group of keys within a world. The world owner
+can share a post with the friends who hold keys of a selected type.
+
 **Member** — a user who holds a key to a world. Members are described in UI copy
 as _friends_, never as members or users.
 

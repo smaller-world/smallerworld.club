@@ -77,12 +77,11 @@ through a public flow when it protects a distinct user outcome.
 For a transition that changes what another actor can see, verify that the first
 state took effect and observe the result through that actor's public interface
 on both sides of the transition. The admin reversal test checks the recipient's
-feed before and after dismissal. The key update test checks the member's feed
-before and after the owner clears the last grant. Keep a separate model case
-when it protects a distinct contract, such as recording the moderator and
-resolution time. To cover report submission, create the report through the
-request under test so the feed assertions also detect a submission that never
-saves a report.
+feed before and after dismissal. The key revocation test checks the member's
+feed before and after the owner revokes the key. Keep a separate model case when
+it protects a distinct contract, such as recording the moderator and resolution
+time. To cover report submission, create the report through the request under
+test so the feed assertions also detect a submission that never saves a report.
 
 For local-date behavior, freeze time where the requested time zone and the
 likely fallback are on different dates. Assert the expected dates in the public
@@ -153,10 +152,11 @@ Defined in `test/test_helpers/world_test_helper.rb`. Dumb and composable —
 combine them to express a scenario; they contain no conditional logic.
 
 - `create_world(owner:, name: nil)` — world with the canonical icon attached.
-- `create_member_key(world:, recipient:)` — grants the recipient a key with
-  access to all of the world's current post types.
-- `create_post(world:, type_label: "journal entry", body: "hello world", **attributes)`
-  — creates a post using the world's post type with the given label, forwarding
+- `create_member_key(world:, recipient:)` — gives the recipient a key of the
+  world's `new friends` type. Set the post's audience explicitly when the test
+  needs the recipient to see it.
+- `create_post(world:, type_name: "journal entry", body: "hello world", **attributes)`
+  — creates a post using the world's post type with the given name, forwarding
   additional attributes to `world.posts.create!`.
 
 ### Sign-in

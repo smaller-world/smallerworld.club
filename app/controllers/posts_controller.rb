@@ -129,7 +129,7 @@ class PostsController < ApplicationController
             :body,
             :quiet,
             images: [],
-            recipient_ids: [],
+            visible_to_key_type_ids: [],
           ],
         )
         post = world.posts.build(**post_params)
@@ -156,7 +156,7 @@ class PostsController < ApplicationController
             :body,
             :quiet,
             images: [],
-            recipient_ids: [],
+            visible_to_key_type_ids: [],
           ],
         )
         if post.update(post_params)

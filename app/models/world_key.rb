@@ -13,6 +13,7 @@
 #  updated_at            :datetime         not null
 #  invitation_id         :uuid
 #  recipient_id          :uuid             not null
+#  type_id               :uuid             not null
 #  world_id              :uuid             not null
 #
 # Indexes
@@ -27,6 +28,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  ([invitation_id, world_id] => world_invitations[id, world_id])
+#  fk_rails_...  ([world_id, type_id] => world_key_types[world_id, id])
 #  fk_rails_...  (recipient_id => users.id)
 #  fk_rails_...  (world_id => worlds.id)
 #
@@ -37,13 +39,14 @@ class WorldKey < ApplicationRecord
   # == Associations ==
 
   belongs_to :world, inverse_of: :keys
+  belongs_to :type, class_name: "WorldKeyType"
   has_many :world_invitations, through: :world, source: :invitations
+  has_many :world_key_types, through: :world, source: :key_types
   has_one :world_owner, through: :world, source: :owner
   has_many :world_post_types, through: :world, source: :post_types
   has_many :world_posts, through: :world_post_types, source: :posts
 
-  has_many :post_type_grants, dependent: :destroy
-  has_many :granted_post_types, through: :post_type_grants, source: :post_type
+  has_many :deprecated_post_type_grants, class_name: "Deprecated::PostTypeGrant", dependent: :destroy
 
   belongs_to :recipient, class_name: "User"
   belongs_to :invitation,
@@ -66,8 +69,15 @@ class WorldKey < ApplicationRecord
     recipient or raise ActiveRecord::RecordNotFound, "Missing recipient"
   end
 
+  sig { returns(WorldKeyType) }
+  def type!
+    type or raise ActiveRecord::RecordNotFound, "Missing type"
+  end
+
   # == Validations ==
 
+  validates :type,
+    inclusion: { in: :world_key_types, message: "must belong to this world" }
   validates :recipient, uniqueness: {
     scope: :world,
     message: ->(object, _data) {
@@ -85,28 +95,21 @@ class WorldKey < ApplicationRecord
 
   # == Scopes ==
 
-  scope :order_by_latest_visible_post, -> {
-    reported = Report.not_dismissed
-      .where(reportable_type: "Post")
-      .where("reports.reportable_id = posts.id")
-    latest_post_at = Arel::Nodes::Grouping.new(
-      Post
-        .joins(:type)
-        .where("post_types.world_id = posts.world_id")
-        .where(
-          PostTypeGrant
-            .where("post_type_grants.world_key_id = world_keys.id")
-            .where("post_type_grants.post_type_id = posts.type_id")
-            .arel
-            .exists,
-        )
-        .where.not(reported.arel.exists)
-        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_ids)")
-        .select("MAX(posts.created_at)")
-        .arel,
-    )
-    select("*", latest_post_at.as("latest_post_at"))
-      .order("latest_post_at DESC NULLS LAST")
+  scope :with_visible_post_activity, -> {
+    post_activity = Post.with_recipient_keys.unreported
+      .where(world_keys: { id: reselect(:id).unscope(:order) })
+      .group("world_keys.id")
+      .select(<<~SQL.squish)
+        world_keys.id AS world_key_id,
+        MAX(posts.created_at) AS latest_post_at,
+        COUNT(*) FILTER (
+          WHERE world_keys.world_last_visited_at IS NULL
+             OR posts.created_at > world_keys.world_last_visited_at
+        ) AS unread_count
+      SQL
+
+    joins("LEFT JOIN (#{post_activity.to_sql}) post_activity ON post_activity.world_key_id = world_keys.id")
+      .select("world_keys.*", "post_activity.latest_post_at", "COALESCE(post_activity.unread_count, 0) AS unread_count")
   }
   scope :with_world_and_attached_icon, -> {
     includes(world: { icon_attachment: :blob })
@@ -144,9 +147,21 @@ class WorldKey < ApplicationRecord
     Rails.application.message_verifier(:world_key_grant)
   end
 
+  sig { params(key_type_id: String).returns(String) }
+  def self.grant_message(key_type_id:)
+    grant_verifier.generate({ key_type_id: })
+  end
+
   sig { params(message: String).returns(VerifiedWorldKeyGrant) }
   def self.verify_grant(message)
-    VerifiedWorldKeyGrant.new(grant_verifier.verify(message))
+    data = grant_verifier.verify(message)
+    if data.is_a?(Hash) &&
+        (key_type_id = data[:key_type_id]) &&
+        (key_type = WorldKeyType.find_by(id: key_type_id))
+      VerifiedWorldKeyGrant.new(key_type:)
+    else
+      raise ActiveSupport::MessageVerifier::InvalidSignature
+    end
   end
 
   # == Methods ==

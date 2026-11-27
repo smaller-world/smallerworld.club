@@ -5,6 +5,7 @@
 #
 #  id                               :uuid             not null, primary key
 #  blurb                            :text
+#  key_types_review_pending         :boolean          default(FALSE), not null
 #  last_imported_v1_post_created_at :timestamptz
 #  name                             :string           not null
 #  created_at                       :datetime         not null

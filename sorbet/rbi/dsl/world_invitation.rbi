@@ -416,6 +416,9 @@ class WorldInvitation
   end
 
   module GeneratedAssociationMethods
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def build_key_type(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_recipient(*args, &blk); end
 
@@ -427,6 +430,12 @@ class WorldInvitation
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_world_owner(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def create_key_type(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::WorldKeyType) }
+    def create_key_type!(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_recipient(*args, &blk); end
@@ -451,6 +460,18 @@ class WorldInvitation
 
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def create_world_owner!(*args, &blk); end
+
+    sig { returns(T.nilable(::WorldKeyType)) }
+    def key_type; end
+
+    sig { params(value: T.nilable(::WorldKeyType)).void }
+    def key_type=(value); end
+
+    sig { returns(T::Boolean) }
+    def key_type_changed?; end
+
+    sig { returns(T::Boolean) }
+    def key_type_previously_changed?; end
 
     sig { returns(T::Array[T.untyped]) }
     def notification_ids; end
@@ -478,6 +499,9 @@ class WorldInvitation
     sig { returns(T::Boolean) }
     def recipient_previously_changed?; end
 
+    sig { returns(T.nilable(::WorldKeyType)) }
+    def reload_key_type; end
+
     sig { returns(T.nilable(::User)) }
     def reload_recipient; end
 
@@ -489,6 +513,9 @@ class WorldInvitation
 
     sig { returns(T.nilable(::User)) }
     def reload_world_owner; end
+
+    sig { void }
+    def reset_key_type; end
 
     sig { void }
     def reset_recipient; end
@@ -536,20 +563,6 @@ class WorldInvitation
 
     sig { params(value: T.nilable(::User)).void }
     def world_owner=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def world_post_type_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_post_type_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `WorldInvitation` class because it declared `has_many :world_post_types, through: :world`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::PostType::PrivateCollectionProxy) }
-    def world_post_types; end
-
-    sig { params(value: T::Enumerable[::PostType]).void }
-    def world_post_types=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
@@ -770,49 +783,49 @@ class WorldInvitation
     def created_at_will_change!; end
 
     sig { returns(T::Array[::String]) }
-    def granted_post_type_ids; end
+    def deprecated_granted_post_type_ids; end
 
     sig { params(value: T::Array[::String]).returns(T::Array[::String]) }
-    def granted_post_type_ids=(value); end
+    def deprecated_granted_post_type_ids=(value); end
 
     sig { returns(T::Boolean) }
-    def granted_post_type_ids?; end
+    def deprecated_granted_post_type_ids?; end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def granted_post_type_ids_before_last_save; end
+    def deprecated_granted_post_type_ids_before_last_save; end
 
     sig { returns(T.untyped) }
-    def granted_post_type_ids_before_type_cast; end
+    def deprecated_granted_post_type_ids_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def granted_post_type_ids_came_from_user?; end
+    def deprecated_granted_post_type_ids_came_from_user?; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def granted_post_type_ids_change; end
+    def deprecated_granted_post_type_ids_change; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def granted_post_type_ids_change_to_be_saved; end
+    def deprecated_granted_post_type_ids_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def granted_post_type_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def deprecated_granted_post_type_ids_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def granted_post_type_ids_in_database; end
+    def deprecated_granted_post_type_ids_in_database; end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def granted_post_type_ids_previous_change; end
+    def deprecated_granted_post_type_ids_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def granted_post_type_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def deprecated_granted_post_type_ids_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def granted_post_type_ids_previously_was; end
+    def deprecated_granted_post_type_ids_previously_was; end
 
     sig { returns(T.nilable(T::Array[::String])) }
-    def granted_post_type_ids_was; end
+    def deprecated_granted_post_type_ids_was; end
 
     sig { void }
-    def granted_post_type_ids_will_change!; end
+    def deprecated_granted_post_type_ids_will_change!; end
 
     sig { returns(::String) }
     def id; end
@@ -903,6 +916,51 @@ class WorldInvitation
 
     sig { void }
     def id_will_change!; end
+
+    sig { returns(::String) }
+    def key_type_id; end
+
+    sig { params(value: ::String).returns(::String) }
+    def key_type_id=(value); end
+
+    sig { returns(T::Boolean) }
+    def key_type_id?; end
+
+    sig { returns(T.nilable(::String)) }
+    def key_type_id_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def key_type_id_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def key_type_id_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def key_type_id_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def key_type_id_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_type_id_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def key_type_id_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def key_type_id_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def key_type_id_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def key_type_id_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def key_type_id_was; end
+
+    sig { void }
+    def key_type_id_will_change!; end
 
     sig { returns(T.nilable(::String)) }
     def recipient_id; end
@@ -998,13 +1056,16 @@ class WorldInvitation
     def restore_created_at!; end
 
     sig { void }
-    def restore_granted_post_type_ids!; end
+    def restore_deprecated_granted_post_type_ids!; end
 
     sig { void }
     def restore_id!; end
 
     sig { void }
     def restore_id_value!; end
+
+    sig { void }
+    def restore_key_type_id!; end
 
     sig { void }
     def restore_recipient_id!; end
@@ -1025,10 +1086,10 @@ class WorldInvitation
     def saved_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T::Array[::String], T::Array[::String]])) }
-    def saved_change_to_granted_post_type_ids; end
+    def saved_change_to_deprecated_granted_post_type_ids; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_granted_post_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_deprecated_granted_post_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_id; end
@@ -1041,6 +1102,12 @@ class WorldInvitation
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_key_type_id; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_key_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_recipient_id; end
@@ -1115,13 +1182,16 @@ class WorldInvitation
     def will_save_change_to_created_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_granted_post_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_deprecated_granted_post_type_ids?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_key_type_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_recipient_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end

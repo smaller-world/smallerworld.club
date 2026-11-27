@@ -64,27 +64,26 @@ class Views::Admin::Users::Index < Views::Base
             )
           end
           p(class: "text-sm text-muted-foreground") do
-            "arrows point from worlds to key recipients; dashed arrows are pending invitations " \
-            "and grant no access. repeated names are the same account. default types means all " \
-            "four default post types. post counts include intros."
+            "arrows point from worlds to key recipients. dashed arrows are pending invitations " \
+              "for new friends. repeated names are the same account. post counts include intros."
           end
           dl(class: "text-sm flex flex-col gap-3") do
             scenario(
               "alex",
-              "owns a world with only its intro and no friends. holds keys to blair's journal " \
-                "entries and casey's default post types.",
+              "owns a world with only its intro and no friends. can see blair's historical journal " \
+                "entries and posts shared with new friends in casey's world.",
             )
             scenario(
               "blair",
-              "owns a world with 60 posts and all four other accounts as friends. shares " \
-                "reciprocal keys with casey and ellis. the first generated journal entry is " \
-                "hidden from drew and favorited, with a reaction from casey.",
+              "owns the migrated world with 60 historical posts and four existing friends. " \
+                "historical audiences are saved by person and the key types review is pending. " \
+                "a favorited journal entry is hidden from drew and has a reaction from casey.",
             )
             scenario(
               "casey",
               "owns a world with 8 posts, shared with alex and blair, and a quiet corner with " \
-                "only its intro and no friends. the custom field note type is shared " \
-                "only with blair. has a pending invitation to ellis.",
+                "only its intro and no friends. the field note is shared with chosen family, " \
+                "which includes blair. ellis has a pending new friends invitation.",
             )
             scenario(
               "drew",
@@ -93,8 +92,8 @@ class Views::Admin::Users::Index < Views::Base
             )
             scenario(
               "ellis",
-              "owns a world with 15 posts, shared with blair and drew. mutes blair's poems and " \
-                "has a favorited post with drew's reaction.",
+              "owns a world with 15 posts. a favorited post is shared with chosen family (blair) " \
+                "and drew by name. the newest post is visible only to ellis.",
             )
             scenario(
               "read state and notifications",
