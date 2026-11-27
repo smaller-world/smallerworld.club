@@ -496,7 +496,7 @@ GEM
     regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
-    require-hooks (0.4.0)
+    require-hooks (0.5.1)
     resend (1.18.0)
       base64
       httparty (>= 0.22.0)
@@ -556,9 +556,9 @@ GEM
     ruby-vips (2.3.0)
       ffi (~> 1.12)
       logger
-    rubydex (0.2.6)
-    rubydex (0.2.6-arm64-darwin)
-    rubydex (0.2.6-x86_64-linux)
+    rubydex (0.4.4)
+    rubydex (0.4.4-arm64-darwin)
+    rubydex (0.4.4-x86_64-linux)
     securerandom (0.4.1)
     sentry-rails (7.3.0)
       railties (>= 5.2.0)
@@ -597,10 +597,10 @@ GEM
     sorbet-static-and-runtime (0.6.13704)
       sorbet (= 0.6.13704)
       sorbet-runtime (= 0.6.13704)
-    spoom (1.8.2)
+    spoom (1.8.14)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
-      rbi (>= 0.3.14)
+      rbi (>= 0.4.2)
       rbs (>= 4.0.0.dev.5)
       rexml (>= 3.2.6)
       sorbet-static-and-runtime (>= 0.5.10187)
@@ -619,12 +619,12 @@ GEM
     superform (0.7.0)
       phlex-rails (~> 2.0)
       zeitwerk (~> 2.6)
-    tapioca (0.19.2)
+    tapioca (0.20.0)
       benchmark
       bundler (>= 2.2.25)
       netrc (>= 0.11.0)
       parallel (>= 1.21.0)
-      rbi (>= 0.3.7)
+      rbi (>= 0.4.1)
       require-hooks (>= 0.2.2)
       rubydex (>= 0.1.0.beta10)
       sorbet-static-and-runtime (>= 0.6.12698)
@@ -947,7 +947,7 @@ CHECKSUMS
   refract (1.1.0) sha256=ee3b9627e39f7692831101e2fedd73e0d09a592ff5d5c05f171d14211fc7a9c7
   regexp_parser (2.13.1) sha256=5aedb6b7c35688f51e86eef17a15374dfd287c83f4ca644b2c5f3ec50a33b44b
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
-  require-hooks (0.4.0) sha256=005f4c6435b4edae73e358cdbaba48370a4121f9ce893d5d2a3c66fce855677d
+  require-hooks (0.5.1) sha256=49a6b14518b91c5b8006d0644ef257af0ca033df23625bd4e314a8c5282191d9
   resend (1.18.0) sha256=b35b7292c4117599734039c49c11677cd9386afb320e7a9d0728a43c18a69baa
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   rgeo (3.1.0) sha256=89c1804894b35acf65891e1f24e15bbf2fbd972d4183e63c444bb97c1ccaf5d5
@@ -966,9 +966,9 @@ CHECKSUMS
   ruby-next-core (1.2.0) sha256=f6a7d00bb5186cecbb02f7f1845a0f3a2c9788d35b6ccff5c9be3f0d46799b86
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
-  rubydex (0.2.6) sha256=ada9c1be4b50d613cf1017db94bb4bb3bc6a55ef451708b395ad3ba134bdd71a
-  rubydex (0.2.6-arm64-darwin) sha256=ffc5bc493e17114228b88cf19fa828647fe1113d7ef690fa3a285e097c7c4fa6
-  rubydex (0.2.6-x86_64-linux) sha256=992d3513686bb1dd913da55267a14be334ea9fb2bc181b70a97b793700382c47
+  rubydex (0.4.4) sha256=f506bcc9f4ef4c55ac1312392410f95392ce919a4c0b0c36a18f243969bdd2ba
+  rubydex (0.4.4-arm64-darwin) sha256=e593b7a2b820e3d91ba3d6b7371916efe7c742b75d44f6eaa39cd04546211c09
+  rubydex (0.4.4-x86_64-linux) sha256=6c9144ac21ec4455850bc3b087f0bdce350af9358429675610c9d61fb8bfccfd
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   sentry-rails (7.3.0) sha256=2941ecc5b8f66ede5f7ff9e23d7f714d110675c20490a1be8162f35bf81b98ff
   sentry-ruby (7.3.0) sha256=b097f082e6609c778ca3ac28fa61ce38af998040e042660ff7196fcdcad9f1a4
@@ -983,13 +983,13 @@ CHECKSUMS
   sorbet-static (0.6.13704-universal-darwin) sha256=4f5b53f2b2ec01c8546e25f6fe4515146d78d7a5f73cb9bf7eb641b09e8cb4af
   sorbet-static (0.6.13704-x86_64-linux) sha256=bf544dc2b24eeb59b15c44e90fbfd18f5f65730aa22844fc4205be90a04c9f4d
   sorbet-static-and-runtime (0.6.13704) sha256=7e8e96005d943e0c8385f543eb5d943eb9c5680ee8152229d7e3f01be9f545cf
-  spoom (1.8.2) sha256=1253232b9d85ed140c9d5337ad2c74f03af89a70e3c602f2b2438eba34d0bd2f
+  spoom (1.8.14) sha256=7527a38ec7ea908f1bf98ec261130084d68e17c086775ddd17976f44db2d0953
   sshkit (1.25.0) sha256=c8c6543cdb60f91f1d277306d585dd11b6a064cb44eab0972827e4311ff96744
   ssrf_filter (1.6.0) sha256=78d15bc26d0385c931f46f12a9c1cbb90e6556bd96b95f25e5a5f786c8dcf999
   standardwebhooks (1.1.0) sha256=356ba711c14def4fb27310e4163b26bd5cccf325212c3440cabadd825e4be11f
   stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06
   superform (0.7.0) sha256=3527068275c55e740cb446aeb7f67c7e05c70db22484ffa63af4dadfcece9c24
-  tapioca (0.19.2) sha256=938731b07811aee8d23871b1aee8861d464fbaf2cfffbf79a62b0c869a5120ec
+  tapioca (0.20.0) sha256=b375ed7bf51d2c86c09543eafedd0de85513634187c0f7a062615af8bb9347a0
   telnyx (5.175.0) sha256=a42eb6920ebd624ecb4580eae4f68694c844ffc20102cac44c98711832617bb2
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   thruster (0.1.28) sha256=62672bb4588f49fa764f2e70db108a978818f8976f97ec3fd932d67c9e6b5e39
