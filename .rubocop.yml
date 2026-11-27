@@ -54,6 +54,9 @@ Layout/MultilineMethodArgumentLineBreaks:
 Layout/MultilineMethodCallBraceLayout:
   Enabled: true
   EnforcedStyle: symmetrical
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
 Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: space
 

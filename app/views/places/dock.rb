@@ -58,12 +58,6 @@ class Views::Places::Dock < Views::Base
             source(src: asset_path("places/dock_bg.mov"), type: "video/quicktime")
             source(src: asset_path("places/dock_bg.webm"), type: "video/webm")
           end
-          # image_tag(
-          #   "places/dock_bg.webp",
-          #   id: "dock_bg",
-          #   class: "place-background w-full max-w-sm h-auto",
-          #   data: { turbo_permanent: true },
-          # )
 
           div(class: "text-center font-heading text-xs text-muted-foreground/80 italic") do
             plain("this is a private place to reflect on your day. it's a work in progress...")
@@ -80,7 +74,7 @@ class Views::Places::Dock < Views::Base
           "reflections",
           target: "_top",
           data: {
-            turbo_permanent: (true if hotwire_native_app?),
+            turbo_permanent: true,
           },
         ) do
           form_with(

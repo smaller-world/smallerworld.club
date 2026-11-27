@@ -58,9 +58,14 @@ class ReflectionsController < ApplicationController
   end
   def recent_reflections(time_zone:)
     current_user = Current.user!
-    today = time_zone.today
-    dates = today.downto(today - 6).to_a
-    existing = authorized_scope(current_user.reflections).where(date: dates).index_by(&:date)
+    now = time_zone.now
+    today = now.to_date
+    latest_date = now.hour < 12 ? today - 1 : today
+    dates = latest_date.downto(latest_date - 6).to_a
+    existing = authorized_scope(current_user.reflections)
+      .where(date: dates)
+      .with_rich_text_body
+      .index_by(&:date)
 
     dates.map do |date|
       existing[date] || current_user.reflections.build(date: date)

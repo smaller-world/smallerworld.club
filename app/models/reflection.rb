@@ -57,7 +57,7 @@ class Reflection < ApplicationRecord
 
   # == Hooks ==
 
-  after_save_commit :broadcast_items_refresh
+  after_save_commit :broadcast_items_reload
 
   # == Methods ==
 
@@ -71,7 +71,13 @@ class Reflection < ApplicationRecord
   # == Callbacks ==
 
   sig { void }
-  def broadcast_items_refresh
-    broadcast_refresh_to(author!, :reflections, target: "reflections")
+  def broadcast_items_reload
+    broadcast_action_to(
+      author!,
+      :reflections,
+      action: :reload,
+      target: "reflections",
+      render: false,
+    )
   end
 end

@@ -181,7 +181,7 @@ class Views::Worlds::Show < Views::Base
             class: "world-posts-frame",
             data: {
               controller: "frame-reload",
-              turbo_permanent: (true if hotwire_native_app?),
+              turbo_permanent: true,
             },
           ) do
             div(class: "space-y-4") do

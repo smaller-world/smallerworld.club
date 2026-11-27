@@ -36,7 +36,8 @@ class Components::PostReactions < Components::Base
   sig { override.void }
   def view_template
     turbo_frame_tag(
-      dom_id(@post, :reactions),
+      @post,
+      :reactions,
       **mix(
         {
           class: "post-reactions",

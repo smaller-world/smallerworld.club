@@ -22,7 +22,7 @@ class Views::Reflections::Index < Views::Base
 
   sig { override.void }
   def view_template
-    turbo_frame_tag(:reflections) do
+    turbo_frame_tag("reflections") do
       Components::ItemGroup() do |item_group|
         @reflections.each do |reflection|
           Components::ReflectionItem(reflection:, time_zone: @time_zone)
