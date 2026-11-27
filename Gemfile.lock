@@ -193,7 +193,7 @@ GEM
       activerecord (>= 7.0, < 9.0)
     dockerfile-rails (1.7.10)
       rails (>= 3.0.0)
-    domain_name (0.6.20240107)
+    domain_name (0.7.20261117)
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -249,7 +249,7 @@ GEM
       rails (>= 7.0.0)
       zeitwerk
     http-2 (1.3.0)
-    http (6.0.3)
+    http (6.0.4)
       http-cookie (~> 1.0)
       llhttp (~> 0.6.1)
     http-cookie (1.1.6)
@@ -823,7 +823,7 @@ CHECKSUMS
   dig_bang (0.2.1) sha256=94912d64bd481505f5eb642fa6d9bc38042019d3c11c75ae8e2881fce0f8b8a5
   discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
   dockerfile-rails (1.7.10) sha256=04163273792ec6c6560244d32c0b44bbed705384a47b8063adcbf0d7bc8abd26
-  domain_name (0.6.20240107) sha256=5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933
+  domain_name (0.7.20261117) sha256=13f6a6cc6190892a75041b606d90bfb358ecbd869c1099fdd57b83b11d79269e
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   ed25519 (1.4.0) sha256=16e97f5198689a154247169f3453ef4cfd3f7a47481fde0ae33206cdfdcac506
@@ -848,7 +848,7 @@ CHECKSUMS
   google-protobuf (4.36.2-x86_64-linux-gnu) sha256=d25a820873e423f1d209ae8c672a4a28b019e2429debd0901d26670a0b4e14db
   googleauth (1.17.1) sha256=0f7e6fc70e204cee1b2d71f1e1de2d3b349d432404197fe68ebf7fa23d0821b9
   hotwire-spark (0.1.13) sha256=0a24799b0942fc9b7ea3e560a5aba3f4dd9a6086958a25929894340f920fb499
-  http (6.0.3) sha256=0206e79131089ca9aae557c6791afd6bf9339af319d78a616af1477ae79614fa
+  http (6.0.4) sha256=3768f902489ea8309424f1881c668af8d3ca73675648a755dfe2cb0030d42d26
   http-2 (1.3.0) sha256=58fc8636c2b937b651853e9f6d9ada9fdaa8bf80b5a7d0333ce15653e5ca6ac1
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
   httparty (0.24.3) sha256=5c95cf29ca70d5bfd834e56140ddfca6e94166c3b870cde9c25d157cdb5a00d2
