@@ -1,8 +1,5 @@
 # Post access
 
-A friend's world feed follows their key's post-type grants and the author's
-recipient selection for each post.
-
 Anyone with a copied secret link can open an unsuppressed post, including a
 signed-out visitor or a friend excluded from the feed. The
 [moderation decision](adr/0001-pending-reports-suppress-their-reportable.md)
@@ -11,12 +8,16 @@ defines when a report suppresses content on the linked page.
 Revoking a key ends access granted by that key on subsequent requests.
 Previously loaded posts can remain visible in a page already open.
 
-## Key types on the feature branch
+## World feeds
 
-After cutover, a friend needs a current key to the post's world and either a
-selected key type or an individual inclusion. An individual exclusion wins.
-Pending or upheld reports hide the post from friends. Authors can still see
-their posts. The copied-link behavior above still applies.
+A friend needs a current key to the post's world and either a selected key type
+or an individual inclusion. An individual exclusion wins. Pending or upheld
+reports hide the post from friends. Authors can still see their posts. The
+copied-link behavior above still applies.
+
+The cutover preserves historical audiences through individual inclusions derived
+from legacy grants. Owners can also share historical posts with the key types
+their world has when they confirm in the walkthrough.
 
 Post saves filter the three recipient lists to key types and current key holders
 in the world. Revoking a key leaves individual exceptions on existing posts

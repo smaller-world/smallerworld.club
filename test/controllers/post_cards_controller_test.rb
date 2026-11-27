@@ -7,9 +7,9 @@ class PostCardsControllerTest < ActionDispatch::IntegrationTest
   test "the post card is visible to a recipient and forbidden to a user without a key" do
     friend = users(:sue)
     world = create_world(owner: users(:bob))
-    create_member_key(world:, recipient: friend)
+    key = create_member_key(world:, recipient: friend)
     body = "Post shared through its card"
-    shared_post = create_post(world:, body:)
+    shared_post = create_post(world:, body:, visible_to_key_type_ids: [ key.type_id ])
     card_path = post_card_path(shared_post)
     headers = { "Turbo-Frame" => ActionView::RecordIdentifier.dom_id(shared_post, :card) }
 

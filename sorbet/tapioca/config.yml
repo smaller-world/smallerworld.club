@@ -8,6 +8,7 @@ gem:
     - bundler-audit
     - listen
     - phlex-icons
+    - phlex-icons-huge
     - rubocop-capybara
     - rubocop-performance
     - rubocop-rails

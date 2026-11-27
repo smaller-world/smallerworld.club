@@ -11,12 +11,18 @@ class WorldKeyType
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
+  sig { returns(Enumerize::Value) }
+  def color; end
+
   private
 
   sig { returns(NilClass) }
   def to_ary; end
 
   class << self
+    sig { returns(Enumerize::Attribute) }
+    def color; end
+
     sig do
       params(
         attributes: T.untyped,
@@ -425,6 +431,34 @@ class WorldKeyType
     sig { params(args: T.untyped, blk: T.untyped).returns(::World) }
     def create_world!(*args, &blk); end
 
+    sig { returns(T::Array[T.untyped]) }
+    def invitation_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def invitation_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKeyType` class because it declared `has_many :invitations`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldInvitation::PrivateCollectionProxy) }
+    def invitations; end
+
+    sig { params(value: T::Enumerable[::WorldInvitation]).void }
+    def invitations=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def key_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def key_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `WorldKeyType` class because it declared `has_many :keys`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::WorldKey::PrivateCollectionProxy) }
+    def keys; end
+
+    sig { params(value: T::Enumerable[::WorldKey]).void }
+    def keys=(value); end
+
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
@@ -447,6 +481,9 @@ class WorldKeyType
   module GeneratedAssociationRelationMethods
     sig { returns(PrivateAssociationRelation) }
     def all; end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def alphabetical(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def and(*args, &blk); end
@@ -600,16 +637,16 @@ class WorldKeyType
   end
 
   module GeneratedAttributeMethods
-    sig { returns(::String) }
+    sig { returns(T.untyped) }
     def color; end
 
-    sig { params(value: ::String).returns(::String) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def color=(value); end
 
     sig { returns(T::Boolean) }
     def color?; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def color_before_last_save; end
 
     sig { returns(T.untyped) }
@@ -618,28 +655,28 @@ class WorldKeyType
     sig { returns(T::Boolean) }
     def color_came_from_user?; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def color_change; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def color_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def color_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def color_in_database; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def color_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def color_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def color_previously_was; end
 
-    sig { returns(T.nilable(::String)) }
+    sig { returns(T.untyped) }
     def color_was; end
 
     sig { void }
@@ -846,7 +883,7 @@ class WorldKeyType
     sig { void }
     def restore_world_id!; end
 
-    sig { returns(T.nilable([::String, ::String])) }
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_color; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
@@ -1003,6 +1040,9 @@ class WorldKeyType
   module GeneratedRelationMethods
     sig { returns(PrivateRelation) }
     def all; end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def alphabetical(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def and(*args, &blk); end

@@ -8,6 +8,7 @@ class Views::WorldKeys::Edit < Views::Base
   def initialize(world_key:)
     super()
     @world_key = world_key
+    @key_type = T.let(@world_key.type!, WorldKeyType)
     @world = T.let(@world_key.world!, World)
     @recipient = T.let(@world_key.recipient!, User)
   end
@@ -36,8 +37,11 @@ class Views::WorldKeys::Edit < Views::Base
                 class: "world-icon",
                 data: { world_icon_size: "xs" },
               )
-              div(class: "absolute inset-0 flex items-center justify-center") do
-                Icon("huge/key-01", class: "size-6 text-white")
+              div(class: "absolute inset-0 flex items-center justify-center bg-black/20") do
+                Icon(
+                  "huge/key-02",
+                  class: "text-white size-6",
+                )
               end
             end
           end

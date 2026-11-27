@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,6 +93,40 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.index ["username"], name: "index_console1984_users_on_username"
+  end
+
+  create_table "cutover_invitations", id: false, force: :cascade do |t|
+    t.uuid "id"
+    t.uuid "key_type_id"
+  end
+
+  create_table "cutover_key_types", id: :uuid, default: nil, force: :cascade do |t|
+    t.string "previous_color"
+  end
+
+  create_table "cutover_pending_worlds", id: false, force: :cascade do |t|
+    t.uuid "id"
+  end
+
+  create_table "cutover_posts", id: false, force: :cascade do |t|
+    t.uuid "id"
+    t.uuid "visible_to_key_type_ids", array: true
+    t.uuid "visible_to_user_ids", array: true
+  end
+
+  create_table "cutover_world_keys", id: false, force: :cascade do |t|
+    t.uuid "id"
+    t.uuid "type_id"
+  end
+
+  create_table "deprecated_post_type_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.timestamptz "created_at", null: false
+    t.uuid "post_type_id", null: false
+    t.uuid "world_key_id", null: false
+    t.uuid "world_id", null: false
+    t.index ["post_type_id"], name: "index_deprecated_post_type_grants_on_post_type_id"
+    t.index ["world_key_id", "post_type_id"], name: "index_post_type_grants_uniqueness", unique: true
+    t.index ["world_key_id"], name: "index_deprecated_post_type_grants_on_world_key_id"
   end
 
   create_table "deprecated_world_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -182,24 +216,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
     t.timestamptz "verified_at"
   end
 
-  create_table "post_type_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.timestamptz "created_at", null: false
-    t.uuid "post_type_id", null: false
-    t.uuid "world_key_id", null: false
-    t.uuid "world_id", null: false
-    t.index ["post_type_id"], name: "index_post_type_grants_on_post_type_id"
-    t.index ["world_key_id", "post_type_id"], name: "index_post_type_grants_uniqueness", unique: true
-    t.index ["world_key_id"], name: "index_post_type_grants_on_world_key_id"
-  end
-
   create_table "post_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "icon"
-    t.string "label", null: false
+    t.string "name", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.index ["id", "world_id"], name: "index_post_types_on_id_and_world_id", unique: true
-    t.index ["world_id", "label"], name: "index_post_types_uniqueness", unique: true
+    t.index ["world_id", "name"], name: "index_post_types_uniqueness", unique: true
     t.index ["world_id"], name: "index_post_types_on_world_id"
   end
 
@@ -455,12 +479,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
 
   create_table "world_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.uuid "granted_post_type_ids", default: [], null: false, array: true
+    t.uuid "deprecated_granted_post_type_ids", default: [], null: false, array: true
     t.uuid "recipient_id"
     t.string "recipient_phone_number", null: false
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
-    t.uuid "key_type_id"
+    t.uuid "key_type_id", null: false
     t.index ["id", "world_id"], name: "index_world_invitations_on_id_and_world_id", unique: true
     t.index ["recipient_id"], name: "index_world_invitations_on_recipient_id"
     t.index ["world_id", "recipient_phone_number"], name: "index_world_invitations_uniqueness", unique: true
@@ -485,7 +509,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
     t.datetime "updated_at", null: false
     t.uuid "world_id", null: false
     t.timestamptz "world_last_visited_at"
-    t.uuid "type_id"
+    t.uuid "type_id", null: false
     t.index ["id", "world_id"], name: "index_world_keys_on_id_and_world_id", unique: true
     t.index ["invitation_id"], name: "index_world_keys_on_invitation_id"
     t.index ["muted_post_type_ids"], name: "index_world_keys_on_muted_post_type_ids", using: :gin
@@ -508,6 +532,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "deprecated_post_type_grants", "post_types", column: ["post_type_id", "world_id"], primary_key: ["id", "world_id"]
+  add_foreign_key "deprecated_post_type_grants", "world_keys", column: ["world_key_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "deprecated_world_cards", "devices"
   add_foreign_key "deprecated_world_cards", "users", column: "cardholder_id"
   add_foreign_key "deprecated_world_cards", "world_keys"
@@ -516,8 +542,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_22_200135) do
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "passkit_registrations", "passkit_devices"
   add_foreign_key "passkit_registrations", "passkit_passes"
-  add_foreign_key "post_type_grants", "post_types", column: ["post_type_id", "world_id"], primary_key: ["id", "world_id"]
-  add_foreign_key "post_type_grants", "world_keys", column: ["world_key_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "post_types", "worlds"
   add_foreign_key "posts", "post_types", column: ["type_id", "world_id"], primary_key: ["id", "world_id"]
   add_foreign_key "posts", "worlds"

@@ -58,7 +58,7 @@ class Components::AppHeader < Components::Base
           content.button_item(type: :submit, variant: :destructive, data: {
             action: "dropdown-menu#preventAutoClose",
           }) do
-            Icon("huge/logout-01")
+            Icon("huge/door-01")
             span { "sign out" }
           end
         end

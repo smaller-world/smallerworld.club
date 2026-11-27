@@ -25,6 +25,8 @@ Layout/BlockEndNewline:
   Enabled: true
 Layout/EndAlignment:
   Enabled: true
+Layout/EmptyLines:
+  Enabled: true
 Layout/ExtraSpacing:
   Enabled: true
 Layout/FirstArrayElementIndentation:
@@ -54,6 +56,8 @@ Layout/MultilineMethodArgumentLineBreaks:
 Layout/MultilineMethodCallBraceLayout:
   Enabled: true
   EnforcedStyle: symmetrical
+Layout/MultilineOperationIndentation:
+  Enabled: true
 Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: space
 
@@ -89,6 +93,8 @@ Style/MethodCallWithArgsParentheses:
     - puts
     - throw
 Style/MethodCallWithoutArgsParentheses:
+  Enabled: true
+Style/MultilineTernaryOperator:
   Enabled: true
 Style/RedundantParentheses:
   Enabled: true

@@ -40,7 +40,7 @@ class Views::WorldInvitations::New < Views::Base
             },
           )
           div(class: "absolute inset-0 flex items-center justify-center") do
-            Icon("huge/key-01", class: "size-10 text-white")
+            Icon("huge/key-02", class: "size-10 text-white")
           end
         end
 

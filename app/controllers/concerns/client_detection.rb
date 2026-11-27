@@ -61,7 +61,6 @@ module ClientDetection
     native_client_info&.join(" ")
   end
 
-
   sig { returns(T.nilable(Symbol)) }
   def hotwire_native_platform
     @hotwire_native_platform ||= T.let(

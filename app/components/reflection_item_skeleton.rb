@@ -6,7 +6,11 @@ class Components::ReflectionItemSkeleton < Components::Base
 
   sig { override.void }
   def view_template
-    Components::Item(variant: :outline, size: :xs, **@attributes) do |item|
+    Components::Item(
+      variant: :outline,
+      size: :xs,
+      **mix({ class: "rounded-none" }, @attributes),
+    ) do |item|
       item.content do |item_content|
         item_content.title do
           span(class: "skeleton") do

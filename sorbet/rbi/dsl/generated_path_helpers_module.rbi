@@ -76,6 +76,9 @@ module GeneratedPathHelpersModule
   def edit_world_key_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def edit_world_key_type_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_world_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -131,6 +134,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_key_grant_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def new_world_key_type_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def new_world_path(*args); end
@@ -341,6 +347,12 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_key_type_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def world_key_types_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def world_key_world_visits_path(*args); end

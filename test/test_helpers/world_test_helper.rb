@@ -18,7 +18,7 @@ module WorldTestHelper
   def create_world(owner:, name: nil)
     world = owner.owned_worlds.build
     world.name = name if name
-    world.post_types = World.default_post_types
+    world.post_types = PostType.default_types
     world.icon.attach(
       io: File.open(WORLD_ICON_PATH),
       filename: "world_icon.png",
@@ -31,35 +31,32 @@ module WorldTestHelper
   sig do
     params(
       world: World,
-      type_label: String,
+      type_name: String,
       body: String,
       attributes: T.untyped,
     ).returns(Post)
   end
-  def create_post(world:, type_label: "journal entry", body: "hello world", **attributes)
+  def create_post(world:, type_name: "journal entry", body: "hello world", **attributes)
     world.posts.create!(
-      type: post_type_for(world, type_label),
+      type: post_type_for(world, type_name),
       body:,
       **attributes,
     )
   end
 
-  # Creates a world key for `recipient`, granting access to all of `world`'s
-  # current post types (a "full" member who can see and react to every post).
   sig { params(world: World, recipient: User).returns(WorldKey) }
   def create_member_key(world:, recipient:)
-    key = world.keys.create!(recipient:)
-    key.granted_post_types = world.post_types
-    key
+    type = world.key_types.find_or_create_by!(name: "new friends") { |key_type| key_type.color = "green" }
+    world.keys.create!(recipient:, type:)
   end
 
   private
 
   # == Helpers ==
 
-  sig { params(world: World, label: String).returns(PostType) }
-  def post_type_for(world, label)
-    world.post_types.find_by!(label:)
+  sig { params(world: World, name: String).returns(PostType) }
+  def post_type_for(world, name)
+    world.post_types.find_by!(name:)
   end
 end
 

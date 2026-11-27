@@ -45,14 +45,16 @@ Before typechecking and finishing a change, regenerate the affected RBIs:
 - `Gemfile` or `Gemfile.lock` changed: run `mise run tapioca:gem`.
 - Active Job, Active Record, Active Model, or Action Controller classes added,
   changed, or removed, or schema/routes changed: run `mise run tapioca:dsl`.
+- For any change in `app/components/`, run `mise run tapioca:dsl` to regenerate
+  `Phlex::Kit` helpers.
 
 Review the generated diff and include the RBI changes with the source changes.
 
-When local PostgreSQL is needed and stopped, start it with `bin/postgres` in a
-background tool session, then retry the database operation. Kai authorizes
-starting it automatically; request sandbox escalation when required for Podman
-or local database access. A sandbox permission error alone does not mean
-PostgreSQL is stopped: retry the blocked operation with escalation.
+When local database access hits a sandbox permission error, retry with
+escalation to distinguish a sandbox denial from a stopped service. If Podman or
+PostgreSQL is stopped, ask Kai to start it and wait. Start it yourself only when
+Kai explicitly asks for the current task, using `bin/postgres` in a background
+session for PostgreSQL.
 
 ## Code style
 

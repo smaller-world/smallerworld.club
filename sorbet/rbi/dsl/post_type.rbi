@@ -371,32 +371,18 @@ class PostType
     def create_world!(*args, &blk); end
 
     sig { returns(T::Array[T.untyped]) }
-    def grant_ids; end
+    def deprecated_post_type_grant_ids; end
 
     sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def grant_ids=(ids); end
+    def deprecated_post_type_grant_ids=(ids); end
 
-    sig { returns(T::Array[T.untyped]) }
-    def granted_world_key_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def granted_world_key_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :granted_world_keys, through: :grants`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::WorldKey::PrivateCollectionProxy) }
-    def granted_world_keys; end
-
-    sig { params(value: T::Enumerable[::WorldKey]).void }
-    def granted_world_keys=(value); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :grants`.
+    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :deprecated_post_type_grants`.
     # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
-    sig { returns(::PostTypeGrant::PrivateCollectionProxy) }
-    def grants; end
+    sig { returns(::Deprecated::PostTypeGrant::PrivateCollectionProxy) }
+    def deprecated_post_type_grants; end
 
-    sig { params(value: T::Enumerable[::PostTypeGrant]).void }
-    def grants=(value); end
+    sig { params(value: T::Enumerable[::Deprecated::PostTypeGrant]).void }
+    def deprecated_post_type_grants=(value); end
 
     sig { returns(T::Array[T.untyped]) }
     def post_ids; end
@@ -412,53 +398,11 @@ class PostType
     sig { params(value: T::Enumerable[::Post]).void }
     def posts=(value); end
 
-    sig { returns(T::Array[T.untyped]) }
-    def recipient_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def recipient_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :recipients, through: :granted_world_keys`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def recipients; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def recipients=(value); end
-
     sig { returns(T.nilable(::World)) }
     def reload_world; end
 
     sig { void }
     def reset_world; end
-
-    sig { returns(T::Array[T.untyped]) }
-    def subscribed_world_key_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def subscribed_world_key_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :subscribed_world_keys, through: :grants`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::WorldKey::PrivateCollectionProxy) }
-    def subscribed_world_keys; end
-
-    sig { params(value: T::Enumerable[::WorldKey]).void }
-    def subscribed_world_keys=(value); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def subscriber_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def subscriber_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :subscribers, through: :subscribed_world_keys`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def subscribers; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def subscribers=(value); end
 
     sig { returns(T.nilable(::World)) }
     def world; end
@@ -468,34 +412,6 @@ class PostType
 
     sig { returns(T::Boolean) }
     def world_changed?; end
-
-    sig { returns(T::Array[T.untyped]) }
-    def world_key_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_key_ids=(ids); end
-
-    sig { returns(T::Array[T.untyped]) }
-    def world_key_recipient_ids; end
-
-    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def world_key_recipient_ids=(ids); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :world_key_recipients, through: :world_keys`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::User::PrivateCollectionProxy) }
-    def world_key_recipients; end
-
-    sig { params(value: T::Enumerable[::User]).void }
-    def world_key_recipients=(value); end
-
-    # This method is created by ActiveRecord on the `PostType` class because it declared `has_many :world_keys, through: :world`.
-    # 🔗 [Rails guide for `has_many_through` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-    sig { returns(::WorldKey::PrivateCollectionProxy) }
-    def world_keys; end
-
-    sig { params(value: T::Enumerable[::WorldKey]).void }
-    def world_keys=(value); end
 
     sig { returns(T::Boolean) }
     def world_previously_changed?; end
@@ -838,49 +754,49 @@ class PostType
     def id_will_change!; end
 
     sig { returns(::String) }
-    def label; end
+    def name; end
 
     sig { params(value: ::String).returns(::String) }
-    def label=(value); end
+    def name=(value); end
 
     sig { returns(T::Boolean) }
-    def label?; end
+    def name?; end
 
     sig { returns(T.nilable(::String)) }
-    def label_before_last_save; end
+    def name_before_last_save; end
 
     sig { returns(T.untyped) }
-    def label_before_type_cast; end
+    def name_before_type_cast; end
 
     sig { returns(T::Boolean) }
-    def label_came_from_user?; end
+    def name_came_from_user?; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def label_change; end
+    def name_change; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def label_change_to_be_saved; end
+    def name_change_to_be_saved; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def label_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def name_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def label_in_database; end
+    def name_in_database; end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def label_previous_change; end
+    def name_previous_change; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def label_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def name_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable(::String)) }
-    def label_previously_was; end
+    def name_previously_was; end
 
     sig { returns(T.nilable(::String)) }
-    def label_was; end
+    def name_was; end
 
     sig { void }
-    def label_will_change!; end
+    def name_will_change!; end
 
     sig { void }
     def restore_created_at!; end
@@ -895,7 +811,7 @@ class PostType
     def restore_id_value!; end
 
     sig { void }
-    def restore_label!; end
+    def restore_name!; end
 
     sig { void }
     def restore_updated_at!; end
@@ -928,10 +844,10 @@ class PostType
     def saved_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
-    def saved_change_to_label; end
+    def saved_change_to_name; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def saved_change_to_label?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def saved_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
     def saved_change_to_updated_at; end
@@ -1003,7 +919,7 @@ class PostType
     def will_save_change_to_id_value?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def will_save_change_to_label?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+    def will_save_change_to_name?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_updated_at?(from: T.unsafe(nil), to: T.unsafe(nil)); end

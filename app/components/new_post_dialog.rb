@@ -61,15 +61,12 @@ class Components::NewPostDialog < Components::Base
             form.hidden_field(:type_id, data: {
               post_draft_info_target: "typeIdInput",
             })
-            form.hidden_field(:restore_draft, value: true)
+            form.hidden_field(:restore_draft, value: 1)
             item_group.item(
               element: :button,
               type: :submit,
               size: :sm,
               class: "bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
-              data: {
-                action: "dialog#close",
-              },
             ) do |item|
               item.content do |item_content|
                 item_content.title do
@@ -92,16 +89,13 @@ class Components::NewPostDialog < Components::Base
                 href: url_for([ :new, @world, :post, type_id: post_type.id ]),
                 variant: :outline,
                 size: :sm,
-                data: {
-                  action: "dialog#close",
-                },
               ) do |item|
                 item.media(variant: :icon) do
                   Icon(post_type.icon)
                 end
                 item.content do |item_content|
                   item_content.title do
-                    post_type.label
+                    post_type.name
                   end
                 end
               end
@@ -110,10 +104,6 @@ class Components::NewPostDialog < Components::Base
                 [ :edit, post_type ],
                 size: :sm,
                 class: "text-muted-foreground",
-                data: {
-                  controller: "redirect-back-to-self",
-                  action: "redirect-back-to-self#visit dialog#close",
-                },
               )
             end
           end
@@ -125,10 +115,6 @@ class Components::NewPostDialog < Components::Base
             href: url_for([ :new, @world, :post_type ]),
             variant: :muted,
             size: :sm,
-            data: {
-              controller: "redirect-back-to-self",
-              action: "redirect-back-to-self#visit dialog#close",
-            },
           ) do |item|
             item.content(class: "gap-0") do |item_content|
               item_content.title do

@@ -47,7 +47,7 @@ class Components::WorldPostFiltersForm < Components::Base
           ) do
             Icon(choice.item.icon, data: { icon: :inline_start })
             span do
-              choice.item.label
+              choice.item.name
             end
             if allowed_to?(:edit?, choice.item)
               button_link_to([ :edit, choice.item ], size: :icon_xs, data: {

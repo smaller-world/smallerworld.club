@@ -163,13 +163,7 @@ class Post < ApplicationRecord
 
   # == Scopes ==
 
-  scope :unreported, -> {
-    reported = Report.not_dismissed
-      .where(reportable_type: "Post")
-      .where(Report.arel_table[:reportable_id].eq(Post.arel_table[:id]))
-    where.not(reported.arel.exists)
-  }
-
+  scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
   scope :with_recipient_keys, -> {
     joins(:world_keys).where(<<~SQL.squish)
       (
@@ -180,6 +174,12 @@ class Post < ApplicationRecord
     SQL
   }
 
+  scope :unreported, -> {
+    reported = Report.not_dismissed
+      .where(reportable_type: "Post")
+      .where(Report.arel_table[:reportable_id].eq(Post.arel_table[:id]))
+    where.not(reported.arel.exists)
+  }
   scope :visible_to, ->(user) {
     recipient_posts = Post.with_recipient_keys
       .where(world_keys: { recipient_id: user.id })
@@ -189,10 +189,6 @@ class Post < ApplicationRecord
       .or(where(id: recipient_posts).unreported)
   }
   scope :favorited, -> { where.not(favorited_at: nil) }
-
-  # scope :with_type, -> { includes(:type) }
-  # scope :with_world_owner, -> { includes(:world_owner) }
-  scope :with_v1_attributes, -> { where.not(v1_attributes: nil) }
 
   # == Notifications ==
 

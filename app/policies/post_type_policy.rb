@@ -16,11 +16,7 @@ class PostTypePolicy < ApplicationPolicy
     relation = T.let(relation, PostType::PrivateRelation)
     if (user = self.user)
       relation.where(world_id: user.owned_worlds.select(:id))
-        .or(relation.where(
-          id: PostTypeGrant
-            .where(world_key: WorldKey.where(recipient: user))
-            .select(:post_type_id),
-        ))
+        .or(relation.where(world_id: user.world_keys.select(:world_id)))
     else
       relation.none
     end

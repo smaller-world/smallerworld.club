@@ -68,7 +68,7 @@ class Components::PostCard < Components::Base
                 elsif (icon = @post_type.icon)
                   badge.inline_start_icon(icon)
                 end
-                span(class: "font-normal") { @post_type.label }
+                span(class: "font-normal") { @post_type.name }
               end
 
               time(

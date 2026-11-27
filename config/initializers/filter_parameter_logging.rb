@@ -11,7 +11,7 @@ Rails.application.config.filter_parameters += [
   :email,
   :secret,
   :token,
-  :_key,
+  /_key\z/i,
   :crypt,
   :salt,
   :certificate,

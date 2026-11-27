@@ -15,7 +15,7 @@ class Components::AcceptWorldKeyGrantForm < Components::Base
     super(**attributes)
     @verified_grant = verified_grant
     @invitation = invitation
-    @world = T.let(@verified_grant.world, World)
+    @world = T.let(@verified_grant.world!, World)
   end
 
   # == Component ==

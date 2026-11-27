@@ -8,9 +8,9 @@ class PostReportsControllerTest < ActionDispatch::IntegrationTest
     author = users(:bob)
     reporter = users(:sue)
     world = create_world(owner: author)
-    create_member_key(world:, recipient: reporter)
+    key = create_member_key(world:, recipient: reporter)
     body = "Post that will be reported"
-    reported_post = create_post(world:, body:)
+    reported_post = create_post(world:, body:, visible_to_key_type_ids: [ key.type_id ])
     feed_path = world_posts_path(world)
     headers = { "Turbo-Frame" => "posts" }
 

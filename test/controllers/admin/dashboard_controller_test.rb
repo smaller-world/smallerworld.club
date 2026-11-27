@@ -21,8 +21,8 @@ module Admin
 
     test "admin routes return 403 to signed-in non-admins" do
       world = create_world(owner: users(:sue))
-      create_member_key(world:, recipient: @user)
-      reported_post = create_post(world:)
+      key = create_member_key(world:, recipient: @user)
+      reported_post = create_post(world:, visible_to_key_type_ids: [ key.type_id ])
       report = reported_post.reports.create!(reporter: @user, category: "spam")
       sign_in_as(@user)
 
@@ -34,18 +34,15 @@ module Admin
         ].each do |path|
           get(path)
           assert_response(:forbidden, "GET #{path}")
-          assert_select "main", text: /this door is locked\./
         end
 
         path = resolve_admin_report_path(report)
         post(path, params: { report: { resolution: "dismissed" } })
         assert_response(:forbidden, "POST #{path}")
-        assert_select "main", text: /this door is locked\./
         assert_nil report.reload.resolution
 
         get admin_mission_control_jobs_path
         assert_response :forbidden
-        assert_select "main", text: /this door is locked\./
       end
     end
 

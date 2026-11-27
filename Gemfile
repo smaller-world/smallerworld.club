@@ -61,7 +61,7 @@ gem "premailer", "~> 1.33"
 
 # Build views with Ruby
 gem "phlex-rails", "~> 2.4"
-gem "phlex-icons"
+gem "phlex-icons-huge", github: "hulloitskai/phlex-icons", branch: "huge-gem"
 
 # Declare enum attributes with Enumerize
 gem "enumerize", "~> 3.0"
@@ -164,6 +164,9 @@ gem "superform", "~> 0.7.0"
 
 # Send transactional emails with Resend
 gem "resend", "~> 1.18"
+
+# More compact message from ActiveSupport::MessageVerifier
+gem "msgpack", "~> 1.8"
 
 group :development, :test do
   # Run tests with Minitest

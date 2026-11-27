@@ -8,8 +8,8 @@ class ReplyInitiationsControllerTest < ActionDispatch::IntegrationTest
     @owner = T.let(users(:bob), User)
     @friend = T.let(users(:sue), User)
     @world = T.let(create_world(owner: @owner, name: "Replying World"), World)
-    create_member_key(world: @world, recipient: @friend)
-    @post = T.let(create_post(world: @world), Post)
+    key = create_member_key(world: @world, recipient: @friend)
+    @post = T.let(create_post(world: @world, visible_to_key_type_ids: [ key.type_id ]), Post)
   end
 
   test "a member initiates a reply and gets a dm link" do

@@ -1,12 +1,19 @@
 # typed: false
 # frozen_string_literal: true
 
+require "digest/md5"
 require "faker"
 require "active_support/core_ext/digest/uuid"
 
 module DevelopmentData
   USER_NAMES = %w[alex blair casey drew ellis].freeze
   POST_COUNTS = { alex: 1, blair: 60, casey: 8, drew: 3, ellis: 15 }.freeze
+  KEY_TYPES = {
+    blair: { alex: "existing friends", casey: "existing friends", drew: "existing friends", ellis: "existing friends" },
+    casey: { alex: "new friends", blair: "chosen family" },
+    drew: { casey: "new friends" },
+    ellis: { blair: "chosen family", drew: "new friends" },
+  }.freeze
 
   # Stable identities survive edits to names, phone numbers, and post content.
   def self.id(label)
@@ -61,9 +68,17 @@ module DevelopmentData
     end
     worlds[:casey_second] = create_world(:casey_second, users.fetch(:casey), "casey's quiet corner")
     worlds.each do |label, world|
-      World.default_post_types.each do |type|
-        world.post_types.find_or_create_by!(id: id("type/#{label}/#{type.label}")) do |record|
-          record.label = type.label
+      starter_key_types(label).each do |type|
+        next if world.key_types.exists?(id: type.id)
+
+        world.key_types.find_or_create_by!(name: type.name) do |record|
+          record.id = type.id
+          record.color = type.color
+        end
+      end
+      PostType.default_types.each do |type|
+        world.post_types.find_or_create_by!(id: id("type/#{label}/#{type.name}")) do |record|
+          record.name = type.name
           record.icon = type.icon
         end
       end
@@ -73,76 +88,101 @@ module DevelopmentData
 
   def self.create_world(label, owner, name)
     world = World.find_or_initialize_by(id: id("world/#{label}"))
-    return world unless world.new_record?
+    image = label == :casey_second ? :casey : label
+    icon_path = Rails.root.join("db/seeds/images/#{image}.png")
+    unless world.new_record?
+      restore_world_icon(world.icon.blob, icon_path)
+      return world
+    end
 
     world.owner = owner
     world.name = name
-    world.post_types = World.default_post_types.map do |type|
-      type.id = id("type/#{label}/#{type.label}")
+    world.created_at = POST_COUNTS.fetch(label, 1).days.ago
+    world.key_types_review_pending = label == :blair
+    world.key_types = starter_key_types(label)
+    world.post_types = PostType.default_types.map do |type|
+      type.id = id("type/#{label}/#{type.name}")
       type
     end
-    image = label == :casey_second ? :casey : label
-    image_bytes = Rails.root.join("db/seeds/images/#{image}.png").binread
-    world.icon.attach(io: StringIO.new(image_bytes), filename: "#{image}.png", content_type: "image/png")
+    world.icon.attach(io: StringIO.new(icon_path.binread), filename: icon_path.basename.to_s, content_type: "image/png")
     world.save!
     world
   end
 
+  def self.restore_world_icon(blob, icon_path)
+    return unless blob && !blob.service.exist?(blob.key)
+
+    bytes = icon_path.binread
+    return unless Digest::MD5.base64digest(bytes) == blob.checksum
+
+    blob.service.upload(blob.key, StringIO.new(bytes), checksum: blob.checksum)
+  end
+
+  def self.starter_key_types(label)
+    types = WorldKeyType.default_types
+    types << WorldKeyType.existing_friends_type if label == :blair
+    types.each { |type| type.id = id("key-type/#{label}/#{type.name}") }
+  end
+
+  def self.key_type(world, label, name)
+    world.key_types.find_by(id: id("key-type/#{label}/#{name}")) || world.key_types.find_by!(name:)
+  end
+
   def self.create_keys_and_invitations(users, worlds)
-    # Each row names a world and the people who hold its keys.
-    {
-      blair: %i[alex casey drew ellis],
-      casey: %i[alex blair],
-      drew: %i[casey],
-      ellis: %i[blair drew],
-    }.each do |owner, recipients|
+    KEY_TYPES.each do |owner, recipients|
       world = worlds.fetch(owner)
-      recipients.each do |recipient|
+      recipients.each do |recipient, name|
         world.keys.find_or_create_by!(recipient: users.fetch(recipient)) do |key|
+          key.type = key_type(world, owner, name)
           key.world_last_visited_at = recipient == :blair ? Time.current : 1.week.ago
-          if owner == :blair && recipient == :ellis
-            key.muted_post_type_ids = [ id("type/#{owner}/poem") ]
-          end
-          types = World.default_post_types.map { |type| world.post_types.find(id("type/#{owner}/#{type.label}")) }
-          types = [ types.first ] if owner == :blair && recipient == :alex
-          key.post_type_grants = types.map { |type| PostTypeGrant.new(post_type: type) }
         end
       end
     end
-
-    casey = worlds.fetch(:casey)
-    field_note = casey.post_types.find_or_create_by!(id: id("type/field-note")) do |type|
-      type.label = "field note"
-      type.icon = "huge/book-edit"
-    end
-    key = casey.keys.find_by!(recipient: users.fetch(:blair))
-    key.post_type_grants.find_or_create_by!(post_type: field_note)
 
     { casey: :ellis, drew: :blair }.each do |owner, recipient|
       world = worlds.fetch(owner)
       # Accepting an invitation locally must not make setup offer it again.
       next if world.keys.exists?(recipient: users.fetch(recipient))
 
-      world.invitations.find_or_create_by!(id: id("invitation/#{owner}/#{recipient}")) do |invitation|
-        invitation.recipient = users.fetch(recipient)
-        invitation.granted_post_type_ids = world.post_type_ids
+      invitation = world.invitations.find_or_initialize_by(id: id("invitation/#{owner}/#{recipient}")) do |record|
+        record.recipient = users.fetch(recipient)
       end
+      invitation.key_type ||= key_type(world, owner, "new friends")
+      invitation.save! if invitation.changed?
     end
   end
 
   def self.create_posts(users, worlds)
     previous_random = Faker::Config.random
+    field_note = worlds.fetch(:casey).post_types.find_or_create_by!(id: id("type/field-note")) do |type|
+      type.name = "field note"
+      type.icon = "huge/book-edit"
+    end
+
+    worlds.each do |owner, world|
+      next unless world.previously_new_record?
+
+      intro = world.posts.sole
+      intro.update!(post_audience(world, owner, intro, 0, users))
+    end
+
     POST_COUNTS.each do |owner, count|
       world = worlds.fetch(owner)
-      types = World.default_post_types.map { |type| world.post_types.find(id("type/#{owner}/#{type.label}")) }
+      types = PostType.default_types.map { |type| world.post_types.find(id("type/#{owner}/#{type.name}")) }
       (1...count).each do |number|
         world.posts.find_or_create_by!(id: id("post/#{owner}/#{number}")) do |post|
           # A fresh random source per post makes filling a missing post predictable.
           Faker::Config.random = Random.new(id("post/#{owner}/#{number}").delete("-").to_i(16))
-          post.type = owner == :casey && number == 7 ? world.post_types.find(id("type/field-note")) : types[(number - 1) % types.length]
-          post.title = Faker::Lorem.sentence(word_count: 4).downcase
+          post.type = owner == :casey && number == 7 ? field_note : types[(number - 1) % types.length]
+          post.title = case [ owner, number ]
+          when [ :casey, 7 ] then "field note for chosen family"
+          when [ :ellis, 1 ] then "for chosen family and drew"
+          when [ :ellis, count - 1 ] then "a note just for me"
+          else Faker::Lorem.sentence(word_count: 4).downcase
+          end
           post.body = Faker::Lorem.paragraphs(number: 2).map { |text| "<p>#{text}</p>" }.join
           post.created_at = (count - number).days.ago
+          post.assign_attributes(post_audience(world, owner, post, number, users))
           post.favorited_at = Time.current if %i[blair ellis].include?(owner) && number == 1
           post.hidden_from_user_ids = [ users.fetch(:drew).id ] if owner == :blair && number == 1
         end
@@ -150,6 +190,27 @@ module DevelopmentData
     end
   ensure
     Faker::Config.random = previous_random
+  end
+
+  def self.post_audience(world, owner, post, number, users)
+    if owner == :blair
+      recipients = KEY_TYPES.fetch(:blair).keys
+      recipients -= [ :alex ] unless post.type_id == id("type/blair/journal entry")
+      return { visible_to_key_type_ids: [], visible_to_user_ids: recipients.map { |recipient| users.fetch(recipient).id } }
+    end
+
+    case [ owner, number ]
+    when [ :ellis, POST_COUNTS.fetch(:ellis) - 1 ]
+      {}
+    when [ :ellis, 1 ]
+      {
+        visible_to_key_type_ids: [ key_type(world, owner, "chosen family").id ],
+        visible_to_user_ids: [ users.fetch(:drew).id ],
+      }
+    else
+      names = post.type_id == id("type/field-note") ? [ "chosen family" ] : WorldKeyType.default_types.map(&:name)
+      { visible_to_key_type_ids: names.map { |name| key_type(world, owner, name).id } }
+    end
   end
 
   def self.create_reactions(users, worlds)

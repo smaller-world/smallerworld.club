@@ -9,16 +9,10 @@ class VerifiedWorldKeyGrant
   include SmartPropertiesGeneratedMethods
 
   module SmartPropertiesGeneratedMethods
-    sig { returns(T::Array[T.untyped]) }
-    def post_type_ids; end
+    sig { returns(::WorldKeyType) }
+    def key_type; end
 
-    sig { params(post_type_ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
-    def post_type_ids=(post_type_ids); end
-
-    sig { returns(::String) }
-    def world_id; end
-
-    sig { params(world_id: ::String).returns(::String) }
-    def world_id=(world_id); end
+    sig { params(key_type: ::WorldKeyType).returns(::WorldKeyType) }
+    def key_type=(key_type); end
   end
 end

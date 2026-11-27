@@ -17,6 +17,8 @@ class UserReportsControllerTest < ActionDispatch::IntegrationTest
 
   test "reporting an account removes all world keys in both directions" do
     unrelated_key = create_member_key(world: @world, recipient: users(:jane))
+    reported_key = @world.keys.find_by!(recipient: @reporter)
+    Deprecated::PostTypeGrant.create!(world_key: reported_key, post_type: @world.post_types.create!(name: "journal entry"))
     assert_difference "Report.count", 1 do
       assert_difference "WorldKey.count", -@keys.size do
         assert_no_difference "World.count" do
@@ -27,7 +29,7 @@ class UserReportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to home_path
     assert_empty WorldKey.where(id: @keys.map(&:id))
-    assert_empty PostTypeGrant.where(world_key_id: @keys.map(&:id))
+    assert_empty Deprecated::PostTypeGrant.where(world_key_id: @keys.map(&:id))
     report = Report.last!
     assert_equal @reported, report.reportable
     assert_equal @reporter, report.reporter

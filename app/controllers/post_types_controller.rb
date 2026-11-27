@@ -4,27 +4,28 @@
 class PostTypesController < ApplicationController
   # == Actions ==
 
-  # GET /worlds/:world_id/post_types/new[?redirect_back_to=...]
+  # GET /worlds/:world_id/post_types/new
   def new
     respond_to do |format|
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        previous_url = params[:redirect_back_to]
         post_type = world.post_types.build
-        render Views::PostTypes::New.new(post_type:, previous_url:)
+        render Views::PostTypes::New.new(post_type:)
       end
     end
   end
 
-  # GET /post_types/:id/edit[?redirect_back_to=...]
+  # GET /post_types/:id/edit[?return_to=...]
   def edit
     respond_to do |format|
       format.html do
         post_type = find_post_type
         authorize!(post_type)
-        previous_url = params[:redirect_back_to]
-        render Views::PostTypes::Edit.new(post_type:, previous_url:)
+        return_url = if (url = params[:return_to]) && url.is_a?(String)
+          url
+        end
+        render Views::PostTypes::Edit.new(post_type:, return_url:)
       end
     end
   end
@@ -35,19 +36,17 @@ class PostTypesController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        previous_url = params[:previous_url]
         post_type_params = params.expect(
-          post_type: [ :label, :icon, granted_world_key_ids: [] ],
+          post_type: [ :name, :icon ],
         )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
           refresh_or_redirect_to(
-            previous_url || world,
+            [ :new, world, :post, type_id: post_type.id ],
             status: :see_other,
           )
         else
-          render Views::PostTypes::New.new(post_type:, previous_url:),
-            status: :unprocessable_content
+          render Views::PostTypes::New.new(post_type:), status: :unprocessable_content
         end
       end
     end
@@ -59,15 +58,16 @@ class PostTypesController < ApplicationController
       format.html do
         post_type = find_post_type
         authorize!(post_type)
-        previous_url = params[:previous_url]
+        return_url = if (url = params[:return_url]) && url.is_a?(String)
+          url
+        end
         post_type_params = params.expect(
-          post_type: [ :label, :icon, granted_world_key_ids: [] ],
+          post_type: [ :name, :icon ],
         )
         if post_type.update(**post_type_params)
-          redirect_to(previous_url || post_type.world, status: :see_other)
+          redirect_to(return_url || [ post_type.world, new_post: 1 ], status: :see_other)
         else
-          render Views::PostTypes::Edit.new(post_type:, previous_url:),
-            status: :unprocessable_content
+          render Views::PostTypes::Edit.new(post_type:, return_url:), status: :unprocessable_content
         end
       end
     end
@@ -80,14 +80,15 @@ class PostTypesController < ApplicationController
         post_type = find_post_type
         authorize!(post_type)
         if post_type.destroy
-          refresh_or_redirect_to(post_type.world)
+          refresh_or_redirect_to([ post_type.world, new_post: 1 ])
         else
           message = "failed to delete post type"
           if (error = post_type.errors.full_messages.first)
             message = "#{message}: #{error}"
           end
           flash.now[:alert] = message
-          render Views::PostTypes::Edit.new(post_type:), status: :unprocessable_content
+          render Views::PostTypes::Edit.new(post_type:, return_url: nil),
+            status: :unprocessable_content
         end
       end
     end

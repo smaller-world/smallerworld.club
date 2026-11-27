@@ -43,12 +43,12 @@ class PostTest < ActiveSupport::TestCase
     @owner = users(:bob)
     @friend = users(:sue)
     @world = create_world(owner: @owner, name: "Visibility World")
-    @diary_type = @world.post_types.create!(label: "diary")
+    @diary_type = @world.post_types.create!(name: "diary")
   end
 
   test "the owner sees posts of every type in their world" do
     journal_post = create_post(world: @world)
-    diary_post = create_post(world: @world, type_label: "diary")
+    diary_post = create_post(world: @world, type_name: "diary")
 
     scope = Post.visible_to(@owner)
     assert_includes scope, journal_post

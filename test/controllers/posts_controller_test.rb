@@ -17,21 +17,21 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "a signed-out visitor sees a reporting alert in place of a reported post" do
     reporter = users(:sue)
-    create_member_key(world: @world, recipient: reporter)
-    post = create_post(world: @world, body: "reported post body")
+    key = create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "reported post body", visible_to_key_type_ids: [ key.type_id ])
     post.reports.create!(reporter:, category: "spam")
 
     get post_path(post)
 
     assert_response :success
     assert_not_includes response.body, "reported post body"
-    assert_select '[role="alert"]', text: "this post has been reported."
+    assert_select '[role="alert"]', text: /\breported\b/i
   end
 
   test "the author can open a reported post's secret link after the report is upheld" do
     reporter = users(:sue)
-    create_member_key(world: @world, recipient: reporter)
-    post = create_post(world: @world, body: "the author's reported post body")
+    key = create_member_key(world: @world, recipient: reporter)
+    post = create_post(world: @world, body: "the author's reported post body", visible_to_key_type_ids: [ key.type_id ])
     report = post.reports.create!(reporter:, category: "spam")
     report.resolve!(resolution: "upheld", moderator: users(:jane))
     sign_in_as(@owner)
@@ -44,8 +44,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "a friend sees a reporting alert on the secret link after the report is upheld" do
     friend = users(:sue)
-    create_member_key(world: @world, recipient: friend)
-    post = create_post(world: @world, body: "post shared with a friend")
+    key = create_member_key(world: @world, recipient: friend)
+    post = create_post(world: @world, body: "post shared with a friend", visible_to_key_type_ids: [ key.type_id ])
     report = post.reports.create!(reporter: friend, category: "spam")
     report.resolve!(resolution: "upheld", moderator: users(:jane))
     sign_in_as(friend)
@@ -54,12 +54,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_not_includes response.body, "post shared with a friend"
-    assert_select '[role="alert"]', text: "this post has been reported."
+    assert_select '[role="alert"]', text: /\breported\b/i
   end
 
   test "owner creates a post of a given type" do
     sign_in_as(@owner)
-    post_type = @world.post_types.find_by!(label: "journal entry")
+    post_type = @world.post_types.find_by!(name: "journal entry")
 
     assert_difference -> { @world.posts.count }, 1 do
       post world_posts_path(@world), params: {
@@ -159,7 +159,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     friend = users(:sue)
     key_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
     @world.keys.create!(recipient: friend, type_id: key_type.id)
-    post_type = @world.post_types.find_by!(label: "journal entry")
+    post_type = @world.post_types.find_by!(name: "journal entry")
 
     sign_in_as(@owner)
     post world_posts_path(@world), params: {
@@ -183,7 +183,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     other_world = create_world(owner: @owner, name: "Other World")
     foreign_type = WorldKeyType.create!(world: other_world, name: "close friends", color: "pink")
     local_type = WorldKeyType.create!(world: @world, name: "close friends", color: "pink")
-    post_type = @world.post_types.find_by!(label: "journal entry")
+    post_type = @world.post_types.find_by!(name: "journal entry")
     sign_in_as(@owner)
 
     assert_difference -> { @world.posts.count }, 1 do

@@ -6,14 +6,14 @@
 #
 # Table name: world_invitations
 #
-#  id                     :uuid             not null, primary key
-#  granted_post_type_ids  :uuid             default([]), not null, is an Array
-#  recipient_phone_number :string           not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  key_type_id            :uuid
-#  recipient_id           :uuid
-#  world_id               :uuid             not null
+#  id                               :uuid             not null, primary key
+#  deprecated_granted_post_type_ids :uuid             default([]), not null, is an Array
+#  recipient_phone_number           :string           not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  key_type_id                      :uuid             not null
+#  recipient_id                     :uuid
+#  world_id                         :uuid             not null
 #
 # Indexes
 #
@@ -38,13 +38,14 @@ class WorldInvitation < ApplicationRecord
   belongs_to :world
   has_one :world_owner, through: :world, source: :owner
   has_many :world_key_recipients, through: :world, source: :key_recipients
-  has_many :world_post_types, through: :world, source: :post_types
 
+  belongs_to :key_type, class_name: "WorldKeyType"
   belongs_to :recipient, class_name: "User", inverse_of: :received_world_invitations, optional: true
+
   has_one :world_key,
     inverse_of: :invitation,
     foreign_key: :invitation_id,
-    dependent: :destroy
+    dependent: :nullify
 
   sig { returns(World) }
   def world!
@@ -64,7 +65,6 @@ class WorldInvitation < ApplicationRecord
   # == Normalizations ==
 
   normalizes_phone_number :recipient_phone_number
-  normalizes :granted_post_type_ids, with: ->(ids) { ids.compact }
 
   # == Validations ==
 
@@ -72,7 +72,7 @@ class WorldInvitation < ApplicationRecord
     presence: true,
     uniqueness: { scope: :world, message: "already invited" },
     phone: { possible: true, types: :mobile, extensions: false }
-  validates :granted_post_type_ids, presence: { message: "select at least one" }
+  validate :validate_key_type_world
   validate :validate_recipient_not_world_owner
   validate :validate_recipient_not_world_key_recipient
 
@@ -101,23 +101,6 @@ class WorldInvitation < ApplicationRecord
     )
   end
 
-  # == World Keys ==
-
-  sig { returns(String) }
-  def world_key_grant_message
-    WorldKey.grant_verifier.generate({
-      world_id:,
-      post_type_ids: granted_post_type_ids,
-    })
-  end
-
-  # == Methods ==
-
-  sig { returns(PostType::PrivateAssociationRelation) }
-  def granted_post_types
-    world_post_types.where(id: granted_post_type_ids)
-  end
-
   private
 
   # == Callbacks ==
@@ -133,6 +116,15 @@ class WorldInvitation < ApplicationRecord
   def set_recipient_phone_number
     if (recipient = self.recipient)
       self.recipient_phone_number = recipient.phone_number
+    end
+  end
+
+  sig { void }
+  def validate_key_type_world
+    if !key_type_id?
+      errors.add(:key_type_id, "select a key type")
+    elsif key_type&.world_id != world_id
+      errors.add(:key_type_id, "must belong to this world")
     end
   end
 

@@ -16,7 +16,7 @@ class WorldKeyGrantsController < ApplicationController
   # GET /world_key_grants/:message
   def show
     verified_grant = verify_grant_message
-    world = verified_grant.world
+    world = verified_grant.world!
     if (recipient = Current.user) && recipient.world_keys.exists?(world:)
       redirect_to(world)
     else
@@ -24,11 +24,13 @@ class WorldKeyGrantsController < ApplicationController
     end
   end
 
-  # GET /worlds/:world_id/key_grants/new?granted_post_type_ids=...
+  # GET /worlds/:world_id/key_grants/new?key_type_id=...
   def new
     world = find_world
     authorize!(world, to: :manage?)
-    grant = WorldKeyGrant.new(params.permit(granted_post_type_ids: []), world:)
+
+    grant = WorldKeyGrant.new(params.permit(:key_type_id), world:)
+    grant.validate
     render Views::WorldKeyGrants::New.new(grant:)
   end
 
@@ -55,7 +57,7 @@ class WorldKeyGrantsController < ApplicationController
     render Views::Errors::InvalidWorldKeyGrant.new, content_type: "text/html", status: :bad_request
   end
 
-  sig { params(scope: T.untyped).returns(World) }
+  sig { params(scope: World::PrivateRelation).returns(World) }
   def find_world(scope: World.all)
     scope.friendly.find(params.fetch(:world_id))
   end
@@ -67,10 +69,10 @@ class WorldKeyGrantsController < ApplicationController
 
   sig { params(current_user: User, verified_grant: VerifiedWorldKeyGrant).void }
   def accept_key(current_user:, verified_grant:)
-    world = verified_grant.world
+    world = verified_grant.world!
     world_key = current_user.world_keys.build(
       world:,
-      granted_post_type_ids: verified_grant.post_type_ids,
+      type: verified_grant.key_type,
     )
     if world_key.save
       flash[:celebrate] = true
@@ -92,14 +94,14 @@ class WorldKeyGrantsController < ApplicationController
 
   sig { params(verified_grant: VerifiedWorldKeyGrant).void }
   def accept_invitation(verified_grant:)
-    world = verified_grant.world
+    world = verified_grant.world!
     invitation_params = params.expect(world_invitation: [ :recipient_phone_number ])
     recipient_phone_number = WorldInvitation.normalize_value_for(
       :recipient_phone_number,
       invitation_params.fetch(:recipient_phone_number),
     )
     invitation = world.invitations.find_or_initialize_by(recipient_phone_number:)
-    if invitation.update(granted_post_type_ids: verified_grant.post_type_ids)
+    if invitation.update(key_type: verified_grant.key_type)
       if hotwire_native_app?
         redirect_to(
           new_session_path(

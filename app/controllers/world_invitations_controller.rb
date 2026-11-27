@@ -10,7 +10,8 @@ class WorldInvitationsController < ApplicationController
       format.html do
         invitation = find_invitation(scope: WorldInvitation.pending_acceptance)
         authorize!(invitation)
-        redirect_to(world_key_grant_path(message: invitation.world_key_grant_message))
+        message = WorldKey.grant_message(key_type_id: invitation.key_type_id)
+        redirect_to(world_key_grant_path(message:))
       end
     end
   end
@@ -48,9 +49,7 @@ class WorldInvitationsController < ApplicationController
         world = find_world
         authorize!(world, to: :manage?)
         previous_url = params[:previous_url]
-        invitation_params = params.expect(
-          world_invitation: [ :recipient_id, granted_post_type_ids: [] ],
-        )
+        invitation_params = params.expect(world_invitation: [ :recipient_id, :key_type_id ])
         invitation = world.invitations.build(**invitation_params)
         if invitation.save
           if previous_url
@@ -77,7 +76,7 @@ class WorldInvitationsController < ApplicationController
       format.html do
         invitation = find_invitation
         authorize!(invitation)
-        invitation_params = params.expect(world_invitation: [ granted_post_type_ids: [] ])
+        invitation_params = params.expect(world_invitation: [ :key_type_id ])
         if invitation.update(**invitation_params)
           refresh_or_redirect_to([ invitation.world, :keys ], status: :see_other)
         else

@@ -17,7 +17,8 @@ class Views::Home::Show < Views::Base
     @world_keys = T.let(
       @current_user
         .world_keys
-        .order_by_latest_visible_post
+        .with_visible_post_activity
+        .order("latest_post_at DESC NULLS LAST")
         .with_world_and_attached_icon,
       WorldKey::PrivateAssociationRelation,
     )
@@ -34,7 +35,7 @@ class Views::Home::Show < Views::Base
   sig { override.void }
   def view_template
     Components::AppLayout(
-      title: ("home" unless hotwire_native_app?),
+      page_title: ("home" unless hotwire_native_app?),
       force_header: true,
     ) do |app_layout|
       show_alert = !hotwire_native_app? && !android_browser?
@@ -111,33 +112,6 @@ class Views::Home::Show < Views::Base
 
   # == Helpers ==
 
-  sig { params(world_key: WorldKey).returns(Integer) }
-  def badge_count_for(world_key)
-    badge_counts_by_world_key_id.fetch(world_key.id, 0)
-  end
-
-  # Counts new visible posts for every one of the current user's world keys in a
-  # single grouped query, avoiding an N+1 across `@world_keys`. Mirrors
-  # `WorldKey#new_visible_world_posts_since_last_visited`: only posts of granted
-  # post types, not hidden from the recipient, created after each key was last
-  # visited.
-  sig { returns(T::Hash[String, Integer]) }
-  def badge_counts_by_world_key_id
-    @badge_counts_by_world_key_id ||= T.let(
-      PostTypeGrant
-        .joins(:world_key, post_type: :posts)
-        .where(world_keys: { recipient: @current_user })
-        .where.not("world_keys.recipient_id = ANY(posts.hidden_from_user_ids)")
-        .where(
-          "world_keys.world_last_visited_at IS NULL OR " \
-            "posts.created_at > world_keys.world_last_visited_at",
-        )
-        .group("world_keys.id")
-        .count,
-      T.nilable(T::Hash[String, Integer]),
-    )
-  end
-
   sig { void }
   def owned_worlds
     if @owned_worlds.any?
@@ -192,7 +166,7 @@ class Views::Home::Show < Views::Base
     ul(class: "flex gap-4 flex-wrap justify-center") do
       @world_keys.each do |world_key|
         world = world_key.world!
-        badge_count = badge_count_for(world_key)
+        badge_count = world_key[:unread_count]
         li(
           class: "hidden starting:opacity-0 starting:scale-95",
           data: {
@@ -249,7 +223,7 @@ class Views::Home::Show < Views::Base
                 data: { world_icon_size: "sm" },
               )
               div(class: "absolute inset-0 flex items-center justify-center") do
-                Icon("huge/key-01", class: "size-10 text-white")
+                Icon("huge/key-02", class: "size-10 text-white")
               end
             end
             span(class: "world-icon-label text-xs text-muted-foreground") do
