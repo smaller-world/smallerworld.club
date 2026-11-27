@@ -279,7 +279,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (3.1.0)
+    json (3.2.0)
     jwt (3.2.0)
       base64
     kamal (2.12.0)
@@ -374,7 +374,7 @@ GEM
       racc (~> 1.4)
     os (1.1.4)
     ostruct (0.6.3)
-    pagy (43.8.1)
+    pagy (43.8.5)
       json
       uri
       yaml
@@ -861,7 +861,7 @@ CHECKSUMS
   irb (1.19.0) sha256=55ee56acbdd6c9fe06a2e6909f46a24e5c41f45f16906bab04e8049cf46f1d27
   jmespath (1.6.2) sha256=238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1
   jsbundling-rails (1.3.1) sha256=0fa03f6d051c694cbf55a022d8be53399879f2c4cf38b2968f86379c62b1c2ca
-  json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
+  json (3.2.0) sha256=4a4e222a9ee6ffb296ab3171b6b39d85fec83afc4e7b57eee17edf68c74aec87
   jwt (3.2.0) sha256=5419b1fe37b1da0982bd07051f573a8b8789ab724c2aa7e785e4784a3ed217d7
   kamal (2.12.0) sha256=c51d1ab085e515470f98d0c0f043637122b5ebf76e8b610cb1fbbed0b7f9b8fa
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
@@ -902,7 +902,7 @@ CHECKSUMS
   nokogiri (1.19.7-x86_64-linux-gnu) sha256=25865ccb462f714e712fdf8906fde07849cb6704a808e3d629d75baa5af5dd3b
   os (1.1.4) sha256=57816d6a334e7bd6aed048f4b0308226c5fb027433b67d90a9ab435f35108d3f
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
-  pagy (43.8.1) sha256=8f136a4bded93b04c87bc385e8be24c8b5adbaab1c0fac1c4c0c63eddae9c2ff
+  pagy (43.8.5) sha256=ac428e2345af0456170c78a384be3208926f1bee2ebe667eaa3f15047eb94fe7
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
   pg (1.7.0) sha256=f7b536501284e883d4c9ef86dbde0313063e4aaafc23575b0017b0d572a26afb
