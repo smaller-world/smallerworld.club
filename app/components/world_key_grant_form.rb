@@ -142,7 +142,7 @@ class Components::WorldKeyGrantForm < Components::Base
         Components::Badge(class: "self-center") do
           "now, get your friend to scan this qr code:"
         end
-        grant_qr_code(url)
+        qr_code(url)
         div(class: "self-center flex flex-col gap-3 max-w-xs") do
           div(class: "flex items-center gap-3") do
             Components::Separator(class: "flex-1 shrink")
@@ -184,10 +184,14 @@ class Components::WorldKeyGrantForm < Components::Base
   end
 
   sig { params(url: String).void }
-  def grant_qr_code(url)
+  def qr_code(url)
     qr_code = RQRCode::QRCode.new(url)
     svg = qr_code.as_svg(use_path: true, viewbox: true, color: :currentColor)
-    div(class: "relative", data: { slot: "grant-qr-code" }) do
+
+    div(class: "relative", data: {
+      controller: "scroll-into-focus",
+      slot: "grant-qr-code",
+    }) do
       raw(safe(svg)) # rubocop:disable Rails/OutputSafety
       div(class: "absolute inset-0 flex items-center justify-center") do
         div(class: "bg-background flex items-center rounded-world-icon size-17 p-2.5") do

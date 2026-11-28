@@ -8,6 +8,7 @@ import {
   AlertController,
   DismissableController,
   IntersectionController,
+  ScrollIntoFocusController,
 } from "stimulus-library";
 import { VisibilityController } from "stimulus-use";
 
@@ -122,6 +123,7 @@ application.register("dismissable", DismissableController);
 application.register("notifications-status", NotificationsStatusController);
 application.register("page-visibility", VisibilityController);
 application.register("select-all", SelectAllController);
+application.register("scroll-into-focus", ScrollIntoFocusController);
 
 // == Bridge Components
 /* eslint-disable @typescript-eslint/no-unsafe-argument */

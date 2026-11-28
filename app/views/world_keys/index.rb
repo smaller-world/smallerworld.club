@@ -50,23 +50,23 @@ class Views::WorldKeys::Index < Views::Base
 
         if @world_keys.any?
           Components::ItemGroup() do |item_group|
-            @world_keys.each do |world_key|
-              item_group.item(
-                element: :a,
-                href: url_for([ :new, @world, :key_grant ]),
-                variant: :muted,
-                size: :sm,
-              ) do |item|
-                item.media(variant: :icon) do
-                  Icon("huge/plus-sign-square")
-                end
-                item.content(class: "gap-0") do |item_content|
-                  item_content.title do
-                    "add a friend"
-                  end
+            item_group.item(
+              element: :a,
+              href: url_for([ :new, @world, :key_grant ]),
+              variant: :outline,
+              size: :sm,
+              class: "border-dashed",
+            ) do |item|
+              item.media(variant: :icon) do
+                Icon("huge/user-add-01")
+              end
+              item.content(class: "gap-0") do |item_content|
+                item_content.title do
+                  "add a friend to your world"
                 end
               end
-              div
+            end
+            @world_keys.each do |world_key|
               world_key_item(world_key)
             end
           end
