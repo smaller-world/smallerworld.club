@@ -4,6 +4,16 @@
 
     [data-slot="qr-code-frame"] {
       @apply flex flex-col gap-4 empty:hidden;
+
+      &:has([data-slot="copy-invite-link-button"]:not([data-copied])) {
+        [data-slot="invite-link-warning"] {
+          @apply opacity-60;
+        }
+      }
+    }
+
+    [data-slot="invite-link-warning"] {
+      @apply text-center text-xs text-balance text-muted-foreground;
     }
 
     [data-slot="copy-invite-link-button"] {

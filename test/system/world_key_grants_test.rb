@@ -51,7 +51,7 @@ class WorldKeyGrantsTest < ApplicationSystemTestCase
 
     sign_in_as(owner)
     visit world_keys_path(world)
-    click_link "add a friend"
+    click_link "add a friend to your world"
     find("label", text: "chosen family").click
     link = find_button("copy invite link")["data-clipboard-copy-value"]
 

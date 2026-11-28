@@ -137,15 +137,22 @@ class Components::WorldKeyGrantForm < Components::Base
     turbo_frame_tag("world_key_grant_form_qr_code", data: { slot: "qr-code-frame" }) do
       if @grant.valid? && (key_type_id = @grant.key_type_id)
         url = grant_url(key_type_id:)
+
         Components::Badge(class: "self-center") do
           "now, get your friend to scan this qr code:"
         end
         grant_qr_code(url)
-        div(class: "flex flex-col items-center gap-2") do
+        div(class: "self-center flex flex-col gap-3 max-w-xs") do
+          div(class: "flex items-center gap-3") do
+            Components::Separator(class: "flex-1 shrink")
+            span(class: "text-xs text-muted-foreground") { "or" }
+            Components::Separator(class: "flex-1 shrink")
+          end
           Components::Button(
             type: :button,
             variant: :secondary,
             size: :xs,
+            class: "self-center",
             data: {
               slot: "copy-invite-link-button",
               controller: "clipboard flash-text",
@@ -157,6 +164,15 @@ class Components::WorldKeyGrantForm < Components::Base
             button.inline_start_icon("huge/link-01")
             span(data: { flash_text_target: "container" }) do
               "copy invite link"
+            end
+          end
+          if (key_type = @grant.key_type)
+            p(data: { slot: "invite-link-warning" }) do
+              plain("anyone with this link will be able to join your world as ")
+              span(class: "text-key-foreground", data: { key_color: key_type.color }) do
+                key_type.name
+              end
+              plain("!")
             end
           end
         end

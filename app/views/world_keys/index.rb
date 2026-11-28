@@ -85,7 +85,7 @@ class Views::WorldKeys::Index < Views::Base
             end
             empty.content do
               button_link_to(
-                "give a friend a key to your world",
+                "add a friend to your world",
                 [ :new, @world, :key_grant ],
                 variant: :default,
                 icon: "huge/user-add-01",

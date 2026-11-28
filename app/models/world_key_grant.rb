@@ -27,6 +27,15 @@ class WorldKeyGrant
     inclusion: { in: :world_key_type_ids, message: "must belong to this world" },
     allow_nil: true
 
+  # == Methods ==
+
+  sig { returns(T.nilable(WorldKeyType)) }
+  def key_type
+    if (id = key_type_id)
+      @world.key_types.find(id)
+    end
+  end
+
   private
 
   # == Helpers ==
