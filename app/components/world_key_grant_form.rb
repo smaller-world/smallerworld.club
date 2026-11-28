@@ -36,7 +36,7 @@ class Components::WorldKeyGrantForm < Components::Base
       ),
     ) do |form|
       Components::FieldSet(class: "gap-6") do |field_set|
-        div(class: "text-balance") do
+        div(class: "flex flex-col items-center text-balance") do
           field_set.legend(class: "text-center mb-0.5") do
             "pick a key to give to your friend"
           end
@@ -45,7 +45,7 @@ class Components::WorldKeyGrantForm < Components::Base
           end
         end
         form.Field(:key_type_id).radios(
-          @world.key_types,
+          @world.key_types.alphabetical,
           class: if @world.key_types.size.even?
                    "grid-cols-[min-content_min-content] place-content-center"
                  else
@@ -75,44 +75,96 @@ class Components::WorldKeyGrantForm < Components::Base
             end
           end
         end
+        edit_key_types_button
       end
 
-      turbo_frame_tag("world_key_grant_form_qr_code", data: { slot: "qr-code-frame" }) do
-        if @grant.valid? && (key_type_id = @grant.key_type_id)
-          url = grant_url(key_type_id:)
-          Components::Badge(class: "self-center") do
-            "now, get your friend to scan this qr code:"
-          end
-          grant_qr_code(url)
-          div(class: "flex flex-col items-center gap-2") do
-            Components::Button(
-              type: :button,
-              variant: :secondary,
-              size: :xs,
-              data: {
-                slot: "copy-invite-link-button",
-                controller: "clipboard flash-text",
-                clipboard_copy_value: url,
-                flash_text_content_value: "invite link copied!",
-                action: "clipboard#copy clipboard:copied->flash-text#flash",
-              },
-            ) do |button|
-              button.inline_start_icon("huge/link-01")
-              span(data: { flash_text_target: "container" }) do
-                "copy invite link"
-              end
-            end
-          end
-        else
-          form.error_for(:key_type_id, class: "text-center")
-        end
-      end
+      qr_code_frame(form:)
     end
   end
 
   private
 
   # == Helpers ==
+
+  sig { void }
+  def edit_key_types_button
+    Components::DropdownMenu() do |menu|
+      menu.with_trigger_button(
+        variant: :secondary,
+        size: :xs,
+        class: "self-center",
+      ) do |button|
+        button.inline_start_icon("huge/settings-01")
+        span { "edit key types" }
+      end
+      menu.with_content(anchor: :bottom) do |menu_content|
+        menu_content.group do
+          @world.key_types.alphabetical.find_each do |key_type|
+            menu_content.link_item_to(
+              [ :edit, key_type ],
+              class: "text-key-foreground",
+              data: {
+                controller: "return-to-self",
+                key_color: key_type.color,
+              },
+            ) do
+              Icon("huge/key-02")
+              span do
+                span(class: "text-muted-foreground group-focus/dropdown-menu-item:text-primary") { "edit " }
+                plain(key_type.name)
+              end
+            end
+          end
+        end
+        menu_content.separator
+        menu_content.group do
+          menu_content.link_item_to(
+            [ :new, @world, :key_type ],
+            data: {
+              controller: "return-to-self",
+            },
+          ) do
+            Icon("huge/plus-sign-square")
+            span { "add a new key type" }
+          end
+        end
+      end
+    end
+  end
+
+  sig { params(form: Components::Form[WorldKeyGrant]).returns(T.untyped) }
+  def qr_code_frame(form:)
+    turbo_frame_tag("world_key_grant_form_qr_code", data: { slot: "qr-code-frame" }) do
+      if @grant.valid? && (key_type_id = @grant.key_type_id)
+        url = grant_url(key_type_id:)
+        Components::Badge(class: "self-center") do
+          "now, get your friend to scan this qr code:"
+        end
+        grant_qr_code(url)
+        div(class: "flex flex-col items-center gap-2") do
+          Components::Button(
+            type: :button,
+            variant: :secondary,
+            size: :xs,
+            data: {
+              slot: "copy-invite-link-button",
+              controller: "clipboard flash-text",
+              clipboard_copy_value: url,
+              flash_text_content_value: "invite link copied!",
+              action: "clipboard#copy clipboard:copied->flash-text#flash",
+            },
+          ) do |button|
+            button.inline_start_icon("huge/link-01")
+            span(data: { flash_text_target: "container" }) do
+              "copy invite link"
+            end
+          end
+        end
+      else
+        form.error_for(:key_type_id, class: "text-center")
+      end
+    end
+  end
 
   sig { params(url: String).void }
   def grant_qr_code(url)

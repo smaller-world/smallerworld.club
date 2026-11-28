@@ -151,7 +151,6 @@ class Components::PostCard < Components::Base
             Components::ImageStack(images:)
           end
         end
-
         card.footer do
           if @active_report
             span(class: "text-xs text-destructive") do
@@ -177,7 +176,7 @@ class Components::PostCard < Components::Base
         end
       end
 
-      turbo_stream_from(@post, hidden: true)
+      turbo_stream_from(@post)
     end
   end
 

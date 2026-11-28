@@ -147,10 +147,6 @@ module Components
   sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
   def DropdownMenu(**attributes, &content); end
 
-  # source://app/components/edit_world_key_types_button.rb:4
-  sig { params(world: ::World, attributes: T.untyped).void }
-  def EditWorldKeyTypesButton(world:, **attributes); end
-
   # source://app/components/emoji_select.rb:4
   sig { params(invalid: T::Boolean, attributes: T.untyped).void }
   def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
@@ -169,7 +165,7 @@ module Components
       orientation: ::Symbol,
       invalid: T::Boolean,
       attributes: T.untyped,
-      content: T.proc.params(instance: Components::Field).void
+      content: T.nilable(T.proc.params(instance: Components::Field).void)
     ).void
   end
   def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
@@ -508,6 +504,10 @@ module Components
   sig { params(world: ::World, attributes: T.untyped).void }
   def WorldKeyGrantIconButton(world:, **attributes); end
 
+  # source://app/components/world_key_type_form.rb:4
+  sig { params(key_type: ::WorldKeyType, return_url: T.nilable(::String)).void }
+  def WorldKeyTypeForm(key_type:, return_url:); end
+
   # source://app/components/world_key_world_visit_form.rb:4
   sig { params(world_key: ::WorldKey, attributes: T.untyped).void }
   def WorldKeyWorldVisitForm(world_key:, **attributes); end
@@ -680,10 +680,6 @@ module Components
     sig { params(attributes: T.untyped, content: T.proc.params(instance: Components::DropdownMenu).void).void }
     def DropdownMenu(**attributes, &content); end
 
-    # source://app/components/edit_world_key_types_button.rb:4
-    sig { params(world: ::World, attributes: T.untyped).void }
-    def EditWorldKeyTypesButton(world:, **attributes); end
-
     # source://app/components/emoji_select.rb:4
     sig { params(invalid: T::Boolean, attributes: T.untyped).void }
     def EmojiSelect(invalid: T.unsafe(nil), **attributes); end
@@ -702,7 +698,7 @@ module Components
         orientation: ::Symbol,
         invalid: T::Boolean,
         attributes: T.untyped,
-        content: T.proc.params(instance: Components::Field).void
+        content: T.nilable(T.proc.params(instance: Components::Field).void)
       ).void
     end
     def Field(orientation: T.unsafe(nil), invalid: T.unsafe(nil), **attributes, &content); end
@@ -1040,6 +1036,10 @@ module Components
     # source://app/components/world_key_grant_icon_button.rb:4
     sig { params(world: ::World, attributes: T.untyped).void }
     def WorldKeyGrantIconButton(world:, **attributes); end
+
+    # source://app/components/world_key_type_form.rb:4
+    sig { params(key_type: ::WorldKeyType, return_url: T.nilable(::String)).void }
+    def WorldKeyTypeForm(key_type:, return_url:); end
 
     # source://app/components/world_key_world_visit_form.rb:4
     sig { params(world_key: ::WorldKey, attributes: T.untyped).void }

@@ -86,7 +86,7 @@ class Views::Worlds::Show < Views::Base
       app_layout.page_container(class: "max-w-lg") do
         div(class: "flex flex-col gap-6") do
           section(class: "flex flex-col items-center gap-2") do
-            div(class: "relative") do
+            div(class: "relative mt-2") do
               image_tag(
                 @world.page_icon_variant,
                 id: dom_id(@world, :page_icon),

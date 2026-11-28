@@ -49,7 +49,7 @@ export default class PostTypeSelectController extends Typed(
   #updateSearchParams(postTypeId: string): void {
     const url = new URL(location.href);
     url.searchParams.set("type_id", postTypeId);
-    history.replaceState(null, "", url.toString());
+    history.replaceState(null, "", url.href);
   }
 
   #updateEditAnchor(postTypeId: string): void {

@@ -8,6 +8,6 @@ export default class FrameResetController extends Controller<FrameElement> {
     const { src } = this.element;
     const url = new URL(src);
     url.search = "";
-    this.element.src = url.toString();
+    this.element.src = url.href;
   }
 }

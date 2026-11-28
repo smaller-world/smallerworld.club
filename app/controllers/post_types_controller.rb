@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class PostTypesController < ApplicationController
+  include Returnable
+
   # == Actions ==
 
   # GET /worlds/:world_id/post_types/new
@@ -22,9 +24,6 @@ class PostTypesController < ApplicationController
       format.html do
         post_type = find_post_type
         authorize!(post_type)
-        return_url = if (url = params[:return_to]) && url.is_a?(String)
-          url
-        end
         render Views::PostTypes::Edit.new(post_type:, return_url:)
       end
     end
@@ -36,17 +35,15 @@ class PostTypesController < ApplicationController
       format.html do
         world = find_world
         authorize!(world, to: :manage?)
-        post_type_params = params.expect(
-          post_type: [ :name, :icon ],
-        )
         post_type = world.post_types.build(**post_type_params)
         if post_type.save
           refresh_or_redirect_to(
-            [ :new, world, :post, type_id: post_type.id ],
+            return_url || [ post_type.world!, new_post: 1 ],
             status: :see_other,
           )
         else
-          render Views::PostTypes::New.new(post_type:), status: :unprocessable_content
+          render Views::PostTypes::New.new(post_type:),
+            status: :unprocessable_content
         end
       end
     end
@@ -58,16 +55,14 @@ class PostTypesController < ApplicationController
       format.html do
         post_type = find_post_type
         authorize!(post_type)
-        return_url = if (url = params[:return_url]) && url.is_a?(String)
-          url
-        end
-        post_type_params = params.expect(
-          post_type: [ :name, :icon ],
-        )
         if post_type.update(**post_type_params)
-          redirect_to(return_url || [ post_type.world, new_post: 1 ], status: :see_other)
+          refresh_or_redirect_to(
+            return_url || [ post_type.world!, new_post: 1 ],
+            status: :see_other,
+          )
         else
-          render Views::PostTypes::Edit.new(post_type:, return_url:), status: :unprocessable_content
+          render Views::PostTypes::Edit.new(post_type:, return_url:),
+            status: :unprocessable_content
         end
       end
     end
@@ -106,5 +101,10 @@ class PostTypesController < ApplicationController
   sig { returns(World) }
   def find_world
     World.friendly.find(params.fetch(:world_id))
+  end
+
+  sig { returns(ActionController::Parameters) }
+  def post_type_params
+    params.expect(post_type: [ :name, :icon ])
   end
 end

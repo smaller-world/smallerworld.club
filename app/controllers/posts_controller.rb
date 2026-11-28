@@ -9,7 +9,7 @@ class PostsController < ApplicationController
 
   # == Actions ==
 
-  # GET /world/:world_id/posts[?type_id=...][&favorited=1]
+  # GET /worlds/:world_id/posts[?type_id=...][&favorited=1]
   def index
     current_user = Current.user!
     world = find_world
@@ -90,7 +90,7 @@ class PostsController < ApplicationController
     end
   end
 
-  # GET /world/:world_id/posts/new?type_id=...
+  # GET /worlds/:world_id/posts/new?type_id=...
   def new
     respond_to do |format|
       format.html do
@@ -115,7 +115,7 @@ class PostsController < ApplicationController
     end
   end
 
-  # POST /world/:world_id/posts
+  # POST /worlds/:world_id/posts
   def create
     respond_to do |format|
       format.html do

@@ -25,20 +25,17 @@ class Components::PostTypeForm < Components::Base
   def view_template
     Components::Form(
       @post_type,
-      action: @post_type.new_record? ? [ @world, @post_type ] : @post_type,
+      action:,
       vibrate_on_submit: true,
     ) do |form|
       if (return_url = @return_url)
-        input(type: "hidden", name: "return_url", value: return_url)
+        input(type: "hidden", name: "return_to", value: return_url)
       end
 
       form.wrapped(
         form.field(:name).text(
           placeholder: @post_type.name.presence || "journal entry",
           required: true,
-          data: {
-            controller: "prevent-enter-submit",
-          },
         ),
         label: "what's this post type called?",
       )
@@ -87,5 +84,14 @@ class Components::PostTypeForm < Components::Base
         end
       end
     end
+  end
+
+  private
+
+  # == Helpers ==
+
+  sig { returns(Object) }
+  def action
+    @post_type.new_record? ? [ @world, @post_type ] : @post_type
   end
 end

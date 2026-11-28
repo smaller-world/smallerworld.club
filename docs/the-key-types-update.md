@@ -2,8 +2,9 @@
 
 **Status** — The `codex/key-types-update` branch has key type storage, core
 audience reads, the historical backfill, and legacy grant retirement. Owners can
-share a signed key link, change a friend's key type, and select key types in the
-post composer. The remaining work and production cutover are tracked below.
+manage key types, share a signed key link, change a friend's key type, and
+select key types in the post composer. The remaining work and production cutover
+are tracked below.
 
 Giving a friend a key lets them into a world. The owner chooses which key types
 can see each post, so they can welcome someone new and keep a journal entry for
@@ -103,9 +104,10 @@ the new rules in [post access](post-access.md).
 1. Finish individual audience editing and the walkthrough (checkpoints 5 and 6).
    The composer already handles key type selections. Add the pending-world gate,
    then verify publishing and editing through both walkthrough choices.
-2. Finish key management and its UI in parallel (checkpoint 4). Signed links and
-   phone redemption work. Direct invitation forms, key-type settings, and
-   preserving past access when changing a key type still need implementation.
+2. Finish key management and its UI in parallel (checkpoint 4). Add key type
+   selection and submission to direct invitation forms and the option to
+   preserve past access when changing a friend's key type. Verify the key type
+   settings flows on the release candidate.
 3. Finish the remaining audience read and notification work (checkpoint 2).
    Decide whether explicit post-type subscriptions ship with key types or in a
    follow-up.
@@ -281,7 +283,10 @@ editor. Changing the type currently applies the new type's audience immediately
 and keeps any existing individual exceptions. Request tests cover that feed
 change, denial of a friend's attempt to change their own key, and revocation.
 
-Key-type settings have route and dialog scaffolding and still need a controller.
+Owners can manage key types from the friends list and add or edit them while
+sharing a key. The key editor also links to each type's edit page. A key type
+needs a name that's unique in its world and a selected color.
+
 The model blocks deletion for active keys and pending invitations. If a key has
 changed type, removing the old type deletes the accepted invitation and leaves
 the key in place. Tests also cover removal of the old type from post audiences.

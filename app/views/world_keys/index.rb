@@ -31,15 +31,14 @@ class Views::WorldKeys::Index < Views::Base
       app_layout.with_navigation(class: "max-w-md") do
         button_back_to(@world.name, @world, variant: :secondary)
         button_link_to(
-          "give a key to a new friend",
-          [ :new, @world, :key_grant ],
-          variant: :default,
-          icon: "huge/user-add-01",
-          class: "self-center",
+          "edit key types",
+          [ @world, :key_types ],
+          variant: :secondary,
+          icon: "huge/settings-01",
           data: {
             controller: "button-bridge",
-            bridge_ios_image: "person.crop.circle.fill.badge.plus",
-            bridge_android_image: "person_add",
+            bridge_ios_image: "gearshape.fill",
+            bridge_android_image: "settings",
           },
         )
       end
@@ -50,8 +49,24 @@ class Views::WorldKeys::Index < Views::Base
         end
 
         if @world_keys.any?
-          Components::ItemGroup() do
+          Components::ItemGroup() do |item_group|
             @world_keys.each do |world_key|
+              item_group.item(
+                element: :a,
+                href: url_for([ :new, @world, :key_grant ]),
+                variant: :muted,
+                size: :sm,
+              ) do |item|
+                item.media(variant: :icon) do
+                  Icon("huge/plus-sign-square")
+                end
+                item.content(class: "gap-0") do |item_content|
+                  item_content.title do
+                    "add a friend"
+                  end
+                end
+              end
+              div
               world_key_item(world_key)
             end
           end
@@ -65,7 +80,7 @@ class Views::WorldKeys::Index < Views::Base
                 span { "nobody has access to your world!" }
               end
               empty.description do
-                "you haven't shared any world keys with anyone yet"
+                "you haven't added any friends yet"
               end
             end
             empty.content do
@@ -107,7 +122,7 @@ class Views::WorldKeys::Index < Views::Base
     recipient = world_key.recipient!
     type = world_key.type!
     Components::Item(
-      variant: :muted,
+      variant: :outline,
       class: "flex-nowrap items-start gap-2",
     ) do |item|
       item.content(class: "flex-row items-center gap-2") do |item_content|

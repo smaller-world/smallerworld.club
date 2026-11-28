@@ -79,8 +79,8 @@ Rails.application.routes.draw do
   end
   resources :world_keys, path: "/worlds/:world_id/keys", only: :index
   resources :world_key_types,
-    path: "/world/:world_id/key_types",
-    only: [ :new, :create, :destroy ]
+    path: "/worlds/:world_id/key_types",
+    only: [ :index, :new, :create ]
   resources :world_key_grants, path: "/worlds/:world_id/key_grants", only: :new
   resources :world_invitations,
     path: "/worlds/:world_id/invitations",

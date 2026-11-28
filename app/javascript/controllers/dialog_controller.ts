@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import type { TurboClickEvent } from "@hotwired/turbo";
 import { Typed } from "stimulus-typescript";
 
 import { addBeforeCacheAction } from "#helpers/stimulus_helpers";
@@ -35,5 +36,25 @@ export default class DialogController extends Typed(Controller<HTMLElement>, {
 
   closeImmediately(): void {
     this.contentTarget.requestClose();
+  }
+
+  closeAndClick(event: MouseEvent): void {
+    if (!this.contentTarget.open) {
+      return;
+    }
+    const { currentTarget } = event;
+    if (!(currentTarget instanceof HTMLElement)) {
+      return;
+    }
+
+    event.preventDefault();
+    this.contentTarget.addEventListener(
+      "transitionend",
+      () => {
+        currentTarget.click();
+      },
+      { once: true },
+    );
+    this.contentTarget.close();
   }
 }

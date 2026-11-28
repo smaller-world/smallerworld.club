@@ -18,7 +18,7 @@ export default class WorldPostFiltersFormController extends Controller<HTMLFormE
     } else {
       url.searchParams.delete("only_favorited");
     }
-    history.pushState(null, "", url.toString());
+    history.pushState(null, "", url.href);
     this.element.requestSubmit();
   }
 }

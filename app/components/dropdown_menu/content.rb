@@ -159,7 +159,8 @@ class Components::DropdownMenu::Content < Components::Base
     variant: :default,
     inset: false,
     disabled: false,
-    **attributes, &content
+    **attributes,
+    &content
   )
     unless variant.in?(ITEM_VARIANTS)
       raise InvalidParameter.new(parameter: :variant, value: variant)

@@ -94,7 +94,6 @@ class Components::PostForm < Components::Base
               data: {
                 post_form_type_target: "editAnchor",
                 controller: "return-to-self",
-                action: "return-to-self#visit",
               },
             )
           end

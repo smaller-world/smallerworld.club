@@ -45,12 +45,15 @@ class WorldKeyType < ApplicationRecord
 
   # == Validations ==
 
-  validates :color, presence: true
+  validates :name,
+    presence: true,
+    uniqueness: { scope: :world, message: "already exists" }
+  validates :color, presence: { message: "requires a selection" }
 
   # == Hooks ==
 
   before_destroy :ensure_unused, prepend: true
-  after_destroy :remove_from_post_audiences
+  after_destroy :remove_from_posts
 
   # == Scopes ==
   scope :alphabetical, -> () {
@@ -85,19 +88,27 @@ class WorldKeyType < ApplicationRecord
     # Prevent new keys or invitations from referencing the type during deletion.
     WorldKeyType.where(id:).lock.pick(:id)
 
-    errors.delete(:base, :active_keys)
-    errors.delete(:base, :pending_invitations)
     active_keys = keys.exists?
     pending_invitations = invitations.pending_acceptance.exists?
-    errors.add(:base, :active_keys, message: "friends still have this key type") if active_keys
+    if active_keys
+      errors.add(
+        :base,
+        :active_keys,
+        message: "friends still have this key type",
+      )
+    end
     if pending_invitations
-      errors.add(:base, :pending_invitations, message: "pending invitations still use this key type")
+      errors.add(
+        :base,
+        :pending_invitations,
+        message: "pending invitations still use this key type",
+      )
     end
     throw :abort if active_keys || pending_invitations
   end
 
   sig { void }
-  def remove_from_post_audiences
+  def remove_from_posts
     Post.where(world_id:)
       .where("? = ANY(visible_to_key_type_ids)", id)
       .update_all([ "visible_to_key_type_ids = array_remove(visible_to_key_type_ids, ?::uuid)", id ]) # rubocop:disable Rails/SkipsModelValidations

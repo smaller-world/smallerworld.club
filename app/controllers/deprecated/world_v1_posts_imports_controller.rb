@@ -4,7 +4,7 @@
 class Deprecated::WorldV1PostsImportsController < ApplicationController
   # == Actions ==
 
-  # GET /world/:world_id/v1_posts_import?import_job_id=...
+  # GET /worlds/:world_id/v1_posts_import?import_job_id=...
   def show
     respond_to do |format|
       if turbo_frame_request?
@@ -25,7 +25,7 @@ class Deprecated::WorldV1PostsImportsController < ApplicationController
     end
   end
 
-  # POST /world/:world_id/v1_posts_import
+  # POST /worlds/:world_id/v1_posts_import
   def create
     respond_to do |format|
       format.html do

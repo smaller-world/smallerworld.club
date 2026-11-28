@@ -11,10 +11,10 @@
       "patterns": [
         "\/new$",
         "\/edit$",
-        "^\/world_key_grants\/.+$",
         "\/settings$",
         "\/policies$",
-        "\/contact$"
+        "\/contact$",
+        "^\/world_key_grants\/.+$"
       ],
       "properties": {
         "context": "modal",
@@ -53,7 +53,6 @@
     {
       "patterns": [
         "^\/contact$",
-        "^\/world_keys\/[\\w-]+\/edit$",
         "^\/worlds\/[\\w-]+\/post_types/new$",
         "^\/post_types\/[\\w-]+\/edit$"
       ],

@@ -39,6 +39,10 @@ Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 Layout/FirstMethodArgumentLineBreak:
   Enabled: true
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true
+Layout/FirstParameterIndentation:
+  Enabled: true
 Layout/HashAlignment:
   Enabled: true
   EnforcedLastArgumentHashStyle: always_inspect
@@ -56,7 +60,13 @@ Layout/MultilineMethodArgumentLineBreaks:
 Layout/MultilineMethodCallBraceLayout:
   Enabled: true
   EnforcedStyle: symmetrical
+Layout/MultilineMethodDefinitionBraceLayout:
+  Enabled: true
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: true
 Layout/MultilineOperationIndentation:
+  Enabled: true
+Layout/ParameterAlignment:
   Enabled: true
 Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: space

@@ -21,6 +21,6 @@ export default class WorldNewPostDialogController extends ApplicationController<
     } else {
       url.searchParams.set("new_post", "1");
     }
-    history.replaceState(null, "", url.toString());
+    history.replaceState(null, "", url.href);
   }
 }

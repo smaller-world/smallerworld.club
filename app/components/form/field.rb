@@ -95,7 +95,6 @@ class Components::Form
         ).returns(Radios[T.type_parameter(:U)])
     end
     def radios(options, toggleable: false, **attributes, &content)
-      # options = enum_options if options.empty?
       Radios.new(field, options:, toggleable:, **attributes, &content)
     end
 

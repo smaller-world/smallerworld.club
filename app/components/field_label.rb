@@ -6,13 +6,16 @@ class Components::FieldLabel < Components::Base
 
   sig { override.params(content: T.proc.void).void }
   def view_template(&content)
-    root_element(
-      :label,
-      class: "field-label group/field-label peer/field-label",
-      data: {
-        slot: "field-label",
+    Components::Label(**mix(
+      {
+        class: "field-label group/field-label peer/field-label",
+        data: {
+          slot!: "field-label",
+        },
       },
-      &content
-    )
+      @attributes,
+    )) do
+      yield
+    end
   end
 end

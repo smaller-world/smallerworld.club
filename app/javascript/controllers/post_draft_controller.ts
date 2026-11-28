@@ -155,6 +155,6 @@ export default class PostDraftController extends Typed(
   #updateSearchParams() {
     const url = new URL(location.href);
     url.searchParams.set("restore_draft", "1");
-    history.replaceState(history.state, "", url.toString());
+    history.replaceState(history.state, "", url.href);
   }
 }

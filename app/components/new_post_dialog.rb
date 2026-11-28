@@ -67,6 +67,9 @@ class Components::NewPostDialog < Components::Base
               type: :submit,
               size: :sm,
               class: "bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
+              data: {
+                controller: "dialog#closeAndClick",
+              },
             ) do |item|
               item.content do |item_content|
                 item_content.title do
@@ -89,6 +92,9 @@ class Components::NewPostDialog < Components::Base
                 href: url_for([ :new, @world, :post, type_id: post_type.id ]),
                 variant: :outline,
                 size: :sm,
+                data: {
+                  action: "dialog#closeAndClick",
+                },
               ) do |item|
                 item.media(variant: :icon) do
                   Icon(post_type.icon)
@@ -104,6 +110,9 @@ class Components::NewPostDialog < Components::Base
                 [ :edit, post_type ],
                 size: :sm,
                 class: "text-muted-foreground",
+                data: {
+                  action: "dialog#closeAndClick",
+                },
               )
             end
           end
@@ -115,6 +124,9 @@ class Components::NewPostDialog < Components::Base
             href: url_for([ :new, @world, :post_type ]),
             variant: :muted,
             size: :sm,
+            data: {
+              action: "dialog#closeAndClick",
+            },
           ) do |item|
             item.content(class: "gap-0") do |item_content|
               item_content.title do

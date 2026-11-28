@@ -16,7 +16,7 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
-  # GET /world/:world_id/invitations/new?recipient_id=...[?redirect_back_to=...]
+  # GET /worlds/:world_id/invitations/new?recipient_id=...[?redirect_back_to=...]
   def new
     respond_to do |format|
       format.html do
@@ -42,7 +42,7 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
-  # POST /world/:world_id/invitations
+  # POST /worlds/:world_id/invitations
   def create
     respond_to do |format|
       format.html do
@@ -70,7 +70,7 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
-  # PUT/PATCH /world/:world_id/invitations
+  # PUT/PATCH /worlds/:world_id/invitations
   def update
     respond_to do |format|
       format.html do
@@ -89,7 +89,7 @@ class WorldInvitationsController < ApplicationController
     end
   end
 
-  # DELETE /world/:world_id/invitations
+  # DELETE /worlds/:world_id/invitations
   def destroy
     respond_to do |format|
       format.html do

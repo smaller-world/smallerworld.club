@@ -31,7 +31,7 @@ class Components::Field < Components::Base
 
   # == Component ==
 
-  sig { override.params(content: T.proc.void).void }
+  sig { override.params(content: T.nilable(T.proc.void)).void }
   def view_template(&content)
     root_element(
       :div,
