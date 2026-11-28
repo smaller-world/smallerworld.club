@@ -3,6 +3,10 @@
     @apply gap-2 px-3.5 text-base font-semibold has-data-[icon=inline-start]:pl-3 [&_svg]:size-5;
   }
 
+  .new-world-key-grant-button {
+    @apply border-primary/40;
+  }
+
   .world-icon {
     box-shadow: 0 0 var(--shadow-spread) -5px
       var(--tw-shadow-color, rgb(0 0 0 / 0.5));

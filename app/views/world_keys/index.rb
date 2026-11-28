@@ -31,7 +31,7 @@ class Views::WorldKeys::Index < Views::Base
       app_layout.with_navigation(class: "max-w-md") do
         button_back_to(@world.name, @world, variant: :secondary)
         button_link_to(
-          "edit key types",
+          "key types",
           [ @world, :key_types ],
           variant: :secondary,
           icon: "huge/settings-01",

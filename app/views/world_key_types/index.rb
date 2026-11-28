@@ -48,7 +48,7 @@ class Views::WorldKeyTypes::Index < Views::Base
             end
             item.content(class: "gap-0") do |item_content|
               item_content.title do
-                "add a new key type"
+                "create a new key type"
               end
             end
           end

@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class WorldKeyGrantsController < ApplicationController
+  include Returnable
+
   # == Configuration ==
 
   allow_unauthenticated_access only: [ :show, :accept ]
@@ -31,7 +33,7 @@ class WorldKeyGrantsController < ApplicationController
 
     grant = WorldKeyGrant.new(params.permit(:key_type_id), world:)
     grant.validate
-    render Views::WorldKeyGrants::New.new(grant:)
+    render Views::WorldKeyGrants::New.new(grant:, return_url:)
   end
 
   # POST /world_key_grants/:message/accept

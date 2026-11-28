@@ -101,7 +101,13 @@ class Views::Worlds::Show < Views::Base
                 },
               )
               if allowed_to?(:manage?, @world)
-                Components::WorldKeyGrantIconButton(world: @world)
+                Components::NewWorldKeyGrantButton(
+                  world: @world,
+                  class: "absolute -top-2 -right-2",
+                  data: {
+                    controller: "return-to-self",
+                  },
+                )
               end
             end
             h1(class: "text-2xl text-center") do

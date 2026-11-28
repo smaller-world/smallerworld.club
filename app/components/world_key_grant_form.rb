@@ -13,6 +13,7 @@ class Components::WorldKeyGrantForm < Components::Base
   def initialize(grant:, **attributes)
     super(**attributes)
     @grant = grant
+
     @world = T.let(grant.world, World)
   end
 
@@ -125,7 +126,7 @@ class Components::WorldKeyGrantForm < Components::Base
             },
           ) do
             Icon("huge/plus-sign-square")
-            span { "add a new key type" }
+            span { "create a new key type" }
           end
         end
       end

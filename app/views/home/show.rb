@@ -116,6 +116,11 @@ class Views::Home::Show < Views::Base
   def owned_worlds
     if @owned_worlds.any?
       ul(class: "flex gap-6 flex-wrap justify-center") do
+        li(class: "world-icon-container self-center invisible") do
+          div(class: "world-icon", data: { world_icon_size: "xs" })
+          span(class: "world-icon-label") { "\u00A0" }
+        end
+
         @owned_worlds.each do |world|
           li(class: "relative") do
             link_to(world, class: "world-icon-container hover:underline") do
@@ -124,11 +129,17 @@ class Views::Home::Show < Views::Base
                 world.name
               end
             end
-            Components::WorldKeyGrantIconButton(world:)
+            Components::NewWorldKeyGrantButton(
+              world:,
+              class: "absolute -top-2 -right-2",
+              data: {
+                controller: "return-to-self",
+              },
+            )
           end
         end
 
-        li(class: "self-center world-icon-container") do
+        li(class: "world-icon-container self-center") do
           button_link_to(
             places_dock_path,
             variant: :outline,

@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-class Components::WorldKeyGrantIconButton < Components::Base
+class Components::NewWorldKeyGrantButton < Components::Base
   # == Initialization ==
 
   sig { params(world: World, attributes: T.untyped).void }
@@ -18,11 +18,11 @@ class Components::WorldKeyGrantIconButton < Components::Base
       variant: :secondary,
       size: :icon_sm,
       **mix(
-        { class: "absolute -top-2 -right-2 border-primary/40" },
+        { class: "new-world-key-grant-button" },
         @attributes,
       ),
     ) do
-      Icon("huge/qr-code")
+      Icon("huge/user-add-01")
     end
   end
 end

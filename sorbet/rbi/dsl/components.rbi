@@ -276,6 +276,10 @@ module Components
   sig { params(reaction: ::Reaction, attributes: T.untyped).void }
   def NewPostReactionForm(reaction:, **attributes); end
 
+  # source://app/components/new_world_key_grant_button.rb:4
+  sig { params(world: ::World, attributes: T.untyped).void }
+  def NewWorldKeyGrantButton(world:, **attributes); end
+
   # source://app/components/next_page_control.rb:4
   sig do
     params(
@@ -499,10 +503,6 @@ module Components
   # source://app/components/world_key_grant_form.rb:4
   sig { params(grant: ::WorldKeyGrant, attributes: T.untyped).void }
   def WorldKeyGrantForm(grant:, **attributes); end
-
-  # source://app/components/world_key_grant_icon_button.rb:4
-  sig { params(world: ::World, attributes: T.untyped).void }
-  def WorldKeyGrantIconButton(world:, **attributes); end
 
   # source://app/components/world_key_type_form.rb:4
   sig { params(key_type: ::WorldKeyType, return_url: T.nilable(::String)).void }
@@ -809,6 +809,10 @@ module Components
     sig { params(reaction: ::Reaction, attributes: T.untyped).void }
     def NewPostReactionForm(reaction:, **attributes); end
 
+    # source://app/components/new_world_key_grant_button.rb:4
+    sig { params(world: ::World, attributes: T.untyped).void }
+    def NewWorldKeyGrantButton(world:, **attributes); end
+
     # source://app/components/next_page_control.rb:4
     sig do
       params(
@@ -1032,10 +1036,6 @@ module Components
     # source://app/components/world_key_grant_form.rb:4
     sig { params(grant: ::WorldKeyGrant, attributes: T.untyped).void }
     def WorldKeyGrantForm(grant:, **attributes); end
-
-    # source://app/components/world_key_grant_icon_button.rb:4
-    sig { params(world: ::World, attributes: T.untyped).void }
-    def WorldKeyGrantIconButton(world:, **attributes); end
 
     # source://app/components/world_key_type_form.rb:4
     sig { params(key_type: ::WorldKeyType, return_url: T.nilable(::String)).void }
